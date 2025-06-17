@@ -11,7 +11,17 @@ export const Header = () => {
 
   const navigation = [
     { name: "Главная", href: "/" },
-    { name: "Туры", href: "/tours" },
+    { 
+      name: "Туры", 
+      href: "/tours",
+      subItems: [
+        { name: "Все туры", href: "/tours" },
+        { name: "Городские туры", href: "/category/city-tours" },
+        { name: "Пляжные туры", href: "/category/beach-tours" },
+        { name: "Приключенческие туры", href: "/category/adventure-tours" },
+        { name: "Групповые туры", href: "/category/group-tours" }
+      ]
+    },
     { name: "Направления", href: "/destinations" },
     { name: "О нас", href: "/about" },
     { name: "Контакты", href: "/contact" }
@@ -34,15 +44,41 @@ export const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium ${
-                  location.pathname === item.href ? 'text-blue-600 border-b-2 border-blue-600' : ''
-                }`}
-              >
-                {item.name}
-              </Link>
+              item.subItems ? (
+                <NavigationMenu key={item.name}>
+                  <NavigationMenuList>
+                    <NavigationMenuItem>
+                      <NavigationMenuTrigger className="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium bg-transparent">
+                        {item.name}
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <div className="grid w-48 gap-2 p-4">
+                          {item.subItems.map((subItem) => (
+                            <NavigationMenuLink key={subItem.name} asChild>
+                              <Link
+                                to={subItem.href}
+                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-blue-50 hover:text-blue-600"
+                              >
+                                <div className="text-sm font-medium leading-none">{subItem.name}</div>
+                              </Link>
+                            </NavigationMenuLink>
+                          ))}
+                        </div>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  </NavigationMenuList>
+                </NavigationMenu>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium ${
+                    location.pathname === item.href ? 'text-blue-600 border-b-2 border-blue-600' : ''
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              )
             ))}
           </nav>
 
@@ -71,14 +107,29 @@ export const Header = () => {
           <div className="md:hidden absolute top-16 left-0 right-0 bg-white border-t shadow-lg">
             <nav className="px-4 py-4 space-y-4">
               {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="block text-gray-700 hover:text-blue-600 transition-colors duration-300 py-2"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </Link>
+                <div key={item.name}>
+                  <Link
+                    to={item.href}
+                    className="block text-gray-700 hover:text-blue-600 transition-colors duration-300 py-2 font-medium"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                  {item.subItems && (
+                    <div className="ml-4 space-y-2">
+                      {item.subItems.map((subItem) => (
+                        <Link
+                          key={subItem.name}
+                          to={subItem.href}
+                          className="block text-gray-600 hover:text-blue-600 transition-colors duration-300 py-1 text-sm"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          {subItem.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
               <div className="pt-4 border-t">
                 <div className="flex items-center space-x-2 text-sm text-gray-600 mb-3">

@@ -1,4 +1,3 @@
-
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,6 +9,21 @@ const GroupTours = () => {
   const groupTours = [
     {
       id: 1,
+      slug: "11-islands-standard",
+      title: "11 Islands Standard",
+      subtitle: "11 островов стандарт",
+      price: "2,500",
+      currency: "₽",
+      duration: "8 часов",
+      groupSize: "15-25 чел",
+      rating: 4.8,
+      reviewsCount: 342,
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+      highlights: ["11 островов", "Морская прогулка", "Снорклинг", "Обед"],
+      popular: true
+    },
+    {
+      id: 2,
       slug: "bangkok-pattaya-5-days",
       title: "Bangkok & Pattaya 5 Days",
       subtitle: "Бангкок и Паттайя за 5 дней",
@@ -20,11 +34,10 @@ const GroupTours = () => {
       rating: 4.8,
       reviewsCount: 342,
       image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Отель 4*", "Все экскурсии", "Русский гид", "Трансферы"],
-      popular: true
+      highlights: ["Отель 4*", "Все экскурсии", "Русский гид", "Трансферы"]
     },
     {
-      id: 2,
+      id: 3,
       slug: "phuket-krabi-7-days",
       title: "Phuket & Krabi 7 Days",
       subtitle: "Пхукет и Краби за неделю",
@@ -38,7 +51,7 @@ const GroupTours = () => {
       highlights: ["2 острова", "Пляжный отдых", "Экскурсии", "Морские прогулки"]
     },
     {
-      id: 3,
+      id: 4,
       slug: "northern-thailand-adventure",
       title: "Northern Thailand Adventure",
       subtitle: "Приключения на севере Тайланда",
@@ -52,7 +65,7 @@ const GroupTours = () => {
       highlights: ["Чиангмай", "Чианграй", "Золотой треугольник", "Горные племена"]
     },
     {
-      id: 4,
+      id: 5,
       slug: "thailand-grand-tour",
       title: "Thailand Grand Tour",
       subtitle: "Большое путешествие по Тайланду",
@@ -66,7 +79,7 @@ const GroupTours = () => {
       highlights: ["5 городов", "Все включено", "Гид-историк", "VIP трансфер"]
     },
     {
-      id: 5,
+      id: 6,
       slug: "islands-hopping-10-days",
       title: "Islands Hopping 10 Days",
       subtitle: "Путешествие по островам",
@@ -80,7 +93,7 @@ const GroupTours = () => {
       highlights: ["6 островов", "Яхта", "Снорклинг", "Романтические ужины"]
     },
     {
-      id: 6,
+      id: 7,
       slug: "cultural-heritage-tour",
       title: "Cultural Heritage Tour",
       subtitle: "Культурное наследие Тайланда",
@@ -114,7 +127,7 @@ const GroupTours = () => {
           </p>
           <div className="flex justify-center">
             <div className="bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 text-white">
-              <span className="font-semibold">{groupTours.length} групповых туров</span> • От 15,990 ₽
+              <span className="font-semibold">{groupTours.length} групповых туров</span> • От 2,500 ₽
             </div>
           </div>
         </div>

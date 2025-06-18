@@ -14,6 +14,7 @@ import BeachTours from "./pages/BeachTours";
 import AdventureTours from "./pages/AdventureTours";
 import GroupTours from "./pages/GroupTours";
 import ExcursionDetail from "./pages/ExcursionDetail";
+import ElevenIslandsStandard from "./pages/ElevenIslandsStandard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/category/adventure-tours" element={<AdventureTours />} />
           <Route path="/category/group-tours" element={<GroupTours />} />
           <Route path="/excursion/:slug" element={<ExcursionDetail />} />
+          <Route path="/excursion/11-islands-standard" element={<ElevenIslandsStandard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

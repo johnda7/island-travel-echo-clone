@@ -10,6 +10,9 @@ import About from "./pages/About";
 import Destinations from "./pages/Destinations";
 import ContactPage from "./pages/ContactPage";
 import CityTours from "./pages/CityTours";
+import BeachTours from "./pages/BeachTours";
+import AdventureTours from "./pages/AdventureTours";
+import GroupTours from "./pages/GroupTours";
 import ExcursionDetail from "./pages/ExcursionDetail";
 import NotFound from "./pages/NotFound";
 
@@ -28,6 +31,9 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/category/city-tours" element={<CityTours />} />
+          <Route path="/category/beach-tours" element={<BeachTours />} />
+          <Route path="/category/adventure-tours" element={<AdventureTours />} />
+          <Route path="/category/group-tours" element={<GroupTours />} />
           <Route path="/excursion/:slug" element={<ExcursionDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

@@ -5,33 +5,33 @@ import { Clock, Users, Calendar } from "lucide-react";
 const tours = [
   {
     id: 1,
-    title: "Романтический тур на Санторини",
-    duration: "7 дней",
-    group: "2-4 человека",
+    title: "Острова Пхи Пхи на скоростной лодке",
+    duration: "8 часов",
+    group: "До 35 человек",
     date: "Круглый год",
-    price: "€1,299",
-    image: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Закаты в Ие", "Дегустация вин", "Круиз по кальдере"]
+    price: "2,490 ₽",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Майя Бэй", "Снорклинг", "Обед на пляже"]
   },
   {
     id: 2,
-    title: "Приключения на Тенерифе",
-    duration: "5 дней",
-    group: "До 8 человек",
-    date: "Март - Октябрь",
-    price: "€899",
+    title: "Остров Джеймса Бонда",
+    duration: "8 часов",
+    group: "До 25 человек",
+    date: "Октябрь - Май",
+    price: "2,590 ₽",
     image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Подъем на Тейде", "Наблюдение за китами", "Лорелевый лес"]
+    highlights: ["Каноэ в пещерах", "Деревня на воде", "Морепродукты"]
   },
   {
     id: 3,
-    title: "Релакс на Мальдивах",
-    duration: "10 дней",
-    group: "2 человека",
+    title: "11 островов Стандарт",
+    duration: "9 часов",
+    group: "До 40 человек",
     date: "Ноябрь - Апрель",
-    price: "€2,499",
+    price: "2,690 ₽",
     image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Водная вилла", "Дайвинг", "Спа-процедуры"]
+    highlights: ["11 островов", "Снорклинг", "Обед-барбекю"]
   }
 ];
 
@@ -41,10 +41,10 @@ export const Tours = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-            Наши туры
+            Популярные экскурсии
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Тщательно спланированные путешествия для создания незабываемых воспоминаний
+            Тщательно спланированные морские путешествия для создания незабываемых воспоминаний
           </p>
         </div>
         

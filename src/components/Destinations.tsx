@@ -5,30 +5,30 @@ import { MapPin, Star } from "lucide-react";
 const destinations = [
   {
     id: 1,
-    name: "Тенерифе",
-    country: "Канарские острова",
-    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
+    name: "Пхукет",
+    country: "Таиланд",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
     rating: 4.9,
-    price: "от €299",
-    description: "Вулканические ландшафты и черные пляжи"
+    price: "от 1,890 ₽",
+    description: "Жемчужина Андаманского моря с белоснежными пляжами"
   },
   {
     id: 2,
-    name: "Санторини",
-    country: "Греция",
-    image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80",
+    name: "Краби",
+    country: "Таиланд",
+    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
     rating: 4.8,
-    price: "от €450",
-    description: "Белоснежные домики и бесконечное море"
+    price: "от 2,190 ₽",
+    description: "Известняковые скалы и изумрудные лагуны"
   },
   {
     id: 3,
-    name: "Мальдивы",
-    country: "Индийский океан",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+    name: "Острова Пхи Пхи",
+    country: "Таиланд",
+    image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80",
     rating: 5.0,
-    price: "от €899",
-    description: "Роскошные водные виллы и коралловые рифы"
+    price: "от 2,490 ₽",
+    description: "Райские острова с кристально чистой водой"
   }
 ];
 
@@ -41,7 +41,7 @@ export const Destinations = () => {
             Популярные направления
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Выберите из наших тщательно отобранных направлений для незабываемого отдыха
+            Выберите из наших тщательно отобранных направлений для незабываемого отдыха в Таиланде
           </p>
         </div>
         

@@ -1,119 +1,207 @@
+
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, Users, Star, Filter, UsersIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const GroupTours = () => {
+  const [selectedFilter, setSelectedFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("popular");
+
   const groupTours = [
     {
       id: 1,
-      slug: "11-islands-standard",
-      title: "11 Islands Standard",
-      subtitle: "11 островов стандарт",
-      price: "2,500",
+      slug: "group-phi-phi-adventure",
+      title: "Group Phi Phi Islands Adventure",
+      subtitle: "Групповое приключение на острова Пхи Пхи",
+      price: "2,290",
       currency: "₽",
       duration: "8 часов",
-      groupSize: "15-25 чел",
+      groupSize: "до 25 чел",
       rating: 4.8,
-      reviewsCount: 342,
+      reviewsCount: 156,
       image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-      highlights: ["11 островов", "Морская прогулка", "Снорклинг", "Обед"],
+      highlights: ["Майя Бэй", "Снорклинг", "Обед на пляже", "Лодка-экспресс"],
+      category: "marine",
       popular: true
     },
     {
       id: 2,
-      slug: "bangkok-pattaya-5-days",
-      title: "Bangkok & Pattaya 5 Days",
-      subtitle: "Бангкок и Паттайя за 5 дней",
-      price: "15,990",
+      slug: "group-elephant-sanctuary",
+      title: "Group Elephant Sanctuary Visit",
+      subtitle: "Групповое посещение слоновьего заповедника",
+      price: "2,790",
       currency: "₽",
-      duration: "5 дней",
-      groupSize: "15-25 чел",
-      rating: 4.8,
-      reviewsCount: 342,
-      image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Отель 4*", "Все экскурсии", "Русский гид", "Трансферы"]
+      duration: "6 часов",
+      groupSize: "до 20 чел",
+      rating: 4.9,
+      reviewsCount: 203,
+      image: "https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Кормление слонов", "Купание со слонами", "Этичный туризм", "Традиционный обед"],
+      category: "adventure"
     },
     {
       id: 3,
-      slug: "phuket-krabi-7-days",
-      title: "Phuket & Krabi 7 Days",
-      subtitle: "Пхукет и Краби за неделю",
-      price: "24,990",
+      slug: "group-bangkok-temples",
+      title: "Group Bangkok Temples Tour",
+      subtitle: "Групповая экскурсия по храмам Бангкока",
+      price: "2,490",
       currency: "₽",
-      duration: "7 дней",
-      groupSize: "12-20 чел",
-      rating: 4.9,
-      reviewsCount: 278,
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-      highlights: ["2 острова", "Пляжный отдых", "Экскурсии", "Морские прогулки"]
+      duration: "9 часов",
+      groupSize: "до 30 чел",
+      rating: 4.7,
+      reviewsCount: 134,
+      image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Королевский дворец", "Храм Изумрудного Будды", "Речная прогулка", "Плавучий рынок"],
+      category: "cultural"
     },
     {
       id: 4,
-      slug: "northern-thailand-adventure",
-      title: "Northern Thailand Adventure",
-      subtitle: "Приключения на севере Тайланда",
-      price: "18,990",
+      slug: "group-krabi-island-hopping",
+      title: "Group Krabi Island Hopping",
+      subtitle: "Групповые прыжки по островам Краби",
+      price: "2,190",
       currency: "₽",
-      duration: "6 дней",
-      groupSize: "10-15 чел",
-      rating: 4.7,
-      reviewsCount: 156,
-      image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Чиангмай", "Чианграй", "Золотой треугольник", "Горные племена"]
+      duration: "7 часов",
+      groupSize: "до 35 чел",
+      rating: 4.6,
+      reviewsCount: 89,
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Острова Хонг", "Лагуна изумрудная", "Пляж Прананг", "Обед на острове"],
+      category: "marine"
     },
     {
       id: 5,
-      slug: "thailand-grand-tour",
-      title: "Thailand Grand Tour",
-      subtitle: "Большое путешествие по Тайланду",
-      price: "39,990",
+      slug: "group-chiang-mai-cooking",
+      title: "Group Cooking Class Chiang Mai",
+      subtitle: "Групповые кулинарные курсы в Чиангмае",
+      price: "1,890",
       currency: "₽",
-      duration: "12 дней",
-      groupSize: "15-25 чел",
-      rating: 4.9,
-      reviewsCount: 198,
-      image: "https://images.unsplash.com/photo-1544198365-f5d60b6d8190?auto=format&fit=crop&w=800&q=80",
-      highlights: ["5 городов", "Все включено", "Гид-историк", "VIP трансфер"]
+      duration: "5 часов",
+      groupSize: "до 15 чел",
+      rating: 4.8,
+      reviewsCount: 167,
+      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Рынок свежих продуктов", "Приготовление 5 блюд", "Сертификат", "Дегустация"],
+      category: "cultural"
     },
     {
       id: 6,
-      slug: "islands-hopping-10-days",
-      title: "Islands Hopping 10 Days",
-      subtitle: "Путешествие по островам",
-      price: "32,990",
+      slug: "group-james-bond-island",
+      title: "Group James Bond Island Tour",
+      subtitle: "Групповой тур на остров Джеймса Бонда",
+      price: "2,590",
       currency: "₽",
-      duration: "10 дней",
-      groupSize: "8-16 чел",
-      rating: 4.8,
-      reviewsCount: 223,
-      image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80",
-      highlights: ["6 островов", "Яхта", "Снорклинг", "Романтические ужины"]
+      duration: "8 часов",
+      groupSize: "до 28 чел",
+      rating: 4.7,
+      reviewsCount: 198,
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Остров Джеймса Бонда", "Каноэ в пещерах", "Деревня на воде", "Обед морепродуктами"],
+      category: "marine"
     },
     {
       id: 7,
-      slug: "cultural-heritage-tour",
-      title: "Cultural Heritage Tour",
-      subtitle: "Культурное наследие Тайланда",
-      price: "21,990",
+      slug: "group-zipline-adventure",
+      title: "Group Zipline Adventure",
+      subtitle: "Групповое приключение на зиплайне",
+      price: "2,390",
       currency: "₽",
-      duration: "8 дней",
-      groupSize: "12-18 чел",
+      duration: "6 часов",
+      groupSize: "до 18 чел",
+      rating: 4.5,
+      reviewsCount: 112,
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80",
+      highlights: ["15 зиплайнов", "Прогулка по кронам", "Абсейлинг", "Обед в джунглях"],
+      category: "adventure"
+    },
+    {
+      id: 8,
+      slug: "group-floating-market",
+      title: "Group Floating Market Tour",
+      subtitle: "Групповая экскурсия на плавучий рынок",
+      price: "1,690",
+      currency: "₽",
+      duration: "6 часов",
+      groupSize: "до 25 чел",
+      rating: 4.4,
+      reviewsCount: 145,
+      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Дамноен Садуак", "Лодочная прогулка", "Местная еда", "Железная дорога"],
+      category: "cultural"
+    },
+    {
+      id: 9,
+      slug: "group-snorkeling-safari",
+      title: "Group Snorkeling Safari",
+      subtitle: "Групповое снорклинг-сафари",
+      price: "2,890",
+      currency: "₽",
+      duration: "10 часов",
+      groupSize: "до 40 чел",
       rating: 4.6,
-      reviewsCount: 134,
-      image: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Аюттхая", "Сукхотхай", "Древние храмы", "Культурные мастер-классы"]
+      reviewsCount: 176,
+      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Симиланские острова", "3 точки снорклинга", "Морские черепахи", "Обед-барбекю"],
+      category: "marine"
+    },
+    {
+      id: 10,
+      slug: "group-white-water-rafting",
+      title: "Group White Water Rafting",
+      subtitle: "Групповой рафтинг",
+      price: "2,490",
+      currency: "₽",
+      duration: "7 часов",
+      groupSize: "до 24 чел",
+      rating: 4.3,
+      reviewsCount: 98,
+      image: "https://images.unsplash.com/photo-1527004013197-933c4bb611b3?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Рафтинг 5 км", "Профессиональные гиды", "Обед у реки", "Трансфер"],
+      category: "adventure"
     }
   ];
+
+  const categories = [
+    { id: "all", name: "Все виды" },
+    { id: "marine", name: "Морские" },
+    { id: "adventure", name: "Приключения" },
+    { id: "cultural", name: "Культурные" }
+  ];
+
+  const sortOptions = [
+    { id: "popular", name: "Популярные" },
+    { id: "price-low", name: "Цена: низкая" },
+    { id: "price-high", name: "Цена: высокая" },
+    { id: "rating", name: "Рейтинг" }
+  ];
+
+  const filteredTours = groupTours.filter(tour => 
+    selectedFilter === "all" || tour.category === selectedFilter
+  );
+
+  const sortedTours = [...filteredTours].sort((a, b) => {
+    switch (sortBy) {
+      case "price-low":
+        return parseInt(a.price.replace(/,/g, '')) - parseInt(b.price.replace(/,/g, ''));
+      case "price-high":
+        return parseInt(b.price.replace(/,/g, '')) - parseInt(a.price.replace(/,/g, ''));
+      case "rating":
+        return b.rating - a.rating;
+      default:
+        return b.reviewsCount - a.reviewsCount;
+    }
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-20 pb-12 bg-gradient-to-r from-purple-600 to-indigo-600">
+      <section className="pt-20 pb-12 bg-gradient-to-r from-purple-600 to-pink-600">
         <div className="container mx-auto px-4 text-center">
           <div className="flex justify-center mb-6">
             <UsersIcon className="w-16 h-16 text-white" />
@@ -122,12 +210,12 @@ const GroupTours = () => {
             Групповые туры
           </h1>
           <p className="text-xl text-purple-100 max-w-3xl mx-auto mb-8">
-            Присоединяйтесь к организованным группам и познакомьтесь с 
-            единомышленниками во время путешествия по самым красивым местам Тайланда.
+            Присоединяйтесь к другим путешественникам в незабываемых групповых приключениях. 
+            Новые знакомства, разделенные впечатления и доступные цены.
           </p>
           <div className="flex justify-center">
             <div className="bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 text-white">
-              <span className="font-semibold">{groupTours.length} групповых туров</span> • От 2,500 ₽
+              <span className="font-semibold">{groupTours.length} групповых туров</span> • От 1,690 ₽
             </div>
           </div>
         </div>
@@ -141,13 +229,27 @@ const GroupTours = () => {
               <Filter className="w-4 h-4" />
               Фильтры
             </Button>
-            <Button variant="outline">Все туры</Button>
-            <Button variant="outline">5-7 дней</Button>
-            <Button variant="outline">8-10 дней</Button>
-            <Button variant="outline">10+ дней</Button>
-            <Button variant="outline">Эконом</Button>
-            <div className="ml-auto text-gray-600">
-              Сортировка: <Button variant="ghost" className="p-0 h-auto text-purple-600">Популярные</Button>
+            {categories.map((category) => (
+              <Button 
+                key={category.id}
+                variant={selectedFilter === category.id ? "default" : "outline"}
+                onClick={() => setSelectedFilter(category.id)}
+                className={selectedFilter === category.id ? "bg-purple-600 text-white" : ""}
+              >
+                {category.name}
+              </Button>
+            ))}
+            <div className="ml-auto text-gray-600 flex items-center gap-2">
+              Сортировка: 
+              <select 
+                value={sortBy} 
+                onChange={(e) => setSortBy(e.target.value)}
+                className="border rounded px-2 py-1 text-purple-600"
+              >
+                {sortOptions.map((option) => (
+                  <option key={option.id} value={option.id}>{option.name}</option>
+                ))}
+              </select>
             </div>
           </div>
         </div>
@@ -157,7 +259,7 @@ const GroupTours = () => {
       <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {groupTours.map((tour) => (
+            {sortedTours.map((tour) => (
               <Card key={tour.id} className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
                 <div className="relative">
                   <img 
@@ -235,18 +337,18 @@ const GroupTours = () => {
       <section className="py-16 bg-purple-600">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
-            Хотите путешествовать в компании?
+            Найдите единомышленников!
           </h2>
           <p className="text-purple-100 mb-8 max-w-2xl mx-auto">
-            Групповые туры - это отличная возможность познакомиться с новыми людьми, 
-            разделить впечатления и сэкономить на путешествии.
+            Групповые туры - отличный способ познакомиться с новыми людьми и 
+            разделить незабываемые впечатления от путешествия по Тайланду.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="outline" className="bg-white text-purple-600 hover:bg-gray-100">
               Получить консультацию
             </Button>
             <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-white">
-              Записаться в группу
+              Присоединиться к группе
             </Button>
           </div>
         </div>

@@ -1,12 +1,15 @@
-
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, Users, Star, MapPin, Filter } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const CityTours = () => {
+  const [selectedFilter, setSelectedFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("popular");
+
   const cityTours = [
     {
       id: 1,
@@ -22,6 +25,7 @@ const CityTours = () => {
       reviewsCount: 127,
       image: "https://images.unsplash.com/photo-1544198365-f5d60b6d8190?auto=format&fit=crop&w=800&q=80",
       highlights: ["Big Buddha", "Храм Ват Чалонг", "Мыс Промтеп", "Пляжи Ката и Карон"],
+      city: "phuket",
       popular: true
     },
     {
@@ -36,7 +40,8 @@ const CityTours = () => {
       rating: 4.7,
       reviewsCount: 89,
       image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Старый город", "Храм Джуй Туй", "Чайна-таун", "Смотровая площадка"]
+      highlights: ["Старый город", "Храм Джуй Туй", "Чайна-таун", "Смотровая площадка"],
+      city: "phuket"
     },
     {
       id: 3,
@@ -50,7 +55,8 @@ const CityTours = () => {
       rating: 4.8,
       reviewsCount: 156,
       image: "https://images.unsplash.com/photo-1466442929976-97f336a657be?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Летний дворец", "Руины Аюттхаи", "Храм лежащего Будды", "Речная прогулка"]
+      highlights: ["Летний дворец", "Руины Аюттхаи", "Храм лежащего Будды", "Речная прогулка"],
+      city: "bangkok"
     },
     {
       id: 4,
@@ -64,7 +70,8 @@ const CityTours = () => {
       rating: 4.9,
       reviewsCount: 203,
       image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Королевский дворец", "Храм Изумрудного Будды", "Речные каналы", "Плавучий рынок"]
+      highlights: ["Королевский дворец", "Храм Изумрудного Будды", "Речные каналы", "Плавучий рынок"],
+      city: "bangkok"
     },
     {
       id: 5,
@@ -78,7 +85,8 @@ const CityTours = () => {
       rating: 4.6,
       reviewsCount: 74,
       image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Храм Дой Сутеп", "Старый город", "Ночной базар", "Слоновья ферма"]
+      highlights: ["Храм Дой Сутеп", "Старый город", "Ночной базар", "Слоновья ферма"],
+      city: "chiangmai"
     },
     {
       id: 6,
@@ -92,7 +100,8 @@ const CityTours = () => {
       rating: 4.4,
       reviewsCount: 92,
       image: "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Холм Большого Будды", "Храм Истины", "Смотровая площадка", "Плавучий рынок"]
+      highlights: ["Холм Большого Будды", "Храм Истины", "Смотровая площадка", "Плавучий рынок"],
+      city: "pattaya"
     },
     {
       id: 7,
@@ -106,7 +115,8 @@ const CityTours = () => {
       rating: 4.5,
       reviewsCount: 118,
       image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Рынок Дамноен Садуак", "Лодочная прогулка", "Традиционная еда", "Железная дорога"]
+      highlights: ["Рынок Дамноен Садуак", "Лодочная прогулка", "Традиционная еда", "Железная дорога"],
+      city: "bangkok"
     },
     {
       id: 8,
@@ -120,7 +130,8 @@ const CityTours = () => {
       rating: 4.7,
       reviewsCount: 65,
       image: "https://images.unsplash.com/photo-1544731612-de7f96afe55f?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Руины древних храмов", "Статуи Будды", "Исторический музей", "Велосипедная прогулка"]
+      highlights: ["Руины древних храмов", "Статуи Будды", "Исторический музей", "Велосипедная прогулка"],
+      city: "sukhothai"
     },
     {
       id: 9,
@@ -134,7 +145,8 @@ const CityTours = () => {
       rating: 4.6,
       reviewsCount: 134,
       image: "https://images.unsplash.com/photo-1520637836862-4d197d17c90a?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Мост через реку Квай", "Музей войны", "Поездка на поезде", "Водопады Эраван"]
+      highlights: ["Мост через реку Квай", "Музей войны", "Поездка на поезде", "Водопады Эраван"],
+      city: "kanchanaburi"
     },
     {
       id: 10,
@@ -148,37 +160,42 @@ const CityTours = () => {
       rating: 4.3,
       reviewsCount: 87,
       image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Королевский дворец", "Железнодорожная станция", "Ночной рынок", "Пляж Хуа Хин"]
-    },
-    {
-      id: 11,
-      slug: "lopburi-monkey-temple",
-      title: "Lopburi Monkey Temple",
-      subtitle: "Лопбури - город обезьян",
-      price: "1,990",
-      currency: "₽",
-      duration: "8 часов",
-      groupSize: "до 15 чел",
-      rating: 4.5,
-      reviewsCount: 98,
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Храм обезьян", "Руины кхмерской архитектуры", "Дворец короля Нараи", "Местные рынки"]
-    },
-    {
-      id: 12,
-      slug: "nakhon-pathom-giant-buddha",
-      title: "Nakhon Pathom Giant Buddha",
-      subtitle: "Накхон Патхом - гигантский Будда",
-      price: "1,490",
-      currency: "₽",
-      duration: "6 часов",
-      groupSize: "до 20 чел",
-      rating: 4.4,
-      reviewsCount: 76,
-      image: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Пхра Патхом Чеди", "Самая высокая ступа в мире", "Местные ремесла", "Традиционный рынок"]
+      highlights: ["Королевский дворец", "Железнодорожная станция", "Ночной рынок", "Пляж Хуа Хин"],
+      city: "huahin"
     }
   ];
+
+  const categories = [
+    { id: "all", name: "Все города" },
+    { id: "phuket", name: "Пхукет" },
+    { id: "bangkok", name: "Бангкок" },
+    { id: "chiangmai", name: "Чиангмай" },
+    { id: "pattaya", name: "Паттайя" }
+  ];
+
+  const sortOptions = [
+    { id: "popular", name: "Популярные" },
+    { id: "price-low", name: "Цена: низкая" },
+    { id: "price-high", name: "Цена: высокая" },
+    { id: "rating", name: "Рейтинг" }
+  ];
+
+  const filteredTours = cityTours.filter(tour => 
+    selectedFilter === "all" || tour.city === selectedFilter
+  );
+
+  const sortedTours = [...filteredTours].sort((a, b) => {
+    switch (sortBy) {
+      case "price-low":
+        return parseInt(a.price.replace(/,/g, '')) - parseInt(b.price.replace(/,/g, ''));
+      case "price-high":
+        return parseInt(b.price.replace(/,/g, '')) - parseInt(a.price.replace(/,/g, ''));
+      case "rating":
+        return b.rating - a.rating;
+      default:
+        return b.reviewsCount - a.reviewsCount;
+    }
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -210,13 +227,27 @@ const CityTours = () => {
               <Filter className="w-4 h-4" />
               Фильтры
             </Button>
-            <Button variant="outline">Все города</Button>
-            <Button variant="outline">Пхукет</Button>
-            <Button variant="outline">Бангкок</Button>
-            <Button variant="outline">Чиангмай</Button>
-            <Button variant="outline">Паттайя</Button>
-            <div className="ml-auto text-gray-600">
-              Сортировка: <Button variant="ghost" className="p-0 h-auto text-blue-600">Популярные</Button>
+            {categories.map((category) => (
+              <Button 
+                key={category.id}
+                variant={selectedFilter === category.id ? "default" : "outline"}
+                onClick={() => setSelectedFilter(category.id)}
+                className={selectedFilter === category.id ? "bg-blue-600 text-white" : ""}
+              >
+                {category.name}
+              </Button>
+            ))}
+            <div className="ml-auto text-gray-600 flex items-center gap-2">
+              Сортировка: 
+              <select 
+                value={sortBy} 
+                onChange={(e) => setSortBy(e.target.value)}
+                className="border rounded px-2 py-1 text-blue-600"
+              >
+                {sortOptions.map((option) => (
+                  <option key={option.id} value={option.id}>{option.name}</option>
+                ))}
+              </select>
             </div>
           </div>
         </div>
@@ -226,7 +257,7 @@ const CityTours = () => {
       <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {cityTours.map((tour) => (
+            {sortedTours.map((tour) => (
               <Card key={tour.id} className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
                 <div className="relative">
                   <img 

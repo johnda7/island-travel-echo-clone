@@ -1,12 +1,15 @@
-
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, Users, Star, Filter, Mountain } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const AdventureTours = () => {
+  const [selectedFilter, setSelectedFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("popular");
+
   const adventureTours = [
     {
       id: 1,
@@ -21,6 +24,7 @@ const AdventureTours = () => {
       reviewsCount: 178,
       image: "https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?auto=format&fit=crop&w=800&q=80",
       highlights: ["Кормление слонов", "Купание со слонами", "Этичный туризм", "Традиционный обед"],
+      category: "animals",
       popular: true
     },
     {
@@ -35,7 +39,8 @@ const AdventureTours = () => {
       rating: 4.7,
       reviewsCount: 234,
       image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80",
-      highlights: ["12 зиплайнов", "Прогулка по кронам", "Абсейлинг", "Обед в джунглях"]
+      highlights: ["12 зиплайнов", "Прогулка по кронам", "Абсейлинг", "Обед в джунглях"],
+      category: "extreme"
     },
     {
       id: 3,
@@ -49,7 +54,8 @@ const AdventureTours = () => {
       rating: 4.6,
       reviewsCount: 156,
       image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Езда на квадроциклах", "Грязевые трассы", "Водопады", "Инструктаж"]
+      highlights: ["Езда на квадроциклах", "Грязевые трассы", "Водопады", "Инструктаж"],
+      category: "land"
     },
     {
       id: 4,
@@ -63,7 +69,8 @@ const AdventureTours = () => {
       rating: 4.8,
       reviewsCount: 89,
       image: "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Скалолазание", "Профессиональный инструктор", "Снаряжение", "Пляж Рейли"]
+      highlights: ["Скалолазание", "Профессиональный инструктор", "Снаряжение", "Пляж Рейли"],
+      category: "extreme"
     },
     {
       id: 5,
@@ -77,7 +84,8 @@ const AdventureTours = () => {
       rating: 4.5,
       reviewsCount: 203,
       image: "https://images.unsplash.com/photo-1527004013197-933c4bb611b3?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Рафтинг 5-го уровня", "Профессиональные гиды", "Обед у реки", "Безопасность"]
+      highlights: ["Рафтинг 5-го уровня", "Профессиональные гиды", "Обед у реки", "Безопасность"],
+      category: "water"
     },
     {
       id: 6,
@@ -91,9 +99,102 @@ const AdventureTours = () => {
       rating: 4.7,
       reviewsCount: 124,
       image: "https://images.unsplash.com/photo-1544191696-15693072b5a6?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Горный велосипед", "Дои Сутеп", "Горные тропы", "Видовые точки"]
+      highlights: ["Горный велосипед", "Дои Сутеп", "Горные тропы", "Видовые точки"],
+      category: "land"
+    },
+    {
+      id: 7,
+      slug: "bungee-jumping-phuket",
+      title: "Bungee Jumping Phuket",
+      subtitle: "Банджи-джампинг в Пхукете",
+      price: "3,890",
+      currency: "₽",
+      duration: "3 часа",
+      groupSize: "до 6 чел",
+      rating: 4.9,
+      reviewsCount: 87,
+      image: "https://images.unsplash.com/photo-1544734716-392fe2489ffa?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Прыжок с 50 метров", "Сертификат", "Видеосъемка", "Страховка"],
+      category: "extreme"
+    },
+    {
+      id: 8,
+      slug: "jungle-trekking-chiang-mai",
+      title: "Jungle Trekking Chiang Mai",
+      subtitle: "Треккинг в джунглях Чиангмая",
+      price: "2,690",
+      currency: "₽",
+      duration: "8 часов",
+      groupSize: "до 12 чел",
+      rating: 4.6,
+      reviewsCount: 145,
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Треккинг 12 км", "Водопады", "Деревни племен", "Обед в джунглях"],
+      category: "land"
+    },
+    {
+      id: 9,
+      slug: "cave-diving-koh-tao",
+      title: "Cave Diving Koh Tao",
+      subtitle: "Дайвинг в пещерах Ко Тао",
+      price: "4,290",
+      currency: "₽",
+      duration: "6 часов",
+      groupSize: "до 8 чел",
+      rating: 4.8,
+      reviewsCount: 76,
+      image: "https://images.unsplash.com/photo-1583212292454-1fe6229603b7?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Подводные пещеры", "Сертифицированный инструктор", "Снаряжение", "2 погружения"],
+      category: "water"
+    },
+    {
+      id: 10,
+      slug: "tiger-temple-visit",
+      title: "Tiger Temple & Monkey Cave",
+      subtitle: "Храм тигров и пещера обезьян",
+      price: "2,390",
+      currency: "₽",
+      duration: "5 часов",
+      groupSize: "до 15 чел",
+      rating: 4.4,
+      reviewsCount: 198,
+      image: "https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Храм тигров", "Пещера обезьян", "1237 ступеней", "Панорамный вид"],
+      category: "animals"
     }
   ];
+
+  const categories = [
+    { id: "all", name: "Все виды" },
+    { id: "water", name: "Водные" },
+    { id: "land", name: "Наземные" },
+    { id: "extreme", name: "Экстрим" },
+    { id: "animals", name: "Животные" }
+  ];
+
+  const sortOptions = [
+    { id: "popular", name: "Популярные" },
+    { id: "price-low", name: "Цена: низкая" },
+    { id: "price-high", name: "Цена: высокая" },
+    { id: "rating", name: "Рейтинг" }
+  ];
+
+  const filteredTours = adventureTours.filter(tour => 
+    selectedFilter === "all" || tour.category === selectedFilter
+  );
+
+  const sortedTours = [...filteredTours].sort((a, b) => {
+    switch (sortBy) {
+      case "price-low":
+        return parseInt(a.price.replace(/,/g, '')) - parseInt(b.price.replace(/,/g, ''));
+      case "price-high":
+        return parseInt(b.price.replace(/,/g, '')) - parseInt(a.price.replace(/,/g, ''));
+      case "rating":
+        return b.rating - a.rating;
+      default:
+        return b.reviewsCount - a.reviewsCount;
+    }
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -128,13 +229,27 @@ const AdventureTours = () => {
               <Filter className="w-4 h-4" />
               Фильтры
             </Button>
-            <Button variant="outline">Все виды</Button>
-            <Button variant="outline">Водные</Button>
-            <Button variant="outline">Наземные</Button>
-            <Button variant="outline">Экстрим</Button>
-            <Button variant="outline">Животные</Button>
-            <div className="ml-auto text-gray-600">
-              Сортировка: <Button variant="ghost" className="p-0 h-auto text-green-600">Популярные</Button>
+            {categories.map((category) => (
+              <Button 
+                key={category.id}
+                variant={selectedFilter === category.id ? "default" : "outline"}
+                onClick={() => setSelectedFilter(category.id)}
+                className={selectedFilter === category.id ? "bg-green-600 text-white" : ""}
+              >
+                {category.name}
+              </Button>
+            ))}
+            <div className="ml-auto text-gray-600 flex items-center gap-2">
+              Сортировка: 
+              <select 
+                value={sortBy} 
+                onChange={(e) => setSortBy(e.target.value)}
+                className="border rounded px-2 py-1 text-green-600"
+              >
+                {sortOptions.map((option) => (
+                  <option key={option.id} value={option.id}>{option.name}</option>
+                ))}
+              </select>
             </div>
           </div>
         </div>
@@ -144,7 +259,7 @@ const AdventureTours = () => {
       <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {adventureTours.map((tour) => (
+            {sortedTours.map((tour) => (
               <Card key={tour.id} className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
                 <div className="relative">
                   <img 

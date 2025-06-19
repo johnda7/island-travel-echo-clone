@@ -1,4 +1,3 @@
-
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,162 +13,162 @@ const GroupTours = () => {
   const groupTours = [
     {
       id: 1,
-      slug: "group-phi-phi-adventure",
-      title: "Group Phi Phi Islands Adventure",
-      subtitle: "Групповое приключение на острова Пхи Пхи",
-      price: "2,290",
+      slug: "ayutthaya-floating-markets-group",
+      title: "Ayutthaya & Floating Markets Group Tour",
+      subtitle: "Айюттхая и плавучие рынки",
+      price: "1,590",
       currency: "₽",
-      duration: "8 часов",
-      groupSize: "до 25 чел",
+      duration: "10 часов",
+      groupSize: "15-25 чел",
       rating: 4.8,
-      reviewsCount: 156,
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Майя Бэй", "Снорклинг", "Обед на пляже", "Лодка-экспресс"],
-      category: "marine",
+      reviewsCount: 243,
+      image: "https://images.unsplash.com/photo-1466442929976-97f336a657be?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Древние руины", "Плавучий рынок", "Обед включен", "Групповая скидка"],
+      category: "cultural",
       popular: true
     },
     {
       id: 2,
-      slug: "group-elephant-sanctuary",
-      title: "Group Elephant Sanctuary Visit",
-      subtitle: "Групповое посещение слоновьего заповедника",
-      price: "2,790",
+      slug: "bangkok-temples-group-tour",
+      title: "Bangkok Temples Group Tour",
+      subtitle: "Храмы Бангкока в группе",
+      price: "1,290",
       currency: "₽",
-      duration: "6 часов",
-      groupSize: "до 20 чел",
-      rating: 4.9,
-      reviewsCount: 203,
-      image: "https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Кормление слонов", "Купание со слонами", "Этичный туризм", "Традиционный обед"],
-      category: "adventure"
+      duration: "8 часов",
+      groupSize: "20-30 чел",
+      rating: 4.6,
+      reviewsCount: 189,
+      image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Wat Pho", "Wat Arun", "Grand Palace", "Речная прогулка"],
+      category: "cultural"
     },
     {
       id: 3,
-      slug: "group-bangkok-temples",
-      title: "Group Bangkok Temples Tour",
-      subtitle: "Групповая экскурсия по храмам Бангкока",
-      price: "2,490",
+      slug: "phi-phi-group-speedboat",
+      title: "Phi Phi Islands Group Speedboat",
+      subtitle: "Пхи Пхи на скоростной лодке",
+      price: "2,190",
       currency: "₽",
-      duration: "9 часов",
-      groupSize: "до 30 чел",
-      rating: 4.7,
-      reviewsCount: 134,
-      image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Королевский дворец", "Храм Изумрудного Будды", "Речная прогулка", "Плавучий рынок"],
-      category: "cultural"
+      duration: "8 часов",
+      groupSize: "25-35 чел",
+      rating: 4.9,
+      reviewsCount: 312,
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Maya Bay", "Снорклинг", "Обед на пляже", "Экономия в группе"],
+      category: "beach"
     },
     {
       id: 4,
-      slug: "group-krabi-island-hopping",
-      title: "Group Krabi Island Hopping",
-      subtitle: "Групповые прыжки по островам Краби",
-      price: "2,190",
+      slug: "james-bond-island-group",
+      title: "James Bond Island Group Tour",
+      subtitle: "Остров Джеймса Бонда в группе",
+      price: "2,090",
       currency: "₽",
-      duration: "7 часов",
-      groupSize: "до 35 чел",
-      rating: 4.6,
-      reviewsCount: 89,
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Острова Хонг", "Лагуна изумрудная", "Пляж Прананг", "Обед на острове"],
-      category: "marine"
+      duration: "8 часов",
+      groupSize: "20-25 чел",
+      rating: 4.7,
+      reviewsCount: 156,
+      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Каноэ", "Panak Island", "Hong Island", "Морепродукты"],
+      category: "beach"
     },
     {
       id: 5,
-      slug: "group-chiang-mai-cooking",
-      title: "Group Cooking Class Chiang Mai",
-      subtitle: "Групповые кулинарные курсы в Чиангмае",
-      price: "1,890",
+      slug: "chiang-mai-elephant-group",
+      title: "Chiang Mai Elephant Sanctuary Group",
+      subtitle: "Слоновий заповедник в группе",
+      price: "2,490",
       currency: "₽",
-      duration: "5 часов",
-      groupSize: "до 15 чел",
+      duration: "6 часов",
+      groupSize: "12-18 чел",
       rating: 4.8,
-      reviewsCount: 167,
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Рынок свежих продуктов", "Приготовление 5 блюд", "Сертификат", "Дегустация"],
-      category: "cultural"
+      reviewsCount: 134,
+      image: "https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Кормление слонов", "Купание", "Этичный туризм", "Традиционный обед"],
+      category: "nature"
     },
     {
       id: 6,
-      slug: "group-james-bond-island",
-      title: "Group James Bond Island Tour",
-      subtitle: "Групповой тур на остров Джеймса Бонда",
-      price: "2,590",
+      slug: "krabi-four-islands-group",
+      title: "Krabi Four Islands Group Tour",
+      subtitle: "4 острова Краби в группе",
+      price: "1,990",
       currency: "₽",
-      duration: "8 часов",
-      groupSize: "до 28 чел",
-      rating: 4.7,
-      reviewsCount: 198,
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Остров Джеймса Бонда", "Каноэ в пещерах", "Деревня на воде", "Обед морепродуктами"],
-      category: "marine"
+      duration: "7 часов",
+      groupSize: "25-30 чел",
+      rating: 4.5,
+      reviewsCount: 201,
+      image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Railay Beach", "Poda Island", "Chicken Island", "Снорклинг"],
+      category: "beach"
     },
     {
       id: 7,
-      slug: "group-zipline-adventure",
-      title: "Group Zipline Adventure",
-      subtitle: "Групповое приключение на зиплайне",
-      price: "2,390",
+      slug: "pattaya-coral-island-group",
+      title: "Pattaya Coral Island Group",
+      subtitle: "Коралловый остров Паттайи",
+      price: "1,390",
       currency: "₽",
       duration: "6 часов",
-      groupSize: "до 18 чел",
-      rating: 4.5,
-      reviewsCount: 112,
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80",
-      highlights: ["15 зиплайнов", "Прогулка по кронам", "Абсейлинг", "Обед в джунглях"],
-      category: "adventure"
+      groupSize: "20-25 чел",
+      rating: 4.4,
+      reviewsCount: 167,
+      image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Koh Larn", "Водные виды спорта", "Пляжный отдых", "Обед"],
+      category: "beach"
     },
     {
       id: 8,
-      slug: "group-floating-market",
-      title: "Group Floating Market Tour",
-      subtitle: "Групповая экскурсия на плавучий рынок",
-      price: "1,690",
+      slug: "floating-markets-group-tour",
+      title: "Floating Markets Group Experience",
+      subtitle: "Плавучие рынки в группе",
+      price: "1,190",
       currency: "₽",
-      duration: "6 часов",
-      groupSize: "до 25 чел",
-      rating: 4.4,
-      reviewsCount: 145,
+      duration: "5 часов",
+      groupSize: "15-20 чел",
+      rating: 4.3,
+      reviewsCount: 98,
       image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Дамноен Садуак", "Лодочная прогулка", "Местная еда", "Железная дорога"],
+      highlights: ["Damnoen Saduak", "Традиционная еда", "Лодочная прогулка", "Сувениры"],
       category: "cultural"
     },
     {
       id: 9,
-      slug: "group-snorkeling-safari",
-      title: "Group Snorkeling Safari",
-      subtitle: "Групповое снорклинг-сафари",
-      price: "2,890",
+      slug: "doi-suthep-group-tour",
+      title: "Doi Suthep Temple Group Tour",
+      subtitle: "Дои Сутеп в группе",
+      price: "1,690",
       currency: "₽",
-      duration: "10 часов",
-      groupSize: "до 40 чел",
+      duration: "4 часа",
+      groupSize: "18-22 чел",
       rating: 4.6,
-      reviewsCount: 176,
-      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Симиланские острова", "3 точки снорклинга", "Морские черепахи", "Обед-барбекю"],
-      category: "marine"
+      reviewsCount: 145,
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Храм на горе", "Панорамный вид", "300 ступеней", "Золотая ступа"],
+      category: "cultural"
     },
     {
       id: 10,
-      slug: "group-white-water-rafting",
-      title: "Group White Water Rafting",
-      subtitle: "Групповой рафтинг",
-      price: "2,490",
+      slug: "kanchanaburi-bridge-group",
+      title: "Kanchanaburi Bridge Group Tour",
+      subtitle: "Мост через реку Квай",
+      price: "1,890",
       currency: "₽",
-      duration: "7 часов",
-      groupSize: "до 24 чел",
-      rating: 4.3,
-      reviewsCount: 98,
-      image: "https://images.unsplash.com/photo-1527004013197-933c4bb611b3?auto=format&fit=crop&w=800&q=80",
-      highlights: ["Рафтинг 5 км", "Профессиональные гиды", "Обед у реки", "Трансфер"],
-      category: "adventure"
+      duration: "9 часов",
+      groupSize: "20-25 чел",
+      rating: 4.5,
+      reviewsCount: 178,
+      image: "https://images.unsplash.com/photo-1520637836862-4d197d17c90a?auto=format&fit=crop&w=800&q=80",
+      highlights: ["Исторический мост", "Музей войны", "Поездка на поезде", "Водопады"],
+      category: "cultural"
     }
   ];
 
   const categories = [
-    { id: "all", name: "Все виды" },
-    { id: "marine", name: "Морские" },
-    { id: "adventure", name: "Приключения" },
-    { id: "cultural", name: "Культурные" }
+    { id: "all", name: "Все типы" },
+    { id: "beach", name: "Пляжные" },
+    { id: "cultural", name: "Культурные" },
+    { id: "nature", name: "Природа" }
   ];
 
   const sortOptions = [
@@ -210,12 +209,12 @@ const GroupTours = () => {
             Групповые туры
           </h1>
           <p className="text-xl text-purple-100 max-w-3xl mx-auto mb-8">
-            Присоединяйтесь к другим путешественникам в незабываемых групповых приключениях. 
-            Новые знакомства, разделенные впечатления и доступные цены.
+            Путешествуйте в компании единомышленников! Экономичные групповые туры 
+            с разделением расходов и новыми знакомствами.
           </p>
           <div className="flex justify-center">
             <div className="bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 text-white">
-              <span className="font-semibold">{groupTours.length} групповых туров</span> • От 1,690 ₽
+              <span className="font-semibold">{groupTours.length} групповых туров</span> • От 1,190 ₽
             </div>
           </div>
         </div>
@@ -337,18 +336,18 @@ const GroupTours = () => {
       <section className="py-16 bg-purple-600">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
-            Найдите единомышленников!
+            Экономьте с групповыми турами!
           </h2>
           <p className="text-purple-100 mb-8 max-w-2xl mx-auto">
-            Групповые туры - отличный способ познакомиться с новыми людьми и 
-            разделить незабываемые впечатления от путешествия по Тайланду.
+            Групповые туры - отличный способ сэкономить на путешествии и познакомиться 
+            с новыми людьми. Присоединяйтесь к нашим турам!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="outline" className="bg-white text-purple-600 hover:bg-gray-100">
               Получить консультацию
             </Button>
             <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-white">
-              Присоединиться к группе
+              Записаться в группу
             </Button>
           </div>
         </div>

@@ -4,107 +4,142 @@ import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, Users, Calendar, MapPin, Star } from "lucide-react";
+import { useState } from "react";
 
 const toursData = [
   {
     id: 1,
-    title: "Романтический тур на Санторини",
-    location: "Греция, Санторини",
-    duration: "7 дней / 6 ночей",
-    group: "2-4 человека",
+    title: "Острова Пхи Пхи на скоростной лодке",
+    location: "Пхукет, Таиланд",
+    duration: "8 часов",
+    group: "До 35 человек",
     dates: "Круглый год",
-    price: "€1,299",
-    originalPrice: "€1,599",
+    price: "2,490 ₽",
+    originalPrice: "2,990 ₽",
     rating: 4.9,
-    reviews: 127,
-    image: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Закаты в Ие", "Дегустация вин", "Круиз по кальдере", "Романтический ужин"],
-    description: "Откройте для себя магию Санторини - острова белоснежных домиков и бесконечного моря.",
-    featured: true
+    reviews: 234,
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Майя Бэй", "Снорклинг", "Обед на пляже", "Лагуна"],
+    description: "Незабываемое путешествие к знаменитым островам Пхи Пхи с посещением Майя Бэй.",
+    featured: true,
+    category: "beach"
   },
   {
     id: 2,
-    title: "Приключения на Тенерифе",
-    location: "Канарские острова",
-    duration: "5 дней / 4 ночи",
-    group: "До 8 человек",
-    dates: "Март - Октябрь",
-    price: "€899",
-    originalPrice: "€1,199",
+    title: "Остров Джеймса Бонда",
+    location: "Пханг Нга, Таиланд", 
+    duration: "8 часов",
+    group: "До 25 человек",
+    dates: "Октябрь - Май",
+    price: "2,590 ₽",
+    originalPrice: "3,090 ₽",
     rating: 4.8,
-    reviews: 89,
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc25ebb?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Подъем на Тейде", "Наблюдение за китами", "Лорелевый лес", "Вулканические пляжи"],
-    description: "Активный отдых среди вулканических ландшафтов и уникальной природы Тенерифе.",
-    featured: false
+    reviews: 189,
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Каноэ в пещерах", "Деревня на воде", "Морепродукты", "Известняковые скалы"],
+    description: "Исследование залива Пханг Нга с посещением знаменитого острова из фильма о Джеймсе Бонде.",
+    featured: false,
+    category: "beach"
   },
   {
     id: 3,
-    title: "Релакс на Мальдивах",
-    location: "Мальдивские острова",
-    duration: "10 дней / 9 ночей",
-    group: "2 человека",
+    title: "11 островов Стандарт",
+    location: "Краби, Таиланд",
+    duration: "9 часов", 
+    group: "До 40 человек",
     dates: "Ноябрь - Апрель",
-    price: "€2,499",
-    originalPrice: "€2,999",
+    price: "2,690 ₽",
+    originalPrice: "3,190 ₽",
     rating: 5.0,
-    reviews: 203,
+    reviews: 167,
     image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Водная вилла", "Дайвинг", "Спа-процедуры", "Частный пляж"],
-    description: "Роскошный отдых в водных виллах с видом на бирюзовые лагуны.",
-    featured: true
+    highlights: ["11 островов", "Снорклинг", "Обед-барбекю", "Кристальная вода"],
+    description: "Большое путешествие по 11 живописным островам с множеством активностей.",
+    featured: true,
+    category: "beach"
   },
   {
     id: 4,
-    title: "Открытие Сицилии",
-    location: "Италия, Сицилия",
-    duration: "8 дней / 7 ночей",
-    group: "До 12 человек",
-    dates: "Апрель - Сентябрь",
-    price: "€1,199",
-    originalPrice: "€1,499",
+    title: "Большой дворец Бангкока",
+    location: "Бангкок, Таиланд",
+    duration: "6 часов",
+    group: "До 20 человек", 
+    dates: "Круглый год",
+    price: "1,890 ₽",
+    originalPrice: "2,390 ₽",
     rating: 4.7,
-    reviews: 156,
-    image: "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Этна экскурсия", "Сицилийская кухня", "Таормина", "Археологические памятники"],
-    description: "Погружение в историю и культуру самого большого острова Средиземного моря.",
-    featured: false
+    reviews: 312,
+    image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Королевский дворец", "Храм Изумрудного Будды", "Речные каналы", "История"],
+    description: "Погружение в королевскую историю Таиланда с посещением главных достопримечательностей Бангкока.",
+    featured: false,
+    category: "city"
   },
   {
     id: 5,
-    title: "Экзотическая Ямайка",
-    location: "Карибы, Ямайка",
-    duration: "9 дней / 8 ночей",
-    group: "2-6 человек",
-    dates: "Декабрь - Март",
-    price: "€1,799",
-    originalPrice: "€2,199",
-    rating: 4.9,
-    reviews: 94,
-    image: "https://images.unsplash.com/photo-1544276503-4f5c7f47c698?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Водопады Данс-Ривер", "Регги-туры", "Голубые горы", "Пляжи Негрил"],
-    description: "Ощутите ритм Карибов и насладитесь райскими пляжами Ямайки.",
-    featured: false
+    title: "Треккинг к водопадам Чиангмая",
+    location: "Чиангмай, Таиланд",
+    duration: "7 часов",
+    group: "До 12 человек",
+    dates: "Октябрь - Март",
+    price: "2,190 ₽",
+    originalPrice: "2,690 ₽", 
+    rating: 4.6,
+    reviews: 98,
+    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Водопады", "Джунгли", "Деревни племен", "Треккинг"],
+    description: "Активное приключение в джунглях северного Таиланда с посещением традиционных деревень.",
+    featured: false,
+    category: "adventure"
   },
   {
     id: 6,
-    title: "Мистическая Мадейра",
-    location: "Португалия, Мадейра",
-    duration: "6 дней / 5 ночей",
-    group: "До 10 человек",
-    dates: "Круглый год",
-    price: "€999",
-    originalPrice: "€1,299",
-    rating: 4.8,
-    reviews: 112,
-    image: "https://images.unsplash.com/photo-1530051633781-0b5e96b7b33e?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Левады", "Мадерское вино", "Фуншал", "Ботанические сады"],
-    description: "Откройте остров вечной весны с его уникальными ландшафтами и традициями.",
-    featured: true
+    title: "Групповой тур: Айюттхая и плавучие рынки",
+    location: "Айюттхая, Таиланд",
+    duration: "10 часов",
+    group: "15-25 человек",
+    dates: "Каждый день",
+    price: "1,590 ₽",
+    originalPrice: "1,990 ₽",
+    rating: 4.5,
+    reviews: 203,
+    image: "https://images.unsplash.com/photo-1466442929976-97f336a657be?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Древние руины", "Плавучий рынок", "Обед", "Групповая скидка"],
+    description: "Экономичный групповой тур к древней столице Сиама с посещением традиционных рынков.",
+    featured: true,
+    category: "group"
   }
 ];
 
 const Tours = () => {
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [sortBy, setSortBy] = useState("popular");
+
+  const categories = [
+    { id: "all", name: "Все туры" },
+    { id: "beach", name: "Морские" },
+    { id: "city", name: "Городские" },
+    { id: "adventure", name: "Приключения" },
+    { id: "group", name: "Групповые" }
+  ];
+
+  const filteredTours = toursData.filter(tour => 
+    selectedCategory === "all" || tour.category === selectedCategory
+  );
+
+  const sortedTours = [...filteredTours].sort((a, b) => {
+    switch (sortBy) {
+      case "price-low":
+        return parseInt(a.price.replace(/[^\d]/g, '')) - parseInt(b.price.replace(/[^\d]/g, ''));
+      case "price-high":
+        return parseInt(b.price.replace(/[^\d]/g, '')) - parseInt(a.price.replace(/[^\d]/g, ''));
+      case "rating":
+        return b.rating - a.rating;
+      default:
+        return b.reviews - a.reviews;
+    }
+  });
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -118,14 +153,31 @@ const Tours = () => {
             </h1>
             <p className="text-xl text-gray-600 mb-8">
               Тщательно спланированные путешествия для создания незабываемых воспоминаний. 
-              Выберите идеальный тур из нашей коллекции островных приключений.
+              Выберите идеальный тур из нашей коллекции тайских приключений.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button variant="outline" className="rounded-full">Все туры</Button>
-              <Button variant="outline" className="rounded-full">Романтические</Button>
-              <Button variant="outline" className="rounded-full">Приключения</Button>
-              <Button variant="outline" className="rounded-full">Релакс</Button>
-              <Button variant="outline" className="rounded-full">Групповые</Button>
+              {categories.map((category) => (
+                <Button 
+                  key={category.id}
+                  variant={selectedCategory === category.id ? "default" : "outline"}
+                  className="rounded-full"
+                  onClick={() => setSelectedCategory(category.id)}
+                >
+                  {category.name}
+                </Button>
+              ))}
+            </div>
+            <div className="mt-4 flex justify-center">
+              <select 
+                value={sortBy} 
+                onChange={(e) => setSortBy(e.target.value)}
+                className="border rounded-full px-4 py-2 text-blue-600"
+              >
+                <option value="popular">Популярные</option>
+                <option value="price-low">Цена: низкая</option>
+                <option value="price-high">Цена: высокая</option>
+                <option value="rating">Рейтинг</option>
+              </select>
             </div>
           </div>
         </div>
@@ -135,7 +187,7 @@ const Tours = () => {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {toursData.map((tour) => (
+            {sortedTours.map((tour) => (
               <Card key={tour.id} className={`group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 ${tour.featured ? 'ring-2 ring-blue-500' : ''}`}>
                 <div className="relative h-64 overflow-hidden">
                   {tour.featured && (

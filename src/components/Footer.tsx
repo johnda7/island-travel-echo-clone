@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Facebook, Instagram, Youtube } from "lucide-react";
 
@@ -11,12 +10,12 @@ export const Footer = () => {
           <div>
             <div className="flex items-center space-x-2 mb-6">
               <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">T</span>
+                <span className="text-white font-bold text-lg">P</span>
               </div>
-              <span className="text-2xl font-bold">TIsland</span>
+              <span className="text-2xl font-bold">Пхукет Go</span>
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed">
-              Создаем незабываемые путешествия к самым красивым островам мира. 
+              Создаем незабываемые путешествия к самым красивым местам Пхукета и Таиланда. 
               Ваша мечта о райском отдыхе станет реальностью с нами.
             </p>
             <div className="flex space-x-4">
@@ -70,7 +69,7 @@ export const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-blue-400 flex-shrink-0" />
-                <span className="text-gray-300">info@tisland.travel</span>
+                <span className="text-gray-300">info@phuketgo.travel</span>
               </div>
             </div>
             <div className="mt-6 p-4 bg-blue-600/20 rounded-lg">
@@ -85,7 +84,7 @@ export const Footer = () => {
       <div className="border-t border-gray-800">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-            <p>&copy; 2024 TIsland. Все права защищены.</p>
+            <p>&copy; 2024 Пхукет Go. Все права защищены.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="hover:text-white transition-colors">Политика конфиденциальности</a>
               <a href="#" className="hover:text-white transition-colors">Условия использования</a>

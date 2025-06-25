@@ -1,4 +1,5 @@
 
+
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
@@ -142,6 +143,11 @@ const Tours = () => {
     }
   });
 
+  console.log('Tours data:', toursData.length);
+  console.log('Filtered tours:', filteredTours.length);
+  console.log('Sorted tours:', sortedTours.length);
+  console.log('Selected category:', selectedCategory);
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -188,6 +194,11 @@ const Tours = () => {
       {/* Tours Grid */}
       <section className="py-16">
         <div className="container mx-auto px-4">
+          <div className="mb-8 text-center">
+            <p className="text-lg text-gray-600">
+              Показано {sortedTours.length} из {toursData.length} туров
+            </p>
+          </div>
           <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {sortedTours.map((tour) => (
               <Card key={tour.id} className={`group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 ${tour.featured ? 'ring-2 ring-blue-500' : ''}`}>

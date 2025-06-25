@@ -1,37 +1,48 @@
 
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Clock, Users, Calendar } from "lucide-react";
+import { Link } from "react-router-dom";
+import { BookingModal } from "./BookingModal";
+import { PopularityBadge } from "./PopularityBadge";
 
 const tours = [
   {
     id: 1,
+    slug: "phi-phi-islands-speedboat",
     title: "Острова Пхи Пхи на скоростной лодке",
     duration: "8 часов",
     group: "До 35 человек",
     date: "Круглый год",
     price: "2,490 ₽",
     image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Майя Бэй", "Снорклинг", "Обед на пляже"]
+    highlights: ["Майя Бэй", "Снорклинг", "Обед на пляже"],
+    bookingsToday: 12,
+    popular: true
   },
   {
     id: 2,
+    slug: "james-bond-island",
     title: "Остров Джеймса Бонда",
     duration: "8 часов",
     group: "До 25 человек",
     date: "Октябрь - Май",
     price: "2,590 ₽",
     image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Каноэ в пещерах", "Деревня на воде", "Морепродукты"]
+    highlights: ["Каноэ в пещерах", "Деревня на воде", "Морепродукты"],
+    bookingsToday: 8
   },
   {
     id: 3,
+    slug: "11-islands-standard",
     title: "11 островов Стандарт",
     duration: "9 часов",
     group: "До 40 человек",
     date: "Ноябрь - Апрель",
     price: "2,690 ₽",
     image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80",
-    highlights: ["11 островов", "Снорклинг", "Обед-барбекю"]
+    highlights: ["11 островов", "Снорклинг", "Обед-барбекю"],
+    bookingsToday: 15
   }
 ];
 
@@ -58,6 +69,9 @@ export const Tours = () => {
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                
+                {tour.popular && <PopularityBadge bookingsToday={tour.bookingsToday} />}
+                
                 <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
                   <span className="font-bold text-blue-600">{tour.price}</span>
                 </div>
@@ -92,12 +106,30 @@ export const Tours = () => {
                   </ul>
                 </div>
                 
-                <button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
-                  Забронировать
-                </button>
+                <div className="flex gap-2">
+                  <BookingModal tourTitle={tour.title} tourPrice={tour.price}>
+                    <Button className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
+                      Забронировать
+                    </Button>
+                  </BookingModal>
+                  
+                  <Link to={`/excursion/${tour.slug}`}>
+                    <Button variant="outline" className="rounded-full">
+                      Подробнее
+                    </Button>
+                  </Link>
+                </div>
               </CardContent>
             </Card>
           ))}
+        </div>
+        
+        <div className="text-center mt-12">
+          <Link to="/tours">
+            <Button size="lg" variant="outline" className="rounded-full">
+              Смотреть все туры
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

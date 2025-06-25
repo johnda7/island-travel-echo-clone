@@ -254,12 +254,16 @@ const Tours = () => {
                   </div>
                   
                   <div className="flex gap-3">
-                    <Button className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
-                      Забронировать
-                    </Button>
-                    <Button variant="outline" className="rounded-full">
-                      Подробнее
-                    </Button>
+                    <BookingModal tourTitle={tour.title} tourPrice={tour.price}>
+                      <Button className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
+                        Забронировать
+                      </Button>
+                    </BookingModal>
+                    <Link to={`/category/${tour.category}-tours`}>
+                      <Button variant="outline" className="rounded-full">
+                        Подробнее
+                      </Button>
+                    </Link>
                   </div>
                 </CardContent>
               </Card>

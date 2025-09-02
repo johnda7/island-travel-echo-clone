@@ -1,4 +1,3 @@
-
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,908 +10,630 @@ import { BookingModal } from "@/components/BookingModal";
 const toursData = [
   {
     id: 1,
-    title: "Острова Пхи Пхи на скоростной лодке",
+    title: "Симиланские острова",
     location: "Пхукет, Таиланд",
-    duration: "8 часов",
-    group: "До 35 человек",
-    dates: "Круглый год",
-    price: "2,490 ₽",
-    originalPrice: "2,990 ₽",
-    rating: 4.9,
-    reviews: 234,
+    duration: "10 часов",
+    group: "До 40 человек",
+    dates: "Ноябрь - Апрель",
+    price: "5,750 ₽",
+    originalPrice: "6,250 ₽",
+    rating: 5.0,
+    reviews: 147,
     image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Майя Бэй", "Снорклинг", "Обед на пляже", "Лагуна"],
-    description: "Незабываемое путешествие к знаменитым островам Пхи Пхи с посещением Майя Бэй.",
+    highlights: ["9 островов", "Кристально чистая вода", "Белоснежные пляжи", "Снорклинг"],
+    description: "Самая яркая и незабываемая экскурсия на Пхукете. Эти 9 островов собрали в себе всю первозданную красоту тропической природы.",
     featured: true,
     category: "beach"
   },
   {
     id: 2,
-    title: "Остров Джеймса Бонда",
-    location: "Пханг Нга, Таиланд", 
+    title: "Острова Пхи-Пхи",
+    location: "Пхукет, Таиланд",
     duration: "8 часов",
-    group: "До 25 человек",
-    dates: "Октябрь - Май",
-    price: "2,590 ₽",
-    originalPrice: "3,090 ₽",
-    rating: 4.8,
-    reviews: 189,
+    group: "До 35 человек",
+    dates: "Круглый год",
+    price: "2,750 ₽",
+    originalPrice: "3,250 ₽",
+    rating: 4.9,
+    reviews: 156,
     image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Каноэ в пещерах", "Деревня на воде", "Морепродукты", "Известняковые скалы"],
-    description: "Исследование залива Пханг Нга с посещением знаменитого острова из фильма о Джеймсе Бонде.",
-    featured: false,
+    highlights: ["Пляж Майя", "Бухты Samah и Pileh", "Остров обезьян", "Снорклинг"],
+    description: "Экскурсия на знаменитые острова Пхи-Пхи с посещением пляжа Майя и красивых бухт.",
+    featured: true,
     category: "beach"
   },
   {
     id: 3,
-    title: "11 островов Стандарт",
-    location: "Краби, Таиланд",
-    duration: "9 часов", 
-    group: "До 40 человек",
-    dates: "Ноябрь - Апрель",
-    price: "2,690 ₽",
-    originalPrice: "3,190 ₽",
-    rating: 5.0,
-    reviews: 167,
+    title: "Остров Джеймса Бонда",
+    location: "Пханг Нга, Таиланд",
+    duration: "8 часов",
+    group: "До 30 человек",
+    dates: "Круглый год",
+    price: "3,250 ₽",
+    originalPrice: "3,750 ₽",
+    rating: 4.9,
+    reviews: 134,
     image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80",
-    highlights: ["11 островов", "Снорклинг", "Обед-барбекю", "Кристальная вода"],
-    description: "Большое путешествие по 11 живописным островам с множеством активностей.",
-    featured: true,
+    highlights: ["7 островов", "Каноэ в пещерах", "Деревня на воде", "Знаменитые скалы"],
+    description: "Экскурсия в залив Пханг Нга с посещением 7 островов и прогулкой по лагунам на каноэ.",
+    featured: false,
     category: "beach"
   },
   {
     id: 4,
-    title: "Большой дворец Бангкока",
-    location: "Бангкок, Таиланд",
+    title: "Остров Корал",
+    location: "Пхукет, Таиланд",
     duration: "6 часов",
-    group: "До 20 человек", 
+    group: "До 25 человек",
     dates: "Круглый год",
-    price: "1,890 ₽",
-    originalPrice: "2,390 ₽",
-    rating: 4.7,
-    reviews: 312,
+    price: "2,375 ₽",
+    originalPrice: "2,875 ₽",
+    rating: 4.9,
+    reviews: 86,
     image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Королевский дворец", "Храм Изумрудного Будды", "Речные каналы", "История"],
-    description: "Погружение в королевскую историю Таиланда с посещением главных достопримечательностей Бангкока.",
+    highlights: ["Коралловые рифы", "Снорклинг", "Белый песок", "Близко к Пхукету"],
+    description: "Коралловый остров находится всего в 9 километрах от Пхукета. Здесь можно насладиться тишиной и уединением.",
+    featured: false,
+    category: "beach"
+  },
+  {
+    id: 5,
+    title: "Краби с Пхукета",
+    location: "Краби, Таиланд",
+    duration: "10 часов",
+    group: "До 40 человек",
+    dates: "Круглый год",
+    price: "6,000 ₽",
+    originalPrice: "6,500 ₽",
+    rating: 4.7,
+    reviews: 52,
+    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Храмы Краби", "Горячие источники", "Изумрудный бассейн", "Автобус с комфортом"],
+    description: "Поездка на автобусе с Пхукета в город Краби и его окрестности. Посещение храмов и природных достопримечательностей.",
     featured: false,
     category: "city"
   },
   {
-    id: 5,
-    title: "Треккинг к водопадам Чиангмая",
-    location: "Чиангмай, Таиланд",
-    duration: "7 часов",
-    group: "До 12 человек",
-    dates: "Октябрь - Март",
-    price: "2,190 ₽",
-    originalPrice: "2,690 ₽", 
-    rating: 4.6,
-    reviews: 98,
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Водопады", "Джунгли", "Деревни племен", "Треккинг"],
-    description: "Активное приключение в джунглях северного Таиланда с посещением традиционных деревень.",
+    id: 6,
+    title: "Удивительная Пханг Нга",
+    location: "Пханг Нга, Таиланд",
+    duration: "8 часов",
+    group: "До 35 человек",
+    dates: "Круглый год",
+    price: "3,750 ₽",
+    originalPrice: "4,250 ₽",
+    rating: 4.9,
+    reviews: 127,
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Экзотические пещеры", "Мангровые леса", "Сталактиты", "Национальный парк"],
+    description: "Удивительная и неизведанная Пханг Нга продемонстрирует вам все очарование экзотической природы.",
     featured: false,
     category: "adventure"
   },
   {
-    id: 6,
-    title: "Групповой тур: Айюттхая и плавучие рынки",
-    location: "Айюттхая, Таиланд",
-    duration: "10 часов",
-    group: "15-25 человек",
-    dates: "Каждый день",
-    price: "1,590 ₽",
-    originalPrice: "1,990 ₽",
-    rating: 4.5,
-    reviews: 203,
-    image: "https://images.unsplash.com/photo-1466442929976-97f336a657be?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Древние руины", "Плавучий рынок", "Обед", "Групповая скидка"],
-    description: "Экономичный групповой тур к древней столице Сиама с посещением традиционных рынков.",
-    featured: true,
-    category: "group"
-  },
-  {
     id: 7,
-    title: "Коралловый остров и парасейлинг",
-    location: "Паттайя, Таиланд",
+    title: "Рафтинг на реке",
+    location: "Пхукет, Таиланд",
     duration: "7 часов",
-    group: "До 30 человек",
+    group: "До 15 человек",
     dates: "Круглый год",
-    price: "2,290 ₽",
-    originalPrice: "2,790 ₽",
-    rating: 4.4,
-    reviews: 156,
+    price: "2,500 ₽",
+    originalPrice: "3,000 ₽",
+    rating: 4.9,
+    reviews: 124,
     image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Парасейлинг", "Водные виды спорта", "Коралловый риф", "Пляжный отдых"],
-    description: "Экстремальные водные развлечения с красивыми видами на побережье Паттайи.",
+    highlights: ["Безопасный сплав", "Джунгли", "Водопады", "Адреналин"],
+    description: "Увлекательный и абсолютно безопасный сплав по реке. Рафтинг проводится в соседней провинции среди тропических джунглей.",
     featured: false,
     category: "adventure"
   },
   {
     id: 8,
-    title: "Наблюдение за китами",
-    location: "Мирисса, Шри-Ланка",
-    duration: "5 часов",
-    group: "До 25 человек",
-    dates: "Декабрь - Апрель",
-    price: "3,290 ₽",
-    originalPrice: "3,790 ₽",
-    rating: 4.8,
-    reviews: 134,
-    image: "https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Голубые киты", "Дельфины", "Океанское сафари", "Завтрак на борту"],
-    description: "Уникальная возможность увидеть величественных китов в их естественной среде обитания.",
-    featured: true,
-    category: "adventure"
-  },
-  {
-    id: 9,
-    title: "Храмы Ангкора на рассвете",
-    location: "Сием Рип, Камбоджа",
-    duration: "12 часов",
-    group: "До 15 человек",
+    title: "Дайвинг для начинающих",
+    location: "Пхукет, Таиланд",
+    duration: "8 часов",
+    group: "До 12 человек",
     dates: "Круглый год",
-    price: "4,190 ₽",
-    originalPrice: "4,690 ₽",
-    rating: 4.9,
-    reviews: 287,
-    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Ангкор Ват", "Рассвет", "Древние храмы", "История кхмеров"],
-    description: "Волшебное путешествие к величественным храмам Ангкора на рассвете.",
-    featured: true,
-    category: "city"
-  },
-  {
-    id: 10,
-    title: "Рафтинг по реке Аюн",
-    location: "Убуд, Бали",
-    duration: "6 часов",
-    group: "До 20 человек",
-    dates: "Апрель - Октябрь",
-    price: "2,890 ₽",
-    originalPrice: "3,390 ₽",
-    rating: 4.7,
-    reviews: 198,
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Рафтинг", "Тропические джунгли", "Водопады", "Традиционный обед"],
-    description: "Адреналиновое приключение по порогам реки среди тропических джунглей Бали.",
+    price: "9,625 ₽",
+    originalPrice: "10,125 ₽",
+    rating: 4.6,
+    reviews: 75,
+    image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Обучение дайвингу", "Подводный мир", "Инструктор", "Сертификат"],
+    description: "Вы никогда не ныряли с аквалангом? Или даже не умеете плавать? У вас есть отличный шанс попробовать.",
     featured: false,
     category: "adventure"
   },
   {
-    id: 11,
-    title: "Ночной рынок и стрит-фуд",
-    location: "Чиангмай, Таиланд",
-    duration: "4 часа",
-    group: "До 18 человек",
-    dates: "Каждый вечер",
-    price: "1,490 ₽",
-    originalPrice: "1,890 ₽",
+    id: 9,
+    title: "Морская рыбалка",
+    location: "Пхукет, Таиланд",
+    duration: "8 часов",
+    group: "До 20 человек",
+    dates: "Круглый год",
+    price: "3,500 ₽",
+    originalPrice: "4,000 ₽",
     rating: 4.6,
-    reviews: 223,
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Ночной базар", "Стрит-фуд", "Местная культура", "Дегустация"],
-    description: "Гастрономическое путешествие по ночным рынкам с дегустацией местных деликатесов.",
+    reviews: 86,
+    image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Глубоководная рыбалка", "Свежий улов", "Приготовление рыбы", "Снасти включены"],
+    description: "Очень популярная экскурсия на Пхукете среди российских туристов. Настоящая морская рыбалка в Андаманском море.",
+    featured: false,
+    category: "adventure"
+  },
+  {
+    id: 10,
+    title: "VIP тур на яхте",
+    location: "Пхукет, Таиланд",
+    duration: "8 часов",
+    group: "До 30 человек",
+    dates: "Круглый год",
+    price: "11,000 ₽",
+    originalPrice: "12,000 ₽",
+    rating: 4.8,
+    reviews: 35,
+    image: "https://images.unsplash.com/photo-1540946485063-548550789012?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Катамаран", "Под парусами", "Премиум сервис", "Закаты на море"],
+    description: "Морская прогулка на огромном катамаране. Вы проведете под парусами целый день наслаждаясь морем и пейзажами.",
+    featured: false,
+    category: "beach"
+  },
+  {
+    id: 11,
+    title: "Обзорная экскурсия по Пхукету",
+    location: "Пхукет, Таиланд",
+    duration: "5 часов",
+    group: "До 25 человек",
+    dates: "Круглый год",
+    price: "1,750 ₽",
+    originalPrice: "2,250 ₽",
+    rating: 4.8,
+    reviews: 115,
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Большой Будда", "Храмы Пхукета", "Смотровые площадки", "Мыс Промтеп"],
+    description: "Среди главных достопримечательностей Пхукета статуя Большого Будды, храмы и обзорные площадки с потрясающими видами.",
     featured: false,
     category: "city"
   },
   {
     id: 12,
-    title: "Остров Рача Яй",
+    title: "Шоу Фэнтэзи",
     location: "Пхукет, Таиланд",
-    duration: "8 часов",
-    group: "До 30 человек",
-    dates: "Ноябрь - Май",
-    price: "2,390 ₽",
-    originalPrice: "2,890 ₽",
-    rating: 4.5,
-    reviews: 176,
-    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Белоснежные пляжи", "Снорклинг", "Кристальная вода", "Морепродукты"],
-    description: "Райский остров с идеальными пляжами для спокойного отдыха и снорклинга.",
+    duration: "4 часа",
+    group: "До 50 человек",
+    dates: "Круглый год",
+    price: "3,875 ₽",
+    originalPrice: "4,375 ₽",
+    rating: 4.7,
+    reviews: 93,
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Слоны в шоу", "Тайская культура", "Ужин-буфет", "Грандиозное представление"],
+    description: "Самое популярное вечернее шоу на Пхукете. Грандиозный по своим масштабам проект с участием слонов и погружением в тайскую культуру.",
     featured: false,
-    category: "beach"
+    category: "show"
   },
   {
     id: 13,
-    title: "Вулкан Батур на рассвете",
-    location: "Кинтамани, Бали",
-    duration: "8 часов",
-    group: "До 15 человек",
+    title: "Carnival Magic",
+    location: "Пхукет, Таиланд",
+    duration: "4 часа",
+    group: "До 50 человек",
     dates: "Круглый год",
-    price: "3,490 ₽",
-    originalPrice: "3,990 ₽",
-    rating: 4.8,
-    reviews: 245,
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Восход солнца", "Действующий вулкан", "Горячие источники", "Завтрак на вершине"],
-    description: "Восхождение на священный вулкан Батур для встречи рассвета над облаками.",
+    price: "4,625 ₽",
+    originalPrice: "5,125 ₽",
+    rating: 5.0,
+    reviews: 132,
+    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80",
+    highlights: ["40 акров парка", "Карнавальное шоу", "Ослепительные краски", "Современные технологии"],
+    description: "Жемчужина ночных развлечений, занимающая более 40 акров и наполненная ослепительными цветами и сверкающими огнями.",
     featured: true,
-    category: "adventure"
+    category: "show"
   },
   {
     id: 14,
-    title: "Мост через реку Квай",
-    location: "Канчанабури, Таиланд",
-    duration: "10 часов",
-    group: "До 25 человек",
+    title: "Сиам Нирамит",
+    location: "Пхукет, Таиланд",
+    duration: "4 часа",
+    group: "До 45 человек",
     dates: "Круглый год",
-    price: "2,790 ₽",
-    originalPrice: "3,290 ₽",
-    rating: 4.4,
-    reviews: 167,
-    image: "https://images.unsplash.com/photo-1520637836862-4d197d17c90a?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Исторический мост", "Музей войны", "Поездка на поезде", "Водопады Эраван"],
-    description: "Историческое путешествие к знаменитому мосту через реку Квай времен Второй мировой войны.",
+    price: "3,825 ₽",
+    originalPrice: "4,325 ₽",
+    rating: 4.7,
+    reviews: 103,
+    image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Культурное шоу", "История Таиланда", "Традиционные танцы", "Костюмы и декорации"],
+    description: "После 7 успешных сезонов в Бангкоке, захватывающее шоу мирового уровня, удостоенное нескольких государственных наград.",
     featured: false,
-    category: "city"
+    category: "show"
   },
   {
     id: 15,
-    title: "Слоновий заповедник",
-    location: "Чиангмай, Таиланд",
+    title: "Аквапарк Splash Jungle",
+    location: "Пхукет, Таиланд",
     duration: "6 часов",
-    group: "До 12 человек",
+    group: "До 30 человек",
     dates: "Круглый год",
-    price: "3,190 ₽",
-    originalPrice: "3,690 ₽",
+    price: "2,375 ₽",
+    originalPrice: "2,875 ₽",
     rating: 4.9,
-    reviews: 298,
-    image: "https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Этичный туризм", "Кормление слонов", "Купание с слонами", "Традиционный обед"],
-    description: "Незабываемый опыт взаимодействия со слонами в этичном заповеднике.",
-    featured: true,
-    category: "adventure"
+    reviews: 38,
+    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Водные горки", "Детская зона", "Ленивая река", "Семейный отдых"],
+    description: "Первый аквапарк на Пхукете приглашает взрослых и детей провести свой отдых брызгаясь и плескаясь в бассейнах.",
+    featured: false,
+    category: "family"
   },
   {
     id: 16,
-    title: "4 острова Краби",
-    location: "Краби, Таиланд",
-    duration: "7 часов",
+    title: "Аквапарк Andamanda",
+    location: "Пхукет, Таиланд",
+    duration: "6 часов",
     group: "До 35 человек",
-    dates: "Октябрь - Май",
-    price: "2,190 ₽",
-    originalPrice: "2,690 ₽",
-    rating: 4.6,
-    reviews: 189,
-    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Пода", "Чикен Айленд", "Талай Вэк", "Снорклинг"],
-    description: "Тур по четырем живописным островам провинции Краби с кристально чистой водой.",
+    dates: "Круглый год",
+    price: "4,000 ₽",
+    originalPrice: "4,500 ₽",
+    rating: 4.9,
+    reviews: 130,
+    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Тематические зоны", "Экстремальные горки", "Волновой бассейн", "Современный дизайн"],
+    description: "Территория аквапарка поделена на несколько тематических зон, выполненных в разных стилях современного дизайна.",
     featured: false,
-    category: "beach"
+    category: "family"
   },
   {
     id: 17,
-    title: "Плавучие рынки Дамноен Садуак",
-    location: "Ратчабури, Таиланд",
+    title: "Полет гиббона",
+    location: "Пхукет, Таиланд",
     duration: "5 часов",
-    group: "До 20 человек",
+    group: "До 15 человек",
     dates: "Круглый год",
-    price: "1,690 ₽",
-    originalPrice: "2,190 ₽",
-    rating: 4.3,
-    reviews: 156,
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Плавучий рынок", "Лодочные каналы", "Местная еда", "Сувениры"],
-    description: "Аутентичное путешествие по знаменитым плавучим рынкам Таиланда.",
+    price: "2,750 ₽",
+    originalPrice: "3,250 ₽",
+    rating: 4.8,
+    reviews: 92,
+    image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Зип-лайн в джунглях", "Канатная дорога", "Адреналин", "Безопасность"],
+    description: "Добавьте немного экстрима в размеренный пляжный отдых. Тем кому необходим адреналин в крови предлагается полет над джунглями.",
     featured: false,
-    category: "city"
+    category: "adventure"
   },
   {
     id: 18,
-    title: "Заповедник тигров",
-    location: "Канчанабури, Таиланд",
-    duration: "8 часов",
-    group: "До 15 человек",
+    title: "Вейкбординг",
+    location: "Пхукет, Таиланд",
+    duration: "4 часа",
+    group: "До 10 человек",
     dates: "Круглый год",
-    price: "4,490 ₽",
-    originalPrice: "4,990 ₽",
-    rating: 4.7,
-    reviews: 134,
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Тигры", "Фотосессия", "Безопасность", "Обед включен"],
-    description: "Уникальная возможность увидеть тигров вблизи в специальном заповеднике.",
+    price: "3,125 ₽",
+    originalPrice: "3,625 ₽",
+    rating: 4.9,
+    reviews: 24,
+    image: "https://images.unsplash.com/photo-1540946485063-548550789012?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Cable Ski парк", "Обучение", "Активный отдых", "Для всех уровней"],
+    description: "Соскучились по активному отдыху? Вейкпарк Phuket Cable Ski приглашает всех желающих от новичков до профи.",
     featured: false,
     category: "adventure"
   },
   {
     id: 19,
-    title: "Храм Дои Сутеп",
-    location: "Чиангмай, Таиланд",
-    duration: "4 часа",
-    group: "До 25 человек",
+    title: "Флайборд",
+    location: "Пхукет, Таиланд",
+    duration: "2 часа",
+    group: "До 8 человек",
     dates: "Круглый год",
-    price: "1,390 ₽",
-    originalPrice: "1,790 ₽",
-    rating: 4.5,
-    reviews: 267,
-    image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Храм на горе", "300 ступеней", "Панорамный вид", "Золотая чеди"],
-    description: "Священный храм на вершине горы с потрясающими видами на Чиангмай.",
+    price: "5,000 ₽",
+    originalPrice: "5,500 ₽",
+    rating: 4.8,
+    reviews: 17,
+    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Полет над водой", "Новые ощущения", "Инструктор", "Фото и видео"],
+    description: "На доске Flyboard вы можете осуществить свою мечту о полете над водой.",
     featured: false,
-    category: "city"
+    category: "adventure"
   },
   {
     id: 20,
-    title: "Острова Симилан",
+    title: "Suuko SPA",
     location: "Пхукет, Таиланд",
-    duration: "10 часов",
-    group: "До 30 человек",
-    dates: "Ноябрь - Май",
-    price: "3,890 ₽",
-    originalPrice: "4,390 ₽",
-    rating: 4.9,
-    reviews: 198,
-    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Национальный парк", "Дайвинг", "Белые пляжи", "Скала Слон"],
-    description: "Путешествие к одним из самых красивых островов Таиланда с первозданной природой.",
-    featured: true,
-    category: "beach"
+    duration: "3 часа",
+    group: "До 12 человек",
+    dates: "Круглый год",
+    price: "3,250 ₽",
+    originalPrice: "3,750 ₽",
+    rating: 4.6,
+    reviews: 26,
+    image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Тайский массаж", "Спа-ритуалы", "Релаксация", "Натуральные масла"],
+    description: "Спа-процедуры совсем не похожи на привычные салоны красоты. Скорее, это красивые ритуалы целительства.",
+    featured: false,
+    category: "spa"
   },
   {
     id: 21,
-    title: "Сафари на джипах",
-    location: "Самуи, Таиланд",
-    duration: "6 часов",
-    group: "До 16 человек",
+    title: "Mookda SPA",
+    location: "Пхукет, Таиланд",
+    duration: "3 часа",
+    group: "До 10 человек",
     dates: "Круглый год",
-    price: "2,590 ₽",
-    originalPrice: "3,090 ₽",
-    rating: 4.4,
-    reviews: 145,
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Джип-сафари", "Водопады", "Джунгли", "Смотровые площадки"],
-    description: "Захватывающее сафари по горным джунглям острова Самуи на открытых джипах.",
+    price: "5,000 ₽",
+    originalPrice: "5,500 ₽",
+    rating: 4.7,
+    reviews: 18,
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Премиум спа", "Авторские процедуры", "Ароматерапия", "VIP обслуживание"],
+    description: "Спа-процедуры совсем не похожи на привычные салоны красоты. Скорее, это красивые ритуалы целительства высочайшего уровня.",
     featured: false,
-    category: "adventure"
+    category: "spa"
   },
   {
     id: 22,
-    title: "Рыбалка в открытом море",
+    title: "Oasis SPA",
     location: "Пхукет, Таиланд",
-    duration: "8 часов",
-    group: "До 12 человек",
-    dates: "Круглый год",
-    price: "3,290 ₽",
-    originalPrice: "3,790 ₽",
-    rating: 4.6,
-    reviews: 123,
-    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Морская рыбалка", "Свежая рыба", "Завтрак и обед", "Снаряжение включено"],
-    description: "Увлекательная морская рыбалка в богатых водах Андаманского моря.",
-    featured: false,
-    category: "adventure"
-  },
-  {
-    id: 23,
-    title: "Каякинг в мангровых лесах",
-    location: "Пханг Нга, Таиланд",
-    duration: "5 часов",
-    group: "До 14 человек",
-    dates: "Круглый год",
-    price: "2,090 ₽",
-    originalPrice: "2,590 ₽",
-    rating: 4.7,
-    reviews: 167,
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Каякинг", "Мангровые леса", "Пещеры", "Дикая природа"],
-    description: "Спокойное путешествие на каяках через таинственные мангровые леса.",
-    featured: false,
-    category: "adventure"
-  },
-  {
-    id: 24,
-    title: "Шоу трансвеститов",
-    location: "Паттайя, Таиланд",
     duration: "3 часа",
-    group: "До 50 человек",
-    dates: "Каждый вечер",
-    price: "1,190 ₽",
-    originalPrice: "1,590 ₽",
-    rating: 4.2,
-    reviews: 234,
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Кабаре-шоу", "Костюмы", "Развлечение", "Фотосессия"],
-    description: "Знаменитое кабаре-шоу с яркими костюмами и профессиональными артистами.",
-    featured: false,
-    category: "city"
-  },
-  {
-    id: 25,
-    title: "Водопады Эраван",
-    location: "Канчанабури, Таиланд",
-    duration: "7 часов",
-    group: "До 20 человек",
-    dates: "Круглый год",
-    price: "2,290 ₽",
-    originalPrice: "2,790 ₽",
-    rating: 4.8,
-    reviews: 189,
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80",
-    highlights: ["7 уровней водопадов", "Купание", "Треккинг", "Национальный парк"],
-    description: "Прогулка к семиуровневым водопадам Эраван с возможностью купания в природных бассейнах.",
-    featured: false,
-    category: "adventure"
-  },
-  {
-    id: 26,
-    title: "Крокодиловая ферма",
-    location: "Самутпракан, Таиланд",
-    duration: "4 часа",
-    group: "До 30 человек",
-    dates: "Круглый год",
-    price: "1,590 ₽",
-    originalPrice: "1,990 ₽",
-    rating: 4.1,
-    reviews: 156,
-    image: "https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Крокодилы", "Шоу со змеями", "Слоны", "Сувенирный магазин"],
-    description: "Посещение одной из крупнейших крокодиловых ферм в мире с захватывающими шоу.",
-    featured: false,
-    category: "adventure"
-  },
-  {
-    id: 27,
-    title: "Тайский кулинарный класс",
-    location: "Бангкок, Таиланд",
-    duration: "5 часов",
-    group: "До 12 человек",
-    dates: "Круглый год",
-    price: "2,890 ₽",
-    originalPrice: "3,390 ₽",
-    rating: 4.9,
-    reviews: 267,
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Готовка", "Рецепты", "Рынок специй", "Дегустация"],
-    description: "Изучение секретов тайской кухни с профессиональным шеф-поваром.",
-    featured: true,
-    category: "city"
-  },
-  {
-    id: 28,
-    title: "Остров Ко Лан",
-    location: "Паттайя, Таиланд",
-    duration: "6 часов",
-    group: "До 40 человек",
-    dates: "Круглый год",
-    price: "1,890 ₽",
-    originalPrice: "2,390 ₽",
-    rating: 4.3,
-    reviews: 198,
-    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Коралловый остров", "Пляжи", "Водные виды спорта", "Морепродукты"],
-    description: "Однодневная поездка на красивый коралловый остров недалеко от Паттайи.",
-    featured: false,
-    category: "beach"
-  },
-  {
-    id: 29,
-    title: "Банкиттык и медитация",
-    location: "Чиангмай, Таиланд",
-    duration: "8 часов",
-    group: "До 10 человек",
-    dates: "Круглый год",
-    price: "3,490 ₽",
-    originalPrice: "3,990 ₽",
-    rating: 4.8,
-    reviews: 134,
-    image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Медитация", "Монахи", "Духовность", "Вегетарианский обед"],
-    description: "Духовное путешествие в буддийский храм с практикой медитации под руководством монахов.",
-    featured: false,
-    category: "city"
-  },
-  {
-    id: 30,
-    title: "Зиплайн в джунглях",
-    location: "Чиангмай, Таиланд",
-    duration: "6 часов",
     group: "До 15 человек",
-    dates: "Октябрь - Май",
-    price: "3,190 ₽",
-    originalPrice: "3,690 ₽",
-    rating: 4.7,
-    reviews: 223,
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Зиплайн", "Джунгли", "Адреналин", "Безопасность"],
-    description: "Захватывающий полет над кронами деревьев в джунглях северного Таиланда.",
-    featured: true,
-    category: "adventure"
-  },
-  {
-    id: 31,
-    title: "Речная прогулка по Чао Прайя",
-    location: "Бангкок, Таиланд",
-    duration: "3 часа",
-    group: "До 25 человек",
     dates: "Круглый год",
-    price: "1,290 ₽",
-    originalPrice: "1,690 ₽",
-    rating: 4.4,
-    reviews: 189,
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Река Чао Прайя", "Храмы", "Закат", "Ужин на борту"],
-    description: "Романтическая речная прогулка по главной реке Бангкока с ужином на закате.",
-    featured: false,
-    category: "city"
-  },
-  {
-    id: 32,
-    title: "Пещеры Као Лак",
-    location: "Пханг Нга, Таиланд",
-    duration: "7 часов",
-    group: "До 18 человек",
-    dates: "Круглый год",
-    price: "2,490 ₽",
-    originalPrice: "2,990 ₽",
-    rating: 4.5,
-    reviews: 167,
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Пещеры", "Подземные реки", "Сталактиты", "Фонарики"],
-    description: "Исследование загадочных пещер с подземными реками и удивительными сталактитами.",
-    featured: false,
-    category: "adventure"
-  },
-  {
-    id: 33,
-    title: "Морские цыгане",
-    location: "Пхукет, Таиланд",
-    duration: "6 часов",
-    group: "До 20 человек",
-    dates: "Круглый год",
-    price: "2,790 ₽",
-    originalPrice: "3,290 ₽",
+    price: "3,500 ₽",
+    originalPrice: "4,000 ₽",
     rating: 4.6,
-    reviews: 145,
-    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Деревня на воде", "Культура", "Рыбалка", "Традиции"],
-    description: "Знакомство с уникальной культурой морских цыган, живущих на воде.",
-    featured: false,
-    category: "city"
-  },
-  {
-    id: 34,
-    title: "Национальный парк Дои Интанон",
-    location: "Чиангмай, Таиланд",
-    duration: "10 часов",
-    group: "До 15 человек",
-    dates: "Ноябрь - Февраль",
-    price: "3,690 ₽",
-    originalPrice: "4,190 ₽",
-    rating: 4.8,
-    reviews: 178,
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Высшая точка", "Водопады", "Королевские пагоды", "Горные племена"],
-    description: "Посещение высшей точки Таиланда с красивыми водопадами и древними пагодами.",
-    featured: false,
-    category: "adventure"
-  },
-  {
-    id: 35,
-    title: "Муай Тай тренировка",
-    location: "Бангкок, Таиланд",
-    duration: "3 часа",
-    group: "До 12 человек",
-    dates: "Круглый год",
-    price: "1,890 ₽",
-    originalPrice: "2,390 ₽",
-    rating: 4.7,
-    reviews: 234,
+    reviews: 19,
     image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Тайский бокс", "Тренировка", "Традиции", "Фитнес"],
-    description: "Изучение основ традиционного тайского бокса с опытными тренерами.",
+    highlights: ["Традиционный массаж", "Горячие камни", "Травяные компрессы", "Медитация"],
+    description: "Спа-процедуры совсем не похожи на привычные салоны красоты. Скорее, это красивые ритуалы целительства и восстановления энергии.",
     featured: false,
-    category: "city"
-  },
-  {
-    id: 36,
-    title: "Острова Три",
-    location: "Транг, Таиланд",
-    duration: "8 часов",
-    group: "До 25 человек",
-    dates: "Ноябрь - Май",
-    price: "2,990 ₽",
-    originalPrice: "3,490 ₽",
-    rating: 4.4,
-    reviews: 156,
-    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Изумрудная пещера", "Снорклинг", "Белые пляжи", "Каякинг"],
-    description: "Посещение трех красивых островов провинции Транг с изумрудной пещерой.",
-    featured: false,
-    category: "beach"
-  },
-  {
-    id: 37,
-    title: "Хуа Хин винные дегустации",
-    location: "Хуа Хин, Таиланд",
-    duration: "5 часов",
-    group: "До 16 человек",
-    dates: "Круглый год",
-    price: "3,490 ₽",
-    originalPrice: "3,990 ₽",
-    rating: 4.6,
-    reviews: 123,
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Винодельня", "Дегустация", "Виноградники", "Закуски"],
-    description: "Элегантная дегустация вин на местной винодельне с видом на виноградники.",
-    featured: false,
-    category: "city"
-  },
-  {
-    id: 38,
-    title: "Подводное плавание",
-    location: "Ко Тао, Таиланд",
-    duration: "8 часов",
-    group: "До 10 человек",
-    dates: "Круглый год",
-    price: "4,290 ₽",
-    originalPrice: "4,790 ₽",
-    rating: 4.9,
-    reviews: 198,
-    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Дайвинг", "Коралловые рифы", "Тропические рыбы", "Инструкция"],
-    description: "Погружение в подводный мир Сиамского залива с богатыми коралловыми рифами.",
-    featured: true,
-    category: "adventure"
-  },
-  {
-    id: 39,
-    title: "Традиционный массаж",
-    location: "Чиангмай, Таиланд",
-    duration: "4 часа",
-    group: "До 8 человек",
-    dates: "Круглый год",
-    price: "2,190 ₽",
-    originalPrice: "2,690 ₽",
-    rating: 4.8,
-    reviews: 267,
-    image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Тайский массаж", "Релаксация", "Традиции", "Спа"],
-    description: "Аутентичный тайский массаж в традиционной обстановке для полного расслабления.",
-    featured: false,
-    category: "city"
-  },
-  {
-    id: 40,
-    title: "Ферма орхидей",
-    location: "Пхукет, Таиланд",
-    duration: "3 часа",
-    group: "До 20 человек",
-    dates: "Круглый год",
-    price: "1,490 ₽",
-    originalPrice: "1,890 ₽",
-    rating: 4.3,
-    reviews: 145,
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Орхидеи", "Ботанический сад", "Фотосессия", "Покупки"],
-    description: "Посещение красивой фермы орхидей с сотнями видов экзотических цветов.",
-    featured: false,
-    category: "city"
-  },
-  {
-    id: 41,
-    title: "Остров Панган Full Moon",
-    location: "Ко Панган, Таиланд",
-    duration: "12 часов",
-    group: "До 30 человек",
-    dates: "Полнолуние",
-    price: "3,990 ₽",
-    originalPrice: "4,490 ₽",
-    rating: 4.5,
-    reviews: 189,
-    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Full Moon Party", "Пляжная вечеринка", "Музыка", "Танцы"],
-    description: "Легендарная вечеринка полнолуния на пляже Хаад Рин с музыкой до рассвета.",
-    featured: true,
-    category: "city"
-  },
-  {
-    id: 42,
-    title: "Велосипедный тур по рисовым полям",
-    location: "Убуд, Бали",
-    duration: "6 часов",
-    group: "До 14 человек",
-    dates: "Апрель - Октябрь",
-    price: "2,690 ₽",
-    originalPrice: "3,190 ₽",
-    rating: 4.7,
-    reviews: 167,
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Велосипеды", "Рисовые террасы", "Деревни", "Традиционный обед"],
-    description: "Спокойная велопрогулка через живописные рисовые поля и балийские деревни.",
-    featured: false,
-    category: "adventure"
-  },
-  {
-    id: 43,
-    title: "Закат на яхте",
-    location: "Пхукет, Таиланд",
-    duration: "4 часа",
-    group: "До 20 человек",
-    dates: "Круглый год",
-    price: "4,490 ₽",
-    originalPrice: "4,990 ₽",
-    rating: 4.9,
-    reviews: 234,
-    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Яхта", "Закат", "Шампанское", "Романтика"],
-    description: "Романтический круиз на яхте с шампанским и потрясающими видами заката над морем.",
-    featured: true,
-    category: "beach"
+    category: "spa"
   }
 ];
 
 const Tours = () => {
+  const [filteredTours, setFilteredTours] = useState(toursData);
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [sortBy, setSortBy] = useState("popular");
+  const [sortBy, setSortBy] = useState("popularity");
 
   const categories = [
-    { id: "all", name: "Все туры" },
-    { id: "beach", name: "Морские" },
-    { id: "city", name: "Городские" },
-    { id: "adventure", name: "Приключения" },
-    { id: "group", name: "Групповые" }
+    { value: "all", label: "Все туры" },
+    { value: "beach", label: "Пляжи и острова" },
+    { value: "adventure", label: "Приключения" },
+    { value: "city", label: "Городские" },
+    { value: "show", label: "Шоу" },
+    { value: "family", label: "Семейные" },
+    { value: "spa", label: "СПА и релакс" }
   ];
 
-  const filteredTours = toursData.filter(tour => 
-    selectedCategory === "all" || tour.category === selectedCategory
-  );
+  const sortOptions = [
+    { value: "popularity", label: "По популярности" },
+    { value: "price-low", label: "Сначала дешевые" },
+    { value: "price-high", label: "Сначала дорогие" },
+    { value: "rating", label: "По рейтингу" }
+  ];
 
-  const sortedTours = [...filteredTours].sort((a, b) => {
-    switch (sortBy) {
+  const handleCategoryFilter = (category: string) => {
+    setSelectedCategory(category);
+    filterAndSortTours(category, sortBy);
+  };
+
+  const handleSortChange = (sort: string) => {
+    setSortBy(sort);
+    filterAndSortTours(selectedCategory, sort);
+  };
+
+  const filterAndSortTours = (category: string, sort: string) => {
+    let filtered = category === "all" 
+      ? toursData 
+      : toursData.filter(tour => tour.category === category);
+
+    // Sort tours
+    switch (sort) {
       case "price-low":
-        return parseInt(a.price.replace(/[^\d]/g, '')) - parseInt(b.price.replace(/[^\d]/g, ''));
+        filtered = filtered.sort((a, b) => 
+          parseInt(a.price.replace(/[^\d]/g, '')) - parseInt(b.price.replace(/[^\d]/g, ''))
+        );
+        break;
       case "price-high":
-        return parseInt(b.price.replace(/[^\d]/g, '')) - parseInt(a.price.replace(/[^\d]/g, ''));
+        filtered = filtered.sort((a, b) => 
+          parseInt(b.price.replace(/[^\d]/g, '')) - parseInt(a.price.replace(/[^\d]/g, ''))
+        );
+        break;
       case "rating":
-        return b.rating - a.rating;
-      default:
-        return b.reviews - a.reviews;
+        filtered = filtered.sort((a, b) => b.rating - a.rating);
+        break;
+      default: // popularity
+        filtered = filtered.sort((a, b) => b.reviews - a.reviews);
     }
-  });
 
-  console.log('Tours data:', toursData.length);
-  console.log('Filtered tours:', filteredTours.length);
-  console.log('Sorted tours:', sortedTours.length);
-  console.log('Selected category:', selectedCategory);
+    setFilteredTours(filtered);
+  };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-cyan-50">
       <Header />
       
-      {/* Hero Section */}
-      <section className="pt-24 pb-16 bg-gradient-to-b from-blue-50 to-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-              Наши туры
-            </h1>
-            <p className="text-xl text-gray-600 mb-8">
-              Тщательно спланированные путешествия для создания незабываемых воспоминаний. 
-              Выберите идеальный тур из нашей коллекции тайских приключений.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              {categories.map((category) => (
-                <Button 
-                  key={category.id}
-                  variant={selectedCategory === category.id ? "default" : "outline"}
-                  className="rounded-full"
-                  onClick={() => setSelectedCategory(category.id)}
+      <main className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+            Все экскурсии на Пхукете
+          </h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Выберите из 22 лучших экскурсий на Пхукете с реальными отзывами и проверенными ценами
+          </p>
+        </div>
+
+        {/* Filters and Sort */}
+        <div className="flex flex-col md:flex-row gap-4 mb-8 p-6 bg-white rounded-2xl shadow-lg">
+          {/* Category Filter */}
+          <div className="flex-1">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Категория</label>
+            <div className="flex flex-wrap gap-2">
+              {categories.map(category => (
+                <button
+                  key={category.value}
+                  onClick={() => handleCategoryFilter(category.value)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                    selectedCategory === category.value
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
                 >
-                  {category.name}
-                </Button>
+                  {category.label}
+                </button>
               ))}
             </div>
-            <div className="mt-4 flex justify-center">
-              <select 
-                value={sortBy} 
-                onChange={(e) => setSortBy(e.target.value)}
-                className="border rounded-full px-4 py-2 text-blue-600"
-              >
-                <option value="popular">Популярные</option>
-                <option value="price-low">Цена: низкая</option>
-                <option value="price-high">Цена: высокая</option>
-                <option value="rating">Рейтинг</option>
-              </select>
-            </div>
+          </div>
+
+          {/* Sort */}
+          <div className="md:w-48">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Сортировка</label>
+            <select
+              value={sortBy}
+              onChange={(e) => handleSortChange(e.target.value)}
+              className="w-full p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              {sortOptions.map(option => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
-      </section>
 
-      {/* Tours Grid */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="mb-8 text-center">
-            <p className="text-lg text-gray-600">
-              Показано {sortedTours.length} из {toursData.length} туров
-            </p>
-          </div>
-          <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {sortedTours.map((tour) => (
-              <Card key={tour.id} className={`group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 ${tour.featured ? 'ring-2 ring-blue-500' : ''}`}>
-                <div className="relative h-64 overflow-hidden">
-                  {tour.featured && (
-                    <div className="absolute top-4 left-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold z-10">
-                      Хит продаж
-                    </div>
-                  )}
-                  <img 
-                    src={tour.image} 
-                    alt={tour.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+        {/* Results count */}
+        <div className="mb-6">
+          <p className="text-gray-600">
+            Найдено <span className="font-semibold text-blue-600">{filteredTours.length}</span> экскурсий
+          </p>
+        </div>
+
+        {/* Tours Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {filteredTours.map((tour) => (
+            <Card key={tour.id} className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={tour.image} 
+                  alt={tour.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                
+                {/* Featured badge */}
+                {tour.featured && (
+                  <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    ХИТ ПРОДАЖ
+                  </div>
+                )}
+                
+                {/* Price */}
+                <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-full px-3 py-1">
+                  <div className="flex flex-col items-center">
                     <span className="font-bold text-blue-600">{tour.price}</span>
                     {tour.originalPrice && (
-                      <span className="text-sm text-gray-500 line-through ml-2">{tour.originalPrice}</span>
+                      <span className="text-xs text-gray-500 line-through">{tour.originalPrice}</span>
                     )}
                   </div>
-                  <div className="absolute bottom-4 left-4 text-white">
-                    <div className="flex items-center gap-1 mb-1">
-                      <MapPin className="w-4 h-4" />
-                      <span className="text-sm">{tour.location}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-1">
-                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                        <span className="font-semibold">{tour.rating}</span>
-                      </div>
-                      <span className="text-sm">({tour.reviews} отзывов)</span>
-                    </div>
+                </div>
+
+                {/* Rating */}
+                <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-full px-3 py-1">
+                  <div className="flex items-center gap-1">
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    <span className="font-semibold text-gray-800">{tour.rating}</span>
+                    <span className="text-sm text-gray-600">({tour.reviews})</span>
                   </div>
                 </div>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold mb-2 text-gray-800">{tour.title}</h3>
-                  <p className="text-gray-600 mb-4 text-sm">{tour.description}</p>
-                  
-                  <div className="flex items-center gap-4 mb-4 text-sm text-gray-600">
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      <span>{tour.duration}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Users className="w-4 h-4" />
-                      <span>{tour.group}</span>
-                    </div>
+              </div>
+
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between mb-3">
+                  <h3 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
+                    {tour.title}
+                  </h3>
+                </div>
+
+                <div className="flex items-center gap-1 mb-4 text-sm text-gray-500">
+                  <MapPin className="w-4 h-4" />
+                  <span>{tour.location}</span>
+                </div>
+                
+                <div className="flex items-center gap-4 mb-4 text-sm text-gray-600">
+                  <div className="flex items-center gap-1">
+                    <Clock className="w-4 h-4" />
+                    <span>{tour.duration}</span>
                   </div>
-                  
-                  <div className="flex items-center gap-1 mb-4 text-sm text-gray-600">
+                  <div className="flex items-center gap-1">
+                    <Users className="w-4 h-4" />
+                    <span>{tour.group}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
                     <Calendar className="w-4 h-4" />
                     <span>{tour.dates}</span>
                   </div>
+                </div>
+
+                <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                  {tour.description}
+                </p>
+                
+                <div className="mb-4">
+                  <h4 className="font-semibold mb-2 text-gray-800">В тур входит:</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    {tour.highlights.map((highlight, index) => (
+                      <li key={index} className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 bg-blue-500 rounded-full flex-shrink-0"></div>
+                        {highlight}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className="flex gap-2">
+                  <BookingModal tourTitle={tour.title} tourPrice={tour.price}>
+                    <Button className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
+                      Забронировать
+                    </Button>
+                  </BookingModal>
                   
-                  <div className="mb-6">
-                    <h4 className="font-semibold mb-2 text-gray-800">В тур входит:</h4>
-                    <div className="grid grid-cols-2 gap-1">
-                      {tour.highlights.map((highlight, index) => (
-                        <div key={index} className="flex items-center gap-2 text-sm text-gray-600">
-                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full flex-shrink-0"></div>
-                          <span>{highlight}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-3">
-                    <BookingModal tourTitle={tour.title} tourPrice={tour.price}>
-                      <Button className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
-                        Забронировать
-                      </Button>
-                    </BookingModal>
-                    <Link to={`/category/${tour.category}-tours`}>
-                      <Button variant="outline" className="rounded-full">
-                        Подробнее
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
+                  <Button 
+                    variant="outline" 
+                    className="rounded-full"
+                    onClick={() => {
+                      // Implement tour details modal or page navigation
+                      console.log('View details for:', tour.title);
+                    }}
+                  >
+                    Подробнее
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Featured tours section */}
+        <div className="bg-white rounded-2xl shadow-lg p-8 mb-12">
+          <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+            Самые популярные экскурсии
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {toursData.filter(tour => tour.featured).map((tour) => (
+              <div key={tour.id} className="text-center p-6 rounded-xl border border-blue-100 bg-blue-50">
+                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Star className="w-8 h-8 text-white fill-white" />
+                </div>
+                <h3 className="font-bold text-lg mb-2 text-gray-800">{tour.title}</h3>
+                <p className="text-sm text-gray-600 mb-3">{tour.description}</p>
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  <span className="font-semibold">{tour.rating}</span>
+                  <span className="text-sm text-gray-500">({tour.reviews} отзывов)</span>
+                </div>
+                <div className="text-2xl font-bold text-blue-600">{tour.price}</div>
+              </div>
             ))}
           </div>
         </div>
-      </section>
-
+      </main>
+      
       <Footer />
     </div>
   );

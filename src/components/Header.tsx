@@ -16,6 +16,7 @@ export const Header = () => {
       href: "/tours",
       subItems: [
         { name: "Все туры", href: "/tours" },
+        { name: "Острова Пхи-Пхи", href: "/phi-phi-islands" },
         { name: "Городские туры", href: "/category/city-tours" },
         { name: "Пляжные туры", href: "/category/beach-tours" },
         { name: "Приключенческие туры", href: "/category/adventure-tours" },

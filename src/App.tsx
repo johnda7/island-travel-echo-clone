@@ -22,6 +22,7 @@ import RachaYaiIsland from "./pages/RachaYaiIsland";
 import MayaBaySunrise from "./pages/MayaBaySunrise";
 import KohPhiPhiLehLagoon from "./pages/KohPhiPhiLehLagoon";
 import WhaleWatchingTour from "./pages/WhaleWatchingTour";
+import PhiPhiIslands from "./pages/PhiPhiIslands";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -53,6 +54,9 @@ const App = () => (
           <Route path="/excursion/maya-bay-sunrise" element={<MayaBaySunrise />} />
           <Route path="/excursion/koh-phi-phi-leh-lagoon" element={<KohPhiPhiLehLagoon />} />
           <Route path="/excursion/whale-watching-tour" element={<WhaleWatchingTour />} />
+          
+          {/* Phi Phi Islands Category Page */}
+          <Route path="/phi-phi-islands" element={<PhiPhiIslands />} />
           
           {/* Остальные 33 морские экскурсии используют общий шаблон ExcursionDetail */}
           <Route path="/excursion/bamboo-island-snorkeling" element={<ExcursionDetail />} />

@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Star, Calendar, Thermometer } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const destinationsData = [
   {
@@ -22,6 +23,21 @@ const destinationsData = [
   },
   {
     id: 2,
+    name: "Острова Пхи-Пхи",
+    country: "Таиланд",
+    region: "Андаманское море",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+    rating: 4.8,
+    toursCount: 6,
+    bestTime: "Ноябрь - Апрель",
+    climate: "26°C - 32°C",
+    description: "Легендарные острова из фильма 'Пляж' с кристально чистой водой и белоснежными пляжами.",
+    highlights: ["Бухта Майя", "Снорклинг", "Скоростные лодки", "Закаты"],
+    featured: true,
+    link: "/phi-phi-islands"
+  },
+  {
+    id: 3,
     name: "Мальдивы",
     country: "Мальдивская Республика",
     region: "Индийский океан",
@@ -204,12 +220,23 @@ const Destinations = () => {
                     </div>
                   </div>
                   
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-500">{destination.toursCount} туров</span>
-                    <Button className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-full">
-                      Выбрать тур
-                    </Button>
-                  </div>
+                   <div className="flex justify-between items-center">
+                     <span className="text-sm text-gray-500">{destination.toursCount} туров</span>
+                     {destination.link ? (
+                       <Button 
+                         asChild 
+                         className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-full"
+                       >
+                         <Link to={destination.link}>
+                           Выбрать тур
+                         </Link>
+                       </Button>
+                     ) : (
+                       <Button className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-full">
+                         Выбрать тур
+                       </Button>
+                     )}
+                   </div>
                 </CardContent>
               </Card>
             ))}

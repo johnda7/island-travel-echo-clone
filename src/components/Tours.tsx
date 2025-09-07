@@ -125,11 +125,18 @@ export const Tours = () => {
         </div>
         
         <div className="text-center mt-12">
-          <Link to="/tours">
-            <Button size="lg" variant="outline" className="rounded-full">
-              Смотреть все туры
-            </Button>
-          </Link>
+          <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto mb-8">
+            <Link to="/phi-phi-islands">
+              <Button size="lg" className="w-full bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white rounded-full">
+                Все туры на Пхи-Пхи
+              </Button>
+            </Link>
+            <Link to="/tours">
+              <Button size="lg" variant="outline" className="w-full rounded-full">
+                Смотреть все туры
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </section>

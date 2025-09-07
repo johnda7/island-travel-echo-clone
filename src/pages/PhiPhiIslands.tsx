@@ -18,6 +18,12 @@ import {
   Mountain
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import phiPhiMayaBay from "@/assets/phi-phi-maya-bay.jpg";
+import phiPhiSpeedboat from "@/assets/phi-phi-speedboat.jpg";
+import phiPhiLagoon from "@/assets/phi-phi-lagoon.jpg";
+import phiPhiSnorkeling from "@/assets/phi-phi-snorkeling.jpg";
+import phiPhiMonkeyBeach from "@/assets/phi-phi-monkey-beach.jpg";
+import phiPhiSunset from "@/assets/phi-phi-sunset.jpg";
 
 const PhiPhiIslands = () => {
   const phiPhiTours = [
@@ -32,7 +38,7 @@ const PhiPhiIslands = () => {
       groupSize: "до 20 человек",
       rating: 4.8,
       reviewsCount: 245,
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80",
+      image: phiPhiMayaBay,
       highlights: ["Бухта Майя", "Monkey Beach", "Снорклинг", "Обед на пляже"],
       tags: ["Популярный", "Скоростная лодка"],
       category: "premium",
@@ -49,7 +55,7 @@ const PhiPhiIslands = () => {
       groupSize: "до 20 человек",
       rating: 4.6,
       reviewsCount: 165,
-      image: "https://images.unsplash.com/photo-1544198365-f5d60b6d8190?auto=format&fit=crop&w=600&q=80",
+      image: phiPhiLagoon,
       highlights: ["Закрытая лагуна", "Каякинг", "Пещеры", "Изумрудная вода"],
       tags: ["Каякинг", "Эко-тур"],
       category: "adventure",
@@ -66,7 +72,7 @@ const PhiPhiIslands = () => {
       groupSize: "до 15 человек",
       rating: 4.9,
       reviewsCount: 89,
-      image: "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4?auto=format&fit=crop&w=600&q=80",
+      image: phiPhiSunset,
       highlights: ["Рассвет в Майя Бэй", "Без толп туристов", "Завтрак на пляже", "Йога на рассвете"],
       tags: ["Эксклюзив", "Рассвет"],
       category: "exclusive",
@@ -83,7 +89,7 @@ const PhiPhiIslands = () => {
       groupSize: "до 40 человек",
       rating: 4.4,
       reviewsCount: 312,
-      image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=600&q=80",
+      image: phiPhiSpeedboat,
       highlights: ["Комфортная большая лодка", "Буфет на борту", "4 острова", "Снорклинг оборудование"],
       tags: ["Экономный", "Большая группа"],
       category: "budget",
@@ -100,7 +106,7 @@ const PhiPhiIslands = () => {
       groupSize: "до 18 человек",
       rating: 4.7,
       reviewsCount: 156,
-      image: "https://images.unsplash.com/photo-1544198365-f5d60b6d8190?auto=format&fit=crop&w=600&q=80",
+      image: phiPhiSnorkeling,
       highlights: ["Закат на Пхи-Пхи", "Светящийся планктон", "Ночное плавание", "Ужин на пляже"],
       tags: ["Романтик", "Планктон"],
       category: "romantic",
@@ -117,7 +123,7 @@ const PhiPhiIslands = () => {
       groupSize: "до 8 человек",
       rating: 5.0,
       reviewsCount: 43,
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80",
+      image: phiPhiMayaBay,
       highlights: ["Приватная лодка", "Персональный гид", "Гурмэ обед", "Шампанское на закате"],
       tags: ["VIP", "Приватный"],
       category: "luxury",
@@ -348,7 +354,7 @@ const PhiPhiIslands = () => {
             </div>
             <div className="relative">
               <img 
-                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80"
+                src={phiPhiMayaBay}
                 alt="Острова Пхи-Пхи"
                 className="w-full h-96 object-cover rounded-2xl shadow-xl"
               />

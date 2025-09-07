@@ -5,6 +5,7 @@ import { Clock, Users, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BookingModal } from "./BookingModal";
 import { PopularityBadge } from "./PopularityBadge";
+import phiPhiMayaBay from "@/assets/phi-phi-maya-bay.jpg";
 
 const tours = [
   {
@@ -15,7 +16,7 @@ const tours = [
     group: "До 35 человек",
     date: "Круглый год",
     price: "2,490 ₽",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+    image: phiPhiMayaBay,
     highlights: ["Майя Бэй", "Снорклинг", "Обед на пляже"],
     bookingsToday: 12,
     popular: true

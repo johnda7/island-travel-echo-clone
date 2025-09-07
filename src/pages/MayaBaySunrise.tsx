@@ -4,6 +4,10 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, Sunrise, Camera, Waves } from "lucide-react";
+import mayaBaySunrise from "@/assets/maya-bay-sunrise.jpg";
+import phiPhiMayaBay from "@/assets/phi-phi-maya-bay.jpg";
+import phiPhiSunset from "@/assets/phi-phi-sunset.jpg";
+import phiPhiMonkeyBeach from "@/assets/phi-phi-monkey-beach.jpg";
 
 const MayaBaySunrise = () => {
   const excursion = {
@@ -15,12 +19,12 @@ const MayaBaySunrise = () => {
     groupSize: "до 15 человек",
     rating: 4.9,
     reviewsCount: 87,
-    mainImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80",
+    mainImage: mayaBaySunrise,
     gallery: [
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1544198365-f5d60b6d8190?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80"
+      mayaBaySunrise,
+      phiPhiMayaBay,
+      phiPhiSunset,
+      phiPhiMonkeyBeach
     ],
     description: "Встретьте рассвет в легендарной бухте Майя без толп туристов. Ранний выезд позволит вам насладиться магией этого места в полном покое, сделать потрясающие фотографии и почувствовать себя первооткрывателем.",
     highlights: [

@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Star, Calendar, Thermometer } from "lucide-react";
 import { Link } from "react-router-dom";
+import phiPhiMayaBay from "@/assets/phi-phi-maya-bay.jpg";
 
 const destinationsData = [
   {
@@ -26,7 +27,7 @@ const destinationsData = [
     name: "Острова Пхи-Пхи",
     country: "Таиланд",
     region: "Андаманское море",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+    image: phiPhiMayaBay,
     rating: 4.8,
     toursCount: 6,
     bestTime: "Ноябрь - Апрель",

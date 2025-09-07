@@ -4,6 +4,10 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, Anchor, Camera } from "lucide-react";
+import phiPhiMayaBay from "@/assets/phi-phi-maya-bay.jpg";
+import phiPhiSpeedboat from "@/assets/phi-phi-speedboat.jpg";
+import phiPhiSnorkeling from "@/assets/phi-phi-snorkeling.jpg";
+import phiPhiMonkeyBeach from "@/assets/phi-phi-monkey-beach.jpg";
 
 const PhiPhiIslandsSpeedboat = () => {
   const excursion = {
@@ -15,12 +19,12 @@ const PhiPhiIslandsSpeedboat = () => {
     groupSize: "до 20 человек",
     rating: 4.8,
     reviewsCount: 245,
-    mainImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80",
+    mainImage: phiPhiMayaBay,
     gallery: [
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1544198365-f5d60b6d8190?auto=format&fit=crop&w=800&q=80"
+      phiPhiMayaBay,
+      phiPhiSpeedboat,
+      phiPhiSnorkeling,
+      phiPhiMonkeyBeach
     ],
     description: "Отправляйтесь на скоростной лодке к знаменитым островам Пхи-Пхи! Посетите бухту Майя из фильма 'Пляж', поплавайте в кристально чистых водах и насладитесь снорклингом среди тропических рыб.",
     highlights: [

@@ -47,7 +47,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      {/* Use basename so routes work under GitHub Pages subpath (Vite's base -> import.meta.env.BASE_URL) */}
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <ErrorBoundary>
         <Routes>
           <Route path="/" element={<Index />} />

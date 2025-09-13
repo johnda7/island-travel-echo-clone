@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -222,9 +223,9 @@ const PhiPhi2Days1Night = () => {
         <div className="container mx-auto px-4">
           <nav className="text-sm text-gray-500">
             <div className="flex items-center space-x-2">
-              <a href="/" className="hover:text-green-600 transition-colors">Главная</a>
+              <Link to="/" className="hover:text-green-600 transition-colors">Главная</Link>
               <span>›</span>
-              <a href="/tours" className="hover:text-green-600 transition-colors">Туры</a>
+              <Link to="/tours" className="hover:text-green-600 transition-colors">Туры</Link>
               <span>›</span>
               <span className="text-gray-700">Пхи-Пхи 2 дня / 1 ночь</span>
             </div>
@@ -415,6 +416,35 @@ const PhiPhi2Days1Night = () => {
         </div>
       </section>
 
+      {/* Tags section - сразу после фото как на tisland.travel */}
+      <section className="py-4">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-wrap gap-2">
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
+              Пхи-Пхи
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
+              Майя Бей
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
+              Снорклинг
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
+              Экскурсия с ночевкой
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
+              Огненное шоу
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
+              Лагуна Пиле
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
+              Пляж обезьян
+            </span>
+          </div>
+        </div>
+      </section>
+
       {/* Booking section - блок бронирования после фото */}
       <section className="py-8 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -566,37 +596,7 @@ const PhiPhi2Days1Night = () => {
         </div>
       </section>
 
-      {/* Tags section - как на tisland.travel внизу */}
-      <section className="py-8 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl">
-            <h3 className="text-lg font-semibold mb-4 text-gray-900">Теги</h3>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-green-400 cursor-pointer transition-colors">
-                Пхи-Пхи
-              </span>
-              <span className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-green-400 cursor-pointer transition-colors">
-                Майя Бей
-              </span>
-              <span className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-green-400 cursor-pointer transition-colors">
-                Снорклинг
-              </span>
-              <span className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-green-400 cursor-pointer transition-colors">
-                Экскурсия с ночевкой
-              </span>
-              <span className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-green-400 cursor-pointer transition-colors">
-                Огненное шоу
-              </span>
-              <span className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-green-400 cursor-pointer transition-colors">
-                Лагуна Пиле
-              </span>
-              <span className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-green-400 cursor-pointer transition-colors">
-                Пляж обезьян
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Mobile booking bar - фиксированная кнопка внизу */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40">

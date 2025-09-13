@@ -14,7 +14,7 @@ export const Header = () => {
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
 
-  // Tours data for search
+  // Tours data for search - все 22 тура
   const allTours = [
     { name: "Пхи-Пхи 2 дня / 1 ночь", href: "/phi-phi-2-days-1-night", description: "Экскурсия с ночёвкой на островах Пхи-Пхи" },
     { name: "Острова Пхи-Пхи на спидботе", href: "/phi-phi-islands-speedboat", description: "Скоростная экскурсия на знаменитые острова" },
@@ -24,7 +24,20 @@ export const Header = () => {
     { name: "11 островов стандарт", href: "/eleven-islands-standard", description: "Большое путешествие по 11 островам" },
     { name: "Коралловый остров + Парасейлинг", href: "/coral-island-parasailing", description: "Водные развлечения и парасейлинг" },
     { name: "Остров Рача Яй", href: "/racha-yai-island", description: "Снорклинг на живописном острове" },
-    { name: "Наблюдение за китами", href: "/whale-watching-tour", description: "Уникальная экскурсия для наблюдения за китами" }
+    { name: "Наблюдение за китами", href: "/whale-watching-tour", description: "Уникальная экскурсия для наблюдения за китами" },
+    { name: "Пляжные туры", href: "/beach-tours", description: "Экскурсии по лучшим пляжам Пхукета" },
+    { name: "Городские туры", href: "/city-tours", description: "Обзорные экскурсии по городу Пхукет" },
+    { name: "Приключенческие туры", href: "/adventure-tours", description: "Экстремальные и активные туры" },
+    { name: "Групповые туры", href: "/group-tours", description: "Экскурсии для больших групп" },
+    { name: "Что посетить", href: "/what-to-visit", description: "Главные достопримечательности Пхукета" },
+    { name: "Экскурсии", href: "/tours", description: "Все экскурсии и туры" },
+    { name: "Направления", href: "/destinations", description: "Популярные направления" },
+    { name: "Пляжи", href: "/beaches", description: "Лучшие пляжи Пхукета" },
+    { name: "Достопримечательности", href: "/attractions", description: "Интересные места для посещения" },
+    { name: "Морские экскурсии", href: "/tours", description: "Туры по морю и островам" },
+    { name: "Семейные туры", href: "/tours", description: "Экскурсии для всей семьи" },
+    { name: "СПА и релакс", href: "/tours", description: "Расслабляющие туры и спа-процедуры" },
+    { name: "Шоу программы", href: "/tours", description: "Развлекательные шоу и представления" }
   ];
 
   // Filter tours based on search query
@@ -61,15 +74,15 @@ export const Header = () => {
       href: "/tours",
       subItems: [
         { name: "Все туры", href: "/tours" },
-        { name: "Пхи-Пхи 2 дня / 1 ночь", href: "/phi-phi-2-days-1-night" },
-        { name: "Острова Пхи-Пхи на спидботе", href: "/phi-phi-islands-speedboat" },
-        { name: "Пхи-Пхи Ле и лагуна", href: "/koh-phi-phi-leh-lagoon" },
-        { name: "Майя Бей на рассвете", href: "/maya-bay-sunrise" },
-        { name: "Остров Джеймса Бонда", href: "/james-bond-island" },
-        { name: "11 островов стандарт", href: "/eleven-islands-standard" },
-        { name: "Коралловый остров + Парасейлинг", href: "/coral-island-parasailing" },
-        { name: "Остров Рача Яй", href: "/racha-yai-island" },
-        { name: "Наблюдение за китами", href: "/whale-watching-tour" }
+        { name: "Морские", href: "/tours#морские" },
+        { name: "Сухопутные", href: "/tours#сухопутные" },
+        { name: "Обзорные", href: "/tours#обзорные" },
+        { name: "Пляжи и острова", href: "/tours#пляжи-и-острова" },
+        { name: "Приключения", href: "/tours#приключения" },
+        { name: "Городские", href: "/tours#городские" },
+        { name: "Шоу", href: "/tours#шоу" },
+        { name: "Семейные", href: "/tours#семейные" },
+        { name: "СПА и релакс", href: "/tours#спа-и-релакс" }
       ]
     },
     { name: "Направления", href: "/destinations" },

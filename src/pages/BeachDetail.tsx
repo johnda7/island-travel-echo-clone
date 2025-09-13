@@ -16,8 +16,8 @@ function BeachDetail() {
     const normalizedTitle = title.replace(/\(.*?\)/g, "").trim();
     const qString = [normalizedTitle, location ?? "Phuket", "Phuket, Thailand"].filter(Boolean).join(", ");
     const q = encodeURIComponent(qString);
-    // Более совместимый вариант встраивания через maps.google.com с явными параметрами
-    return `https://maps.google.com/maps?q=${q}&z=14&hl=ru&iwloc=near&output=embed`;
+    // Более совместимый вариант: www.google.com + output=embed
+    return `https://www.google.com/maps?q=${q}&z=14&hl=ru&iwloc=near&output=embed`;
   };
   const related = beach
     ? allBeaches
@@ -149,6 +149,16 @@ function BeachDetail() {
                 allowFullScreen
                 loading="lazy"
               ></iframe>
+            </div>
+            <div className="mt-2 text-sm">
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${beach.title}, ${beach.location}, Phuket, Thailand`)}`}
+                target="_blank"
+                rel="noopener"
+                className="text-blue-700 underline"
+              >
+                Открыть в Google Maps
+              </a>
             </div>
           </div>
 

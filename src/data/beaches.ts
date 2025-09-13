@@ -73,7 +73,7 @@ export const beaches: Beach[] = [
       { user: "Андрей", text: "Очень красивый пляж, мало людей, отличная еда!", rating: 5 },
       { user: "Елена", text: "Вода прозрачная, рыбки прямо у берега. Супер для детей!", rating: 4.9 }
     ],
-  map: "https://maps.google.com/maps?q=Banana%20Beach%20Koh%20Hey%2C%20Phuket%2C%20Thailand&z=14&hl=ru&iwloc=near&output=embed",
+  map: "https://www.google.com/maps?q=Banana%20Beach%20Koh%20Hey%2C%20Phuket%2C%20Thailand&z=14&hl=ru&iwloc=near&output=embed",
     info: {
       length: "~300 м",
       sand: "Белый, мелкий",

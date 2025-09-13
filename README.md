@@ -64,6 +64,30 @@ This project is built with:
 
 Simply open [Lovable](https://lovable.dev/projects/3875c40a-aaeb-47ea-bedc-679166dacdea) and click on Share -> Publish.
 
+### Step-by-step on Lovable
+
+1) Open your project: https://lovable.dev/projects/3875c40a-aaeb-47ea-bedc-679166dacdea
+2) Click Share → Publish
+3) Build settings:
+	- Build command: `npm run build`
+	- Output directory: `dist`
+	- Install command (optional): `npm ci` or `npm i`
+4) SPA routing: already handled (we copy `index.html` to `404.html` in `postbuild`). No extra config needed.
+5) Preview/Dev server:
+	- Local dev: `npm run dev` (Vite)
+	- Fixed port used for local preview of built assets: `npm run serve:dist` serves `dist` on `http://localhost:8081`
+6) Enable Auto Publish (optional): Project → Settings → Publish → Auto publish on push to `main`.
+
+If the publish fails, open the Build Logs in Lovable and ensure Node/npm versions are compatible. This project uses Vite 5 and Node 18+.
+
+### Deploy via GitHub Pages (no Lovable)
+
+1) In GitHub repo: Settings → Pages → Build and deployment → Source: GitHub Actions.
+2) Commit is already configured to trigger `.github/workflows/deploy.yml` on push to `main`.
+3) If you publish as Project Page (i.e. `https://<user>.github.io/<repo>/`), set env `BASE_PATH=/island-travel-echo-clone/` in the build step or in repo secrets. For User/Org Page (`https://<user>.github.io/`), `BASE_PATH` can be omitted.
+4) After first successful deploy, you’ll see the public URL in the Actions logs and in Settings → Pages.
+
+
 ## Can I connect a custom domain to my Lovable project?
 
 Yes, you can!

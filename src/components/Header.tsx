@@ -11,16 +11,28 @@ export const Header = () => {
 
   const navigation = [
     { name: "Главная", href: "/" },
+    {
+      name: "Пляжи",
+      href: "/beaches"
+    },
+    {
+      name: "Достопримечательности",
+      href: "/what-to-visit/dostoprimechatelnosti"
+    },
+    {
+      name: "Что посетить",
+      href: "/what-to-visit"
+    },
     { 
       name: "Туры", 
       href: "/tours",
       subItems: [
         { name: "Все туры", href: "/tours" },
         { name: "Острова Пхи-Пхи", href: "/phi-phi-islands" },
-        { name: "Городские туры", href: "/category/city-tours" },
-        { name: "Пляжные туры", href: "/category/beach-tours" },
-        { name: "Приключенческие туры", href: "/category/adventure-tours" },
-        { name: "Групповые туры", href: "/category/group-tours" }
+        { name: "Городские туры", href: "/city-tours" },
+        { name: "Пляжные туры", href: "/beach-tours" },
+        { name: "Приключенческие туры", href: "/adventure-tours" },
+        { name: "Групповые туры", href: "/group-tours" }
       ]
     },
     { name: "Направления", href: "/destinations" },
@@ -41,6 +53,27 @@ export const Header = () => {
               Пхукет Go
             </span>
           </Link>
+          {/* Right: Social + Menu icon */}
+          <div className="flex items-center space-x-4">
+            <a href="https://t.me/+FAswrtvXpLY2YzY9" target="_blank" rel="noopener" className="flex items-center group">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none" className="mr-2 text-blue-500 group-hover:text-cyan-500 transition-colors">
+                <path d="M14 0C6.26801 0 0 6.26801 0 14C0 21.732 6.26801 28 14 28C21.732 28 28 21.732 28 14C28 6.26801 21.732 0 14 0ZM20.944 8.944L18.944 19.944C18.75 20.944 18.194 21.194 17.444 20.744L13.444 17.744L11.444 19.744C11.222 19.966 11.028 20.16 10.666 20.16L10.694 17.094L17.194 10.944C17.5 10.666 17.111 10.5 16.694 10.778L9.694 15.278L6.694 14.278C5.722 13.944 5.722 13.278 6.944 12.778L19.444 8.278C20.222 8.028 20.806 8.472 20.944 8.944Z" fill="currentColor"/>
+              </svg>
+              <span className="text-blue-700 group-hover:text-cyan-600 font-medium text-sm">Чат Пхукет Da</span>
+            </a>
+            {/* Menu icon for mobile/desktop */}
+            <button
+              className="p-2 focus:outline-none"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Открыть меню"
+            >
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect y="6" width="28" height="2.5" rx="1.25" fill="#2563eb" />
+                <rect y="13" width="28" height="2.5" rx="1.25" fill="#2563eb" />
+                <rect y="20" width="28" height="2.5" rx="1.25" fill="#2563eb" />
+              </svg>
+            </button>
+          </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">

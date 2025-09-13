@@ -1,9 +1,9 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 import Tours from "./pages/Tours";
 import About from "./pages/About";
@@ -25,6 +25,21 @@ import WhaleWatchingTour from "./pages/WhaleWatchingTour";
 import PhiPhiIslands from "./pages/PhiPhiIslands";
 import NotFound from "./pages/NotFound";
 
+import BeachesPage from "./pages/Beaches";
+import BeachDetail from "./pages/BeachDetail";
+import WhatToVisit from "./pages/WhatToVisit";
+import Attractions from "./pages/Attractions";
+import Plyazhi from "./pages/attractions/Plyazhi";
+import Dostoprimechatelnosti from "./pages/attractions/Dostoprimechatelnosti";
+import Ekskursii from "./pages/attractions/Ekskursii";
+import Slony from "./pages/attractions/Slony";
+import Akvaparki from "./pages/attractions/Akvaparki";
+import ParikiRazvlechenij from "./pages/attractions/ParikiRazvlechenij";
+import SmotrovyePloshchadki from "./pages/attractions/SmotrovyePloshchadki";
+import Hramy from "./pages/attractions/Hramy";
+import Muzei from "./pages/attractions/Muzei";
+import NochnyeRynki from "./pages/attractions/NochnyeRynki";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -33,6 +48,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ErrorBoundary>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/tours" element={<Tours />} />
@@ -43,7 +59,22 @@ const App = () => (
           <Route path="/category/beach-tours" element={<BeachTours />} />
           <Route path="/category/adventure-tours" element={<AdventureTours />} />
           <Route path="/category/group-tours" element={<GroupTours />} />
+          <Route path="/category/plyazhi" element={<BeachesPage />} />
+          <Route path="/beaches" element={<BeachesPage />} />
+          <Route path="/beach/:id" element={<BeachDetail />} />
           <Route path="/excursion/:slug" element={<ExcursionDetail />} />
+          <Route path="/what-to-visit" element={<WhatToVisit />} />
+          <Route path="/dostoprimechatelnosti" element={<Attractions />} />
+          <Route path="/attractions/plyazhi" element={<Plyazhi />} />
+          <Route path="/attractions/dostoprimechatelnosti" element={<Dostoprimechatelnosti />} />
+          <Route path="/attractions/ekskursii" element={<Ekskursii />} />
+          <Route path="/attractions/slony" element={<Slony />} />
+          <Route path="/attractions/akvaparki" element={<Akvaparki />} />
+          <Route path="/attractions/parki-razvlechenij" element={<ParikiRazvlechenij />} />
+          <Route path="/attractions/smotrovye-ploshchadki" element={<SmotrovyePloshchadki />} />
+          <Route path="/attractions/hramy" element={<Hramy />} />
+          <Route path="/attractions/muzei" element={<Muzei />} />
+          <Route path="/attractions/nochnye-rynki" element={<NochnyeRynki />} />
           
           {/* Specific excursion routes */}
           <Route path="/excursion/11-islands-standard" element={<ElevenIslandsStandard />} />
@@ -97,6 +128,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </ErrorBoundary>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

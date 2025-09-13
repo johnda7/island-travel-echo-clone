@@ -32,6 +32,8 @@ export const Header = () => {
     { name: "Контакты", href: "/contact" }
   ];
 
+  const actionsDeployUrl = "https://github.com/johnda7/island-travel-echo-clone/actions/workflows/deploy-gh-pages.yml";
+
   return (
     <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg z-50">
       <div className="container mx-auto px-4">
@@ -94,6 +96,15 @@ export const Header = () => {
                 </Link>
               )
             ))}
+            <a
+              href={actionsDeployUrl}
+              target="_blank"
+              rel="noopener"
+              className="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium"
+              title="Открыть страницу деплоя в GitHub Actions"
+            >
+              Опубликовать обновление
+            </a>
           </nav>
 
           {/* Contact Info & CTA */}
@@ -153,6 +164,15 @@ export const Header = () => {
                 <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500">
                   Заказать звонок
                 </Button>
+                <a
+                  href={actionsDeployUrl}
+                  target="_blank"
+                  rel="noopener"
+                  className="block text-center mt-3 text-sm text-gray-600 underline hover:text-blue-600"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Опубликовать обновление
+                </a>
               </div>
             </nav>
           </div>

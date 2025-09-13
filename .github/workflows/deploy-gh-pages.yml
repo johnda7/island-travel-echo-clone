@@ -33,7 +33,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          BASE_PATH: /island-travel-echo-clone/
+          BASE_PATH: /island-travel-echo-clone
           NODE_OPTIONS: --max_old_space_size=4096
 
       - name: Deploy to gh-pages branch

@@ -129,6 +129,7 @@ const PhiPhi2Days1Night = () => {
   const [showFullGallery, setShowFullGallery] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [mobileGalleryIndex, setMobileGalleryIndex] = useState<number>(0);
 
   const openModal = (image: string, index: number) => {
     setSelectedImage(image);
@@ -203,6 +204,15 @@ const PhiPhi2Days1Night = () => {
     }
   }, [selectedImage]);
 
+  // Handle mobile gallery scroll
+  const handleMobileGalleryScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    const scrollLeft = container.scrollLeft;
+    const containerWidth = container.clientWidth;
+    const newIndex = Math.round(scrollLeft / containerWidth);
+    setMobileGalleryIndex(newIndex);
+  };
+
   return (
     <div className="min-h-screen bg-white pb-20 lg:pb-0">
       <Header />
@@ -222,75 +232,34 @@ const PhiPhi2Days1Night = () => {
         </div>
       </section>
 
-      {/* Hero section with title and booking */}
+      {/* Hero section with title only - фото сверху, бронирование снизу */}
       <section className="pb-8">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-4 gap-8">
-            {/* Left content - title and info */}
-            <div className="lg:col-span-3">
-              <h1 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
-                {excursion.title}
-              </h1>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                {excursion.subtitle}
-              </p>
-              <div className="flex flex-wrap items-center gap-6 mb-8">
-                <div className="flex items-center gap-2">
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <span className="font-semibold text-gray-900">{excursion.rating}</span>
-                  <span className="text-gray-500">({excursion.reviewsCount} отзывов)</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-500">
-                  <Clock className="w-4 h-4" />
-                  <span>{excursion.duration}</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-500">
-                  <Users className="w-4 h-4" />
-                  <span>{excursion.groupSize}</span>
-                </div>
+          <div className="max-w-6xl">
+            <h1 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
+              {excursion.title}
+            </h1>
+            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              {excursion.subtitle}
+            </p>
+            <div className="flex flex-wrap items-center gap-6 mb-8">
+              <div className="flex items-center gap-2">
+                <Star className="w-5 h-5 text-yellow-400 fill-current" />
+                <span className="font-semibold text-gray-900">{excursion.rating}</span>
+                <span className="text-gray-500">({excursion.reviewsCount} отзывов)</span>
               </div>
-              {/* Mobile price */}
-              <div className="text-3xl font-bold text-green-600 mb-8 lg:hidden">
-                {excursion.price} {excursion.currency} <span className="text-lg font-normal text-gray-500">за человека</span>
+              <div className="flex items-center gap-2 text-gray-500">
+                <Clock className="w-4 h-4" />
+                <span>{excursion.duration}</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-500">
+                <Users className="w-4 h-4" />
+                <span>{excursion.groupSize}</span>
               </div>
             </div>
-
-            {/* Right sidebar - booking card */}
-            <div className="lg:col-span-1 hidden lg:block">
-              <Card className="sticky top-24 shadow-lg border-0">
-                <CardContent className="p-6">
-                  <div className="text-center mb-6">
-                    <div className="text-4xl font-bold text-green-600 mb-2">
-                      {excursion.price} {excursion.currency}
-                    </div>
-                    <div className="text-gray-500">за человека</div>
-                  </div>
-                  <div className="space-y-3 mb-6 text-sm">
-                    <div className="flex items-center gap-3">
-                      <Clock className="w-4 h-4 text-gray-400" />
-                      <span>Продолжительность: {excursion.duration}</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Users className="w-4 h-4 text-gray-400" />
-                      <span>Группа: {excursion.groupSize}</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Calendar className="w-4 h-4 text-gray-400" />
-                      <span>Ежедневно</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <MapPin className="w-4 h-4 text-gray-400" />
-                      <span>Трансфер включен</span>
-                    </div>
-                  </div>
-                  <Button className="w-full bg-green-600 hover:bg-green-700 text-white mb-3 py-3 font-semibold">
-                    Забронировать сейчас
-                  </Button>
-                  <Button variant="outline" className="w-full py-3 border-gray-300">
-                    Задать вопрос
-                  </Button>
-                </CardContent>
-              </Card>
+            {/* Mobile price */}
+            <div className="text-3xl font-bold text-green-600 mb-8 lg:hidden">
+              {excursion.price} {excursion.currency} <span className="text-lg font-normal text-gray-500">за человека</span>
             </div>
           </div>
         </div>
@@ -369,46 +338,63 @@ const PhiPhi2Days1Night = () => {
               </div>
             </div>
 
-            {/* Мобильная галерея */}
+            {/* Мобильная карусель точно как на tisland.travel */}
             <div className="md:hidden">
-              <div className="grid grid-cols-2 gap-2 mb-2">
+              <div className="relative">
+                {/* Карусель с свайпом */}
                 <div 
-                  className="aspect-square cursor-pointer relative overflow-hidden rounded-lg"
-                  onClick={() => openModal(excursion.gallery[0], 0)}
+                  className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+                  onScroll={handleMobileGalleryScroll}
+                  style={{ scrollBehavior: 'smooth' }}
+                  id="mobile-gallery"
                 >
-                  <img 
-                    src={excursion.gallery[0]} 
-                    alt="Maya Bay"
-                    className="w-full h-full object-cover"
-                  />
+                  {excursion.gallery.slice(0, 6).map((image, index) => (
+                    <div 
+                      key={index}
+                      className="flex-shrink-0 w-full snap-center"
+                      onClick={() => openModal(image, index)}
+                    >
+                      <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
+                        <img 
+                          src={image} 
+                          alt={`Gallery ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                        {/* Overlay с количеством фото на последнем слайде */}
+                        {index === 5 && excursion.gallery.length > 6 && (
+                          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                            <div className="text-white text-center">
+                              <div className="text-2xl font-bold mb-1">+{excursion.gallery.length - 6}</div>
+                              <div className="text-sm">фото</div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                
-                <div 
-                  className="aspect-square cursor-pointer relative overflow-hidden rounded-lg"
-                  onClick={() => openModal(excursion.gallery[1], 1)}
-                >
-                  <img 
-                    src={excursion.gallery[1]} 
-                    alt="Gallery 2"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-              
-              <div 
-                className="aspect-[2/1] cursor-pointer relative overflow-hidden rounded-lg"
-                onClick={openGallery}
-              >
-                <img 
-                  src={excursion.gallery[2]} 
-                  alt="Gallery 3"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                  <div className="text-white text-center">
-                    <div className="text-lg font-semibold mb-1">+{excursion.gallery.length - 3}</div>
-                    <div className="text-sm">фото</div>
-                  </div>
+
+                {/* Точки индикации */}
+                <div className="flex justify-center mt-4 space-x-2">
+                  {excursion.gallery.slice(0, 6).map((_, index) => (
+                    <button
+                      key={index}
+                      className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                        index === mobileGalleryIndex ? 'bg-green-600 scale-110' : 'bg-gray-300'
+                      }`}
+                      onClick={() => {
+                        setMobileGalleryIndex(index);
+                        // Программный скролл к нужному слайду
+                        const carousel = document.getElementById('mobile-gallery');
+                        if (carousel) {
+                          carousel.scrollTo({
+                            left: index * carousel.clientWidth,
+                            behavior: 'smooth'
+                          });
+                        }
+                      }}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -420,7 +406,7 @@ const PhiPhi2Days1Night = () => {
                 className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 Показать все {excursion.gallery.length} фото
               </button>
@@ -428,6 +414,58 @@ const PhiPhi2Days1Night = () => {
           </div>
         </div>
       </section>
+
+      {/* Booking section - блок бронирования после фото */}
+      <section className="py-8 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <Card className="shadow-lg border-0">
+              <CardContent className="p-8">
+                <div className="grid md:grid-cols-2 gap-8 items-center">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4 text-gray-900">Забронировать экскурсию</h3>
+                    <div className="space-y-3 mb-6 text-sm">
+                      <div className="flex items-center gap-3">
+                        <Clock className="w-4 h-4 text-gray-400" />
+                        <span>Продолжительность: {excursion.duration}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Users className="w-4 h-4 text-gray-400" />
+                        <span>Группа: {excursion.groupSize}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Calendar className="w-4 h-4 text-gray-400" />
+                        <span>Ежедневно</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <MapPin className="w-4 h-4 text-gray-400" />
+                        <span>Трансфер включен</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-green-600 mb-2">
+                      {excursion.price} {excursion.currency}
+                    </div>
+                    <div className="text-gray-500 mb-6">за человека</div>
+                    <div className="space-y-3">
+                      <Button asChild className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold">
+                        <a href="/book/phi-phi-2-days-1-night">Забронировать сейчас</a>
+                      </Button>
+                      <Button variant="outline" asChild className="w-full py-3 border-gray-300">
+                        <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
+                          Задать вопрос в Telegram
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-4 gap-12">
@@ -569,8 +607,8 @@ const PhiPhi2Days1Night = () => {
             </div>
             <div className="text-xs text-gray-600">за человека</div>
           </div>
-          <Button className="bg-green-600 hover:bg-green-700 text-white px-6">
-            Забронировать
+          <Button asChild className="bg-green-600 hover:bg-green-700 text-white px-6">
+            <a href="/book/phi-phi-2-days-1-night">Забронировать</a>
           </Button>
         </div>
       </div>

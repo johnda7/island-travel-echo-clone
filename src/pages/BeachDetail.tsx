@@ -10,6 +10,12 @@ import { getBeachById, beaches as allBeaches } from "@/data/beaches";
 function BeachDetail() {
   const { id } = useParams();
   const beach = id ? getBeachById(id) : undefined;
+  const [showMap, setShowMap] = React.useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return !/\.app\.github\.dev$/.test(window.location.host);
+    }
+    return true;
+  });
   const getEmbedMapUrl = (title: string, raw?: string, location?: string) => {
     if (raw && /\/maps\/embed|output=embed/.test(raw)) return raw;
     // Нормализуем заголовок: уберём скобки и лишние символы
@@ -139,16 +145,36 @@ function BeachDetail() {
           <div className="mb-8" id="map">
             <h3 className="font-semibold mb-2 text-blue-700">Расположение на карте</h3>
             <div className="rounded-xl overflow-hidden shadow-lg">
-              <iframe
-                src={getEmbedMapUrl(beach.title, beach.map, beach.location)}
-                title="Карта пляжа"
-                width="100%"
-                height="300"
-                style={{ border: 0 }}
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-                loading="lazy"
-              ></iframe>
+              {showMap ? (
+                <iframe
+                  src={getEmbedMapUrl(beach.title, beach.map, beach.location)}
+                  title="Карта пляжа"
+                  width="100%"
+                  height="300"
+                  style={{ border: 0 }}
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                  loading="lazy"
+                ></iframe>
+              ) : (
+                <div className="p-4 bg-blue-50 text-blue-900">
+                  <p className="mb-2">Карта скрыта в текущем превью (возможно, хост блокирует встраивание iframe).</p>
+                  <button
+                    className="inline-flex items-center px-3 py-1.5 rounded bg-blue-600 text-white hover:bg-blue-700 mr-3"
+                    onClick={() => setShowMap(true)}
+                  >
+                    Показать карту здесь
+                  </button>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${beach.title}, ${beach.location}, Phuket, Thailand`)}`}
+                    target="_blank"
+                    rel="noopener"
+                    className="inline-flex items-center px-3 py-1.5 rounded bg-white border text-blue-700 hover:bg-blue-100"
+                  >
+                    Открыть в Google Maps
+                  </a>
+                </div>
+              )}
             </div>
             <div className="mt-2 text-sm">
               <a
@@ -158,6 +184,15 @@ function BeachDetail() {
                 className="text-blue-700 underline"
               >
                 Открыть в Google Maps
+              </a>
+              <span className="mx-2 text-gray-400">•</span>
+              <a
+                href={`https://www.openstreetmap.org/search?query=${encodeURIComponent(`${beach.title}, ${beach.location}, Phuket, Thailand`)}`}
+                target="_blank"
+                rel="noopener"
+                className="text-blue-700 underline"
+              >
+                Открыть в OpenStreetMap
               </a>
             </div>
           </div>

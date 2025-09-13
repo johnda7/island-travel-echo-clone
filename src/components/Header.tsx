@@ -12,14 +12,6 @@ export const Header = () => {
   const navigation = [
     { name: "Главная", href: "/" },
     {
-      name: "Пляжи",
-      href: "/beaches"
-    },
-    {
-      name: "Достопримечательности",
-      href: "/what-to-visit/dostoprimechatelnosti"
-    },
-    {
       name: "Что посетить",
       href: "/what-to-visit"
     },

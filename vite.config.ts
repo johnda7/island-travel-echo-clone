@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => ({
   base: process.env.BASE_PATH || "/",
   server: {
     host: "0.0.0.0",
-    port: 8081,
+    port: 8080,
     strictPort: true,
   },
   plugins: [

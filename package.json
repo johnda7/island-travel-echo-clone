@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "postbuild": "cp -f dist/index.html dist/404.html || powershell -Command \"Copy-Item dist/index.html dist/404.html -Force\"",
+  "postbuild": "node scripts/postbuild.cjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",

@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import { beaches as beachesData } from "@/data/beaches";
@@ -22,20 +22,27 @@ const filterCategories = ['Все', 'Семейный', 'Сёрфинг', 'Дл�
 const BeachesPage: React.FC = () => {
   const [sortBy, setSortBy] = useState("popularity");
   const [activeCategory, setActiveCategory] = useState('Все');
-  const [filteredBeaches, setFilteredBeaches] = useState(beaches);
+  const [filteredBeaches, setFilteredBeaches] = useState<typeof beaches>([]);
   const [visibleCount, setVisibleCount] = useState(6);
   const navigate = useNavigate();
+
+  // Initialize filtered beaches on component mount
+  useEffect(() => {
+    let sorted = [...beaches];
+    sorted.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+    setFilteredBeaches(sorted);
+  }, []);
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const sort = e.target.value;
     setSortBy(sort);
     let sorted = [...filteredBeaches];
     if (sort === "popularity") {
-      sorted.sort((a, b) => b.popularity - a.popularity);
+      sorted.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
     } else if (sort === "rating") {
       sorted.sort((a, b) => b.rating - a.rating);
     } else if (sort === "price") {
-      sorted.sort((a, b) => a.price - b.price);
+      sorted.sort((a, b) => (a.price || 0) - (b.price || 0));
     }
     setFilteredBeaches(sorted);
   };
@@ -43,8 +50,18 @@ const BeachesPage: React.FC = () => {
   const handleCategoryClick = (cat: string) => {
     setActiveCategory(cat);
     setVisibleCount(6);
-    if (cat === 'Все') setFilteredBeaches(beaches);
-    else setFilteredBeaches(beaches.filter(b => b.tags.includes(cat)));
+    let filtered = cat === 'Все' ? beaches : beaches.filter(b => b.tags.includes(cat));
+    
+    // Apply sorting to filtered results
+    if (sortBy === "popularity") {
+      filtered.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+    } else if (sortBy === "rating") {
+      filtered.sort((a, b) => b.rating - a.rating);
+    } else if (sortBy === "price") {
+      filtered.sort((a, b) => (a.price || 0) - (b.price || 0));
+    }
+    
+    setFilteredBeaches(filtered);
   };
 
   return (
@@ -90,14 +107,49 @@ const BeachesPage: React.FC = () => {
           </ul>
         </div>
 
-        {/* Горизонтальное меню-якоря + выпадающее меню для мобильных */}
-        <div className="mb-8 flex flex-col gap-3 items-center sticky top-0 z-30 bg-white/90 py-4 rounded-xl shadow">
-          <div className="hidden sm:flex flex-wrap gap-3 justify-center w-full">
-            {beaches.map((beach) => (
+        {/* Категории фильтров */}
+        <div className="mb-6 sticky top-16 z-30 bg-white/95 backdrop-blur-sm py-4 rounded-xl shadow-lg border">
+          <div className="flex flex-wrap gap-3 justify-center mb-4">
+            {filterCategories.map(category => (
+              <button
+                key={category}
+                onClick={() => handleCategoryClick(category)}
+                className={`px-4 py-2 rounded-full font-medium transition-all duration-300 shadow-sm border ${
+                  activeCategory === category
+                    ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white border-blue-500 shadow-md'
+                    : 'bg-white text-blue-600 border-blue-300 hover:bg-blue-50 hover:border-blue-400'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+          
+          {/* Сортировка */}
+          <div className="flex items-center gap-2 justify-center">
+            <label className="font-medium text-gray-600">Сортировать по:</label>
+            <select
+              value={sortBy}
+              onChange={handleSortChange}
+              className="border border-blue-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition bg-white"
+            >
+              {sortOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Горизонтальное меню-якоря */}
+        <div className="mb-8 flex flex-col gap-3 items-center">
+          <div className="hidden sm:flex flex-wrap gap-2 justify-center w-full">
+            {filteredBeaches.slice(0, visibleCount).map((beach) => (
               <a
                 key={beach.id}
                 href={`#${beach.id}`}
-                className="px-5 py-2 rounded-full font-medium border transition-all duration-200 shadow-sm bg-white text-blue-600 border-blue-300 hover:bg-blue-100 hover:text-blue-700"
+                className="px-3 py-1 rounded-full text-sm font-medium border transition-all duration-200 shadow-sm bg-white text-blue-600 border-blue-200 hover:bg-blue-50 hover:text-blue-700"
               >
                 {beach.title}
               </a>
@@ -113,27 +165,11 @@ const BeachesPage: React.FC = () => {
               }}
             >
               <option value="">Выбрать пляж...</option>
-              {beaches.map(beach => (
+              {filteredBeaches.slice(0, visibleCount).map(beach => (
                 <option key={beach.id} value={beach.id}>{beach.title}</option>
               ))}
             </select>
           </div>
-        </div>
-
-        {/* Сортировка */}
-        <div className="flex items-center gap-2 mb-8 justify-end">
-          <label className="font-medium text-gray-600">Сортировать:</label>
-          <select
-            value={sortBy}
-            onChange={handleSortChange}
-            className="border border-blue-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-          >
-            {sortOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredBeaches.slice(0, visibleCount).map((beach, idx) => (

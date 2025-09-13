@@ -87,6 +87,37 @@ If the publish fails, open the Build Logs in Lovable and ensure Node/npm version
 3) If you publish as Project Page (i.e. `https://<user>.github.io/<repo>/`), set env `BASE_PATH=/island-travel-echo-clone/` in the build step or in repo secrets. For User/Org Page (`https://<user>.github.io/`), `BASE_PATH` can be omitted.
 4) After first successful deploy, you’ll see the public URL in the Actions logs and in Settings → Pages.
 
+### Quick guide: enable GitHub Pages + permissions (required)
+
+If your Actions deployment fails with errors like "Get Pages site failed" or "Resource not accessible by integration", you must enable Pages and grant write permissions to workflows.
+
+1) Enable Pages source:
+	- Open Settings → Pages: `https://github.com/<user>/island-travel-echo-clone/settings/pages`
+	- In "Build and deployment" set Source = "GitHub Actions"
+	- Click Save
+
+2) Grant workflow write permissions (once per repo):
+	- Open Settings → Actions → General: `https://github.com/<user>/island-travel-echo-clone/settings/actions`
+	- Scroll to "Workflow permissions"
+	- Select "Read and write permissions" and Save
+
+3) Re-run deployment:
+	- Go to Actions, open the latest failed run, click "Re-run all jobs"
+	- Or push any commit to main to trigger a new deployment
+
+URL will be: `https://<user>.github.io/island-travel-echo-clone/`
+
+### Alternatives: Vercel / Netlify (optional)
+
+This is a static SPA built with Vite/React. You can deploy on Vercel or Netlify in minutes:
+
+- Vercel
+  - Import repo in Vercel dashboard → Framework: Vite → Build: `npm run build` → Output: `dist/`
+- Netlify
+  - New site from Git → Build command: `npm run build` → Publish directory: `dist`
+
+No extra routing config needed (SPA fallback is provided by copying `index.html` to `404.html` during postbuild).
+
 
 ## Can I connect a custom domain to my Lovable project?
 

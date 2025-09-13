@@ -1,3 +1,12 @@
+import patongImg from "@/assets/patong-beach.jpg";
+import kataImg from "@/assets/kata-beach.jpg";
+import karonImg from "@/assets/karon-beach.jpg";
+import naiharnImg from "@/assets/naiharn-beach.jpg";
+import surinImg from "@/assets/surin-beach.jpg";
+import kamalaImg from "@/assets/kamala-beach.jpg";
+import bangtaoImg from "@/assets/bangtao-beach.jpg";
+import maiKhaoImg from "@/assets/mai-khao-beach.jpg";
+
 export type Beach = {
   id: string;
   title: string;
@@ -12,6 +21,8 @@ export type Beach = {
   services?: string[];
   reviews?: { user: string; text: string; rating: number }[];
   map?: string;
+  tips?: string[];
+  faq?: { q: string; a: string }[];
   info?: {
     length?: string;
     sand?: string;
@@ -19,6 +30,20 @@ export type Beach = {
     bestTime?: string;
     transport?: string;
   };
+  pros?: string[];
+  cons?: string[];
+  zones?: { name: string; desc: string }[];
+  safetyTips?: string[];
+  prices?: {
+    sunbed?: string;
+    umbrella?: string;
+    jetSki?: string;
+    banana?: string;
+    parasailing?: string;
+    sup?: string;
+    kayak?: string;
+  };
+  hotels?: { name: string; url?: string; rating?: number; distance?: string }[];
 };
 
 // Единый источник данных пляжей (объединяет то, что уже было на страницах)
@@ -52,64 +77,99 @@ export const beaches: Beach[] = [
     id: "kata",
     title: "Пляж Ката",
     description: "Один из самых популярных пляжей Пхукета. Идеален для семейного отдыха.",
-    image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80",
+    image: kataImg,
     location: "Западное побережье",
     rating: 4.8,
     tags: ["Семейный", "Сёрфинг", "Рестораны"],
     price: 0,
     popularity: 5,
     gallery: [
-      "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80",
+      kataImg,
       "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80"
     ],
     services: ["Сёрфинг", "Рестораны", "Прокат лежаков", "Детские площадки"],
     reviews: [
       { user: "Иван", text: "Отличный пляж для всей семьи!", rating: 5 },
       { user: "Мария", text: "Чисто, красиво, много кафе.", rating: 4.5 }
     ],
-    map: "https://www.google.com/maps"
+    map: "https://www.google.com/maps",
+    info: {
+      length: "~1.5 км",
+      sand: "Светлый, мягкий",
+      infrastructure: "Сёрф-школы, кафе, набережная",
+      bestTime: "Ноябрь — апрель (купание), май—октябрь (сёрфинг)",
+      transport: "Тук-тук, такси, автобус из Пхукет-тауна, аренда скутера"
+    },
+    tips: [
+      "Для сёрфинга удобнее южная часть пляжа",
+      "Утром меньше людей и чище вода",
+      "При сильной волне пригодятся рифовые тапочки",
+      "Загляните на смотровую Karon Viewpoint неподалёку"
+    ],
+    faq: [
+      { q: "Есть ли спасатели?", a: "Да, в высокий сезон на Кате дежурят спасатели." },
+      { q: "Можно ли арендовать доску для сёрфинга?", a: "Да, рядом с пляжем работают сёрф-станции и школы." },
+      { q: "Подходит ли для детей?", a: "Да, вне сезона волн море спокойное; следите за флагами безопасности." },
+      { q: "Есть парковка?", a: "Есть бесплатные и платные места у дороги и у кафе." },
+      { q: "Где лежаки?", a: "Лежаки и зонты доступны на выделенных участках, оплата на месте." }
+    ]
   },
   {
     id: "karon",
     title: "Пляж Карон",
     description: "Протяжённый пляж с мягким песком и развитой инфраструктурой.",
-    image: "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80",
+    image: karonImg,
     location: "Западное побережье",
     rating: 4.6,
     tags: ["Длинный", "Активный отдых", "Бары"],
     price: 0,
     popularity: 4,
     gallery: [
-      "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80",
+      karonImg,
       "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80"
     ],
     services: ["Пляжный волейбол", "Бары", "Прокат скутеров"],
     reviews: [
       { user: "Олег", text: "Очень длинный пляж, удобно гулять!", rating: 4.7 },
       { user: "Светлана", text: "Много развлечений и кафе.", rating: 4.3 }
     ],
-    map: "https://www.google.com/maps"
+    map: "https://www.google.com/maps",
+    info: {
+      length: "~3 км",
+      sand: "Золотистый, 'поющий' песок",
+      infrastructure: "Кафе, бары, массаж, спортплощадки",
+      bestTime: "Ноябрь — апрель",
+      transport: "Тук-тук, такси, автобус, аренда скутера"
+    },
+    tips: [
+      "В сезон волн следите за красными флагами — течение может быть сильным",
+      "Закаты на Кароне особенно красивые — приходите к 18:00",
+      "Южная часть ближе к Ката обычно спокойнее",
+      "Удобно бегать и гулять по длинной кромке воды"
+    ],
+    faq: [
+      { q: "Есть ли спасатели?", a: "Да, на популярных участках работают спасатели." },
+      { q: "Подходит ли для детей?", a: "Да, но при волне будьте внимательны — выход в воду местами резкий." },
+      { q: "Есть ли сёрфинг?", a: "Летом часто бывают волны, возможен сёрфинг для начинающих." },
+      { q: "Где меньше людей?", a: "Ближе к северному краю и утром народу меньше." }
+    ]
   },
   {
     id: "naiharn",
     title: "Пляж Най Харн",
     description: "Уединённый пляж с чистой водой и живописными видами.",
-    image: "https://images.unsplash.com/photo-1465378552550-1caf2b7b2a45?auto=format&fit=crop&w=800&q=80",
+    image: naiharnImg,
     location: "Южное побережье",
     rating: 4.7,
     tags: ["Уединённый", "Красивый", "Для пар"],
     price: 0,
     popularity: 3,
     gallery: [
-      "https://images.unsplash.com/photo-1465378552550-1caf2b7b2a45?auto=format&fit=crop&w=800&q=80",
+      naiharnImg,
       "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
     ],
     services: ["Йога", "Прокат сапбордов", "Кафе"],
     reviews: [
@@ -122,18 +182,16 @@ export const beaches: Beach[] = [
     id: "patong",
     title: "Пляж Патонг",
     description: "Самый оживлённый пляж Пхукета: бары, клубы, развлечения и набережная.",
-    image: "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80",
+    image: patongImg,
     location: "Западное побережье, центр туристической жизни",
     rating: 4.2,
     tags: ["Ночная жизнь", "Бары", "Развлечения", "Активный отдых", "Магазины", "Вечеринки"],
     price: 0,
     popularity: 5,
     gallery: [
-      "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80",
+      patongImg,
       "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80"
     ],
     services: [
       "Ночные клубы и бары (Bangla Road)",
@@ -154,23 +212,71 @@ export const beaches: Beach[] = [
       infrastructure: "Максимальная: бары, клубы, магазины, массаж, водные развлечения",
       bestTime: "Ноябрь — апрель",
       transport: "Такси, тук-тук, автобусы, аренда скутера"
-    }
+    },
+    pros: [
+      "Лучшая инфраструктура на острове",
+      "Множество кафе, баров, клубов и магазинов",
+      "Длинная набережная для прогулок",
+      "Простой доступ транспортом из любой точки"
+    ],
+    cons: [
+      "Многолюдно в высокий сезон",
+      "Шумно вечером (особенно у Bangla Road)",
+      "Летом бывают сильные волны и течения"
+    ],
+    zones: [
+      { name: "Северная часть", desc: "Спокойнее, чище вода, меньше шума и людей." },
+      { name: "Центр (Bangla Road)", desc: "Самая оживлённая зона: бары, клубы, ночная жизнь." },
+      { name: "Южная часть", desc: "Ближе к Три Трангу и Paradise, умеренно людно, удобный вход." }
+    ],
+    safetyTips: [
+      "Следите за цветом флагов: красный — купание запрещено",
+      "Во время волн купайтесь на мелководье и не заплывайте за буйки",
+      "Держитесь подальше от гидроциклов и зон старта парасейлинга"
+    ],
+    prices: {
+      sunbed: "от 100–150 бат/день",
+      umbrella: "включён с лежаком или ~50 бат",
+      jetSki: "1500–2500 бат/30 мин (торг уместен)",
+      banana: "400–600 бат/чел",
+      parasailing: "1500–2000 бат/полет",
+      sup: "200–300 бат/час",
+      kayak: "200–300 бат/час"
+    },
+    hotels: [
+      { name: "Holiday Inn Resort Phuket", url: "https://www.holidayinn.com/", rating: 4.4, distance: "у пляжа" },
+      { name: "Baan Laimai Beach Resort", rating: 4.3, distance: "1-я линия" },
+      { name: "The Kee Resort & Spa", rating: 4.3, distance: "рядом с Bangla Road" }
+    ],
+    tips: [
+      "Лучшее время — ноябрь–апрель (сухой сезон)",
+      "За тусовкой — Bangla Road; за спокойствием — северная часть пляжа",
+      "Берите солнцезащиту и головной убор: днём жарко",
+      "Прокат лежаков и зонтов — ориентир от 100 бат/день",
+      "Вечером пройдитесь по набережной и ночным рынкам"
+    ],
+    faq: [
+      { q: "Есть ли спасатели на пляже?", a: "Да, в дневное время на Патонге дежурят спасатели." },
+      { q: "Можно ли арендовать скутер или велосипед?", a: "Да, прокат доступен рядом с пляжем и в отелях." },
+      { q: "Есть ли туалеты и душевые?", a: "Да, инфраструктура развита: есть туалеты, душевые и камеры хранения." },
+      { q: "Подходит ли Патонг для детей?", a: "Днём — да (спокойные участки на севере), ночью в центре шумно." },
+      { q: "Где лучше купаться?", a: "Чище и спокойнее вода обычно в северной части пляжа." }
+    ]
   },
   {
     id: "surin",
     title: "Пляж Сурин",
     description: "Элитный пляж с белым песком и чистой водой.",
-    image: "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80",
+    image: surinImg,
     location: "Северо-западное побережье",
     rating: 4.5,
     tags: ["Элитный", "Кафе", "Рестораны"],
     price: 0,
     popularity: 4,
     gallery: [
-      "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80",
+      surinImg,
       "https://images.unsplash.com/photo-1465378552550-1caf2b7b2a45?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
     ],
     services: ["Кафе", "Рестораны", "Пляжные вечеринки"],
     reviews: [
@@ -183,63 +289,98 @@ export const beaches: Beach[] = [
     id: "kamala",
     title: "Пляж Камала",
     description: "Спокойный пляж для семей с детьми. Рядом парк Phuket Fantasea.",
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+    image: kamalaImg,
     location: "Западное побережье",
     rating: 4.4,
     tags: ["Семейный", "Дети", "Парк развлечений"],
     price: 0,
     popularity: 3,
     gallery: [
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+      kamalaImg,
       "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80"
     ],
     services: ["Парк развлечений", "Детские площадки", "Кафе"],
     reviews: [
       { user: "Ольга", text: "Дети в восторге от парка!", rating: 4.5 },
       { user: "Игорь", text: "Очень спокойный пляж.", rating: 4.3 }
     ],
-    map: "https://www.google.com/maps"
+    map: "https://www.google.com/maps",
+    info: {
+      length: "~2 км",
+      sand: "Мелкий, мягкий",
+      infrastructure: "Семейные кафе и отели, рядом Phuket Fantasea",
+      bestTime: "Ноябрь — апрель",
+      transport: "Тук-тук, такси, местный автобус, скутер"
+    },
+    tips: [
+      "Северная часть пляжа обычно спокойнее",
+      "Много тени от деревьев — удобно с детьми",
+      "Вечером работает рынок и стритфуд у дороги",
+      "Шоу-парк Phuket Fantasea расположен рядом"
+    ],
+    faq: [
+      { q: "Есть ли тень?", a: "Да, вдоль пляжа растут деревья, много естественной тени." },
+      { q: "Где перекусить?", a: "На набережной много семейных кафе и ресторанов." },
+      { q: "Безопасно ли купаться детям?", a: "Как правило да, следите за флагами и волной в низкий сезон." },
+      { q: "Есть парковка?", a: "Есть у дороги и у кафе, в высокий сезон может быть занято." }
+    ]
   },
   {
     id: "bangtao",
     title: "Пляж Банг Тао",
     description: "Один из самых длинных пляжей острова. Лучшие отели и виллы.",
-    image: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
+    image: bangtaoImg,
     location: "Северо-западное побережье",
     rating: 4.6,
     tags: ["Длинный", "Отели", "Виллы"],
     price: 0,
     popularity: 4,
     gallery: [
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
+      bangtaoImg,
       "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
     ],
     services: ["Отели", "Виллы", "Пляжные бары"],
     reviews: [
       { user: "Сергей", text: "Очень длинный пляж, много места!", rating: 4.6 },
       { user: "Елена", text: "Красивые виллы и отличный сервис.", rating: 4.7 }
     ],
-    map: "https://www.google.com/maps"
+    map: "https://www.google.com/maps",
+    info: {
+      length: "~6 км",
+      sand: "Светлый, мягкий",
+      infrastructure: "Зона Laguna: отели, рестораны, пляжные бары, Boat Avenue",
+      bestTime: "Ноябрь — апрель",
+      transport: "Такси, аренда авто/скутера, местные автобусы"
+    },
+    tips: [
+      "Юг пляжа оживлённее (Boat Avenue, рестораны), север — тише и уединённее",
+      "Протяжённость большая — удобнее иметь транспорт",
+      "Кайтсерфинг возможен в ветреные дни",
+      "Закаты на Банг Тао очень живописные — приходите к 18:00"
+    ],
+    faq: [
+      { q: "Есть ли лежаки и зонты?", a: "Да, на выделенных участках пляжа, оплата на месте." },
+      { q: "Где поесть?", a: "Много ресторанов в зоне Laguna и на Boat Avenue." },
+      { q: "Подходит ли для детей?", a: "Да, особенно в спокойную погоду; глубина нарастает постепенно." },
+      { q: "Есть водные развлечения?", a: "Да, каяки, SUP, иногда кайтсерфинг; предложения у отелей и прокатов." }
+    ]
   },
   {
     id: "mai-khao",
     title: "Пляж Май Кхао",
     description: "Дикий и малолюдный пляж, рядом аэропорт — вид на посадку самолётов.",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+    image: maiKhaoImg,
     location: "Северное побережье",
     rating: 4.3,
     tags: ["Дикий", "Аэропорт", "Уединённый"],
     price: 0,
     popularity: 2,
     gallery: [
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+      maiKhaoImg,
       "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80"
     ],
     services: ["Аэропорт", "Уединённый отдых", "Пикники"],
     reviews: [
@@ -248,49 +389,247 @@ export const beaches: Beach[] = [
     ],
     map: "https://www.google.com/maps"
   },
+  
   {
-    id: "naiyang",
-    title: "Пляж Най Янг",
-    description: "Пляж в национальном парке, идеален для пикников и снорклинга.",
-    image: "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80",
-    location: "Северное побережье",
-    rating: 4.4,
-    tags: ["Парк", "Снорклинг", "Пикник"],
+    id: "kata-noi",
+    title: "Пляж Ката Ной",
+    description: "Небольшой уютный пляж рядом с Ката, спокойное море и мягкий песок.",
+    image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80",
+    location: "Западное побережье",
+    rating: 4.8,
+    tags: ["Семейный", "Уютный", "Купание"],
     price: 0,
-    popularity: 3,
+    popularity: 4,
     gallery: [
-      "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
     ],
-    services: ["Пикники", "Снорклинг", "Прокат лежаков"],
+    services: ["Прокат лежаков", "Кафе", "Массаж"],
     reviews: [
-      { user: "Алексей", text: "Отличное место для снорклинга!", rating: 4.4 },
-      { user: "Марина", text: "Понравился национальный парк.", rating: 4.5 }
+      { user: "Роман", text: "Очень уютно и спокойно", rating: 4.8 }
     ],
     map: "https://www.google.com/maps"
   },
   {
-    id: "freedom",
-    title: "Пляж Фридом",
-    description: "Маленький уединённый пляж с белым песком и лазурной водой.",
-    image: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
-    location: "Западное побережье",
+    id: "rawai",
+    title: "Пляж Равай",
+    description: "Пляж рыбацких лодок и морепродуктов, отличная набережная и кафе.",
+    image: "https://images.unsplash.com/photo-1465378552550-1caf2b7b2a45?auto=format&fit=crop&w=800&q=80",
+    location: "Южное побережье",
+    rating: 4.3,
+    tags: ["Кафе", "Рыбный рынок", "Набережная"],
+    price: 0,
+    popularity: 3,
+    gallery: [
+      "https://images.unsplash.com/photo-1465378552550-1caf2b7b2a45?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80"
+    ],
+    services: ["Рестораны морепродуктов", "Рынок", "Пирс"],
+    reviews: [
+      { user: "Ирина", text: "Лучшие морепродукты на Пхукете!", rating: 4.6 }
+    ],
+    map: "https://www.google.com/maps"
+  },
+  {
+    id: "ya-nui",
+    title: "Пляж Я Нуй",
+    description: "Маленькая бухта между Раваем и мысом Промтеп, отличен для снорклинга.",
+    image: "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80",
+    location: "Южное побережье",
     rating: 4.7,
-    tags: ["Уединённый", "Лодка", "Красивый"],
+    tags: ["Снорклинг", "Уединённый", "Живописный"],
+    price: 0,
+    popularity: 3,
+    gallery: [
+      "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80"
+    ],
+    services: ["Снорклинг", "Каяки", "Кафе"],
+    reviews: [
+      { user: "Павел", text: "Отличное место для маски!", rating: 4.7 }
+    ],
+    map: "https://www.google.com/maps"
+  },
+  {
+    id: "ao-sane",
+    title: "Пляж Ао Сане",
+    description: "Каменистая уютная бухта рядом с Най Харном, чистая вода, снорклинг.",
+    image: "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80",
+    location: "Южное побережье",
+    rating: 4.5,
+    tags: ["Снорклинг", "Уединённый", "Каменистый"],
+    price: 0,
+    popularity: 2,
+    gallery: [
+      "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80"
+    ],
+    services: ["Кафе", "Лежаки", "Снорклинг"],
+    reviews: [
+      { user: "Николай", text: "Чистая вода и рыбы у берега", rating: 4.6 }
+    ],
+    map: "https://www.google.com/maps"
+  },
+  {
+    id: "tri-trang",
+    title: "Пляж Три Транг",
+    description: "Спокойная альтернатива Патонгу рядом, меньше людей и чище вода.",
+    image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80",
+    location: "Западное побережье",
+    rating: 4.4,
+    tags: ["Рядом с Патонг", "Спокойный", "Кафе"],
+    price: 0,
+    popularity: 3,
+    gallery: [
+      "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80"
+    ],
+    services: ["Кафе", "Лежаки", "Прокат каяков"],
+    reviews: [
+      { user: "Саша", text: "Тихо и спокойно", rating: 4.5 }
+    ],
+    map: "https://www.google.com/maps"
+  },
+  {
+    id: "paradise-beach",
+    title: "Paradise Beach",
+    description: "Небольшая бухта с прозрачной водой, клубы и мероприятия в высокий сезон.",
+    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+    location: "Западное побережье",
+    rating: 4.4,
+    tags: ["Клубы", "Прозрачная вода", "Снорклинг"],
+    price: 0,
+    popularity: 3,
+    gallery: [
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80"
+    ],
+    services: ["Пляжный клуб", "Бар", "Снорклинг"],
+    reviews: [
+      { user: "Алёна", text: "Красиво и атмосферно", rating: 4.5 }
+    ],
+    map: "https://www.google.com/maps"
+  },
+  {
+    id: "kalim",
+    title: "Пляж Калим",
+    description: "Продолжение Патонга на севере, каменистые участки и волнорезы, стритфуд.",
+    image: "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80",
+    location: "Западное побережье",
+    rating: 4.2,
+    tags: ["Стритфуд", "Набережная", "Сёрфинг (сезон)"],
+    price: 0,
+    popularity: 3,
+    gallery: [
+      "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80"
+    ],
+    services: ["Стритфуд", "Парковка", "Кафе"],
+    reviews: [
+      { user: "Григорий", text: "Вкусные ночные рынки у дороги", rating: 4.2 }
+    ],
+    map: "https://www.google.com/maps"
+  },
+  {
+    id: "nai-thon",
+    title: "Пляж Най Тхон",
+    description: "Спокойный пляж к северу от Най Янга, чистый песок и мало людей.",
+    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+    location: "Северо-запад",
+    rating: 4.5,
+    tags: ["Спокойный", "Семейный", "Чистый"],
+    price: 0,
+    popularity: 2,
+    gallery: [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80"
+    ],
+    services: ["Лежаки", "Кафе"],
+    reviews: [
+      { user: "Катя", text: "Очень спокойно и красиво", rating: 4.6 }
+    ],
+    map: "https://www.google.com/maps"
+  },
+  {
+    id: "pansea",
+    title: "Пляж Пансеа",
+    description: "Маленький пляж между Сурином и Банг Тао, доступ чаще через отели.",
+    image: "https://images.unsplash.com/photo-1465378552550-1caf2b7b2a45?auto=format&fit=crop&w=800&q=80",
+    location: "Северо-запад",
+    rating: 4.3,
+    tags: ["Уединённый", "Отели", "Красивый"],
+    price: 0,
+    popularity: 2,
+    gallery: [
+      "https://images.unsplash.com/photo-1465378552550-1caf2b7b2a45?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80"
+    ],
+    services: ["Кафе (отели)", "Лежаки"],
+    reviews: [
+      { user: "Оксана", text: "Очень красиво, но доступ ограничен", rating: 4.2 }
+    ],
+    map: "https://www.google.com/maps"
+  },
+  {
+    id: "panwa",
+    title: "Пляж Панва",
+    description: "Уютные бухты на мысе Панва, красивые виды на залив.",
+    image: "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80",
+    location: "Юго-восток",
+    rating: 4.3,
+    tags: ["Спокойный", "Виды", "Отели"],
+    price: 0,
+    popularity: 2,
+    gallery: [
+      "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80"
+    ],
+    services: ["Кафе", "Отели", "Пирс"],
+    reviews: [
+      { user: "Станислав", text: "Красивые рассветы", rating: 4.4 }
+    ],
+    map: "https://www.google.com/maps"
+  },
+  {
+    id: "ao-yon",
+    title: "Пляж Ао Йон",
+    description: "Тихая бухта на мысе Панва, спокойная вода круглый год.",
+    image: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
+    location: "Юго-восток",
+    rating: 4.5,
+    tags: ["Спокойный", "Купание", "Семейный"],
     price: 0,
     popularity: 2,
     gallery: [
       "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
+    ],
+    services: ["Кафе", "Отели"],
+    reviews: [
+      { user: "Тимур", text: "Без волн — идеален для детей", rating: 4.6 }
+    ],
+    map: "https://www.google.com/maps"
+  },
+  {
+    id: "laem-singh",
+    title: "Пляж Лаем Синг (ограниченный доступ)",
+    description: "Живописная бухта между Сурином и Камалой, доступ иногда ограничен.",
+    image: "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80",
+    location: "Северо-запад",
+    rating: 4.4,
+    tags: ["Живописный", "Уединённый", "Доступ ограничен"],
+    price: 0,
+    popularity: 2,
+    gallery: [
+      "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80"
     ],
-    services: ["Лодка", "Уединённый отдых", "Красивые виды"],
+    services: ["Смотровые точки", "Лодка"],
     reviews: [
-      { user: "Дмитрий", text: "Очень красивый пляж, мало людей.", rating: 4.8 },
-      { user: "Евгения", text: "Добраться только на лодке, но стоит!", rating: 4.7 }
+      { user: "Жанна", text: "Очень красиво, но с доступом бывает сложно", rating: 4.3 }
     ],
     map: "https://www.google.com/maps"
   }

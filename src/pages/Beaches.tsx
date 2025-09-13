@@ -53,6 +53,16 @@ const BeachesPage: React.FC = () => {
         <title>Пляжи Пхукета — лучшие пляжи, фото, описание, отзывы</title>
         <meta name="description" content="Обзор лучших пляжей Пхукета: фото, описание, рейтинг, отзывы, расположение. Выберите идеальный пляж для отдыха!" />
         <meta name="keywords" content="Пхукет, пляжи, отдых, рейтинг, отзывы, фото, карта" />
+        <link rel="canonical" href={`https://johnda7.github.io/island-travel-echo-clone/beaches`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Пляжи Пхукета — лучшие пляжи, фото, описание, отзывы" />
+        <meta property="og:description" content="Обзор лучших пляжей Пхукета: фото, описание, рейтинг, отзывы, расположение." />
+        <meta property="og:url" content="https://johnda7.github.io/island-travel-echo-clone/beaches" />
+        <meta property="og:image" content="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Пляжи Пхукета — лучшие пляжи, фото, описание, отзывы" />
+        <meta name="twitter:description" content="Обзор лучших пляжей Пхукета: фото, описание, рейтинг, отзывы, расположение." />
+        <meta name="twitter:image" content="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" />
       </Helmet>
       <Header />
       <div className="min-h-screen bg-gray-50 pt-16">

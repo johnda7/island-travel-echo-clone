@@ -10,6 +10,12 @@ import { getBeachById, beaches as allBeaches } from "@/data/beaches";
 function BeachDetail() {
   const { id } = useParams();
   const beach = id ? getBeachById(id) : undefined;
+  const getEmbedMapUrl = (title: string, raw?: string) => {
+    if (raw && /\/maps\/embed|output=embed/.test(raw)) return raw;
+    // Простой и надёжный вариант без API: query + output=embed
+    const q = encodeURIComponent(`${title} Phuket`);
+    return `https://www.google.com/maps?q=${q}&output=embed`;
+  };
   const related = beach
     ? allBeaches
         .filter((b) => b.id !== beach.id && b.tags?.some((t) => beach.tags?.includes(t)))
@@ -127,11 +133,11 @@ function BeachDetail() {
           </div>
 
           {/* Карта */}
-          <div className="mb-8">
+          <div className="mb-8" id="map">
             <h3 className="font-semibold mb-2 text-blue-700">Расположение на карте</h3>
             <div className="rounded-xl overflow-hidden shadow-lg">
               <iframe
-                src={beach.map}
+                src={getEmbedMapUrl(beach.title, beach.map)}
                 title="Карта пляжа"
                 width="100%"
                 height="300"

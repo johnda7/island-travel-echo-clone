@@ -40,6 +40,11 @@ import Hramy from "./pages/attractions/Hramy";
 import Muzei from "./pages/attractions/Muzei";
 import NochnyeRynki from "./pages/attractions/NochnyeRynki";
 
+// What-to-visit components
+import WhatToVisitDostoprimechatelnosti from "./pages/what-to-visit/Dostoprimechatelnosti";
+import WhatToVisitEkskursii from "./pages/what-to-visit/Ekskursii";
+import WhatToVisitRazvlecheniya from "./pages/what-to-visit/Razvlecheniya";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -65,6 +70,9 @@ const App = () => (
           <Route path="/beach/:id" element={<BeachDetail />} />
           <Route path="/excursion/:slug" element={<ExcursionDetail />} />
           <Route path="/what-to-visit" element={<WhatToVisit />} />
+          <Route path="/what-to-visit/dostoprimechatelnosti" element={<WhatToVisitDostoprimechatelnosti />} />
+          <Route path="/what-to-visit/ekskursii" element={<WhatToVisitEkskursii />} />
+          <Route path="/what-to-visit/razvlecheniya" element={<WhatToVisitRazvlecheniya />} />
           <Route path="/dostoprimechatelnosti" element={<Attractions />} />
           <Route path="/attractions/plyazhi" element={<Plyazhi />} />
           <Route path="/attractions/dostoprimechatelnosti" element={<Dostoprimechatelnosti />} />

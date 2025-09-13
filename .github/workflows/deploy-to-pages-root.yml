@@ -14,6 +14,7 @@ on:
       - 'eslint.config.js'
       - '.github/workflows/deploy-to-pages-root.yml'
       - 'scripts/**'
+      - 'index.html'
   workflow_dispatch:
 
 permissions:

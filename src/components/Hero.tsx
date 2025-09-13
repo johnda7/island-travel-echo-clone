@@ -28,9 +28,6 @@ export const Hero = () => {
           <Button size="lg" className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8 py-3 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
             Забронировать тур
           </Button>
-          <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-blue-900 px-8 py-3 text-lg rounded-full transition-all duration-300">
-            Узнать больше
-          </Button>
         </div>
       </div>
       

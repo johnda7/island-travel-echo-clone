@@ -53,18 +53,6 @@ export const Header = () => {
               </svg>
               <span className="text-blue-700 group-hover:text-cyan-600 font-medium text-sm">Чат Пхукет Da</span>
             </a>
-            {/* Menu icon for mobile/desktop */}
-            <button
-              className="p-2 focus:outline-none"
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label="Открыть меню"
-            >
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect y="6" width="28" height="2.5" rx="1.25" fill="#2563eb" />
-                <rect y="13" width="28" height="2.5" rx="1.25" fill="#2563eb" />
-                <rect y="20" width="28" height="2.5" rx="1.25" fill="#2563eb" />
-              </svg>
-            </button>
           </div>
 
           {/* Desktop Navigation */}

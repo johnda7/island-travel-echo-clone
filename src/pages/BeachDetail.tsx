@@ -10,10 +10,10 @@ import { getBeachById, beaches as allBeaches } from "@/data/beaches";
 function BeachDetail() {
   const { id } = useParams();
   const beach = id ? getBeachById(id) : undefined;
-  const getEmbedMapUrl = (title: string, raw?: string) => {
+  const getEmbedMapUrl = (title: string, raw?: string, location?: string) => {
     if (raw && /\/maps\/embed|output=embed/.test(raw)) return raw;
     // Простой и надёжный вариант без API: query + output=embed
-    const q = encodeURIComponent(`${title} Phuket`);
+    const q = encodeURIComponent(`${title}, ${location ?? "Phuket"}, Phuket, Thailand`);
     return `https://www.google.com/maps?q=${q}&output=embed`;
   };
   const related = beach
@@ -137,11 +137,12 @@ function BeachDetail() {
             <h3 className="font-semibold mb-2 text-blue-700">Расположение на карте</h3>
             <div className="rounded-xl overflow-hidden shadow-lg">
               <iframe
-                src={getEmbedMapUrl(beach.title, beach.map)}
+                src={getEmbedMapUrl(beach.title, beach.map, beach.location)}
                 title="Карта пляжа"
                 width="100%"
                 height="300"
                 style={{ border: 0 }}
+                referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen
                 loading="lazy"
               ></iframe>

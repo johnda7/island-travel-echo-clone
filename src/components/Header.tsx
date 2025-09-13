@@ -1,5 +1,6 @@
 
 import { Button } from "@/components/ui/button";
+import { Upload } from "lucide-react";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import { useState } from "react";
@@ -96,15 +97,11 @@ export const Header = () => {
                 </Link>
               )
             ))}
-            <a
-              href={actionsDeployUrl}
-              target="_blank"
-              rel="noopener"
-              className="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium"
-              title="Открыть страницу деплоя в GitHub Actions"
-            >
-              Опубликовать обновление
-            </a>
+            <Button asChild variant="secondary" size="sm" title="Открыть страницу деплоя в GitHub Actions">
+              <a href={actionsDeployUrl} target="_blank" rel="noopener" className="flex items-center">
+                <Upload className="mr-1 h-4 w-4" /> Опубликовать
+              </a>
+            </Button>
           </nav>
 
           {/* Contact Info & CTA */}
@@ -164,15 +161,11 @@ export const Header = () => {
                 <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500">
                   Заказать звонок
                 </Button>
-                <a
-                  href={actionsDeployUrl}
-                  target="_blank"
-                  rel="noopener"
-                  className="block text-center mt-3 text-sm text-gray-600 underline hover:text-blue-600"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Опубликовать обновление
-                </a>
+                <Button asChild variant="secondary" size="sm" className="w-full mt-3" title="Открыть страницу деплоя в GitHub Actions">
+                  <a href={actionsDeployUrl} target="_blank" rel="noopener" onClick={() => setIsOpen(false)}>
+                    <span className="inline-flex items-center gap-2"><Upload className="h-4 w-4"/> Опубликовать</span>
+                  </a>
+                </Button>
               </div>
             </nav>
           </div>

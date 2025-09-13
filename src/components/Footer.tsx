@@ -26,6 +26,11 @@ export const Footer = () => {
               Ваша мечта о райском отдыхе станет реальностью с нами.
             </p>
             <div className="flex space-x-4">
+              <a href="https://t.me/phuketGoo" target="_blank" rel="noopener" className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors shadow-md">
+                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16l-1.61 7.591c-.12.539-.437.67-.887.417l-2.456-1.81-1.185 1.14c-.131.131-.242.242-.495.242l.177-2.517 4.589-4.147c.199-.177-.043-.275-.309-.098l-5.674 3.573L7.784 13.5c-.542-.169-.551-.542.113-.802l10.057-3.875c.451-.179.847.106.703.637z"/>
+                </svg>
+              </a>
               <a href="#" className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-700 transition-colors shadow-md">
                 <Facebook className="w-5 h-5" />
               </a>

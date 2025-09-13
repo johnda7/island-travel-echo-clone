@@ -11,12 +11,23 @@ function run() {
     console.error("postbuild: dist/index.html not found");
     process.exit(0);
   }
+  
   const ts = new Date().toISOString();
   let html = fs.readFileSync(indexPath, "utf8");
-  html += `\n<!-- build:${ts} -->\n`;
+  
+  // Удаляем предыдущие метки сборки, если они уже есть
+  html = html.replace(/<!-- build:.*? -->\n/g, "");
+  
+  // Добавляем новую метку сборки
+  const buildMark = `<!-- build:${ts} -->\n`;
+  html += buildMark;
+  
+  // Сохраняем файлы
   fs.writeFileSync(indexPath, html, "utf8");
   fs.writeFileSync(fallbackPath, html, "utf8");
+  
   console.log("postbuild: appended build timestamp and wrote 404.html");
+  console.log(`postbuild: timestamp - ${ts}`);
 }
 
 run();

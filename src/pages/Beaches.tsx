@@ -29,7 +29,7 @@ const BeachesPage: React.FC = () => {
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const sort = e.target.value;
     setSortBy(sort);
-    let sorted = [...filteredBeaches];
+  const sorted = [...filteredBeaches];
     if (sort === "popularity") {
       sorted.sort((a, b) => b.popularity - a.popularity);
     } else if (sort === "rating") {

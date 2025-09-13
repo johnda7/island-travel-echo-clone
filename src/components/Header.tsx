@@ -9,16 +9,19 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
   const location = useLocation();
   const searchRef = useRef<HTMLDivElement>(null);
+  const mobileSearchRef = useRef<HTMLDivElement>(null);
 
   // Tours data for search
   const allTours = [
     { name: "Пхи-Пхи 2 дня / 1 ночь", href: "/phi-phi-2-days-1-night", description: "Экскурсия с ночёвкой на островах Пхи-Пхи" },
-    { name: "Острова Пхи-Пхи", href: "/phi-phi-islands", description: "Однодневная экскурсия на знаменитые острова" },
+    { name: "Острова Пхи-Пхи на спидботе", href: "/phi-phi-islands-speedboat", description: "Скоростная экскурсия на знаменитые острова" },
+    { name: "Пхи-Пхи Ле и лагуна", href: "/koh-phi-phi-leh-lagoon", description: "Экскурсия к острову Пхи-Пхи Ле и Изумрудной лагуне" },
     { name: "Майя Бей на рассвете", href: "/maya-bay-sunrise", description: "Встреча рассвета в легендарной бухте" },
     { name: "Остров Джеймса Бонда", href: "/james-bond-island", description: "Экскурсия к острову из фильма о Джеймсе Бонде" },
-    { name: "11 островов", href: "/eleven-islands-standard", description: "Большое путешествие по 11 островам" },
+    { name: "11 островов стандарт", href: "/eleven-islands-standard", description: "Большое путешествие по 11 островам" },
     { name: "Коралловый остров + Парасейлинг", href: "/coral-island-parasailing", description: "Водные развлечения и парасейлинг" },
     { name: "Остров Рача Яй", href: "/racha-yai-island", description: "Снорклинг на живописном острове" },
     { name: "Наблюдение за китами", href: "/whale-watching-tour", description: "Уникальная экскурсия для наблюдения за китами" }
@@ -35,6 +38,10 @@ export const Header = () => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setShowSearchResults(false);
+      }
+      if (mobileSearchRef.current && !mobileSearchRef.current.contains(event.target as Node)) {
+        setShowMobileSearch(false);
+        setSearchQuery('');
       }
     };
 
@@ -54,11 +61,15 @@ export const Header = () => {
       href: "/tours",
       subItems: [
         { name: "Все туры", href: "/tours" },
-        { name: "Острова Пхи-Пхи", href: "/phi-phi-islands" },
-        { name: "Городские туры", href: "/city-tours" },
-        { name: "Пляжные туры", href: "/beach-tours" },
-        { name: "Приключенческие туры", href: "/adventure-tours" },
-        { name: "Групповые туры", href: "/group-tours" }
+        { name: "Пхи-Пхи 2 дня / 1 ночь", href: "/phi-phi-2-days-1-night" },
+        { name: "Острова Пхи-Пхи на спидботе", href: "/phi-phi-islands-speedboat" },
+        { name: "Пхи-Пхи Ле и лагуна", href: "/koh-phi-phi-leh-lagoon" },
+        { name: "Майя Бей на рассвете", href: "/maya-bay-sunrise" },
+        { name: "Остров Джеймса Бонда", href: "/james-bond-island" },
+        { name: "11 островов стандарт", href: "/eleven-islands-standard" },
+        { name: "Коралловый остров + Парасейлинг", href: "/coral-island-parasailing" },
+        { name: "Остров Рача Яй", href: "/racha-yai-island" },
+        { name: "Наблюдение за китами", href: "/whale-watching-tour" }
       ]
     },
     { name: "Направления", href: "/destinations" },
@@ -85,7 +96,8 @@ export const Header = () => {
           </Link>
           {/* Search */}
           <div className="flex items-center space-x-4">
-            <div className="relative" ref={searchRef}>
+            {/* Desktop Search */}
+            <div className="hidden md:block relative" ref={searchRef}>
               <input
                 type="text"
                 placeholder="Поиск туров..."
@@ -115,6 +127,54 @@ export const Header = () => {
                       <div className="text-sm text-gray-500">{tour.description}</div>
                     </Link>
                   ))}
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Search */}
+            <div className="md:hidden relative">
+              {!showMobileSearch ? (
+                <button 
+                  className="p-2 text-gray-700 hover:text-green-600 transition-colors"
+                  onClick={() => setShowMobileSearch(true)}
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                  </svg>
+                </button>
+              ) : (
+                <div className="absolute right-0 top-0 w-64 z-50" ref={mobileSearchRef}>
+                  <div className="bg-white border border-gray-300 rounded-lg shadow-lg p-2">
+                    <input
+                      type="text"
+                      placeholder="Поиск туров..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onFocus={() => setShowSearchResults(true)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      autoFocus
+                    />
+                    {/* Mobile Search Results */}
+                    {showSearchResults && searchQuery && filteredTours.length > 0 && (
+                      <div className="mt-2 max-h-60 overflow-y-auto">
+                        {filteredTours.map((tour) => (
+                          <Link
+                            key={tour.href}
+                            to={tour.href}
+                            className="block px-3 py-2 hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
+                            onClick={() => {
+                              setSearchQuery('');
+                              setShowSearchResults(false);
+                              setShowMobileSearch(false);
+                            }}
+                          >
+                            <div className="font-medium text-gray-900 text-sm">{tour.name}</div>
+                            <div className="text-xs text-gray-500">{tour.description}</div>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>

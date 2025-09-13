@@ -36,6 +36,9 @@ jobs:
           BASE_PATH: /island-travel-echo-clone/
           NODE_OPTIONS: --max_old_space_size=4096
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -91,50 +91,101 @@ function BeachDetail() {
             </div>
           </div>
 
-          {/* Галерея */}
-          <div id="gallery" className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-            {beach.gallery.map((img, idx) => (
-              <div key={idx} className="relative group overflow-hidden rounded-xl shadow-lg">
-                <img src={img} alt={beach.title + idx} loading="lazy" className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
-            ))}
-          </div>
-
-          {/* Описание и инфраструктура */}
-          <div id="overview" className="mb-8 bg-blue-50 rounded-xl p-6 shadow text-gray-700">
-            <h2 className="text-2xl font-semibold mb-2 text-blue-700">Описание пляжа</h2>
-            <p className="mb-4 text-lg">{beach.description}</p>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {beach.tags.map(tag => (
-                <span key={tag} className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full font-medium">#{tag}</span>
+          {/* Enhanced Gallery with Modal Functionality */}
+          <div id="gallery" className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-800">Галерея</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {beach.gallery.map((img, idx) => (
+                <div key={idx} className="relative group overflow-hidden rounded-xl shadow-lg cursor-pointer">
+                  <img 
+                    src={img} 
+                    alt={`${beach.title} фото ${idx + 1}`} 
+                    loading="lazy" 
+                    className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+                    <span className="text-white text-sm font-medium">Фото {idx + 1}</span>
+                  </div>
+                  {/* View Icon */}
+                  <div className="absolute top-3 right-3 bg-white/90 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  </div>
+                </div>
               ))}
             </div>
-            <h3 className="font-semibold mb-2 text-blue-700">Инфраструктура и услуги:</h3>
-            <ul className="list-disc pl-5 mb-2">
-              {beach.services.map(service => (
-                <li key={service} className="mb-1">{service}</li>
+          </div>
+
+          {/* Enhanced Description and Infrastructure */}
+          <div id="overview" className="mb-8 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-8 shadow-lg border border-blue-100">
+            <h2 className="text-3xl font-bold mb-4 text-gray-800">Описание пляжа</h2>
+            <p className="mb-6 text-lg leading-relaxed text-gray-700">{beach.description}</p>
+            
+            {/* Tags with Better Styling */}
+            <div className="flex flex-wrap gap-3 mb-6">
+              {beach.tags.map(tag => (
+                <span key={tag} className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-sm px-4 py-2 rounded-full font-medium shadow-md hover:from-blue-600 hover:to-cyan-600 transition-colors">
+                  #{tag}
+                </span>
               ))}
-            </ul>
-            {/* Факты */}
+            </div>
+
+            {/* Services with Icons */}
+            <h3 className="text-xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
+              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H9m0 0H5m0 0h2M7 7h10M7 11h10M7 15h10" />
+              </svg>
+              Инфраструктура и услуги
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+              {beach.services.map((service, idx) => (
+                <div key={idx} className="flex items-center gap-3 bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                    <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span className="text-gray-700 font-medium">{service}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Beach Facts Cards */}
             {beach.info && (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 text-sm">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
                 {beach.info.length && (
-                  <div className="bg-white rounded-lg p-3 shadow-sm">
-                    <div className="text-blue-600 font-semibold">Длина пляжа</div>
-                    <div>{beach.info.length}</div>
+                  <div className="bg-white rounded-xl p-4 shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div className="flex items-center gap-2 mb-2">
+                      <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                      </svg>
+                      <div className="text-blue-700 font-semibold">Длина пляжа</div>
+                    </div>
+                    <div className="text-gray-800 font-medium">{beach.info.length}</div>
                   </div>
                 )}
                 {beach.info.sand && (
-                  <div className="bg-white rounded-lg p-3 shadow-sm">
-                    <div className="text-blue-600 font-semibold">Песок</div>
-                    <div>{beach.info.sand}</div>
+                  <div className="bg-white rounded-xl p-4 shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div className="flex items-center gap-2 mb-2">
+                      <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" />
+                      </svg>
+                      <div className="text-blue-700 font-semibold">Песок</div>
+                    </div>
+                    <div className="text-gray-800 font-medium">{beach.info.sand}</div>
                   </div>
                 )}
                 {beach.info.bestTime && (
-                  <div className="bg-white rounded-lg p-3 shadow-sm">
-                    <div className="text-blue-600 font-semibold">Лучшее время</div>
-                    <div>{beach.info.bestTime}</div>
+                  <div className="bg-white rounded-xl p-4 shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div className="flex items-center gap-2 mb-2">
+                      <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                      </svg>
+                      <div className="text-blue-700 font-semibold">Лучшее время</div>
+                    </div>
+                    <div className="text-gray-800 font-medium">{beach.info.bestTime}</div>
                   </div>
                 )}
               </div>
@@ -316,41 +367,68 @@ function BeachDetail() {
             </ul>
           </div>
 
-          {/* Отзывы */}
+          {/* Enhanced Reviews Section */}
           <div id="reviews" className="mb-8">
-            <h2 className="font-semibold mb-2 text-blue-700">Отзывы: {beach.title}</h2>
-            <div className="space-y-4">
+            <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-2">
+              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              Отзывы о пляже {beach.title}
+            </h2>
+            <div className="space-y-6">
               {beach.reviews.map((review, idx) => (
-                <Card key={idx} className="p-4 bg-blue-50 rounded-xl shadow">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="font-bold text-blue-700">{review.user}</span>
-                    <span className="text-yellow-500">★ {review.rating}</span>
+                <Card key={idx} className="p-6 bg-gradient-to-r from-white to-blue-50 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                  <div className="flex items-start gap-4">
+                    {/* User Avatar */}
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
+                      {review.user[0]}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="font-bold text-gray-800 text-lg">{review.user}</span>
+                        <div className="flex items-center gap-1 bg-yellow-100 px-2 py-1 rounded-full">
+                          <svg className="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                          <span className="text-yellow-700 font-semibold text-sm">{review.rating}</span>
+                        </div>
+                      </div>
+                      <p className="text-gray-700 leading-relaxed text-base">{review.text}</p>
+                    </div>
                   </div>
-                  <p className="text-gray-700">{review.text}</p>
                 </Card>
               ))}
             </div>
           </div>
 
-          {/* Похожие пляжи */}
+          {/* Enhanced Related Beaches */}
           {related.length > 0 && (
             <div id="related" className="mb-10">
-              <h3 className="text-xl font-semibold mb-4 text-blue-700">Похожие пляжи</h3>
+              <h3 className="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-2">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Похожие пляжи
+              </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {related.map((r) => (
-                  <Card key={r.id} className="overflow-hidden rounded-xl border shadow-sm">
-                    <Link to={`/beach/${r.id}`} className="block">
-                      <img src={r.image} alt={r.title} loading="lazy" className="w-full h-40 object-cover" />
+                  <Card key={r.id} className="group overflow-hidden rounded-xl border border-gray-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <Link to={`/beach/${r.id}`} className="block relative">
+                      <img src={r.image} alt={r.title} loading="lazy" className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </Link>
-                    <div className="p-4">
-                      <h4 className="font-semibold text-blue-700 mb-1">{r.title}</h4>
-                      <div className="flex flex-wrap gap-2 mb-3">
+                    <div className="p-6">
+                      <h4 className="font-bold text-lg text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">{r.title}</h4>
+                      <div className="flex flex-wrap gap-2 mb-4">
                         {r.tags?.slice(0,3).map((t) => (
-                          <span key={t} className="bg-blue-50 text-blue-700 text-xs px-2 py-0.5 rounded-full border border-blue-100">#{t}</span>
+                          <span key={t} className="bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-700 text-xs px-3 py-1 rounded-full border border-blue-100 font-medium">#{t}</span>
                         ))}
                       </div>
                       <Link to={`/beach/${r.id}`} className="inline-block">
-                        <Button size="sm">Подробнее</Button>
+                        <Button className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all group-hover:scale-105">
+                          Подробнее
+                        </Button>
                       </Link>
                     </div>
                   </Card>

@@ -5,19 +5,19 @@ const reviews = [
     name: "Алексей П.",
     text: "Отличная организация тура! Всё было четко, интересно и безопасно. Рекомендую!",
     rating: 5,
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg"
+    avatar: "" // Will use initials instead
   },
   {
     name: "Мария К.",
     text: "Пляжи просто супер, гиды профессионалы, сервис на высоте!",
     rating: 5,
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg"
+    avatar: ""
   },
   {
     name: "Игорь С.",
     text: "Очень понравился тур на Пхи-Пхи, всё удобно и красиво!",
     rating: 4.8,
-    avatar: "https://randomuser.me/api/portraits/men/65.jpg"
+    avatar: ""
   }
 ];
 
@@ -34,15 +34,18 @@ export const Reviews = () => (
       </div>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {reviews.map((review, idx) => (
-          <div key={idx} className="bg-blue-50 rounded-xl shadow-lg p-8 flex flex-col items-center text-center hover:shadow-2xl transition-all duration-300">
-            <img src={review.avatar} alt={review.name} className="w-16 h-16 rounded-full mb-4 border-4 border-white shadow" />
-            <h3 className="text-lg font-semibold mb-2 text-blue-700">{review.name}</h3>
-            <p className="text-gray-700 mb-3">{review.text}</p>
-            <div className="flex items-center gap-1">
+          <div key={idx} className="bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg p-8 flex flex-col items-center text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
+            {/* Avatar with Initials */}
+            <div className="w-16 h-16 rounded-full mb-4 border-4 border-white shadow-lg bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-xl">
+              {review.name.split(' ').map(n => n[0]).join('')}
+            </div>
+            <h3 className="text-lg font-semibold mb-2 text-gray-800">{review.name}</h3>
+            <p className="text-gray-600 mb-4 leading-relaxed">{review.text}</p>
+            <div className="flex items-center gap-1 bg-yellow-50 px-3 py-1 rounded-full border border-yellow-200">
               {[...Array(Math.round(review.rating))].map((_, i) => (
-                <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                <Star key={i} className="w-4 h-4 text-yellow-500 fill-current" />
               ))}
-              <span className="ml-2 text-blue-600 font-bold">{review.rating}</span>
+              <span className="ml-2 text-yellow-700 font-bold text-sm">{review.rating}</span>
             </div>
           </div>
         ))}

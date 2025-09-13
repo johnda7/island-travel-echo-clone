@@ -49,7 +49,7 @@ export const Header = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+            <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
               Пхукет Go
             </span>
           </Link>
@@ -70,7 +70,7 @@ export const Header = () => {
                 <NavigationMenu key={item.name}>
                   <NavigationMenuList>
                     <NavigationMenuItem>
-                      <NavigationMenuTrigger className="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium bg-transparent">
+                      <NavigationMenuTrigger className="text-gray-700 hover:text-green-600 transition-colors duration-300 font-medium bg-transparent">
                         {item.name}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
@@ -79,7 +79,7 @@ export const Header = () => {
                             <NavigationMenuLink key={subItem.name} asChild>
                               <Link
                                 to={subItem.href}
-                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-blue-50 hover:text-blue-600"
+                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-green-50 hover:text-green-600"
                               >
                                 <div className="text-sm font-medium leading-none">{subItem.name}</div>
                               </Link>
@@ -94,8 +94,8 @@ export const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium ${
-                    location.pathname === item.href ? 'text-blue-600 border-b-2 border-blue-600' : ''
+                  className={`text-gray-700 hover:text-green-600 transition-colors duration-300 font-medium ${
+                    location.pathname === item.href ? 'text-green-600 border-b-2 border-green-600' : ''
                   }`}
                 >
                   {item.name}
@@ -105,7 +105,7 @@ export const Header = () => {
             <Button
               asChild
               size="sm"
-              className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-md hover:shadow-lg hover:from-blue-600 hover:to-cyan-600 rounded-full px-4 py-2 transition-all duration-200 active:scale-[0.98]"
+              className="bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-md hover:shadow-lg hover:from-green-600 hover:to-emerald-600 rounded-full px-4 py-2 transition-all duration-200 active:scale-[0.98]"
               title="Открыть страницу деплоя в GitHub Actions"
             >
               <a href={actionsDeployUrl} target="_blank" rel="noopener" className="flex items-center">
@@ -120,7 +120,7 @@ export const Header = () => {
               <Phone className="w-4 h-4" />
               <span>+7 (495) 123-45-67</span>
             </div>
-            <Button className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600">
+            <Button className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600">
               Заказать звонок
             </Button>
           </div>
@@ -142,7 +142,7 @@ export const Header = () => {
                 <div key={item.name}>
                   <Link
                     to={item.href}
-                    className="block text-gray-700 hover:text-blue-600 transition-colors duration-300 py-2 font-medium"
+                    className="block text-gray-700 hover:text-green-600 transition-colors duration-300 py-2 font-medium"
                     onClick={() => setIsOpen(false)}
                   >
                     {item.name}
@@ -153,7 +153,7 @@ export const Header = () => {
                         <Link
                           key={subItem.name}
                           to={subItem.href}
-                          className="block text-gray-600 hover:text-blue-600 transition-colors duration-300 py-1 text-sm"
+                          className="block text-gray-600 hover:text-green-600 transition-colors duration-300 py-1 text-sm"
                           onClick={() => setIsOpen(false)}
                         >
                           {subItem.name}
@@ -168,13 +168,13 @@ export const Header = () => {
                   <Phone className="w-4 h-4" />
                   <span>+7 (495) 123-45-67</span>
                 </div>
-                <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500">
+                <Button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600">
                   Заказать звонок
                 </Button>
                 <Button
                   asChild
                   size="sm"
-                  className="w-full mt-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-md hover:shadow-lg hover:from-blue-600 hover:to-cyan-600 rounded-full px-4 py-2 transition-all duration-200 active:scale-[0.98]"
+                  className="w-full mt-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-md hover:shadow-lg hover:from-green-600 hover:to-emerald-600 rounded-full px-4 py-2 transition-all duration-200 active:scale-[0.98]"
                   title="Открыть страницу деплоя в GitHub Actions"
                 >
                   <a href={actionsDeployUrl} target="_blank" rel="noopener" onClick={() => setIsOpen(false)}>

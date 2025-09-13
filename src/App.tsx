@@ -23,6 +23,7 @@ import MayaBaySunrise from "./pages/MayaBaySunrise";
 import KohPhiPhiLehLagoon from "./pages/KohPhiPhiLehLagoon";
 import WhaleWatchingTour from "./pages/WhaleWatchingTour";
 import PhiPhiIslands from "./pages/PhiPhiIslands";
+import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 import NotFound from "./pages/NotFound";
 
 import BeachesPage from "./pages/Beaches";
@@ -94,6 +95,7 @@ const App = () => (
           <Route path="/excursion/maya-bay-sunrise" element={<MayaBaySunrise />} />
           <Route path="/excursion/koh-phi-phi-leh-lagoon" element={<KohPhiPhiLehLagoon />} />
           <Route path="/excursion/whale-watching-tour" element={<WhaleWatchingTour />} />
+          <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
           
           {/* Phi Phi Islands Category Page */}
           <Route path="/phi-phi-islands" element={<PhiPhiIslands />} />

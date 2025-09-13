@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Facebook, Instagram, Youtube } from "lucide-react";
+import logoImage from "@/assets/logo.jpg";
 
 export const Footer = () => {
   return (
@@ -8,24 +9,30 @@ export const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <div className="flex items-center space-x-2 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">P</span>
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="w-12 h-12 rounded-full overflow-hidden shadow-lg ring-2 ring-white/20">
+                <img 
+                  src={logoImage} 
+                  alt="Phuket Go Logo" 
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <span className="text-2xl font-bold">Пхукет Go</span>
+              <span className="text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                Пхукет Go
+              </span>
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed">
               Создаем незабываемые путешествия к самым красивым местам Пхукета и Таиланда. 
               Ваша мечта о райском отдыхе станет реальностью с нами.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
+              <a href="#" className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-700 transition-colors shadow-md">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center hover:bg-pink-700 transition-colors">
+              <a href="#" className="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center hover:bg-emerald-700 transition-colors shadow-md">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">
+              <a href="#" className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-colors shadow-md">
                 <Youtube className="w-5 h-5" />
               </a>
             </div>
@@ -60,19 +67,19 @@ export const Footer = () => {
             <h3 className="text-xl font-bold mb-6">Контакты</h3>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-blue-400 mt-1 flex-shrink-0" />
+                <MapPin className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" />
                 <span className="text-gray-300">Москва, ул. Тверская, 1<br />БЦ "Островский", офис 504</span>
               </div>
               <div className="flex items-center space-x-3">
-                <Phone className="w-5 h-5 text-blue-400 flex-shrink-0" />
+                <Phone className="w-5 h-5 text-green-400 flex-shrink-0" />
                 <span className="text-gray-300">+7 (495) 123-45-67</span>
               </div>
               <div className="flex items-center space-x-3">
-                <Mail className="w-5 h-5 text-blue-400 flex-shrink-0" />
+                <Mail className="w-5 h-5 text-green-400 flex-shrink-0" />
                 <span className="text-gray-300">info@phuketgo.travel</span>
               </div>
             </div>
-            <div className="mt-6 p-4 bg-blue-600/20 rounded-lg">
+            <div className="mt-6 p-4 bg-green-600/20 rounded-lg border border-green-500/30">
               <p className="text-sm font-semibold mb-1">Время работы:</p>
               <p className="text-sm text-gray-300">Пн-Пт: 9:00 - 20:00</p>
               <p className="text-sm text-gray-300">Сб-Вс: 10:00 - 18:00</p>
@@ -84,12 +91,19 @@ export const Footer = () => {
       <div className="border-t border-gray-800">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-            <p>&copy; 2024 Пхукет Go. Все права защищены.</p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
+            <div className="flex items-center space-x-3 mb-2 md:mb-0">
+              <div className="w-8 h-8 rounded-full overflow-hidden shadow ring-2 ring-green-400/40">
+                <img src={logoImage} alt="Phuket Go Logo" className="w-full h-full object-cover" />
+              </div>
+              <span className="font-bold text-green-400">Пхукет Go</span>
+            </div>
+            <div className="flex flex-col md:flex-row md:space-x-6 mt-4 md:mt-0 items-center">
               <a href="#" className="hover:text-white transition-colors">Политика конфиденциальности</a>
               <a href="#" className="hover:text-white transition-colors">Условия использования</a>
               <a href="#" className="hover:text-white transition-colors">Карта сайта</a>
+              <span className="hidden md:inline-block ml-6">&copy; 2024 Пхукет Go. Все права защищены.</span>
             </div>
+            <span className="md:hidden block mt-2">&copy; 2024 Пхукет Go. Все права защищены.</span>
           </div>
         </div>
       </div>

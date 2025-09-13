@@ -7,9 +7,29 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { BookingModal } from "@/components/BookingModal";
 
+// Import images from phuketgo
+import mayaBay1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
+
 const toursData = [
   {
     id: 1,
+    title: "Пхи-Пхи 2 дня / 1 ночь",
+    location: "Острова Пхи-Пхи, Таиланд",
+    duration: "2 дня / 1 ночь",
+    group: "До 30 человек",
+    dates: "Круглый год",
+    price: "8,900 ฿",
+    originalPrice: "9,500 ฿",
+    rating: 4.8,
+    reviews: 53,
+    image: mayaBay1,
+    highlights: ["Майя Бэй", "Ночь на острове", "Лагуна Пи-Ле", "Снорклинг", "Встреча рассвета", "Пляж Обезьян"],
+    description: "Путешествие на острова Пхи-Пхи с ночёвкой — это уникальная возможность увидеть самые красивые места Андаманского моря и провести ночь на настоящем райском острове.",
+    featured: true,
+    category: "beach"
+  },
+  {
+    id: 2,
     title: "Симиланские острова",
     location: "Пхукет, Таиланд",
     duration: "10 часов",
@@ -26,7 +46,7 @@ const toursData = [
     category: "beach"
   },
   {
-    id: 2,
+    id: 3,
     title: "Острова Пхи-Пхи",
     location: "Пхукет, Таиланд",
     duration: "8 часов",
@@ -596,12 +616,11 @@ const Tours = () => {
                   <Button 
                     variant="outline" 
                     className="rounded-full"
-                    onClick={() => {
-                      // Implement tour details modal or page navigation
-                      console.log('View details for:', tour.title);
-                    }}
+                    asChild
                   >
-                    Подробнее
+                    <Link to={tour.id === 1 ? "/excursion/phi-phi-2-days-1-night" : "#"}>
+                      Подробнее
+                    </Link>
                   </Button>
                 </div>
               </CardContent>

@@ -90,14 +90,34 @@ const BeachesPage: React.FC = () => {
           </ul>
         </div>
 
-        {/* Горизонтальное меню-якоря + выпадающее меню для мобильных */}
-        <div className="mb-8 flex flex-col gap-3 items-center sticky top-0 z-30 bg-white/90 py-4 rounded-xl shadow">
-          <div className="hidden sm:flex flex-wrap gap-3 justify-center w-full">
-            {beaches.map((beach) => (
+        {/* Category Filter Section */}
+        <div className="mb-8 bg-white rounded-xl p-6 shadow-md">
+          <h3 className="text-xl font-semibold mb-4 text-gray-800">Фильтр по категориям</h3>
+          <div className="flex flex-wrap gap-3">
+            {filterCategories.map((category) => (
+              <button
+                key={category}
+                onClick={() => handleCategoryClick(category)}
+                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 shadow-sm ${
+                  activeCategory === category
+                    ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg transform scale-105'
+                    : 'bg-gray-100 text-gray-700 hover:bg-blue-100 hover:text-blue-600 hover:shadow-md'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Горизонтальное меню-якоря */}
+        <div className="mb-8 flex flex-col gap-3 items-center sticky top-0 z-30 bg-white/95 backdrop-blur-sm py-4 rounded-xl shadow-lg border">
+          <div className="hidden sm:flex flex-wrap gap-2 justify-center w-full max-w-6xl">
+            {filteredBeaches.slice(0, Math.min(filteredBeaches.length, 12)).map((beach) => (
               <a
                 key={beach.id}
                 href={`#${beach.id}`}
-                className="px-5 py-2 rounded-full font-medium border transition-all duration-200 shadow-sm bg-white text-blue-600 border-blue-300 hover:bg-blue-100 hover:text-blue-700"
+                className="px-4 py-2 rounded-full text-sm font-medium border transition-all duration-200 shadow-sm bg-white text-blue-600 border-blue-200 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 hover:shadow-md"
               >
                 {beach.title}
               </a>
@@ -105,7 +125,7 @@ const BeachesPage: React.FC = () => {
           </div>
           <div className="sm:hidden w-full flex justify-center">
             <select
-              className="px-4 py-2 rounded-full border border-blue-300 text-blue-700 font-medium shadow-sm bg-white"
+              className="px-4 py-2 rounded-full border border-blue-300 text-blue-700 font-medium shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               onChange={e => {
                 const id = e.target.value;
                 const el = document.getElementById(id);
@@ -113,114 +133,115 @@ const BeachesPage: React.FC = () => {
               }}
             >
               <option value="">Выбрать пляж...</option>
-              {beaches.map(beach => (
+              {filteredBeaches.map(beach => (
                 <option key={beach.id} value={beach.id}>{beach.title}</option>
               ))}
             </select>
           </div>
         </div>
 
-        {/* Сортировка */}
-        <div className="flex items-center gap-2 mb-8 justify-end">
-          <label className="font-medium text-gray-600">Сортировать:</label>
-          <select
-            value={sortBy}
-            onChange={handleSortChange}
-            className="border border-blue-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-          >
-            {sortOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+        {/* Results count and sorting */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="text-gray-600">
+            Найдено пляжей: <span className="font-semibold text-blue-600">{filteredBeaches.length}</span>
+            {activeCategory !== 'Все' && (
+              <span className="ml-2 text-sm">
+                в категории "<span className="font-medium text-blue-700">{activeCategory}</span>"
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-3">
+            <label className="font-medium text-gray-600">Сортировать:</label>
+            <select
+              value={sortBy}
+              onChange={handleSortChange}
+              className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white shadow-sm"
+            >
+              {sortOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredBeaches.slice(0, visibleCount).map((beach, idx) => (
             <div id={beach.id} key={beach.id}>
               <Card
-                className="overflow-hidden shadow-xl rounded-2xl bg-white flex flex-col hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-blue-200"
+                className="group overflow-hidden shadow-lg rounded-2xl bg-white flex flex-col hover:shadow-2xl transition-all duration-500 border border-gray-200 hover:border-blue-300 hover:-translate-y-2"
                 style={{ animationDelay: `${idx * 80}ms` }}
               >
-                <div className="h-56 w-full overflow-hidden relative">
+                <div className="h-64 w-full overflow-hidden relative">
                   <img
                     src={beach.image}
                     alt={beach.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute top-3 left-3 bg-white/90 rounded-full px-4 py-1 text-sm font-semibold text-yellow-600 shadow">
+                  {/* Rating Badge */}
+                  <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-bold text-yellow-600 shadow-lg border border-yellow-200">
                     ★ {beach.rating}
                   </div>
+                  {/* Location Badge */}
+                  <div className="absolute top-4 right-4 bg-blue-600/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium text-white shadow-lg">
+                    {beach.location.split(',')[0]}
+                  </div>
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent group-hover:from-black/30 transition-all duration-300"></div>
                 </div>
+                
                 <div className="flex-1 flex flex-col p-6">
-                  <h2 className="text-2xl font-bold mb-2 text-blue-700 group-hover:text-cyan-700 transition-colors">{beach.title}</h2>
-                  <p className="text-gray-600 mb-3 text-base line-clamp-3">{beach.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {beach.tags.map((tag) => (
+                  <h2 className="text-xl font-bold mb-3 text-gray-800 group-hover:text-blue-600 transition-colors duration-300">{beach.title}</h2>
+                  <p className="text-gray-600 mb-4 text-sm leading-relaxed line-clamp-2">{beach.description}</p>
+                  
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {beach.tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
-                        className="bg-blue-50 text-blue-700 text-xs px-3 py-1 rounded-full font-medium shadow-sm border border-blue-100"
+                        className="bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-700 text-xs px-3 py-1 rounded-full font-medium shadow-sm border border-blue-100 hover:from-blue-100 hover:to-cyan-100 transition-colors duration-200"
                       >
                         #{tag}
                       </span>
                     ))}
+                    {beach.tags.length > 3 && (
+                      <span className="text-xs text-gray-500 px-2 py-1">
+                        +{beach.tags.length - 3} еще
+                      </span>
+                    )}
                   </div>
-                  {/* Дополнительные подробности только для Патонга */}
-                  {beach.id === "patong" && (
-                    <>
-                      {/* Галерея */}
-                      <div className="mb-4">
-                        <div className="font-semibold text-blue-700 mb-2">Галерея:</div>
-                        <div className="flex gap-2 overflow-x-auto pb-2">
-                          {beach.gallery.map((img, i) => (
-                            <img key={i} src={img} alt={beach.title + ' фото ' + (i+1)} className="h-20 w-32 object-cover rounded-lg shadow" />
-                          ))}
-                        </div>
+
+                  {/* Services Preview */}
+                  {beach.services && beach.services.length > 0 && (
+                    <div className="mb-4">
+                      <div className="text-sm font-semibold text-gray-700 mb-2">Услуги:</div>
+                      <div className="flex flex-wrap gap-1">
+                        {beach.services.slice(0, 2).map((service, i) => (
+                          <span key={i} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                            {service}
+                          </span>
+                        ))}
+                        {beach.services.length > 2 && (
+                          <span className="text-xs text-gray-500 px-2 py-1">
+                            +{beach.services.length - 2}
+                          </span>
+                        )}
                       </div>
-                      {/* Услуги */}
-                      <div className="mb-4">
-                        <div className="font-semibold text-blue-700 mb-2">Услуги и развлечения:</div>
-                        <ul className="list-disc pl-5 text-gray-700 text-sm">
-                          {beach.services.map((srv, i) => (
-                            <li key={i}>{srv}</li>
-                          ))}
-                        </ul>
-                      </div>
-                      {/* Информация */}
-                      {beach.info && (
-                        <div className="mb-4">
-                          <div className="font-semibold text-blue-700 mb-2">Информация о пляже:</div>
-                          <ul className="list-none pl-0 text-gray-700 text-sm">
-                            <li><b>Длина:</b> {beach.info.length}</li>
-                            <li><b>Песок:</b> {beach.info.sand}</li>
-                            <li><b>Инфраструктура:</b> {beach.info.infrastructure}</li>
-                            <li><b>Лучшее время:</b> {beach.info.bestTime}</li>
-                            <li><b>Транспорт:</b> {beach.info.transport}</li>
-                          </ul>
-                        </div>
-                      )}
-                      {/* Отзывы */}
-                      <div className="mb-4">
-                        <div className="font-semibold text-blue-700 mb-2">Отзывы:</div>
-                        <ul className="list-none pl-0 text-gray-700 text-sm">
-                          {beach.reviews.map((rev, i) => (
-                            <li key={i} className="mb-2"><b>{rev.user}:</b> {rev.text} <span className="text-yellow-600">★ {rev.rating}</span></li>
-                          ))}
-                        </ul>
-                      </div>
-                      {/* Карта */}
-                      <div className="mb-4">
-                        <div className="font-semibold text-blue-700 mb-2">Карта:</div>
-                        <iframe src={beach.map} title="Карта Патонга" className="w-full h-40 rounded-lg border" loading="lazy"></iframe>
-                      </div>
-                    </>
+                    </div>
                   )}
+
+                  {/* Action Button */}
                   <Button
                     variant="default"
-                    className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold py-2 rounded-lg transition-all duration-300 shadow-md mt-auto"
+                    className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg group-hover:scale-105 mt-auto"
                     onClick={() => navigate(`/beach/${beach.id}`)}
                   >
-                    Подробнее
+                    <span className="flex items-center justify-center gap-2">
+                      Подробнее
+                      <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </span>
                   </Button>
                 </div>
               </Card>
@@ -228,13 +249,18 @@ const BeachesPage: React.FC = () => {
           ))}
         </div>
         {visibleCount < filteredBeaches.length && (
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center mt-12">
             <Button
               variant="outline"
-              className="px-8 py-3 text-lg rounded-full border-blue-500 text-blue-600 hover:bg-blue-100 transition-all"
+              className="px-10 py-4 text-lg rounded-full border-2 border-blue-500 text-blue-600 hover:bg-blue-500 hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 font-semibold"
               onClick={() => setVisibleCount((prev) => prev + 6)}
             >
-              Показать ещё
+              <span className="flex items-center gap-3">
+                Показать ещё пляжи
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
             </Button>
           </div>
         )}

@@ -155,6 +155,7 @@ function BeachDetail() {
                   referrerPolicy="no-referrer-when-downgrade"
                   allowFullScreen
                   loading="lazy"
+                  onError={() => setShowMap(false)}
                 ></iframe>
               ) : (
                 <div className="p-4 bg-blue-50 text-blue-900">

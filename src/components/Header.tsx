@@ -193,7 +193,7 @@ export const Header = () => {
             </div>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Menu button for all devices */}
           <button
             className="p-2 ml-4"
             onClick={() => setIsOpen(!isOpen)}
@@ -202,26 +202,26 @@ export const Header = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Navigation Menu */}
         {isOpen && (
-          <div className="md:hidden absolute top-16 left-0 right-0 bg-white border-t shadow-lg">
-            <nav className="px-4 py-4 space-y-4">
+          <div className="absolute top-16 left-0 right-0 bg-white border-t shadow-lg max-h-[80vh] overflow-y-auto">
+            <nav className="px-4 py-2 space-y-1">
               {navigation.map((item) => (
                 <div key={item.name}>
                   <Link
                     to={item.href}
-                    className="block text-gray-700 hover:text-green-600 transition-colors duration-300 py-2 font-medium"
+                    className="block text-gray-700 hover:text-green-600 transition-colors duration-300 py-1 font-medium"
                     onClick={() => setIsOpen(false)}
                   >
                     {item.name}
                   </Link>
                   {item.subItems && (
-                    <div className="ml-4 space-y-2">
+                    <div className="ml-2 space-y-0.5">
                       {item.subItems.map((subItem) => (
                         <Link
                           key={subItem.name}
                           to={subItem.href}
-                          className="block text-gray-600 hover:text-green-600 transition-colors duration-300 py-1 text-sm"
+                          className="block text-gray-600 hover:text-green-600 transition-colors duration-300 py-0.5 text-sm"
                           onClick={() => setIsOpen(false)}
                         >
                           {subItem.name}

@@ -5,6 +5,7 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import { Menu, X, Phone, Mail } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import logoImage from "@/assets/logo.jpg";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,8 +42,12 @@ export const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-lg">P</span>
+            <div className="w-10 h-10 rounded-full overflow-hidden shadow-md">
+              <img 
+                src={logoImage} 
+                alt="Phuket Go Logo" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
               Пхукет Go

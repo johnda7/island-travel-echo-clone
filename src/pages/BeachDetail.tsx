@@ -93,12 +93,16 @@ function BeachDetail() {
 
           {/* Галерея */}
           <div id="gallery" className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-            {beach.gallery.map((img, idx) => (
+            {beach.gallery?.map((img, idx) => (
               <div key={idx} className="relative group overflow-hidden rounded-xl shadow-lg">
                 <img src={img} alt={beach.title + idx} loading="lazy" className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
-            ))}
+            )) || (
+              <div className="col-span-full text-center text-gray-500 py-8">
+                <img src={beach.image} alt={beach.title} className="w-full h-48 object-cover rounded-xl" />
+              </div>
+            )}
           </div>
 
           {/* Описание и инфраструктура */}
@@ -106,15 +110,15 @@ function BeachDetail() {
             <h2 className="text-2xl font-semibold mb-2 text-blue-700">Описание пляжа</h2>
             <p className="mb-4 text-lg">{beach.description}</p>
             <div className="flex flex-wrap gap-2 mb-4">
-              {beach.tags.map(tag => (
+              {beach.tags?.map(tag => (
                 <span key={tag} className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full font-medium">#{tag}</span>
-              ))}
+              )) || []}
             </div>
             <h3 className="font-semibold mb-2 text-blue-700">Инфраструктура и услуги:</h3>
             <ul className="list-disc pl-5 mb-2">
-              {beach.services.map(service => (
+              {beach.services?.map(service => (
                 <li key={service} className="mb-1">{service}</li>
-              ))}
+              )) || [<li key="no-services" className="text-gray-500">Информация об услугах недоступна</li>]}
             </ul>
             {/* Факты */}
             {beach.info && (
@@ -317,20 +321,22 @@ function BeachDetail() {
           </div>
 
           {/* Отзывы */}
-          <div id="reviews" className="mb-8">
-            <h2 className="font-semibold mb-2 text-blue-700">Отзывы: {beach.title}</h2>
-            <div className="space-y-4">
-              {beach.reviews.map((review, idx) => (
-                <Card key={idx} className="p-4 bg-blue-50 rounded-xl shadow">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="font-bold text-blue-700">{review.user}</span>
-                    <span className="text-yellow-500">★ {review.rating}</span>
-                  </div>
-                  <p className="text-gray-700">{review.text}</p>
-                </Card>
-              ))}
+          {beach.reviews?.length ? (
+            <div id="reviews" className="mb-8">
+              <h2 className="font-semibold mb-2 text-blue-700">Отзывы: {beach.title}</h2>
+              <div className="space-y-4">
+                {beach.reviews.map((review, idx) => (
+                  <Card key={idx} className="p-4 bg-blue-50 rounded-xl shadow">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="font-bold text-blue-700">{review.user}</span>
+                      <span className="text-yellow-500">★ {review.rating}</span>
+                    </div>
+                    <p className="text-gray-700">{review.text}</p>
+                  </Card>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : null}
 
           {/* Похожие пляжи */}
           {related.length > 0 && (

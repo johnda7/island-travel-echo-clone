@@ -55,18 +55,18 @@ export const beaches: Beach[] = [
     id: "banana-beach",
     title: "Banana Beach (Ко Хе)",
     description: "Уникальный пляж на острове Ко Хе с белым песком и прозрачной водой.",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+    image: freedomImg, // Use local asset instead of Unsplash
     location: "Остров Ко Хе (Coral Island)",
     rating: 4.9,
     tags: ["Остров", "Снорклинг", "SUP", "Ресторан", "Тропики", "Уединённый"],
     price: 0,
     popularity: 5,
     gallery: [
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80"
+      freedomImg,
+      patongImg,
+      kataImg,
+      karonImg,
+      naiharnImg
     ],
     services: ["Снорклинг", "SUP и каяки", "Пляжный ресторан", "Прокат лежаков", "Трансфер на лодке", "Фотозоны"],
     reviews: [

@@ -90,137 +90,115 @@ const BeachesPage: React.FC = () => {
           </ul>
         </div>
 
-        {/* Горизонтальное меню-якоря + выпадающее меню для мобильных */}
-        <div className="mb-8 flex flex-col gap-3 items-center sticky top-0 z-30 bg-white/90 py-4 rounded-xl shadow">
-          <div className="hidden sm:flex flex-wrap gap-3 justify-center w-full">
-            {beaches.map((beach) => (
+        {/* Горизонтальное меню категорий-фильтров + sticky навигация */}
+        <div className="mb-8 flex flex-col gap-4 items-center sticky top-16 z-30 bg-white/95 backdrop-blur-sm py-6 rounded-xl shadow-lg border">
+          {/* Категории фильтров */}
+          <div className="flex flex-wrap gap-2 justify-center w-full px-4">
+            {filterCategories.map((category) => (
+              <button
+                key={category}
+                onClick={() => handleCategoryClick(category)}
+                className={`px-4 py-2 rounded-full font-medium transition-all duration-300 shadow-sm text-sm ${
+                  activeCategory === category
+                    ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-md transform scale-105'
+                    : 'bg-white text-blue-600 border border-blue-200 hover:bg-blue-50 hover:border-blue-300 hover:scale-102'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+          
+          {/* Быстрые якоря к пляжам - только для десктопа */}
+          <div className="hidden lg:flex flex-wrap gap-2 justify-center w-full max-w-5xl">
+            {filteredBeaches.slice(0, 8).map((beach) => (
               <a
                 key={beach.id}
                 href={`#${beach.id}`}
-                className="px-5 py-2 rounded-full font-medium border transition-all duration-200 shadow-sm bg-white text-blue-600 border-blue-300 hover:bg-blue-100 hover:text-blue-700"
+                className="px-3 py-1 rounded-full text-xs font-medium border transition-all duration-200 bg-gray-50 text-gray-600 border-gray-200 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200"
               >
                 {beach.title}
               </a>
             ))}
           </div>
-          <div className="sm:hidden w-full flex justify-center">
+        </div>
+
+        {/* Сортировка и статистика */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-4 border border-blue-100">
+          <div className="flex items-center gap-4">
+            <div className="text-sm text-gray-600">
+              Найдено пляжей: <span className="font-semibold text-blue-700">{filteredBeaches.length}</span>
+            </div>
+            {activeCategory !== 'Все' && (
+              <div className="text-sm text-gray-500">
+                Категория: <span className="font-medium text-blue-600">{activeCategory}</span>
+              </div>
+            )}
+          </div>
+          <div className="flex items-center gap-3">
+            <label className="font-medium text-gray-700 text-sm">Сортировать по:</label>
             <select
-              className="px-4 py-2 rounded-full border border-blue-300 text-blue-700 font-medium shadow-sm bg-white"
-              onChange={e => {
-                const id = e.target.value;
-                const el = document.getElementById(id);
-                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }}
+              value={sortBy}
+              onChange={handleSortChange}
+              className="border border-blue-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all text-sm bg-white shadow-sm"
             >
-              <option value="">Выбрать пляж...</option>
-              {beaches.map(beach => (
-                <option key={beach.id} value={beach.id}>{beach.title}</option>
+              {sortOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
               ))}
             </select>
           </div>
         </div>
-
-        {/* Сортировка */}
-        <div className="flex items-center gap-2 mb-8 justify-end">
-          <label className="font-medium text-gray-600">Сортировать:</label>
-          <select
-            value={sortBy}
-            onChange={handleSortChange}
-            className="border border-blue-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-          >
-            {sortOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredBeaches.slice(0, visibleCount).map((beach, idx) => (
-            <div id={beach.id} key={beach.id}>
-              <Card
-                className="overflow-hidden shadow-xl rounded-2xl bg-white flex flex-col hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-blue-200"
-                style={{ animationDelay: `${idx * 80}ms` }}
-              >
-                <div className="h-56 w-full overflow-hidden relative">
+            <div id={beach.id} key={beach.id} className="animate-fade-in" style={{ animationDelay: `${idx * 100}ms` }}>
+              <Card className="group overflow-hidden shadow-lg hover:shadow-2xl rounded-2xl bg-white flex flex-col transition-all duration-500 border border-gray-100 hover:border-blue-200 hover:scale-[1.02] transform">
+                <div className="h-64 w-full overflow-hidden relative">
                   <img
                     src={beach.image}
                     alt={beach.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute top-3 left-3 bg-white/90 rounded-full px-4 py-1 text-sm font-semibold text-yellow-600 shadow">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-bold text-amber-600 shadow-lg">
                     ★ {beach.rating}
+                  </div>
+                  <div className="absolute bottom-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-white text-sm font-medium bg-black/30 backdrop-blur-sm px-2 py-1 rounded-full">
+                      {beach.location}
+                    </span>
                   </div>
                 </div>
                 <div className="flex-1 flex flex-col p-6">
-                  <h2 className="text-2xl font-bold mb-2 text-blue-700 group-hover:text-cyan-700 transition-colors">{beach.title}</h2>
-                  <p className="text-gray-600 mb-3 text-base line-clamp-3">{beach.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {beach.tags.map((tag) => (
+                  <h2 className="text-2xl font-bold mb-3 text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                    {beach.title}
+                  </h2>
+                  <p className="text-gray-600 mb-4 text-base line-clamp-3 leading-relaxed">
+                    {beach.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {beach.tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
-                        className="bg-blue-50 text-blue-700 text-xs px-3 py-1 rounded-full font-medium shadow-sm border border-blue-100"
+                        className="bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-700 text-xs px-3 py-1 rounded-full font-medium shadow-sm border border-blue-100 hover:from-blue-100 hover:to-cyan-100 transition-colors cursor-default"
                       >
                         #{tag}
                       </span>
                     ))}
+                    {beach.tags.length > 3 && (
+                      <span className="text-gray-400 text-xs px-2 py-1">
+                        +{beach.tags.length - 3}
+                      </span>
+                    )}
                   </div>
-                  {/* Дополнительные подробности только для Патонга */}
-                  {beach.id === "patong" && (
-                    <>
-                      {/* Галерея */}
-                      <div className="mb-4">
-                        <div className="font-semibold text-blue-700 mb-2">Галерея:</div>
-                        <div className="flex gap-2 overflow-x-auto pb-2">
-                          {beach.gallery.map((img, i) => (
-                            <img key={i} src={img} alt={beach.title + ' фото ' + (i+1)} className="h-20 w-32 object-cover rounded-lg shadow" />
-                          ))}
-                        </div>
-                      </div>
-                      {/* Услуги */}
-                      <div className="mb-4">
-                        <div className="font-semibold text-blue-700 mb-2">Услуги и развлечения:</div>
-                        <ul className="list-disc pl-5 text-gray-700 text-sm">
-                          {beach.services.map((srv, i) => (
-                            <li key={i}>{srv}</li>
-                          ))}
-                        </ul>
-                      </div>
-                      {/* Информация */}
-                      {beach.info && (
-                        <div className="mb-4">
-                          <div className="font-semibold text-blue-700 mb-2">Информация о пляже:</div>
-                          <ul className="list-none pl-0 text-gray-700 text-sm">
-                            <li><b>Длина:</b> {beach.info.length}</li>
-                            <li><b>Песок:</b> {beach.info.sand}</li>
-                            <li><b>Инфраструктура:</b> {beach.info.infrastructure}</li>
-                            <li><b>Лучшее время:</b> {beach.info.bestTime}</li>
-                            <li><b>Транспорт:</b> {beach.info.transport}</li>
-                          </ul>
-                        </div>
-                      )}
-                      {/* Отзывы */}
-                      <div className="mb-4">
-                        <div className="font-semibold text-blue-700 mb-2">Отзывы:</div>
-                        <ul className="list-none pl-0 text-gray-700 text-sm">
-                          {beach.reviews.map((rev, i) => (
-                            <li key={i} className="mb-2"><b>{rev.user}:</b> {rev.text} <span className="text-yellow-600">★ {rev.rating}</span></li>
-                          ))}
-                        </ul>
-                      </div>
-                      {/* Карта */}
-                      <div className="mb-4">
-                        <div className="font-semibold text-blue-700 mb-2">Карта:</div>
-                        <iframe src={beach.map} title="Карта Патонга" className="w-full h-40 rounded-lg border" loading="lazy"></iframe>
-                      </div>
-                    </>
-                  )}
+                  
                   <Button
                     variant="default"
-                    className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold py-2 rounded-lg transition-all duration-300 shadow-md mt-auto"
+                    className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold py-3 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl mt-auto transform hover:scale-[1.02]"
                     onClick={() => navigate(`/beach/${beach.id}`)}
                   >
-                    Подробнее
+                    Подробнее →
                   </Button>
                 </div>
               </Card>

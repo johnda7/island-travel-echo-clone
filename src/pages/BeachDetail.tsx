@@ -12,9 +12,12 @@ function BeachDetail() {
   const beach = id ? getBeachById(id) : undefined;
   const getEmbedMapUrl = (title: string, raw?: string, location?: string) => {
     if (raw && /\/maps\/embed|output=embed/.test(raw)) return raw;
-    // Простой и надёжный вариант без API: query + output=embed
-    const q = encodeURIComponent(`${title}, ${location ?? "Phuket"}, Phuket, Thailand`);
-    return `https://www.google.com/maps?q=${q}&output=embed`;
+    // Нормализуем заголовок: уберём скобки и лишние символы
+    const normalizedTitle = title.replace(/\(.*?\)/g, "").trim();
+    const qString = [normalizedTitle, location ?? "Phuket", "Phuket, Thailand"].filter(Boolean).join(", ");
+    const q = encodeURIComponent(qString);
+    // Более совместимый вариант встраивания через maps.google.com с явными параметрами
+    return `https://maps.google.com/maps?q=${q}&z=14&hl=ru&iwloc=near&output=embed`;
   };
   const related = beach
     ? allBeaches

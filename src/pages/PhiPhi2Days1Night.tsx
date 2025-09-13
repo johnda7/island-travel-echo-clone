@@ -233,41 +233,10 @@ const PhiPhi2Days1Night = () => {
         </div>
       </section>
 
-      {/* Hero section with title only - фото сверху, бронирование снизу */}
-      <section className="pb-8">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl">
-            <h1 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
-              {excursion.title}
-            </h1>
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              {excursion.subtitle}
-            </p>
-            <div className="flex flex-wrap items-center gap-6 mb-8">
-              <div className="flex items-center gap-2">
-                <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                <span className="font-semibold text-gray-900">{excursion.rating}</span>
-                <span className="text-gray-500">({excursion.reviewsCount} отзывов)</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-500">
-                <Clock className="w-4 h-4" />
-                <span>{excursion.duration}</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-500">
-                <Users className="w-4 h-4" />
-                <span>{excursion.groupSize}</span>
-              </div>
-            </div>
-            {/* Mobile price */}
-            <div className="text-3xl font-bold text-green-600 mb-8 lg:hidden">
-              {excursion.price} {excursion.currency} <span className="text-lg font-normal text-gray-500">за человека</span>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Gallery section - точно как на tisland.travel */}
-      <section className="pb-6">
+
+      {/* Gallery section - сразу после хлебных крошек */}
+      <section className="pb-2">
         <div className="container mx-auto px-4">
           <div className="lg:col-span-2">
             {/* Десктопная галерея как на tisland.travel */}
@@ -416,8 +385,8 @@ const PhiPhi2Days1Night = () => {
         </div>
       </section>
 
-      {/* Tags section - сразу после фото как на tisland.travel */}
-      <section className="py-4">
+      {/* Tags section - компактно под фото как на tisland.travel */}
+      <section className="pb-4">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap gap-2">
             <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
@@ -438,19 +407,47 @@ const PhiPhi2Days1Night = () => {
             <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
               Лагуна Пиле
             </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Пляж обезьян
-            </span>
           </div>
         </div>
       </section>
 
-      {/* Booking section - блок бронирования после фото */}
-      <section className="py-8 bg-gray-50">
+      {/* Title and meta info - после тегов */}
+      <section className="py-6">
+        <div className="container mx-auto px-4">
+          <h1 className="text-2xl md:text-4xl font-bold mb-4 text-gray-900 leading-tight">
+            {excursion.title}
+          </h1>
+          <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+            {excursion.subtitle}
+          </p>
+          <div className="flex flex-wrap items-center gap-4 mb-4">
+            <div className="flex items-center gap-2">
+              <Star className="w-4 h-4 text-yellow-400 fill-current" />
+              <span className="font-semibold text-gray-900">{excursion.rating}</span>
+              <span className="text-gray-500 text-sm">({excursion.reviewsCount} отзывов)</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-500 text-sm">
+              <Clock className="w-4 h-4" />
+              <span>{excursion.duration}</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-500 text-sm">
+              <Users className="w-4 h-4" />
+              <span>{excursion.groupSize}</span>
+            </div>
+          </div>
+          {/* Mobile price */}
+          <div className="text-2xl font-bold text-green-600 mb-4 md:hidden">
+            {excursion.price} {excursion.currency} <span className="text-base font-normal text-gray-500">за человека</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Booking section - блок бронирования после описания */}
+      <section className="py-6 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <Card className="shadow-lg border-0">
-              <CardContent className="p-8">
+              <CardContent className="p-6 md:p-8">
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                   <div>
                     <h3 className="text-2xl font-bold mb-4 text-gray-900">Забронировать экскурсию</h3>

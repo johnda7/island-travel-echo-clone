@@ -33,6 +33,7 @@ export const Header = () => {
     { name: "Контакты", href: "/contact" }
   ];
 
+  // GitHub Actions deploy URL - trigger auto deploy
   const actionsDeployUrl = "https://github.com/johnda7/island-travel-echo-clone/actions/workflows/deploy-gh-pages.yml";
 
   return (

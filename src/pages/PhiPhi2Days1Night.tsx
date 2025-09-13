@@ -415,7 +415,7 @@ const PhiPhi2Days1Night = () => {
                       </div>
                       <div className="space-y-3">
                         <Button asChild className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold">
-                          <a href="/book/phi-phi-2-days-1-night">Забронировать сейчас</a>
+                          <a href="/book/phi-phi-treasure-2d-1n-standard/reserv">Забронировать сейчас</a>
                         </Button>
                         <Button variant="outline" asChild className="w-full py-3 border-gray-300">
                           <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
@@ -524,7 +524,7 @@ const PhiPhi2Days1Night = () => {
                     <div className="text-gray-500 mb-6">за человека</div>
                     <div className="space-y-3">
                       <Button asChild className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold">
-                        <a href="/book/phi-phi-2-days-1-night">Забронировать сейчас</a>
+                        <a href="/book/phi-phi-treasure-2d-1n-standard/reserv">Забронировать сейчас</a>
                       </Button>
                       <Button variant="outline" asChild className="w-full py-3 border-gray-300">
                         <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
@@ -652,7 +652,7 @@ const PhiPhi2Days1Night = () => {
             <div className="text-xs text-gray-600">за человека</div>
           </div>
           <Button asChild className="bg-green-600 hover:bg-green-700 text-white px-6">
-            <a href="/book/phi-phi-2-days-1-night">Забронировать</a>
+            <a href="/book/phi-phi-treasure-2d-1n-standard/reserv">Забронировать</a>
           </Button>
         </div>
       </div>

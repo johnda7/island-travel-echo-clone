@@ -114,17 +114,6 @@ export const Header = () => {
             </Button>
           </nav>
 
-          {/* Contact Info & CTA */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <Phone className="w-4 h-4" />
-              <span>+7 (495) 123-45-67</span>
-            </div>
-            <Button className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600">
-              Заказать звонок
-            </Button>
-          </div>
-
           {/* Mobile menu button */}
           <button
             className="md:hidden p-2"
@@ -164,13 +153,6 @@ export const Header = () => {
                 </div>
               ))}
               <div className="pt-4 border-t">
-                <div className="flex items-center space-x-2 text-sm text-gray-600 mb-3">
-                  <Phone className="w-4 h-4" />
-                  <span>+7 (495) 123-45-67</span>
-                </div>
-                <Button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600">
-                  Заказать звонок
-                </Button>
                 <Button
                   asChild
                   size="sm"

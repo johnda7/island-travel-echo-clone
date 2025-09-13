@@ -56,9 +56,9 @@ export const Footer = () => {
             <ul className="space-y-3">
               <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Индивидуальные туры</a></li>
               <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Групповые поездки</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Свадебные туры</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Корпоративный отдых</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">VIP обслуживание</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Экскурсии на острова</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Трансферы</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Консультации</a></li>
             </ul>
           </div>
 
@@ -101,9 +101,9 @@ export const Footer = () => {
               <a href="#" className="hover:text-white transition-colors">Политика конфиденциальности</a>
               <a href="#" className="hover:text-white transition-colors">Условия использования</a>
               <a href="#" className="hover:text-white transition-colors">Карта сайта</a>
-              <span className="hidden md:inline-block ml-6">&copy; 2024 Пхукет Go. Все права защищены.</span>
+              <span className="hidden md:inline-block ml-6">&copy; 2025 Пхукет Go. Все права защищены.</span>
             </div>
-            <span className="md:hidden block mt-2">&copy; 2024 Пхукет Go. Все права защищены.</span>
+            <span className="md:hidden block mt-2">&copy; 2025 Пхукет Go. Все права защищены.</span>
           </div>
         </div>
       </div>

@@ -1,11 +1,18 @@
 
+import phiPhiImg from "@/assets/phi-phi-maya-bay.jpg";
+import phiPhiLagoonImg from "@/assets/phi-phi-lagoon.jpg";  
+import phiPhiSunsetImg from "@/assets/phi-phi-sunset.jpg";
+import phiPhiSpeedboatImg from "@/assets/phi-phi-speedboat.jpg";
+import phiPhiSnorkelingImg from "@/assets/phi-phi-snorkeling.jpg";
+import phiPhiMonkeyImg from "@/assets/phi-phi-monkey-beach.jpg";
+
 const galleryImages = [
-  "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1521968901011-de2be3c0c8a0?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1561452218-6e8b4b67b99c?auto=format&fit=crop&w=800&q=80",
+  phiPhiImg,
+  phiPhiLagoonImg,
+  phiPhiSunsetImg, 
+  phiPhiSpeedboatImg,
+  phiPhiSnorkelingImg,
+  phiPhiMonkeyImg
 ];
 
 export const Gallery = () => {

@@ -97,9 +97,14 @@ export const Header = () => {
                 </Link>
               )
             ))}
-            <Button asChild variant="secondary" size="sm" title="Открыть страницу деплоя в GitHub Actions">
+            <Button
+              asChild
+              size="sm"
+              className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-md hover:shadow-lg hover:from-blue-600 hover:to-cyan-600 rounded-full px-4 py-2 transition-all duration-200 active:scale-[0.98]"
+              title="Открыть страницу деплоя в GitHub Actions"
+            >
               <a href={actionsDeployUrl} target="_blank" rel="noopener" className="flex items-center">
-                <Upload className="mr-1 h-4 w-4" /> Опубликовать
+                <Upload className="mr-2 h-4 w-4" /> Опубликовать
               </a>
             </Button>
           </nav>
@@ -161,7 +166,12 @@ export const Header = () => {
                 <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500">
                   Заказать звонок
                 </Button>
-                <Button asChild variant="secondary" size="sm" className="w-full mt-3" title="Открыть страницу деплоя в GitHub Actions">
+                <Button
+                  asChild
+                  size="sm"
+                  className="w-full mt-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-md hover:shadow-lg hover:from-blue-600 hover:to-cyan-600 rounded-full px-4 py-2 transition-all duration-200 active:scale-[0.98]"
+                  title="Открыть страницу деплоя в GitHub Actions"
+                >
                   <a href={actionsDeployUrl} target="_blank" rel="noopener" onClick={() => setIsOpen(false)}>
                     <span className="inline-flex items-center gap-2"><Upload className="h-4 w-4"/> Опубликовать</span>
                   </a>

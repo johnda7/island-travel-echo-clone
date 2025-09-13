@@ -204,316 +204,89 @@ const PhiPhi2Days1Night = () => {
   }, [selectedImage]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white pb-20 lg:pb-0">
       <Header />
-      <section className="pt-20 pb-8">
+      
+      {/* Breadcrumbs - как на tisland.travel */}
+      <section className="pt-20 pb-4">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            <div>
-              <div className="mb-4">
-                <span className="text-green-600 font-medium">Экскурсии • Пхи-Пхи</span>
-              </div>
-              <h1 className="text-4xl lg:text-5xl font-bold mb-4 text-gray-900">
+          <nav className="text-sm text-gray-500">
+            <div className="flex items-center space-x-2">
+              <a href="/" className="hover:text-green-600 transition-colors">Главная</a>
+              <span>›</span>
+              <a href="/tours" className="hover:text-green-600 transition-colors">Туры</a>
+              <span>›</span>
+              <span className="text-gray-700">Пхи-Пхи 2 дня / 1 ночь</span>
+            </div>
+          </nav>
+        </div>
+      </section>
+
+      {/* Hero section with title and booking */}
+      <section className="pb-8">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-4 gap-8">
+            {/* Left content - title and info */}
+            <div className="lg:col-span-3">
+              <h1 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
                 {excursion.title}
               </h1>
-              <p className="text-xl text-gray-600 mb-6">
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                 {excursion.subtitle}
               </p>
-              <div className="flex items-center gap-6 mb-6">
+              <div className="flex flex-wrap items-center gap-6 mb-8">
                 <div className="flex items-center gap-2">
-                  <Star className="w-5 h-5 text-yellow-500 fill-current" />
-                  <span className="font-semibold">{excursion.rating}</span>
-                  <span className="text-gray-600">({excursion.reviewsCount} отзывов)</span>
+                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
+                  <span className="font-semibold text-gray-900">{excursion.rating}</span>
+                  <span className="text-gray-500">({excursion.reviewsCount} отзывов)</span>
                 </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Clock className="w-5 h-5" />
+                <div className="flex items-center gap-2 text-gray-500">
+                  <Clock className="w-4 h-4" />
                   <span>{excursion.duration}</span>
                 </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Users className="w-5 h-5" />
+                <div className="flex items-center gap-2 text-gray-500">
+                  <Users className="w-4 h-4" />
                   <span>{excursion.groupSize}</span>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="text-3xl font-bold text-green-600">
-                  {excursion.price} {excursion.currency}
-                </div>
-                <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8">
-                  Забронировать
-                </Button>
-              </div>
-            </div>
-            <div className="relative">
-              <img 
-                src={excursion.mainImage} 
-                alt={excursion.title}
-                className="w-full h-96 object-cover rounded-2xl shadow-2xl"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="py-6 sm:py-8">
-        <div className="container mx-auto px-4">
-          <div className="mb-4">
-            <h2 className="text-xl font-bold mb-1">Фотографии</h2>
-            <p className="text-gray-600 text-sm">{excursion.gallery.length} фото</p>
-          </div>
-          
-          {/* Mobile-first Gallery Layout */}
-          <div className="relative">
-            {/* Mobile: 2 photos + show more button */}
-            <div className="grid grid-cols-2 gap-1 rounded-lg overflow-hidden sm:hidden">
-              <div 
-                className="aspect-square cursor-pointer relative overflow-hidden"
-                onClick={() => openModal(excursion.gallery[0], 0)}
-              >
-                <img 
-                  src={excursion.gallery[0]} 
-                  alt="Maya Bay"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              
-              <div 
-                className="aspect-square cursor-pointer relative overflow-hidden"
-                onClick={openGallery}
-              >
-                <img 
-                  src={excursion.gallery[1]} 
-                  alt="Gallery preview"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                  <div className="text-white text-center">
-                    <div className="text-lg font-semibold">+{excursion.gallery.length - 2}</div>
-                    <div className="text-xs">фото</div>
-                  </div>
-                </div>
+              {/* Mobile price */}
+              <div className="text-3xl font-bold text-green-600 mb-8 lg:hidden">
+                {excursion.price} {excursion.currency} <span className="text-lg font-normal text-gray-500">за человека</span>
               </div>
             </div>
 
-            {/* Desktop: 3 photos layout */}
-            <div className="hidden sm:grid sm:grid-cols-3 gap-2 rounded-lg overflow-hidden max-w-4xl">
-              {/* First large photo */}
-              <div 
-                className="col-span-2 aspect-[4/3] cursor-pointer group relative overflow-hidden"
-                onClick={() => openModal(excursion.gallery[0], 0)}
-              >
-                <img 
-                  src={excursion.gallery[0]} 
-                  alt="Maya Bay"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
-              </div>
-
-              {/* Two smaller photos */}
-              <div className="flex flex-col gap-2">
-                <div 
-                  className="aspect-[4/3] cursor-pointer group relative overflow-hidden"
-                  onClick={() => openModal(excursion.gallery[1], 1)}
-                >
-                  <img 
-                    src={excursion.gallery[1]} 
-                    alt="Gallery 2"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
-                </div>
-                
-                <div 
-                  className="aspect-[4/3] cursor-pointer group relative overflow-hidden"
-                  onClick={openGallery}
-                >
-                  <img 
-                    src={excursion.gallery[2]} 
-                    alt="Gallery 3"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                    <div className="text-white text-center">
-                      <div className="text-lg font-semibold mb-1">+{excursion.gallery.length - 3}</div>
-                      <div className="text-sm">больше фото</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Mobile: Show all photos button */}
-            <div className="mt-3 sm:hidden">
-              <button
-                onClick={openGallery}
-                className="w-full bg-blue-600 text-white py-3 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                Посмотреть все {excursion.gallery.length} фото
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-2">
-              <Card className="mb-8">
-                <CardContent className="p-8">
-                  <h2 className="text-2xl font-bold mb-4">Описание экскурсии</h2>
-                  <p className="text-gray-700 leading-relaxed mb-6">
-                    {excursion.description}
-                  </p>
-                  <h3 className="text-xl font-semibold mb-4">Что вас ждет:</h3>
-                  <ul className="space-y-2">
-                    {excursion.highlights.map((highlight, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-gray-700">{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-              <Card className="mb-8">
-                <CardContent className="p-8">
-                  <h2 className="text-2xl font-bold mb-6">Программа тура</h2>
-                  <div className="space-y-6">
-                    {(() => {
-                      const day1Items = excursion.schedule.filter(item => item.day === "1-й день");
-                      const day2Items = excursion.schedule.filter(item => item.day === "2-й день");
-                      
-                      return (
-                        <>
-                          <div>
-                            <h3 className="text-xl font-semibold mb-4 text-green-600 border-b border-green-200 pb-2">
-                              1-й день
-                            </h3>
-                            <div className="space-y-3">
-                              {day1Items.map((item, index) => (
-                                <div key={index} className="flex gap-4 p-3 bg-green-50 rounded-lg border-l-4 border-green-400">
-                                  <div className="text-green-700 font-semibold min-w-[80px] text-sm">
-                                    {item.time}
-                                  </div>
-                                  <div className="text-gray-700 text-sm">{item.activity}</div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                          
-                          <div>
-                            <h3 className="text-xl font-semibold mb-4 text-emerald-600 border-b border-emerald-200 pb-2">
-                              2-й день
-                            </h3>
-                            <div className="space-y-3">
-                              {day2Items.map((item, index) => (
-                                <div key={index} className="flex gap-4 p-3 bg-emerald-50 rounded-lg border-l-4 border-emerald-400">
-                                  <div className="text-emerald-700 font-semibold min-w-[80px] text-sm">
-                                    {item.time}
-                                  </div>
-                                  <div className="text-gray-700 text-sm">{item.activity}</div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </>
-                      );
-                    })()}
-                  </div>
-                </CardContent>
-              </Card>
-              <div className="grid md:grid-cols-2 gap-6">
-                <Card>
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-4 text-green-600">Включено в стоимость</h3>
-                    <ul className="space-y-2">
-                      {excursion.included.map((item, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                          <span className="text-gray-700 text-sm">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-4 text-red-600">Не включено</h3>
-                    <ul className="space-y-2">
-                      {excursion.notIncluded.map((item, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
-                          <span className="text-gray-700 text-sm">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
-              
-              {/* What to Bring */}
-              <Card className="mb-8">
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-4 text-blue-600">Взять с собой</h3>
-                  <ul className="space-y-2">
-                    {excursion.whatToBring.map((item, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                        <span className="text-gray-700 text-sm">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-              
-              {/* Important Info */}
-              <Card className="mb-8 bg-yellow-50 border-yellow-200">
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-4 text-yellow-700">Важно знать</h3>
-                  <ul className="space-y-2">
-                    {excursion.importantInfo.map((item, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <div className="w-2 h-2 bg-yellow-600 rounded-full mt-2"></div>
-                        <span className="text-gray-700 text-sm">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-            <div>
-              <Card className="sticky top-24">
+            {/* Right sidebar - booking card */}
+            <div className="lg:col-span-1 hidden lg:block">
+              <Card className="sticky top-24 shadow-lg border-0">
                 <CardContent className="p-6">
                   <div className="text-center mb-6">
-                    <div className="text-3xl font-bold text-green-600 mb-2">
+                    <div className="text-4xl font-bold text-green-600 mb-2">
                       {excursion.price} {excursion.currency}
                     </div>
-                    <div className="text-gray-600">за человека</div>
+                    <div className="text-gray-500">за человека</div>
                   </div>
-                  <div className="space-y-4 mb-6">
+                  <div className="space-y-3 mb-6 text-sm">
                     <div className="flex items-center gap-3">
-                      <Clock className="w-5 h-5 text-gray-400" />
+                      <Clock className="w-4 h-4 text-gray-400" />
                       <span>Продолжительность: {excursion.duration}</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Users className="w-5 h-5 text-gray-400" />
+                      <Users className="w-4 h-4 text-gray-400" />
                       <span>Группа: {excursion.groupSize}</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Calendar className="w-5 h-5 text-gray-400" />
+                      <Calendar className="w-4 h-4 text-gray-400" />
                       <span>Ежедневно</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <MapPin className="w-5 h-5 text-gray-400" />
+                      <MapPin className="w-4 h-4 text-gray-400" />
                       <span>Трансфер включен</span>
                     </div>
                   </div>
-                  <Button className="w-full bg-green-600 hover:bg-green-700 text-white mb-4">
+                  <Button className="w-full bg-green-600 hover:bg-green-700 text-white mb-3 py-3 font-semibold">
                     Забронировать сейчас
                   </Button>
-                  <Button variant="outline" className="w-full">
+                  <Button variant="outline" className="w-full py-3 border-gray-300">
                     Задать вопрос
                   </Button>
                 </CardContent>
@@ -522,6 +295,285 @@ const PhiPhi2Days1Night = () => {
           </div>
         </div>
       </section>
+
+      {/* Gallery section - точно как на tisland.travel */}
+      <section className="pb-6">
+        <div className="container mx-auto px-4">
+          <div className="lg:col-span-2">
+            {/* Десктопная галерея как на tisland.travel */}
+            <div className="hidden md:block">
+              <div className="grid grid-cols-4 gap-2 h-96">
+                {/* Большое главное фото */}
+                <div 
+                  className="col-span-2 row-span-2 cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={() => openModal(excursion.gallery[0], 0)}
+                >
+                  <img 
+                    src={excursion.gallery[0]} 
+                    alt="Maya Bay"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+
+                {/* Два средних фото справа сверху */}
+                <div 
+                  className="cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={() => openModal(excursion.gallery[1], 1)}
+                >
+                  <img 
+                    src={excursion.gallery[1]} 
+                    alt="Gallery 2"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                
+                <div 
+                  className="cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={() => openModal(excursion.gallery[2], 2)}
+                >
+                  <img 
+                    src={excursion.gallery[2]} 
+                    alt="Gallery 3"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+
+                {/* Два средних фото справа снизу */}
+                <div 
+                  className="cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={() => openModal(excursion.gallery[3], 3)}
+                >
+                  <img 
+                    src={excursion.gallery[3]} 
+                    alt="Gallery 4"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                
+                <div 
+                  className="cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={openGallery}
+                >
+                  <img 
+                    src={excursion.gallery[4]} 
+                    alt="Gallery 5"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="text-white text-center">
+                      <div className="text-lg font-semibold mb-1">+{excursion.gallery.length - 5}</div>
+                      <div className="text-sm">фото</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Мобильная галерея */}
+            <div className="md:hidden">
+              <div className="grid grid-cols-2 gap-2 mb-2">
+                <div 
+                  className="aspect-square cursor-pointer relative overflow-hidden rounded-lg"
+                  onClick={() => openModal(excursion.gallery[0], 0)}
+                >
+                  <img 
+                    src={excursion.gallery[0]} 
+                    alt="Maya Bay"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                
+                <div 
+                  className="aspect-square cursor-pointer relative overflow-hidden rounded-lg"
+                  onClick={() => openModal(excursion.gallery[1], 1)}
+                >
+                  <img 
+                    src={excursion.gallery[1]} 
+                    alt="Gallery 2"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+              
+              <div 
+                className="aspect-[2/1] cursor-pointer relative overflow-hidden rounded-lg"
+                onClick={openGallery}
+              >
+                <img 
+                  src={excursion.gallery[2]} 
+                  alt="Gallery 3"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                  <div className="text-white text-center">
+                    <div className="text-lg font-semibold mb-1">+{excursion.gallery.length - 3}</div>
+                    <div className="text-sm">фото</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Кнопка показать все фото */}
+            <div className="mt-4">
+              <button
+                onClick={openGallery}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Показать все {excursion.gallery.length} фото
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-4 gap-12">
+            <div className="lg:col-span-3">
+              {/* Описание и highlights одним блоком */}
+              <h2 className="text-3xl font-bold mb-6 text-gray-900">Описание экскурсии</h2>
+              <div className="prose prose-lg max-w-none">
+                <p className="text-gray-700 leading-relaxed mb-6 text-lg">
+                  {excursion.description}
+                </p>
+                <ul className="mb-12 space-y-2 text-gray-700">
+                  {excursion.highlights.map((highlight, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <span className="text-green-600 font-bold">•</span>
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Программа тура — компактная таблица */}
+              <h2 className="text-3xl font-bold mb-6 text-gray-900">Программа тура</h2>
+              <div className="overflow-x-auto mb-12 bg-white rounded-lg shadow-sm border">
+                <table className="min-w-full">
+                  <thead>
+                    <tr className="bg-gray-50 border-b">
+                      <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">День</th>
+                      <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">Время</th>
+                      <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">Активность</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {excursion.schedule.map((item, idx) => (
+                      <tr key={idx} className="border-b last:border-b-0 hover:bg-gray-50 transition-colors">
+                        <td className="py-4 px-6 text-sm font-medium text-gray-600">{item.day}</td>
+                        <td className="py-4 px-6 text-sm text-gray-600">{item.time}</td>
+                        <td className="py-4 px-6 text-sm text-gray-700">{item.activity}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Включено / Не включено / Взять с собой / Важно знать — простые списки */}
+              <div className="space-y-12">
+                <div className="grid md:grid-cols-2 gap-12">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4 text-green-600">Включено в стоимость</h3>
+                    <ul className="space-y-2 text-gray-700">
+                      {excursion.included.map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="text-green-600 font-bold">✓</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4 text-red-600">Не включено</h3>
+                    <ul className="space-y-2 text-gray-700">
+                      {excursion.notIncluded.map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="text-red-600 font-bold">✗</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="grid md:grid-cols-2 gap-12">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4 text-blue-600">Взять с собой</h3>
+                    <ul className="space-y-2 text-gray-700">
+                      {excursion.whatToBring.map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="text-blue-600 font-bold">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4 text-amber-600">Важно знать</h3>
+                    <ul className="space-y-2 text-gray-700">
+                      {excursion.importantInfo.map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="text-amber-600 font-bold">!</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Tags section - как на tisland.travel внизу */}
+      <section className="py-8 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl">
+            <h3 className="text-lg font-semibold mb-4 text-gray-900">Теги</h3>
+            <div className="flex flex-wrap gap-2">
+              <span className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-green-400 cursor-pointer transition-colors">
+                Пхи-Пхи
+              </span>
+              <span className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-green-400 cursor-pointer transition-colors">
+                Майя Бей
+              </span>
+              <span className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-green-400 cursor-pointer transition-colors">
+                Снорклинг
+              </span>
+              <span className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-green-400 cursor-pointer transition-colors">
+                Экскурсия с ночевкой
+              </span>
+              <span className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-green-400 cursor-pointer transition-colors">
+                Огненное шоу
+              </span>
+              <span className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-green-400 cursor-pointer transition-colors">
+                Лагуна Пиле
+              </span>
+              <span className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-green-400 cursor-pointer transition-colors">
+                Пляж обезьян
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mobile booking bar - фиксированная кнопка внизу */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40">
+        <div className="flex items-center justify-between gap-4">
+          <div className="text-left">
+            <div className="text-xl font-bold text-green-600">
+              {excursion.price} {excursion.currency}
+            </div>
+            <div className="text-xs text-gray-600">за человека</div>
+          </div>
+          <Button className="bg-green-600 hover:bg-green-700 text-white px-6">
+            Забронировать
+          </Button>
+        </div>
+      </div>
 
       {/* Mobile-first Gallery Modal */}
       {selectedImage && showFullGallery && (

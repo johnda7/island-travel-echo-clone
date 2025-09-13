@@ -1,8 +1,6 @@
 
-import { Button } from "@/components/ui/button";
-import { Upload } from "lucide-react";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
-import { Menu, X, Phone, Mail } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logoImage from "@/assets/logo.jpg";
@@ -12,10 +10,6 @@ export const Header = () => {
   const location = useLocation();
 
   const navigation = [
-    {
-      name: "Что посетить",
-      href: "/what-to-visit"
-    },
     { 
       name: "Туры", 
       href: "/tours",
@@ -27,14 +21,8 @@ export const Header = () => {
         { name: "Приключенческие туры", href: "/adventure-tours" },
         { name: "Групповые туры", href: "/group-tours" }
       ]
-    },
-    { name: "Направления", href: "/destinations" },
-    { name: "О нас", href: "/about" },
-    { name: "Контакты", href: "/contact" }
+    }
   ];
-
-  // GitHub Actions deploy URL - trigger auto deploy
-  const actionsDeployUrl = "https://github.com/johnda7/island-travel-echo-clone/actions/workflows/deploy-gh-pages.yml";
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg z-50">
@@ -102,16 +90,11 @@ export const Header = () => {
                 </Link>
               )
             ))}
-            <Button
-              asChild
-              size="sm"
-              className="bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-md hover:shadow-lg hover:from-green-600 hover:to-emerald-600 rounded-full px-4 py-2 transition-all duration-200 active:scale-[0.98]"
-              title="Открыть страницу деплоя в GitHub Actions"
-            >
-              <a href={actionsDeployUrl} target="_blank" rel="noopener" className="flex items-center">
-                <Upload className="mr-2 h-4 w-4" /> Опубликовать
-              </a>
-            </Button>
+            <button className="p-2 text-gray-700 hover:text-green-600 transition-colors">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
+            </button>
           </nav>
 
           {/* Mobile menu button */}
@@ -153,16 +136,12 @@ export const Header = () => {
                 </div>
               ))}
               <div className="pt-4 border-t">
-                <Button
-                  asChild
-                  size="sm"
-                  className="w-full mt-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-md hover:shadow-lg hover:from-green-600 hover:to-emerald-600 rounded-full px-4 py-2 transition-all duration-200 active:scale-[0.98]"
-                  title="Открыть страницу деплоя в GitHub Actions"
-                >
-                  <a href={actionsDeployUrl} target="_blank" rel="noopener" onClick={() => setIsOpen(false)}>
-                    <span className="inline-flex items-center gap-2"><Upload className="h-4 w-4"/> Опубликовать</span>
-                  </a>
-                </Button>
+                <button className="w-full flex items-center justify-center p-3 text-gray-700 hover:text-green-600 transition-colors border border-gray-300 rounded-lg">
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                  </svg>
+                  Поиск
+                </button>
               </div>
             </nav>
           </div>

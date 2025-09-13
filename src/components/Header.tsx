@@ -11,7 +11,6 @@ export const Header = () => {
   const location = useLocation();
 
   const navigation = [
-    { name: "Главная", href: "/" },
     {
       name: "Что посетить",
       href: "/what-to-visit"

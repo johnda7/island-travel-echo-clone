@@ -134,7 +134,7 @@ const PhiPhi2Days1Night = () => {
   const [mobileGalleryIndex, setMobileGalleryIndex] = useState<number>(0);
   
   // Калькулятор цен
-  const [adults, setAdults] = useState(2);
+  const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
 
   const totalPrice = adults * excursion.priceAdult + children * excursion.priceChild;
@@ -396,7 +396,7 @@ const PhiPhi2Days1Night = () => {
 
             {/* Desktop Booking Sidebar - справа от фото */}
             <div className="hidden lg:block">
-              <div className="sticky top-24">
+              <div className="sticky top-4">
                 <Card className="shadow-lg border-0">
                   <CardContent className="p-6">
                     {/* Калькулятор стоимости */}

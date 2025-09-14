@@ -194,12 +194,11 @@ const Tours = () => {
                     <BookingModal 
                       tourTitle={tour.title}
                       tourPrice={tour.price}
-                      triggerButton={
-                        <Button className="flex-1 bg-orange-500 hover:bg-orange-600">
-                          Забронировать
-                        </Button>
-                      }
-                    />
+                    >
+                      <Button className="flex-1 bg-orange-500 hover:bg-orange-600">
+                        Забронировать
+                      </Button>
+                    </BookingModal>
                   </div>
                 </CardContent>
               </Card>

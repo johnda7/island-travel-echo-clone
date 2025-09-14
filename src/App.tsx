@@ -26,6 +26,7 @@ import WhaleWatchingTour from "./pages/WhaleWatchingTour";
 import PhiPhiIslands from "./pages/PhiPhiIslands";
 import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 import BookPhiPhi2Days from "./pages/BookPhiPhi2Days";
+import PhiPhiReservation from "./pages/PhiPhiReservation";
 
 import AdminOrders from "./pages/AdminOrders";
 import NotFound from "./pages/NotFound";
@@ -114,6 +115,18 @@ const App = () => (
           <Route path="/excursion/four-pearls-andaman" element={<FourPearlsAndaman />} />
           <Route path="/excursion/racha-coral" element={<RachaCoral />} />
           <Route path="/excursion/similan-islands" element={<SimilanIslands />} />
+          
+          {/* Tours routes - новый формат для централизованных данных */}
+          <Route path="/tours/eleven-islands" element={<ElevenIslands />} />
+          <Route path="/tours/four-pearls-andaman" element={<FourPearlsAndaman />} />
+          <Route path="/tours/racha-coral" element={<RachaCoral />} />
+          <Route path="/tours/similan-islands" element={<SimilanIslands />} />
+          <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
+          <Route path="/tours/phi-phi-islands-speedboat" element={<PhiPhiIslandsSpeedboat />} />
+          
+          {/* Reservation routes */}
+          <Route path="/tours/phi-phi-2-days-1-night/reservation" element={<PhiPhiReservation />} />
+          <Route path="/reserv/phi-phi-2-days-1-night" element={<PhiPhiReservation />} />
           
           {/* Booking routes for marine excursions */}
           <Route path="/book/four-pearls-andaman/reserv" element={<PhiPhiBooking />} />

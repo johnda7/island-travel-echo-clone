@@ -12,36 +12,91 @@ import mayaBay1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
 
 const toursData = [
   {
+    id: 101,
+    title: "11 островов на спидботе",
+    location: "Краби",
+    duration: "1 день (12 часов)",
+    group: "До 35 человек",
+    dates: "Круглый год",
+    price: "2,900 ₽",
+    originalPrice: "3,500 ₽",
+    rating: 4.9,
+    reviews: 434,
+    image: mayaBay1,
+    highlights: ["11 потрясающих островов", "Снорклинг", "Обед на пляже", "Профессиональная съемка"],
+    description: "Захватывающее путешествие к 11 самым красивым островам региона на комфортабельном спидботе с профессиональным гидом.",
+    featured: true,
+    category: "marine",
+    slug: "eleven-islands"
+  },
+  {
+    id: 102,
+    title: "4 жемчужины Андаманского моря",
+    location: "Андаманское море",
+    duration: "2 дня / 1 ночь",
+    group: "До 25 человек",
+    dates: "Круглый год",
+    price: "4,700 ฿ взр. / 4,200 ฿ дети",
+    originalPrice: "5,200 ฿",
+    rating: 4.8,
+    reviews: 289,
+    image: mayaBay1,
+    highlights: ["VIP-сервис", "4 эксклюзивные локации", "Романтический ужин", "Профессиональная фотосъемка"],
+    description: "Роскошное двухдневное путешествие по самым красивым и нетронутым уголкам региона с VIP-сервисом.",
+    featured: true,
+    category: "marine",
+    slug: "four-pearls-andaman"
+  },
+  {
+    id: 103,
+    title: "Острова Рача и Корал",
+    location: "Пхукет",
+    duration: "1 день (9 часов)",
+    group: "До 40 человек",
+    dates: "Круглый год",
+    price: "2,400 ₽",
+    originalPrice: "2,900 ₽",
+    rating: 4.7,
+    reviews: 356,
+    image: mayaBay1,
+    highlights: ["Кристально чистая вода", "Коралловые рифы", "Снорклинг", "Пляжный отдых"],
+    description: "Незабываемое путешествие к двум потрясающим островам с белоснежными пляжами и удивительным подводным миром.",
+    featured: true,
+    category: "marine",
+    slug: "racha-coral"
+  },
+  {
+    id: 104,
+    title: "Симиланские острова",
+    location: "Национальный парк",
+    duration: "1 день (12 часов)",
+    group: "До 30 человек",
+    dates: "15 октября - 15 мая",
+    price: "4,200 ₽",
+    originalPrice: "4,800 ₽",
+    rating: 4.9,
+    reviews: 434,
+    image: mayaBay1,
+    highlights: ["Лучший дайвинг в Таиланде", "9 необитаемых островов", "Кристальная вода (видимость 30м)", "Национальный парк"],
+    description: "Девять необитаемых островов, признанных одним из лучших мест для дайвинга и снорклинга в мире.",
+    featured: true,
+    category: "marine",
+    slug: "similan-islands"
+  },
+  {
     id: 1,
     title: "Пхи-Пхи 2 дня / 1 ночь",
     location: "Острова Пхи-Пхи, Таиланд",
     duration: "2 дня / 1 ночь",
     group: "До 30 человек",
     dates: "Круглый год",
-    price: "8,900 ฿",
-    originalPrice: "9,500 ฿",
+    price: "8,900 ₽",
+    originalPrice: "9,500 ₽",
     rating: 4.8,
     reviews: 53,
     image: mayaBay1,
     highlights: ["Майя Бэй", "Ночь на острове", "Лагуна Пи-Ле", "Снорклинг", "Встреча рассвета", "Пляж Обезьян"],
     description: "Путешествие на острова Пхи-Пхи с ночёвкой — это уникальная возможность увидеть самые красивые места Андаманского моря и провести ночь на настоящем райском острове.",
-    featured: true,
-    category: "beach"
-  },
-  {
-    id: 2,
-    title: "Симиланские острова",
-    location: "Пхукет, Таиланд",
-    duration: "10 часов",
-    group: "До 40 человек",
-    dates: "Ноябрь - Апрель",
-    price: "5,750 ₽",
-    originalPrice: "6,250 ₽",
-    rating: 5.0,
-    reviews: 147,
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-    highlights: ["9 островов", "Кристально чистая вода", "Белоснежные пляжи", "Снорклинг"],
-    description: "Самая яркая и незабываемая экскурсия на Пхукете. Эти 9 островов собрали в себе всю первозданную красоту тропической природы.",
     featured: true,
     category: "beach"
   },
@@ -63,7 +118,7 @@ const toursData = [
     category: "beach"
   },
   {
-    id: 3,
+    id: 23,
     title: "Остров Джеймса Бонда",
     location: "Пханг Нга, Таиланд",
     duration: "8 часов",
@@ -411,6 +466,7 @@ const Tours = () => {
 
   const categories = [
     { value: "all", label: "Все туры" },
+    { value: "marine", label: "Морские экскурсии" },
     { value: "beach", label: "Пляжи и острова" },
     { value: "adventure", label: "Приключения" },
     { value: "city", label: "Городские" },
@@ -618,7 +674,7 @@ const Tours = () => {
                     className="rounded-full"
                     asChild
                   >
-                    <Link to={tour.id === 1 ? "/excursion/phi-phi-2-days-1-night" : "#"}>
+                    <Link to={tour.slug ? `/excursion/${tour.slug}` : (tour.id === 1 ? "/excursion/phi-phi-2-days-1-night" : "#")}>
                       Подробнее
                     </Link>
                   </Button>

@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
+import PhiPhiBooking from "@/pages/PhiPhiBooking";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -25,8 +26,15 @@ import WhaleWatchingTour from "./pages/WhaleWatchingTour";
 import PhiPhiIslands from "./pages/PhiPhiIslands";
 import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 import BookPhiPhi2Days from "./pages/BookPhiPhi2Days";
-import PhiPhiReservation from "./pages/PhiPhiReservation";
+
+import AdminOrders from "./pages/AdminOrders";
 import NotFound from "./pages/NotFound";
+
+// New marine excursions from phuketgo
+import ElevenIslands from "./pages/ElevenIslands";
+import FourPearlsAndaman from "./pages/FourPearlsAndaman"; 
+import RachaCoral from "./pages/RachaCoral";
+import SimilanIslands from "./pages/SimilanIslands";
 
 import BeachesPage from "./pages/Beaches";
 import BeachDetail from "./pages/BeachDetail";
@@ -99,7 +107,19 @@ const App = () => (
           <Route path="/excursion/whale-watching-tour" element={<WhaleWatchingTour />} />
           <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
           <Route path="/book/phi-phi-2-days-1-night" element={<BookPhiPhi2Days />} />
-          <Route path="/book/phi-phi-treasure-2d-1n-standard/reserv" element={<PhiPhiReservation />} />
+          <Route path="/book/phi-phi-treasure-2d-1n-standard/reserv" element={<PhiPhiBooking />} />
+          
+          {/* New marine excursions from phuketgo */}
+          <Route path="/excursion/eleven-islands" element={<ElevenIslands />} />
+          <Route path="/excursion/four-pearls-andaman" element={<FourPearlsAndaman />} />
+          <Route path="/excursion/racha-coral" element={<RachaCoral />} />
+          <Route path="/excursion/similan-islands" element={<SimilanIslands />} />
+          
+          {/* Booking routes for marine excursions */}
+          <Route path="/book/four-pearls-andaman/reserv" element={<PhiPhiBooking />} />
+          
+          {/* Admin Panel */}
+          <Route path="/admin/orders" element={<AdminOrders />} />
           
           {/* Phi Phi Islands Category Page */}
           <Route path="/phi-phi-islands" element={<PhiPhiIslands />} />

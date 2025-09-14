@@ -36,6 +36,7 @@ import ElevenIslands from "./pages/ElevenIslands";
 import FourPearlsAndaman from "./pages/FourPearlsAndaman"; 
 import RachaCoral from "./pages/RachaCoral";
 import SimilanIslands from "./pages/SimilanIslands";
+import JamesBondIslandTour from "./pages/JamesBondIslandTour";
 
 import BeachesPage from "./pages/Beaches";
 import BeachDetail from "./pages/BeachDetail";
@@ -115,12 +116,14 @@ const App = () => (
           <Route path="/excursion/four-pearls-andaman" element={<FourPearlsAndaman />} />
           <Route path="/excursion/racha-coral" element={<RachaCoral />} />
           <Route path="/excursion/similan-islands" element={<SimilanIslands />} />
+          <Route path="/excursion/james-bond-island" element={<JamesBondIslandTour />} />
           
           {/* Tours routes - новый формат для централизованных данных */}
           <Route path="/tours/eleven-islands" element={<ElevenIslands />} />
           <Route path="/tours/four-pearls-andaman" element={<FourPearlsAndaman />} />
           <Route path="/tours/racha-coral" element={<RachaCoral />} />
           <Route path="/tours/similan-islands" element={<SimilanIslands />} />
+          <Route path="/tours/james-bond-island" element={<JamesBondIslandTour />} />
           <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
           <Route path="/tours/phi-phi-islands-speedboat" element={<PhiPhiIslandsSpeedboat />} />
           

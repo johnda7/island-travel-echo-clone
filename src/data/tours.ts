@@ -4,6 +4,7 @@ import mayaBay1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
 import pilehLagoon from "@/assets/phi-phi-2days/pileh-lagoon.jpg";
 import { rachaCoralImages } from "@/assets/racha-coral/images";
 import { fourPearlsImages } from "@/assets/four-pearls-andaman/images";
+import { jamesBondImages } from "@/assets/james-bond-island/images";
 
 export interface Tour {
   id: number;
@@ -144,6 +145,30 @@ export const toursData: Tour[] = [
     category: "marine",
     slug: "four-pearls-andaman",
     bookingsToday: 4
+  },
+  {
+    id: 7,
+    title: "Остров Джеймса Бонда",
+    location: "Залив Пханг Нга",
+    duration: "8 часов",
+    group: "До 35 человек",
+    dates: "Круглый год",
+    price: "2,590 ฿ взр. / 1,800 ฿ дет.",
+    rating: 4.9,
+    reviews: 287,
+    image: jamesBondImages.main,
+    highlights: [
+      "Знаменитая скала Ко Тапу из фильма о Джеймсе Бонде",
+      "Каноэ по пещерам и лагунам",
+      "Плавучая деревня мусульман",
+      "Обед из морепродуктов на воде"
+    ],
+    description: "Легендарная экскурсия на остров из фильма 'Человек с золотым пистолетом'. Каноэ по пещерам залива Пханг Нга, плавучая деревня и аутентичный обед из морепродуктов.",
+    featured: true,
+    category: "marine",
+    slug: "james-bond-island",
+    bookingsToday: 15,
+    popular: true
   }
 ];
 

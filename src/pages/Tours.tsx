@@ -9,6 +9,8 @@ import { BookingModal } from "@/components/BookingModal";
 
 // Import images from phuketgo
 import mayaBay1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
+// Import tour-specific images
+import { rachaCoralImages } from "@/assets/racha-coral/images";
 
 const toursData = [
   {
@@ -54,13 +56,13 @@ const toursData = [
     duration: "1 день (9 часов)",
     group: "До 40 человек",
     dates: "Круглый год",
-    price: "2,400 ₽",
-    originalPrice: "2,900 ₽",
+    price: "1200 ฿ взр. / 600 ฿ дети",
+    originalPrice: "1400 ฿",
     rating: 4.7,
     reviews: 356,
-    image: mayaBay1,
-    highlights: ["Кристально чистая вода", "Коралловые рифы", "Снорклинг", "Пляжный отдых"],
-    description: "Незабываемое путешествие к двум потрясающим островам с белоснежными пляжами и удивительным подводным миром.",
+    image: rachaCoralImages.thumbnail,
+    highlights: ["Пляжи Паток Бэй и Бунгало Бэй", "Снорклинг среди коралловых рифов", "Водные развлечения", "Близко к Пхукету"],
+    description: "Острова Рача - кристально чистая вода, белоснежные пляжи и удивительный подводный мир недалеко от Пхукета.",
     featured: true,
     category: "marine",
     slug: "racha-coral"

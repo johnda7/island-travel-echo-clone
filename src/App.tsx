@@ -117,6 +117,7 @@ const App = () => (
           
           {/* Booking routes for marine excursions */}
           <Route path="/book/four-pearls-andaman/reserv" element={<PhiPhiBooking />} />
+          <Route path="/book/racha-coral-islands/reserv" element={<PhiPhiBooking />} />
           
           {/* Admin Panel */}
           <Route path="/admin/orders" element={<AdminOrders />} />

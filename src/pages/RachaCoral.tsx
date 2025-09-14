@@ -6,100 +6,84 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
 
-// Import images - временные из существующих
-import racha1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
-import racha2 from "@/assets/phi-phi-2days/rang-yai-1.jpg";
-import coral1 from "@/assets/phi-phi-2days/bamboo-island.webp";
-import coral2 from "@/assets/phi-phi-snorkeling.jpg";
-import beach1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
-import beach2 from "@/assets/phi-phi-2days/maya-bay-2.jpg";
-import snorkel1 from "@/assets/phi-phi-snorkeling.jpg";
-import snorkel2 from "@/assets/phi-phi-2days/pileh-lagoon.jpg";
+// Import unified image system for Racha Coral tour
+import { rachaCoralImages, rachaCoralImageDescriptions } from "@/assets/racha-coral/images";
 
 const excursion = {
   title: "Острова Рача и Корал",
   subtitle: "Экскурсия на острова Рача 1 день",
-  price: "от 2 400",
+  price: "1200 ฿ взр. / 600 ฿ дети 4-11 лет",
   currency: "฿", 
   duration: "1 день (9 часов)",
   groupSize: "до 40 человек",
   rating: 4.7,
-  reviewsCount: 156,
-  mainImage: racha1,
-  gallery: [
-    racha1,
-    racha2,
-    coral1,
-    coral2,
-    beach1,
-    beach2,
-    snorkel1,
-    snorkel2,
-  ],
+  reviewsCount: 356,
+  mainImage: rachaCoralImages.main,
+  gallery: rachaCoralImages.gallery,
   description: `
-ОСТРОВА РАЧА И КОРАЛ - идеальное сочетание релакса на белоснежных пляжах и активного подводного отдыха. Рача Яй известен своими кристально чистыми водами и пляжами с мягким белым песком, а Корал Айленд предлагает лучший снорклинг недалеко от Пхукета.
+Острова Рача - одно из самых красивых мест для отдыха на море недалеко от Пхукета. Кристально чистая вода, белоснежные пляжи и удивительный подводный мир делают эту экскурсию незабываемой.
 
-Эта экскурсия подходит для всех возрастов и особенно популярна среди семей с детьми благодаря спокойным водам и безопасным пляжам.
+Остров Рача Яй славится своими великолепными пляжами Паток Бэй и Бунгало Бэй с мягким белым песком и спокойными водами цвета аквамарин. Здесь можно позагорать, искупаться в теплом море или заняться снорклингом.
+
+Остров Корал (Хай) - рай для любителей водных развлечений. Богатый подводный мир, коралловые рифы и тропические рыбы создают идеальные условия для снорклинга и дайвинга. На острове также доступны водные виды спорта: парасейлинг, катание на банане и водных мотоциклах.
 `,
   highlights: [
-    "Остров Рача Яй - белоснежные пляжи",
-    "Korал Айленд - лучший снорклинг",
-    "Кристально чистые воды", 
-    "Пляжи с мягким белым песком",
-    "Подводный мир с тропическими рыбами",
-    "Водные развлечения и релакс",
-    "Близко к Пхукету - короткий переезд"
+    "Пляжи Паток Бэй и Бунгало Бэй на Рача Яй",
+    "Снорклинг среди коралловых рифов",
+    "Кристально чистая вода цвета аквамарин", 
+    "Водные развлечения: парасейлинг, банан",
+    "Богатый подводный мир и тропические рыбы",
+    "Близко к Пхукету - всего 30 минут на катере",
+    "Идеально для семей с детьми"
   ],
   included: [
-    "Трансфер из отеля на комфортабельном транспорте",
-    "Русскоговорящий гид-сопровождающий",
-    "Завтрак и обед (шведский стол)",
-    "Катер с удобными сиденьями",
-    "Входные билеты в национальный парк",
-    "Маски и трубки для снорклинга",
+    "Трансфер от отеля и обратно",
+    "Русскоговорящий гид",
+    "Катер с комфортными сидениями",
+    "Обед - шведский стол",
+    "Маски, трубки и ласты",
     "Спасательные жилеты",
-    "Питьевая вода и прохладительные напитки",
-    "Медицинская страховка",
-    "Фрукты и легкие закуски"
+    "Питьевая вода",
+    "Фрукты",
+    "Страховка"
   ],
   notIncluded: [
+    "Дополнительные водные развлечения на Корал Айленд",
     "Алкогольные напитки",
-    "Дополнительные водные развлечения",
-    "Личные расходы и сувениры",
-    "Чаевые персоналу (по желанию)",
-    "Подводная фото/видеосъемка (можно заказать)"
+    "Личные расходы",
+    "Чаевые"
   ],
   schedule: [
-    { day: "Утро", time: "07:00-08:00", activity: "Сбор туристов из отелей" },
-    { day: "Утро", time: "08:30", activity: "Прибытие на пирс Шалонг, завтрак" },
-    { day: "Утро", time: "09:00", activity: "Инструктаж по безопасности, отправление на Рача Яй" },
-    { day: "Утро", time: "10:00", activity: "Прибытие на остров Рача Яй" },
-    { day: "Утро", time: "10:15", activity: "Отдых на пляже Патак, купание в море" },
-    { day: "Утро", time: "11:30", activity: "Снорклинг у коралловых рифов" },
-    { day: "День", time: "12:30", activity: "Обед на острове (морепродукты и тайская кухня)" },
-    { day: "День", time: "14:00", activity: "Переезд на Корал Айленд (Ко Хе)" },
-    { day: "День", time: "14:30", activity: "Снорклинг среди кораллов Корал Айленда" },
-    { day: "День", time: "15:30", activity: "Свободное время на пляже, купание" },
-    { day: "Вечер", time: "16:30", activity: "Отправление обратно на Пхукет" },
-    { day: "Вечер", time: "17:30", activity: "Возвращение в отели" }
+    { day: "Утро", time: "07:00-08:30", activity: "Сбор из отелей и трансфер на пирс" },
+    { day: "Утро", time: "09:00", activity: "Отправление на катере на остров Рача Яй" },
+    { day: "Утро", time: "09:30", activity: "Прибытие на Рача Яй, пляж Паток Бэй" },
+    { day: "Утро", time: "09:45", activity: "Свободное время на пляже, купание" },
+    { day: "Утро", time: "11:00", activity: "Снорклинг у коралловых рифов" },
+    { day: "День", time: "12:00", activity: "Переезд на пляж Бунгало Бэй" },
+    { day: "День", time: "12:30", activity: "Обед - шведский стол с морепродуктами" },
+    { day: "День", time: "14:00", activity: "Переезд на остров Корал (Хай)" },
+    { day: "День", time: "14:30", activity: "Снорклинг среди кораллов острова Корал" },
+    { day: "День", time: "15:30", activity: "Водные развлечения (доп. плата) или отдых" },
+    { day: "Вечер", time: "16:30", activity: "Возвращение на пирс Пхукета" },
+    { day: "Вечер", time: "17:00", activity: "Трансфер в отели" }
   ],
   whatToBring: [
-    "Купальник и полотенце",
-    "Солнцезащитный крем водостойкий",
-    "Головной убор и солнечные очки",
-    "Легкая сменная одежда", 
-    "Шлепанцы или аквашузы",
-    "Водонепроницаемый чехол для телефона",
-    "Наличные деньги для покупок",
-    "Документы (паспорт или ксерокопия)"
+    "Купальник",
+    "Полотенце",
+    "Солнцезащитный крем",
+    "Головной убор",
+    "Солнечные очки",
+    "Легкая одежда",
+    "Тапочки",
+    "Деньги на личные расходы"
   ],
   importantInfo: [
-    "Подходит для всех возрастов, включая детей",
-    "Дети до 4 лет бесплатно, 4-11 лет скидка",
-    "При морской болезни рекомендуются таблетки",
-    "Возможны изменения маршрута из-за погоды",
-    "Лучший сезон: октябрь - апрель",
-    "На островах есть туалеты и кафе",
+    "Дети до 4 лет - бесплатно",
+    "Экскурсия проводится круглый год",
+    "При плохих погодных условиях маршрут может быть изменен",
+    "Рекомендуется взять таблетки от укачивания",
+    "На островах работают туалеты и кафе",
+    "Время в пути до островов - 30 минут",
     "Возможна аренда дополнительного снаряжения"
   ]
 };
@@ -204,6 +188,8 @@ const PhotoGallery = () => {
               <span>›</span>
               <Link to="/tours" className="hover:text-green-600 transition-colors">Туры</Link>
               <span>›</span>
+              <Link to="/tours?category=marine" className="hover:text-green-600 transition-colors">Морские экскурсии</Link>
+              <span>›</span>
               <span className="text-gray-700">Острова Рача и Корал</span>
             </div>
           </nav>
@@ -224,7 +210,7 @@ const PhotoGallery = () => {
                 >
                   <img 
                     src={excursion.gallery[0]} 
-                    alt="Racha Island"
+                    alt={rachaCoralImageDescriptions[0]}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
@@ -235,7 +221,7 @@ const PhotoGallery = () => {
                 >
                   <img 
                     src={excursion.gallery[1]} 
-                    alt="Gallery 2"
+                    alt={rachaCoralImageDescriptions[1]}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
@@ -246,7 +232,7 @@ const PhotoGallery = () => {
                 >
                   <img 
                     src={excursion.gallery[2]} 
-                    alt="Gallery 3"
+                    alt={rachaCoralImageDescriptions[2]}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
@@ -257,7 +243,7 @@ const PhotoGallery = () => {
                 >
                   <img 
                     src={excursion.gallery[3]} 
-                    alt="Gallery 4"
+                    alt={rachaCoralImageDescriptions[3]}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
@@ -268,7 +254,7 @@ const PhotoGallery = () => {
                 >
                   <img 
                     src={excursion.gallery[4]} 
-                    alt="Gallery 5"
+                    alt={rachaCoralImageDescriptions[4]}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center group-hover:bg-opacity-30 transition-all duration-300">
@@ -295,7 +281,7 @@ const PhotoGallery = () => {
                     >
                       <img 
                         src={image} 
-                        alt={`Gallery ${index + 1}`}
+                        alt={rachaCoralImageDescriptions[index]}
                         className="w-full h-64 object-cover"
                       />
                     </div>
@@ -346,10 +332,10 @@ const PhotoGallery = () => {
                   </div>
 
                   <div className="mb-6">
-                    <div className="text-3xl font-bold text-green-600 mb-2">
-                      {excursion.price} {excursion.currency}
+                    <div className="text-2xl font-bold text-green-600 mb-2">
+                      {excursion.price}
                     </div>
-                    <div className="text-gray-600 text-sm">за человека</div>
+                    <div className="text-gray-600 text-sm">цены за человека</div>
                   </div>
 
                   <Button asChild className="w-full bg-green-600 hover:bg-green-700 text-white">
@@ -469,10 +455,10 @@ const PhotoGallery = () => {
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40">
         <div className="flex items-center justify-between gap-4">
           <div className="text-left">
-            <div className="text-xl font-bold text-green-600">
-              {excursion.price} {excursion.currency}
+            <div className="text-lg font-bold text-green-600">
+              {excursion.price}
             </div>
-            <div className="text-xs text-gray-600">за человека</div>
+            <div className="text-xs text-gray-600">цены за человека</div>
           </div>
           <Button asChild className="bg-green-600 hover:bg-green-700 text-white px-6">
             <Link to="/book/racha-coral-islands/reserv">Забронировать</Link>

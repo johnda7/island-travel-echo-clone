@@ -31,51 +31,18 @@ if ! npm run build; then
 fi
 echo "✅ Сборка завершена успешно"
 
-# 2. Копирование файлов
-echo "📂 Шаг 2/4: Копирование файлов из dist/ в корень..."
-cp dist/index.html . || { echo "❌ Ошибка копирования index.html"; exit 1; }
-cp dist/404.html . || { echo "❌ Ошибка копирования 404.html"; exit 1; }
-cp -r dist/assets . || { echo "❌ Ошибка копирования assets/"; exit 1; }
-echo "✅ Файлы скопированы в корень для GitHub Pages"
+# 2. Подготовка к деплою через GitHub Actions
+echo "📂 Шаг 2/3: Подготовка деплоя через GitHub Actions (Pages)"
+echo "ℹ️  dist/ будет загружен в Pages артефактом GitHub Actions"
 
-# 3. Проверка изменений
-echo "📝 Шаг 3/4: Проверка изменений..."
-CHANGES=$(git status --porcelain)
-if [ -z "$CHANGES" ]; then
-    echo "ℹ️  Нет изменений для коммита. Возможно сайт уже обновлен."
-    read -p "Продолжить принудительный деплой? (y/N): " -n 1 -r
-    echo ""
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        echo "✅ Деплой завершен (без изменений)"
-        exit 0
-    fi
-fi
-
-# 4. Git операции
-echo "🚀 Шаг 4/4: Коммит и деплой на GitHub..."
+# 3. Триггер деплоя (пустой коммит)
+echo "🚀 Шаг 3/3: Триггер деплоя (GitHub Actions)"
 BUILD_TIME=$(date -Iseconds)
-git add index.html 404.html assets/
-
-# Запрашиваем сообщение коммита
-echo ""
-echo "Введите описание изменений (или нажмите Enter для стандартного):"
-read -r COMMIT_MESSAGE
-
-if [ -z "$COMMIT_MESSAGE" ]; then
-    COMMIT_MESSAGE="🚀 Deploy production build
-
-✅ Updated static files for GitHub Pages  
-📦 Build time: $BUILD_TIME
-🌐 Site: https://johnda7.github.io/island-travel-echo-clone"
-else
-    COMMIT_MESSAGE="🚀 Deploy: $COMMIT_MESSAGE
+git add -A >/dev/null 2>&1
+git commit --allow-empty -m "🚀 Trigger deploy via GitHub Actions
 
 📦 Build time: $BUILD_TIME
-🌐 https://johnda7.github.io/island-travel-echo-clone"
-fi
-
-git commit -m "$COMMIT_MESSAGE" || { echo "❌ Ошибка коммита"; exit 1; }
-
+🌐 Site: https://johnda7.github.io/island-travel-echo-clone" || true
 echo "📤 Отправка на GitHub..."
 git push || { echo "❌ Ошибка push на GitHub"; exit 1; }
 

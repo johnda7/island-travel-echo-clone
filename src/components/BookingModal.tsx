@@ -1,5 +1,5 @@
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,8 +24,9 @@ export const BookingModal = ({ tourTitle, tourPrice, children }: BookingModalPro
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Здесь будет логика отправки формы
-    console.log("Booking submitted:", formData);
+    // TODO: Implement booking submission logic
+    // For now, we'll show an alert instead of console.log
+    alert(`Заявка на бронирование принята!\n\nТур: ${tourTitle}\nЦена: ${tourPrice}\nИмя: ${formData.name}\nТелефон: ${formData.phone}`);
   };
 
   return (
@@ -38,7 +39,9 @@ export const BookingModal = ({ tourTitle, tourPrice, children }: BookingModalPro
           <DialogTitle className="text-xl font-bold text-blue-600">
             Быстрое бронирование
           </DialogTitle>
-          <p className="text-gray-600">{tourTitle} - {tourPrice}</p>
+          <DialogDescription className="text-gray-600">
+            {tourTitle} - {tourPrice}
+          </DialogDescription>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">

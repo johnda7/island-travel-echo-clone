@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ArrowLeft, Calendar, Users, MapPin, Phone, Mail, User, Clock, Star } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowLeft, Calendar, Users, MapPin, Phone, Mail, User, Clock, Star, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -8,14 +8,24 @@ const PhiPhiReservation = () => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    email: '',
     date: '',
     adults: 2,
-    children: 0,
-    hotel: '',
-    roomNumber: '',
-    comments: ''
+    children: 0
   });
+
+  // Цены (как маркетолог - показываем цену сразу!)
+  const pricing = {
+    adultPrice: 4900, // цена за взрослого
+    childPrice: 3500  // цена за ребенка
+  };
+
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  // Автоматический расчет цены при изменении количества
+  useEffect(() => {
+    const total = (formData.adults * pricing.adultPrice) + (formData.children * pricing.childPrice);
+    setTotalPrice(total);
+  }, [formData.adults, formData.children]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -28,26 +38,32 @@ const PhiPhiReservation = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const message = `🏝️ БРОНИРОВАНИЕ ТУРА "Пхи-Пхи 2 дня/1 ночь"
+    const formatDate = (dateStr: string) => {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('ru-RU', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    };
 
-👤 Контактная информация:
-• Имя: ${formData.name}
-• Телефон: ${formData.phone}
-• Email: ${formData.email}
+    // Маркетинговый подход - готовая заявка с ценой!
+    const message = `🏝️ ЗАЯВКА НА БРОНИРОВАНИЕ
 
-📅 Детали бронирования:
-• Дата: ${formData.date}
-• Взрослые: ${formData.adults} чел.
-• Дети: ${formData.children} чел.
+🎯 ТУР: Пхи-Пхи 2 дня/1 ночь (Стандарт)
+📅 ДАТА: ${formatDate(formData.date)}
 
-🏨 Размещение:
-• Отель: ${formData.hotel}
-• Номер: ${formData.roomNumber}
+👥 УЧАСТНИКИ:
+• Взрослые: ${formData.adults} чел. × ${pricing.adultPrice.toLocaleString('ru')} ₽ = ${(formData.adults * pricing.adultPrice).toLocaleString('ru')} ₽
+${formData.children > 0 ? `• Дети: ${formData.children} чел. × ${pricing.childPrice.toLocaleString('ru')} ₽ = ${(formData.children * pricing.childPrice).toLocaleString('ru')} ₽` : ''}
 
-💬 Комментарии:
-${formData.comments || 'Нет дополнительных пожеланий'}
+💰 ИТОГО: ${totalPrice.toLocaleString('ru')} ₽
 
-Ждем вашего подтверждения!`;
+👤 КОНТАКТ: ${formData.name}
+� ТЕЛЕФОН: ${formData.phone}
+
+✅ Клиент готов к бронированию!
+🚀 Обработать заявку в приоритете`;
 
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://t.me/phuketGoo?text=${encodedMessage}`, '_blank');
@@ -128,16 +144,16 @@ ${formData.comments || 'Нет дополнительных пожеланий'}
 
                 <form onSubmit={handleSubmit} className="space-y-8">
                   
-                  {/* Контактная информация */}
+                  {/* Контактная информация - ТОЛЬКО НЕОБХОДИМОЕ */}
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center">
                       <User className="w-5 h-5 mr-2 text-green-600" />
-                      Контактная информация
+                      Ваши контакты
                     </h3>
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-3">
-                          Ваше имя *
+                          Как вас зовут? *
                         </label>
                         <input
                           type="text"
@@ -146,12 +162,12 @@ ${formData.comments || 'Нет дополнительных пожеланий'}
                           value={formData.name}
                           onChange={handleInputChange}
                           className="w-full px-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent text-base"
-                          placeholder="Введите ваше имя"
+                          placeholder="Ваше имя"
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-3">
-                          Телефон *
+                          Телефон для связи *
                         </label>
                         <input
                           type="tel"
@@ -163,21 +179,6 @@ ${formData.comments || 'Нет дополнительных пожеланий'}
                           placeholder="+7 (999) 123-45-67"
                         />
                       </div>
-                    </div>
-                    
-                    <div className="mt-6">
-                      <label className="block text-sm font-medium text-gray-700 mb-3">
-                        Email *
-                      </label>
-                      <input
-                        type="email"
-                        name="email"
-                        required
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent text-base"
-                        placeholder="example@email.com"
-                      />
                     </div>
                   </div>
 
@@ -235,64 +236,41 @@ ${formData.comments || 'Нет дополнительных пожеланий'}
                     </div>
                   </div>
 
-                  {/* Размещение */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center">
-                      <MapPin className="w-5 h-5 mr-2 text-green-600" />
-                      Размещение (опционально)
-                    </h3>
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-3">
-                          Отель
-                        </label>
-                        <input
-                          type="text"
-                          name="hotel"
-                          value={formData.hotel}
-                          onChange={handleInputChange}
-                          className="w-full px-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent text-base"
-                          placeholder="Название отеля"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-3">
-                          Номер комнаты
-                        </label>
-                        <input
-                          type="text"
-                          name="roomNumber"
-                          value={formData.roomNumber}
-                          onChange={handleInputChange}
-                          className="w-full px-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent text-base"
-                          placeholder="Номер"
-                        />
-                      </div>
+                  {/* Маркетинговое преимущество - показываем что включено */}
+                  <div className="bg-green-50 border border-green-200 rounded-xl p-6">
+                    <h4 className="font-semibold text-green-800 mb-4 flex items-center">
+                      <CheckCircle className="w-5 h-5 mr-2" />
+                      Все уже включено в стоимость:
+                    </h4>
+                    <div className="grid md:grid-cols-2 gap-2 text-sm text-green-700">
+                      <div>✓ Трансфер туда-обратно</div>
+                      <div>✓ Проживание в бунгало</div>
+                      <div>✓ Лодка + бензин</div>
+                      <div>✓ Завтрак, обед, ужин</div>
+                      <div>✓ Экскурсионная программа</div>
+                      <div>✓ Снаряжение для снорклинга</div>
+                      <div>✓ Русскоговорящий гид</div>
+                      <div>✓ Страховка</div>
                     </div>
-                  </div>
-
-                  {/* Комментарии */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">
-                      Дополнительные пожелания
-                    </label>
-                    <textarea
-                      name="comments"
-                      rows={4}
-                      value={formData.comments}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none text-base"
-                      placeholder="Ваши пожелания, вопросы или особые требования..."
-                    />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold py-5 rounded-xl transition-all duration-200 flex items-center justify-center space-x-3 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                    disabled={!formData.name || !formData.phone || !formData.date}
+                    className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-6 rounded-xl transition-all duration-200 flex items-center justify-center space-x-3 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:transform-none disabled:shadow-none"
                   >
-                    <Phone className="w-5 h-5" />
-                    <span>Отправить заявку в Telegram</span>
+                    <Phone className="w-6 h-6" />
+                    <span>
+                      {totalPrice > 0 
+                        ? `Забронировать за ${totalPrice.toLocaleString('ru')} ₽` 
+                        : 'Отправить заявку'
+                      }
+                    </span>
                   </button>
+                  
+                  <p className="text-center text-sm text-gray-500 mt-4">
+                    📱 Заявка отправится в Telegram • ⚡ Ответим в течение 5 минут
+                  </p>
                   
                 </form>
               </div>
@@ -341,12 +319,26 @@ ${formData.comments || 'Нет дополнительных пожеланий'}
 
                   <div className="border-t pt-6">
                     <div className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-xl border border-green-100">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-lg font-semibold text-green-700">Итого</span>
-                        <span className="text-2xl font-bold text-green-700">Уточняется</span>
+                      {formData.adults > 0 && (
+                        <div className="space-y-2 mb-4 text-sm">
+                          <div className="flex justify-between">
+                            <span>Взрослые ({formData.adults} чел.)</span>
+                            <span>{(formData.adults * pricing.adultPrice).toLocaleString('ru')} ₽</span>
+                          </div>
+                          {formData.children > 0 && (
+                            <div className="flex justify-between">
+                              <span>Дети ({formData.children} чел.)</span>
+                              <span>{(formData.children * pricing.childPrice).toLocaleString('ru')} ₽</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      <div className="flex items-center justify-between border-t pt-4">
+                        <span className="text-lg font-semibold text-green-700">Итого к доплате</span>
+                        <span className="text-3xl font-bold text-green-700">{totalPrice.toLocaleString('ru')} ₽</span>
                       </div>
-                      <p className="text-sm text-green-600">
-                        Стоимость рассчитывается индивидуально
+                      <p className="text-sm text-green-600 mt-2">
+                        💳 Предоплата 30% • 💰 Доплата на месте
                       </p>
                     </div>
                   </div>

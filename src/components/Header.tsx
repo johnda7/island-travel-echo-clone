@@ -21,19 +21,19 @@ export const Header = () => {
     { name: "Пхи-Пхи Ле и лагуна", href: "/koh-phi-phi-leh-lagoon", description: "Экскурсия к острову Пхи-Пхи Ле и Изумрудной лагуне" },
     { name: "Майя Бей на рассвете", href: "/maya-bay-sunrise", description: "Встреча рассвета в легендарной бухте" },
     { name: "Остров Джеймса Бонда", href: "/james-bond-island", description: "Экскурсия к острову из фильма о Джеймсе Бонде" },
-    { name: "11 островов стандарт", href: "/eleven-islands-standard", description: "Большое путешествие по 11 островам" },
-    { name: "Коралловый остров + Парасейлинг", href: "/coral-island-parasailing", description: "Водные развлечения и парасейлинг" },
-    { name: "Остров Рача Яй", href: "/racha-yai-island", description: "Снорклинг на живописном острове" },
-    { name: "Наблюдение за китами", href: "/whale-watching-tour", description: "Уникальная экскурсия для наблюдения за китами" },
-    { name: "Пляжные туры", href: "/beach-tours", description: "Экскурсии по лучшим пляжам Пхукета" },
-    { name: "Городские туры", href: "/city-tours", description: "Обзорные экскурсии по городу Пхукет" },
-    { name: "Приключенческие туры", href: "/adventure-tours", description: "Экстремальные и активные туры" },
-    { name: "Групповые туры", href: "/group-tours", description: "Экскурсии для больших групп" },
+    { name: "11 островов стандарт", href: "/excursion/11-islands-standard", description: "Большое путешествие по 11 островам" },
+    { name: "Коралловый остров + Парасейлинг", href: "/excursion/coral-island-parasailing", description: "Водные развлечения и парасейлинг" },
+    { name: "Остров Рача Яй", href: "/excursion/racha-yai-island", description: "Снорклинг на живописном острове" },
+    { name: "Наблюдение за китами", href: "/excursion/whale-watching-tour", description: "Уникальная экскурсия для наблюдения за китами" },
+    { name: "Пляжные туры", href: "/category/beach-tours", description: "Экскурсии по лучшим пляжам Пхукета" },
+    { name: "Городские туры", href: "/category/city-tours", description: "Обзорные экскурсии по городу Пхукет" },
+    { name: "Приключенческие туры", href: "/category/adventure-tours", description: "Экстремальные и активные туры" },
+    { name: "Групповые туры", href: "/category/group-tours", description: "Экскурсии для больших групп" },
     { name: "Что посетить", href: "/what-to-visit", description: "Главные достопримечательности Пхукета" },
     { name: "Экскурсии", href: "/tours", description: "Все экскурсии и туры" },
     { name: "Направления", href: "/destinations", description: "Популярные направления" },
     { name: "Пляжи", href: "/beaches", description: "Лучшие пляжи Пхукета" },
-    { name: "Достопримечательности", href: "/attractions", description: "Интересные места для посещения" },
+  { name: "Достопримечательности", href: "/dostoprimechatelnosti", description: "Интересные места для посещения" },
     { name: "Морские экскурсии", href: "/tours", description: "Туры по морю и островам" },
     { name: "Семейные туры", href: "/tours", description: "Экскурсии для всей семьи" },
     { name: "СПА и релакс", href: "/tours", description: "Расслабляющие туры и спа-процедуры" },
@@ -64,6 +64,11 @@ export const Header = () => {
     };
   }, []);
 
+  const isActive = (path: string) => {
+    if (path === "/") return location.pathname === "/";
+    return location.pathname.startsWith(path);
+  };
+
   const navigation = [
     {
       name: "Что посетить",
@@ -91,7 +96,7 @@ export const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg z-50">
+  <header className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm shadow-md border-b border-gray-200/60 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -210,7 +215,7 @@ export const Header = () => {
                 <div key={item.name}>
                   <Link
                     to={item.href}
-                    className="block text-gray-700 hover:text-green-600 transition-colors duration-300 py-1 font-medium"
+                    className={`block py-1 font-medium transition-colors duration-200 ${isActive(item.href) ? "text-emerald-600" : "text-gray-700 hover:text-green-600"}`}
                     onClick={() => setIsOpen(false)}
                   >
                     {item.name}
@@ -221,7 +226,7 @@ export const Header = () => {
                         <Link
                           key={subItem.name}
                           to={subItem.href}
-                          className="block text-gray-600 hover:text-green-600 transition-colors duration-300 py-0.5 text-sm"
+                          className={`block py-0.5 text-sm transition-colors duration-200 ${isActive(subItem.href) ? "text-emerald-600" : "text-gray-600 hover:text-green-600"}`}
                           onClick={() => setIsOpen(false)}
                         >
                           {subItem.name}

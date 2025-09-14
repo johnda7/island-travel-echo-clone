@@ -101,12 +101,45 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* subtle background tint similar to reference design */
+    background-image:
+      radial-gradient(1200px 600px at 90% -10%, rgba(16, 185, 129, 0.06), transparent 60%),
+      radial-gradient(800px 400px at -10% 10%, rgba(59, 130, 246, 0.05), transparent 60%);
+    background-attachment: fixed;
   }
 
   /* Typography */
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold;
     letter-spacing: -0.025em;
+  }
+
+  /* Base links (only when not styled by Tailwind classes) */
+  a:not([class]) {
+    color: #059669; /* emerald-600 */
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 0.08em;
+    transition: color .2s ease, text-decoration-color .2s ease;
+  }
+  a:not([class]):hover {
+    color: #047857; /* emerald-700 */
+  }
+
+  /* Selection color */
+  ::selection {
+    background: rgba(16, 185, 129, 0.2); /* emerald-500 @ 20% */
+    color: inherit;
+  }
+
+  /* Focus visible outline for accessibility */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 6px;
   }
 }
 
@@ -157,6 +190,13 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Dark mode subtle background tints */
+.dark body {
+  background-image:
+    radial-gradient(1000px 500px at 90% -10%, rgba(16, 185, 129, 0.12), transparent 60%),
+    radial-gradient(700px 350px at -10% 10%, rgba(59, 130, 246, 0.10), transparent 60%);
+}
+
 /* Custom gradient text */
 .gradient-text {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -186,6 +226,7 @@ html {
 /* Custom utilities */
 .line-clamp-2 {
   display: -webkit-box;
+  line-clamp: 2; /* modern property for compatibility */
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;

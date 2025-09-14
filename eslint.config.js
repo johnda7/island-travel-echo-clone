@@ -23,6 +23,9 @@ export default tseslint.config(
         "warn",
         { allowConstantExport: true },
       ],
+      // Disable rule causing crash with ESLint 9 + @typescript-eslint v8
+      // See error: Cannot read properties of undefined (reading 'allowShortCircuit')
+      "@typescript-eslint/no-unused-expressions": "off",
       "@typescript-eslint/no-unused-vars": "off",
     },
   }

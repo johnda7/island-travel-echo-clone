@@ -5,75 +5,10 @@ import { Clock, Users, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BookingModal } from "./BookingModal";
 import { PopularityBadge } from "./PopularityBadge";
-import phiPhiMayaBay from "@/assets/phi-phi-maya-bay.jpg";
-import { rachaCoralImages } from "@/assets/racha-coral/images";
-import mayaBay1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
+import { getPopularTours } from "@/data/tours";
 
-const tours = [
-  {
-    id: 1,
-    slug: "phi-phi-islands-speedboat",
-    title: "Острова Пхи Пхи на скоростной лодке",
-    duration: "8 часов",
-    group: "До 35 человек",
-    date: "Круглый год",
-    price: "2,490 ₽",
-    image: phiPhiMayaBay,
-    highlights: ["Майя Бэй", "Снорклинг", "Обед на пляже"],
-    bookingsToday: 12,
-    popular: true
-  },
-  {
-    id: 2,
-    slug: "james-bond-island",
-    title: "Остров Джеймса Бонда",
-    duration: "8 часов",
-    group: "До 25 человек",
-    date: "Октябрь - Май",
-    price: "2,590 ₽",
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Каноэ в пещерах", "Деревня на воде", "Морепродукты"],
-    bookingsToday: 8
-  },
-  {
-    id: 3,
-    slug: "racha-coral",
-    title: "Острова Рача и Корал",
-    duration: "8 часов",
-    group: "До 30 человек",
-    date: "Круглый год",
-    price: "2,290 ₽",
-    image: rachaCoralImages.main,
-    highlights: ["Coral Beach Club", "Снорклинг", "Парасейлинг"],
-    bookingsToday: 9,
-    popular: true
-  },
-  {
-    id: 4,
-    slug: "phi-phi-2-days-1-night",
-    title: "Пхи-Пхи 2 дня / 1 ночь",
-    duration: "2 дня",
-    group: "До 30 человек",
-    date: "Круглый год",
-    price: "4,000 ฿",
-    image: mayaBay1,
-    highlights: ["Майя Бэй", "Ночь на острове", "Огненное шоу"],
-    bookingsToday: 6,
-    popular: true
-  },
-  {
-    id: 5,
-    slug: "11-islands-standard",
-    title: "11 островов Стандарт",
-    duration: "9 часов",
-    group: "До 40 человек",
-    date: "Ноябрь - Апрель",
-    price: "2,690 ₽",
-    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80",
-    highlights: ["11 островов", "Снорклинг", "Обед-барбекю"],
-    bookingsToday: 15
-  }
-];
+// Получаем популярные туры из централизованного источника данных
+const tours = getPopularTours();
 
 export const Tours = () => {
   return (
@@ -108,19 +43,12 @@ export const Tours = () => {
               <CardContent className="p-6">
                 <h3 className="text-xl font-bold mb-3 text-gray-800">{tour.title}</h3>
                 
-                <div className="flex items-center gap-4 mb-4 text-sm text-gray-600">
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
-                    <span>{tour.duration}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Users className="w-4 h-4" />
-                    <span>{tour.group}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-4 h-4" />
-                    <span>{tour.date}</span>
-                  </div>
+                                <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
+                  <span>{tour.duration}</span>
+                  <span>До {tour.group} человек</span>
+                </div>
+                <div className="text-sm text-gray-600 mb-3">
+                  <span>{tour.dates}</span>
                 </div>
                 
                 <div className="mb-4">

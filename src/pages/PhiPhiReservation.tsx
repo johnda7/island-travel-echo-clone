@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Calendar, Users, Clock, MapPin, Phone, Mail, User } from 'lucide-react';
+import { Calendar, Users, Clock, MapPin, Phone, Mail, User, ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 
 const PhiPhiReservation = () => {
   const [formData, setFormData] = useState({
@@ -52,7 +55,22 @@ ${formData.comments || 'Нет дополнительных пожеланий'}
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
+      <Header />
+      
+      {/* Кнопка назад */}
+      <div className="bg-white border-b pt-20">
+        <div className="max-w-4xl mx-auto px-4 py-4">
+          <Link 
+            to="/excursion/phi-phi-2-days-1-night"
+            className="inline-flex items-center text-green-600 hover:text-green-700 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Вернуться к туру
+          </Link>
+        </div>
+      </div>
+
+      {/* Header страницы */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">
           <div className="flex items-center space-x-4">
@@ -324,6 +342,8 @@ ${formData.comments || 'Нет дополнительных пожеланий'}
           </div>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };

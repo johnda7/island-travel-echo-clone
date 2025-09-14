@@ -11,11 +11,11 @@ import { rachaCoralImages, rachaCoralImageDescriptions } from "@/assets/racha-co
 
 const excursion = {
   title: "Острова Рача и Корал",
-  subtitle: "Экскурсия на острова Рача 1 день",
-  price: "1200 ฿ взр. / 600 ฿ дети 4-11 лет",
+  subtitle: "Экскурсия на острова Рача 1 день",  
+  price: "1300 ฿ взр. / 1200 ฿ дети 4-11 лет",
   currency: "฿", 
-  duration: "1 день (9 часов)",
-  groupSize: "до 40 человек",
+  duration: "1 день (7.5 часов)",
+  groupSize: "до 40 человек", 
   rating: 4.7,
   reviewsCount: 356,
   mainImage: rachaCoralImages.main,
@@ -37,15 +37,15 @@ const excursion = {
     "Идеально для семей с детьми"
   ],
   included: [
-    "Трансфер от отеля и обратно",
-    "Русскоговорящий гид",
-    "Катер с комфортными сидениями",
-    "Обед - шведский стол",
-    "Маски, трубки и ласты",
+    "Русско и англоговорящий гид и команда",
+    "Страховка",
+    "Сбор за посещение национального парка", 
+    "Трансферы из отеля в оба конца на автобусе с кондиционером",
+    "Кофе и чай на пирсе",
+    "Обед - шведский стол с блюдами тайской кухни",
+    "Прохладительные и безалкогольные напитки",
     "Спасательные жилеты",
-    "Питьевая вода",
-    "Фрукты",
-    "Страховка"
+    "Маски для снорклинга"
   ],
   notIncluded: [
     "Дополнительные водные развлечения на Корал Айленд",
@@ -54,37 +54,32 @@ const excursion = {
     "Чаевые"
   ],
   schedule: [
-    { day: "Утро", time: "07:00-08:30", activity: "Сбор из отелей и трансфер на пирс" },
-    { day: "Утро", time: "09:00", activity: "Отправление на катере на остров Рача Яй" },
-    { day: "Утро", time: "09:30", activity: "Прибытие на Рача Яй, пляж Паток Бэй" },
-    { day: "Утро", time: "09:45", activity: "Свободное время на пляже, купание" },
-    { day: "Утро", time: "11:00", activity: "Снорклинг у коралловых рифов" },
-    { day: "День", time: "12:00", activity: "Переезд на пляж Бунгало Бэй" },
-    { day: "День", time: "12:30", activity: "Обед - шведский стол с морепродуктами" },
-    { day: "День", time: "14:00", activity: "Переезд на остров Корал (Хай)" },
-    { day: "День", time: "14:30", activity: "Снорклинг среди кораллов острова Корал" },
-    { day: "День", time: "15:30", activity: "Водные развлечения (доп. плата) или отдых" },
-    { day: "Вечер", time: "16:30", activity: "Возвращение на пирс Пхукета" },
-    { day: "Вечер", time: "17:00", activity: "Трансфер в отели" }
+    { day: "Утро", time: "08:30", activity: "Добро пожаловать на пирс на пляже Раваи. Кофе и чай перед началом путешествия" },
+    { day: "Утро", time: "09:00", activity: "Отправление с пирса Раваи на остров Рача" },
+    { day: "Утро", time: "10:00", activity: "Прибытие на остров Рача. Снорклинг, отдых на пляже, солнечные ванны" },
+    { day: "День", time: "11:30", activity: "Отправление с острова Рача в пляжный клуб Coral Beach Club" },
+    { day: "День", time: "12:30", activity: "Прибытие на остров Корал. Обед «шведский стол» с блюдами тайской кухни" },
+    { day: "День", time: "13:30", activity: "Время на пляже: снорклинг, отдых, плавание или водные развлечения" },
+    { day: "Вечер", time: "15:45", activity: "Отправление с острова Корал на пирс" },
+    { day: "Вечер", time: "16:00", activity: "Прибытие на пирс Раваи и трансфер обратно в отель" }
   ],
   whatToBring: [
-    "Купальник",
-    "Полотенце",
+    "Купальники", 
+    "Шорты",
+    "Рубашки",
     "Солнцезащитный крем",
-    "Головной убор",
-    "Солнечные очки",
-    "Легкая одежда",
-    "Тапочки",
-    "Деньги на личные расходы"
+    "Солнцезащитные очки", 
+    "Шляпы",
+    "Наличные на личные расходы"
   ],
   importantInfo: [
-    "Дети до 4 лет - бесплатно",
-    "Экскурсия проводится круглый год",
-    "При плохих погодных условиях маршрут может быть изменен",
-    "Рекомендуется взять таблетки от укачивания",
-    "На островах работают туалеты и кафе",
-    "Время в пути до островов - 30 минут",
-    "Возможна аренда дополнительного снаряжения"
+    "Дети от 0 до 3 лет - бесплатно",
+    "Водные развлечения на острове Корал не включены в стоимость",
+    "Тайминг программы носит ориентировочный характер",
+    "Экскурсия/Расписание/Время/Маршрут могут быть изменены из-за погодных условий",
+    "Изменения возможны без предварительного уведомления",
+    "Отправление с пирса Раваи (не Чалонг)",
+    "Время в пути до острова Рача - 30 минут"
   ]
 };
 
@@ -331,11 +326,73 @@ const PhotoGallery = () => {
                     </div>
                   </div>
 
+                  {/* Pricing Table - точная копия с оригинального сайта */}
                   <div className="mb-6">
-                    <div className="text-2xl font-bold text-green-600 mb-2">
-                      {excursion.price}
+                    <h3 className="text-lg font-semibold mb-4 text-gray-900">Выберите количество гостей</h3>
+                    <div className="border border-gray-200 rounded-lg overflow-hidden">
+                      <table className="w-full">
+                        {/* Взрослые */}
+                        <tr className="border-b border-gray-100">
+                          <td className="p-4">
+                            <div className="font-medium text-gray-900">Взрослые</div>
+                            <div className="text-sm text-gray-500">от 12 лет</div>
+                          </td>
+                          <td className="p-4 text-right">
+                            <div className="font-bold text-lg text-gray-900">1,300 ฿</div>
+                          </td>
+                          <td className="p-4">
+                            <div className="flex items-center border border-gray-300 rounded w-24">
+                              <button className="px-2 py-1 text-gray-600 hover:bg-gray-100">-</button>
+                              <input type="number" value="1" min="1" max="40" className="w-8 text-center border-0 text-sm" />
+                              <button className="px-2 py-1 text-gray-600 hover:bg-gray-100">+</button>
+                            </div>
+                          </td>
+                        </tr>
+                        {/* Дети */}
+                        <tr className="border-b border-gray-100">
+                          <td className="p-4">
+                            <div className="font-medium text-gray-900">Дети</div>
+                            <div className="text-sm text-gray-500">от 4 до 11 лет</div>
+                          </td>
+                          <td className="p-4 text-right">
+                            <div className="font-bold text-lg text-gray-900">1,200 ฿</div>
+                          </td>
+                          <td className="p-4">
+                            <div className="flex items-center border border-gray-300 rounded w-24">
+                              <button className="px-2 py-1 text-gray-600 hover:bg-gray-100">-</button>
+                              <input type="number" value="0" min="0" max="20" className="w-8 text-center border-0 text-sm" />
+                              <button className="px-2 py-1 text-gray-600 hover:bg-gray-100">+</button>
+                            </div>
+                          </td>
+                        </tr>
+                        {/* Малыши */}
+                        <tr>
+                          <td className="p-4">
+                            <div className="font-medium text-gray-900">Малыши</div>
+                            <div className="text-sm text-gray-500">от 0 до 3 лет</div>
+                          </td>
+                          <td className="p-4 text-right">
+                            <div className="font-bold text-lg text-green-600">Бесплатно</div>
+                          </td>
+                          <td className="p-4">
+                            <div className="flex items-center border border-gray-300 rounded w-24">
+                              <button className="px-2 py-1 text-gray-600 hover:bg-gray-100">-</button>
+                              <input type="number" value="0" min="0" max="5" className="w-8 text-center border-0 text-sm" />
+                              <button className="px-2 py-1 text-gray-600 hover:bg-gray-100">+</button>
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
                     </div>
-                    <div className="text-gray-600 text-sm">цены за человека</div>
+                    
+                    {/* Общая сумма */}
+                    <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+                      <div className="flex justify-between items-center">
+                        <span className="font-medium text-gray-700">Итого:</span>
+                        <span className="text-xl font-bold text-green-600">1,300 ฿</span>
+                      </div>
+                      <div className="text-xs text-gray-500 mt-1">за 1 взрослого</div>
+                    </div>
                   </div>
 
                   <Button asChild className="w-full bg-green-600 hover:bg-green-700 text-white">
@@ -455,13 +512,11 @@ const PhotoGallery = () => {
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40">
         <div className="flex items-center justify-between gap-4">
           <div className="text-left">
-            <div className="text-lg font-bold text-green-600">
-              {excursion.price}
-            </div>
-            <div className="text-xs text-gray-600">цены за человека</div>
+            <div className="text-sm font-medium text-gray-700">от 1,300 ฿</div>
+            <div className="text-xs text-gray-500">взрослый / от 1,200 ฿ дети</div>
           </div>
           <Button asChild className="bg-green-600 hover:bg-green-700 text-white px-6">
-            <Link to="/book/racha-coral-islands/reserv">Забронировать</Link>
+            <Link to="/book/racha-coral-islands/reserv">Выбрать</Link>
           </Button>
         </div>
       </div>

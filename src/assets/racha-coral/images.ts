@@ -1,34 +1,38 @@
 // Фотографии для тура "Острова Рача и Корал"
-// Временно используем существующие фото, потом заменим на настоящие
+// НАСТОЯЩИЕ фотографии с оригинального сайта phuketgo.aaddaa.com
 
-// Main tour images
-import rachaBeach1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
-import rachaBeach2 from "@/assets/phi-phi-2days/maya-bay-2.jpg"; 
-import coralIsland1 from "@/assets/phi-phi-snorkeling.jpg";
-import coralIsland2 from "@/assets/phi-phi-2days/pileh-lagoon.jpg";
-import snorkeling1 from "@/assets/phi-phi-2days/bamboo-island.webp";
-import snorkeling2 from "@/assets/phi-phi-2days/rang-yai-1.jpg";
-import beach1 from "@/assets/phi-phi-2days/maya-bay-3.jpg";
-import beach2 from "@/assets/phi-phi-2days/maya-bay-4.jpg";
+// Реальные фото с phuketgo
+import rachaPhoto1 from "@/assets/racha-coral/racha-1.jpg";
+import rachaPhoto2 from "@/assets/racha-coral/racha-2.jpg"; 
+import rachaPhoto3 from "@/assets/racha-coral/racha-3.jpg";
+import rachaPhoto4 from "@/assets/racha-coral/racha-4.jpg";
+import rachaPhoto5 from "@/assets/racha-coral/racha-5.jpg";
+import rachaPhoto6 from "@/assets/racha-coral/racha-6.jpg";
+import rachaPhoto7 from "@/assets/racha-coral/racha-7.jpg";
+import rachaPhoto8 from "@/assets/racha-coral/racha-8.jpg";
+import rachaPhoto9 from "@/assets/racha-coral/racha-9.jpg";
+import rachaPhoto10 from "@/assets/racha-coral/racha-10.jpg";
 
 export const rachaCoralImages = {
   // Главное фото для обложки
-  main: rachaBeach1,
+  main: rachaPhoto1,
   
-  // Галерея фотографий (8 шт для полной галереи)
+  // Галерея фотографий (10 шт - настоящие фото с phuketgo)
   gallery: [
-    rachaBeach1,     // Пляж Рача Яй - Паток Бэй
-    rachaBeach2,     // Пляж Рача Яй - Бунгало Бэй  
-    coralIsland1,    // Остров Корал - снорклинг
-    coralIsland2,    // Остров Корал - подводный мир
-    snorkeling1,     // Снорклинг среди кораллов
-    snorkeling2,     // Тропические рыбы
-    beach1,          // Отдых на пляже
-    beach2,          // Кристально чистая вода
+    rachaPhoto1,     // Пляж Рача Яй - главное фото
+    rachaPhoto2,     // Пляж Рача Яй - Паток Бэй  
+    rachaPhoto3,     // Остров Корал - снорклинг
+    rachaPhoto4,     // Остров Корал - подводный мир
+    rachaPhoto5,     // Снорклинг среди кораллов
+    rachaPhoto6,     // Тропические рыбы и кораллы
+    rachaPhoto7,     // Отдых на пляже
+    rachaPhoto8,     // Кристально чистая вода
+    rachaPhoto9,     // Coral Beach Club - водные развлечения
+    rachaPhoto10,    // Coral Beach Club - пляжная зона
   ],
   
   // Фото для каталога
-  thumbnail: rachaBeach1,
+  thumbnail: rachaPhoto1,
 };
 
 // Описания к фотографиям
@@ -40,5 +44,7 @@ export const rachaCoralImageDescriptions = [
   "Плавание с маской среди коралловых садов",
   "Разноцветные тропические рыбы в чистой воде",
   "Релаксация на белоснежных пляжах", 
-  "Кристально чистая вода цвета аквамарин"
+  "Кристально чистая вода цвета аквамарин",
+  "Coral Beach Club - водные развлечения и парасейлинг",
+  "Coral Beach Club - комфортная пляжная зона с лежаками"
 ];

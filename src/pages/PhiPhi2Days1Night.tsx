@@ -28,8 +28,9 @@ import rangYai2 from "@/assets/phi-phi-2days/rang-yai-2.jpg";
 const excursion = {
   title: "Пхи-Пхи 2 дня / 1 ночь",
   subtitle: "Экскурсия с ночёвкой на островах Пхи-Пхи",
-  price: "4 000",
-  currency: "₽",
+  priceAdult: 4000,
+  priceChild: 3500,
+  currency: "฿",
   duration: "2 дня / 1 ночь",
   groupSize: "до 30 человек",
   rating: 4.8,
@@ -131,6 +132,12 @@ const PhiPhi2Days1Night = () => {
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [mobileGalleryIndex, setMobileGalleryIndex] = useState<number>(0);
+  
+  // Калькулятор цен
+  const [adults, setAdults] = useState(2);
+  const [children, setChildren] = useState(0);
+
+  const totalPrice = adults * excursion.priceAdult + children * excursion.priceChild;
 
   const openModal = (image: string, index: number) => {
     setSelectedImage(image);
@@ -226,6 +233,8 @@ const PhiPhi2Days1Night = () => {
               <Link to="/" className="hover:text-green-600 transition-colors">Главная</Link>
               <span>›</span>
               <Link to="/tours" className="hover:text-green-600 transition-colors">Туры</Link>
+              <span>›</span>
+              <Link to="/tours?category=marine" className="hover:text-green-600 transition-colors">Морские экскурсии</Link>
               <span>›</span>
               <span className="text-gray-700">Пхи-Пхи 2 дня / 1 ночь</span>
             </div>
@@ -390,21 +399,78 @@ const PhiPhi2Days1Night = () => {
               <div className="sticky top-24">
                 <Card className="shadow-lg border-0">
                   <CardContent className="p-6">
-                    <div className="text-center mb-6">
-                      <div className="space-y-2 mb-4">
+                    {/* Калькулятор стоимости */}
+                    <div className="mb-6">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">Рассчитать стоимость</h3>
+                      
+                      <div className="space-y-4">
+                        {/* Взрослые */}
                         <div className="flex items-center justify-between">
-                          <span className="text-lg font-medium text-gray-700">Взрослый:</span>
-                          <span className="text-2xl font-bold text-green-600">{excursion.price} {excursion.currency}</span>
+                          <div>
+                            <span className="text-gray-700 font-medium">Взрослые</span>
+                            <div className="text-sm text-gray-500">{excursion.priceAdult} {excursion.currency}</div>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <button
+                              onClick={() => setAdults(Math.max(1, adults - 1))}
+                              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                              disabled={adults <= 1}
+                            >
+                              -
+                            </button>
+                            <span className="font-semibold min-w-[20px] text-center">{adults}</span>
+                            <button
+                              onClick={() => setAdults(adults + 1)}
+                              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                            >
+                              +
+                            </button>
+                          </div>
                         </div>
+
+                        {/* Дети */}
                         <div className="flex items-center justify-between">
-                          <span className="text-lg font-medium text-gray-700">Детский (4-11 лет):</span>
-                          <span className="text-2xl font-bold text-green-600">3,500 {excursion.currency}</span>
+                          <div>
+                            <span className="text-gray-700 font-medium">Дети (4-11 лет)</span>
+                            <div className="text-sm text-gray-500">{excursion.priceChild} {excursion.currency}</div>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <button
+                              onClick={() => setChildren(Math.max(0, children - 1))}
+                              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                              disabled={children <= 0}
+                            >
+                              -
+                            </button>
+                            <span className="font-semibold min-w-[20px] text-center">{children}</span>
+                            <button
+                              onClick={() => setChildren(children + 1)}
+                              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                            >
+                              +
+                            </button>
+                          </div>
                         </div>
-                        <div className="text-sm text-gray-500 mt-2">
+
+                        <div className="text-xs text-gray-500 text-center">
                           До 3 лет бесплатно
                         </div>
+
+                        {/* Итоговая стоимость */}
+                        <div className="border-t pt-4">
+                          <div className="text-center">
+                            <div className="text-sm text-gray-600 mb-1">Итого:</div>
+                            <div className="text-3xl font-bold text-green-600">
+                              {totalPrice.toLocaleString()} {excursion.currency}
+                            </div>
+                            <div className="text-sm text-gray-500 mt-1">
+                              за {adults + children} чел.
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div className="space-y-3 mb-6 text-sm text-left">
+                      
+                      <div className="space-y-3 mb-6 text-sm text-left mt-6">
                         <div className="flex items-center gap-3">
                           <Clock className="w-4 h-4 text-gray-400" />
                           <span>Продолжительность: {excursion.duration}</span>
@@ -422,9 +488,12 @@ const PhiPhi2Days1Night = () => {
                           <span>Трансфер включен</span>
                         </div>
                       </div>
+                      
                       <div className="space-y-3">
                         <Button asChild className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold">
-                          <Link to="/book/phi-phi-treasure-2d-1n-standard/reserv">Забронировать сейчас</Link>
+                          <Link to="/book/phi-phi-treasure-2d-1n-standard/reserv">
+                            Забронировать за {totalPrice.toLocaleString()} {excursion.currency}
+                          </Link>
                         </Button>
                         <Button variant="outline" asChild className="w-full py-3 border-gray-300">
                           <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
@@ -493,7 +562,7 @@ const PhiPhi2Days1Night = () => {
           </div>
           {/* Mobile price */}
           <div className="text-2xl font-bold text-green-600 mb-4 md:hidden">
-            {excursion.price} {excursion.currency} <span className="text-base font-normal text-gray-500">за человека</span>
+            от {excursion.priceAdult} {excursion.currency} <span className="text-base font-normal text-gray-500">за взрослого</span>
           </div>
         </div>
       </section>
@@ -528,9 +597,9 @@ const PhiPhi2Days1Night = () => {
                   </div>
                   <div className="text-center">
                     <div className="text-4xl font-bold text-green-600 mb-2">
-                      {excursion.price} {excursion.currency}
+                      от {excursion.priceAdult} {excursion.currency}
                     </div>
-                    <div className="text-gray-500 mb-6">за человека</div>
+                    <div className="text-gray-500 mb-6">за взрослого</div>
                     <div className="space-y-3">
                       <Button asChild className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold">
                         <Link to="/book/phi-phi-treasure-2d-1n-standard/reserv">Забронировать сейчас</Link>
@@ -656,9 +725,9 @@ const PhiPhi2Days1Night = () => {
         <div className="flex items-center justify-between gap-4">
           <div className="text-left">
             <div className="text-lg font-bold text-green-600">
-              от {excursion.price} {excursion.currency}
+              от {excursion.priceAdult} {excursion.currency}
             </div>
-            <div className="text-xs text-gray-600">взрослый / 3,500 ₽ детский</div>
+            <div className="text-xs text-gray-600">взрослый / {excursion.priceChild} {excursion.currency} детский</div>
           </div>
           <Button asChild className="bg-green-600 hover:bg-green-700 text-white px-6">
             <Link to="/book/phi-phi-treasure-2d-1n-standard/reserv">Забронировать</Link>

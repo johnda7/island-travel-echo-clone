@@ -7,6 +7,7 @@ import { BookingModal } from "./BookingModal";
 import { PopularityBadge } from "./PopularityBadge";
 import phiPhiMayaBay from "@/assets/phi-phi-maya-bay.jpg";
 import { rachaCoralImages } from "@/assets/racha-coral/images";
+import mayaBay1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
 
 const tours = [
   {
@@ -49,6 +50,19 @@ const tours = [
   },
   {
     id: 4,
+    slug: "phi-phi-2-days-1-night",
+    title: "Пхи-Пхи 2 дня / 1 ночь",
+    duration: "2 дня",
+    group: "До 30 человек",
+    date: "Круглый год",
+    price: "4,000 ฿",
+    image: mayaBay1,
+    highlights: ["Майя Бэй", "Ночь на острове", "Огненное шоу"],
+    bookingsToday: 6,
+    popular: true
+  },
+  {
+    id: 5,
     slug: "11-islands-standard",
     title: "11 островов Стандарт",
     duration: "9 часов",

@@ -693,7 +693,7 @@ const Tours = () => {
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             {toursData.filter(tour => tour.featured).map((tour) => (
-              <div key={tour.id} className="text-center p-6 rounded-xl border border-blue-100 bg-blue-50">
+              <div key={`featured-${tour.id}`} className="text-center p-6 rounded-xl border border-blue-100 bg-blue-50">
                 <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Star className="w-8 h-8 text-white fill-white" />
                 </div>

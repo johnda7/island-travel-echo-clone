@@ -28,8 +28,8 @@ import rangYai2 from "@/assets/phi-phi-2days/rang-yai-2.jpg";
 const excursion = {
   title: "Пхи-Пхи 2 дня / 1 ночь",
   subtitle: "Экскурсия с ночёвкой на островах Пхи-Пхи",
-  price: "от 8 900",
-  currency: "฿",
+  price: "4 000",
+  currency: "₽",
   duration: "2 дня / 1 ночь",
   groupSize: "до 30 человек",
   rating: 4.8,
@@ -252,7 +252,7 @@ const PhiPhi2Days1Night = () => {
                   <img 
                     src={excursion.gallery[0]} 
                     alt="Maya Bay"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
 
@@ -264,7 +264,7 @@ const PhiPhi2Days1Night = () => {
                   <img 
                     src={excursion.gallery[1]} 
                     alt="Gallery 2"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 
@@ -275,7 +275,7 @@ const PhiPhi2Days1Night = () => {
                   <img 
                     src={excursion.gallery[2]} 
                     alt="Gallery 3"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
 
@@ -287,7 +287,7 @@ const PhiPhi2Days1Night = () => {
                   <img 
                     src={excursion.gallery[3]} 
                     alt="Gallery 4"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 
@@ -298,7 +298,7 @@ const PhiPhi2Days1Night = () => {
                   <img 
                     src={excursion.gallery[4]} 
                     alt="Gallery 5"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div className="text-white text-center">
@@ -330,7 +330,7 @@ const PhiPhi2Days1Night = () => {
                         <img 
                           src={image} 
                           alt={`Gallery ${index + 1}`}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover object-center"
                         />
                         {/* Overlay с количеством фото на последнем слайде */}
                         {index === 5 && excursion.gallery.length > 6 && (
@@ -391,10 +391,19 @@ const PhiPhi2Days1Night = () => {
                 <Card className="shadow-lg border-0">
                   <CardContent className="p-6">
                     <div className="text-center mb-6">
-                      <div className="text-3xl font-bold text-green-600 mb-2">
-                        {excursion.price} {excursion.currency}
+                      <div className="space-y-2 mb-4">
+                        <div className="flex items-center justify-between">
+                          <span className="text-lg font-medium text-gray-700">Взрослый:</span>
+                          <span className="text-2xl font-bold text-green-600">{excursion.price} {excursion.currency}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-lg font-medium text-gray-700">Детский (4-11 лет):</span>
+                          <span className="text-2xl font-bold text-green-600">3,500 {excursion.currency}</span>
+                        </div>
+                        <div className="text-sm text-gray-500 mt-2">
+                          До 3 лет бесплатно
+                        </div>
                       </div>
-                      <div className="text-gray-500 mb-4">за человека</div>
                       <div className="space-y-3 mb-6 text-sm text-left">
                         <div className="flex items-center gap-3">
                           <Clock className="w-4 h-4 text-gray-400" />
@@ -646,10 +655,10 @@ const PhiPhi2Days1Night = () => {
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40">
         <div className="flex items-center justify-between gap-4">
           <div className="text-left">
-            <div className="text-xl font-bold text-green-600">
-              {excursion.price} {excursion.currency}
+            <div className="text-lg font-bold text-green-600">
+              от {excursion.price} {excursion.currency}
             </div>
-            <div className="text-xs text-gray-600">за человека</div>
+            <div className="text-xs text-gray-600">взрослый / 3,500 ₽ детский</div>
           </div>
           <Button asChild className="bg-green-600 hover:bg-green-700 text-white px-6">
             <Link to="/book/phi-phi-treasure-2d-1n-standard/reserv">Забронировать</Link>
@@ -751,7 +760,7 @@ const PhiPhi2Days1Night = () => {
                     <img
                       src={image}
                       alt={`Миниатюра ${index + 1}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover object-center"
                     />
                   </button>
                 ))}

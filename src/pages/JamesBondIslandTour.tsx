@@ -255,7 +255,7 @@ export const JamesBondIslandTour = () => {
                 
                 <div 
                   className="cursor-pointer group relative overflow-hidden rounded-lg"
-                  onClick={openGallery}
+                  onClick={() => openGallery(4)}
                 >
                   <img 
                     src={excursion.gallery[4]} 
@@ -276,7 +276,7 @@ export const JamesBondIslandTour = () => {
               <div className="md:hidden">
                 <div 
                   className="relative h-64 rounded-lg overflow-hidden cursor-pointer group"
-                  onClick={openGallery}
+                  onClick={() => openGallery(0)}
                 >
                   <img 
                     src={excursion.gallery[0]} 
@@ -419,3 +419,5 @@ export const JamesBondIslandTour = () => {
     </div>
   );
 };
+
+export default JamesBondIslandTour;

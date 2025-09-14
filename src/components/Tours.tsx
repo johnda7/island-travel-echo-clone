@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { BookingModal } from "./BookingModal";
 import { PopularityBadge } from "./PopularityBadge";
 import phiPhiMayaBay from "@/assets/phi-phi-maya-bay.jpg";
+import { rachaCoralImages } from "@/assets/racha-coral/images";
 
 const tours = [
   {
@@ -35,6 +36,19 @@ const tours = [
   },
   {
     id: 3,
+    slug: "racha-coral",
+    title: "Острова Рача и Корал",
+    duration: "8 часов",
+    group: "До 30 человек",
+    date: "Круглый год",
+    price: "2,290 ₽",
+    image: rachaCoralImages.main,
+    highlights: ["Coral Beach Club", "Снорклинг", "Парасейлинг"],
+    bookingsToday: 9,
+    popular: true
+  },
+  {
+    id: 4,
     slug: "11-islands-standard",
     title: "11 островов Стандарт",
     duration: "9 часов",
@@ -67,7 +81,7 @@ export const Tours = () => {
                 <img 
                   src={tour.image} 
                   alt={tour.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 

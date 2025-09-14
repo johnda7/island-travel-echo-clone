@@ -6,15 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
 
-// Import images - будем использовать временные изображения из существующих
-import pearl1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
-import pearl2 from "@/assets/phi-phi-2days/maya-bay-2.jpg";
-import pearl3 from "@/assets/phi-phi-maya-bay.jpg";
-import pearl4 from "@/assets/phi-phi-lagoon.jpg";
-import pearl5 from "@/assets/phi-phi-2days/pileh-lagoon.jpg";
-import pearl6 from "@/assets/phi-phi-2days/bamboo-island.webp";
-import pearl7 from "@/assets/phi-phi-2days/fire-show-1.jpg";
-import pearl8 from "@/assets/phi-phi-2days/rang-yai-1.jpg";
+// Import images - настоящие фото с оригинального сайта
+import { fourPearlsImages, fourPearlsImageDescriptions } from "@/assets/four-pearls-andaman/images";
 
 const excursion = {
   title: "4 жемчужины Андаманского моря",
@@ -25,17 +18,8 @@ const excursion = {
   groupSize: "до 25 человек",
   rating: 4.8,
   reviewsCount: 89,
-  mainImage: pearl1,
-  gallery: [
-    pearl1,
-    pearl2,
-    pearl3,
-    pearl4,
-    pearl5,
-    pearl6,
-    pearl7,
-    pearl8,
-  ],
+  mainImage: fourPearlsImages.main,
+  gallery: fourPearlsImages.gallery,
   description: `
 4 ЖЕМЧУЖИНЫ АНДАМАНСКОГО МОРЯ - это роскошное двухдневное путешествие по самым красивым и нетронутым уголкам региона. Программа включает посещение четырех уникальных локаций с ночевкой на одном из райских островов.
 

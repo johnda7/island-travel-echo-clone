@@ -9,6 +9,10 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Gri
 // Import unified image system for Racha Coral tour
 import { rachaCoralImages, rachaCoralImageDescriptions } from "@/assets/racha-coral/images";
 
+// Debug log to check images
+console.log("DEBUG: rachaCoralImages.gallery length:", rachaCoralImages.gallery.length);
+console.log("DEBUG: First image:", rachaCoralImages.gallery[0]);
+
 const excursion = {
   title: "Острова Рача и Корал",
   subtitle: "Экскурсия на острова Рача 1 день",  
@@ -206,7 +210,7 @@ const PhotoGallery = () => {
                   <img 
                     src={excursion.gallery[0]} 
                     alt={rachaCoralImageDescriptions[0]}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
 
@@ -217,7 +221,7 @@ const PhotoGallery = () => {
                   <img 
                     src={excursion.gallery[1]} 
                     alt={rachaCoralImageDescriptions[1]}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 
@@ -228,7 +232,7 @@ const PhotoGallery = () => {
                   <img 
                     src={excursion.gallery[2]} 
                     alt={rachaCoralImageDescriptions[2]}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
 
@@ -239,7 +243,7 @@ const PhotoGallery = () => {
                   <img 
                     src={excursion.gallery[3]} 
                     alt={rachaCoralImageDescriptions[3]}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 
@@ -250,7 +254,7 @@ const PhotoGallery = () => {
                   <img 
                     src={excursion.gallery[4]} 
                     alt={rachaCoralImageDescriptions[4]}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center group-hover:bg-opacity-30 transition-all duration-300">
                     <div className="text-white text-center">
@@ -277,7 +281,7 @@ const PhotoGallery = () => {
                       <img 
                         src={image} 
                         alt={rachaCoralImageDescriptions[index]}
-                        className="w-full h-64 object-cover"
+                        className="w-full h-64 object-cover object-center"
                       />
                     </div>
                   ))}
@@ -589,7 +593,7 @@ const PhotoGallery = () => {
                     <img
                       src={image}
                       alt={`Thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover object-center"
                     />
                   </button>
                 ))}
@@ -613,7 +617,7 @@ const PhotoGallery = () => {
                   <img
                     src={image}
                     alt={`Thumbnail ${index + 1}`}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-center"
                   />
                 </button>
               ))}

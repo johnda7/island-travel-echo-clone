@@ -4,7 +4,7 @@ import mayaBay1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
 import pilehLagoon from "@/assets/phi-phi-2days/pileh-lagoon.jpg";
 import { rachaCoralImages } from "@/assets/racha-coral/images";
 import { fourPearlsImages } from "@/assets/four-pearls-andaman/images";
-import { jamesBondImages } from "@/assets/james-bond-island/images";
+import { jamesBondIslandImages } from "@/assets/james-bond-island/images";
 
 export interface Tour {
   id: number;
@@ -156,7 +156,7 @@ export const toursData: Tour[] = [
     price: "2,590 ฿ взр. / 1,800 ฿ дет.",
     rating: 4.9,
     reviews: 287,
-    image: jamesBondImages.main,
+    image: jamesBondIslandImages.main,
     highlights: [
       "Знаменитая скала Ко Тапу из фильма о Джеймсе Бонде",
       "Каноэ по пещерам и лагунам",

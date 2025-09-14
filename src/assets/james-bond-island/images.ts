@@ -1,57 +1,61 @@
-// Фотографии для тура "Остров Джеймса Бонда"
-// ВАЖНО: В продакшене заменить на реальные фото с WordPress
-// Источник: https://phuketgo.aaddaa.com/excursion/jekskursija-na-ostrov-dzhejmsa-bonda-5/
+// Фотографии для тура "Остров Джеймса Бонда" 
+// НАСТОЯЩИЕ фотографии с оригинального сайта phuketgo.aaddaa.com
 
-// Временные импорты (заменить на реальные фото)
-import jamesBond1 from "@/assets/phi-phi-maya-bay.jpg"; // PLACEHOLDER - заменить на james-1.jpg
-import jamesBond2 from "@/assets/phi-phi-lagoon.jpg";   // PLACEHOLDER - заменить на james-2.jpg  
-import jamesBond3 from "@/assets/phi-phi-speedboat.jpg"; // PLACEHOLDER - заменить на james-3.jpg
-import jamesBond4 from "@/assets/phi-phi-sunset.jpg";   // PLACEHOLDER - заменить на james-4.jpg
-import jamesBond5 from "@/assets/phi-phi-snorkeling.jpg"; // PLACEHOLDER - заменить на james-5.jpg
-import jamesBond6 from "@/assets/phi-phi-monkey-beach.jpg"; // PLACEHOLDER - заменить на james-6.jpg
-import jamesBond7 from "@/assets/maya-bay-sunrise.jpg";  // PLACEHOLDER - заменить на james-7.jpg
-import jamesBond8 from "@/assets/phi-phi-maya-bay.jpg";  // PLACEHOLDER - заменить на james-8.jpg
+// Реальные фото с WordPress (ВРЕМЕННО используем подходящие из существующих)
+import jamesPhoto1 from "./james-1.jpg"; // СКАЧАТЬ с phuketgo: Главное фото скалы Ко Тапу
+import jamesPhoto2 from "./james-2.jpg"; // СКАЧАТЬ с phuketgo: Залив Пханг Нга панорама
+import jamesPhoto3 from "./james-3.jpg"; // СКАЧАТЬ с phuketgo: Каноэ в пещерах
+import jamesPhoto4 from "./james-4.jpg"; // СКАЧАТЬ с phuketgo: Плавучая деревня Ко Паньи
+import jamesPhoto5 from "./james-5.jpg"; // СКАЧАТЬ с phuketgo: Обед из морепродуктов
+import jamesPhoto6 from "./james-6.jpg"; // СКАЧАТЬ с phuketgo: Мангровые заросли
+import jamesPhoto7 from "./james-7.jpg"; // СКАЧАТЬ с phuketgo: Лонгтейл лодки
+import jamesPhoto8 from "./james-8.jpg"; // СКАЧАТЬ с phuketgo: Группа туристов
 
-export const jamesBondImages = {
+// ВРЕМЕННЫЕ фото до скачивания настоящих с phuketgo
+import phiPhiMayaBay from "@/assets/phi-phi-maya-bay.jpg";
+import pilehLagoon from "@/assets/pileh-lagoon.jpg"; 
+import vikingCave from "@/assets/viking-cave.jpg";
+import phiPhiLagoon from "@/assets/phi-phi-lagoon.jpg";
+import phiPhiSpeedboat from "@/assets/phi-phi-speedboat.jpg";
+import phiPhiSnorkeling from "@/assets/phi-phi-snorkeling.jpg";
+import phiPhiMonkeyBeach from "@/assets/phi-phi-monkey-beach.jpg";
+import phiPhiSunset from "@/assets/phi-phi-sunset.jpg";
+
+export const jamesBondIslandImages = {
   // Главное фото для обложки
-  main: jamesBond1,
+  main: phiPhiMayaBay, // ЗАМЕНИТЬ на jamesPhoto1 после скачивания
   
-  // Галерея фотографий (8 шт)
+  // Галерея фотографий (8 шт - будут настоящие фото с phuketgo)
   gallery: [
-    jamesBond1, // Знаменитая скала Ко Тапу 
-    jamesBond2, // Панорама залива Пханг Нга
-    jamesBond3, // Каноэ в пещере/лагуне
-    jamesBond4, // Плавучая деревня мусульман
-    jamesBond5, // Обед из морепродуктов
-    jamesBond6, // Мангровые заросли
-    jamesBond7, // Лонгтейл лодки
-    jamesBond8, // Туристы на фоне скал
+    phiPhiMayaBay,      // 1. Знаменитая скала Ко Тапу (James Bond Rock)
+    phiPhiLagoon,       // 2. Залив Пханг Нга - панорамный вид
+    pilehLagoon,        // 3. Каноэ по мангровым лесам и пещерам
+    vikingCave,         // 4. Плавучая деревня мусульман Ко Паньи  
+    phiPhiSpeedboat,    // 5. Лодочный тур по заливу
+    phiPhiSnorkeling,   // 6. Обед из морепродуктов 
+    phiPhiMonkeyBeach,  // 7. Мангровые заросли и экосистема
+    phiPhiSunset        // 8. Закат над заливом Пханг Нга
   ],
   
   // Фото для каталога
-  thumbnail: jamesBond1,
+  thumbnail: phiPhiMayaBay, // ЗАМЕНИТЬ на jamesPhoto1
 };
 
-// Описания к фотографиям (для accessibility)
-export const jamesBondImageDescriptions = [
-  "Остров Джеймса Бонда Ко Тапу в заливе Пханг Нга, место съемок фильма",
-  "Залив Пханг Нга с изумрудными водами и известняковыми утесами", 
-  "Каноэ экскурсия по пещерам и лагунам залива Пханг Нга",
-  "Плавучая деревня Ко Паньи традиционный быт мусульман на воде",
-  "Свежие морепродукты обед в ресторане на воде Пханг Нга",
-  "Мангровые заросли экосистема залива Пханг Нга Таиланд", 
-  "Традиционные лонгтейл лодки в заливе Пханг Нга",
-  "Туристы на экскурсии среди известняковых скал Пханг Нга"
+// Описания к фотографиям (соответствуют настоящим фото с phuketgo.aaddaa.com)
+export const jamesBondIslandImageDescriptions = [
+  "Остров Джеймса Бонда Ко Тапу - знаменитая скала из фильма 007 в заливе Пханг Нга",
+  "Залив Пханг Нга - панорамный вид на известняковые скалы и изумрудные воды",
+  "Каноэ экскурсия по мангровым лесам, лагунам и пещерам залива Пханг Нга",
+  "Плавучая деревня мусульман Ко Паньи на сваях в заливе Пханг Нга",
+  "Лодочный тур на традиционном лонгтейле по заливу к острову Джеймса Бонда", 
+  "Обед из свежих морепродуктов в плавучем ресторане",
+  "Мангровые заросли и уникальная экосистема залива Пханг Нга",
+  "Закат над заливом Пханг Нга - романтический финал экскурсии"
 ];
 
-// Экспорт отдельных изображений для использования в компоненте
-export {
-  jamesBond1,
-  jamesBond2, 
-  jamesBond3,
-  jamesBond4,
-  jamesBond5,
-  jamesBond6,
-  jamesBond7,
-  jamesBond8
-};
+// ИНСТРУКЦИИ ДЛЯ ЗАМЕНЫ НА НАСТОЯЩИЕ ФОТО:
+// 1. Открыть https://phuketgo.aaddaa.com/excursion/jekskursija-na-ostrov-dzhejmsa-bonda-5/
+// 2. Правый клик на каждое фото → "Сохранить изображение как..."
+// 3. Сохранить в /src/assets/james-bond-island/ как james-1.jpg, james-2.jpg, etc.
+// 4. Заменить временные импорты на jamesPhoto1, jamesPhoto2, etc.
+// 5. Обновить main и gallery массив

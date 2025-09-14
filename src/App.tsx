@@ -3,7 +3,7 @@ import PhiPhiBooking from "@/pages/PhiPhiBooking";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 import Tours from "./pages/Tours";
@@ -66,7 +66,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       {/* Use basename so routes work under GitHub Pages subpath (Vite's base -> import.meta.env.BASE_URL) */}
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <HashRouter>
         <ErrorBoundary>
         <Routes>
           <Route path="/" element={<Index />} />
@@ -101,7 +101,7 @@ const App = () => (
           {/* Specific excursion routes */}
           <Route path="/excursion/11-islands-standard" element={<ElevenIslandsStandard />} />
           <Route path="/excursion/phi-phi-islands-speedboat" element={<PhiPhiIslandsSpeedboat />} />
-          <Route path="/excursion/james-bond-island" element={<JamesBondIsland />} />
+
           <Route path="/excursion/coral-island-parasailing" element={<CoralIslandParasailing />} />
           <Route path="/excursion/racha-yai-island" element={<RachaYaiIsland />} />
           <Route path="/excursion/maya-bay-sunrise" element={<MayaBaySunrise />} />
@@ -181,7 +181,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
         </ErrorBoundary>
-      </BrowserRouter>
+      </HashRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );

@@ -1,18 +1,54 @@
 
+import { useState } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Clock, Users, MapPin, Star, Calendar } from "lucide-react";
+import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { getTourBySlug } from "@/data/tours";
 import { Helmet } from "react-helmet";
 
 const ExcursionDetail = () => {
   const { slug } = useParams();
+  
+  // State для модального окна галереи
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
   // Пытаемся получить тур из централизованных данных по slug
   const tour = slug ? getTourBySlug(slug) : undefined;
+
+  // Функции для управления галереей
+  const openModal = (image: string, index: number) => {
+    setSelectedImage(image);
+    setCurrentImageIndex(index);
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
+  };
+
+  const openGallery = () => {
+    setIsGalleryOpen(true);
+  };
+
+  const closeGallery = () => {
+    setIsGalleryOpen(false);
+  };
+
+  const nextImage = () => {
+    const gallery = excursion.gallery;
+    setCurrentImageIndex((prev) => (prev + 1) % gallery.length);
+    setSelectedImage(gallery[(currentImageIndex + 1) % gallery.length]);
+  };
+
+  const prevImage = () => {
+    const gallery = excursion.gallery;
+    setCurrentImageIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
+    setSelectedImage(gallery[(currentImageIndex - 1 + gallery.length) % gallery.length]);
+  };
 
   // Фолбэк-данные (как раньше), чтобы не ломать существующие страницы
   const fallback = {
@@ -169,16 +205,59 @@ const ExcursionDetail = () => {
       {/* Gallery */}
       <section className="py-8">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-4 gap-4">
-            {excursion.gallery.map((image, index) => (
-              <div key={index} className="relative aspect-video overflow-hidden rounded-lg">
-                <img 
-                  src={image} 
-                  alt={`Галерея ${index + 1}`}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-            ))}
+          {/* Desktop Gallery */}
+          <div className="hidden md:block">
+            <div className="grid grid-cols-4 gap-4">
+              {excursion.gallery.slice(0, 4).map((image, index) => (
+                <div 
+                  key={index} 
+                  className="relative aspect-video overflow-hidden rounded-lg cursor-pointer group"
+                  onClick={() => openModal(image, index)}
+                >
+                  <img 
+                    src={image} 
+                    alt={`Галерея ${index + 1}`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  {index === 3 && excursion.gallery.length > 4 && (
+                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                      <div className="text-white text-center">
+                        <Grid3X3 className="w-8 h-8 mx-auto mb-2" />
+                        <div className="text-lg font-semibold">+{excursion.gallery.length - 4}</div>
+                        <div className="text-sm">фото</div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile Gallery */}
+          <div className="md:hidden">
+            <div className="grid grid-cols-2 gap-2">
+              {excursion.gallery.slice(0, 4).map((image, index) => (
+                <div 
+                  key={index} 
+                  className="relative aspect-square overflow-hidden rounded-lg cursor-pointer"
+                  onClick={() => openModal(image, index)}
+                >
+                  <img 
+                    src={image} 
+                    alt={`Галерея ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                  {index === 3 && excursion.gallery.length > 4 && (
+                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                      <div className="text-white text-center">
+                        <div className="text-lg font-semibold">+{excursion.gallery.length - 4}</div>
+                        <div className="text-sm">фото</div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -300,6 +379,44 @@ const ExcursionDetail = () => {
           </div>
         </div>
       </section>
+
+      {/* Modal для просмотра фотографий */}
+      {selectedImage && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
+          <div className="relative w-full h-full flex items-center justify-center">
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 text-white hover:text-gray-300 z-60"
+            >
+              <X size={32} />
+            </button>
+            
+            <button
+              onClick={prevImage}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-60"
+            >
+              <ChevronLeft size={32} />
+            </button>
+            
+            <button
+              onClick={nextImage}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-60"
+            >
+              <ChevronRight size={32} />
+            </button>
+            
+            <img
+              src={selectedImage}
+              alt={`Галерея ${currentImageIndex + 1}`}
+              className="max-w-full max-h-full object-contain"
+            />
+            
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm">
+              {currentImageIndex + 1} из {excursion.gallery.length}
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>

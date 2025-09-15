@@ -36,6 +36,44 @@ export interface Tour {
 // Единый массив туров - как база данных в WordPress
 export const toursData: Tour[] = [
   {
+    id: 13,
+    title: "Као Лак SAFARI 1 день",
+    location: "Као Лак, Пханг Нга",
+    duration: "1 день",
+    group: "Групповая экскурсия",
+    dates: "Ежедневно",
+    price: "1700 ฿",
+    originalPrice: "1900 ฿",
+    rating: 4.7,
+    reviews: 89,
+    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.56.21.png",
+    gallery: [
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.56.21.png",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.53.08.png",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.53.32.png",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.53.44.png",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/the-hotspring-beach-resort-spa-1.jpeg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/07/railay-beach_9-2048x1536.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/hong-island1.jpg"
+    ],
+    highlights: [
+      "Посещение пещерного храма Суван Куха с обезьянами",
+      "Слоновье СПА: купание и грязевые процедуры со слонами",
+      "Прогулка по реке на бамбуковом плоту или каноэ",
+      "Визит в зоопарк и мини-ферму черепах",
+      "Остановка у водопада и купание",
+      "Обед в тайском ресторане",
+      "Обзорная площадка на мосту Сарасин",
+      "Взрослые: 1700 ฿, Дети (4-11 лет): 1300 ฿, Малыши (0-3): Бесплатно"
+    ],
+    description: "Однодневное приключение в тропиках: джунгли, водопады и купание со слонами. Прогулка по реке на бамбуковом плоту или каноэ — как в старом приключенческом фильме. Визит в зоопарк, мини-ферму черепах и к храму в пещере со сталактитами.",
+    featured: true,
+    category: "city",
+    slug: "kao-lak-safari-1-den",
+    bookingsToday: 5,
+    popular: true
+  },
+  {
     id: 12,
     title: "Рафтинг + Слоновье СПА + ATV 1 день",
     location: "Джунгли Пхукета",

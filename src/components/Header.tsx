@@ -32,6 +32,7 @@ export const Header = () => {
   { name: "Достопримечательности Пхукета (без шопинга)", href: "/excursion/dostoprimechatelnosti-phuketa-1-den-obzornaja-jekskursija-bez-shopinga", description: "1 день, обзорная экскурсия без магазинов" },
     { name: "Рассветное приключение: Стеклянный мост Beyond Skywalk", href: "/tours/rassvetnoe-priklyuchenie-steklyannyj-most-beyond-skywalk", description: "Встреча рассвета на стеклянном мосту, о. Джеймса Бонда, пляж с самолетами" },
     { name: "Рафтинг + Слоновье СПА + ATV 1 день", href: "/tours/rafting-slonove-spa-atv-1-den", description: "Сплав по реке, катание на квадроциклах, купание со слонами" },
+    { name: "Као Лак SAFARI 1 день", href: "/tours/kao-lak-safari-1-den", description: "Приключение в тропиках: джунгли, водопады, купание со слонами" },
     { name: "Что посетить", href: "/what-to-visit", description: "Главные достопримечательности Пхукета" },
     { name: "Экскурсии", href: "/tours", description: "Все экскурсии и туры" },
     { name: "Направления", href: "/destinations", description: "Популярные направления" },

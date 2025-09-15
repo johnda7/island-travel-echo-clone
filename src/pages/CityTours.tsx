@@ -8,6 +8,19 @@ import { Link } from "react-router-dom";
 
 const cityTours = [
   {
+    id: 13,
+    title: "Као Лак SAFARI 1 день",
+    price: "1,700 ฿",
+    duration: "1 день",
+    groupSize: "Групповая экскурсия",
+    rating: 4.7,
+    reviewsCount: 89,
+    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.56.21.png",
+    highlights: ["Храм с обезьянами", "Слоновье СПА", "Прогулка на плоту", "Зоопарк"],
+    description: "Однодневное приключение в тропиках: джунгли, водопады и купание со слонами.",
+    link: "/tours/kao-lak-safari-1-den"
+  },
+  {
     id: 1,
     title: "Обзорная экскурсия по Пхукет-Тауну",
     price: "1,500 ₽",
@@ -97,6 +110,10 @@ const CityTours = () => {
                     <span className="text-2xl font-bold text-orange-600">{tour.price}</span>
                     {"href" in tour ? (
                       <Link to={(tour as any).href}>
+                        <Button className="bg-gradient-to-r from-orange-500 to-red-500">Подробнее</Button>
+                      </Link>
+                    ) : "link" in tour ? (
+                      <Link to={(tour as any).link}>
                         <Button className="bg-gradient-to-r from-orange-500 to-red-500">Подробнее</Button>
                       </Link>
                     ) : (

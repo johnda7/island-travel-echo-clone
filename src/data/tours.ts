@@ -15,6 +15,9 @@ export interface Tour {
   dates: string;
   price: string;
   originalPrice?: string;
+  priceAdult?: number; // Цена для взрослых в числовом формате
+  priceChild?: number; // Цена для детей в числовом формате
+  currency?: string; // Валюта отдельно
   rating: number;
   reviews: number;
   image: string;
@@ -40,6 +43,9 @@ export const toursData: Tour[] = [
     dates: "Круглый год",
     price: "2,490 ₽",
     originalPrice: "2,800 ₽",
+    priceAdult: 2490,
+    priceChild: 1990,
+    currency: "₽",
     rating: 4.9,
     reviews: 434,
     image: phiPhiMayaBay,
@@ -181,6 +187,9 @@ export const toursData: Tour[] = [
     dates: "Ежедневно",
     price: "3900 ฿",
     originalPrice: "4200 ฿",
+    priceAdult: 3900,
+    priceChild: 2900,
+    currency: "฿",
     rating: 4.9,
     reviews: 124,
     image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/james-bond-island-768x1024.jpg",
@@ -218,6 +227,9 @@ export const toursData: Tour[] = [
     dates: "Ежедневно",
     price: "2900 ฿",
     originalPrice: "3200 ฿",
+    priceAdult: 2900,
+    priceChild: 2200,
+    currency: "฿",
     rating: 4.8,
     reviews: 156,
     image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/samet-nangshe-viewpoint-555x1024.jpg",

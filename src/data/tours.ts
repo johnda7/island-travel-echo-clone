@@ -36,6 +36,46 @@ export interface Tour {
 // Единый массив туров - как база данных в WordPress
 export const toursData: Tour[] = [
   {
+    id: 11,
+    title: "Рассветное приключение: Стеклянный мост Beyond Skywalk",
+    location: "Пханг Нга, о. Джеймса Бонда",
+    duration: "1 день",
+    group: "Групповая экскурсия",
+    dates: "Ежедневно",
+    price: "2900 ฿",
+    originalPrice: "3200 ฿",
+    rating: 4.9,
+    reviews: 124,
+    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/sky-walk-bridge-1.webp",
+    gallery: [
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/sky-walk-bridge-1.webp",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/sky-walk-bridge_-1.webp",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/airplane-beach_-1-scaled.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/suwan-khuha-temple-1.webp",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/the-sea-gypsies-floating-village-2-scaled.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/elephant-show-1-scaled.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/baby-elephant-show-1.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/waterfall-2.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/hong-island1.jpg"
+    ],
+    highlights: [
+      "Встреча рассвета на стеклянном мосту Beyond Skywalk",
+      "Завтрак на смотровой с панорамными видами",
+      "Прогулка на длиннохвостой лодке по заливу Пханг Нга",
+      "Посещение острова Джеймса Бонда",
+      "Пляж с самолетами - уникальное место для фото",
+      "Кафе с кувшинками Ma Doo Bua",
+      "Храм с лежащим Буддой Suwan Khuha",
+      "Шоу слонов и купание со слонятами"
+    ],
+    description: "Погрузитесь в утреннюю тишину и красоту Таиланда: рассвет на смотровой площадке, лодочная прогулка по таинственным пещерам, пляж с самолётами и уютное кафе среди кувшинок — всё это за один незабываемый день. Ранний выезд в 3:45 утра гарантирует встречу рассвета в самых живописных местах региона.",
+    featured: true,
+    category: "adventure",
+    slug: "rassvetnoe-priklyuchenie-steklyannyj-most-beyond-skywalk",
+    bookingsToday: 12,
+    popular: true
+  },
+  {
     id: 1,
     title: "Острова Пхи-Пхи на скоростной лодке",
     location: "Острова Пхи-Пхи",

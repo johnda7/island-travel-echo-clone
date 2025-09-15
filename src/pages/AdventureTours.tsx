@@ -4,8 +4,22 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, Clock, Users, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const adventureTours = [
+  {
+    id: 11,
+    title: "Рассветное приключение: Стеклянный мост Beyond Skywalk",
+    price: "2,900 ฿",
+    duration: "1 день",
+    groupSize: "Групповая экскурсия",
+    rating: 4.9,
+    reviewsCount: 124,
+    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/sky-walk-bridge-1.webp",
+    highlights: ["Встреча рассвета на стеклянном мосту", "о. Джеймса Бонда", "Пляж с самолетами", "Кафе с кувшинками"],
+    description: "Погрузитесь в утреннюю тишину и красоту Таиланда: рассвет на смотровой площадке, лодочная прогулка по таинственным пещерам.",
+    link: "/tours/rassvetnoe-priklyuchenie-steklyannyj-most-beyond-skywalk"
+  },
   {
     id: 1,
     title: "Зиплайн через джунгли Пхукета",
@@ -81,7 +95,13 @@ const AdventureTours = () => {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-2xl font-bold text-green-600">{tour.price}</span>
-                    <Button className="bg-gradient-to-r from-green-500 to-emerald-500">Забронировать</Button>
+                    {tour.link ? (
+                      <Link to={tour.link}>
+                        <Button className="bg-gradient-to-r from-green-500 to-emerald-500">Подробнее</Button>
+                      </Link>
+                    ) : (
+                      <Button className="bg-gradient-to-r from-green-500 to-emerald-500">Забронировать</Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>

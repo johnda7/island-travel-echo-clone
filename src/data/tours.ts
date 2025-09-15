@@ -42,12 +42,13 @@ export const toursData: Tour[] = [
     duration: "1 день",
     group: "Групповая экскурсия",
     dates: "Ежедневно",
-    price: "2800 ฿",
-    originalPrice: "3100 ฿",
+    price: "2000 ฿",
+    originalPrice: "2200 ฿",
     rating: 4.8,
     reviews: 167,
-    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/rafting1-scaled.jpg",
+    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/rafting21-scaled.jpg",
     gallery: [
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/rafting21-scaled.jpg",
       "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/rafting1-scaled.jpg",
       "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/rafting2-scaled.jpg",
       "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/atv1-scaled.jpg",
@@ -55,8 +56,7 @@ export const toursData: Tour[] = [
       "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/bangkaew-elephant-park1-scaled.jpg",
       "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/bangkaew-elephant-park2-scaled.jpg",
       "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/zipline-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/waterfall-1.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/monkeys-at-suwan-khuha-temple-1.webp"
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/waterfall-1.jpg"
     ],
     highlights: [
       "Сплав на рафтах 5 км по горной реке",
@@ -66,7 +66,7 @@ export const toursData: Tour[] = [
       "Посещение храма с обезьянами Суван Куха",
       "Купание у живописного водопада",
       "Обед традиционной тайской кухни",
-      "Шоу слонёнка и катание на слоне"
+      "Взрослые: 2000 ฿, Дети (4-11 лет): 1700 ฿, Малыши (0-3): Бесплатно"
     ],
     description: "Один день в джунглях без спешки: купание со слоном, рафтинг по реке, храм с обезьянами, водопад в лесу. Захватывающее приключение на мощных квадроциклах по трассе с преградами, уникальное слоновье СПА и незабываемый сплав по горной реке.",
     featured: true,

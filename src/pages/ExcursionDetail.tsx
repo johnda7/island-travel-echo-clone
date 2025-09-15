@@ -69,8 +69,8 @@ const ExcursionDetail = () => {
         groupSize: tour.group,
         rating: tour.rating,
         reviewsCount: tour.reviews,
-        mainImage: tour.image,
-        gallery: [tour.image],
+  mainImage: tour.image,
+  gallery: tour.gallery && tour.gallery.length > 0 ? tour.gallery : [tour.image],
         description: tour.description,
         highlights: tour.highlights || [],
         included: [

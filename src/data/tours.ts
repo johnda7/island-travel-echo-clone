@@ -5,6 +5,10 @@ import pilehLagoon from "@/assets/phi-phi-2days/pileh-lagoon.jpg";
 import { rachaCoralImages } from "@/assets/racha-coral/images";
 import { fourPearlsImages } from "@/assets/four-pearls-andaman/images";
 import { jamesBondIslandImages } from "@/assets/james-bond-island/images";
+import karonBeach from "@/assets/karon-beach.jpg";
+import kataBeach from "@/assets/kata-beach.jpg";
+import patongBeach from "@/assets/patong-beach.jpg";
+import kamalaBeach from "@/assets/kamala-beach.jpg";
 
 export interface Tour {
   id: number;
@@ -18,6 +22,8 @@ export interface Tour {
   rating: number;
   reviews: number;
   image: string;
+  // Дополнительные изображения галереи (опционально)
+  gallery?: string[];
   highlights: string[];
   description: string;
   featured: boolean;
@@ -49,25 +55,7 @@ export const toursData: Tour[] = [
     bookingsToday: 12,
     popular: true
   },
-  {
-    id: 2,
-    title: "Остров Джеймса Бонда",
-    location: "Залив Пханг Нга",
-    duration: "8 часов", 
-    group: "До 25 человек",
-    dates: "Октябрь - Май",
-    price: "2,590 ₽",
-    originalPrice: "2,900 ₽",
-    rating: 4.8,
-    reviews: 289,
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Каноэ в пещерах", "Деревня на воде", "Морепродукты"],
-    description: "Путешествие к легендарному острову из фильма о Джеймсе Бонде с каноэ по мангровым зарослям.",
-    featured: true,
-    category: "marine",
-    slug: "james-bond-island",
-    bookingsToday: 8
-  },
+  
   {
     id: 3,
     title: "Острова Рача и Корал",
@@ -180,7 +168,17 @@ export const toursData: Tour[] = [
     price: "2,190 ₽",
     rating: 4.9,
     reviews: 168,
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/cape-promthep.jpg",
+    gallery: [
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/cape-promthep.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/temple-wat-chalong.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/view-point-near-big-buddha-statue.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/karon-view-point.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/phuket-old-town.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/viewpoint-windmill.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/6798780e8ebf0-17645-1200-800.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/elephant-feeding.jpg"
+    ],
     highlights: ["Большой Будда", "Ват Чалонг", "Старый город", "Karon Viewpoint", "Мыс Промтеп"],
     description: "Классическая обзорная экскурсия по Пхукету без посещения магазинов — топ‑локации за 1 день.",
     featured: true,

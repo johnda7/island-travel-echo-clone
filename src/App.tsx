@@ -128,6 +128,8 @@ const App = () => (
           <Route path="/tours/james-bond-island" element={<JamesBondIslandTour />} />
           <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
           <Route path="/tours/phi-phi-islands-speedboat" element={<PhiPhiIslandsSpeedboat />} />
+          {/* Generic tours route powered by centralized data */}
+          <Route path="/tours/:slug" element={<ExcursionDetail />} />
           
           {/* Reservation routes */}
           <Route path="/tours/phi-phi-2-days-1-night/reservation" element={<PhiPhiReservation />} />

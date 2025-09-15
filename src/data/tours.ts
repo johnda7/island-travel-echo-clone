@@ -171,6 +171,43 @@ export const toursData: Tour[] = [
     slug: "james-bond-island",
     bookingsToday: 15,
     popular: true
+  },
+  {
+    id: 14,
+    title: "11 ОСТРОВОВ МЕГА-ТУР | ОДИН ЭПИЧНЫЙ ДЕНЬ",
+    location: "Пханг-Нга, Пхи-Пхи",
+    duration: "1 день",
+    group: "Групповая экскурсия",
+    dates: "Ежедневно",
+    price: "3900 ฿",
+    originalPrice: "4200 ฿",
+    rating: 4.9,
+    reviews: 124,
+    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/james-bond-island-768x1024.jpg",
+    gallery: [
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/james-bond-island-768x1024.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/hong-island1-1-1024x682.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/hong-island1-2-1024x682.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/maya-bay1-768x1024.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/maya-bay3-1024x768.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/mayabay5-1024x768.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/pileh-lagoon.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/pileh-lagoon1.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/phi-phi-don.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/viking-cave.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/canoeing-768x1024.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/canoeing-talu-island-576x1024.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/koh-panyi1-1024x576.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/koh-panyi2-1024x576.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/koh-panak.jpg"
+    ],
+    highlights: ["Остров Джеймса Бонда", "Пхи-Пхи Мая Бэй", "Остров Хонг", "Каноэ в пещерах", "Деревня Паньи", "11 уникальных островов"],
+    description: "Грандиозный тур на 11 островов за один день: Джеймс Бонд, Пхи-Пхи, Хонг и другие жемчужины Андаманского моря. Каноэ, пещеры, белоснежные пляжи и невероятные фотолокации.",
+    featured: true,
+    category: "marine",
+    slug: "11-ostrovov",
+    bookingsToday: 12,
+    popular: true
   }
 ];
 

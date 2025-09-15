@@ -21,7 +21,7 @@ export const Header = () => {
     { name: "Пхи-Пхи Ле и лагуна", href: "/koh-phi-phi-leh-lagoon", description: "Экскурсия к острову Пхи-Пхи Ле и Изумрудной лагуне" },
     { name: "Майя Бей на рассвете", href: "/maya-bay-sunrise", description: "Встреча рассвета в легендарной бухте" },
     { name: "Остров Джеймса Бонда", href: "/james-bond-island", description: "Экскурсия к острову из фильма о Джеймсе Бонде" },
-    { name: "11 островов стандарт", href: "/excursion/11-islands-standard", description: "Большое путешествие по 11 островам" },
+  { name: "11 ОСТРОВОВ МЕГА-ТУР | ОДИН ЭПИЧНЫЙ ДЕНЬ", href: "/excursion/11-ostrovov", description: "Мега-тур по 11 островам: Пхи-Пхи, Майя Бэй, Джеймс Бонд, Хонг, Панак, Пани и др." },
     { name: "Коралловый остров + Парасейлинг", href: "/excursion/coral-island-parasailing", description: "Водные развлечения и парасейлинг" },
     { name: "Остров Рача Яй", href: "/excursion/racha-yai-island", description: "Снорклинг на живописном острове" },
     { name: "Наблюдение за китами", href: "/excursion/whale-watching-tour", description: "Уникальная экскурсия для наблюдения за китами" },

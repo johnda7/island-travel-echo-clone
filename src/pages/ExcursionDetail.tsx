@@ -20,36 +20,6 @@ const ExcursionDetail = () => {
   // Пытаемся получить тур из централизованных данных по slug
   const tour = slug ? getTourBySlug(slug) : undefined;
 
-  // Функции для управления галереей
-  const openModal = (image: string, index: number) => {
-    setSelectedImage(image);
-    setCurrentImageIndex(index);
-  };
-
-  const closeModal = () => {
-    setSelectedImage(null);
-  };
-
-  const openGallery = () => {
-    setIsGalleryOpen(true);
-  };
-
-  const closeGallery = () => {
-    setIsGalleryOpen(false);
-  };
-
-  const nextImage = () => {
-    const gallery = excursion.gallery;
-    setCurrentImageIndex((prev) => (prev + 1) % gallery.length);
-    setSelectedImage(gallery[(currentImageIndex + 1) % gallery.length]);
-  };
-
-  const prevImage = () => {
-    const gallery = excursion.gallery;
-    setCurrentImageIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
-    setSelectedImage(gallery[(currentImageIndex - 1 + gallery.length) % gallery.length]);
-  };
-
   // Фолбэк-данные (как раньше), чтобы не ломать существующие страницы
   const fallback = {
     title: "Discovery South Phuket",
@@ -123,6 +93,40 @@ const ExcursionDetail = () => {
         ],
       }
     : fallback;
+
+  // Функции для управления галереей
+  const openModal = (image: string, index: number) => {
+    setSelectedImage(image);
+    setCurrentImageIndex(index);
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
+  };
+
+  const openGallery = () => {
+    setIsGalleryOpen(true);
+  };
+
+  const closeGallery = () => {
+    setIsGalleryOpen(false);
+  };
+
+  const nextImage = () => {
+    const gallery = excursion.gallery;
+    if (gallery && gallery.length > 0) {
+      setCurrentImageIndex((prev) => (prev + 1) % gallery.length);
+      setSelectedImage(gallery[(currentImageIndex + 1) % gallery.length]);
+    }
+  };
+
+  const prevImage = () => {
+    const gallery = excursion.gallery;
+    if (gallery && gallery.length > 0) {
+      setCurrentImageIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
+      setSelectedImage(gallery[(currentImageIndex - 1 + gallery.length) % gallery.length]);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">

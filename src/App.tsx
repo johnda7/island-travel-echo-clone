@@ -129,8 +129,6 @@ const App = () => (
           <Route path="/tours/james-bond-island" element={<JamesBondIslandTour />} />
           <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
           <Route path="/tours/phi-phi-islands-speedboat" element={<PhiPhiIslandsSpeedboat />} />
-          {/* Generic tours route powered by centralized data - MUST be last */}
-          <Route path="/tours/:slug" element={<ExcursionDetail />} />
           
           {/* Reservation routes */}
           <Route path="/tours/phi-phi-2-days-1-night/reservation" element={<PhiPhiReservation />} />
@@ -181,6 +179,9 @@ const App = () => (
           <Route path="/excursion/similan-islands-diving" element={<ExcursionDetail />} />
           <Route path="/excursion/krabi-four-islands" element={<ExcursionDetail />} />
           <Route path="/excursion/koh-samui-angthong" element={<ExcursionDetail />} />
+          
+          {/* Generic tours route powered by centralized data - MUST be last before catch-all */}
+          <Route path="/tours/:slug" element={<ExcursionDetail />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

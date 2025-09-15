@@ -121,6 +121,7 @@ const App = () => (
           <Route path="/excursion/james-bond-island" element={<JamesBondIslandTour />} />
           
           {/* Tours routes - новый формат для централизованных данных */}
+          {/* Specific tours routes first to avoid conflicts */}
           <Route path="/tours/eleven-islands" element={<ElevenIslands />} />
           <Route path="/tours/four-pearls-andaman" element={<FourPearlsAndaman />} />
           <Route path="/tours/racha-coral" element={<RachaCoral />} />
@@ -128,7 +129,7 @@ const App = () => (
           <Route path="/tours/james-bond-island" element={<JamesBondIslandTour />} />
           <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
           <Route path="/tours/phi-phi-islands-speedboat" element={<PhiPhiIslandsSpeedboat />} />
-          {/* Generic tours route powered by centralized data */}
+          {/* Generic tours route powered by centralized data - MUST be last */}
           <Route path="/tours/:slug" element={<ExcursionDetail />} />
           
           {/* Reservation routes */}

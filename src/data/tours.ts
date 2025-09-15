@@ -208,6 +208,43 @@ export const toursData: Tour[] = [
     slug: "11-ostrovov",
     bookingsToday: 12,
     popular: true
+  },
+  {
+    id: 15,
+    title: "Аватар Плюс",
+    location: "Као Лак, Пханг Нга",
+    duration: "1 день",
+    group: "Групповая экскурсия",
+    dates: "Ежедневно",
+    price: "2900 ฿",
+    originalPrice: "3200 ฿",
+    rating: 4.8,
+    reviews: 156,
+    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/samet-nangshe-viewpoint-555x1024.jpg",
+    gallery: [
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/samet-nangshe-viewpoint-555x1024.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/benyaran-waterfall-1024x763.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/benyaran-waterfall2-825x1024.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/benyaran-museum-1-1024x683.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/benyaran-museum-2-1024x683.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/benyaran-museum-4-1024x683.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/elephant-show-1024x768.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/elephant-spa-1024x768.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/the-hotspring-beach-resort-spa-cold-iced-pool-1024x576.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/the-hotspring-beach-resort-spa2-1024x569.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/wat-tha-sai-temple-1024x746.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/natai-beach-.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/sunset-at-natai-beach-555x1024.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/jeep-768x1024.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/ma-doo-bua-cafe-1-2-830x1024.jpg"
+    ],
+    highlights: ["Смотровая Самет Нангше", "Водопад Бенжаран", "Музей Бенжаран", "Горячие источники", "Слоновье шоу", "Пляж Натай"],
+    description: "Экскурсия в стиле Аватар: потрясающие виды со смотровых площадок, водопады, горячие источники, слоновье шоу и SPA. Полное погружение в природную красоту Као Лака.",
+    featured: true,
+    category: "adventure",
+    slug: "avatar-pljus",
+    bookingsToday: 8,
+    popular: true
   }
 ];
 

@@ -22,6 +22,7 @@ export const Header = () => {
     { name: "Майя Бей на рассвете", href: "/maya-bay-sunrise", description: "Встреча рассвета в легендарной бухте" },
     { name: "Остров Джеймса Бонда", href: "/james-bond-island", description: "Экскурсия к острову из фильма о Джеймсе Бонде" },
     { name: "11 ОСТРОВОВ МЕГА-ТУР | ОДИН ЭПИЧНЫЙ ДЕНЬ", href: "/tours/11-ostrovov", description: "Грандиозный тур на 11 островов за один день: Джеймс Бонд, Пхи-Пхи, Хонг и другие жемчужины Андаманского моря" },
+    { name: "Аватар Плюс", href: "/tours/avatar-pljus", description: "Экскурсия в стиле Аватар: смотровые площадки, водопады, горячие источники, слоновье шоу" },
     { name: "Коралловый остров + Парасейлинг", href: "/excursion/coral-island-parasailing", description: "Водные развлечения и парасейлинг" },
     { name: "Остров Рача Яй", href: "/excursion/racha-yai-island", description: "Снорклинг на живописном острове" },
     { name: "Наблюдение за китами", href: "/excursion/whale-watching-tour", description: "Уникальная экскурсия для наблюдения за китами" },

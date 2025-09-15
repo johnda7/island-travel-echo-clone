@@ -18,6 +18,8 @@ export interface Tour {
   rating: number;
   reviews: number;
   image: string;
+  // Дополнительные изображения галереи (опционально)
+  gallery?: string[];
   highlights: string[];
   description: string;
   featured: boolean;

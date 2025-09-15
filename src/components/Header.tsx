@@ -29,6 +29,7 @@ export const Header = () => {
     { name: "Городские туры", href: "/category/city-tours", description: "Обзорные экскурсии по городу Пхукет" },
     { name: "Приключенческие туры", href: "/category/adventure-tours", description: "Экстремальные и активные туры" },
     { name: "Групповые туры", href: "/category/group-tours", description: "Экскурсии для больших групп" },
+  { name: "Достопримечательности Пхукета (без шопинга)", href: "/excursion/dostoprimechatelnosti-phuketa-1-den-obzornaja-jekskursija-bez-shopinga", description: "1 день, обзорная экскурсия без магазинов" },
     { name: "Что посетить", href: "/what-to-visit", description: "Главные достопримечательности Пхукета" },
     { name: "Экскурсии", href: "/tours", description: "Все экскурсии и туры" },
     { name: "Направления", href: "/destinations", description: "Популярные направления" },
@@ -64,11 +65,6 @@ export const Header = () => {
     };
   }, []);
 
-  const isActive = (path: string) => {
-    if (path === "/") return location.pathname === "/";
-    return location.pathname.startsWith(path);
-  };
-
   const navigation = [
     {
       name: "Что посетить",
@@ -96,7 +92,7 @@ export const Header = () => {
   ];
 
   return (
-  <header className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm shadow-md border-b border-gray-200/60 z-50">
+    <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -215,7 +211,7 @@ export const Header = () => {
                 <div key={item.name}>
                   <Link
                     to={item.href}
-                    className={`block py-1 font-medium transition-colors duration-200 ${isActive(item.href) ? "text-emerald-600" : "text-gray-700 hover:text-green-600"}`}
+                    className="block text-gray-700 hover:text-green-600 transition-colors duration-300 py-1 font-medium"
                     onClick={() => setIsOpen(false)}
                   >
                     {item.name}
@@ -226,7 +222,7 @@ export const Header = () => {
                         <Link
                           key={subItem.name}
                           to={subItem.href}
-                          className={`block py-0.5 text-sm transition-colors duration-200 ${isActive(subItem.href) ? "text-emerald-600" : "text-gray-600 hover:text-green-600"}`}
+                          className="block text-gray-600 hover:text-green-600 transition-colors duration-300 py-0.5 text-sm"
                           onClick={() => setIsOpen(false)}
                         >
                           {subItem.name}

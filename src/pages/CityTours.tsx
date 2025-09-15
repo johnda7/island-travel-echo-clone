@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Star, Clock, Users, Camera } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const cityTours = [
   {
@@ -29,6 +30,19 @@ const cityTours = [
     image: "https://images.unsplash.com/photo-1580837119756-563d608dd119?auto=format&fit=crop&w=800&q=80",
     highlights: ["Китайские особняки", "Уличное искусство", "Местная кухня"],
     description: "Исследуйте уникальную архитектуру китайского квартала с профессиональным гидом-историком."
+  },
+  {
+    id: 3,
+    title: "Достопримечательности Пхукета (без шопинга)",
+    price: "2,190 ₽",
+    duration: "8–9 часов",
+    groupSize: "До 18 человек",
+    rating: 4.9,
+    reviewsCount: 168,
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Большой Будда", "Ват Чалонг", "Старый город", "Karon Viewpoint", "Мыс Промтеп"],
+    description: "Классическая обзорная экскурсия по Пхукету без посещения магазинов — топ‑локации за 1 день.",
+    href: "/excursion/dostoprimechatelnosti-phuketa-1-den-obzornaja-jekskursija-bez-shopinga"
   }
 ];
 
@@ -81,7 +95,13 @@ const CityTours = () => {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-2xl font-bold text-orange-600">{tour.price}</span>
-                    <Button className="bg-gradient-to-r from-orange-500 to-red-500">Забронировать</Button>
+                    {"href" in tour ? (
+                      <Link to={(tour as any).href}>
+                        <Button className="bg-gradient-to-r from-orange-500 to-red-500">Подробнее</Button>
+                      </Link>
+                    ) : (
+                      <Button className="bg-gradient-to-r from-orange-500 to-red-500">Забронировать</Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>

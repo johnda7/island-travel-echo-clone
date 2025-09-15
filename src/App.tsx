@@ -52,6 +52,7 @@ import SmotrovyePloshchadki from "./pages/attractions/SmotrovyePloshchadki";
 import Hramy from "./pages/attractions/Hramy";
 import Muzei from "./pages/attractions/Muzei";
 import NochnyeRynki from "./pages/attractions/NochnyeRynki";
+import PhuketSightseeingNoShopping from "./pages/PhuketSightseeingNoShopping";
 
 // What-to-visit components
 import WhatToVisitDostoprimechatelnosti from "./pages/what-to-visit/Dostoprimechatelnosti";
@@ -110,6 +111,7 @@ const App = () => (
           <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
           <Route path="/book/phi-phi-2-days-1-night" element={<BookPhiPhi2Days />} />
           <Route path="/book/phi-phi-treasure-2d-1n-standard/reserv" element={<PhiPhiBooking />} />
+          <Route path="/excursion/dostoprimechatelnosti-phuketa-1-den-obzornaja-jekskursija-bez-shopinga" element={<PhuketSightseeingNoShopping />} />
           
           {/* New marine excursions from phuketgo */}
           <Route path="/excursion/eleven-islands" element={<ElevenIslands />} />

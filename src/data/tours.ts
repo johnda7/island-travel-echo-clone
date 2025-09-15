@@ -169,6 +169,24 @@ export const toursData: Tour[] = [
     slug: "james-bond-island",
     bookingsToday: 15,
     popular: true
+  },
+  {
+    id: 8,
+    title: "Достопримечательности Пхукета (без шопинга)",
+    location: "Пхукет",
+    duration: "8–9 часов",
+    group: "До 18 человек",
+    dates: "Круглый год",
+    price: "2,190 ₽",
+    rating: 4.9,
+    reviews: 168,
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Большой Будда", "Ват Чалонг", "Старый город", "Karon Viewpoint", "Мыс Промтеп"],
+    description: "Классическая обзорная экскурсия по Пхукету без посещения магазинов — топ‑локации за 1 день.",
+    featured: true,
+    category: "city",
+    slug: "dostoprimechatelnosti-phuketa-1-den-obzornaja-jekskursija-bez-shopinga",
+    bookingsToday: 7
   }
 ];
 

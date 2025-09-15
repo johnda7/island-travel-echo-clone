@@ -8,6 +8,19 @@ import { Link } from "react-router-dom";
 
 const adventureTours = [
   {
+    id: 12,
+    title: "Рафтинг + Слоновье СПА + ATV 1 день",
+    price: "2,800 ฿",
+    duration: "1 день",
+    groupSize: "Групповая экскурсия",
+    rating: 4.8,
+    reviewsCount: 167,
+    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/rafting1-scaled.jpg",
+    highlights: ["Рафтинг 5 км по горной реке", "Квадроциклы 250 СС", "Купание со слонами", "ZIP Line"],
+    description: "Один день в джунглях без спешки: купание со слоном, рафтинг по реке, храм с обезьянами, водопад в лесу.",
+    link: "/tours/rafting-slonove-spa-atv-1-den"
+  },
+  {
     id: 11,
     title: "Рассветное приключение: Стеклянный мост Beyond Skywalk",
     price: "2,900 ฿",

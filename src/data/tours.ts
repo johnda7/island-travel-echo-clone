@@ -36,6 +36,46 @@ export interface Tour {
 // Единый массив туров - как база данных в WordPress
 export const toursData: Tour[] = [
   {
+    id: 12,
+    title: "Рафтинг + Слоновье СПА + ATV 1 день",
+    location: "Джунгли Пхукета",
+    duration: "1 день",
+    group: "Групповая экскурсия",
+    dates: "Ежедневно",
+    price: "2800 ฿",
+    originalPrice: "3100 ฿",
+    rating: 4.8,
+    reviews: 167,
+    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/rafting1-scaled.jpg",
+    gallery: [
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/rafting1-scaled.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/rafting2-scaled.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/atv1-scaled.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/atv2-scaled.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/bangkaew-elephant-park1-scaled.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/bangkaew-elephant-park2-scaled.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/zipline-scaled.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/waterfall-1.jpg",
+      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/monkeys-at-suwan-khuha-temple-1.webp"
+    ],
+    highlights: [
+      "Сплав на рафтах 5 км по горной реке",
+      "Катание на мощных квадроциклах 250 СС",
+      "Слоновье СПА: купание и грязевые процедуры со слоном",
+      "Катание на тарзанке (ZIP Line)",
+      "Посещение храма с обезьянами Суван Куха",
+      "Купание у живописного водопада",
+      "Обед традиционной тайской кухни",
+      "Шоу слонёнка и катание на слоне"
+    ],
+    description: "Один день в джунглях без спешки: купание со слоном, рафтинг по реке, храм с обезьянами, водопад в лесу. Захватывающее приключение на мощных квадроциклах по трассе с преградами, уникальное слоновье СПА и незабываемый сплав по горной реке.",
+    featured: true,
+    category: "adventure",
+    slug: "rafting-slonove-spa-atv-1-den",
+    bookingsToday: 8,
+    popular: true
+  },
+  {
     id: 11,
     title: "Рассветное приключение: Стеклянный мост Beyond Skywalk",
     location: "Пханг Нга, о. Джеймса Бонда",

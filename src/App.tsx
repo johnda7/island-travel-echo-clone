@@ -26,6 +26,7 @@ import WhaleWatchingTour from "./pages/WhaleWatchingTour";
 import PhiPhiIslands from "./pages/PhiPhiIslands";
 import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 import BookPhiPhi2Days from "./pages/BookPhiPhi2Days";
+import BookPhiPhi2Days1Night from "./pages/BookPhiPhi2Days1Night";
 import PhiPhiReservation from "./pages/PhiPhiReservation";
 
 import AdminOrders from "./pages/AdminOrders";
@@ -111,7 +112,7 @@ const App = () => (
           <Route path="/excursion/whale-watching-tour" element={<WhaleWatchingTour />} />
           <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
           <Route path="/book/phi-phi-2-days-1-night" element={<BookPhiPhi2Days />} />
-          <Route path="/book/phi-phi-treasure-2d-1n-standard/reserv" element={<PhiPhiBooking />} />
+          <Route path="/book/phi-phi-treasure-2d-1n-standard/reserv" element={<BookPhiPhi2Days1Night />} />
           <Route path="/excursion/dostoprimechatelnosti-phuketa-1-den-obzornaja-jekskursija-bez-shopinga" element={<PhuketSightseeingNoShopping />} />
           
           {/* New marine excursions from phuketgo */}

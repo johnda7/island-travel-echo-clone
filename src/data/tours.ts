@@ -5,10 +5,6 @@ import pilehLagoon from "@/assets/phi-phi-2days/pileh-lagoon.jpg";
 import { rachaCoralImages } from "@/assets/racha-coral/images";
 import { fourPearlsImages } from "@/assets/four-pearls-andaman/images";
 import { jamesBondIslandImages } from "@/assets/james-bond-island/images";
-import karonBeach from "@/assets/karon-beach.jpg";
-import kataBeach from "@/assets/kata-beach.jpg";
-import patongBeach from "@/assets/patong-beach.jpg";
-import kamalaBeach from "@/assets/kamala-beach.jpg";
 
 export interface Tour {
   id: number;
@@ -22,8 +18,6 @@ export interface Tour {
   rating: number;
   reviews: number;
   image: string;
-  // Дополнительные изображения галереи (опционально)
-  gallery?: string[];
   highlights: string[];
   description: string;
   featured: boolean;
@@ -35,137 +29,6 @@ export interface Tour {
 
 // Единый массив туров - как база данных в WordPress
 export const toursData: Tour[] = [
-  {
-    id: 13,
-    title: "Као Лак SAFARI 1 день",
-    location: "Као Лак, Пханг Нга",
-    duration: "1 день",
-    group: "Групповая экскурсия",
-    dates: "Ежедневно",
-    price: "1700 ฿",
-    originalPrice: "1900 ฿",
-    rating: 4.7,
-    reviews: 89,
-    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.56.21.png",
-    gallery: [
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.56.21.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.53.08.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.53.32.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.53.44.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.54.16.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.54.29.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.54.39.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.55.06.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.55.17.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.55.28.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.55.42.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.55.51.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.56.02.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.56.11.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.56.33.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.56.45.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.57.17.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.57.28.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.57.43.png",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/snimok-jekrana-2025-09-06-v-20.58.04.png"
-    ],
-    highlights: [
-      "Посещение пещерного храма Суван Куха с обезьянами",
-      "Слоновье СПА: купание и грязевые процедуры со слонами",
-      "Прогулка по реке на бамбуковом плоту или каноэ",
-      "Визит в зоопарк и мини-ферму черепах",
-      "Остановка у водопада и купание",
-      "Обед в тайском ресторане",
-      "Обзорная площадка на мосту Сарасин",
-      "Взрослые: 1700 ฿, Дети (4-11 лет): 1300 ฿, Малыши (0-3): Бесплатно"
-    ],
-    description: "Однодневное приключение в тропиках: джунгли, водопады и купание со слонами. Прогулка по реке на бамбуковом плоту или каноэ — как в старом приключенческом фильме. Визит в зоопарк, мини-ферму черепах и к храму в пещере со сталактитами.",
-    featured: true,
-    category: "city",
-    slug: "kao-lak-safari-1-den",
-    bookingsToday: 5,
-    popular: true
-  },
-  {
-    id: 12,
-    title: "Рафтинг + Слоновье СПА + ATV 1 день",
-    location: "Джунгли Пхукета",
-    duration: "1 день",
-    group: "Групповая экскурсия",
-    dates: "Ежедневно",
-    price: "2000 ฿",
-    originalPrice: "2200 ฿",
-    rating: 4.8,
-    reviews: 167,
-    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/rafting21-scaled.jpg",
-    gallery: [
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/rafting21-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/rafting1-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/rafting2-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/atv1-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/atv2-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/bangkaew-elephant-park1-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/bangkaew-elephant-park2-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/zipline-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/waterfall-1.jpg"
-    ],
-    highlights: [
-      "Сплав на рафтах 5 км по горной реке",
-      "Катание на мощных квадроциклах 250 СС",
-      "Слоновье СПА: купание и грязевые процедуры со слоном",
-      "Катание на тарзанке (ZIP Line)",
-      "Посещение храма с обезьянами Суван Куха",
-      "Купание у живописного водопада",
-      "Обед традиционной тайской кухни",
-      "Взрослые: 2000 ฿, Дети (4-11 лет): 1700 ฿, Малыши (0-3): Бесплатно"
-    ],
-    description: "Один день в джунглях без спешки: купание со слоном, рафтинг по реке, храм с обезьянами, водопад в лесу. Захватывающее приключение на мощных квадроциклах по трассе с преградами, уникальное слоновье СПА и незабываемый сплав по горной реке.",
-    featured: true,
-    category: "adventure",
-    slug: "rafting-slonove-spa-atv-1-den",
-    bookingsToday: 8,
-    popular: true
-  },
-  {
-    id: 11,
-    title: "Рассветное приключение: Стеклянный мост Beyond Skywalk",
-    location: "Пханг Нга, о. Джеймса Бонда",
-    duration: "1 день",
-    group: "Групповая экскурсия",
-    dates: "Ежедневно",
-    price: "2900 ฿",
-    originalPrice: "3200 ฿",
-    rating: 4.9,
-    reviews: 124,
-    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/sky-walk-bridge-1.webp",
-    gallery: [
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/sky-walk-bridge-1.webp",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/sky-walk-bridge_-1.webp",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/airplane-beach_-1-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/suwan-khuha-temple-1.webp",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/the-sea-gypsies-floating-village-2-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/elephant-show-1-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/baby-elephant-show-1.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/waterfall-2.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/hong-island1.jpg"
-    ],
-    highlights: [
-      "Встреча рассвета на стеклянном мосту Beyond Skywalk",
-      "Завтрак на смотровой с панорамными видами",
-      "Прогулка на длиннохвостой лодке по заливу Пханг Нга",
-      "Посещение острова Джеймса Бонда",
-      "Пляж с самолетами - уникальное место для фото",
-      "Кафе с кувшинками Ma Doo Bua",
-      "Храм с лежащим Буддой Suwan Khuha",
-      "Шоу слонов и купание со слонятами"
-    ],
-    description: "Погрузитесь в утреннюю тишину и красоту Таиланда: рассвет на смотровой площадке, лодочная прогулка по таинственным пещерам, пляж с самолётами и уютное кафе среди кувшинок — всё это за один незабываемый день. Ранний выезд в 3:45 утра гарантирует встречу рассвета в самых живописных местах региона.",
-    featured: true,
-    category: "adventure",
-    slug: "rassvetnoe-priklyuchenie-steklyannyj-most-beyond-skywalk",
-    bookingsToday: 12,
-    popular: true
-  },
   {
     id: 1,
     title: "Острова Пхи-Пхи на скоростной лодке",
@@ -186,7 +49,25 @@ export const toursData: Tour[] = [
     bookingsToday: 12,
     popular: true
   },
-  
+  {
+    id: 2,
+    title: "Остров Джеймса Бонда",
+    location: "Залив Пханг Нга",
+    duration: "8 часов", 
+    group: "До 25 человек",
+    dates: "Октябрь - Май",
+    price: "2,590 ₽",
+    originalPrice: "2,900 ₽",
+    rating: 4.8,
+    reviews: 289,
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
+    highlights: ["Каноэ в пещерах", "Деревня на воде", "Морепродукты"],
+    description: "Путешествие к легендарному острову из фильма о Джеймсе Бонде с каноэ по мангровым зарослям.",
+    featured: true,
+    category: "marine",
+    slug: "james-bond-island",
+    bookingsToday: 8
+  },
   {
     id: 3,
     title: "Острова Рача и Корал",
@@ -225,62 +106,6 @@ export const toursData: Tour[] = [
     category: "marine",
     slug: "phi-phi-2-days-1-night",
     bookingsToday: 6,
-    popular: true
-  },
-  {
-    id: 14,
-    title: "11 ОСТРОВОВ МЕГА-ТУР | ОДИН ЭПИЧНЫЙ ДЕНЬ",
-    location: "Пханг Нга, Пхи-Пхи, Майя Бэй, Джеймс Бонд и др.",
-    duration: "1 день",
-    group: "Групповая экскурсия",
-    dates: "Ежедневно",
-    price: "3,900 ฿",
-    originalPrice: "4,200 ฿",
-    rating: 4.9,
-    reviews: 212,
-    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/hong-island1.jpg",
-    gallery: [
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/hong-island1.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/hong-island.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/hong-island1-1.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/hong-island1-2.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/james-bond-island-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/koh-panak.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/koh-panyi-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/koh-panyi1-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/koh-panyi2-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/koh-panyi3-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/koh-panyi4-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/maya-bay1.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/maya-bay2.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/maya-bay3.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/mayabay3.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/mayabay4.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/mayabay5.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/mayabay6.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/phi-phi-don.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/pileh-lagoon.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/pileh-lagoon1.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/viking-cave.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/canoeing-scaled.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/canoeing-talu-island.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/canoeing-talu-island1-1.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/the-hotspring-beach-resort-spa-1-1536x1152.jpeg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/07/railay-beach_9-2048x1536.jpg"
-    ],
-    highlights: [
-      "11 островов за 1 день: Пхи-Пхи, Майя Бэй, Джеймс Бонд, Хонг, Панак, Пани и др.",
-      "Каноэ по пещерам и лагунам",
-      "Обед на плавучей деревне Пани",
-      "Купание на пляже Майя Бэй",
-      "Посещение знаменитого острова Джеймса Бонда",
-      "Взрослые: 3,900 ฿, Дети (4-11 лет): 3,400 ฿, Малыши (0-3): Бесплатно"
-    ],
-    description: "Мега-тур по 11 островам за 1 день! Пхи-Пхи, Майя Бэй, Джеймс Бонд, Хонг, Панак, Пани, каноэ по пещерам, обед на плавучей деревне, купание на лучших пляжах и фотостопы на каждом острове.",
-    featured: true,
-    category: "adventure",
-    slug: "11-ostrovov",
-    bookingsToday: 14,
     popular: true
   },
   {
@@ -344,34 +169,6 @@ export const toursData: Tour[] = [
     slug: "james-bond-island",
     bookingsToday: 15,
     popular: true
-  },
-  {
-    id: 8,
-    title: "Достопримечательности Пхукета (без шопинга)",
-    location: "Пхукет",
-    duration: "8–9 часов",
-    group: "До 18 человек",
-    dates: "Круглый год",
-    price: "2,190 ₽",
-    rating: 4.9,
-    reviews: 168,
-    image: "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/cape-promthep.jpg",
-    gallery: [
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/cape-promthep.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/temple-wat-chalong.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/view-point-near-big-buddha-statue.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/karon-view-point.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/phuket-old-town.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/viewpoint-windmill.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/05/6798780e8ebf0-17645-1200-800.jpg",
-      "https://phuketgo.aaddaa.com/wp-content/uploads/2025/09/elephant-feeding.jpg"
-    ],
-    highlights: ["Большой Будда", "Ват Чалонг", "Старый город", "Karon Viewpoint", "Мыс Промтеп"],
-    description: "Классическая обзорная экскурсия по Пхукету без посещения магазинов — топ‑локации за 1 день.",
-    featured: true,
-    category: "city",
-    slug: "dostoprimechatelnosti-phuketa-1-den-obzornaja-jekskursija-bez-shopinga",
-    bookingsToday: 7
   }
 ];
 

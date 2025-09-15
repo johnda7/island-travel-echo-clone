@@ -246,7 +246,82 @@ const PhiPhi2Days1Night = () => {
 
       {/* Gallery section - сразу после хлебных крошек */}
       <section className="pb-2">
-        <div className="container mx-auto px-4">
+        {/* Мобильная карусель - во всю ширину экрана как на tisland.travel */}
+        <div className="md:hidden">
+          <div className="relative">
+            {/* Карусель с свайпом */}
+            <div 
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+              onScroll={handleMobileGalleryScroll}
+              style={{ scrollBehavior: 'smooth' }}
+              id="mobile-gallery"
+            >
+              {excursion.gallery.slice(0, 6).map((image, index) => (
+                <div 
+                  key={index}
+                  className="flex-shrink-0 w-full snap-center"
+                  onClick={() => openModal(image, index)}
+                >
+                  <div className="aspect-[4/3] relative overflow-hidden">
+                    <img 
+                      src={image} 
+                      alt={`Gallery ${index + 1}`}
+                      className="w-full h-full object-cover object-center"
+                    />
+                    {/* Overlay с количеством фото на последнем слайде */}
+                    {index === 5 && excursion.gallery.length > 6 && (
+                      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                        <div className="text-white text-center">
+                          <div className="text-2xl font-bold mb-1">+{excursion.gallery.length - 6}</div>
+                          <div className="text-sm">фото</div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Точки индикации */}
+            <div className="flex justify-center mt-4 space-x-2">
+              {excursion.gallery.slice(0, 6).map((_, index) => (
+                <button
+                  key={index}
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                    index === mobileGalleryIndex ? 'bg-green-600 scale-110' : 'bg-gray-300'
+                  }`}
+                  onClick={() => {
+                    setMobileGalleryIndex(index);
+                    // Программный скролл к нужному слайду
+                    const carousel = document.getElementById('mobile-gallery');
+                    if (carousel) {
+                      carousel.scrollTo({
+                        left: index * carousel.clientWidth,
+                        behavior: 'smooth'
+                      });
+                    }
+                  }}
+                />
+              ))}
+            </div>
+            
+            {/* Кнопка показать все фото - только для мобильных */}
+            <div className="mt-4 px-4">
+              <button
+                onClick={openGallery}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Показать все {excursion.gallery.length} фото
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        {/* Десктопная версия */}
+        <div className="container mx-auto px-4 hidden md:block">
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Галерея - левая часть на десктопе */}
             <div className="lg:col-span-2">
@@ -315,67 +390,6 @@ const PhiPhi2Days1Night = () => {
                       <div className="text-sm">фото</div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Мобильная карусель точно как на tisland.travel */}
-            <div className="md:hidden">
-              <div className="relative">
-                {/* Карусель с свайпом */}
-                <div 
-                  className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
-                  onScroll={handleMobileGalleryScroll}
-                  style={{ scrollBehavior: 'smooth' }}
-                  id="mobile-gallery"
-                >
-                  {excursion.gallery.slice(0, 6).map((image, index) => (
-                    <div 
-                      key={index}
-                      className="flex-shrink-0 w-full snap-center"
-                      onClick={() => openModal(image, index)}
-                    >
-                      <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
-                        <img 
-                          src={image} 
-                          alt={`Gallery ${index + 1}`}
-                          className="w-full h-full object-cover object-center"
-                        />
-                        {/* Overlay с количеством фото на последнем слайде */}
-                        {index === 5 && excursion.gallery.length > 6 && (
-                          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                            <div className="text-white text-center">
-                              <div className="text-2xl font-bold mb-1">+{excursion.gallery.length - 6}</div>
-                              <div className="text-sm">фото</div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Точки индикации */}
-                <div className="flex justify-center mt-4 space-x-2">
-                  {excursion.gallery.slice(0, 6).map((_, index) => (
-                    <button
-                      key={index}
-                      className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                        index === mobileGalleryIndex ? 'bg-green-600 scale-110' : 'bg-gray-300'
-                      }`}
-                      onClick={() => {
-                        setMobileGalleryIndex(index);
-                        // Программный скролл к нужному слайду
-                        const carousel = document.getElementById('mobile-gallery');
-                        if (carousel) {
-                          carousel.scrollTo({
-                            left: index * carousel.clientWidth,
-                            behavior: 'smooth'
-                          });
-                        }
-                      }}
-                    />
-                  ))}
                 </div>
               </div>
             </div>

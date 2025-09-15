@@ -158,33 +158,33 @@ export const Header = () => {
                   </svg>
                 </button>
               ) : (
-                <div className="absolute right-0 top-0 w-64 z-50" ref={mobileSearchRef}>
-                  <div className="bg-white border border-gray-300 rounded-lg shadow-lg p-2">
+                <div className="md:hidden fixed top-16 left-0 right-0 z-50 bg-white border-b shadow-lg" ref={mobileSearchRef}>
+                  <div className="container mx-auto px-4 py-3">
                     <input
                       type="text"
                       placeholder="Поиск туров..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       onFocus={() => setShowSearchResults(true)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
                       autoFocus
                     />
                     {/* Mobile Search Results */}
                     {showSearchResults && searchQuery && filteredTours.length > 0 && (
-                      <div className="mt-2 max-h-60 overflow-y-auto">
+                      <div className="mt-3 max-h-80 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg">
                         {filteredTours.map((tour) => (
                           <Link
                             key={tour.href}
                             to={tour.href}
-                            className="block px-3 py-2 hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
+                            className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
                             onClick={() => {
                               setSearchQuery('');
                               setShowSearchResults(false);
                               setShowMobileSearch(false);
                             }}
                           >
-                            <div className="font-medium text-gray-900 text-sm">{tour.name}</div>
-                            <div className="text-xs text-gray-500">{tour.description}</div>
+                            <div className="font-medium text-gray-900">{tour.name}</div>
+                            <div className="text-sm text-gray-500 mt-1">{tour.description}</div>
                           </Link>
                         ))}
                       </div>
@@ -195,13 +195,26 @@ export const Header = () => {
             </div>
           </div>
 
-          {/* Menu button for all devices */}
-          <button
-            className="p-2 ml-4"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Search and Menu buttons */}
+          <div className="flex items-center space-x-2">
+            {/* Mobile Search Button */}
+            <button
+              className="md:hidden p-2"
+              onClick={() => setShowMobileSearch(!showMobileSearch)}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
+            </button>
+            
+            {/* Menu button for all devices */}
+            <button
+              className="p-2"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Navigation Menu */}

@@ -83,6 +83,7 @@ const App = () => (
           <Route path="/beaches" element={<BeachesPage />} />
           <Route path="/beach/:id" element={<BeachDetail />} />
           <Route path="/excursion/:slug" element={<ExcursionDetail />} />
+          <Route path="/tours/:slug" element={<ExcursionDetail />} />
           <Route path="/what-to-visit" element={<WhatToVisit />} />
           <Route path="/what-to-visit/dostoprimechatelnosti" element={<WhatToVisitDostoprimechatelnosti />} />
           <Route path="/what-to-visit/ekskursii" element={<WhatToVisitEkskursii />} />

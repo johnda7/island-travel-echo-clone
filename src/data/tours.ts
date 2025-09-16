@@ -2,6 +2,7 @@ import { Tour } from "../types/tour";
 import { phiPhi2Days1Night } from "./tours/phi-phi-2-days-1-night";
 import phiPhiMayaBay from "../assets/phi-phi-maya-bay.jpg";
 import { rachaCoralImages } from "../assets/racha-coral/images";
+import { jamesBondIslandImages } from "../assets/james-bond-island/images";
 
 export const tours: Tour[] = [
   phiPhi2Days1Night,
@@ -49,13 +50,15 @@ export const toursData: LegacyTour[] = [
     originalPrice: "2,900 ₽",
     rating: 4.8,
     reviews: 289,
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-    highlights: ["Каноэ в пещерах", "Деревня на воде", "Морепродукты"],
-    description: "Путешествие к легендарному острову из фильма о Джеймсе Бонде с каноэ по мангровым зарослям.",
+    image: jamesBondIslandImages.main,
+    gallery: jamesBondIslandImages.gallery,
+    highlights: ["Знаменитая скала Ко Тапу из фильма о Джеймсе Бонде", "Каноэ по пещерам и лагунам", "Плавучая деревня мусульман", "Обед из морепродуктов на воде"],
+    description: "Легендарная экскурсия на остров из фильма 'Человек с золотым пистолетом'. Каноэ по пещерам залива Пханг Нга, плавучая деревня и аутентичный обед из морепродуктов.",
     featured: true,
     category: "marine",
     slug: "james-bond-island",
-    bookingsToday: 8
+    bookingsToday: 8,
+    popular: true
   },
   {
     id: 3,

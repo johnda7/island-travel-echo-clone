@@ -1,43 +1,10 @@
 import { Tour } from '../types/tour';
 import { phiPhi2Days1Night } from './tours/phi-phi-2-days-1-night';
-
-// Централизованный реестр всех туров
-export const tours: Tour[] = [
-  phiPhi2Days1Night,
-  // Сюда будут добавляться остальные туры по мере миграции
-];
-
-// Хелперы для работы с турами
-export const getTourBySlug = (slug: string): Tour | undefined => {
-  return tours.find(tour => tour.slug === slug);
-};
-
-export const getTourById = (id: string): Tour | undefined => {
-  return tours.find(tour => tour.id === id);
-};
-
-export const getActiveTours = (): Tour[] => {
-  return tours.filter(tour => tour.status === 'active');
-};
-
-export const getFeaturedTours = (): Tour[] => {
-  return tours.filter(tour => tour.featured && tour.status === 'active');
-};
-
-export const getToursByCategory = (category: string): Tour[] => {
-  return tours.filter(tour => 
-    tour.categories.includes(category as any) && tour.status === 'active'
-  );
-};
-
-export const getToursByTag = (tag: string): Tour[] => {
-  return tours.filter(tour => 
-    tour.tags.includes(tag as any) && tour.status === 'active'
-  );
-};
-
-import { Tour } from '../types/tour';
-import { phiPhi2Days1Night } from './tours/phi-phi-2-days-1-night';
+import phiPhiMayaBay from '../assets/phi-phi-2days/maya-bay-1.jpg';
+import { rachaCoralImages } from '../assets/racha-coral/images';
+import { fourPearlsImages } from '../assets/four-pearls-andaman/images';
+import { jamesBondIslandImages } from '../assets/james-bond-island/images';
+import pilehLagoon from '../assets/phi-phi-2days/pileh-lagoon.jpg';
 
 // Централизованный реестр всех туров
 export const tours: Tour[] = [
@@ -76,9 +43,6 @@ export const getToursByTag = (tag: string): Tour[] => {
 
 // Экспорт всех туров для использования в компонентах
 export { phiPhi2Days1Night };
-
-// LEGACY: Старые данные туров - будут удалены после полной миграции
-// Временно сохраняем для совместимости с существующими компонентами
 
 // LEGACY: Старые данные туров - будут удалены после полной миграции
 // Временно сохраняем для совместимости с существующими компонентами
@@ -337,23 +301,26 @@ export const legacyToursData: LegacyTour[] = [
   }
 ];
 
-// Функции для фильтрации как в WordPress
-export const getFeaturedTours = (): Tour[] => {
-  return toursData.filter(tour => tour.featured);
+// LEGACY функции для фильтрации старых данных
+export const getLegacyFeaturedTours = (): LegacyTour[] => {
+  return legacyToursData.filter(tour => tour.featured);
 };
 
-export const getPopularTours = (): Tour[] => {
-  return toursData.filter(tour => tour.popular);  
+export const getPopularTours = (): LegacyTour[] => {
+  return legacyToursData.filter(tour => tour.popular);  
 };
 
-export const getToursByCategory = (category: string): Tour[] => {
-  return toursData.filter(tour => tour.category === category);
+export const getLegacyToursByCategory = (category: string): LegacyTour[] => {
+  return legacyToursData.filter(tour => tour.category === category);
 };
 
-export const getTourBySlug = (slug: string): Tour | undefined => {
-  return toursData.find(tour => tour.slug === slug);
+export const getLegacyTourBySlug = (slug: string): LegacyTour | undefined => {
+  return legacyToursData.find(tour => tour.slug === slug);
 };
 
-export const getMarineTours = (): Tour[] => {
-  return getToursByCategory('marine');
+export const getMarineTours = (): LegacyTour[] => {
+  return getLegacyToursByCategory('marine');
 };
+
+// Alias for backward compatibility
+export const toursData = legacyToursData;

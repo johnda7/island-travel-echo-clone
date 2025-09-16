@@ -1,11 +1,15 @@
 import { Tour } from "../types/tour";
 import { phiPhi2Days1Night } from "./tours/phi-phi-2-days-1-night";
+import { jamesBondIsland } from "./tours/james-bond-island";
+import { rachaCoral } from "./tours/racha-coral";
 import phiPhiMayaBay from "../assets/phi-phi-maya-bay.jpg";
 import { rachaCoralImages } from "../assets/racha-coral/images";
 import { jamesBondIslandImages } from "../assets/james-bond-island/images";
 
 export const tours: Tour[] = [
   phiPhi2Days1Night,
+  jamesBondIsland,
+  rachaCoral,
 ];
 
 export const getTourBySlug = (slug: string): Tour | undefined => {

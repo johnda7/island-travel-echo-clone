@@ -15,7 +15,6 @@ import BeachTours from "./pages/BeachTours";
 import AdventureTours from "./pages/AdventureTours";
 import GroupTours from "./pages/GroupTours";
 import ExcursionDetail from "./pages/ExcursionDetail";
-import JamesBondIsland from "./pages/JamesBondIsland";
 import CoralIslandParasailing from "./pages/CoralIslandParasailing";
 import RachaYaiIsland from "./pages/RachaYaiIsland";
 import MayaBaySunrise from "./pages/MayaBaySunrise";
@@ -39,7 +38,9 @@ import ElevenIslands from "./pages/ElevenIslands";
 import FourPearlsAndaman from "./pages/FourPearlsAndaman"; 
 import RachaCoral from "./pages/RachaCoral";
 import SimilanIslands from "./pages/SimilanIslands";
-import JamesBondIslandTour from "./pages/JamesBondIslandTour";
+
+// Universal tour template
+import { TourPage } from "./components/tours/TourPage";
 
 import BeachesPage from "./pages/Beaches";
 import BeachDetail from "./pages/BeachDetail";
@@ -118,9 +119,9 @@ const App = () => (
           {/* New marine excursions from phuketgo */}
           <Route path="/excursion/eleven-islands" element={<ElevenIslands />} />
           <Route path="/excursion/four-pearls-andaman" element={<FourPearlsAndaman />} />
-          <Route path="/excursion/racha-coral" element={<RachaCoral />} />
+          <Route path="/excursion/racha-coral" element={<TourPage tourSlug="racha-coral" />} />
           <Route path="/excursion/similan-islands" element={<SimilanIslands />} />
-          <Route path="/excursion/james-bond-island" element={<JamesBondIslandTour />} />
+          <Route path="/excursion/james-bond-island" element={<TourPage tourSlug="james-bond-island" />} />
           
           {/* NEW UNIFIED TOUR SYSTEM - Centralized WordPress-like tours */}
           <Route path="/tours-new/phi-phi-2-days-1-night" element={<PhiPhi2Days1NightNew />} />
@@ -129,9 +130,9 @@ const App = () => (
           {/* Tours routes - новый формат для централизованных данных */}
           <Route path="/tours/eleven-islands" element={<ElevenIslands />} />
           <Route path="/tours/four-pearls-andaman" element={<FourPearlsAndaman />} />
-          <Route path="/tours/racha-coral" element={<RachaCoral />} />
+          <Route path="/tours/racha-coral" element={<TourPage tourSlug="racha-coral" />} />
           <Route path="/tours/similan-islands" element={<SimilanIslands />} />
-          <Route path="/tours/james-bond-island" element={<JamesBondIslandTour />} />
+          <Route path="/tours/james-bond-island" element={<TourPage tourSlug="james-bond-island" />} />
           <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
           
           {/* Reservation routes */}

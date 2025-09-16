@@ -16,12 +16,14 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Calendar, Clock, Users, MapPin, Star, Phone, Mail, User } from "lucide-react";
 import { Helmet } from "react-helmet";
+import { sendTelegramNotification, sendWhatsAppMessage, type BookingData } from "@/lib/telegram";
 
 const BookPhiPhi2Days1Night = () => {
   // Состояния для формы бронирования
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
   const [selectedDate, setSelectedDate] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [contactInfo, setContactInfo] = useState({
     name: "",
     phone: "",
@@ -88,17 +90,56 @@ const BookPhiPhi2Days1Night = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Здесь будет логика отправки формы
-    console.log("Booking data:", {
+    
+    // Проверяем обязательные поля
+    if (!contactInfo.name.trim() || !contactInfo.phone.trim()) {
+      alert("Пожалуйста, заполните имя и телефон");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    // Подготавливаем данные для отправки
+    const bookingData: BookingData = {
+      tourTitle: excursion.title,
       adults,
       children,
       selectedDate,
       contactInfo,
-      totalPrice
-    });
-    alert("Бронирование отправлено! Мы свяжемся с вами в ближайшее время.");
+      totalPrice,
+      currency: excursion.currency
+    };
+
+    try {
+      // Отправляем уведомление в Telegram
+      const telegramSent = await sendTelegramNotification(bookingData);
+      
+      if (telegramSent) {
+        alert("✅ Бронирование отправлено! Уведомление отправлено в Telegram. Мы свяжемся с вами в ближайшее время.");
+      } else {
+        // Если Telegram не сработал, используем WhatsApp как запасной вариант
+        console.log("Telegram notification failed, using WhatsApp fallback");
+        sendWhatsAppMessage(bookingData);
+        alert("Бронирование отправлено! Мы свяжемся с вами в ближайшее время.");
+      }
+      
+      // Сбрасываем форму после успешной отправки
+      setContactInfo({
+        name: "",
+        phone: "",
+        email: "",
+        comment: ""
+      });
+      setSelectedDate("");
+      
+    } catch (error) {
+      console.error("Error submitting booking:", error);
+      alert("Произошла ошибка при отправке бронирования. Попробуйте еще раз или свяжитесь с нами напрямую.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -116,15 +157,21 @@ const BookPhiPhi2Days1Night = () => {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/">Главная</BreadcrumbLink>
+                <BreadcrumbLink asChild>
+                  <Link to="/">Главная</Link>
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/tours">Туры</BreadcrumbLink>
+                <BreadcrumbLink asChild>
+                  <Link to="/tours">Туры</Link>
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/excursion/phi-phi-2-days-1-night">Пхи-Пхи 2 дня</BreadcrumbLink>
+                <BreadcrumbLink asChild>
+                  <Link to="/excursion/phi-phi-2-days-1-night">Пхи-Пхи 2 дня</Link>
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
@@ -390,9 +437,10 @@ const BookPhiPhi2Days1Night = () => {
                       <div className="space-y-3">
                         <Button 
                           type="submit"
-                          className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
+                          disabled={isSubmitting}
+                          className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white py-3 font-semibold"
                         >
-                          Забронировать за {totalPrice.toLocaleString()} {excursion.currency}
+                          {isSubmitting ? "Отправляем..." : `Забронировать за ${totalPrice.toLocaleString()} ${excursion.currency}`}
                         </Button>
                         
                         <Button variant="outline" asChild className="w-full py-3 border-gray-300">

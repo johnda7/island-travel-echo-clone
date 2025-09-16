@@ -1,6 +1,7 @@
 import { Tour } from "../types/tour";
 import { phiPhi2Days1Night } from "./tours/phi-phi-2-days-1-night";
 import phiPhiMayaBay from "../assets/phi-phi-maya-bay.jpg";
+import { rachaCoralImages } from "../assets/racha-coral/images";
 
 export const tours: Tour[] = [
   phiPhi2Days1Night,
@@ -33,6 +34,7 @@ export interface LegacyTour {
   slug: string;
   bookingsToday: number;
   popular?: boolean;
+  gallery?: string[];
 }
 
 export const toursData: LegacyTour[] = [
@@ -86,7 +88,8 @@ export const toursData: LegacyTour[] = [
     originalPrice: "1,400 ฿",
     rating: 4.7,
     reviews: 356,
-    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
+    image: rachaCoralImages.main,
+    gallery: rachaCoralImages.gallery,
     highlights: ["Coral Beach Club", "Снорклинг", "Парасейлинг"],
     description: "Острова Рача - кристально чистая вода, белоснежные пляжи и удивительный подводный мир недалеко от Пхукета.",
     featured: true,

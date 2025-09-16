@@ -29,6 +29,10 @@ import BookPhiPhi2Days from "./pages/BookPhiPhi2Days";
 import BookPhiPhi2Days1Night from "./pages/BookPhiPhi2Days1Night";
 import PhiPhiReservation from "./pages/PhiPhiReservation";
 
+// NEW UNIFIED TOUR SYSTEM - WordPress-like centralized tours
+import PhiPhi2Days1NightNew from "./pages/PhiPhi2Days1NightNew";
+import BookPhiPhi2Days1NightNew from "./pages/BookPhiPhi2Days1NightNew";
+
 import AdminOrders from "./pages/AdminOrders";
 import NotFound from "./pages/NotFound";
 
@@ -121,6 +125,10 @@ const App = () => (
           <Route path="/excursion/racha-coral" element={<RachaCoral />} />
           <Route path="/excursion/similan-islands" element={<SimilanIslands />} />
           <Route path="/excursion/james-bond-island" element={<JamesBondIslandTour />} />
+          
+          {/* NEW UNIFIED TOUR SYSTEM - Centralized WordPress-like tours */}
+          <Route path="/tours-new/phi-phi-2-days-1-night" element={<PhiPhi2Days1NightNew />} />
+          <Route path="/book-new/phi-phi-2-days-1-night" element={<BookPhiPhi2Days1NightNew />} />
           
           {/* Tours routes - новый формат для централизованных данных */}
           <Route path="/tours/eleven-islands" element={<ElevenIslands />} />

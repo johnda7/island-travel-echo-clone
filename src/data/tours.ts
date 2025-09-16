@@ -1,12 +1,89 @@
-// Централизованные данные туров - единый источник истины как в WordPress CMS
-import phiPhiMayaBay from "@/assets/phi-phi-maya-bay.jpg";
-import mayaBay1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
-import pilehLagoon from "@/assets/phi-phi-2days/pileh-lagoon.jpg";
-import { rachaCoralImages } from "@/assets/racha-coral/images";
-import { fourPearlsImages } from "@/assets/four-pearls-andaman/images";
-import { jamesBondIslandImages } from "@/assets/james-bond-island/images";
+import { Tour } from '../types/tour';
+import { phiPhi2Days1Night } from './tours/phi-phi-2-days-1-night';
 
-export interface Tour {
+// Централизованный реестр всех туров
+export const tours: Tour[] = [
+  phiPhi2Days1Night,
+  // Сюда будут добавляться остальные туры по мере миграции
+];
+
+// Хелперы для работы с турами
+export const getTourBySlug = (slug: string): Tour | undefined => {
+  return tours.find(tour => tour.slug === slug);
+};
+
+export const getTourById = (id: string): Tour | undefined => {
+  return tours.find(tour => tour.id === id);
+};
+
+export const getActiveTours = (): Tour[] => {
+  return tours.filter(tour => tour.status === 'active');
+};
+
+export const getFeaturedTours = (): Tour[] => {
+  return tours.filter(tour => tour.featured && tour.status === 'active');
+};
+
+export const getToursByCategory = (category: string): Tour[] => {
+  return tours.filter(tour => 
+    tour.categories.includes(category as any) && tour.status === 'active'
+  );
+};
+
+export const getToursByTag = (tag: string): Tour[] => {
+  return tours.filter(tour => 
+    tour.tags.includes(tag as any) && tour.status === 'active'
+  );
+};
+
+import { Tour } from '../types/tour';
+import { phiPhi2Days1Night } from './tours/phi-phi-2-days-1-night';
+
+// Централизованный реестр всех туров
+export const tours: Tour[] = [
+  phiPhi2Days1Night,
+  // Сюда будут добавляться остальные туры по мере миграции
+];
+
+// Хелперы для работы с турами
+export const getTourBySlug = (slug: string): Tour | undefined => {
+  return tours.find(tour => tour.slug === slug);
+};
+
+export const getTourById = (id: string): Tour | undefined => {
+  return tours.find(tour => tour.id === id);
+};
+
+export const getActiveTours = (): Tour[] => {
+  return tours.filter(tour => tour.status === 'active');
+};
+
+export const getFeaturedTours = (): Tour[] => {
+  return tours.filter(tour => tour.featured && tour.status === 'active');
+};
+
+export const getToursByCategory = (category: string): Tour[] => {
+  return tours.filter(tour => 
+    tour.categories.includes(category as any) && tour.status === 'active'
+  );
+};
+
+export const getToursByTag = (tag: string): Tour[] => {
+  return tours.filter(tour => 
+    tour.tags.includes(tag as any) && tour.status === 'active'
+  );
+};
+
+// Экспорт всех туров для использования в компонентах
+export { phiPhi2Days1Night };
+
+// LEGACY: Старые данные туров - будут удалены после полной миграции
+// Временно сохраняем для совместимости с существующими компонентами
+
+// LEGACY: Старые данные туров - будут удалены после полной миграции
+// Временно сохраняем для совместимости с существующими компонентами
+
+export interface LegacyTour {
   id: number;
   title: string;
   location: string;
@@ -32,8 +109,8 @@ export interface Tour {
   popular?: boolean;
 }
 
-// Единый массив туров - как база данных в WordPress
-export const toursData: Tour[] = [
+// LEGACY: Единый массив туров - как база данных в WordPress
+export const legacyToursData: LegacyTour[] = [
   {
     id: 1,
     title: "Острова Пхи-Пхи на скоростной лодке",

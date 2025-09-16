@@ -15,7 +15,6 @@ import BeachTours from "./pages/BeachTours";
 import AdventureTours from "./pages/AdventureTours";
 import GroupTours from "./pages/GroupTours";
 import ExcursionDetail from "./pages/ExcursionDetail";
-import PhiPhiIslandsSpeedboat from "./pages/PhiPhiIslandsSpeedboat";
 import JamesBondIsland from "./pages/JamesBondIsland";
 import CoralIslandParasailing from "./pages/CoralIslandParasailing";
 import RachaYaiIsland from "./pages/RachaYaiIsland";
@@ -105,7 +104,6 @@ const App = () => (
           <Route path="/attractions/nochnye-rynki" element={<NochnyeRynki />} />
           
           {/* Specific excursion routes */}
-          <Route path="/excursion/phi-phi-islands-speedboat" element={<PhiPhiIslandsSpeedboat />} />
 
           <Route path="/excursion/coral-island-parasailing" element={<CoralIslandParasailing />} />
           <Route path="/excursion/racha-yai-island" element={<RachaYaiIsland />} />
@@ -135,7 +133,6 @@ const App = () => (
           <Route path="/tours/similan-islands" element={<SimilanIslands />} />
           <Route path="/tours/james-bond-island" element={<JamesBondIslandTour />} />
           <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
-          <Route path="/tours/phi-phi-islands-speedboat" element={<PhiPhiIslandsSpeedboat />} />
           
           {/* Reservation routes */}
           <Route path="/tours/phi-phi-2-days-1-night/reservation" element={<PhiPhiReservation />} />

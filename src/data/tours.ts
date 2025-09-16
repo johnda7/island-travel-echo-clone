@@ -39,26 +39,6 @@ export interface LegacyTour {
 
 export const toursData: LegacyTour[] = [
   {
-    id: 1,
-    title: "Острова Пхи-Пхи на скоростной лодке",
-    location: "Острова Пхи-Пхи",
-    duration: "8 часов",
-    group: "До 35 человек",
-    dates: "Круглый год",
-    price: "2,490 ₽",
-    originalPrice: "2,800 ₽",
-    rating: 4.9,
-    reviews: 434,
-    image: phiPhiMayaBay,
-    highlights: ["Майя Бэй", "Снорклинг", "Обед на пляже"],
-    description: "Захватывающее путешествие к легендарным островам Пхи-Пхи с посещением знаменитой бухты Майя Бэй.",
-    featured: true,
-    category: "marine",
-    slug: "phi-phi-islands-speedboat",
-    bookingsToday: 12,
-    popular: true
-  },
-  {
     id: 2,
     title: "Остров Джеймса Бонда",
     location: "Залив Пханг Нга",

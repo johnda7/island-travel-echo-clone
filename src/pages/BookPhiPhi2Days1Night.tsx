@@ -124,7 +124,7 @@ const BookPhiPhi2Days1Night = () => {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/phi-phi-2-days-1-night">Пхи-Пхи 2 дня</BreadcrumbLink>
+                <BreadcrumbLink href="/excursion/phi-phi-2-days-1-night">Пхи-Пхи 2 дня</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
@@ -400,11 +400,6 @@ const BookPhiPhi2Days1Night = () => {
                             Задать вопрос в Telegram
                           </a>
                         </Button>
-                      </div>
-
-                      <div className="mt-6 text-xs text-gray-500 text-center">
-                        <p>Нажимая "Забронировать", вы соглашаетесь с условиями бронирования.</p>
-                        <p className="mt-2">Оплата производится наличными в день тура.</p>
                       </div>
                     </CardContent>
                   </Card>

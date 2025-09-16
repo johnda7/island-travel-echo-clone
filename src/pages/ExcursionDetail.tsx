@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { getTourBySlug } from "@/data/tours";
+import { TourTemplate } from "@/components/tours/TourTemplate";
 import { Helmet } from "react-helmet";
 
 const ExcursionDetail = () => {
@@ -19,6 +20,11 @@ const ExcursionDetail = () => {
 
   // Пытаемся получить тур из централизованных данных по slug
   const tour = slug ? getTourBySlug(slug) : undefined;
+
+  // Если тур уже мигрирован в новую систему — используем единый шаблон
+  if (tour) {
+    return <TourTemplate tour={tour} />;
+  }
 
   // Фолбэк-данные (как раньше), чтобы не ломать существующие страницы
   const fallback = {
@@ -65,34 +71,7 @@ const ExcursionDetail = () => {
   } as const;
 
   // Преобразуем Tour -> представление Excursion с безопасными дефолтами
-  const excursion = tour
-    ? {
-        title: tour.title,
-        subtitle: tour.location ? `${tour.location}` : "",
-        price: tour.price, // Уже может содержать валюту
-        currency: "",
-        duration: tour.duration,
-        groupSize: tour.group,
-        rating: tour.rating,
-        reviewsCount: tour.reviews,
-  mainImage: tour.image,
-  gallery: tour.gallery && tour.gallery.length > 0 ? tour.gallery : [tour.image],
-        description: tour.description,
-        highlights: tour.highlights || [],
-        included: [
-          "Трансфер",
-          "Русскоговорящий гид",
-          "Страховка",
-        ],
-        notIncluded: ["Личные расходы", "Напитки"],
-        schedule: [
-          { time: "08:00", activity: "Трансфер из отеля" },
-          { time: "10:00", activity: "Основные локации тура" },
-          { time: "13:00", activity: "Обед / свободное время" },
-          { time: "17:00", activity: "Возвращение в отель" },
-        ],
-      }
-    : fallback;
+  const excursion = fallback;
 
   // Функции для управления галереей
   const openModal = (image: string, index: number) => {

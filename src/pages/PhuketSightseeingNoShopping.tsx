@@ -11,25 +11,43 @@ const PhuketSightseeingNoShopping = () => {
   const dataTour = getTourBySlug(
     "dostoprimechatelnosti-phuketa-1-den-obzornaja-jekskursija-bez-shopinga"
   );
+  const getDurationText = (tour: any) => {
+    if (!tour?.duration) return "8–9 часов";
+    if (typeof tour.duration === 'string') return tour.duration;
+    const d = tour.duration;
+    if (typeof d === 'object' && d.days) {
+      const days = d.days || 1;
+      const nights = d.nights || 0;
+      const dayWord = days === 1 ? "день" : days >= 2 && days <= 4 ? "дня" : "дней";
+      const nightWord = nights === 1 ? "ночь" : nights >= 2 && nights <= 4 ? "ночи" : "ночей";
+      return nights > 0 ? `${days} ${dayWord} / ${nights} ${nightWord}` : `${days} ${dayWord}`;
+    }
+    return "8–9 часов";
+  };
+
+  const getMainImage = (tour: any) => {
+    if (tour?.images?.length > 0) {
+      return tour.images.find((i: any) => i.category === 'hero')?.url || tour.images[0].url;
+    }
+    return "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80";
+  };
+
   const excursion = {
     title: "Достопримечательности Пхукета (1 день)",
-    subtitle: "Обзорная экскурсия без шопинга",
-    price: dataTour?.price?.replace(/[^0-9₽฿.\s/]/g, "") || "2,190",
-    currency: dataTour?.price?.includes("฿") ? "฿" : "₽",
-    duration: dataTour?.duration || "8–9 часов",
-    groupSize: dataTour?.group || "до 18 человек",
+    subtitle: "Обзорная экскурсия без шопинга", 
+    price: "2,190",
+    currency: "₽",
+    duration: getDurationText(dataTour),
+    groupSize: dataTour?.groupSize?.max ? `до ${dataTour.groupSize.max} человек` : "до 18 человек",
     rating: 4.9,
     reviewsCount: 168,
-    mainImage: dataTour?.image ||
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
-    gallery: dataTour?.gallery && dataTour.gallery.length > 0
-      ? dataTour.gallery
-      : [
+    mainImage: getMainImage(dataTour),
+    gallery: dataTour?.images?.slice(1, 6).map(img => img.url) || [
           "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
           "https://images.unsplash.com/photo-1544198365-f5d60b6d8190?auto=format&fit=crop&w=800&q=80",
           "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4?auto=format&fit=crop&w=800&q=80",
           "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80",
-        ],
+      ],
     description:
       "Классическая обзорная экскурсия по Пхукету без посещения магазинов. Лучшие смотровые площадки, Большой Будда, храм Ват Чалонг, Старый город Пхукета и легендарный мыс Промтеп.",
     highlights: [

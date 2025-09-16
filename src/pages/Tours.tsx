@@ -94,9 +94,9 @@ const Tours = () => {
   const getMainImage = (tour: Tour) => tour.images?.find(i => i.category === 'hero')?.url || tour.images?.[0]?.url || "";
   const getDurationText = (tour: Tour) => {
     const d = tour.duration;
-    if (!d) return "1 день";
-    const days = d.days;
-    const nights = d.nights;
+    if (!d || typeof d !== 'object') return "1 день";
+    const days = d.days || 1;
+    const nights = d.nights || 0;
     const dayWord = days === 1 ? "день" : days >= 2 && days <= 4 ? "дня" : "дней";
     const nightWord = nights === 1 ? "ночь" : nights >= 2 && nights <= 4 ? "ночи" : "ночей";
     return nights > 0 ? `${days} ${dayWord} / ${nights} ${nightWord}` : `${days} ${dayWord}`;

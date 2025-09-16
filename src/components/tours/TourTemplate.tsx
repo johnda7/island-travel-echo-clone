@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { BookingModal } from '../BookingModal';
 
 interface TourTemplateProps {
   tour: Tour;
@@ -39,6 +40,7 @@ export const TourTemplate: React.FC<TourTemplateProps> = ({ tour }) => {
   const priceText = formatPrice(tour.pricing.base.adult, tour.pricing.currency);
   const childPriceText = formatPrice(tour.pricing.base.child, tour.pricing.currency);
   const durationText = formatDuration(tour.duration.days, tour.duration.nights);
+  const isDaily = tour.availability?.daysOfWeek?.length === 7;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -135,8 +137,8 @@ export const TourTemplate: React.FC<TourTemplateProps> = ({ tour }) => {
                 </div>
               )}
               
-              {/* Основные характеристики */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Основные характеристики (как в каталоге) */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 <div className="flex items-center gap-2 text-gray-600">
                   <MapPin className="h-5 w-5" />
                   <span>{tour.location.island}</span>
@@ -153,19 +155,26 @@ export const TourTemplate: React.FC<TourTemplateProps> = ({ tour }) => {
                 </div>
                 
                 <div className="flex items-center gap-2 text-gray-600">
-                  <Shield className="h-5 w-5" />
-                  <span>Страховка</span>
+                  <Calendar className="h-5 w-5" />
+                  <span>{isDaily ? 'Ежедневно' : 'По расписанию'}</span>
                 </div>
               </div>
             </div>
 
-            {/* Главное изображение */}
-            <div className="aspect-video mb-6 rounded-lg overflow-hidden">
-              <img
-                src={heroImage.url}
-                alt={heroImage.alt}
-                className="w-full h-full object-cover"
-              />
+            {/* Главное изображение с бейджами как в каталоге */}
+            <div className="relative aspect-video mb-6 rounded-lg overflow-hidden">
+              <img src={heroImage.url} alt={heroImage.alt} className="w-full h-full object-cover" />
+              {tour.featured && (
+                <div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-full text-sm font-medium">
+                  Рекомендуем
+                </div>
+              )}
+              {tour.reviews && (
+                <div className="absolute top-3 right-3 bg-white px-2 py-1 rounded-full flex items-center gap-1 shadow">
+                  <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                  <span className="text-sm font-medium">{tour.reviews.averageRating.toFixed(1)}</span>
+                </div>
+              )}
             </div>
 
             {/* Описание */}
@@ -310,19 +319,22 @@ export const TourTemplate: React.FC<TourTemplateProps> = ({ tour }) => {
                     </div>
                   )}
 
-                  {/* Кнопки действий */}
+                  {/* Кнопки действий — стиль как в каталоге (оранжевая кнопка, BookingModal) */}
                   <div className="space-y-2">
-                    <Link to={`/book/${tour.slug}`} className="w-full">
-                      <Button className="w-full" size="lg">
+                    <BookingModal tourTitle={tour.title} tourPrice={priceText}>
+                      <Button className="w-full bg-orange-500 hover:bg-orange-600" size="lg">
                         <Calendar className="h-5 w-5 mr-2" />
                         Забронировать
                       </Button>
-                    </Link>
-                    
+                    </BookingModal>
+
                     <Button variant="outline" className="w-full">
                       Задать вопрос
                     </Button>
                   </div>
+
+                  {/* Подпись как в карточках */}
+                  <div className="text-xs text-gray-500 text-center">Бесплатная отмена за 24 часа</div>
 
                   {/* Дополнительная информация */}
                   {tour.notes && (

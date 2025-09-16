@@ -112,7 +112,7 @@ export const TourTemplate: React.FC<TourTemplateProps> = ({ tour }) => {
                   </Badge>
                 ))}
                 {tour.featured && (
-                  <Badge variant="destructive">🔥 Популярный</Badge>
+                  <Badge variant="destructive">Рекомендуем</Badge>
                 )}
               </div>
               
@@ -140,22 +140,22 @@ export const TourTemplate: React.FC<TourTemplateProps> = ({ tour }) => {
               {/* Основные характеристики (как в каталоге) */}
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 <div className="flex items-center gap-2 text-gray-600">
-                  <MapPin className="h-5 w-5" />
+                  <MapPin className="h-4 w-4" />
                   <span>{tour.location.island}</span>
                 </div>
                 
                 <div className="flex items-center gap-2 text-gray-600">
-                  <Clock className="h-5 w-5" />
+                  <Clock className="h-4 w-4" />
                   <span>{durationText}</span>
                 </div>
                 
                 <div className="flex items-center gap-2 text-gray-600">
-                  <Users className="h-5 w-5" />
+                  <Users className="h-4 w-4" />
                   <span>до {tour.groupSize.max} чел.</span>
                 </div>
                 
                 <div className="flex items-center gap-2 text-gray-600">
-                  <Calendar className="h-5 w-5" />
+                  <Calendar className="h-4 w-4" />
                   <span>{isDaily ? 'Ежедневно' : 'По расписанию'}</span>
                 </div>
               </div>
@@ -323,7 +323,7 @@ export const TourTemplate: React.FC<TourTemplateProps> = ({ tour }) => {
                   <div className="space-y-2">
                     <BookingModal tourTitle={tour.title} tourPrice={priceText}>
                       <Button className="w-full bg-orange-500 hover:bg-orange-600" size="lg">
-                        <Calendar className="h-5 w-5 mr-2" />
+                        <Calendar className="h-4 w-4 mr-2" />
                         Забронировать
                       </Button>
                     </BookingModal>

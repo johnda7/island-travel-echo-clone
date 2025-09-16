@@ -16,7 +16,7 @@ import AdventureTours from "./pages/AdventureTours";
 import GroupTours from "./pages/GroupTours";
 import ExcursionDetail from "./pages/ExcursionDetail";
 import PhiPhiIslandsSpeedboat from "./pages/PhiPhiIslandsSpeedboat";
-import JamesBondIsland from "./pages/JamesBondIsland";
+
 import CoralIslandParasailing from "./pages/CoralIslandParasailing";
 import RachaYaiIsland from "./pages/RachaYaiIsland";
 import MayaBaySunrise from "./pages/MayaBaySunrise";

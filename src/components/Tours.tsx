@@ -70,7 +70,7 @@ export const Tours = () => {
                     </Button>
                   </BookingModal>
                   
-                  <Link to={`/excursion/${tour.slug}`}>
+                  <Link to={`/tours/${tour.slug}`}>
                     <Button variant="outline" className="rounded-full">
                       Подробнее
                     </Button>

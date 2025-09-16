@@ -119,7 +119,10 @@ const App = () => (
           
           {/* New marine excursions from phuketgo */}
           <Route path="/excursion/eleven-islands" element={<TourPage tourSlug="11-ostrovov" />} />
+          <Route path="/excursion/11-ostrovov" element={<TourPage tourSlug="11-ostrovov" />} />
+          <Route path="/excursion/11-islands" element={<TourPage tourSlug="11-ostrovov" />} />
           <Route path="/excursion/four-pearls-andaman" element={<TourPage tourSlug="four-pearls-andaman" />} />
+          <Route path="/excursion/four-pearls" element={<TourPage tourSlug="four-pearls-andaman" />} />
           <Route path="/excursion/racha-coral" element={<TourPage tourSlug="racha-coral" />} />
           <Route path="/excursion/similan-islands" element={<SimilanIslands />} />
           <Route path="/excursion/james-bond-island" element={<TourPage tourSlug="james-bond-island" />} />
@@ -130,7 +133,10 @@ const App = () => (
           
           {/* Tours routes - новый формат для централизованных данных */}
           <Route path="/tours/eleven-islands" element={<TourPage tourSlug="11-ostrovov" />} />
+          <Route path="/tours/11-ostrovov" element={<TourPage tourSlug="11-ostrovov" />} />
+          <Route path="/tours/11-islands" element={<TourPage tourSlug="11-ostrovov" />} />
           <Route path="/tours/four-pearls-andaman" element={<TourPage tourSlug="four-pearls-andaman" />} />
+          <Route path="/tours/four-pearls" element={<TourPage tourSlug="four-pearls-andaman" />} />
           <Route path="/tours/racha-coral" element={<TourPage tourSlug="racha-coral" />} />
           <Route path="/tours/similan-islands" element={<SimilanIslands />} />
           <Route path="/tours/james-bond-island" element={<TourPage tourSlug="james-bond-island" />} />

@@ -6,10 +6,10 @@ export const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-1 gap-8 justify-center">
           {/* Company Info */}
-          <div>
-            <div className="flex items-center space-x-3 mb-6">
+          <div className="text-center">
+            <div className="flex items-center justify-center space-x-3 mb-6">
               <div className="w-12 h-12 rounded-full overflow-hidden shadow-lg ring-2 ring-white/20">
                 <img 
                   src={logoImage} 
@@ -25,70 +25,6 @@ export const Footer = () => {
               Создаем незабываемые путешествия к самым красивым местам Пхукета и Таиланда. 
               Ваша мечта о райском отдыхе станет реальностью с нами.
             </p>
-            <div className="flex space-x-4">
-              <a href="https://t.me/phuketGoo" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400/50">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16l-1.61 7.591c-.12.539-.437.67-.887.417l-2.456-1.81-1.185 1.14c-.131.131-.242.242-.495.242l.177-2.517 4.589-4.147c.199-.177-.043-.275-.309-.098l-5.674 3.573L7.784 13.5c-.542-.169-.551-.542.113-.802l10.057-3.875c.451-.179.847.106.703.637z"/>
-                </svg>
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-green-400/50">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center hover:bg-emerald-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-teal-400/50">
-                <Youtube className="w-5 h-5" />
-              </a>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-xl font-bold mb-6">Быстрые ссылки</h3>
-            <ul className="space-y-3">
-              <li><Link to="/" className="text-gray-300 hover:text-white transition-colors">Главная</Link></li>
-              <li><Link to="/tours" className="text-gray-300 hover:text-white transition-colors">Туры</Link></li>
-              <li><Link to="/destinations" className="text-gray-300 hover:text-white transition-colors">Направления</Link></li>
-              <li><Link to="/about" className="text-gray-300 hover:text-white transition-colors">О нас</Link></li>
-              <li><Link to="/contact" className="text-gray-300 hover:text-white transition-colors">Контакты</Link></li>
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h3 className="text-xl font-bold mb-6">Услуги</h3>
-            <ul className="space-y-3">
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Индивидуальные туры</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Групповые поездки</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Экскурсии на острова</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Трансферы</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Консультации</a></li>
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h3 className="text-xl font-bold mb-6">Контакты</h3>
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" />
-                <span className="text-gray-300">Москва, ул. Тверская, 1<br />БЦ "Островский", офис 504</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Phone className="w-5 h-5 text-green-400 flex-shrink-0" />
-                <span className="text-gray-300">+7 (495) 123-45-67</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="w-5 h-5 text-green-400 flex-shrink-0" />
-                <span className="text-gray-300">info@phuketgo.travel</span>
-              </div>
-            </div>
-            <div className="mt-6 p-4 bg-green-600/20 rounded-lg border border-green-500/30">
-              <p className="text-sm font-semibold mb-1">Время работы:</p>
-              <p className="text-sm text-gray-300">Пн-Пт: 9:00 - 20:00</p>
-              <p className="text-sm text-gray-300">Сб-Вс: 10:00 - 18:00</p>
-            </div>
           </div>
         </div>
       </div>

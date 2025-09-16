@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Phone, Mail, MapPin, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -50,53 +50,7 @@ export const Contact = () => {
           </p>
         </div>
         
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Contact Info */}
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-2xl font-bold mb-6 text-white">Как с нами связаться</h3>
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
-                    <Phone className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-white">Телефон</p>
-                    <p className="text-gray-300">+7 (495) 123-45-67</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
-                    <Mail className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-white">Email</p>
-                    <p className="text-gray-300">info@tisland.travel</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
-                    <MapPin className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-white">Адрес</p>
-                    <p className="text-gray-300">Москва, ул. Тверская, 1</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 backdrop-blur-sm rounded-2xl p-6 border border-blue-500/20">
-              <h4 className="font-bold text-lg mb-3 text-white">Время работы</h4>
-              <div className="space-y-2 text-gray-300">
-                <p>Пн-Пт: 9:00 - 20:00</p>
-                <p>Сб-Вс: 10:00 - 18:00</p>
-              </div>
-            </div>
-          </div>
-          
+        <div className="max-w-2xl mx-auto">
           {/* Contact Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid sm:grid-cols-2 gap-4">

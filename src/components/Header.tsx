@@ -44,9 +44,19 @@ export const Header = () => {
 
   // Filter tours based on search query
   const filteredTours = allTours.filter(tour =>
-    tour.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    tour.description.toLowerCase().includes(searchQuery.toLowerCase())
+    searchQuery.length > 0 && (
+      tour.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tour.description.toLowerCase().includes(searchQuery.toLowerCase())
+    )
   );
+
+  // Debug logging
+  console.log('Search Debug:', {
+    searchQuery,
+    showSearchResults,
+    filteredToursLength: filteredTours.length,
+    showMobileSearch
+  });
 
   // Close search results when clicking outside
   useEffect(() => {
@@ -66,26 +76,23 @@ export const Header = () => {
       }
     };
 
-    // Close search when navigation changes
-    const handleLocationChange = () => {
-      setShowSearchResults(false);
-      setShowMobileSearch(false);
-      setSearchQuery('');
-    };
-
     if (showSearchResults || showMobileSearch) {
       document.addEventListener('mousedown', handleClickOutside);
       document.addEventListener('touchstart', handleClickOutside);
     }
 
-    // Listen for location changes
-    handleLocationChange();
-
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('touchstart', handleClickOutside);
     };
-  }, [showSearchResults, showMobileSearch, location.pathname]);
+  }, [showSearchResults, showMobileSearch]);
+
+  // Close search when location changes (separate useEffect)
+  useEffect(() => {
+    setShowSearchResults(false);
+    setShowMobileSearch(false);
+    setSearchQuery('');
+  }, [location.pathname]);
 
   const navigation = [
     {
@@ -147,7 +154,7 @@ export const Header = () => {
               </svg>
               
               {/* Search Results Dropdown */}
-              {showSearchResults && searchQuery && filteredTours.length > 0 && (
+              {showSearchResults && searchQuery.length > 0 && filteredTours.length > 0 && (
                 <div className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-[60] max-h-80 overflow-y-auto">
                   {filteredTours.map((tour) => (
                     <Link
@@ -251,7 +258,7 @@ export const Header = () => {
                 </button>
               </div>
               {/* Mobile Search Results */}
-              {showSearchResults && searchQuery && filteredTours.length > 0 && (
+              {showSearchResults && searchQuery.length > 0 && filteredTours.length > 0 && (
                 <div className="mt-3 max-h-80 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg">
                   {filteredTours.map((tour) => (
                     <Link

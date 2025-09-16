@@ -16,12 +16,12 @@ export const Header = () => {
 
   // Tours data for search - все 22 тура
   const allTours = [
-    { name: "Пхи-Пхи 2 дня / 1 ночь", href: "/phi-phi-2-days-1-night", description: "Экскурсия с ночёвкой на островах Пхи-Пхи" },
-    { name: "Острова Пхи-Пхи на спидботе", href: "/phi-phi-islands-speedboat", description: "Скоростная экскурсия на знаменитые острова" },
-    { name: "Пхи-Пхи Ле и лагуна", href: "/koh-phi-phi-leh-lagoon", description: "Экскурсия к острову Пхи-Пхи Ле и Изумрудной лагуне" },
-    { name: "Майя Бей на рассвете", href: "/maya-bay-sunrise", description: "Встреча рассвета в легендарной бухте" },
-    { name: "Остров Джеймса Бонда", href: "/james-bond-island", description: "Экскурсия к острову из фильма о Джеймсе Бонде" },
-    { name: "11 ОСТРОВОВ МЕГА-ТУР | ОДИН ЭПИЧНЫЙ ДЕНЬ", href: "/tours/11-ostrovov", description: "Грандиозный тур на 11 островов за один день: Джеймс Бонд, Пхи-Пхи, Хонг и другие жемчужины Андаманского моря" },
+    { name: "Пхи-Пхи 2 дня / 1 ночь", href: "/excursion/phi-phi-2-days-1-night", description: "Экскурсия с ночёвкой на островах Пхи-Пхи" },
+    { name: "Острова Пхи-Пхи на спидботе", href: "/excursion/phi-phi-islands-speedboat", description: "Скоростная экскурсия на знаменитые острова" },
+    { name: "Пхи-Пхи Ле и лагуна", href: "/excursion/koh-phi-phi-leh-lagoon", description: "Экскурсия к острову Пхи-Пхи Ле и Изумрудной лагуне" },
+    { name: "Майя Бей на рассвете", href: "/excursion/maya-bay-sunrise", description: "Встреча рассвета в легендарной бухте" },
+    { name: "Остров Джеймса Бонда", href: "/excursion/james-bond-island", description: "Экскурсия к острову из фильма о Джеймсе Бонде" },
+    { name: "11 ОСТРОВОВ МЕГА-ТУР | ОДИН ЭПИЧНЫЙ ДЕНЬ", href: "/excursion/11-ostrovov", description: "Мега-тур по 11 островам: Пхи-Пхи, Майя Бэй, Джеймс Бонд, Хонг, Панак, Пани и др." },
     { name: "Аватар Плюс", href: "/tours/avatar-pljus", description: "Экскурсия в стиле Аватар: смотровые площадки, водопады, горячие источники, слоновье шоу" },
     { name: "Коралловый остров + Парасейлинг", href: "/excursion/coral-island-parasailing", description: "Водные развлечения и парасейлинг" },
     { name: "Остров Рача Яй", href: "/excursion/racha-yai-island", description: "Снорклинг на живописном острове" },
@@ -51,20 +51,41 @@ export const Header = () => {
   // Close search results when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      
+      // Close desktop search
+      if (searchRef.current && !searchRef.current.contains(target)) {
         setShowSearchResults(false);
       }
-      if (mobileSearchRef.current && !mobileSearchRef.current.contains(event.target as Node)) {
+      
+      // Close mobile search
+      if (mobileSearchRef.current && !mobileSearchRef.current.contains(target)) {
         setShowMobileSearch(false);
         setSearchQuery('');
+        setShowSearchResults(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    // Close search when navigation changes
+    const handleLocationChange = () => {
+      setShowSearchResults(false);
+      setShowMobileSearch(false);
+      setSearchQuery('');
+    };
+
+    if (showSearchResults || showMobileSearch) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+
+    // Listen for location changes
+    handleLocationChange();
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
     };
-  }, []);
+  }, [showSearchResults, showMobileSearch, location.pathname]);
 
   const navigation = [
     {
@@ -127,13 +148,14 @@ export const Header = () => {
               
               {/* Search Results Dropdown */}
               {showSearchResults && searchQuery && filteredTours.length > 0 && (
-                <div className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
+                <div className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-[60] max-h-80 overflow-y-auto">
                   {filteredTours.map((tour) => (
                     <Link
                       key={tour.href}
                       to={tour.href}
-                      className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
-                      onClick={() => {
+                      className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
                         setSearchQuery('');
                         setShowSearchResults(false);
                       }}
@@ -205,7 +227,7 @@ export const Header = () => {
 
         {/* Mobile Search Modal */}
         {showMobileSearch && (
-          <div className="md:hidden fixed top-16 left-0 right-0 z-50 bg-white border-b shadow-lg" ref={mobileSearchRef}>
+          <div className="md:hidden fixed top-16 left-0 right-0 z-[60] bg-white border-b shadow-lg" ref={mobileSearchRef}>
             <div className="container mx-auto px-4 py-3">
               <div className="flex items-center space-x-3">
                 <input
@@ -235,8 +257,9 @@ export const Header = () => {
                     <Link
                       key={tour.href}
                       to={tour.href}
-                      className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
-                      onClick={() => {
+                      className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors active:bg-gray-100"
+                      onClick={(e) => {
+                        e.stopPropagation();
                         setSearchQuery('');
                         setShowSearchResults(false);
                         setShowMobileSearch(false);

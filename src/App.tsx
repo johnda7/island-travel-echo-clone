@@ -15,7 +15,6 @@ import BeachTours from "./pages/BeachTours";
 import AdventureTours from "./pages/AdventureTours";
 import GroupTours from "./pages/GroupTours";
 import ExcursionDetail from "./pages/ExcursionDetail";
-import ElevenIslandsStandard from "./pages/ElevenIslandsStandard";
 import PhiPhiIslandsSpeedboat from "./pages/PhiPhiIslandsSpeedboat";
 import JamesBondIsland from "./pages/JamesBondIsland";
 import CoralIslandParasailing from "./pages/CoralIslandParasailing";
@@ -106,7 +105,6 @@ const App = () => (
           <Route path="/attractions/nochnye-rynki" element={<NochnyeRynki />} />
           
           {/* Specific excursion routes */}
-          <Route path="/excursion/11-islands-standard" element={<ElevenIslandsStandard />} />
           <Route path="/excursion/phi-phi-islands-speedboat" element={<PhiPhiIslandsSpeedboat />} />
 
           <Route path="/excursion/coral-island-parasailing" element={<CoralIslandParasailing />} />

@@ -3,25 +3,40 @@ import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, Users, Calendar, MapPin, Star } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { BookingModal } from "@/components/BookingModal";
-import { toursData } from "@/data/tours";
+import { tours as newTours } from "@/data/tours";
+import type { Tour, TourCategory } from "@/types/tour";
 
 const Tours = () => {
-  const [filteredTours, setFilteredTours] = useState(toursData);
+  const [filteredTours, setFilteredTours] = useState<Tour[]>(newTours);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("popularity");
 
+  // Строим список категорий на основе реально присутствующих в данных
+  const availableCategories = useMemo(() => {
+    const set = new Set<TourCategory>();
+    newTours.forEach(t => t.categories.forEach(c => set.add(c)));
+    return Array.from(set);
+  }, []);
+
+  const categoryLabelMap: Record<string, string> = {
+    "island-hopping": "Островные туры",
+    "beach-tours": "Пляжи и острова",
+    "adventure": "Приключения",
+    "overnight": "С ночёвкой",
+    "day-trip": "Однодневные",
+    "city-tours": "Городские",
+    "cultural": "Культура",
+    "romantic": "Романтика",
+    "family": "Семейные",
+    "group": "Групповые",
+  };
+
   const categories = [
     { value: "all", label: "Все туры" },
-    { value: "marine", label: "Морские экскурсии" },
-    { value: "beach", label: "Пляжи и острова" },
-    { value: "adventure", label: "Приключения" },
-    { value: "city", label: "Городские" },
-    { value: "show", label: "Шоу" },
-    { value: "family", label: "Семейные" },
-    { value: "spa", label: "СПА и релакс" }
+    ...availableCategories.map(c => ({ value: c, label: categoryLabelMap[c] || c }))
   ];
 
   const sortOptions = [
@@ -41,29 +56,27 @@ const Tours = () => {
     filterAndSortTours(selectedCategory, sort);
   };
 
-  const filterAndSortTours = (category: string, sort: string) => {
-    let filtered = category === "all" 
-      ? toursData 
-      : toursData.filter(tour => tour.category === category);
+  const getBaseAdultPrice = (tour: Tour) => tour.pricing?.base?.adult ?? 0;
+  const getRating = (tour: Tour) => tour.reviews?.averageRating ?? 4.8;
 
-    // Sort tours
+  const filterAndSortTours = (category: string, sort: string) => {
+    let filtered = category === "all"
+      ? [...newTours]
+      : newTours.filter(tour => tour.categories.includes(category as TourCategory));
+
     switch (sort) {
       case "price-low":
-        filtered = filtered.sort((a, b) => 
-          parseInt(a.price.replace(/[^\d]/g, '')) - parseInt(b.price.replace(/[^\d]/g, ''))
-        );
+        filtered.sort((a, b) => getBaseAdultPrice(a) - getBaseAdultPrice(b));
         break;
       case "price-high":
-        filtered = filtered.sort((a, b) => 
-          parseInt(b.price.replace(/[^\d]/g, '')) - parseInt(a.price.replace(/[^\d]/g, ''))
-        );
+        filtered.sort((a, b) => getBaseAdultPrice(b) - getBaseAdultPrice(a));
         break;
       case "rating":
-        filtered = filtered.sort((a, b) => b.rating - a.rating);
+        filtered.sort((a, b) => getRating(b) - getRating(a));
         break;
       default:
-        // popularity - featured tours first
-        filtered = filtered.sort((a, b) => {
+        // popularity - featured first
+        filtered.sort((a, b) => {
           if (a.featured && !b.featured) return -1;
           if (!a.featured && b.featured) return 1;
           return 0;
@@ -72,6 +85,24 @@ const Tours = () => {
 
     setFilteredTours(filtered);
   };
+
+  // Инициализируем первоначальную сортировку и фильтр
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useMemo(() => filterAndSortTours(selectedCategory, sortBy), []);
+
+  const formatPrice = (tour: Tour) => `${getBaseAdultPrice(tour).toLocaleString()} ฿`;
+  const getMainImage = (tour: Tour) => tour.images?.find(i => i.category === 'hero')?.url || tour.images?.[0]?.url || "";
+  const getDurationText = (tour: Tour) => {
+    const d = tour.duration;
+    if (!d) return "1 день";
+    const days = d.days;
+    const nights = d.nights;
+    const dayWord = days === 1 ? "день" : days >= 2 && days <= 4 ? "дня" : "дней";
+    const nightWord = nights === 1 ? "ночь" : nights >= 2 && nights <= 4 ? "ночи" : "ночей";
+    return nights > 0 ? `${days} ${dayWord} / ${nights} ${nightWord}` : `${days} ${dayWord}`;
+  };
+  const getGroupSizeText = (tour: Tour) => tour.groupSize?.max ? `До ${tour.groupSize.max} чел.` : "Группа";
+  const getLocationText = (tour: Tour) => tour.location?.region || tour.location?.island || "Пхукет";
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -124,8 +155,8 @@ const Tours = () => {
             {filteredTours.map((tour) => (
               <Card key={tour.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative">
-                  <img 
-                    src={tour.image} 
+                  <img
+                    src={getMainImage(tour)}
                     alt={tour.title}
                     className="w-full h-48 object-cover object-center"
                   />
@@ -136,7 +167,7 @@ const Tours = () => {
                   )}
                   <div className="absolute top-3 right-3 bg-white px-2 py-1 rounded-full flex items-center gap-1">
                     <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                    <span className="text-sm font-medium">{tour.rating}</span>
+                    <span className="text-sm font-medium">{getRating(tour).toFixed(1)}</span>
                   </div>
                 </div>
                 
@@ -144,57 +175,51 @@ const Tours = () => {
                   <h3 className="font-semibold text-lg mb-2">{tour.title}</h3>
                   <div className="flex items-center text-gray-600 text-sm mb-2">
                     <MapPin className="h-4 w-4 mr-1" />
-                    <span>{tour.location}</span>
+                    <span>{getLocationText(tour)}</span>
                   </div>
                   
                   <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
                     <div className="flex items-center">
                       <Clock className="h-4 w-4 mr-1" />
-                      <span>{tour.duration}</span>
+                      <span>{getDurationText(tour)}</span>
                     </div>
                     <div className="flex items-center">
                       <Users className="h-4 w-4 mr-1" />
-                      <span>До {tour.group} чел.</span>
+                      <span>{getGroupSizeText(tour)}</span>
                     </div>
                   </div>
                   
                   <div className="flex items-center text-sm text-gray-600 mb-3">
                     <Calendar className="h-4 w-4 mr-1" />
-                    <span>{tour.dates}</span>
+                    <span>{tour.availability?.daysOfWeek?.length === 7 ? "Ежедневно" : "По расписанию"}</span>
                   </div>
 
                   <div className="flex items-center justify-between mb-3">
                     <div>
-                      <div className="text-2xl font-bold text-blue-600">{tour.price}</div>
-                      <div className="text-sm text-gray-500">{tour.reviews} отзывов</div>
+                      <div className="text-2xl font-bold text-blue-600">{formatPrice(tour)}</div>
+                      <div className="text-sm text-gray-500">{tour.reviews?.totalReviews ?? 0} отзывов</div>
                     </div>
                   </div>
 
                   <div className="space-y-2 mb-4">
                     <h4 className="font-medium text-sm">Что входит:</h4>
                     <ul className="text-sm text-gray-600">
-                      {tour.highlights.slice(0, 3).map((highlight, index) => (
+                      {(tour.included || []).slice(0, 3).map((item, index) => (
                         <li key={index} className="flex items-start">
                           <span className="text-green-500 mr-1">✓</span>
-                          {highlight}
+                          {item}
                         </li>
                       ))}
                     </ul>
                   </div>
 
                   <div className="flex gap-2">
-                    <Link 
-                      to={`/tours/${tour.slug}`}
-                      className="flex-1"
-                    >
+                    <Link to={`/tours/${tour.slug}`} className="flex-1">
                       <Button variant="outline" className="w-full">
                         Подробнее
                       </Button>
                     </Link>
-                    <BookingModal 
-                      tourTitle={tour.title}
-                      tourPrice={tour.price}
-                    >
+                    <BookingModal tourTitle={tour.title} tourPrice={formatPrice(tour)}>
                       <Button className="flex-1 bg-orange-500 hover:bg-orange-600">
                         Забронировать
                       </Button>

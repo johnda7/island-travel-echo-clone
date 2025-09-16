@@ -118,8 +118,11 @@ const App = () => (
           <Route path="/excursion/dostoprimechatelnosti-phuketa-1-den-obzornaja-jekskursija-bez-shopinga" element={<PhuketSightseeingNoShopping />} />
           
           {/* New marine excursions from phuketgo */}
-          <Route path="/excursion/eleven-islands" element={<TourPage tourSlug="11-ostrovov" />} />
+          <Route path="/excursion/eleven-islands" element={<TourPage tourSlug="eleven-islands" />} />
+          <Route path="/excursion/11-ostrovov" element={<TourPage tourSlug="11-ostrovov" />} />
+          <Route path="/excursion/11-islands" element={<TourPage tourSlug="11-islands" />} />
           <Route path="/excursion/four-pearls-andaman" element={<TourPage tourSlug="four-pearls-andaman" />} />
+          <Route path="/excursion/four-pearls" element={<TourPage tourSlug="four-pearls" />} />
           <Route path="/excursion/racha-coral" element={<TourPage tourSlug="racha-coral" />} />
           <Route path="/excursion/similan-islands" element={<SimilanIslands />} />
           <Route path="/excursion/james-bond-island" element={<TourPage tourSlug="james-bond-island" />} />
@@ -129,8 +132,11 @@ const App = () => (
           <Route path="/book-new/phi-phi-2-days-1-night" element={<BookPhiPhi2Days1NightNew />} />
           
           {/* Tours routes - новый формат для централизованных данных */}
-          <Route path="/tours/eleven-islands" element={<TourPage tourSlug="11-ostrovov" />} />
+          <Route path="/tours/eleven-islands" element={<TourPage tourSlug="eleven-islands" />} />
+          <Route path="/tours/11-ostrovov" element={<TourPage tourSlug="11-ostrovov" />} />
+          <Route path="/tours/11-islands" element={<TourPage tourSlug="11-islands" />} />
           <Route path="/tours/four-pearls-andaman" element={<TourPage tourSlug="four-pearls-andaman" />} />
+          <Route path="/tours/four-pearls" element={<TourPage tourSlug="four-pearls" />} />
           <Route path="/tours/racha-coral" element={<TourPage tourSlug="racha-coral" />} />
           <Route path="/tours/similan-islands" element={<SimilanIslands />} />
           <Route path="/tours/james-bond-island" element={<TourPage tourSlug="james-bond-island" />} />

@@ -18,9 +18,9 @@ export const tours: Tour[] = [
 
 // Алиасы слагов для совместимости со старыми/внешними ссылками
 const slugAliases: Record<string, string> = {
-  "eleven-islands": "11-островов",
-  "11-islands": "11-островов",
-  "11-ostrovov": "11-островов",
+  "eleven-islands": "11-ostrovov",
+  "11-islands": "11-ostrovov",
+  "11-ostrovov": "11-ostrovov",
   "four-pearls": "four-pearls-andaman",
   "four-pearls-andaman": "four-pearls-andaman",
   "james-bond": "james-bond-island",

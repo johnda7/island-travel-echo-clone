@@ -5,12 +5,39 @@ import { Clock, Users, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BookingModal } from "./BookingModal";
 import { PopularityBadge } from "./PopularityBadge";
-import { getPopularTours } from "@/data/tours";
+import { tours, getFeaturedTours } from "@/data/tours";
 
-// Получаем популярные туры из централизованного источника данных
-const tours = getPopularTours();
+// Получаем новые туры из централизованного источника данных
+const featuredTours = getFeaturedTours();
 
 export const Tours = () => {
+  const formatPrice = (tour: any) => {
+    const basePrice = tour.pricing?.base?.adult || 0;
+    return `${basePrice.toLocaleString()} ฿`;
+  };
+
+  const getMainImage = (tour: any) => {
+    return tour.images?.find((img: any) => img.category === "hero")?.url || 
+           tour.images?.[0]?.url || 
+           "/default-tour-image.jpg";
+  };
+
+  const getDurationText = (tour: any) => {
+    const duration = tour.duration;
+    if (duration?.days && duration?.nights) {
+      return `${duration.days} ${duration.days === 1 ? 'день' : 'дня'} / ${duration.nights} ${duration.nights === 1 ? 'ночь' : 'ночи'}`;
+    }
+    return tour.duration || "1 день";
+  };
+
+  const getGroupSizeText = (tour: any) => {
+    const groupSize = tour.groupSize;
+    if (groupSize?.max) {
+      return `До ${groupSize.max} человек`;
+    }
+    return "Группа";
+  };
+
   return (
     <section className="py-20 bg-gradient-to-b from-blue-50 to-cyan-50">
       <div className="container mx-auto px-4">
@@ -24,53 +51,63 @@ export const Tours = () => {
         </div>
         
         <div className="grid lg:grid-cols-3 gap-8">
-          {tours.map((tour) => (
+          {featuredTours.map((tour) => (
             <Card key={tour.id} className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
               <div className="relative h-48 overflow-hidden">
                 <img 
-                  src={tour.image} 
+                  src={getMainImage(tour)} 
                   alt={tour.title}
                   className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 
-                {tour.popular && <PopularityBadge bookingsToday={tour.bookingsToday} />}
+                {tour.featured && (
+                  <div className="absolute top-4 left-4 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold animate-pulse">
+                    ⭐ Популярно
+                  </div>
+                )}
                 
                 <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
-                  <span className="font-bold text-blue-600">{tour.price}</span>
+                  <span className="font-bold text-blue-600">{formatPrice(tour)}</span>
                 </div>
               </div>
               <CardContent className="p-6">
                 <h3 className="text-xl font-bold mb-3 text-gray-800">{tour.title}</h3>
                 
-                                <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
-                  <span>{tour.duration}</span>
-                  <span>До {tour.group} человек</span>
-                </div>
-                <div className="text-sm text-gray-600 mb-3">
-                  <span>{tour.dates}</span>
+                <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
+                  <div className="flex items-center gap-1">
+                    <Clock className="w-4 h-4" />
+                    <span>{getDurationText(tour)}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Users className="w-4 h-4" />
+                    <span>{getGroupSizeText(tour)}</span>
+                  </div>
                 </div>
                 
+                <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                  {tour.description}
+                </p>
+                
                 <div className="mb-4">
-                  <h4 className="font-semibold mb-2 text-gray-800">В тур входит:</h4>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    {tour.highlights.map((highlight, index) => (
-                      <li key={index} className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
-                        {highlight}
-                      </li>
+                  <h4 className="font-semibold mb-2 text-gray-800">Особенности:</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {tour.tags?.slice(0, 3).map((tag: string, index: number) => (
+                      <span key={index} className="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">
+                        {tag}
+                      </span>
                     ))}
-                  </ul>
+                  </div>
                 </div>
                 
                 <div className="flex gap-2">
-                  <BookingModal tourTitle={tour.title} tourPrice={tour.price}>
+                  <BookingModal tourTitle={tour.title} tourPrice={formatPrice(tour)}>
                     <Button className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
                       Забронировать
                     </Button>
                   </BookingModal>
                   
-                  <Link to={`/excursion/${tour.slug}`}>
+                  <Link to={`/tours/${tour.slug}`}>
                     <Button variant="outline" className="rounded-full">
                       Подробнее
                     </Button>

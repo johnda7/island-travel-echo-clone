@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -29,6 +29,23 @@ const BookPhiPhi2Days1Night = () => {
     comment: ""
   });
 
+  // Функции для изменения количества участников
+  const increaseAdults = () => {
+    setAdults(prev => prev + 1);
+  };
+
+  const decreaseAdults = () => {
+    setAdults(prev => Math.max(1, prev - 1));
+  };
+
+  const increaseChildren = () => {
+    setChildren(prev => prev + 1);
+  };
+
+  const decreaseChildren = () => {
+    setChildren(prev => Math.max(0, prev - 1));
+  };
+
   // Данные тура
   const excursion = {
     title: "Пхи-Пхи 2 дня / 1 ночь",
@@ -44,7 +61,24 @@ const BookPhiPhi2Days1Night = () => {
   };
 
   // Расчёт общей стоимости
-  const totalPrice = excursion.priceAdult * adults + excursion.priceChild * children;
+  const totalPrice = useMemo(() => {
+    const adultsCost = excursion.priceAdult * adults;
+    const childrenCost = excursion.priceChild * children;
+    const total = adultsCost + childrenCost;
+    
+    // Отладочная информация
+    console.log('Price calculation:', {
+      adults,
+      children,
+      priceAdult: excursion.priceAdult,
+      priceChild: excursion.priceChild,
+      adultsCost,
+      childrenCost,
+      total
+    });
+    
+    return total;
+  }, [adults, children, excursion.priceAdult, excursion.priceChild]);
 
   // Обработчики форм
   const handleContactChange = (field: string, value: string) => {
@@ -149,25 +183,29 @@ const BookPhiPhi2Days1Night = () => {
                       
                       <div className="space-y-4">
                         {/* Взрослые */}
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <span className="text-gray-700 font-medium">Взрослые (12+ лет)</span>
+                        <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                          <div className="flex-1">
+                            <span className="text-gray-700 font-medium block">Взрослые (12+ лет)</span>
                             <div className="text-sm text-gray-500">{excursion.priceAdult} {excursion.currency} за человека</div>
                           </div>
-                          <div className="flex items-center space-x-3">
+                          <div className="flex items-center space-x-3 ml-4">
                             <button
                               type="button"
-                              onClick={() => setAdults(Math.max(1, adults - 1))}
-                              className="w-10 h-10 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors text-lg font-semibold"
+                              onClick={decreaseAdults}
+                              className="w-12 h-12 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center hover:bg-gray-50 focus:bg-gray-100 transition-all duration-200 text-xl font-semibold active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
                               disabled={adults <= 1}
+                              aria-label="Уменьшить количество взрослых"
+                              style={{ WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
                             >
-                              -
+                              −
                             </button>
-                            <span className="font-semibold min-w-[30px] text-center text-lg">{adults}</span>
+                            <span className="font-bold min-w-[40px] text-center text-xl bg-white px-3 py-2 rounded border">{adults}</span>
                             <button
                               type="button"
-                              onClick={() => setAdults(adults + 1)}
-                              className="w-10 h-10 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors text-lg font-semibold"
+                              onClick={increaseAdults}
+                              className="w-12 h-12 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center hover:bg-gray-50 focus:bg-gray-100 transition-all duration-200 text-xl font-semibold active:scale-95 shadow-sm"
+                              aria-label="Увеличить количество взрослых"
+                              style={{ WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
                             >
                               +
                             </button>
@@ -175,25 +213,29 @@ const BookPhiPhi2Days1Night = () => {
                         </div>
 
                         {/* Дети */}
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <span className="text-gray-700 font-medium">Дети (4-11 лет)</span>
+                        <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                          <div className="flex-1">
+                            <span className="text-gray-700 font-medium block">Дети (4-11 лет)</span>
                             <div className="text-sm text-gray-500">{excursion.priceChild} {excursion.currency} за ребёнка</div>
                           </div>
-                          <div className="flex items-center space-x-3">
+                          <div className="flex items-center space-x-3 ml-4">
                             <button
                               type="button"
-                              onClick={() => setChildren(Math.max(0, children - 1))}
-                              className="w-10 h-10 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors text-lg font-semibold"
+                              onClick={decreaseChildren}
+                              className="w-12 h-12 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center hover:bg-gray-50 focus:bg-gray-100 transition-all duration-200 text-xl font-semibold active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
                               disabled={children <= 0}
+                              aria-label="Уменьшить количество детей"
+                              style={{ WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
                             >
-                              -
+                              −
                             </button>
-                            <span className="font-semibold min-w-[30px] text-center text-lg">{children}</span>
+                            <span className="font-bold min-w-[40px] text-center text-xl bg-white px-3 py-2 rounded border">{children}</span>
                             <button
                               type="button"
-                              onClick={() => setChildren(children + 1)}
-                              className="w-10 h-10 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors text-lg font-semibold"
+                              onClick={increaseChildren}
+                              className="w-12 h-12 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center hover:bg-gray-50 focus:bg-gray-100 transition-all duration-200 text-xl font-semibold active:scale-95 shadow-sm"
+                              aria-label="Увеличить количество детей"
+                              style={{ WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
                             >
                               +
                             </button>

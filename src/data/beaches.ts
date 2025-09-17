@@ -1,13 +1,4 @@
-import patongImg from "@/assets/patong-beach.jpg";
-import kataImg from "@/assets/kata-beach.jpg";
-import karonImg from "@/assets/karon-beach.jpg";
-import naiharnImg from "@/assets/naiharn-beach.jpg";
-import surinImg from "@/assets/surin-beach.jpg";
-import kamalaImg from "@/assets/kamala-beach.jpg";
-import bangtaoImg from "@/assets/bangtao-beach.jpg";
-import maiKhaoImg from "@/assets/mai-khao-beach.jpg";
-import naiYangImg from "@/assets/naiyang-beach.jpg";
-import freedomImg from "@/assets/freedom-beach.jpg";
+// Using Unsplash images instead of local assets for better reliability
 
 export type Beach = {
   id: string;
@@ -124,13 +115,13 @@ export const beaches: Beach[] = [
     title: "Най Янг (Nai Yang)",
     description:
       "Спокойный пляж на севере Пхукета в пределах Национального парка Сиринат — тень от казуаринов, мелководье, атмосфера ‘как раньше’. Отличный выбор для семей и тех, кто любит тишину рядом с аэропортом.",
-    image: naiYangImg,
+    image: "https://images.unsplash.com/photo-1547036967-23d11aacaee0?auto=format&fit=crop&w=800&q=80",
     location: "Север Пхукета, рядом с аэропортом HKT",
     rating: 4.4,
     tags: ["Спокойный", "Семейный", "Север", "Нац.парк"],
     price: 0,
     popularity: 3,
-    gallery: [naiYangImg],
+    gallery: ["https://images.unsplash.com/photo-1547036967-23d11aacaee0?auto=format&fit=crop&w=800&q=80"],
     services: ["Лежаки", "Кафе", "Массаж", "Сапборды"],
     info: {
       length: "~3 км",
@@ -172,13 +163,13 @@ export const beaches: Beach[] = [
     title: "Фридом Бич (Freedom Beach)",
     description:
       "Живописная бухта с белоснежным песком и бирюзовой водой к югу от Патонга. Сюда добираются по тропе или на лодке — уединённо и очень красиво.",
-    image: freedomImg,
+    image: "https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=800&q=80",
     location: "Юго-запад Пхукета, между Патонгом и Кароном",
     rating: 4.7,
     tags: ["Уединённый", "Живописный", "Бухта", "Снорклинг"],
     price: 0,
     popularity: 4,
-    gallery: [freedomImg],
+    gallery: ["https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=800&q=80"],
     services: ["Небольшие кафе (сезон)", "Туалеты", "Лодки-такси с Патонга"],
     info: {
       length: "~300 м",
@@ -222,14 +213,14 @@ export const beaches: Beach[] = [
     id: "kata",
     title: "Пляж Ката",
     description: "Один из самых популярных пляжей Пхукета. Идеален для семейного отдыха.",
-    image: kataImg,
+    image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80",
     location: "Западное побережье",
     rating: 4.8,
     tags: ["Семейный", "Сёрфинг", "Рестораны"],
     price: 0,
     popularity: 5,
     gallery: [
-      kataImg,
+      "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80"
     ],
@@ -293,14 +284,14 @@ export const beaches: Beach[] = [
     id: "karon",
     title: "Пляж Карон",
     description: "Протяжённый пляж с мягким песком и развитой инфраструктурой.",
-    image: karonImg,
+    image: "https://images.unsplash.com/photo-1471919743851-c4df8b6eeaac?auto=format&fit=crop&w=800&q=80",
     location: "Западное побережье",
     rating: 4.6,
     tags: ["Длинный", "Активный отдых", "Бары"],
     price: 0,
     popularity: 4,
     gallery: [
-      karonImg,
+      "https://images.unsplash.com/photo-1471919743851-c4df8b6eeaac?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80"
     ],
@@ -365,14 +356,14 @@ export const beaches: Beach[] = [
     id: "naiharn",
     title: "Пляж Най Харн",
     description: "Уединённый пляж с чистой водой и живописными видами.",
-    image: naiharnImg,
+    image: "https://images.unsplash.com/photo-1502568692423-4854ab5b5923?auto=format&fit=crop&w=800&q=80",
     location: "Южное побережье",
     rating: 4.7,
     tags: ["Уединённый", "Красивый", "Для пар"],
     price: 0,
     popularity: 3,
     gallery: [
-      naiharnImg,
+      "https://images.unsplash.com/photo-1502568692423-4854ab5b5923?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
     ],
@@ -407,14 +398,14 @@ export const beaches: Beach[] = [
     id: "patong",
     title: "Пляж Патонг",
     description: "Самый оживлённый пляж Пхукета: бары, клубы, развлечения и набережная.",
-    image: patongImg,
+    image: "https://images.unsplash.com/photo-1471919743851-c4df8b6eeaac?auto=format&fit=crop&w=800&q=80",
     location: "Западное побережье, центр туристической жизни",
     rating: 4.2,
     tags: ["Ночная жизнь", "Бары", "Развлечения", "Активный отдых", "Магазины", "Вечеринки"],
     price: 0,
     popularity: 5,
     gallery: [
-      patongImg,
+      "https://images.unsplash.com/photo-1471919743851-c4df8b6eeaac?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80"
     ],
@@ -492,14 +483,14 @@ export const beaches: Beach[] = [
     id: "surin",
     title: "Пляж Сурин",
     description: "Элитный пляж с белым песком и чистой водой.",
-    image: surinImg,
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
     location: "Северо-западное побережье",
     rating: 4.5,
     tags: ["Элитный", "Кафе", "Рестораны"],
     price: 0,
     popularity: 4,
     gallery: [
-      surinImg,
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1465378552550-1caf2b7b2a45?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
     ],
@@ -534,14 +525,14 @@ export const beaches: Beach[] = [
     id: "kamala",
     title: "Пляж Камала",
     description: "Спокойный пляж для семей с детьми. Рядом парк Phuket Fantasea.",
-    image: kamalaImg,
+    image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80",
     location: "Западное побережье",
     rating: 4.4,
     tags: ["Семейный", "Дети", "Парк развлечений"],
     price: 0,
     popularity: 3,
     gallery: [
-      kamalaImg,
+      "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80"
     ],
@@ -604,14 +595,14 @@ export const beaches: Beach[] = [
     id: "bangtao",
     title: "Пляж Банг Тао",
     description: "Один из самых длинных пляжей острова. Лучшие отели и виллы.",
-    image: bangtaoImg,
+    image: "https://images.unsplash.com/photo-1464207687429-7505649dae38?auto=format&fit=crop&w=800&q=80",
     location: "Северо-западное побережье",
     rating: 4.6,
     tags: ["Длинный", "Отели", "Виллы"],
     price: 0,
     popularity: 4,
     gallery: [
-      bangtaoImg,
+      "https://images.unsplash.com/photo-1464207687429-7505649dae38?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
     ],
@@ -675,14 +666,14 @@ export const beaches: Beach[] = [
     id: "mai-khao",
     title: "Пляж Май Кхао",
     description: "Дикий и малолюдный пляж, рядом аэропорт — вид на посадку самолётов.",
-    image: maiKhaoImg,
+    image: "https://images.unsplash.com/photo-1519832379-6fa4ac6b7be1?auto=format&fit=crop&w=800&q=80",
     location: "Северное побережье",
     rating: 4.3,
     tags: ["Дикий", "Аэропорт", "Уединённый"],
     price: 0,
     popularity: 2,
     gallery: [
-      maiKhaoImg,
+      "https://images.unsplash.com/photo-1519832379-6fa4ac6b7be1?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1465101178521-c1a2b1c6413c?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80"
     ],

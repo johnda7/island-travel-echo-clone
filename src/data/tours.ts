@@ -48,10 +48,10 @@ export const tours: Tour[] = [
     ],
     gallery: [
       './assets/phi-phi-maya-bay.jpg',
-      './assets/phi-phi-lagoon.jpg',
-      './assets/phi-phi-speedboat.jpg',
-      './assets/phi-phi-snorkeling.jpg',
-      './assets/phi-phi-sunset.jpg'
+      './assets/maya-bay-1.jpg',
+      './assets/maya-bay-2.jpg',
+      './assets/fire-show-1.jpg',
+      './assets/fire-show-2.jpg'
     ],
     route: '/tours/phi-phi-2-days-1-night'
   },
@@ -84,8 +84,8 @@ export const tours: Tour[] = [
       { time: '17:00', activity: 'Возвращение' }
     ],
     gallery: [
-      './assets/phi-phi-maya-bay.jpg',
-      './assets/phi-phi-lagoon.jpg'
+      './assets/maya-bay-3.jpg',
+      './assets/viking-cave.jpg'
     ],
     route: '/tours/james-bond-island'
   },
@@ -117,8 +117,8 @@ export const tours: Tour[] = [
       { time: '16:30', activity: 'Возвращение' }
     ],
     gallery: [
-      './assets/phi-phi-speedboat.jpg',
-      './assets/phi-phi-snorkeling.jpg'
+      './assets/rang-yai-1.jpg',
+      './assets/rang-yai-2.jpg'
     ],
     route: '/tours/racha-coral-island'
   },
@@ -150,8 +150,8 @@ export const tours: Tour[] = [
       { time: '17:00', activity: 'Возвращение' }
     ],
     gallery: [
-      './assets/phi-phi-lagoon.jpg',
-      './assets/phi-phi-sunset.jpg'
+      './assets/pileh-lagoon.jpg',
+      './assets/bamboo-island.webp'
     ],
     route: '/tours/11-islands-standard'
   }

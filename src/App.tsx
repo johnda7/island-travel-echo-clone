@@ -105,25 +105,6 @@ const App = () => (
           <Route path="/attractions/muzei" element={<Muzei />} />
           <Route path="/attractions/nochnye-rynki" element={<NochnyeRynki />} />
           
-          {/* Specific excursion routes */}
-
-          <Route path="/excursion/coral-island-parasailing" element={<CoralIslandParasailing />} />
-          <Route path="/excursion/racha-yai-island" element={<RachaYaiIsland />} />
-          <Route path="/excursion/maya-bay-sunrise" element={<MayaBaySunrise />} />
-          <Route path="/excursion/koh-phi-phi-leh-lagoon" element={<KohPhiPhiLehLagoon />} />
-          <Route path="/excursion/whale-watching-tour" element={<WhaleWatchingTour />} />
-          <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
-          <Route path="/book/phi-phi-2-days-1-night" element={<BookPhiPhi2Days />} />
-          <Route path="/book/phi-phi-treasure-2d-1n-standard/reserv" element={<BookPhiPhi2Days1Night />} />
-          <Route path="/excursion/dostoprimechatelnosti-phuketa-1-den-obzornaja-jekskursija-bez-shopinga" element={<PhuketSightseeingNoShopping />} />
-          
-          {/* New marine excursions from phuketgo */}
-          <Route path="/excursion/eleven-islands" element={<TourPage tourSlug="11-ostrovov" />} />
-          <Route path="/excursion/four-pearls-andaman" element={<TourPage tourSlug="four-pearls-andaman" />} />
-          <Route path="/excursion/racha-coral" element={<TourPage tourSlug="racha-coral" />} />
-          <Route path="/excursion/similan-islands" element={<SimilanIslands />} />
-          <Route path="/excursion/james-bond-island" element={<TourPage tourSlug="james-bond-island" />} />
-          
           {/* NEW UNIFIED TOUR SYSTEM - Centralized WordPress-like tours */}
           <Route path="/tours-new/phi-phi-2-days-1-night" element={<PhiPhi2Days1NightNew />} />
           <Route path="/book-new/phi-phi-2-days-1-night" element={<BookPhiPhi2Days1NightNew />} />

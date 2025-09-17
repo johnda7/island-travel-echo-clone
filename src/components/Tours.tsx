@@ -4,9 +4,22 @@ import { Clock, Users, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BookingModal } from "./BookingModal";
 import { PopularityBadge } from "./PopularityBadge";
-import { tours } from "@/data/tours";
 
 export const Tours = () => {
+  // Статичный список туров - каждый тур теперь отдельная страница
+  const staticTours = [
+    {
+      id: "phi-phi-2days",
+      title: "Пхи-Пхи острова на 2 дня/1 ночь",
+      description: "Незабываемое путешествие на 2 дня с ночевкой на острове",
+      adultPrice: 7900,
+      childPrice: 5900,
+      duration: "2 дня/1 ночь",
+      image: "/src/assets/phi-phi-maya-bay.jpg",
+      route: "/phi-phi-2days"
+    }
+  ];
+
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -18,15 +31,15 @@ export const Tours = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {tours.map((tour) => (
+          {staticTours.map((tour) => (
             <Card key={tour.id} className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className="relative h-48">
                 <img
-                  src={tour.gallery[0]}
+                  src={tour.image}
                   alt={tour.title}
                   className="w-full h-full object-cover"
                 />
-                <PopularityBadge />
+                <PopularityBadge bookingsToday={Math.floor(Math.random() * 8) + 3} />
               </div>
               
               <CardContent className="p-6">

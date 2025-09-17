@@ -47,11 +47,11 @@ export const tours: Tour[] = [
       { time: '19:00', activity: 'Ужин и огненное шоу' }
     ],
     gallery: [
-      '/assets/phi-phi-maya-bay.jpg',
-      '/assets/phi-phi-lagoon.jpg',
-      '/assets/phi-phi-speedboat.jpg',
-      '/assets/phi-phi-snorkeling.jpg',
-      '/assets/phi-phi-sunset.jpg'
+      './assets/phi-phi-maya-bay.jpg',
+      './assets/phi-phi-lagoon.jpg',
+      './assets/phi-phi-speedboat.jpg',
+      './assets/phi-phi-snorkeling.jpg',
+      './assets/phi-phi-sunset.jpg'
     ],
     route: '/tours/phi-phi-2-days-1-night'
   },
@@ -84,8 +84,8 @@ export const tours: Tour[] = [
       { time: '17:00', activity: 'Возвращение' }
     ],
     gallery: [
-      '/assets/phi-phi-maya-bay.jpg',
-      '/assets/phi-phi-lagoon.jpg'
+      './assets/phi-phi-maya-bay.jpg',
+      './assets/phi-phi-lagoon.jpg'
     ],
     route: '/tours/james-bond-island'
   },
@@ -117,8 +117,8 @@ export const tours: Tour[] = [
       { time: '16:30', activity: 'Возвращение' }
     ],
     gallery: [
-      '/assets/phi-phi-speedboat.jpg',
-      '/assets/phi-phi-snorkeling.jpg'
+      './assets/phi-phi-speedboat.jpg',
+      './assets/phi-phi-snorkeling.jpg'
     ],
     route: '/tours/racha-coral-island'
   },
@@ -150,8 +150,8 @@ export const tours: Tour[] = [
       { time: '17:00', activity: 'Возвращение' }
     ],
     gallery: [
-      '/assets/phi-phi-lagoon.jpg',
-      '/assets/phi-phi-sunset.jpg'
+      './assets/phi-phi-lagoon.jpg',
+      './assets/phi-phi-sunset.jpg'
     ],
     route: '/tours/11-islands-standard'
   },
@@ -184,9 +184,9 @@ export const tours: Tour[] = [
       { time: '12:00', activity: 'Возвращение в порт' }
     ],
     gallery: [
-      '/assets/maya-bay-sunrise.jpg',
-      '/assets/phi-phi-lagoon.jpg',
-      '/assets/phi-phi-monkey-beach.jpg'
+      './assets/maya-bay-sunrise.jpg',
+      './assets/phi-phi-lagoon.jpg',
+      './assets/phi-phi-monkey-beach.jpg'
     ],
     route: '/tours/maya-bay-sunrise'
   },
@@ -218,8 +218,8 @@ export const tours: Tour[] = [
       { time: '16:30', activity: 'Возвращение в порт' }
     ],
     gallery: [
-      '/assets/phi-phi-speedboat.jpg',
-      '/assets/phi-phi-sunset.jpg'
+      './assets/phi-phi-speedboat.jpg',
+      './assets/phi-phi-sunset.jpg'
     ],
     route: '/tours/whale-watching'
   },
@@ -253,9 +253,9 @@ export const tours: Tour[] = [
       { time: '16:30', activity: 'Возвращение' }
     ],
     gallery: [
-      '/assets/phi-phi-speedboat.jpg',
-      '/assets/phi-phi-maya-bay.jpg',
-      '/assets/phi-phi-snorkeling.jpg'
+      './assets/phi-phi-speedboat.jpg',
+      './assets/phi-phi-maya-bay.jpg',
+      './assets/phi-phi-snorkeling.jpg'
     ],
     route: '/tours/phi-phi-islands-speedboat'
   },
@@ -289,8 +289,8 @@ export const tours: Tour[] = [
       { time: '17:00', activity: 'Возвращение' }
     ],
     gallery: [
-      '/assets/phi-phi-lagoon.jpg',
-      '/assets/phi-phi-maya-bay.jpg'
+      './assets/phi-phi-lagoon.jpg',
+      './assets/phi-phi-maya-bay.jpg'
     ],
     route: '/tours/koh-phi-phi-leh-lagoon'
   }

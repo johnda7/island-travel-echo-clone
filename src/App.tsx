@@ -4,13 +4,13 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import { TourPageWrapper } from "@/components/TourPageWrapper";
 import Index from "./pages/Index";
 import Tours from "./pages/Tours";
 import About from "./pages/About";
 import Destinations from "./pages/Destinations";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
+import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 
 const queryClient = new QueryClient();
 
@@ -32,11 +32,8 @@ function App() {
               <Route path="/destinations" element={<Destinations />} />
               <Route path="/contact" element={<ContactPage />} />
               
-              {/* Универсальные туры */}
-              <Route path="/tours/phi-phi-2-days-1-night" element={<TourPageWrapper />} />
-              <Route path="/tours/james-bond-island" element={<TourPageWrapper />} />
-              <Route path="/tours/racha-coral-island" element={<TourPageWrapper />} />
-              <Route path="/tours/11-islands-standard" element={<TourPageWrapper />} />
+              {/* Туры */}
+              <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
               
               {/* 404 */}
               <Route path="*" element={<NotFound />} />

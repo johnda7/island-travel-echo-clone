@@ -11,12 +11,13 @@ export const Tours = () => {
     {
       id: "phi-phi-2days",
       title: "Пхи-Пхи острова на 2 дня/1 ночь",
-      description: "Незабываемое путешествие на 2 дня с ночевкой на острове",
+      description: "Незабываемое путешествие с ночевкой на острове. Бухта Майя, огненное шоу, снорклинг и множество приключений!",
       adultPrice: 7900,
       childPrice: 5900,
       duration: "2 дня/1 ночь",
-      image: "/src/assets/phi-phi-maya-bay.jpg",
-      route: "/phi-phi-2days"
+      image: "/src/assets/phi-phi-2days/maya-bay-1.jpg",
+      route: "/phi-phi-2days",
+      highlights: ["Бухта Майя", "Огненное шоу", "Ночевка на острове", "Снорклинг"]
     }
   ];
 
@@ -54,6 +55,20 @@ export const Tours = () => {
                   <div className="flex items-center">
                     <Users className="w-4 h-4 mr-1" />
                     до 30 чел
+                  </div>
+                </div>
+
+                {/* Ключевые особенности */}
+                <div className="mb-4">
+                  <div className="flex flex-wrap gap-1">
+                    {tour.highlights?.map((highlight, index) => (
+                      <span 
+                        key={index}
+                        className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full"
+                      >
+                        {highlight}
+                      </span>
+                    ))}
                   </div>
                 </div>
 

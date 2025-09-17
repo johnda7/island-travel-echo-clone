@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Star, Calendar, Thermometer } from "lucide-react";
 import { Link } from "react-router-dom";
-import phiPhiMayaBay from "@/assets/phi-phi-maya-bay.jpg";
+import phiPhiMayaBay from "@/assets/phi-phi-2days/maya-bay-1.jpg";
 
 const destinationsData = [
   {

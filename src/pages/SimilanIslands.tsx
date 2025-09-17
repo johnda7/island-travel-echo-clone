@@ -9,12 +9,12 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Gri
 // Import images - временные из существующих
 import similan1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
 import similan2 from "@/assets/phi-phi-2days/maya-bay-2.jpg";
-import similan3 from "@/assets/phi-phi-maya-bay.jpg";
-import similan4 from "@/assets/phi-phi-lagoon.jpg";
+import similan3 from "@/assets/phi-phi-2days/maya-bay-3.jpg";
+import similan4 from "@/assets/phi-phi-2days/pileh-lagoon.jpg";
 import similan5 from "@/assets/phi-phi-2days/pileh-lagoon.jpg";
 import similan6 from "@/assets/phi-phi-2days/bamboo-island.webp";
-import similan7 from "@/assets/phi-phi-snorkeling.jpg";
-import similan8 from "@/assets/phi-phi-speedboat.jpg";
+import similan7 from "@/assets/phi-phi-2days/rang-yai-1.jpg";
+import similan8 from "@/assets/phi-phi-2days/rang-yai-2.jpg";
 
 const excursion = {
   title: "Симиланские острова",

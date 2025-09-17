@@ -14,18 +14,12 @@ export const Header = () => {
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
 
-  // Tours data for search - все 10 туров
+  // Tours data for search - только ваши 4 оригинальных тура
   const allTours = [
-    { name: "Пхи-Пхи 2 дня / 1 ночь", href: "/tours/phi-phi-2-days-1-night", description: "Путешествие с ночёвкой на островах Пхи-Пхи" },
-    { name: "Острова Пхи-Пхи на спидботе", href: "/tours/phi-phi-islands-speedboat", description: "Скоростная экскурсия на знаменитые острова" },
-    { name: "Остров Джеймса Бонда", href: "/tours/james-bond-island", description: "Экскурсия к острову из фильма о Джеймсе Бонде" },
-    { name: "Коралловый остров + Парасейлинг", href: "/tours/coral-island-parasailing", description: "Активный день на Коралловом острове" },
-    { name: "4 жемчужины Андаманского моря", href: "/tours/four-pearls-andaman", description: "Роскошное двухдневное путешествие с VIP-сервисом" },
-    { name: "Остров Рача Яй", href: "/tours/racha-yai-island", description: "Поездка на живописный остров с кристально чистой водой" },
-    { name: "Майя Бей на рассвете", href: "/tours/maya-bay-sunrise", description: "Эксклюзивная поездка в Майя Бей на рассвете" },
-    { name: "Пхи-Пхи Ле и лагуна", href: "/tours/koh-phi-phi-leh-lagoon", description: "Исследование острова Пхи-Пхи Ле с Изумрудной лагуной" },
-    { name: "11 ОСТРОВОВ МЕГА-ТУР", href: "/tours/11-islands-mega-tour", description: "Грандиозный тур на 11 островов за один день" },
-    { name: "Наблюдение за китами", href: "/tours/whale-watching-tour", description: "Уникальная возможность увидеть китов и дельфинов" },
+    { name: "Острова Пхи-Пхи 2 дня / 1 ночь", href: "/tours/phi-phi-2-days-1-night", description: "Незабываемое путешествие на острова Пхи-Пхи с ночевкой" },
+    { name: "Остров Джеймса Бонда", href: "/tours/james-bond-island", description: "Экскурсия к знаменитому острову из фильма о Джеймсе Бонде" },
+    { name: "4 Жемчужины + Коралловый остров", href: "/tours/racha-coral-island", description: "Посещение 4 островов и кораллового острова с парасейлингом" },
+    { name: "11 островов Стандарт", href: "/tours/11-islands-standard", description: "Обзорная экскурсия по 11 островам Краби на традиционной лодке" },
     { name: "Пляжи", href: "/beaches", description: "Лучшие пляжи Пхукета" },
     { name: "Что посетить", href: "/what-to-visit", description: "Главные достопримечательности Пхукета" },
     { name: "Экскурсии", href: "/tours", description: "Все экскурсии и туры" }

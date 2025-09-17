@@ -1,19 +1,18 @@
-
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, Users, Phone, Mail, Calculator, Minus, Plus } from "lucide-react";
+import { Calendar, Users, Phone, Mail, Calculator, Minus, Plus, Send } from "lucide-react";
 import { useState } from "react";
 
 interface BookingModalProps {
   tourTitle: string;
-  tourPrice: string;
+  adultPrice: number;
+  childPrice: number;
   children: React.ReactNode;
 }
 
-export const BookingModal = ({ tourTitle, tourPrice, children }: BookingModalProps) => {
+export const BookingModal = ({ tourTitle, adultPrice, childPrice, children }: BookingModalProps) => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -23,15 +22,13 @@ export const BookingModal = ({ tourTitle, tourPrice, children }: BookingModalPro
     children: 0
   });
 
-  // Простой калькулятор цен
-  const baseAdultPrice = 4000; // ฿ за взрослого
-  const baseChildPrice = 3500; // ฿ за ребенка
-  const totalPrice = (formData.adults * baseAdultPrice) + (formData.children * baseChildPrice);
+  // Калькулятор цен на основе переданных цен тура
+  const totalPrice = (formData.adults * adultPrice) + (formData.children * childPrice);
 
   const adjustGuests = (type: 'adults' | 'children', direction: 'plus' | 'minus') => {
     setFormData(prev => {
       const current = prev[type];
-      const newValue = direction === 'plus' ? current + 1 : Math.max(0, current - 1);
+      const newValue = direction === 'plus' ? current + 1 : Math.max(type === 'adults' ? 1 : 0, current - 1);
       return { ...prev, [type]: newValue };
     });
   };
@@ -39,20 +36,24 @@ export const BookingModal = ({ tourTitle, tourPrice, children }: BookingModalPro
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Формируем сообщение для WhatsApp
-    const message = `Здравствуйте! Хочу забронировать:
-🏝️ ${tourTitle}
-👤 ${formData.adults} взрослых, ${formData.children} детей
+    // Формируем сообщение для Telegram бота
+    const message = `🏝️ Новая бронь тура!
+
+📋 Тур: ${tourTitle}
+💰 Цена: ${totalPrice.toLocaleString()} ฿
+👥 Гости: ${formData.adults} взрослых, ${formData.children} детей
 📅 Дата: ${formData.date}
-💰 Итого: ${totalPrice.toLocaleString()} ฿
 
-Контакты:
-📞 ${formData.phone}
-👤 ${formData.name}
-📧 ${formData.email}`;
+👤 Контактная информация:
+• Имя: ${formData.name}
+• Телефон: ${formData.phone}
+• Email: ${formData.email || 'не указан'}
 
-    const whatsappUrl = `https://wa.me/66934740231?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+⏰ Заявка подана: ${new Date().toLocaleString('ru-RU')}`;
+
+    // Отправляем в Telegram бот
+    const telegramUrl = `https://t.me/PhuketBookBot?start=booking&text=${encodeURIComponent(message)}`;
+    window.open(telegramUrl, '_blank');
   };
 
   return (
@@ -64,7 +65,7 @@ export const BookingModal = ({ tourTitle, tourPrice, children }: BookingModalPro
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-blue-600 flex items-center gap-2">
             <Calculator className="h-5 w-5" />
-            Быстрое бронирование
+            Бронирование тура
           </DialogTitle>
           <p className="text-gray-600">{tourTitle}</p>
         </DialogHeader>
@@ -82,7 +83,7 @@ export const BookingModal = ({ tourTitle, tourPrice, children }: BookingModalPro
               <div className="flex items-center justify-between">
                 <div>
                   <span className="font-medium">Взрослые</span>
-                  <span className="text-sm text-gray-500 block">{baseAdultPrice.toLocaleString()} ฿ за человека</span>
+                  <span className="text-sm text-gray-500 block">{adultPrice.toLocaleString()} ฿ за человека</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Button 
@@ -110,7 +111,7 @@ export const BookingModal = ({ tourTitle, tourPrice, children }: BookingModalPro
               <div className="flex items-center justify-between">
                 <div>
                   <span className="font-medium">Дети (4-11 лет)</span>
-                  <span className="text-sm text-gray-500 block">{baseChildPrice.toLocaleString()} ฿ за ребенка</span>
+                  <span className="text-sm text-gray-500 block">{childPrice.toLocaleString()} ฿ за ребенка</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Button 
@@ -143,6 +144,7 @@ export const BookingModal = ({ tourTitle, tourPrice, children }: BookingModalPro
               </div>
             </div>
           </div>
+          
           <div>
             <Label htmlFor="name">Ваше имя *</Label>
             <Input 
@@ -198,12 +200,12 @@ export const BookingModal = ({ tourTitle, tourPrice, children }: BookingModalPro
           </div>
           
           <Button type="submit" className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600">
-            <Phone className="h-4 w-4 mr-2" />
-            Забронировать через WhatsApp
+            <Send className="h-4 w-4 mr-2" />
+            Забронировать через Telegram
           </Button>
           
           <p className="text-xs text-gray-500 text-center">
-            Нажимая кнопку, вы будете перенаправлены в WhatsApp для завершения бронирования
+            Нажимая кнопку, вы будете перенаправлены в Telegram бот @PhuketBookBot для завершения бронирования
           </p>
         </form>
       </DialogContent>

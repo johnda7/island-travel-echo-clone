@@ -14,30 +14,21 @@ export const Header = () => {
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
 
-  // Tours data for search - все 22 тура
+  // Tours data for search - все 10 туров
   const allTours = [
-    { name: "Пхи-Пхи 2 дня / 1 ночь", href: "/tours/phi-phi-2-days-1-night", description: "Экскурсия с ночёвкой на островах Пхи-Пхи" },
+    { name: "Пхи-Пхи 2 дня / 1 ночь", href: "/tours/phi-phi-2-days-1-night", description: "Путешествие с ночёвкой на островах Пхи-Пхи" },
     { name: "Острова Пхи-Пхи на спидботе", href: "/tours/phi-phi-islands-speedboat", description: "Скоростная экскурсия на знаменитые острова" },
-    { name: "Пхи-Пхи Ле и лагуна", href: "/tours/koh-phi-phi-leh-lagoon", description: "Экскурсия к острову Пхи-Пхи Ле и Изумрудной лагуне" },
-    { name: "Майя Бей на рассвете", href: "/tours/maya-bay-sunrise", description: "Встреча рассвета в легендарной бухте" },
     { name: "Остров Джеймса Бонда", href: "/tours/james-bond-island", description: "Экскурсия к острову из фильма о Джеймсе Бонде" },
-    { name: "11 островов Стандарт", href: "/tours/11-islands-standard", description: "Обзорная экскурсия по 11 островам Краби на традиционной длиннохвостой лодке" },
-    { name: "4 Жемчужины + Коралловый остров", href: "/tours/racha-coral-island", description: "Посещение 4 островов и кораллового острова с парасейлингом" },
-    { name: "Наблюдение за китами", href: "/tours/whale-watching", description: "Уникальная возможность увидеть китов и дельфинов" },
-    { name: "Пляжные туры", href: "/category/beach-tours", description: "Экскурсии по лучшим пляжам Пхукета" },
-    { name: "Городские туры", href: "/category/city-tours", description: "Обзорные экскурсии по городу Пхукет" },
-    { name: "Приключенческие туры", href: "/category/adventure-tours", description: "Экстремальные и активные туры" },
-    { name: "Групповые туры", href: "/category/group-tours", description: "Экскурсии для больших групп" },
-  { name: "Достопримечательности Пхукета (без шопинга)", href: "/excursion/dostoprimechatelnosti-phuketa-1-den-obzornaja-jekskursija-bez-shopinga", description: "1 день, обзорная экскурсия без магазинов" },
-    { name: "Что посетить", href: "/what-to-visit", description: "Главные достопримечательности Пхукета" },
-    { name: "Экскурсии", href: "/tours", description: "Все экскурсии и туры" },
-    { name: "Направления", href: "/destinations", description: "Популярные направления" },
+    { name: "Коралловый остров + Парасейлинг", href: "/tours/coral-island-parasailing", description: "Активный день на Коралловом острове" },
+    { name: "4 жемчужины Андаманского моря", href: "/tours/four-pearls-andaman", description: "Роскошное двухдневное путешествие с VIP-сервисом" },
+    { name: "Остров Рача Яй", href: "/tours/racha-yai-island", description: "Поездка на живописный остров с кристально чистой водой" },
+    { name: "Майя Бей на рассвете", href: "/tours/maya-bay-sunrise", description: "Эксклюзивная поездка в Майя Бей на рассвете" },
+    { name: "Пхи-Пхи Ле и лагуна", href: "/tours/koh-phi-phi-leh-lagoon", description: "Исследование острова Пхи-Пхи Ле с Изумрудной лагуной" },
+    { name: "11 ОСТРОВОВ МЕГА-ТУР", href: "/tours/11-islands-mega-tour", description: "Грандиозный тур на 11 островов за один день" },
+    { name: "Наблюдение за китами", href: "/tours/whale-watching-tour", description: "Уникальная возможность увидеть китов и дельфинов" },
     { name: "Пляжи", href: "/beaches", description: "Лучшие пляжи Пхукета" },
-  { name: "Достопримечательности", href: "/dostoprimechatelnosti", description: "Интересные места для посещения" },
-    { name: "Морские экскурсии", href: "/tours", description: "Туры по морю и островам" },
-    { name: "Семейные туры", href: "/tours", description: "Экскурсии для всей семьи" },
-    { name: "СПА и релакс", href: "/tours", description: "Расслабляющие туры и спа-процедуры" },
-    { name: "Шоу программы", href: "/tours", description: "Развлекательные шоу и представления" }
+    { name: "Что посетить", href: "/what-to-visit", description: "Главные достопримечательности Пхукета" },
+    { name: "Экскурсии", href: "/tours", description: "Все экскурсии и туры" }
   ];
 
   // Filter tours based on search query

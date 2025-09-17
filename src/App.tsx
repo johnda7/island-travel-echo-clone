@@ -29,7 +29,7 @@ import AdminOrders from "./pages/AdminOrders";
 import NotFound from "./pages/NotFound";
 
 // DELETED - using unified TourPage instead:
-// import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
+import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 // import BookPhiPhi2Days from "./pages/BookPhiPhi2Days";
 // import BookPhiPhi2Days1Night from "./pages/BookPhiPhi2Days1Night";
 import PhiPhiReservation from "./pages/PhiPhiReservation";
@@ -116,8 +116,8 @@ const App = () => (
           <Route path="/tours/racha-coral" element={<TourPage tourSlug="racha-coral" />} />
           <Route path="/tours/similan-islands" element={<SimilanIslands />} />
           <Route path="/tours/james-bond-island" element={<TourPage tourSlug="james-bond-island" />} />
-          {/* ИСПОЛЬЗУЕМ УНИВЕРСАЛЬНЫЙ TourPage ВМЕСТО СТАРОЙ СТРАНИЦЫ */}
-          <Route path="/tours/phi-phi-2-days-1-night" element={<TourPage tourSlug="phi-phi-2-days-1-night" />} />
+          {/* ВОЗВРАЩАЕМ ОРИГИНАЛЬНУЮ СТРАНИЦУ PHI PHI С ОРИГИНАЛЬНЫМ ДИЗАЙНОМ И КАЛЬКУЛЯТОРОМ */}
+          <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
           
           {/* Reservation routes */}
           <Route path="/tours/phi-phi-2-days-1-night/reservation" element={<PhiPhiReservation />} />

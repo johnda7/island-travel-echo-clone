@@ -21,17 +21,18 @@ import MayaBaySunrise from "./pages/MayaBaySunrise";
 import KohPhiPhiLehLagoon from "./pages/KohPhiPhiLehLagoon";
 import WhaleWatchingTour from "./pages/WhaleWatchingTour";
 import PhiPhiIslands from "./pages/PhiPhiIslands";
-import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
-import BookPhiPhi2Days from "./pages/BookPhiPhi2Days";
-import BookPhiPhi2Days1Night from "./pages/BookPhiPhi2Days1Night";
-import PhiPhiReservation from "./pages/PhiPhiReservation";
-
 // NEW UNIFIED TOUR SYSTEM - WordPress-like centralized tours
 import PhiPhi2Days1NightNew from "./pages/PhiPhi2Days1NightNew";
 import BookPhiPhi2Days1NightNew from "./pages/BookPhiPhi2Days1NightNew";
 
 import AdminOrders from "./pages/AdminOrders";
 import NotFound from "./pages/NotFound";
+
+// DELETED - using unified TourPage instead:
+// import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
+// import BookPhiPhi2Days from "./pages/BookPhiPhi2Days";
+// import BookPhiPhi2Days1Night from "./pages/BookPhiPhi2Days1Night";
+import PhiPhiReservation from "./pages/PhiPhiReservation";
 
 // New marine excursions from phuketgo - now using unified TourPage
 // import ElevenIslands from "./pages/ElevenIslands";  // DELETED - using TourPage
@@ -115,7 +116,8 @@ const App = () => (
           <Route path="/tours/racha-coral" element={<TourPage tourSlug="racha-coral" />} />
           <Route path="/tours/similan-islands" element={<SimilanIslands />} />
           <Route path="/tours/james-bond-island" element={<TourPage tourSlug="james-bond-island" />} />
-          <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
+          {/* ИСПОЛЬЗУЕМ УНИВЕРСАЛЬНЫЙ TourPage ВМЕСТО СТАРОЙ СТРАНИЦЫ */}
+          <Route path="/tours/phi-phi-2-days-1-night" element={<TourPage tourSlug="phi-phi-2-days-1-night" />} />
           
           {/* Reservation routes */}
           <Route path="/tours/phi-phi-2-days-1-night/reservation" element={<PhiPhiReservation />} />

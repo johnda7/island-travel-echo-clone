@@ -84,8 +84,8 @@ export const tours: Tour[] = [
       { time: '17:00', activity: 'Возвращение' }
     ],
     gallery: [
-      './assets/maya-bay-3.jpg',
-      './assets/viking-cave.jpg'
+      './assets/james-1.jpg',
+      './assets/james-2.jpg'
     ],
     route: '/tours/james-bond-island'
   },
@@ -117,8 +117,8 @@ export const tours: Tour[] = [
       { time: '16:30', activity: 'Возвращение' }
     ],
     gallery: [
-      './assets/rang-yai-1.jpg',
-      './assets/rang-yai-2.jpg'
+      './assets/racha-1.jpg',
+      './assets/racha-2.jpg'
     ],
     route: '/tours/racha-coral-island'
   },

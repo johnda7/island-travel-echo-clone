@@ -33,10 +33,10 @@ import BookPhiPhi2Days1NightNew from "./pages/BookPhiPhi2Days1NightNew";
 import AdminOrders from "./pages/AdminOrders";
 import NotFound from "./pages/NotFound";
 
-// New marine excursions from phuketgo
-import ElevenIslands from "./pages/ElevenIslands";
-import FourPearlsAndaman from "./pages/FourPearlsAndaman"; 
-import RachaCoral from "./pages/RachaCoral";
+// New marine excursions from phuketgo - now using unified TourPage
+// import ElevenIslands from "./pages/ElevenIslands";  // DELETED - using TourPage
+// import FourPearlsAndaman from "./pages/FourPearlsAndaman";  // DELETED - using TourPage
+// import RachaCoral from "./pages/RachaCoral";  // DELETED - using TourPage
 import SimilanIslands from "./pages/SimilanIslands";
 
 // Universal tour template

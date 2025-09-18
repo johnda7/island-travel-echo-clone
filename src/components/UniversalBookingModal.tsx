@@ -31,12 +31,12 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
     const totalPrice = 
       (formData.adults * adultPrice) + 
       (formData.children * childPrice) + 
-      (formData.infants! * infantPrice);
+      ((formData.infants || 0) * infantPrice);
 
     return {
       adults: formData.adults,
       children: formData.children,
-      infants: formData.infants!,
+      infants: formData.infants || 0,
       adultPrice,
       childPrice,
       infantPrice,
@@ -78,7 +78,6 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
 • Телефон: ${formData.phone}
 • Email: ${formData.email || 'не указан'}
 ${formData.hotelName ? `• Отель: ${formData.hotelName}` : ''}
-${formData.specialRequests ? `• Особые пожелания: ${formData.specialRequests}` : ''}
 
 ⏰ Заявка подана: ${new Date().toLocaleString('ru-RU')}`;
 
@@ -300,17 +299,6 @@ ${formData.specialRequests ? `• Особые пожелания: ${formData.sp
                 onChange={(e) => setFormData({...formData, hotelName: e.target.value})}
               />
             </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-1">Особые пожелания</label>
-              <textarea
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                rows={3}
-                placeholder="Аллергии, особые требования..."
-                value={formData.specialRequests}
-                onChange={(e) => setFormData({...formData, specialRequests: e.target.value})}
-              />
-            </div>
           </div>
 
           <Button 
@@ -324,10 +312,6 @@ ${formData.specialRequests ? `• Особые пожелания: ${formData.sp
               : '🏝️ ЗАБРОНИРОВАТЬ ТУР'
             }
           </Button>
-
-          <p className="text-xs text-gray-500 text-center mt-3">
-            Нажимая кнопку, вы соглашаетесь с условиями бронирования
-          </p>
         </div>
       </div>
     </div>

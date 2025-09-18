@@ -33,6 +33,11 @@ const PhiPhi2Days1Night = () => {
   });
 
   const totalPrice = adults * excursion.priceAdult + children * excursion.priceChild;
+  
+  // Отладка калькулятора
+  useEffect(() => {
+    console.log('Калькулятор обновлен:', { adults, children, totalPrice });
+  }, [adults, children, totalPrice]);
 
   const handleBooking = async () => {
     console.log('Начинаем отправку заявки...');
@@ -828,7 +833,10 @@ const PhiPhi2Days1Night = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => setAdults(Math.max(1, adults - 1))}
+                      onClick={() => {
+                        console.log('Уменьшаем взрослых:', adults);
+                        setAdults(Math.max(1, adults - 1));
+                      }}
                       disabled={adults <= 1}
                       className="h-8 w-8 p-0"
                     >
@@ -838,7 +846,10 @@ const PhiPhi2Days1Night = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => setAdults(adults + 1)}
+                      onClick={() => {
+                        console.log('Увеличиваем взрослых:', adults);
+                        setAdults(adults + 1);
+                      }}
                       className="h-8 w-8 p-0"
                     >
                       <Plus className="w-4 h-4" />
@@ -855,7 +866,10 @@ const PhiPhi2Days1Night = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => setChildren(Math.max(0, children - 1))}
+                      onClick={() => {
+                        console.log('Уменьшаем детей:', children);
+                        setChildren(Math.max(0, children - 1));
+                      }}
                       disabled={children <= 0}
                       className="h-8 w-8 p-0"
                     >
@@ -865,7 +879,10 @@ const PhiPhi2Days1Night = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => setChildren(children + 1)}
+                      onClick={() => {
+                        console.log('Увеличиваем детей:', children);
+                        setChildren(children + 1);
+                      }}
                       className="h-8 w-8 p-0"
                     >
                       <Plus className="w-4 h-4" />
@@ -929,12 +946,18 @@ const PhiPhi2Days1Night = () => {
               </div>
 
               <Button 
-                onClick={handleBooking}
+                onClick={() => {
+                  console.log('Клик по кнопке отправки, formData:', formData);
+                  handleBooking();
+                }}
                 disabled={!formData.name.trim() || !formData.phone.trim() || !formData.date}
                 className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
               >
                 <Calendar className="w-4 h-4 mr-2" />
-                Отправить заявку
+                {(!formData.name.trim() || !formData.phone.trim() || !formData.date) 
+                  ? 'Заполните все поля' 
+                  : 'Отправить заявку'
+                }
               </Button>
 
               <p className="text-xs text-gray-500 text-center mt-3">

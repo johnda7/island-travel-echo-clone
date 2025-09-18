@@ -10,7 +10,6 @@ import About from "./pages/About";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
-import { BookingPage } from "./pages/BookingPage";
 import { TestTelegram } from "./pages/TestTelegram";
 
 const queryClient = new QueryClient();
@@ -34,9 +33,6 @@ function App() {
               
               {/* Специальный тур Phi Phi с оригинальным дизайном */}
               <Route path="/phi-phi-2days" element={<PhiPhi2Days1Night />} />
-              
-              {/* Страница бронирования */}
-              <Route path="/book/:tourId" element={<BookingPage />} />
               
               {/* Тестирование Telegram */}
               <Route path="/test-telegram" element={<TestTelegram />} />

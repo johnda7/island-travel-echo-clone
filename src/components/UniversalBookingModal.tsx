@@ -83,11 +83,25 @@ ${formData.specialRequests ? `• Особые пожелания: ${formData.sp
 ⏰ Заявка подана: ${new Date().toLocaleString('ru-RU')}`;
 
     try {
+      // Отправляем email уведомление на почту
+      if (formData.email) {
+        const emailSubject = `🏝️ Новое бронирование тура: ${tourData.title}`;
+        const emailBody = message.replace(/\n/g, '%0D%0A');
+        const mailtoUrl = `mailto:anotrhers@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+        
+        // Открываем почтовый клиент (будет работать если настроен)
+        try {
+          window.open(mailtoUrl, '_blank');
+        } catch (e) {
+          console.log('Email клиент не настроен, пропускаем отправку email');
+        }
+      }
+
       // Прямая ссылка на Telegram
       const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
       window.open(telegramUrl, '_blank');
       
-      alert('Заявка подготовлена! Откроется Telegram для отправки.');
+      alert('Заявка подготовлена! Откроется Telegram для отправки.' + (formData.email ? ' Также будет отправлен email.' : ''));
       
       // Очищаем форму и закрываем модал
       setFormData({

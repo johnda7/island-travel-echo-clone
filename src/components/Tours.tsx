@@ -1,12 +1,23 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, Users, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { phiPhiTourData } from "@/data/phiPhiTour";
+import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 
 export const Tours = () => {
   // Получаем популярные туры из ЕДИНОГО источника данных
   const popularTours = [phiPhiTourData].filter(tour => tour.isPopular);
+  
+  // Состояние для модального окна бронирования
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [selectedTour, setSelectedTour] = useState(phiPhiTourData);
+
+  const handleBookingClick = (tour: typeof phiPhiTourData) => {
+    setSelectedTour(tour);
+    setShowBookingModal(true);
+  };
 
   return (
     <section className="py-16 bg-gray-50">
@@ -70,12 +81,13 @@ export const Tours = () => {
                       </Button>
                     </Link>
                     
-                    <Link to={`/book/${tour.id}`}>
-                      <Button size="sm">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        Забронировать
-                      </Button>
-                    </Link>
+                    <Button 
+                      size="sm"
+                      onClick={() => handleBookingClick(tour)}
+                    >
+                      <Calendar className="w-4 h-4 mr-1" />
+                      Забронировать
+                    </Button>
                   </div>
                 </div>
               </CardContent>
@@ -83,6 +95,13 @@ export const Tours = () => {
           ))}
         </div>
       </div>
+      
+      {/* Модальное окно бронирования */}
+      <UniversalBookingModal
+        isOpen={showBookingModal}
+        onClose={() => setShowBookingModal(false)}
+        tourData={selectedTour}
+      />
     </section>
   );
 };

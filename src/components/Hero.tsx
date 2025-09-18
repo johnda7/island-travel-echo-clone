@@ -27,7 +27,7 @@ export const Hero = () => {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button size="lg" asChild className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8 py-3 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-            <Link to="/book/phi-phi-2days">
+            <Link to="/tours">
               Забронировать тур
             </Link>
           </Button>

@@ -12,6 +12,7 @@ import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 import { BookingPage } from "./pages/BookingPage";
+import { TestTelegram } from "./pages/TestTelegram";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,9 @@ function App() {
               
               {/* Страница бронирования */}
               <Route path="/book/:tourId" element={<BookingPage />} />
+              
+              {/* Тестирование Telegram */}
+              <Route path="/test-telegram" element={<TestTelegram />} />
               
               {/* 404 */}
               <Route path="*" element={<NotFound />} />

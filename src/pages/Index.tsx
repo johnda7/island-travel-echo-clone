@@ -2,7 +2,6 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
-import { Destinations } from "@/components/Destinations";
 import { Gallery } from "@/components/Gallery";
 import { Tours } from "@/components/Tours";
 import { Contact } from "@/components/Contact";
@@ -27,13 +26,12 @@ const Index = () => {
       </Helmet>
       <Header />
       <Hero />
-  <Destinations />
-  <Advantages />
-  <Gallery />
-  <Tours />
-  <Reviews />
-  <FAQ />
-  <Contact />
+      <Advantages />
+      <Gallery />
+      <Tours />
+      <Reviews />
+      <FAQ />
+      <Contact />
       <Footer />
     </div>
   );

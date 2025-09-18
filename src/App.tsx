@@ -7,7 +7,6 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 import Tours from "./pages/Tours";
 import About from "./pages/About";
-import Destinations from "./pages/Destinations";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
@@ -31,7 +30,6 @@ function App() {
               {/* Основные страницы */}
               <Route path="/tours" element={<Tours />} />
               <Route path="/about" element={<About />} />
-              <Route path="/destinations" element={<Destinations />} />
               <Route path="/contact" element={<ContactPage />} />
               
               {/* Специальный тур Phi Phi с оригинальным дизайном */}

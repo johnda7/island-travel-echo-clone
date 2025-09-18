@@ -16,19 +16,19 @@ const About = () => {
     {
       name: "Анна Волкова",
       position: "Основатель и CEO",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b5bc?auto=format&fit=crop&w=400&q=80",
+      image: "/src/assets/logo.jpg", 
       description: "15 лет в туризме, эксперт по островным направлениям"
     },
     {
-      name: "Михаил Петров",
+      name: "Михаил Петров", 
       position: "Директор по развитию",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80",
+      image: "/src/assets/logo.jpg",
       description: "Специалист по эксклюзивным турам и VIP обслуживанию"
     },
     {
       name: "Елена Смирнова",
-      position: "Менеджер по качеству",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80",
+      position: "Менеджер по качеству", 
+      image: "/src/assets/logo.jpg",
       description: "Отвечает за качество услуг и удовлетворенность клиентов"
     }
   ];
@@ -98,8 +98,8 @@ const About = () => {
             </div>
             <div className="relative">
               <img 
-                src="https://images.unsplash.com/photo-1573590330893-d46a2a6c9bb0?auto=format&fit=crop&w=800&q=80"
-                alt="Команда TIsland"
+                src="/src/assets/phi-phi-2days/maya-bay-1.jpg"
+                alt="Пхи-Пхи острова"
                 className="rounded-2xl shadow-2xl"
               />
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl opacity-20"></div>

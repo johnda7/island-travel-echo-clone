@@ -1,11 +1,11 @@
 
 const galleryImages = [
-  "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1521968901011-de2be3c0c8a0?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1561452218-6e8b4b67b99c?auto=format&fit=crop&w=800&q=80",
+  "/src/assets/phi-phi-2days/maya-bay-1.jpg",
+  "/src/assets/phi-phi-2days/maya-bay-2.jpg", 
+  "/src/assets/phi-phi-2days/bamboo-island.webp",
+  "/src/assets/phi-phi-2days/pileh-lagoon.jpg",
+  "/src/assets/phi-phi-2days/viking-cave.jpg",
+  "/src/assets/phi-phi-2days/rang-yai-1.jpg",
 ];
 
 export const Gallery = () => {

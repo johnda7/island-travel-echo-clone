@@ -6,8 +6,8 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { getTourById } from '@/data/toursRegistry';
 import type { TourData } from '@/types/Tour';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 
 interface TourTemplateProps {
   tourId?: string; // можно передать ID напрямую
@@ -105,7 +105,7 @@ export const TourTemplate = ({ tourId: propTourId }: TourTemplateProps) => {
           {/* 🖼️ Главное изображение */}
           <div className="relative rounded-2xl overflow-hidden mb-8 h-96">
             <img
-              src={tourData.mainImage || tourData.gallery?.[0]}
+              src={tourData.gallery?.[0] || '/src/assets/phi-phi-2days/maya-bay-1.jpg'}
               alt={tourData.title}
               className="w-full h-full object-cover object-center"
             />
@@ -137,7 +137,7 @@ export const TourTemplate = ({ tourId: propTourId }: TourTemplateProps) => {
                     <span className="text-2xl">👥</span>
                     <div>
                       <p className="text-sm text-gray-600">Размер группы</p>
-                      <p className="font-semibold">{tourData.groupSize}</p>
+                      <p className="font-semibold">{tourData.groupSize || 'До 45 человек'}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">

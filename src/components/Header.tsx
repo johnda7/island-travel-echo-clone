@@ -20,8 +20,6 @@ export const Header = () => {
     { name: "Остров Джеймса Бонда", href: "/tours/james-bond-island", description: "Экскурсия к знаменитому острову из фильма о Джеймсе Бонде" },
     { name: "4 Жемчужины + Коралловый остров", href: "/tours/racha-coral-island", description: "Посещение 4 островов и кораллового острова с парасейлингом" },
     { name: "11 островов Стандарт", href: "/tours/11-islands-standard", description: "Обзорная экскурсия по 11 островам Краби на традиционной лодке" },
-    { name: "Пляжи", href: "/beaches", description: "Лучшие пляжи Пхукета" },
-    { name: "Что посетить", href: "/what-to-visit", description: "Главные достопримечательности Пхукета" },
     { name: "Экскурсии", href: "/tours", description: "Все экскурсии и туры" }
   ];
 
@@ -78,10 +76,6 @@ export const Header = () => {
   }, [location.pathname]);
 
   const navigation = [
-    {
-      name: "Что посетить",
-      href: "/what-to-visit"
-    },
     { 
       name: "Туры", 
       href: "/tours",
@@ -98,7 +92,6 @@ export const Header = () => {
         { name: "СПА и релакс", href: "/tours#спа-и-релакс" }
       ]
     },
-    { name: "Направления", href: "/destinations" },
     { name: "О нас", href: "/about" },
     { name: "Контакты", href: "/contact" }
   ];

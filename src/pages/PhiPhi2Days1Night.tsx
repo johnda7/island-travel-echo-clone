@@ -35,8 +35,11 @@ const PhiPhi2Days1Night = () => {
   const totalPrice = adults * excursion.priceAdult + children * excursion.priceChild;
 
   const handleBooking = async () => {
-    if (!formData.name || !formData.phone || !formData.date) {
-      alert('Пожалуйста, заполните все обязательные поля');
+    console.log('Начинаем отправку заявки...');
+    console.log('FormData:', formData);
+    
+    if (!formData.name.trim() || !formData.phone.trim() || !formData.date) {
+      alert('Пожалуйста, заполните все обязательные поля (Имя, Телефон, Дата)');
       return;
     }
 
@@ -55,32 +58,22 @@ const PhiPhi2Days1Night = () => {
 ⏰ Заявка подана: ${new Date().toLocaleString('ru-RU')}`;
 
     try {
-      // ПРЯМАЯ отправка в Telegram бот через API
-      const botToken = '8445717266:AAHEDA4SJPUL48gpV-Q9qc-V98GSuyPFn08';
-      const chatId = '@PhuketBookBot'; // или ваш chat_id
+      console.log('Отправляем сообщение:', message);
       
-      const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: message,
-          parse_mode: 'HTML'
-        })
-      });
-
-      if (response.ok) {
-        alert('Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
-        // Очищаем форму
-        setFormData({ name: "", phone: "", email: "", date: "" });
-        setAdults(1);
-        setChildren(0);
-        setShowBookingForm(false);
-      } else {
-        throw new Error('Ошибка отправки');
-      }
+      // Попробуем отправить напрямую в Telegram чат @Phuketga
+      const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
+      
+      // Открываем Telegram и показываем успех
+      window.open(telegramUrl, '_blank');
+      
+      alert('Заявка подготовлена! Откроется Telegram для отправки.');
+      
+      // Очищаем форму
+      setFormData({ name: "", phone: "", email: "", date: "" });
+      setAdults(1);
+      setChildren(0);
+      setShowBookingForm(false);
+      
     } catch (error) {
       console.error('Ошибка:', error);
       alert('Произошла ошибка при отправке заявки. Попробуйте еще раз.');
@@ -937,8 +930,8 @@ const PhiPhi2Days1Night = () => {
 
               <Button 
                 onClick={handleBooking}
-                disabled={!formData.name || !formData.phone || !formData.date}
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                disabled={!formData.name.trim() || !formData.phone.trim() || !formData.date}
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
               >
                 <Calendar className="w-4 h-4 mr-2" />
                 Отправить заявку

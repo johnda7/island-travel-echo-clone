@@ -2,24 +2,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, Users, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
-import { BookingModal } from "./BookingModal";
-import { PopularityBadge } from "./PopularityBadge";
+import { phiPhiTourData } from "@/data/phiPhiTour";
 
 export const Tours = () => {
-  // Статичный список туров - каждый тур теперь отдельная страница
-  const staticTours = [
-    {
-      id: "phi-phi-2days",
-      title: "Пхи-Пхи острова на 2 дня/1 ночь",
-      description: "Незабываемое путешествие с ночевкой на острове. Бухта Майя, огненное шоу, снорклинг и множество приключений!",
-      adultPrice: 7900,
-      childPrice: 5900,
-      duration: "2 дня/1 ночь",
-      image: "/src/assets/phi-phi-2days/maya-bay-1.jpg",
-      route: "/phi-phi-2days",
-      highlights: ["Бухта Майя", "Огненное шоу", "Ночевка на острове", "Снорклинг"]
-    }
-  ];
+  // Получаем популярные туры из ЕДИНОГО источника данных
+  const popularTours = [phiPhiTourData].filter(tour => tour.isPopular);
 
   return (
     <section className="py-16 bg-gray-50">
@@ -32,15 +19,14 @@ export const Tours = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {staticTours.map((tour) => (
+          {popularTours.map((tour) => (
             <Card key={tour.id} className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className="relative h-48">
                 <img
-                  src={tour.image}
+                  src={tour.mainImage}
                   alt={tour.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-center"
                 />
-                <PopularityBadge bookingsToday={Math.floor(Math.random() * 8) + 3} />
               </div>
               
               <CardContent className="p-6">
@@ -54,7 +40,7 @@ export const Tours = () => {
                   </div>
                   <div className="flex items-center">
                     <Users className="w-4 h-4 mr-1" />
-                    до 30 чел
+                    {tour.groupSize}
                   </div>
                 </div>
 
@@ -74,7 +60,7 @@ export const Tours = () => {
 
                 <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold text-blue-600">
-                    от {tour.adultPrice.toLocaleString()} ฿
+                    от {tour.priceAdult.toLocaleString()} {tour.currency}
                   </div>
                   
                   <div className="flex space-x-2">
@@ -84,16 +70,12 @@ export const Tours = () => {
                       </Button>
                     </Link>
                     
-                    <BookingModal 
-                      tourTitle={tour.title}
-                      adultPrice={tour.adultPrice}
-                      childPrice={tour.childPrice}
-                    >
+                    <Link to={`/book/${tour.id}`}>
                       <Button size="sm">
                         <Calendar className="w-4 h-4 mr-1" />
                         Забронировать
                       </Button>
-                    </BookingModal>
+                    </Link>
                   </div>
                 </div>
               </CardContent>

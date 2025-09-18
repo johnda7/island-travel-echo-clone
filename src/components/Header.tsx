@@ -113,7 +113,7 @@ export const Header = () => {
               <img 
                 src={logoImage} 
                 alt="Phuket Go Logo" 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center"
               />
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">

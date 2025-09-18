@@ -11,6 +11,7 @@ import Destinations from "./pages/Destinations";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
+import { BookingPage } from "./pages/BookingPage";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,9 @@ function App() {
               
               {/* Специальный тур Phi Phi с оригинальным дизайном */}
               <Route path="/phi-phi-2days" element={<PhiPhi2Days1Night />} />
+              
+              {/* Страница бронирования */}
+              <Route path="/book/:tourId" element={<BookingPage />} />
               
               {/* 404 */}
               <Route path="*" element={<NotFound />} />

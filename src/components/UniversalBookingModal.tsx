@@ -45,7 +45,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
 
   const priceCalc = calculatePrice();
 
-  const adjustGuests = (type: 'adults' | 'children' | 'infants', direction: 'plus' | 'minus') => {
+  const adjustGuests = (type: 'adults' | 'children', direction: 'plus' | 'minus') => {
     setFormData(prev => {
       const current = prev[type] || 0;
       let newValue = direction === 'plus' ? current + 1 : current - 1;

@@ -65,7 +65,7 @@ export interface BookingFormData {
   date: string;
   adults: number;
   children: number;
-  infants?: number;
+  // infants убрано - младенцы бесплатно, считать не нужно
   specialRequests?: string;
   hotelName?: string;
 }

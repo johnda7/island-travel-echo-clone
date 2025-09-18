@@ -17,7 +17,6 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
     date: "",
     adults: 1,
     children: 0,
-    infants: 0,
     specialRequests: "",
     hotelName: ""
   });
@@ -34,7 +33,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
     return {
       adults: formData.adults,
       children: formData.children,
-      infants: 0, // Младенцы всегда бесплатно
+      infants: 0, // Младенцы всегда бесплатно (ЖЕСТКО ФИКСИРУЕМ 0!)
       adultPrice,
       childPrice,
       infantPrice: 0,
@@ -68,7 +67,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
 
 📋 Тур: ${tourData.title}
 💰 Цена: ${priceCalc.totalPrice.toLocaleString()} ${priceCalc.currency}
-👥 Гости: ${priceCalc.adults} взрослых, ${priceCalc.children} детей${priceCalc.infants > 0 ? `, ${priceCalc.infants} младенцев` : ''}
+👥 Гости: ${priceCalc.adults} взрослых, ${priceCalc.children} детей
 📅 Дата: ${formData.date}
 
 👤 Контактная информация:
@@ -118,7 +117,6 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
         date: "",
         adults: 1,
         children: 0,
-        infants: 0,
         specialRequests: "",
         hotelName: ""
       });

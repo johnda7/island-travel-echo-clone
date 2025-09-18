@@ -18,14 +18,17 @@ import fireShow3 from "@/assets/phi-phi-2days/fire-show-3.jpg";
 import rangYai1 from "@/assets/phi-phi-2days/rang-yai-1.jpg";
 import rangYai2 from "@/assets/phi-phi-2days/rang-yai-2.jpg";
 
+import { TourData } from "@/types/Tour";
+
 // ЕДИНСТВЕННЫЙ ИСТОЧНИК ДАННЫХ - как в CMS
-export const phiPhiTourData = {
+export const phiPhiTourData: TourData = {
   id: "phi-phi-2days",
   title: "Пхи-Пхи 2 дня / 1 ночь",
   subtitle: "Экскурсия с ночёвкой на островах Пхи-Пхи",
   description: "Незабываемое путешествие с ночевкой на острове. Бухта Майя, огненное шоу, снорклинг и множество приключений!",
   priceAdult: 4000,
   priceChild: 3500,
+  priceInfant: 0, // Младенцы бесплатно
   currency: "฿",
   duration: "2 дня / 1 ночь",
   groupSize: "до 30 человек",
@@ -71,13 +74,13 @@ export const phiPhiTourData = {
     "Спасательные жилеты на лонгтейле",
     "Медицинская страховка"
   ],
-  notIncluded: [
+  excluded: [
     "Обед на второй день не включен в программу",
     "За одноместное размещение - 1 500 бат",
     "Трансфер из отдаленных районов (Камала, Сурин, Бангтао) - 2 000 бат",
     "Личные расходы и чаевые"
   ],
-  schedule: [
+  itinerary: [
     { day: "1-й день", time: "07:00-07:30", activity: "Сбор гостей из отелей" },
     { day: "1-й день", time: "08:00-08:30", activity: "Прибытие на пирс и встреча с гидом" },
     { day: "1-й день", time: "08:30-09:00", activity: "Отправление на острова Пхи-Пхи на большом тихоходном пароме" },
@@ -93,7 +96,7 @@ export const phiPhiTourData = {
     { day: "2-й день", time: "14:30", activity: "Отправление на Пхукет" },
     { day: "2-й день", time: "16:00", activity: "Прибытие на Пхукет и отправление в отели" }
   ],
-  whatToBring: [
+  requirements: [
     "Купальные принадлежности (надеть сразу на себя)",
     "Полотенце",
     "Защита от солнца: крем с SPF 50+, солнцезащитные очки, головной убор",

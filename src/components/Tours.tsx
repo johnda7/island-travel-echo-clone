@@ -3,10 +3,22 @@ import { Button } from "@/components/ui/button";
 import { Clock, Users, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { phiPhiTourData } from "@/data/phiPhiTour";
+import { UniversalBookingModal } from "./UniversalBookingModal";
+import { useState } from "react";
+import { TourData } from "@/types/Tour";
 
 export const Tours = () => {
   // Получаем популярные туры из ЕДИНОГО источника данных
   const popularTours = [phiPhiTourData].filter(tour => tour.isPopular);
+  
+  // Состояние для управления модальным окном бронирования
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [selectedTour, setSelectedTour] = useState<TourData | null>(null);
+
+  const handleBookingClick = (tour: TourData) => {
+    setSelectedTour(tour);
+    setIsBookingModalOpen(true);
+  };
 
   return (
     <section className="py-16 bg-gray-50">
@@ -70,12 +82,13 @@ export const Tours = () => {
                       </Button>
                     </Link>
                     
-                    <Link to="/book/phi-phi-2days">
-                      <Button size="sm">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        Забронировать
-                      </Button>
-                    </Link>
+                    <Button 
+                      size="sm"
+                      onClick={() => handleBookingClick(tour)}
+                    >
+                      <Calendar className="w-4 h-4 mr-1" />
+                      Забронировать
+                    </Button>
                   </div>
                 </div>
               </CardContent>
@@ -83,6 +96,18 @@ export const Tours = () => {
           ))}
         </div>
       </div>
+      
+      {/* Универсальное модальное окно бронирования */}
+      {selectedTour && (
+        <UniversalBookingModal
+          tourData={selectedTour}
+          isOpen={isBookingModalOpen}
+          onClose={() => {
+            setIsBookingModalOpen(false);
+            setSelectedTour(null);
+          }}
+        />
+      )}
     </section>
   );
 };

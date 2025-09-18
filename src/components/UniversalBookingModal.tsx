@@ -26,20 +26,18 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
   const calculatePrice = (): PriceCalculation => {
     const adultPrice = tourData.priceAdult || 0;
     const childPrice = tourData.priceChild || 0;
-    const infantPrice = tourData.priceInfant || 0;
     
     const totalPrice = 
       (formData.adults * adultPrice) + 
-      (formData.children * childPrice) + 
-      ((formData.infants || 0) * infantPrice);
+      (formData.children * childPrice);
 
     return {
       adults: formData.adults,
       children: formData.children,
-      infants: formData.infants || 0,
+      infants: 0, // Младенцы всегда бесплатно
       adultPrice,
       childPrice,
-      infantPrice,
+      infantPrice: 0,
       totalPrice,
       currency: tourData.currency
     };
@@ -77,30 +75,40 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
 • Имя: ${formData.name}
 • Телефон: ${formData.phone}
 • Email: ${formData.email || 'не указан'}
-${formData.hotelName ? `• Отель: ${formData.hotelName}` : ''}
 
 ⏰ Заявка подана: ${new Date().toLocaleString('ru-RU')}`;
 
     try {
-      // Отправляем email уведомление на почту
-      if (formData.email) {
-        const emailSubject = `🏝️ Новое бронирование тура: ${tourData.title}`;
-        const emailBody = message.replace(/\n/g, '%0D%0A');
-        const mailtoUrl = `mailto:anotrhers@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-        
-        // Открываем почтовый клиент (будет работать если настроен)
-        try {
-          window.open(mailtoUrl, '_blank');
-        } catch (e) {
-          console.log('Email клиент не настроен, пропускаем отправку email');
-        }
-      }
+      // Сохраняем заказ в localStorage для админки
+      const newOrder = {
+        id: Date.now(), // Используем timestamp как ID
+        tourName: tourData.title,
+        customerName: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        date: formData.date,
+        adults: formData.adults,
+        children: formData.children,
+        totalPrice: priceCalc.totalPrice,
+        currency: priceCalc.currency,
+        createdAt: new Date().toLocaleString('ru-RU'),
+        status: 'новый' as const
+      };
+
+      // Получаем существующие заказы
+      const existingOrders = JSON.parse(localStorage.getItem('bookingOrders') || '[]');
+      
+      // Добавляем новый заказ
+      existingOrders.push(newOrder);
+      
+      // Сохраняем обратно
+      localStorage.setItem('bookingOrders', JSON.stringify(existingOrders));
 
       // Прямая ссылка на Telegram
       const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
       window.open(telegramUrl, '_blank');
       
-      alert('Заявка подготовлена! Откроется Telegram для отправки.' + (formData.email ? ' Также будет отправлен email.' : ''));
+      alert('Заявка подготовлена! Откроется Telegram для отправки.');
       
       // Очищаем форму и закрываем модал
       setFormData({
@@ -202,36 +210,10 @@ ${formData.hotelName ? `• Отель: ${formData.hotelName}` : ''}
               </div>
             </div>
 
-            {tourData.priceInfant !== undefined && (
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div>
-                  <div className="font-medium">Младенцы (0-3 года)</div>
-                  <div className="text-sm text-gray-500">
-                    {tourData.priceInfant === 0 ? 'Бесплатно' : `${tourData.priceInfant.toLocaleString()} ${priceCalc.currency}`}
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => adjustGuests('infants', 'minus')}
-                    disabled={formData.infants! <= 0}
-                    className="h-8 w-8 p-0"
-                  >
-                    <Minus className="w-4 h-4" />
-                  </Button>
-                  <span className="font-semibold w-8 text-center">{formData.infants}</span>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => adjustGuests('infants', 'plus')}
-                    className="h-8 w-8 p-0"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-            )}
+            {/* Информация о младенцах */}
+            <div className="text-center py-2">
+              <span className="text-sm text-gray-600">👶 Младенцы до 3 лет - бесплатно</span>
+            </div>
 
             <div className="border-t pt-4">
               <div className="flex justify-between items-center">
@@ -269,7 +251,7 @@ ${formData.hotelName ? `• Отель: ${formData.hotelName}` : ''}
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-1">Email</label>
+              <label className="block text-sm font-medium mb-1">Email (необязательно)</label>
               <input
                 type="email"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -286,17 +268,6 @@ ${formData.hotelName ? `• Отель: ${formData.hotelName}` : ''}
                 value={formData.date}
                 onChange={(e) => setFormData({...formData, date: e.target.value})}
                 required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-1">Отель (необязательно)</label>
-              <input
-                type="text"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                placeholder="Название отеля для трансфера"
-                value={formData.hotelName}
-                onChange={(e) => setFormData({...formData, hotelName: e.target.value})}
               />
             </div>
           </div>

@@ -42,6 +42,10 @@ export const Footer = () => {
               <a href="#" className="hover:text-white transition-colors">Политика конфиденциальности</a>
               <a href="#" className="hover:text-white transition-colors">Условия использования</a>
               <a href="#" className="hover:text-white transition-colors">Карта сайта</a>
+              {/* Скрытая ссылка на админку */}
+              <Link to="/admin" className="text-gray-700 hover:text-gray-500 transition-colors text-xs">
+                •
+              </Link>
               <span className="hidden md:inline-block ml-6">&copy; 2025 Пхукет Go. Все права защищены.</span>
             </div>
             <span className="md:hidden block mt-2">&copy; 2025 Пхукет Go. Все права защищены.</span>

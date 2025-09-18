@@ -1,4 +1,5 @@
 import { Star } from "lucide-react";
+import igorAvatar from "@/assets/igor-avatar.jpg";
 
 const reviews = [
   {
@@ -17,7 +18,7 @@ const reviews = [
     name: "Игорь С.",
     text: "Очень понравился тур на Пхи-Пхи, всё удобно и красиво!",
     rating: 4.8,
-    avatar: "https://randomuser.me/api/portraits/men/65.jpg"
+    avatar: igorAvatar
   }
 ];
 

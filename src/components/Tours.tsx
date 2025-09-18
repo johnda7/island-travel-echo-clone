@@ -70,7 +70,7 @@ export const Tours = () => {
                       </Button>
                     </Link>
                     
-                    <Link to={`/book/${tour.id}`}>
+                    <Link to="/book/phi-phi-2days">
                       <Button size="sm">
                         <Calendar className="w-4 h-4 mr-1" />
                         Забронировать

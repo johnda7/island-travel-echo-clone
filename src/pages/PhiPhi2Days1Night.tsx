@@ -459,9 +459,9 @@ const PhiPhi2Days1Night = () => {
                           Забронировать за {totalPrice.toLocaleString()} {excursion.currency}
                         </Button>
                         <Button variant="outline" asChild className="w-full py-3 border-gray-300">
-                          <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
-                            Задать вопрос в Telegram
-                          </a>
+                          <Link to="/book/phi-phi-2days">
+                            Быстрое бронирование
+                          </Link>
                         </Button>
                       </div>
                     </div>
@@ -571,9 +571,9 @@ const PhiPhi2Days1Night = () => {
                         Забронировать сейчас
                       </Button>
                       <Button variant="outline" asChild className="w-full py-3 border-gray-300">
-                        <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
-                          Задать вопрос в Telegram
-                        </a>
+                        <Link to="/book/phi-phi-2days">
+                          Быстрое бронирование
+                        </Link>
                       </Button>
                     </div>
                   </div>

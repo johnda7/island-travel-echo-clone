@@ -527,62 +527,30 @@ const PhiPhi2Days1Night = () => {
           <div className="text-2xl font-bold text-green-600 mb-4 md:hidden">
             от {excursion.priceAdult} {excursion.currency} <span className="text-base font-normal text-gray-500">за взрослого</span>
           </div>
-        </div>
-      </section>
 
-      {/* Booking section - только для мобильных, на десктопе в сайдбаре */}
-      <section className="py-6 bg-gray-50 lg:hidden">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <Card className="shadow-lg border-0">
-              <CardContent className="p-6 md:p-8">
-                <div className="grid md:grid-cols-2 gap-8 items-center">
-                  <div>
-                    <h3 className="text-2xl font-bold mb-4 text-gray-900">Забронировать экскурсию</h3>
-                    <div className="space-y-3 mb-6 text-sm">
-                      <div className="flex items-center gap-3">
-                        <Clock className="w-4 h-4 text-gray-400" />
-                        <span>Продолжительность: {excursion.duration}</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Users className="w-4 h-4 text-gray-400" />
-                        <span>Группа: {excursion.groupSize}</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Calendar className="w-4 h-4 text-gray-400" />
-                        <span>Ежедневно</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <MapPin className="w-4 h-4 text-gray-400" />
-                        <span>Трансфер включен</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-green-600 mb-2">
-                      от {excursion.priceAdult} {excursion.currency}
-                    </div>
-                    <div className="text-gray-500 mb-6">за взрослого</div>
-                    <div className="space-y-3">
-                      <Button 
-                        onClick={() => setShowBookingForm(true)}
-                        className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
-                      >
-                        Забронировать сейчас
-                      </Button>
-                      <Button variant="outline" asChild className="w-full py-3 border-gray-300">
-                        <Link to="/book/phi-phi-2days">
-                          Быстрое бронирование
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
+          {/* Mobile CTA Button - сразу на первом экране */}
+          <div className="lg:hidden mb-8">
+            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">Забронировать тур</h3>
+                <div className="text-2xl font-bold text-green-600 mb-4">
+                  от {excursion.priceAdult} {excursion.currency}
                 </div>
-              </CardContent>
-            </Card>
+                <Button 
+                  onClick={() => setShowBookingForm(true)}
+                  className="w-full bg-green-600 hover:bg-green-700 text-white py-4 text-lg font-semibold rounded-xl"
+                >
+                  <Calendar className="w-5 h-5 mr-2" />
+                  Забронировать сейчас
+                </Button>
+                <p className="text-xs text-gray-500 mt-3">Бесплатная отмена за 24 часа</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
+      {/* Removed: Duplicated booking section - теперь кнопка на первом экране */}
 
       <section className="py-16">
         <div className="container mx-auto px-4">
@@ -969,7 +937,8 @@ const PhiPhi2Days1Night = () => {
 
               <Button 
                 onClick={handleBooking}
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3"
+                disabled={!formData.name || !formData.phone || !formData.date}
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 <Calendar className="w-4 h-4 mr-2" />
                 Отправить заявку

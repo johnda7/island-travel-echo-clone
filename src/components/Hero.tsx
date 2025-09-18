@@ -94,7 +94,7 @@ export const Hero = () => {
       </div>
       
       {/* Animated Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <div className="flex flex-col items-center text-white/80">
           <div className="text-sm mb-2 animate-pulse">Прокрутите вниз</div>
           <ArrowDown className="w-6 h-6" />

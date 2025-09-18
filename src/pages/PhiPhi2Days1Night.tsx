@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
 import { phiPhiTourData } from "@/data/phiPhiTour";
-import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = phiPhiTourData;
@@ -19,9 +18,6 @@ const PhiPhi2Days1Night = () => {
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [mobileGalleryIndex, setMobileGalleryIndex] = useState<number>(0);
-  
-  // Форма бронирования
-  const [showBookingForm, setShowBookingForm] = useState(false);
 
   const openModal = (image: string, index: number) => {
     setSelectedImage(image);
@@ -329,15 +325,9 @@ const PhiPhi2Days1Night = () => {
                       </div>
                       
                       <div className="space-y-3">
-                        <Button 
-                          onClick={() => setShowBookingForm(true)}
-                          className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
-                        >
-                          Забронировать тур
-                        </Button>
-                        <Button variant="outline" asChild className="w-full py-3 border-gray-300">
+                        <Button asChild className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold">
                           <Link to="/book/phi-phi-2days">
-                            Быстрое бронирование
+                            Забронировать тур
                           </Link>
                         </Button>
                       </div>
@@ -413,12 +403,11 @@ const PhiPhi2Days1Night = () => {
                 <div className="text-2xl font-bold text-green-600 mb-4">
                   от {excursion.priceAdult} {excursion.currency}
                 </div>
-                <Button 
-                  onClick={() => setShowBookingForm(true)}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-4 text-lg font-semibold rounded-xl"
-                >
-                  <Calendar className="w-5 h-5 mr-2" />
-                  Забронировать сейчас
+                <Button asChild className="w-full bg-green-600 hover:bg-green-700 text-white py-4 text-lg font-semibold rounded-xl">
+                  <Link to="/book/phi-phi-2days">
+                    <Calendar className="w-5 h-5 mr-2" />
+                    Забронировать сейчас
+                  </Link>
                 </Button>
                 <p className="text-xs text-gray-500 mt-3">Бесплатная отмена за 24 часа</p>
               </div>
@@ -540,11 +529,10 @@ const PhiPhi2Days1Night = () => {
             </div>
             <div className="text-xs text-gray-600">взрослый / {excursion.priceChild} {excursion.currency} детский</div>
           </div>
-          <Button 
-            onClick={() => setShowBookingForm(true)}
-            className="bg-green-600 hover:bg-green-700 text-white px-6"
-          >
-            Забронировать
+          <Button asChild className="bg-green-600 hover:bg-green-700 text-white px-6">
+            <Link to="/book/phi-phi-2days">
+              Забронировать
+            </Link>
           </Button>
         </div>
       </div>
@@ -677,13 +665,6 @@ const PhiPhi2Days1Night = () => {
           </div>
         </div>
       )}
-
-      {/* Universal Booking Modal */}
-      <UniversalBookingModal
-        tourData={excursion}
-        isOpen={showBookingForm}
-        onClose={() => setShowBookingForm(false)}
-      />
 
       <Footer />
     </div>

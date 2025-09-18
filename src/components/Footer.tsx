@@ -28,30 +28,6 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-      
-      <div className="border-t border-gray-800">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-            <div className="flex items-center space-x-3 mb-2 md:mb-0">
-              <div className="w-8 h-8 rounded-full overflow-hidden shadow ring-2 ring-green-400/40">
-                <img src={logoImage} alt="Phuket Go Logo" className="w-full h-full object-cover" />
-              </div>
-              <span className="font-bold text-green-400">Пхукет Go</span>
-            </div>
-            <div className="flex flex-col md:flex-row md:space-x-6 mt-4 md:mt-0 items-center">
-              <a href="#" className="hover:text-white transition-colors">Политика конфиденциальности</a>
-              <a href="#" className="hover:text-white transition-colors">Условия использования</a>
-              <a href="#" className="hover:text-white transition-colors">Карта сайта</a>
-              {/* Скрытая ссылка на админку */}
-              <Link to="/admin" className="text-gray-700 hover:text-gray-500 transition-colors text-xs">
-                •
-              </Link>
-              <span className="hidden md:inline-block ml-6">&copy; 2025 Пхукет Go. Все права защищены.</span>
-            </div>
-            <span className="md:hidden block mt-2">&copy; 2025 Пхукет Go. Все права защищены.</span>
-          </div>
-        </div>
-      </div>
     </footer>
   );
 };

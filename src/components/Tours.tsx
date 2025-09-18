@@ -84,6 +84,7 @@ export const Tours = () => {
                     <Button 
                       size="sm"
                       onClick={() => handleBookingClick(tour)}
+                      className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 transform hover:scale-105 border-0"
                     >
                       <Calendar className="w-4 h-4 mr-1" />
                       Забронировать

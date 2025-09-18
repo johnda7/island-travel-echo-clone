@@ -8,9 +8,6 @@ const Tours = () => {
       <Header />
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4">
-          <p className="text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            Выберите незабываемое приключение из нашей коллекции лучших экскурсий по островам Таиланда
-          </p>
         </div>
         
         {/* Компонент с турами */}

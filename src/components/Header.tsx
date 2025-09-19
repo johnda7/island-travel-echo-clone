@@ -1,8 +1,9 @@
 
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTours } from "@/hooks/useTours";
 import logoImage from "@/assets/logo.jpg";
 
 export const Header = () => {
@@ -13,21 +14,17 @@ export const Header = () => {
   const location = useLocation();
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
-
-  // Tours data for search - только ваши 4 оригинальных тура
-  const allTours = [
-    { name: "Острова Пхи-Пхи 2 дня / 1 ночь", href: "/tours/phi-phi-2-days-1-night", description: "Незабываемое путешествие на острова Пхи-Пхи с ночевкой" },
-    { name: "Остров Джеймса Бонда", href: "/tours/james-bond-island", description: "Экскурсия к знаменитому острову из фильма о Джеймсе Бонде" },
-    { name: "4 Жемчужины + Коралловый остров", href: "/tours/racha-coral-island", description: "Посещение 4 островов и кораллового острова с парасейлингом" },
-    { name: "11 островов Стандарт", href: "/tours/11-islands-standard", description: "Обзорная экскурсия по 11 островам Краби на традиционной лодке" },
-    { name: "Экскурсии", href: "/tours", description: "Все экскурсии и туры" }
-  ];
+  
+  // Используем централизованную систему туров
+  const { allTours, loading } = useTours();
 
   // Filter tours based on search query
   const filteredTours = allTours.filter(tour =>
-    searchQuery.length > 0 && (
+    searchQuery.length > 0 && tour.data && (
       tour.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tour.description.toLowerCase().includes(searchQuery.toLowerCase())
+      tour.data.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tour.data.subtitle?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tour.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
     )
   );
 
@@ -81,15 +78,9 @@ export const Header = () => {
       href: "/tours",
       subItems: [
         { name: "Все туры", href: "/tours" },
-        { name: "Морские", href: "/tours#морские" },
-        { name: "Сухопутные", href: "/tours#сухопутные" },
-        { name: "Обзорные", href: "/tours#обзорные" },
-        { name: "Пляжи и острова", href: "/tours#пляжи-и-острова" },
-        { name: "Приключения", href: "/tours#приключения" },
-        { name: "Городские", href: "/tours#городские" },
-        { name: "Шоу", href: "/tours#шоу" },
-        { name: "Семейные", href: "/tours#семейные" },
-        { name: "СПА и релакс", href: "/tours#спа-и-релакс" }
+        { name: "Морские экскурсии", href: "/tours?category=морские" },
+        { name: "Пхи-Пхи острова", href: "/phi-phi-2days" },
+        { name: "Многодневные туры", href: "/tours?category=многодневные" }
       ]
     },
     { name: "О нас", href: "/about" },
@@ -130,23 +121,36 @@ export const Header = () => {
               </svg>
               
               {/* Search Results Dropdown */}
-              {showSearchResults && searchQuery.length > 0 && filteredTours.length > 0 && (
+              {showSearchResults && searchQuery.length > 0 && !loading && (
                 <div className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-[60] max-h-80 overflow-y-auto">
-                  {filteredTours.map((tour) => (
-                    <Link
-                      key={tour.href}
-                      to={tour.href}
-                      className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSearchQuery('');
-                        setShowSearchResults(false);
-                      }}
-                    >
-                      <div className="font-medium text-gray-900">{tour.name}</div>
-                      <div className="text-sm text-gray-500">{tour.description}</div>
-                    </Link>
-                  ))}
+                  {filteredTours.length > 0 ? (
+                    filteredTours.map((tour) => (
+                      <Link
+                        key={tour.id}
+                        to={tour.data?.route || `/tour/${tour.id}`}
+                        className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSearchQuery('');
+                          setShowSearchResults(false);
+                        }}
+                      >
+                        <div className="font-medium text-gray-900">{tour.data?.title || tour.name}</div>
+                        <div className="text-sm text-gray-500">{tour.data?.subtitle || tour.data?.description}</div>
+                        <div className="flex gap-1 mt-1">
+                          {tour.tags.slice(0, 3).map((tag, index) => (
+                            <span key={index} className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </Link>
+                    ))
+                  ) : (
+                    <div className="px-4 py-3 text-gray-500 text-sm">
+                      Туры не найдены. Попробуйте изменить запрос.
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -238,8 +242,8 @@ export const Header = () => {
                 <div className="mt-3 max-h-80 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg">
                   {filteredTours.map((tour) => (
                     <Link
-                      key={tour.href}
-                      to={tour.href}
+                      key={tour.id}
+                      to={tour.data?.route || `/tour/${tour.id}`}
                       className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors active:bg-gray-100"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -248,8 +252,15 @@ export const Header = () => {
                         setShowMobileSearch(false);
                       }}
                     >
-                      <div className="font-medium text-gray-900">{tour.name}</div>
-                      <div className="text-sm text-gray-500 mt-1">{tour.description}</div>
+                      <div className="font-medium text-gray-900">{tour.data?.title || tour.name}</div>
+                      <div className="text-sm text-gray-500 mt-1">{tour.data?.subtitle || tour.data?.description}</div>
+                      <div className="flex gap-1 mt-1">
+                        {tour.tags.slice(0, 3).map((tag, index) => (
+                          <span key={index} className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     </Link>
                   ))}
                 </div>

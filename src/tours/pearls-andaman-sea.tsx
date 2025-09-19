@@ -367,6 +367,186 @@ export const PearlsAndamanSeaPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Main Content */}
+      <section className="py-8">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            {/* Left Content */}
+            <div className="lg:col-span-2">
+              
+              {/* Description */}
+              <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Описание тура</h2>
+                <p className="text-gray-600 leading-relaxed">
+                  {excursion.description}
+                </p>
+              </div>
+
+              {/* Route */}
+              <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                  <MapPin className="w-5 h-5 mr-2 text-green-600" />
+                  Маршрут тура
+                </h3>
+                <p className="text-gray-600">{excursion.route}</p>
+              </div>
+
+              {/* Itinerary */}
+              <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                  <Calendar className="w-5 h-5 mr-2 text-green-600" />
+                  Программа тура
+                </h3>
+                <div className="space-y-4">
+                  {excursion.itinerary.map((item, index) => (
+                    <div key={index} className="border-l-4 border-green-500 pl-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-sm font-medium text-green-600">День {item.day}</span>
+                        <span className="text-sm text-gray-500">{item.time}</span>
+                      </div>
+                      <h4 className="font-semibold text-gray-800 mb-1">{item.title}</h4>
+                      <p className="text-sm text-gray-600">{item.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Included/Not Included */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div className="bg-white rounded-lg shadow-md p-6">
+                  <h3 className="text-lg font-semibold text-green-600 mb-3">✅ Включено в стоимость</h3>
+                  <ul className="space-y-2">
+                    {excursion.included.map((item, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="text-green-500 mr-2 mt-1">✓</span>
+                        <span className="text-gray-600 text-sm">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className="bg-white rounded-lg shadow-md p-6">
+                  <h3 className="text-lg font-semibold text-red-600 mb-3">❌ Дополнительно оплачивается</h3>
+                  <ul className="space-y-2">
+                    {excursion.notIncluded.map((item, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="text-red-500 mr-2 mt-1">✗</span>
+                        <span className="text-gray-600 text-sm">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Important Info */}
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-lg font-semibold text-blue-600 mb-3">ℹ️ Важная информация</h3>
+                <ul className="space-y-2">
+                  {excursion.importantInfo.map((item, index) => (
+                    <li key={index} className="flex items-start">
+                      <span className="text-blue-500 mr-2 mt-1">•</span>
+                      <span className="text-gray-600 text-sm">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Right Sidebar - КАРТОЧКА БРОНИРОВАНИЯ */}
+            <div className="lg:col-span-1">
+              
+              {/* Booking Card */}
+              <div className="bg-white rounded-lg shadow-md p-6 mb-6 sticky top-4">
+                <h3 className="text-xl font-bold text-gray-800 mb-4">Забронировать тур</h3>
+                
+                {/* Price Display */}
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 mb-4">
+                  <div className="text-center">
+                    <div className="text-sm text-gray-600">Цена от</div>
+                    <div className="text-3xl font-bold text-green-600">
+                      {excursion.currency}{excursion.priceAdult.toLocaleString()}
+                    </div>
+                    <div className="text-sm text-gray-500">за взрослого</div>
+                  </div>
+                </div>
+
+                {/* Price Table */}
+                <div className="border rounded-lg p-4 mb-4">
+                  <h4 className="font-semibold mb-3 text-gray-700">Стоимость тура:</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600">Взрослый:</span>
+                      <span className="font-semibold text-gray-800">{excursion.currency}{excursion.priceAdult.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600">Ребенок (4-11 лет):</span>
+                      <span className="font-semibold text-gray-800">{excursion.currency}{excursion.priceChild.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600">Младенец (0-3 года):</span>
+                      <span className="font-semibold text-green-600">Бесплатно</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Booking Button */}
+                <Button
+                  onClick={() => setShowBookingModal(true)}
+                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
+                >
+                  🏝️ Забронировать сейчас
+                </Button>
+
+                {/* Additional Info */}
+                <div className="mt-4 text-xs text-gray-500 text-center">
+                  <p>✓ Бесплатная отмена за 24 часа</p>
+                  <p>✓ Подтверждение в течение 2 часов</p>
+                </div>
+              </div>
+
+              {/* Tour Features */}
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">Детали тура</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <span className="text-green-500 mr-3">⏱️</span>
+                      <span className="text-sm text-gray-600">Продолжительность</span>
+                    </div>
+                    <span className="text-sm font-medium">{excursion.duration}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <span className="text-green-500 mr-3">👥</span>
+                      <span className="text-sm text-gray-600">Размер группы</span>
+                    </div>
+                    <span className="text-sm font-medium">{excursion.groupSize}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <span className="text-green-500 mr-3">⭐</span>
+                      <span className="text-sm text-gray-600">Рейтинг</span>
+                    </div>
+                    <span className="text-sm font-medium">{excursion.rating}/5</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Booking Button */}
+          <div className="mt-8 text-center">
+            <Button
+              onClick={() => setShowBookingModal(true)}
+              className="bg-green-600 hover:bg-green-700 text-white px-12 py-4 rounded-lg text-lg font-semibold transition-colors"
+            >
+              🏝️ Забронировать тур "{excursion.title}"
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Rest of the component stays the same... */}
       
       <Footer />

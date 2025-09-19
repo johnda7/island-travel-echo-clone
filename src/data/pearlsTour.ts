@@ -1,16 +1,13 @@
-// 🗑️ ЛЕГКО УДАЛЯЕМЫЙ ТУР - "4 ЖЕМЧУЖИНЫ АНДАМАНСКОГО МОРЯ"
-// ⚠️ ВНИМАНИЕ: Этот файл создан для тестирования новой архитектуры
+// ✅ ТУР "4 ЖЕМЧУЖИНЫ АНДАМАНСКОГО МОРЯ" - ГОТОВ К ПРОДАКШЕНУ
+// 📸 Оригинальные фотографии загружены с сайта phuketgo.aaddaa.com
 // 🔄 Можно безопасно удалить, просто убрав импорт в toursRegistry.ts
 
 import { TourData } from "@/types/Tour";
 
-// 📋 ВРЕМЕННЫЕ ЗАГЛУШКИ ДЛЯ ИЗОБРАЖЕНИЙ (будут заменены на настоящие)
-// Используем заглушки с Phi Phi пока не добавим настоящие фото
-import tempMainImage from "@/assets/phi-phi-2days/maya-bay-1.jpg";
-import tempImage1 from "@/assets/phi-phi-2days/maya-bay-2.jpg";
-import tempImage2 from "@/assets/phi-phi-2days/maya-bay-3.jpg";
-import tempImage3 from "@/assets/phi-phi-2days/pileh-lagoon.jpg";
-import tempImage4 from "@/assets/phi-phi-2days/viking-cave.jpg";
+// � ОРИГИНАЛЬНЫЕ ФОТОГРАФИИ С САЙТА
+import railayBeach from "../assets/pearls-andaman-sea/railay-beach.jpg";
+import railayVertical from "../assets/pearls-andaman-sea/railay-vertical.jpg";
+import railayBeach2 from "../assets/pearls-andaman-sea/railay-beach-2.jpg";
 
 // 🎯 ДАННЫЕ НОВОГО ТУРА (скопированы с phuketgo.aaddaa.com)
 export const pearlsTourData: TourData = {
@@ -32,14 +29,12 @@ export const pearlsTourData: TourData = {
   reviewsCount: 0, // Новый тур, отзывов пока нет
   route: "/pearls-andaman-sea", // Уникальный URL
   
-  // 🖼️ ИЗОБРАЖЕНИЯ (пока временные заглушки)
-  mainImage: tempMainImage,
+  // 🖼️ ОРИГИНАЛЬНЫЕ ИЗОБРАЖЕНИЯ С САЙТА
+  mainImage: railayBeach,
   gallery: [
-    tempMainImage,
-    tempImage1,
-    tempImage2,
-    tempImage3,
-    tempImage4
+    railayBeach,
+    railayVertical,
+    railayBeach2
   ],
   
   // ⭐ ОСНОВНЫЕ ДОСТОПРИМЕЧАТЕЛЬНОСТИ

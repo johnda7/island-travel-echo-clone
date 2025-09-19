@@ -11,6 +11,7 @@ import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 import AdminPanel from "./pages/AdminPanel";
+import { PearlsAndamanSea } from "./pages/PearlsAndamanSea";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,9 @@ function App() {
               
               {/* ЕДИНСТВЕННЫЙ реальный тур Phi Phi */}
               <Route path="/phi-phi-2days" element={<PhiPhi2Days1Night />} />
+              
+              {/* Новый тур 4 жемчужины */}
+              <Route path="/pearls-andaman-sea" element={<PearlsAndamanSea />} />
               
               {/* Админ-панель */}
               <Route path="/admin" element={<AdminPanel />} />

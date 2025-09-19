@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
 import { phiPhiTourData } from "@/data/phiPhiTour";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import TourTags from "@/components/TourTags";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = phiPhiTourData;
@@ -380,6 +381,14 @@ const PhiPhi2Days1Night = () => {
           <p className="text-lg text-gray-600 mb-6 leading-relaxed">
             {excursion.subtitle}
           </p>
+          
+          {/* Теги тура - как на tisland.travel */}
+          {excursion.tags && (
+            <div className="mb-6">
+              <TourTags tags={excursion.tags} />
+            </div>
+          )}
+          
           <div className="flex flex-wrap items-center gap-4 mb-4">
             <div className="flex items-center gap-2">
               <Star className="w-4 h-4 text-yellow-400 fill-current" />

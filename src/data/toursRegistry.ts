@@ -92,9 +92,6 @@ export const getActiveTours = () =>
 export const getToursByCategory = (category: string) =>
   TOURS_REGISTRY.filter(t => t.category === category && t.isActive);
 
-export const getToursByTag = (tag: string) =>
-  TOURS_REGISTRY.filter(t => t.tags.includes(tag) && t.isActive);
-
 export const searchTours = (query: string) =>
   TOURS_REGISTRY.filter(t => 
     t.isActive && (
@@ -126,3 +123,69 @@ export const TOUR_TAGS = {
   audience: ['семейный', 'романтический', 'экстрим', 'спокойный', 'VIP'],
   transport: ['speedboat', 'longtail', 'катамаран', 'автобус', 'джип']
 } as const;
+
+// 🏷️ ФУНКЦИИ ДЛЯ РАБОТЫ С ТЕГАМИ - как в WordPress
+
+/**
+ * Получить все уникальные теги из всех туров
+ */
+export const getAllTags = (): string[] => {
+  const allTags = new Set<string>();
+  
+  TOURS_REGISTRY.forEach(tour => {
+    if (tour.isActive && tour.tags) {
+      tour.tags.forEach(tag => allTags.add(tag));
+    }
+  });
+  
+  return Array.from(allTags).sort();
+};
+
+/**
+ * Найти туры по тегу - как WordPress tag filtering
+ */
+export const getToursByTag = (tag: string): TourRegistryItem[] => {
+  return TOURS_REGISTRY.filter(tour => 
+    tour.isActive && 
+    tour.tags.some(tourTag => 
+      tourTag.toLowerCase().includes(tag.toLowerCase()) ||
+      tag.toLowerCase().includes(tourTag.toLowerCase())
+    )
+  );
+};
+
+/**
+ * Получить похожие туры по тегам
+ */
+export const getSimilarTours = (currentTourId: string, limit: number = 3): TourRegistryItem[] => {
+  const currentTour = TOURS_REGISTRY.find(tour => tour.id === currentTourId);
+  if (!currentTour || !currentTour.tags) return [];
+  
+  const similarTours = TOURS_REGISTRY
+    .filter(tour => 
+      tour.id !== currentTourId && 
+      tour.isActive &&
+      tour.tags.some(tag => currentTour.tags.includes(tag))
+    )
+    .sort((a, b) => {
+      // Сортировка по количеству общих тегов
+      const aCommonTags = a.tags.filter(tag => currentTour.tags.includes(tag)).length;
+      const bCommonTags = b.tags.filter(tag => currentTour.tags.includes(tag)).length;
+      return bCommonTags - aCommonTags;
+    });
+    
+  return similarTours.slice(0, limit);
+};
+
+/**
+ * Создать slug для тега - как в WordPress
+ */
+export const createTagSlug = (tag: string): string => {
+  return tag
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-')
+    .replace(/^-+/, '')
+    .replace(/-+$/, '');
+};

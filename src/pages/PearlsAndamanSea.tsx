@@ -8,6 +8,7 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Gri
 import { phiPhiTourData } from "@/data/phiPhiTour";
 import { pearlsAndamanSeaTourData } from "@/data/pearlsTour";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import TourTags from "@/components/TourTags";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = pearlsAndamanSeaTourData;
@@ -121,7 +122,7 @@ const PearlsAndamanSea = () => {
               <span>›</span>
               <Link to="/tours?category=marine" className="hover:text-green-600 transition-colors">Морские экскурсии</Link>
               <span>›</span>
-              <span className="text-gray-700">Пхи-Пхи 2 дня / 1 ночь</span>
+              <span className="text-gray-700">4 жемчужины Андаманского моря</span>
             </div>
           </nav>
         </div>
@@ -381,6 +382,14 @@ const PearlsAndamanSea = () => {
           <p className="text-lg text-gray-600 mb-6 leading-relaxed">
             {excursion.subtitle}
           </p>
+          
+          {/* Теги тура - как на tisland.travel */}
+          {excursion.tags && (
+            <div className="mb-6">
+              <TourTags tags={excursion.tags} />
+            </div>
+          )}
+          
           <div className="flex flex-wrap items-center gap-4 mb-4">
             <div className="flex items-center gap-2">
               <Star className="w-4 h-4 text-yellow-400 fill-current" />

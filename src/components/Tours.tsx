@@ -17,6 +17,11 @@ export const Tours = ({ filteredTours }: ToursProps) => {
   // Использовать переданные туры или популярные по умолчанию
   const toursToShow = filteredTours || popularTours;
   
+  // 🔍 ОТЛАДКА: логируем данные
+  console.log('Tours component - toursToShow:', toursToShow);
+  console.log('Tours component - popularTours:', popularTours);
+  console.log('Tours component - loading:', loading);
+  
   // Состояние для модального окна бронирования
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [selectedTour, setSelectedTour] = useState<any>(null);
@@ -60,11 +65,11 @@ export const Tours = ({ filteredTours }: ToursProps) => {
               {/* ✅ РЕАЛЬНОЕ ФОТО ИЗ ДАННЫХ ТУРА */}
               <div className="relative h-48 overflow-hidden">
                 <img 
-                  src={tour.data?.gallery?.[0] || '/assets/tours/default.jpg'} 
+                  src={tour.data?.gallery?.[0] || tour.data?.image || '/assets/maya-bay-1-Bx0Hc6p5.jpg'} 
                   alt={tour.name}
                   className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
                   onError={(e) => {
-                    e.currentTarget.src = '/assets/tours/default.jpg';
+                    e.currentTarget.src = '/assets/maya-bay-1-Bx0Hc6p5.jpg';
                   }}
                 />
                 {tour.isPopular && (
@@ -136,6 +141,8 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                         от {tour.data?.currency || '₿'}{tour.data?.priceAdult?.toLocaleString() || '4,500'}
                       </span>
                       <span className="text-sm text-gray-500 ml-1">/ чел</span>
+                      {/* 🔍 ОТЛАДКА: показываем что загружено */}
+                      {!tour.data && <div className="text-xs text-red-500">⚠️ tour.data не загружен</div>}
                     </div>
                     <div className="text-right">
                       <div className="text-xs text-gray-400">

@@ -9,9 +9,10 @@ import Tours from "./pages/Tours";
 import About from "./pages/About";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
-import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 import AdminPanel from "./pages/AdminPanel";
-import PearlsAndamanSea from "./pages/PearlsAndamanSea";
+// Импорты новых компактных туров
+import { PhiPhiTourPage } from "./tours/phi-phi-2days";
+import { PearlsAndamanSeaPage } from "./tours/pearls-andaman-sea";
 
 const queryClient = new QueryClient();
 
@@ -32,11 +33,9 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<ContactPage />} />
               
-              {/* ЕДИНСТВЕННЫЙ реальный тур Phi Phi */}
-              <Route path="/phi-phi-2days" element={<PhiPhi2Days1Night />} />
-              
-              {/* Новый тур 4 жемчужины */}
-              <Route path="/pearls-andaman-sea" element={<PearlsAndamanSea />} />
+              {/* Компактные туры - новая архитектура "1 тур = 1 файл" */}
+              <Route path="/phi-phi-2days" element={<PhiPhiTourPage />} />
+              <Route path="/pearls-andaman-sea" element={<PearlsAndamanSeaPage />} />
               
               {/* Админ-панель */}
               <Route path="/admin" element={<AdminPanel />} />

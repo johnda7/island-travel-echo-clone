@@ -1,8 +1,8 @@
 // 🚨 ЦЕНТРАЛЬНЫЙ РЕЕСТР ВСЕХ ТУРОВ - СЕРДЦЕ WORDPRESS-АРХИТЕКТУРЫ!
 // 🎯 ПРИНЦИП: "ДОБАВИЛ СЮДА - ПОЯВИЛОСЬ ВЕЗДЕ АВТОМАТИЧЕСКИ!"
 
-import { phiPhiTourData } from './phiPhiTour';
-import { pearlsAndamanSeaTourData } from './pearlsTour';
+import { phiPhiTourData } from '../tours/phi-phi-2days';
+import { pearlsAndamanSeaTourData } from '../tours/pearls-andaman-sea';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {

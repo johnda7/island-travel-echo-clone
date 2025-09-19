@@ -4,6 +4,7 @@ import { Menu, X, Search } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTours } from "@/hooks/useTours";
+import { useAutoMenu } from "@/hooks/useAutoMenu";
 import logoImage from "@/assets/logo.jpg";
 
 export const Header = () => {
@@ -17,6 +18,7 @@ export const Header = () => {
   
   // Используем централизованную систему туров
   const { allTours, loading } = useTours();
+  const { mainMenuItems, categories } = useAutoMenu();
 
   // Filter tours based on search query
   const filteredTours = allTours.filter(tour =>
@@ -72,20 +74,7 @@ export const Header = () => {
     setSearchQuery('');
   }, [location.pathname]);
 
-  const navigation = [
-    { 
-      name: "Туры", 
-      href: "/tours",
-      subItems: [
-        { name: "Все туры", href: "/tours" },
-        { name: "Морские экскурсии", href: "/tours?category=морские" },
-        { name: "Пхи-Пхи острова", href: "/phi-phi-2days" },
-        { name: "Многодневные туры", href: "/tours?category=многодневные" }
-      ]
-    },
-    { name: "О нас", href: "/about" },
-    { name: "Контакты", href: "/contact" }
-  ];
+
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg z-50">
@@ -183,7 +172,7 @@ export const Header = () => {
         {isOpen && (
           <div className="absolute top-16 left-0 right-0 bg-white border-t shadow-lg max-h-[80vh] overflow-y-auto">
             <nav className="px-4 py-2 space-y-1">
-              {navigation.map((item) => (
+              {mainMenuItems.map((item) => (
                 <div key={item.name}>
                   <Link
                     to={item.href}

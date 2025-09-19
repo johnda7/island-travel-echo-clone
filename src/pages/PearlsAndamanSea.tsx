@@ -347,28 +347,19 @@ const PearlsAndamanSea = () => {
         </div>
       </section>
 
-      {/* Tags section - компактно под фото как на tisland.travel */}
+      {/* Tags section - ЦЕНТРАЛИЗОВАННО из данных тура */}
       <section className="pb-4">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap gap-2">
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Пхи-Пхи
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Майя Бей
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Снорклинг
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Экскурсия с ночевкой
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Огненное шоу
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Лагуна Пиле
-            </span>
+            {excursion.tags?.map((tag, index) => (
+              <Link
+                key={index}
+                to={`/tours?tag=${encodeURIComponent(tag)}`}
+                className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors"
+              >
+                {tag}
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -382,13 +373,6 @@ const PearlsAndamanSea = () => {
           <p className="text-lg text-gray-600 mb-6 leading-relaxed">
             {excursion.subtitle}
           </p>
-          
-          {/* Теги тура - как на tisland.travel */}
-          {excursion.tags && (
-            <div className="mb-6">
-              <TourTags tags={excursion.tags} />
-            </div>
-          )}
           
           <div className="flex flex-wrap items-center gap-4 mb-4">
             <div className="flex items-center gap-2">

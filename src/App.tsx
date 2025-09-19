@@ -10,6 +10,8 @@ import About from "./pages/About";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import AdminPanel from "./pages/AdminPanel";
+import Beaches from "./pages/Beaches";
+import BeachDetail from "./pages/BeachDetail";
 // Импорты новых компактных туров
 import { PhiPhiTourPage } from "./tours/phi-phi-2days";
 import { PearlsAndamanSeaPage } from "./tours/pearls-andaman-sea";
@@ -32,6 +34,10 @@ function App() {
               <Route path="/tours" element={<Tours />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<ContactPage />} />
+              
+              {/* Страница пляжей */}
+              <Route path="/category/plyazhi" element={<Beaches />} />
+              <Route path="/beach/:id" element={<BeachDetail />} />
               
               {/* Компактные туры - новая архитектура "1 тур = 1 файл" */}
               <Route path="/phi-phi-2days" element={<PhiPhiTourPage />} />

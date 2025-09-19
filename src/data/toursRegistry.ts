@@ -2,7 +2,7 @@
 // 🎯 ПРИНЦИП: "ДОБАВИЛ СЮДА - ПОЯВИЛОСЬ ВЕЗДЕ АВТОМАТИЧЕСКИ!"
 
 import { phiPhiTourData } from './phiPhiTour';
-import { pearlsTourData } from './pearlsTour';
+import { pearlsAndamanSeaTourData } from './pearlsTour';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -48,7 +48,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,      // ✅ АКТИВИРОВАН - показывается в поиске/меню
     isFeatured: false,   // ❌ не на главной (пока)
     priority: 2,         // 🥈 второй приоритет
-    data: () => Promise.resolve(pearlsTourData)
+    data: () => Promise.resolve(pearlsAndamanSeaTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

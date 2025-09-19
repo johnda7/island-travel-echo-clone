@@ -11,7 +11,7 @@ import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 import AdminPanel from "./pages/AdminPanel";
-import { PearlsAndamanSea } from "./pages/PearlsAndamanSea";
+import PearlsAndamanSea from "./pages/PearlsAndamanSea";
 
 const queryClient = new QueryClient();
 

@@ -8,7 +8,6 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Gri
 import { phiPhiTourData } from "@/data/phiPhiTour";
 import { pearlsAndamanSeaTourData } from "@/data/pearlsTour";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
-import TourTags from "@/components/TourTags";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = pearlsAndamanSeaTourData;
@@ -122,7 +121,7 @@ const PearlsAndamanSea = () => {
               <span>›</span>
               <Link to="/tours?category=marine" className="hover:text-green-600 transition-colors">Морские экскурсии</Link>
               <span>›</span>
-              <span className="text-gray-700">4 жемчужины Андаманского моря</span>
+              <span className="text-gray-700">Пхи-Пхи 2 дня / 1 ночь</span>
             </div>
           </nav>
         </div>
@@ -347,19 +346,28 @@ const PearlsAndamanSea = () => {
         </div>
       </section>
 
-      {/* Tags section - ЦЕНТРАЛИЗОВАННО из данных тура */}
+      {/* Tags section - компактно под фото как на tisland.travel */}
       <section className="pb-4">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap gap-2">
-            {excursion.tags?.map((tag, index) => (
-              <Link
-                key={index}
-                to={`/tours?tag=${encodeURIComponent(tag)}`}
-                className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors"
-              >
-                {tag}
-              </Link>
-            ))}
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
+              Пхи-Пхи
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
+              Майя Бей
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
+              Снорклинг
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
+              Экскурсия с ночевкой
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
+              Огненное шоу
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
+              Лагуна Пиле
+            </span>
           </div>
         </div>
       </section>
@@ -373,7 +381,6 @@ const PearlsAndamanSea = () => {
           <p className="text-lg text-gray-600 mb-6 leading-relaxed">
             {excursion.subtitle}
           </p>
-          
           <div className="flex flex-wrap items-center gap-4 mb-4">
             <div className="flex items-center gap-2">
               <Star className="w-4 h-4 text-yellow-400 fill-current" />

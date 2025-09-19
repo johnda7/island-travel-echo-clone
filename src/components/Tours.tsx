@@ -57,33 +57,44 @@ export const Tours = ({ filteredTours }: ToursProps) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {toursToShow.map((tour) => (
             <Card key={tour.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="relative h-48 bg-gradient-to-r from-blue-500 to-green-500">
-                <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-                  <h3 className="text-white text-xl font-bold text-center px-4">
+              {/* ✅ РЕАЛЬНОЕ ФОТО ИЗ ДАННЫХ ТУРА */}
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={tour.data?.gallery?.[0] || '/assets/tours/default.jpg'} 
+                  alt={tour.name}
+                  className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
+                  onError={(e) => {
+                    e.currentTarget.src = '/assets/tours/default.jpg';
+                  }}
+                />
+                {tour.isPopular && (
+                  <Badge className="absolute top-4 right-4 bg-orange-500 hover:bg-orange-600">
+                    🔥 Популярно
+                  </Badge>
+                )}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                  <h3 className="text-white text-xl font-bold">
                     {tour.name}
                   </h3>
                 </div>
-                {tour.isPopular && (
-                  <Badge className="absolute top-4 right-4 bg-orange-500 hover:bg-orange-600">
-                    Популярно
-                  </Badge>
-                )}
               </div>
               
               <CardContent className="p-6">
                 <div className="space-y-4">
+                  {/* ✅ РЕАЛЬНОЕ ОПИСАНИЕ ИЗ ДАННЫХ */}
                   <p className="text-gray-600 text-sm line-clamp-2">
-                    {tour.category === 'islands' ? 'Морские экскурсии и острова' : 'Экскурсионный тур'}
+                    {tour.data?.description || tour.data?.subtitle || 'Удивительный тур для незабываемых впечатлений'}
                   </p>
                   
+                  {/* ✅ РЕАЛЬНЫЕ ХАРАКТЕРИСТИКИ ИЗ ДАННЫХ */}
                   <div className="flex items-center space-x-4 text-sm text-gray-500">
                     <div className="flex items-center space-x-1">
                       <Clock className="w-4 h-4" />
-                      <span>2 дня</span>
+                      <span>{tour.data?.duration || '2 дня'}</span>
                     </div>
                     <div className="flex items-center space-x-1">
                       <Users className="w-4 h-4" />
-                      <span>До 15 чел</span>
+                      <span>{tour.data?.groupSize || 'До 15 чел'}</span>
                     </div>
                     <div className="flex items-center space-x-1">
                       <Calendar className="w-4 h-4" />
@@ -91,20 +102,25 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                     </div>
                   </div>
                   
+                  {/* ✅ РЕАЛЬНЫЙ РЕЙТИНГ ИЗ ДАННЫХ */}
                   <div className="flex items-center space-x-2">
                     <div className="flex items-center">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
                           className={`w-4 h-4 ${
-                            i < 5 ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                            i < Math.floor(tour.data?.rating || 5) ? 'text-yellow-400 fill-current' : 'text-gray-300'
                           }`}
                         />
                       ))}
                     </div>
-                    <span className="text-sm text-gray-600">(5.0)</span>
+                    <span className="text-sm text-gray-600">({tour.data?.rating || 5.0})</span>
+                    {tour.data?.reviewsCount && (
+                      <span className="text-xs text-gray-400">({tour.data.reviewsCount} отзывов)</span>
+                    )}
                   </div>
                   
+                  {/* ✅ ЦЕНТРАЛИЗОВАННЫЕ ТЕГИ ИЗ ДАННЫХ */}
                   <div className="flex flex-wrap gap-1 mb-4">
                     {tour.tags?.slice(0, 3).map((tag: string, index: number) => (
                       <Badge key={index} variant="secondary" className="text-xs">
@@ -113,25 +129,34 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                     ))}
                   </div>
                   
-                  <div className="flex items-center justify-between pt-4 border-t">
+                  {/* ✅ РЕАЛЬНЫЕ ЦЕНЫ ИЗ ДАННЫХ */}
+                  <div className="flex items-center justify-between pt-4 border-t mb-4">
                     <div>
-                      <span className="text-2xl font-bold text-green-600">от ₿4,500</span>
+                      <span className="text-2xl font-bold text-green-600">
+                        от {tour.data?.currency || '₿'}{tour.data?.priceAdult?.toLocaleString() || '4,500'}
+                      </span>
                       <span className="text-sm text-gray-500 ml-1">/ чел</span>
                     </div>
-                    <div className="space-x-2">
-                      <Link to={`/${tour.id}`}>
-                        <Button variant="outline" size="sm">
-                          Подробнее
-                        </Button>
-                      </Link>
-                      <Button 
-                        size="sm" 
-                        onClick={() => handleBookingClick(tour)}
-                        className="bg-green-600 hover:bg-green-700"
-                      >
-                        Забронировать
-                      </Button>
+                    <div className="text-right">
+                      <div className="text-xs text-gray-400">
+                        {tour.data?.priceChild && `Дети: ${tour.data.currency}${tour.data.priceChild}`}
+                      </div>
                     </div>
+                  </div>
+                  
+                  {/* ✅ КНОПКИ ДЕЙСТВИЙ */}
+                  <div className="space-y-2">
+                    <Link to={`/${tour.id}`} className="block">
+                      <Button variant="outline" className="w-full">
+                        📖 Подробнее о туре
+                      </Button>
+                    </Link>
+                    <Button 
+                      onClick={() => handleBookingClick(tour)}
+                      className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3"
+                    >
+                      🏝️ Забронировать тур
+                    </Button>
                   </div>
                 </div>
               </CardContent>

@@ -17,6 +17,8 @@ export const Header = () => {
   const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
+  const desktopListboxId = "search-results-desktop";
+  const mobileListboxId = "search-results-mobile";
   
   // Используем централизованную систему туров
   const { allTours, loading } = useTours();
@@ -43,6 +45,24 @@ export const Header = () => {
       )
     );
   }, [allTours, debouncedQuery]);
+
+  // Helper: highlight matches in a text
+  const highlightMatches = (text: string | undefined, q: string) => {
+    if (!text) return null;
+    if (!q) return text;
+    const idx = text.toLowerCase().indexOf(q.toLowerCase());
+    if (idx === -1) return text;
+    const before = text.slice(0, idx);
+    const match = text.slice(idx, idx + q.length);
+    const after = text.slice(idx + q.length);
+    return (
+      <>
+        {before}
+        <mark className="bg-yellow-200 text-inherit rounded px-0.5">{match}</mark>
+        {after}
+      </>
+    );
+  };
 
   // Debug logging removed in production
 
@@ -84,6 +104,12 @@ export const Header = () => {
 
   // Handle Enter key: go to the first result
   const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Escape') {
+      setShowSearchResults(false);
+      setShowMobileSearch(false);
+      setSearchQuery('');
+      return;
+    }
     if (e.key === 'Enter' && filteredTours.length > 0) {
       const first = filteredTours[0];
       navigate(getTourDetailPath(first.id));
@@ -93,6 +119,14 @@ export const Header = () => {
     }
   };
 
+  // Prevent body scroll when mobile search modal open
+  useEffect(() => {
+    if (showMobileSearch) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => { document.body.style.overflow = prev; };
+    }
+  }, [showMobileSearch]);
 
 
   return (
@@ -124,6 +158,10 @@ export const Header = () => {
                 onFocus={() => setShowSearchResults(true)}
                 onKeyDown={handleSearchKeyDown}
                 className="w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                role="combobox"
+                aria-expanded={showSearchResults && searchQuery.length > 0}
+                aria-controls={desktopListboxId}
+                aria-autocomplete="list"
               />
               <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
@@ -131,7 +169,10 @@ export const Header = () => {
               
               {/* Search Results Dropdown */}
               {showSearchResults && searchQuery.length > 0 && (
-                <div className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-[60] max-h-80 overflow-y-auto">
+                <div className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-[60] max-h-80 overflow-y-auto" role="listbox" id={desktopListboxId}>
+                  <span className="sr-only" aria-live="polite">
+                    {loading ? 'Идёт загрузка' : `Найдено: ${filteredTours.length}`}
+                  </span>
                   {loading ? (
                     <div className="px-4 py-3 text-gray-500 text-sm">Идёт загрузка…</div>
                   ) : filteredTours.length > 0 ? (
@@ -145,14 +186,13 @@ export const Header = () => {
                           setSearchQuery('');
                           setShowSearchResults(false);
                         }}
+                        role="option"
                       >
-                        <div className="font-medium text-gray-900">{tour.data?.title || tour.name}</div>
-                        <div className="text-sm text-gray-500">{tour.data?.subtitle || tour.data?.description}</div>
+                        <div className="font-medium text-gray-900">{highlightMatches(tour.data?.title || tour.name, debouncedQuery)}</div>
+                        <div className="text-sm text-gray-500">{highlightMatches(tour.data?.subtitle || tour.data?.description, debouncedQuery)}</div>
                         <div className="flex gap-1 mt-1">
                           {tour.tags.slice(0, 3).map((tag, index) => (
-                            <span key={index} className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">
-                              {tag}
-                            </span>
+                            <span key={index} className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">{highlightMatches(tag, debouncedQuery as string)}</span>
                           ))}
                         </div>
                       </Link>
@@ -237,6 +277,10 @@ export const Header = () => {
                   onKeyDown={handleSearchKeyDown}
                   className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
                   autoFocus
+                  role="combobox"
+                  aria-expanded={showSearchResults && searchQuery.length > 0}
+                  aria-controls={mobileListboxId}
+                  aria-autocomplete="list"
                 />
                 <button
                   onClick={() => {
@@ -251,7 +295,10 @@ export const Header = () => {
               </div>
               {/* Mobile Search Results */}
               {showSearchResults && searchQuery.length > 0 && (
-                <div className="mt-3 max-h-80 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg">
+                <div className="mt-3 max-h-80 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg" role="listbox" id={mobileListboxId}>
+                  <span className="sr-only" aria-live="polite">
+                    {loading ? 'Идёт загрузка' : `Найдено: ${filteredTours.length}`}
+                  </span>
                   {loading ? (
                     <div className="px-4 py-3 text-gray-500 text-sm">Идёт загрузка…</div>
                   ) : filteredTours.length > 0 ? (
@@ -266,14 +313,13 @@ export const Header = () => {
                           setShowSearchResults(false);
                           setShowMobileSearch(false);
                         }}
+                        role="option"
                       >
-                        <div className="font-medium text-gray-900">{tour.data?.title || tour.name}</div>
-                        <div className="text-sm text-gray-500 mt-1">{tour.data?.subtitle || tour.data?.description}</div>
+                        <div className="font-medium text-gray-900">{highlightMatches(tour.data?.title || tour.name, debouncedQuery)}</div>
+                        <div className="text-sm text-gray-500 mt-1">{highlightMatches(tour.data?.subtitle || tour.data?.description, debouncedQuery)}</div>
                         <div className="flex gap-1 mt-1">
                           {tour.tags.slice(0, 3).map((tag, index) => (
-                            <span key={index} className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">
-                              {tag}
-                            </span>
+                            <span key={index} className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">{highlightMatches(tag, debouncedQuery as string)}</span>
                           ))}
                         </div>
                       </Link>

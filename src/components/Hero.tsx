@@ -65,14 +65,6 @@ export const Hero = () => {
         </div>
       </div>
       
-      {/* Animated Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <div className="flex flex-col items-center text-white/80">
-          <div className="text-sm mb-2 animate-pulse">Прокрутите вниз</div>
-          <ArrowDown className="w-6 h-6" />
-        </div>
-      </div>
-      
       {/* Decorative Elements */}
       <div className="absolute top-10 left-10 opacity-20">
         <div className="w-20 h-20 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 animate-pulse"></div>

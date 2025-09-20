@@ -5,6 +5,7 @@
 
 import { phiPhiTourData } from '../tours/phi-phi-2days.tsx';
 import { pearlsAndamanSeaTourData } from '../tours/pearls-andaman-sea.tsx';
+import { dostoprimechatelnostiPhuketaTourData } from '../tours/dostoprimechatelnosti-phuketa.tsx';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -51,6 +52,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: false,   // ❌ не на главной (пока)
     priority: 2,         // 🥈 второй приоритет
     data: () => Promise.resolve(pearlsAndamanSeaTourData)
+  },
+
+  // 🏛️ НОВЫЙ ТУР: ДОСТОПРИМЕЧАТЕЛЬНОСТИ ПХУКЕТА
+  {
+    id: 'dostoprimechatelnosti-phuketa',
+    name: 'Достопримечательности Пхукета (1 день, без шопинга)',
+    category: 'mainland',
+    tags: ['культурные', 'сухопутные', 'храмы', 'обзорные', 'целый день', 'семейный', 'история', 'без шопинга'],
+    isPopular: true,     // ✅ показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН - показывается в поиске/меню
+    isFeatured: true,    // ✅ будет на главной
+    priority: 3,         // 🥉 третий приоритет
+    data: () => Promise.resolve(dostoprimechatelnostiPhuketaTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

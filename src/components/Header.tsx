@@ -32,13 +32,7 @@ export const Header = () => {
     )
   );
 
-  // Debug logging
-  console.log('Search Debug:', {
-    searchQuery,
-    showSearchResults,
-    filteredToursLength: filteredTours.length,
-    showMobileSearch
-  });
+  // Debug logging removed in production
 
   // Close search results when clicking outside
   useEffect(() => {

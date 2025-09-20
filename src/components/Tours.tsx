@@ -7,6 +7,7 @@ import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { useTours, TourWithMeta } from "@/hooks/useTours";
 import type { TourData } from "@/types/Tour";
 import { getTourDetailPath } from "@/lib/paths";
+import fallbackImage from "@/assets/maya-bay-sunrise.jpg";
 import { Badge } from "@/components/ui/badge";
 
 interface ToursProps {
@@ -64,11 +65,11 @@ export const Tours = ({ filteredTours }: ToursProps) => {
               {/* ✅ РЕАЛЬНОЕ ФОТО ИЗ ДАННЫХ ТУРА */}
               <div className="relative h-48 overflow-hidden">
                 <img 
-                  src={tour.data?.gallery?.[0] || '/assets/maya-bay-1-Bx0Hc6p5.jpg'} 
+                  src={tour.data?.gallery?.[0] || fallbackImage} 
                   alt={tour.data?.title || tour.name}
                   className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
                   onError={(e) => {
-                    e.currentTarget.src = '/assets/maya-bay-1-Bx0Hc6p5.jpg';
+                    e.currentTarget.src = fallbackImage;
                   }}
                 />
                 {tour.isPopular && (

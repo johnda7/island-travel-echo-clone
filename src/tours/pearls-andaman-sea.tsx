@@ -36,7 +36,14 @@ export const pearlsAndamanSeaTourData: TourData = {
   reviewsCount: 127,
   route: "Пхукет → Пхи-Пхи → Джеймс Бонд → Краби → Пхукет",
   
-  // Галерея изображений
+  mainImage: railayMain,
+  highlights: [
+    "Четыре жемчужины Андаманского моря за одно путешествие",
+    "Остров Джеймса Бонда из знаменитого фильма",
+    "Девственные пляжи Краби и национальные парки",
+    "Ночёвка в комфортабельном отеле с завтраком",
+    "Снорклинг в кристально чистых водах"
+  ],
   gallery: [
     railayMain,
     railayBeach, 
@@ -50,46 +57,39 @@ export const pearlsAndamanSeaTourData: TourData = {
   // Программа тура
   itinerary: [
     {
-      day: 1,
-      title: "Отправление в Краби и острова Пхи-Пхи",
+      day: "1",
       time: "07:00",
-      description: "Трансфер из отеля, переезд в Краби, посадка на скоростной катер"
+      activity: "Трансфер из отеля, переезд в Краби, посадка на скоростной катер"
     },
     {
-      day: 1,
-      title: "Остров Пхи-Пхи Дон",
+      day: "1",
       time: "10:30", 
-      description: "Исследование главного острова архипелага, обед в местном ресторане"
+      activity: "Исследование главного острова архипелага, обед в местном ресторане"
     },
     {
-      day: 1,
-      title: "Бухта Майя Бей",
+      day: "1",
       time: "14:00",
-      description: "Посещение знаменитой бухты из фильма 'Пляж', снорклинг"
+      activity: "Посещение знаменитой бухты из фильма 'Пляж', снорклинг"
     },
     {
-      day: 1,
-      title: "Размещение в отеле Краби",
+      day: "1",
       time: "18:00",
-      description: "Заселение в отель, свободное время, ужин"
+      activity: "Заселение в отель, свободное время, ужин"
     },
     {
-      day: 2,
-      title: "Залив Пханг Нга",
+      day: "2",
       time: "08:00",
-      description: "Завтрак, переезд в залив Пханг Нга"
+      activity: "Завтрак, переезд в залив Пханг Нга"
     },
     {
-      day: 2,
-      title: "Остров Джеймса Бонда",
+      day: "2",
       time: "10:00",
-      description: "Посещение знаменитого острова Ко Тапу из фильма о Джеймсе Бонде"
+      activity: "Посещение знаменитого острова Ко Тапу из фильма о Джеймсе Бонде"
     },
     {
-      day: 2,
-      title: "Возвращение в Пхукет",
+      day: "2",
       time: "16:00",
-      description: "Трансфер обратно в отель в Пхукете"
+      activity: "Трансфер обратно в отель в Пхукете"
     }
   ],
   
@@ -106,7 +106,7 @@ export const pearlsAndamanSeaTourData: TourData = {
   ],
   
   // Что НЕ включено  
-  notIncluded: [
+  excluded: [
     "Ужины",
     "Личные расходы",
     "Алкогольные напитки",
@@ -405,8 +405,8 @@ export const PearlsAndamanSeaPage: React.FC = () => {
                         <span className="text-sm font-medium text-green-600">День {item.day}</span>
                         <span className="text-sm text-gray-500">{item.time}</span>
                       </div>
-                      <h4 className="font-semibold text-gray-800 mb-1">{item.title}</h4>
-                      <p className="text-sm text-gray-600">{item.description}</p>
+                       <h4 className="font-semibold text-gray-800 mb-1">День {item.day} - {item.time}</h4>
+                       <p className="text-sm text-gray-600">{item.activity}</p>
                     </div>
                   ))}
                 </div>
@@ -429,7 +429,7 @@ export const PearlsAndamanSeaPage: React.FC = () => {
                 <div className="bg-white rounded-lg shadow-md p-6">
                   <h3 className="text-lg font-semibold text-red-600 mb-3">❌ Дополнительно оплачивается</h3>
                   <ul className="space-y-2">
-                    {excursion.notIncluded.map((item, index) => (
+                    {excursion.excluded?.map((item, index) => (
                       <li key={index} className="flex items-start">
                         <span className="text-red-500 mr-2 mt-1">✗</span>
                         <span className="text-gray-600 text-sm">{item}</span>

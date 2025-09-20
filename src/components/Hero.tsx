@@ -77,7 +77,7 @@ export const Hero = () => {
         </div>
         
         {/* Stats Bar */}
-        <div className="flex flex-wrap justify-center gap-8 mt-12 animate-fade-in delay-700">
+        <div className="flex flex-wrap justify-center items-center gap-8 mt-12 animate-fade-in delay-700">
           <div className="text-center">
             <div className="text-2xl font-bold text-cyan-300">1000+</div>
             <div className="text-sm text-gray-300">Счастливых туристов</div>

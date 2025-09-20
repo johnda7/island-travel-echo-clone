@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Tours as ToursComponent } from "@/components/Tours";
-import { getAllTags, getToursByTag, getActiveTours } from "@/data/toursRegistry";
+import { useTours } from "@/hooks/useTours";
 
 const Tours = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { allTours, tags, loading } = useTours();
   const [filteredTours, setFilteredTours] = useState<any[]>([]);
   const [availableTags, setAvailableTags] = useState<string[]>([]);
   const [activeTag, setActiveTag] = useState<string | null>(null);
@@ -15,18 +16,22 @@ const Tours = () => {
   useEffect(() => {
     const tagFromUrl = searchParams.get('tag');
     setActiveTag(tagFromUrl);
-    
-    // Загрузка доступных тегов
-    setAvailableTags(getAllTags());
-    
-    // Фильтрация туров
-    if (tagFromUrl) {
-      const toursWithTag = getToursByTag(tagFromUrl);
-      setFilteredTours(toursWithTag);
-    } else {
-      setFilteredTours(getActiveTours());
+    // Теги из централизованного хука
+    setAvailableTags(tags);
+  }, [searchParams, tags]);
+
+  // Централизованная фильтрация: используем уже загруженные туры с данными
+  useEffect(() => {
+    if (loading) {
+      setFilteredTours([]);
+      return;
     }
-  }, [searchParams]);
+    if (activeTag) {
+      setFilteredTours(allTours.filter(t => t.tags?.some(tag => tag.toLowerCase() === activeTag.toLowerCase())));
+    } else {
+      setFilteredTours(allTours);
+    }
+  }, [loading, allTours, activeTag]);
 
   // Обработка клика по тегу
   const handleTagClick = (tag: string) => {
@@ -94,7 +99,16 @@ const Tours = () => {
         </div>
         
         {/* Компонент с турами */}
-        <ToursComponent filteredTours={filteredTours} />
+        {loading ? (
+          <div className="container mx-auto px-4 py-12">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-green-600 mx-auto" />
+              <p className="mt-4 text-gray-600">Загружаем туры...</p>
+            </div>
+          </div>
+        ) : (
+          <ToursComponent filteredTours={filteredTours} />
+        )}
       </main>
       <Footer />
     </div>

@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTours } from "@/hooks/useTours";
 import { useAutoMenu } from "@/hooks/useAutoMenu";
+import { getTourDetailPath } from "@/lib/paths";
 import logoImage from "@/assets/logo.jpg";
 
 export const Header = () => {
@@ -26,6 +27,7 @@ export const Header = () => {
       tour.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       tour.data.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       tour.data.subtitle?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tour.data.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       tour.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
     )
   );
@@ -116,7 +118,7 @@ export const Header = () => {
                     filteredTours.map((tour) => (
                       <Link
                         key={tour.id}
-                        to={tour.data?.route || `/tour/${tour.id}`}
+                        to={getTourDetailPath(tour.id)}
                         className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors"
                         onClick={(e) => {
                           e.stopPropagation();
@@ -232,7 +234,7 @@ export const Header = () => {
                   {filteredTours.map((tour) => (
                     <Link
                       key={tour.id}
-                      to={tour.data?.route || `/tour/${tour.id}`}
+                      to={getTourDetailPath(tour.id)}
                       className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors active:bg-gray-100"
                       onClick={(e) => {
                         e.stopPropagation();

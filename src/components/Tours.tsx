@@ -5,6 +5,7 @@ import { Clock, Users, Calendar, Star, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { useTours } from "@/hooks/useTours";
+import { getTourDetailPath } from "@/lib/paths";
 import { Badge } from "@/components/ui/badge";
 
 interface ToursProps {
@@ -21,13 +22,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [selectedTour, setSelectedTour] = useState<any>(null);
 
-  const getDetailPath = (tour: any) => {
-    // Для ключевых туров ведем на восстановленные полноценные страницы
-    if (tour.id === 'phi-phi-2days') return '/excursion/phi-phi-2-days-1-night';
-    if (tour.id === 'pearls-andaman-sea') return '/tours/four-pearls-andaman';
-    // По умолчанию — на компактную страницу по id
-    return `/${tour.id}`;
-  };
+  const getDetailPath = (tour: any) => getTourDetailPath(tour.id);
 
   const handleBookingClick = (tour: any) => {
     if (tour.data) {
@@ -147,7 +142,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                     </div>
                     <div className="text-right">
                       <div className="text-xs text-gray-400">
-                        {tour.data?.priceChild && `Дети: ${tour.data.currency}${tour.data.priceChild}`}
+                        {tour.data?.priceChild && `Дети: ${tour.data.currency}${tour.data.priceChild.toLocaleString()}`}
                       </div>
                     </div>
                   </div>

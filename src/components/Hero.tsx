@@ -69,10 +69,10 @@ export const Hero = () => {
             asChild
             className="bg-white/10 border-white/30 text-white hover:bg-white/20 px-8 py-4 text-lg rounded-full backdrop-blur-md transition-all duration-300 hover:scale-105"
           >
-            <Link to="/gallery">
+            <a href="#gallery">
               <span className="mr-2">📸</span>
               Галерея
-            </Link>
+            </a>
           </Button>
         </div>
         

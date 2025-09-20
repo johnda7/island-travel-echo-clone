@@ -62,18 +62,6 @@ export const Hero = () => {
               <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
             </Link>
           </Button>
-          
-          <Button 
-            size="lg" 
-            variant="outline" 
-            asChild
-            className="bg-white/10 border-white/30 text-white hover:bg-white/20 px-8 py-4 text-lg rounded-full backdrop-blur-md transition-all duration-300 hover:scale-105"
-          >
-            <a href="#gallery">
-              <span className="mr-2">📸</span>
-              Галерея
-            </a>
-          </Button>
         </div>
         
         {/* Stats Bar */}

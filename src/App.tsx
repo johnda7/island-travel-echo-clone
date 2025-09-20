@@ -16,6 +16,7 @@ import { PearlsAndamanSeaPage } from "./tours/pearls-andaman-sea";
 // Импорты восстановленных полноценных страниц (защищенные файлы)
 import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 import PearlsAndamanSea from "./pages/PearlsAndamanSea";
+import { TourTemplate } from "./templates/TourTemplate";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,9 @@ function App() {
               {/* 4 Pearls of the Andaman Sea */}
               <Route path="/excursion/four-pearls-andaman" element={<PearlsAndamanSea />} />
               <Route path="/tours/four-pearls-andaman" element={<PearlsAndamanSea />} />
+
+              {/* ДИНАМИЧЕСКИЙ ШАБЛОН ТУРА: централизованный маршрут для всех остальных туров */}
+              <Route path="/tour/:tourId" element={<TourTemplate />} />
               
               {/* Админ-панель */}
               <Route path="/admin" element={<AdminPanel />} />

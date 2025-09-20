@@ -8,7 +8,8 @@ export const getTourDetailPath = (id: string): string => {
     case 'pearls-andaman-sea':
       return '/tours/four-pearls-andaman';
     default:
-      return `/${id}`;
+      // Централизованный маршрут шаблона туров
+      return `/tour/${id}`;
   }
 };
 

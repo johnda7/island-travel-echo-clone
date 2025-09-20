@@ -63,22 +63,6 @@ export const Hero = () => {
             </Link>
           </Button>
         </div>
-        
-        {/* Stats Bar */}
-        <div className="flex flex-wrap justify-center items-center gap-8 mt-12 animate-fade-in delay-700">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-cyan-300">1000+</div>
-            <div className="text-sm text-gray-300">Счастливых туристов</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-cyan-300">15+</div>
-            <div className="text-sm text-gray-300">Лет опыта</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-cyan-300">50+</div>
-            <div className="text-sm text-gray-300">Уникальных маршрутов</div>
-          </div>
-        </div>
       </div>
       
       {/* Animated Scroll Indicator */}

@@ -1,8 +1,8 @@
 
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 import { Menu, X, Search } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTours } from "@/hooks/useTours";
 import { useAutoMenu } from "@/hooks/useAutoMenu";
 import { getTourDetailPath } from "@/lib/paths";
@@ -14,6 +14,7 @@ export const Header = () => {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
   
@@ -21,16 +22,27 @@ export const Header = () => {
   const { allTours, loading } = useTours();
   const { mainMenuItems, categories } = useAutoMenu();
 
-  // Filter tours based on search query
-  const filteredTours = allTours.filter(tour =>
-    searchQuery.length > 0 && tour.data && (
-      tour.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tour.data.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tour.data.subtitle?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tour.data.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tour.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-    )
-  );
+  // Debounce for mobile performance
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+  useEffect(() => {
+    const id = setTimeout(() => setDebouncedQuery(searchQuery.trim()), 180);
+    return () => clearTimeout(id);
+  }, [searchQuery]);
+
+  // Filter tours based on (debounced) search query
+  const filteredTours = useMemo(() => {
+    const q = (debouncedQuery || '').toLowerCase();
+    if (!q) return [];
+    return allTours.filter(tour =>
+      tour.data && (
+        tour.name.toLowerCase().includes(q) ||
+        tour.data.title.toLowerCase().includes(q) ||
+        tour.data.subtitle?.toLowerCase().includes(q) ||
+        tour.data.description?.toLowerCase().includes(q) ||
+        tour.tags.some(tag => tag.toLowerCase().includes(q))
+      )
+    );
+  }, [allTours, debouncedQuery]);
 
   // Debug logging removed in production
 
@@ -70,6 +82,17 @@ export const Header = () => {
     setSearchQuery('');
   }, [location.pathname]);
 
+  // Handle Enter key: go to the first result
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && filteredTours.length > 0) {
+      const first = filteredTours[0];
+      navigate(getTourDetailPath(first.id));
+      setShowSearchResults(false);
+      setShowMobileSearch(false);
+      setSearchQuery('');
+    }
+  };
+
 
 
   return (
@@ -99,6 +122,7 @@ export const Header = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setShowSearchResults(true)}
+                onKeyDown={handleSearchKeyDown}
                 className="w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
               />
               <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,9 +130,11 @@ export const Header = () => {
               </svg>
               
               {/* Search Results Dropdown */}
-              {showSearchResults && searchQuery.length > 0 && !loading && (
+              {showSearchResults && searchQuery.length > 0 && (
                 <div className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-[60] max-h-80 overflow-y-auto">
-                  {filteredTours.length > 0 ? (
+                  {loading ? (
+                    <div className="px-4 py-3 text-gray-500 text-sm">Идёт загрузка…</div>
+                  ) : filteredTours.length > 0 ? (
                     filteredTours.map((tour) => (
                       <Link
                         key={tour.id}
@@ -208,6 +234,7 @@ export const Header = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() => setShowSearchResults(true)}
+                  onKeyDown={handleSearchKeyDown}
                   className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
                   autoFocus
                 />
@@ -223,31 +250,39 @@ export const Header = () => {
                 </button>
               </div>
               {/* Mobile Search Results */}
-              {showSearchResults && searchQuery.length > 0 && filteredTours.length > 0 && (
+              {showSearchResults && searchQuery.length > 0 && (
                 <div className="mt-3 max-h-80 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg">
-                  {filteredTours.map((tour) => (
-                    <Link
-                      key={tour.id}
-                      to={getTourDetailPath(tour.id)}
-                      className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors active:bg-gray-100"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSearchQuery('');
-                        setShowSearchResults(false);
-                        setShowMobileSearch(false);
-                      }}
-                    >
-                      <div className="font-medium text-gray-900">{tour.data?.title || tour.name}</div>
-                      <div className="text-sm text-gray-500 mt-1">{tour.data?.subtitle || tour.data?.description}</div>
-                      <div className="flex gap-1 mt-1">
-                        {tour.tags.slice(0, 3).map((tag, index) => (
-                          <span key={index} className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </Link>
-                  ))}
+                  {loading ? (
+                    <div className="px-4 py-3 text-gray-500 text-sm">Идёт загрузка…</div>
+                  ) : filteredTours.length > 0 ? (
+                    filteredTours.map((tour) => (
+                      <Link
+                        key={tour.id}
+                        to={getTourDetailPath(tour.id)}
+                        className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors active:bg-gray-100"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSearchQuery('');
+                          setShowSearchResults(false);
+                          setShowMobileSearch(false);
+                        }}
+                      >
+                        <div className="font-medium text-gray-900">{tour.data?.title || tour.name}</div>
+                        <div className="text-sm text-gray-500 mt-1">{tour.data?.subtitle || tour.data?.description}</div>
+                        <div className="flex gap-1 mt-1">
+                          {tour.tags.slice(0, 3).map((tag, index) => (
+                            <span key={index} className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </Link>
+                    ))
+                  ) : (
+                    <div className="px-4 py-3 text-gray-500 text-sm">
+                      Ничего не найдено. Попробуйте другой запрос.
+                    </div>
+                  )}
                 </div>
               )}
             </div>

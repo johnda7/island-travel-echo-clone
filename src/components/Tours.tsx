@@ -21,6 +21,14 @@ export const Tours = ({ filteredTours }: ToursProps) => {
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [selectedTour, setSelectedTour] = useState<any>(null);
 
+  const getDetailPath = (tour: any) => {
+    // Для ключевых туров ведем на восстановленные полноценные страницы
+    if (tour.id === 'phi-phi-2days') return '/excursion/phi-phi-2-days-1-night';
+    if (tour.id === 'pearls-andaman-sea') return '/tours/four-pearls-andaman';
+    // По умолчанию — на компактную страницу по id
+    return `/${tour.id}`;
+  };
+
   const handleBookingClick = (tour: any) => {
     if (tour.data) {
       setSelectedTour(tour.data);
@@ -146,7 +154,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                   
                   {/* ✅ КНОПКИ ДЕЙСТВИЙ */}
                   <div className="space-y-2">
-                    <Link to={`/${tour.id}`} className="block">
+                    <Link to={getDetailPath(tour)} className="block">
                       <Button variant="outline" className="w-full">
                         📖 Подробнее о туре
                       </Button>

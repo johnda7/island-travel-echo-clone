@@ -186,8 +186,8 @@ export const createTagSlug = (tag: string): string => {
   return tag
     .toLowerCase()
     .replace(/\s+/g, '-')
-    .replace(/[^\w\-]+/g, '')
-    .replace(/\-\-+/g, '-')
+    .replace(/[^\w-]+/g, '')
+    .replace(/-{2,}/g, '-')
     .replace(/^-+/, '')
     .replace(/-+$/, '');
 };

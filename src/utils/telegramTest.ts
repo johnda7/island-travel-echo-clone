@@ -77,7 +77,11 @@ export async function getChatId() {
 }
 
 // Отправка реального бронирования
-export async function sendBookingToTelegram(bookingData: any) {
+export interface BookingPayload {
+  message: string;
+}
+
+export async function sendBookingToTelegram(bookingData: BookingPayload) {
   const BOT_TOKEN = '8445717266:AAHEDA4SJPUL48gpV-Q9qc-V98GSuyPFn08';
   
   try {
@@ -101,7 +105,8 @@ export async function sendBookingToTelegram(bookingData: any) {
       return { success: false, error: result.description };
     }
     
-  } catch (error) {
-    return { success: false, error: error.message };
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    return { success: false, error: msg };
   }
 }

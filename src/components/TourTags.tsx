@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { createTagSlug } from '@/data/toursRegistry';
 
 interface TourTagsProps {
   tags: string[];
@@ -15,17 +16,6 @@ const TourTags: React.FC<TourTagsProps> = ({
   if (!tags || tags.length === 0) {
     return null;
   }
-
-  // Функция для создания slug из тега
-  const createTagSlug = (tag: string): string => {
-    return tag
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w\-]+/g, '')
-      .replace(/\-\-+/g, '-')
-      .replace(/^-+/, '')
-      .replace(/-+$/, '');
-  };
 
   return (
     <div className={`flex flex-wrap items-center gap-2 ${className}`}>

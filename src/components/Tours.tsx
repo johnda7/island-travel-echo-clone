@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Clock, Users, Calendar, Star, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
-import { useTours } from "@/hooks/useTours";
+import { useTours, TourWithMeta } from "@/hooks/useTours";
+import type { TourData } from "@/types/Tour";
 import { getTourDetailPath } from "@/lib/paths";
 import { Badge } from "@/components/ui/badge";
 
 interface ToursProps {
-  filteredTours?: any[];
+  filteredTours?: TourWithMeta[];
 }
 
 export const Tours = ({ filteredTours }: ToursProps) => {
@@ -20,11 +21,11 @@ export const Tours = ({ filteredTours }: ToursProps) => {
   
   // Состояние для модального окна бронирования
   const [showBookingModal, setShowBookingModal] = useState(false);
-  const [selectedTour, setSelectedTour] = useState<any>(null);
+  const [selectedTour, setSelectedTour] = useState<TourData | null>(null);
 
-  const getDetailPath = (tour: any) => getTourDetailPath(tour.id);
+  const getDetailPath = (tour: TourWithMeta) => getTourDetailPath(tour.id);
 
-  const handleBookingClick = (tour: any) => {
+  const handleBookingClick = (tour: TourWithMeta) => {
     if (tour.data) {
       setSelectedTour(tour.data);
       setShowBookingModal(true);

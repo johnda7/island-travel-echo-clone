@@ -3,12 +3,12 @@ import { useSearchParams } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Tours as ToursComponent } from "@/components/Tours";
-import { useTours } from "@/hooks/useTours";
+import { useTours, TourWithMeta } from "@/hooks/useTours";
 
 const Tours = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { allTours, tags, loading } = useTours();
-  const [filteredTours, setFilteredTours] = useState<any[]>([]);
+  const [filteredTours, setFilteredTours] = useState<TourWithMeta[]>([]);
   const [availableTags, setAvailableTags] = useState<string[]>([]);
   const [activeTag, setActiveTag] = useState<string | null>(null);
 

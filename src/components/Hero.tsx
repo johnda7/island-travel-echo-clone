@@ -10,9 +10,9 @@ export const Hero = () => {
       <div className="absolute inset-0">
         {/* Main Background Image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-20000 ease-linear hover:scale-105"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-out hover:scale-105"
           style={{
-            backgroundImage: `url('/src/assets/maya-bay-sunrise.jpg')`
+            backgroundImage: `url('/assets/maya-bay-sunrise.jpg')`
           }}
         />
         

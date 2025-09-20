@@ -8,6 +8,8 @@ import { getTourById } from '@/data/toursRegistry';
 import type { TourData } from '@/types/Tour';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { Button } from '@/components/ui/button';
+import { UniversalBookingModal } from '@/components/UniversalBookingModal';
 
 interface TourTemplateProps {
   tourId?: string; // можно передать ID напрямую
@@ -20,6 +22,7 @@ export const TourTemplate = ({ tourId: propTourId }: TourTemplateProps) => {
   const [tourData, setTourData] = useState<TourData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showBookingModal, setShowBookingModal] = useState(false);
 
   useEffect(() => {
     const loadTourData = async () => {
@@ -222,13 +225,13 @@ export const TourTemplate = ({ tourId: propTourId }: TourTemplateProps) => {
                   )}
                 </div>
 
-                {/* 🎯 Кнопка бронирования */}
-                <a
-                  href={`#/book/${tourId}`}
-                  className="w-full bg-blue-600 text-white text-center py-4 px-6 rounded-xl font-semibold text-lg hover:bg-blue-700 transition-colors block"
+                {/* 🎯 Кнопка бронирования (универсальная модалка) */}
+                <Button
+                  onClick={() => setShowBookingModal(true)}
+                  className="w-full bg-blue-600 text-white text-center py-4 px-6 rounded-xl font-semibold text-lg hover:bg-blue-700 transition-colors"
                 >
                   🏝️ Забронировать тур
-                </a>
+                </Button>
 
                 <p className="text-xs text-gray-500 text-center mt-3">
                   Бесплатная отмена за 24 часа
@@ -237,6 +240,15 @@ export const TourTemplate = ({ tourId: propTourId }: TourTemplateProps) => {
             </div>
           </div>
         </main>
+
+        {/* 🧮 Универсальный калькулятор/бронь — централизованно для всех туров по шаблону */}
+        {tourData && (
+          <UniversalBookingModal
+            isOpen={showBookingModal}
+            onClose={() => setShowBookingModal(false)}
+            tourData={tourData}
+          />
+        )}
 
         <Footer />
       </div>

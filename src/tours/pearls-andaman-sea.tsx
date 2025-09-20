@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -145,27 +146,34 @@ export const PearlsAndamanSeaPage: React.FC = () => {
 
   // Используем данные из этого же файла
   const excursion = pearlsAndamanSeaTourData;
+  const galleryRef = useRef(excursion.gallery);
 
   const openModal = (image: string, index: number) => {
     setSelectedImage(image);
     setSelectedImageIndex(index);
   };
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setSelectedImage(null);
-  };
+  }, []);
 
-  const nextImage = () => {
-    const nextIndex = (selectedImageIndex + 1) % excursion.gallery.length;
-    setSelectedImage(excursion.gallery[nextIndex]);
-    setSelectedImageIndex(nextIndex);
-  };
+  const nextImage = useCallback(() => {
+    setSelectedImageIndex((prev) => {
+      const len = galleryRef.current.length;
+      const nextIndex = (prev + 1) % len;
+      setSelectedImage(galleryRef.current[nextIndex]);
+      return nextIndex;
+    });
+  }, []);
 
-  const prevImage = () => {
-    const prevIndex = selectedImageIndex === 0 ? excursion.gallery.length - 1 : selectedImageIndex - 1;
-    setSelectedImage(excursion.gallery[prevIndex]);
-    setSelectedImageIndex(prevIndex);
-  };
+  const prevImage = useCallback(() => {
+    setSelectedImageIndex((prev) => {
+      const len = galleryRef.current.length;
+      const prevIndex = prev === 0 ? len - 1 : prev - 1;
+      setSelectedImage(galleryRef.current[prevIndex]);
+      return prevIndex;
+    });
+  }, []);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % Math.ceil(excursion.gallery.length / 6));
@@ -175,24 +183,21 @@ export const PearlsAndamanSeaPage: React.FC = () => {
     setCurrentSlide((prev) => prev === 0 ? Math.ceil(excursion.gallery.length / 6) - 1 : prev - 1);
   };
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (selectedImage) {
-        if (event.key === 'ArrowLeft') {
-          prevImage();
-        } else if (event.key === 'ArrowRight') {
-          nextImage();
-        } else if (event.key === 'Escape') {
-          closeModal();
-        }
-      }
-    };
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    if (!selectedImage) return;
+    if (event.key === 'ArrowLeft') {
+      prevImage();
+    } else if (event.key === 'ArrowRight') {
+      nextImage();
+    } else if (event.key === 'Escape') {
+      closeModal();
+    }
+  }, [selectedImage, prevImage, nextImage, closeModal]);
 
+  useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [selectedImage, selectedImageIndex]);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
 
   return (
     <div className="min-h-screen bg-white pb-20 lg:pb-0">

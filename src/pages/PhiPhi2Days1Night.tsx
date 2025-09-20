@@ -1,7 +1,7 @@
 // 🚨 ВАЖНО: Этот файл восстановлен из истории и считается защищенным.
 // Не менять структуру/контент без явного согласования. Канонический путь:
 // /excursion/phi-phi-2-days-1-night и /tours/phi-phi-2-days-1-night
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -216,23 +216,27 @@ const PhiPhi2Days1Night = () => {
     setCurrentImageIndex(0);
   };
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setSelectedImage(null);
     setShowThumbnails(false);
     setShowFullGallery(false);
-  };
+  }, []);
 
-  const nextImage = () => {
-    const nextIndex = (currentImageIndex + 1) % excursion.gallery.length;
-    setCurrentImageIndex(nextIndex);
-    setSelectedImage(excursion.gallery[nextIndex]);
-  };
+  const nextImage = useCallback(() => {
+    setCurrentImageIndex((prev) => {
+      const nextIndex = (prev + 1) % excursion.gallery.length;
+      setSelectedImage(excursion.gallery[nextIndex]);
+      return nextIndex;
+    });
+  }, []);
 
-  const prevImage = () => {
-    const prevIndex = currentImageIndex === 0 ? excursion.gallery.length - 1 : currentImageIndex - 1;
-    setCurrentImageIndex(prevIndex);
-    setSelectedImage(excursion.gallery[prevIndex]);
-  };
+  const prevImage = useCallback(() => {
+    setCurrentImageIndex((prev) => {
+      const prevIndex = prev === 0 ? excursion.gallery.length - 1 : prev - 1;
+      setSelectedImage(excursion.gallery[prevIndex]);
+      return prevIndex;
+    });
+  }, []);
 
   const selectImage = (index: number) => {
     setCurrentImageIndex(index);
@@ -261,21 +265,20 @@ const PhiPhi2Days1Night = () => {
   };
 
   // Keyboard navigation
-  const handleKeyPress = (e: KeyboardEvent) => {
+  const handleKeyPress = useCallback((e: KeyboardEvent) => {
     if (!selectedImage) return;
     
     if (e.key === 'ArrowRight') nextImage();
     if (e.key === 'ArrowLeft') prevImage();
     if (e.key === 'Escape') closeModal();
-  };
+  }, [selectedImage, nextImage, prevImage, closeModal]);
 
   // Add keyboard event listener
   useEffect(() => {
-    if (selectedImage) {
-      document.addEventListener('keydown', handleKeyPress);
-      return () => document.removeEventListener('keydown', handleKeyPress);
-    }
-  }, [selectedImage]);
+    if (!selectedImage) return;
+    document.addEventListener('keydown', handleKeyPress);
+    return () => document.removeEventListener('keydown', handleKeyPress);
+  }, [selectedImage, handleKeyPress]);
 
   // Handle mobile gallery scroll
   const handleMobileGalleryScroll = (e: React.UIEvent<HTMLDivElement>) => {

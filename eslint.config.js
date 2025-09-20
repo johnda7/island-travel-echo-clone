@@ -19,9 +19,10 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      // Отключаем спорные ворнинги, не влияющие на прод-сборку
-      "react-refresh/only-export-components": "off",
-      "react-hooks/exhaustive-deps": "off",
+      "react-refresh/only-export-components": [
+        "warn",
+        { allowConstantExport: true },
+      ],
       // Disable rule causing crash with ESLint 9 + @typescript-eslint v8
       // See error: Cannot read properties of undefined (reading 'allowShortCircuit')
       "@typescript-eslint/no-unused-expressions": "off",

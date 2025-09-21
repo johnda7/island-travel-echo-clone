@@ -10,13 +10,10 @@ import About from "./pages/About";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import AdminPanel from "./pages/AdminPanel";
-// Импорты новых компактных туров
-import { PhiPhiTourPage } from "./tours/phi-phi-2days";
-import { PearlsAndamanSeaPage } from "./tours/pearls-andaman-sea";
-// Импорты восстановленных полноценных страниц (защищенные файлы)
+// ТОЛЬКО ЗАЩИЩЕННЫЕ СТРАНИЦЫ ТУРОВ (эталоны PhiPhi и Pearls)
 import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 import PearlsAndamanSea from "./pages/PearlsAndamanSea";
-import { TourTemplate } from "./templates/TourTemplate";
+import DostoprimechatelnostiPhuketa from "./pages/DostoprimechatelnostiPhuketa";
 
 const queryClient = new QueryClient();
 
@@ -37,20 +34,16 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<ContactPage />} />
               
-              {/* Компактные туры - новая архитектура "1 тур = 1 файл" */}
-              <Route path="/phi-phi-2days" element={<PhiPhiTourPage />} />
-              <Route path="/pearls-andaman-sea" element={<PearlsAndamanSeaPage />} />
-
-              {/* ВОССТАНОВЛЕННЫЕ ПОЛНЫЕ СТРАНИЦЫ ТУРОВ (эти пути можно давать клиентам/SEO) */}
+              {/* ЗАЩИЩЕННЫЕ ПОЛНЫЕ СТРАНИЦЫ ТУРОВ (эталоны) */}
               {/* Phi Phi 2 days / 1 night */}
               <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
               <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
               {/* 4 Pearls of the Andaman Sea */}
               <Route path="/excursion/four-pearls-andaman" element={<PearlsAndamanSea />} />
               <Route path="/tours/four-pearls-andaman" element={<PearlsAndamanSea />} />
-
-              {/* ДИНАМИЧЕСКИЙ ШАБЛОН ТУРА: централизованный маршрут для всех остальных туров */}
-              <Route path="/tour/:tourId" element={<TourTemplate />} />
+              {/* Достопримечательности Пхукета */}
+              <Route path="/excursion/dostoprimechatelnosti-phuketa" element={<DostoprimechatelnostiPhuketa />} />
+              <Route path="/tours/dostoprimechatelnosti-phuketa" element={<DostoprimechatelnostiPhuketa />} />
               
               {/* Админ-панель */}
               <Route path="/admin" element={<AdminPanel />} />

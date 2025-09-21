@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { useTours, TourWithMeta } from "@/hooks/useTours";
 import type { TourData } from "@/types/Tour";
-import { getTourDetailPath } from "@/lib/paths";
 import fallbackImage from "@/assets/maya-bay-sunrise.jpg";
 import { Badge } from "@/components/ui/badge";
 
@@ -24,7 +23,19 @@ export const Tours = ({ filteredTours }: ToursProps) => {
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [selectedTour, setSelectedTour] = useState<TourData | null>(null);
 
-  const getDetailPath = (tour: TourWithMeta) => getTourDetailPath(tour.id);
+  // Простая функция для определения пути тура
+  const getDetailPath = (tour: TourWithMeta) => {
+    switch (tour.id) {
+      case 'phi-phi-2days':
+        return '/excursion/phi-phi-2-days-1-night';
+      case 'pearls-andaman-sea':
+        return '/tours/four-pearls-andaman';
+      case 'dostoprimechatelnosti-phuketa':
+        return '/excursion/dostoprimechatelnosti-phuketa';
+      default:
+        return `/tours/${tour.id}`;
+    }
+  };
 
   const handleBookingClick = (tour: TourWithMeta) => {
     if (tour.data) {

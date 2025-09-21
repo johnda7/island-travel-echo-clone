@@ -10,6 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import TourTags from "@/components/TourTags";
 
 // Import images from WordPress - ALL REAL PHOTOS
 import bigBuddhaMain from "@/assets/dostoprimechatelnosti-phuketa/big-buddha-viewpoint.jpg";
@@ -120,6 +121,17 @@ const excursion = {
     "При посещении храмов необходима закрытая одежда (плечи и колени)",
     "Рекомендуем взять с собой головной убор и солнцезащитный крем",
     "Программа подходит для людей любого возраста"
+  ],
+  
+  tags: [
+    "культурные экскурсии",
+    "достопримечательности", 
+    "храмы",
+    "большой будда",
+    "ват чалонг",
+    "старый город",
+    "смотровые площадки",
+    "1 день"
   ]
 };
 
@@ -362,6 +374,13 @@ const DostoprimechatelnostiPhuketa = () => {
                 </div>
               </div>
             </div>
+
+            {/* Tags section - компактно под фото как на tisland.travel */}
+            <section className="pb-4">
+              <div className="container mx-auto px-4">
+                <TourTags tags={excursion.tags || []} showLabel={false} />
+              </div>
+            </section>
 
             {/* Desktop booking card */}
             <div className="lg:col-span-1">
@@ -621,114 +640,12 @@ const DostoprimechatelnostiPhuketa = () => {
         </div>
       </div>
 
-      {/* Booking modal - EXACT COPY from PhiPhi */}
-      {showBookingForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold">Бронирование тура</h3>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowBookingForm(false)}
-                  className="h-8 w-8 p-0"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Имя *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    placeholder="Ваше имя"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Телефон *
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    placeholder="+7 (xxx) xxx-xx-xx"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    placeholder="your@email.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Дата тура *
-                  </label>
-                  <input
-                    type="date"
-                    required
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    value={formData.date}
-                    onChange={(e) => setFormData({...formData, date: e.target.value})}
-                    min={new Date().toISOString().split('T')[0]}
-                  />
-                </div>
-
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-3">Детали бронирования:</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span>Взрослые ({adults} чел.)</span>
-                      <span>{(adults * excursion.priceAdult).toLocaleString()} {excursion.currency}</span>
-                    </div>
-                    {children > 0 && (
-                      <div className="flex justify-between">
-                        <span>Дети ({children} чел.)</span>
-                        <span>{(children * excursion.priceChild).toLocaleString()} {excursion.currency}</span>
-                      </div>
-                    )}
-                    <div className="border-t pt-2 flex justify-between font-semibold">
-                      <span>Итого:</span>
-                      <span className="text-green-600">{totalPrice.toLocaleString()} {excursion.currency}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <Button 
-                  onClick={handleBooking}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3"
-                >
-                  Отправить заявку
-                </Button>
-
-                <p className="text-xs text-gray-500 text-center">
-                  Нажимая кнопку, вы соглашаетесь с условиями бронирования
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Модальное окно бронирования */}
+      <UniversalBookingModal
+        isOpen={showBookingModal}
+        onClose={() => setShowBookingModal(false)}
+        tourData={excursion}
+      />
 
       {/* Image modal - EXACT COPY from PhiPhi */}
       {selectedImage && (

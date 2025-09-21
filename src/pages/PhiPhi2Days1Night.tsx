@@ -10,6 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import TourTags from "@/components/TourTags";
 
 // Import images from phuketgo
 import mayaBay1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
@@ -474,16 +475,7 @@ const PhiPhi2Days1Night = () => {
       {/* Tags section - компактно под фото как на tisland.travel */}
       <section className="pb-4">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap gap-2">
-            {excursion.tags?.slice(0, 6).map((tag, index) => (
-              <span 
-                key={index}
-                className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
+          <TourTags tags={excursion.tags || []} showLabel={false} />
         </div>
       </section>
 

@@ -8,7 +8,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
+import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3, Minus, Plus } from "lucide-react";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import TourTags from "@/components/TourTags";
 
@@ -146,6 +146,12 @@ const DostoprimechatelnostiPhuketa = () => {
   
   // Универсальное модальное окно бронирования
   const [showBookingModal, setShowBookingModal] = useState(false);
+
+  // Калькулятор цен для sidebar (отдельно от UniversalBookingModal)
+  const [adults, setAdults] = useState(1);
+  const [children, setChildren] = useState(0);
+
+  const totalPrice = adults * excursion.priceAdult + children * excursion.priceChild;
 
   // Gallery functions - EXACT COPY from PhiPhi
   const openModal = (image: string, index: number) => {

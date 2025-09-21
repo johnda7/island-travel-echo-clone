@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import TourTags from "@/components/TourTags";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3, Minus, Plus } from "lucide-react";
@@ -125,6 +126,18 @@ const excursion = {
     "Программа тура может изменяться в зависимости от погодных условий, приливов и отливов", 
     "Бухта Майя Бэй закрыта для посещения с 1 августа по 30 сентября",
     "Программа подходит для беременных, детей до года, людей любого возраста и веса"
+  ],
+  
+  // Централизованные кликабельные теги (data-driven)
+  tags: [
+    "морские экскурсии",
+    "острова",
+    "снорклинг",
+    "пляжи",
+    "пхи пхи",
+    "ночёвка",
+    "майя бэй",
+    "приключения"
   ]
 };
 
@@ -531,6 +544,12 @@ const PhiPhi2Days1Night = () => {
           <p className="text-lg text-gray-600 mb-6 leading-relaxed">
             {excursion.subtitle}
           </p>
+          
+          {/* Кликабельные теги - централизованные */}
+          <div className="mb-6">
+            <TourTags tags={excursion.tags} />
+          </div>
+          
           <div className="flex flex-wrap items-center gap-4 mb-4">
             <div className="flex items-center gap-2">
               <Star className="w-4 h-4 text-yellow-400 fill-current" />

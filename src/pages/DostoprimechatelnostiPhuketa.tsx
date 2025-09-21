@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import TourTags from "@/components/TourTags";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3, Minus, Plus } from "lucide-react";
@@ -117,6 +118,18 @@ const excursion = {
     "При посещении храмов необходима закрытая одежда (плечи и колени)",
     "Рекомендуем взять с собой головной убор и солнцезащитный крем",
     "Программа подходит для людей любого возраста"
+  ],
+  
+  // Централизованные кликабельные теги (data-driven)
+  tags: [
+    "культурные достопримечательности",
+    "храмы",
+    "смотровые площадки",
+    "обзорная экскурсия",
+    "большой будда",
+    "старый город",
+    "1 день",
+    "семейный"
   ]
 };
 
@@ -423,6 +436,11 @@ const DostoprimechatelnostiPhuketa = () => {
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{excursion.title}</h1>
               <p className="text-xl text-gray-600 mb-6">{excursion.subtitle}</p>
+              
+              {/* Кликабельные теги - централизованные */}
+              <div className="mb-6">
+                <TourTags tags={excursion.tags} />
+              </div>
               
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <div className="flex items-center gap-3">

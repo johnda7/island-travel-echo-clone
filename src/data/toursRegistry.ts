@@ -6,6 +6,7 @@
 import { phiPhiTourData } from '../data/phiPhiTour.ts';
 import { pearlsAndamanSeaTourData } from '../data/pearlsTour.ts';
 import { dostoprimechatelnostiPhuketaTourData } from '../data/dostoprimechatelnostiPhuketaTour.ts';
+import { rassvetnoePrikljuchenieTourData } from '../data/rassvetnoePrikljuchenieTour.ts';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -57,7 +58,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
   // 🏛️ ДОСТОПРИМЕЧАТЕЛЬНОСТИ ПХУКЕТА
   {
     id: 'dostoprimechatelnosti-phuketa',
-    name: 'Достопримечательности Пхукета',
+    name: 'Достопrimechatelnosti Pхукета',
     category: 'cultural',
     tags: ['культурные', 'достопримечательности', 'храмы', 'обзорные', '1 день', 'семейный', 'большой будда', 'старый город'],
     isPopular: true,     // ✅ показываем в популярных
@@ -65,6 +66,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,    // ✅ показываем на главной
     priority: 3,         // 🥉 третий приоритет
     data: () => Promise.resolve(dostoprimechatelnostiPhuketaTourData)
+  },
+
+  // 🌅 РАССВЕТНОЕ ПРИКЛЮЧЕНИЕ
+  {
+    id: 'rassvetnoe-prikljuchenie',
+    name: 'Рассветное приключение',
+    category: 'adventure',
+    tags: ['обзорные', 'рассвет', 'стеклянный мост', 'остров джеймса бонда', 'пляж с самолетами', 'кувшинки', 'фотосессия', 'ранний старт', '1 день'],
+    isPopular: true,     // ✅ показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН - показывается в поиске/меню
+    isFeatured: false,   // ❌ не на главной (пока)
+    priority: 4,         // 4-й приоритет
+    data: () => Promise.resolve(rassvetnoePrikljuchenieTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

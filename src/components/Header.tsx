@@ -127,6 +127,8 @@ export const Header = () => {
         return '/tours/four-pearls-andaman';
       case 'dostoprimechatelnosti-phuketa':
         return '/excursion/dostoprimechatelnosti-phuketa';
+      case 'rassvetnoe-prikljuchenie':
+        return '/excursion/rassvetnoe-prikljuchenie';
       default:
         return `/tours/${tourId}`;
     }

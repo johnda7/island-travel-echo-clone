@@ -107,7 +107,7 @@ const Tours = () => {
             </div>
           </div>
         ) : (
-          <ToursComponent filteredTours={filteredTours} />
+          <ToursComponent filteredTours={filteredTours} onTagClick={handleTagClick} />
         )}
       </main>
       <Footer />

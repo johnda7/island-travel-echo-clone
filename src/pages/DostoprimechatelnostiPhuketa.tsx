@@ -7,7 +7,9 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3, Minus, Plus } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
+import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 
 // Import images from WordPress - ALL REAL PHOTOS
 import bigBuddhaMain from "@/assets/dostoprimechatelnosti-phuketa/big-buddha-viewpoint.jpg";
@@ -30,6 +32,8 @@ import elephantMain from "@/assets/dostoprimechatelnosti-phuketa/elephant-feedin
 import elephant1 from "@/assets/dostoprimechatelnosti-phuketa/elephant-feeding-1.jpg";
 
 const excursion = {
+  id: "dostoprimechatelnosti-phuketa",
+  route: "/tours/dostoprimechatelnosti-phuketa",
   title: "Достопримечательности Пхукета",
   subtitle: "Обзорная экскурсия без шопинга (1 день)",
   priceAdult: 1900,
@@ -128,59 +132,8 @@ const DostoprimechatelnostiPhuketa = () => {
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [mobileGalleryIndex, setMobileGalleryIndex] = useState<number>(0);
   
-  // Калькулятор цен
-  const [adults, setAdults] = useState(1);
-  const [children, setChildren] = useState(0);
-  
-  // Форма бронирования
-  const [showBookingForm, setShowBookingForm] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    date: ""
-  });
-
-  const totalPrice = adults * excursion.priceAdult + children * excursion.priceChild;
-
-  const handleBooking = async () => {
-    if (!formData.name || !formData.phone || !formData.date) {
-      alert('Пожалуйста, заполните все обязательные поля');
-      return;
-    }
-
-    const message = `🏛️ Новая бронь тура!
-
-📋 Тур: ${excursion.title}
-💰 Цена: ${totalPrice.toLocaleString()} ฿
-👥 Гости: ${adults} взрослых, ${children} детей
-📅 Дата: ${formData.date}
-
-👤 Контактная информация:
-• Имя: ${formData.name}
-• Телефон: ${formData.phone}
-• Email: ${formData.email || 'не указан'}
-
-⏰ Заявка подана: ${new Date().toLocaleString('ru-RU')}`;
-
-    try {
-      // Прямая ссылка на Telegram
-      const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-      window.open(telegramUrl, '_blank');
-      
-      alert('Заявка подготовлена! Откроется Telegram для отправки.');
-      
-      // Очищаем форму
-      setFormData({ name: "", phone: "", email: "", date: "" });
-      setAdults(1);
-      setChildren(0);
-      setShowBookingForm(false);
-      
-    } catch (error) {
-      console.error('Ошибка:', error);
-      alert('Произошла ошибка при отправке заявки. Попробуйте еще раз.');
-    }
-  };
+  // Универсальное модальное окно бронирования
+  const [showBookingModal, setShowBookingModal] = useState(false);
 
   // Gallery functions - EXACT COPY from PhiPhi
   const openModal = (image: string, index: number) => {
@@ -481,7 +434,7 @@ const DostoprimechatelnostiPhuketa = () => {
                     </div>
 
                     <Button 
-                      onClick={() => setShowBookingForm(true)}
+                      onClick={() => setShowBookingModal(true)}
                       className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
                     >
                       Забронировать за {totalPrice.toLocaleString()} {excursion.currency}
@@ -656,7 +609,7 @@ const DostoprimechatelnostiPhuketa = () => {
                     <p className="text-sm text-gray-600">за взрослого</p>
                   </div>
                   <Button 
-                    onClick={() => setShowBookingForm(true)}
+                    onClick={() => setShowBookingModal(true)}
                     className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6"
                   >
                     Забронировать

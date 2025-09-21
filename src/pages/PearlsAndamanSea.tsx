@@ -356,24 +356,14 @@ const PearlsAndamanSea = () => {
       <section className="pb-4">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap gap-2">
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Пхи-Пхи
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Майя Бей
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Снорклинг
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Экскурсия с ночевкой
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Огненное шоу
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Лагуна Пиле
-            </span>
+            {excursion.tags?.slice(0, 6).map((tag, index) => (
+              <span 
+                key={index}
+                className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors"
+              >
+                #{tag}
+              </span>
+            ))}
           </div>
         </div>
       </section>

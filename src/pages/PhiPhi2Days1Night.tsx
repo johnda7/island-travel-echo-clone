@@ -7,7 +7,9 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3, Minus, Plus } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
+import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 
 // Import images from phuketgo
 import mayaBay1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
@@ -29,6 +31,8 @@ import rangYai1 from "@/assets/phi-phi-2days/rang-yai-1.jpg";
 import rangYai2 from "@/assets/phi-phi-2days/rang-yai-2.jpg";
 
 const excursion = {
+  id: "phi-phi-2-days-1-night",
+  route: "/tours/phi-phi-2-days-1-night",
   title: "Пхи-Пхи 2 дня / 1 ночь",
   subtitle: "Экскурсия с ночёвкой на островах Пхи-Пхи",
   priceAdult: 4000,
@@ -124,6 +128,17 @@ const excursion = {
     "Программа тура может изменяться в зависимости от погодных условий, приливов и отливов", 
     "Бухта Майя Бэй закрыта для посещения с 1 августа по 30 сентября",
     "Программа подходит для беременных, детей до года, людей любого возраста и веса"
+  ],
+  
+  tags: [
+    "морские экскурсии",
+    "острова", 
+    "снорклинг",
+    "пляжи",
+    "пхи пхи",
+    "ночёвка",
+    "майя бэй",
+    "приключения"
   ]
 };
 
@@ -136,73 +151,8 @@ const PhiPhi2Days1Night = () => {
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [mobileGalleryIndex, setMobileGalleryIndex] = useState<number>(0);
   
-  // Калькулятор цен
-  const [adults, setAdults] = useState(1);
-  const [children, setChildren] = useState(0);
-  
-  // Форма бронирования
-  const [showBookingForm, setShowBookingForm] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    date: ""
-  });
-
-  const totalPrice = adults * excursion.priceAdult + children * excursion.priceChild;
-
-  const handleBooking = async () => {
-    if (!formData.name || !formData.phone || !formData.date) {
-      alert('Пожалуйста, заполните все обязательные поля');
-      return;
-    }
-
-    const message = `🏝️ Новая бронь тура!
-
-📋 Тур: ${excursion.title}
-💰 Цена: ${totalPrice.toLocaleString()} ฿
-👥 Гости: ${adults} взрослых, ${children} детей
-📅 Дата: ${formData.date}
-
-👤 Контактная информация:
-• Имя: ${formData.name}
-• Телефон: ${formData.phone}
-• Email: ${formData.email || 'не указан'}
-
-⏰ Заявка подана: ${new Date().toLocaleString('ru-RU')}`;
-
-    try {
-      // ПРЯМАЯ отправка в Telegram бот через API
-      const botToken = '8445717266:AAHEDA4SJPUL48gpV-Q9qc-V98GSuyPFn08';
-      const chatId = '@PhuketBookBot'; // или ваш chat_id
-      
-      const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: message,
-          parse_mode: 'HTML'
-        })
-      });
-
-      if (response.ok) {
-        alert('Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
-        // Очищаем форму
-        setFormData({ name: "", phone: "", email: "", date: "" });
-        setAdults(1);
-        setChildren(0);
-        setShowBookingForm(false);
-      } else {
-        throw new Error('Ошибка отправки');
-      }
-    } catch (error) {
-      console.error('Ошибка:', error);
-      alert('Произошла ошибка при отправке заявки. Попробуйте еще раз.');
-    }
-  };
+  // Универсальное модальное окно бронирования
+  const [showBookingModal, setShowBookingModal] = useState(false);
 
   const openModal = (image: string, index: number) => {
     setSelectedImage(image);
@@ -481,109 +431,37 @@ const PhiPhi2Days1Night = () => {
               <div className="sticky top-4">
                 <Card className="shadow-lg border-0">
                   <CardContent className="p-6">
-                    {/* Калькулятор стоимости */}
-                    <div className="mb-6">
-                      <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">Рассчитать стоимость</h3>
-                      
-                      <div className="space-y-4">
-                        {/* Взрослые */}
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <span className="text-gray-700 font-medium">Взрослые</span>
-                            <div className="text-sm text-gray-500">{excursion.priceAdult} {excursion.currency}</div>
-                          </div>
-                          <div className="flex items-center space-x-3">
-                            <button
-                              onClick={() => setAdults(Math.max(1, adults - 1))}
-                              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
-                              disabled={adults <= 1}
-                            >
-                              -
-                            </button>
-                            <span className="font-semibold min-w-[20px] text-center">{adults}</span>
-                            <button
-                              onClick={() => setAdults(adults + 1)}
-                              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Дети */}
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <span className="text-gray-700 font-medium">Дети (4-11 лет)</span>
-                            <div className="text-sm text-gray-500">{excursion.priceChild} {excursion.currency}</div>
-                          </div>
-                          <div className="flex items-center space-x-3">
-                            <button
-                              onClick={() => setChildren(Math.max(0, children - 1))}
-                              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
-                              disabled={children <= 0}
-                            >
-                              -
-                            </button>
-                            <span className="font-semibold min-w-[20px] text-center">{children}</span>
-                            <button
-                              onClick={() => setChildren(children + 1)}
-                              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="text-xs text-gray-500 text-center">
-                          До 3 лет бесплатно
-                        </div>
-
-                        {/* Итоговая стоимость */}
-                        <div className="border-t pt-4">
-                          <div className="text-center">
-                            <div className="text-sm text-gray-600 mb-1">Итого:</div>
-                            <div className="text-3xl font-bold text-green-600">
-                              {totalPrice.toLocaleString()} {excursion.currency}
-                            </div>
-                            <div className="text-sm text-gray-500 mt-1">
-                              за {adults + children} чел.
-                            </div>
-                          </div>
-                        </div>
+                    <div className="space-y-3 mb-6 text-sm text-left">
+                      <div className="flex items-center gap-3">
+                        <Clock className="w-4 h-4 text-gray-400" />
+                        <span>Продолжительность: {excursion.duration}</span>
                       </div>
-                      
-                      <div className="space-y-3 mb-6 text-sm text-left mt-6">
-                        <div className="flex items-center gap-3">
-                          <Clock className="w-4 h-4 text-gray-400" />
-                          <span>Продолжительность: {excursion.duration}</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <Users className="w-4 h-4 text-gray-400" />
-                          <span>Группа: {excursion.groupSize}</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <Calendar className="w-4 h-4 text-gray-400" />
-                          <span>Ежедневно</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <MapPin className="w-4 h-4 text-gray-400" />
-                          <span>Трансфер включен</span>
-                        </div>
+                      <div className="flex items-center gap-3">
+                        <Users className="w-4 h-4 text-gray-400" />
+                        <span>Группа: {excursion.groupSize}</span>
                       </div>
-                      
-                      <div className="space-y-3">
-                        <Button 
-                          onClick={() => setShowBookingForm(true)}
-                          className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
-                        >
-                          Забронировать за {totalPrice.toLocaleString()} {excursion.currency}
-                        </Button>
-                        <Button variant="outline" asChild className="w-full py-3 border-gray-300">
-                          <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
-                            Задать вопрос в Telegram
-                          </a>
-                        </Button>
+                      <div className="flex items-center gap-3">
+                        <Calendar className="w-4 h-4 text-gray-400" />
+                        <span>Ежедневно</span>
                       </div>
+                      <div className="flex items-center gap-3">
+                        <MapPin className="w-4 h-4 text-gray-400" />
+                        <span>Трансфер включен</span>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <Button 
+                        onClick={() => setShowBookingModal(true)}
+                        className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
+                      >
+                        Забронировать тур
+                      </Button>
+                      <Button variant="outline" asChild className="w-full py-3 border-gray-300">
+                        <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
+                          Задать вопрос в Telegram
+                        </a>
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
@@ -597,24 +475,14 @@ const PhiPhi2Days1Night = () => {
       <section className="pb-4">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap gap-2">
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Пхи-Пхи
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Майя Бей
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Снорклинг
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Экскурсия с ночевкой
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Огненное шоу
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Лагуна Пиле
-            </span>
+            {excursion.tags?.slice(0, 6).map((tag, index) => (
+              <span 
+                key={index}
+                className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors"
+              >
+                #{tag}
+              </span>
+            ))}
           </div>
         </div>
       </section>
@@ -685,7 +553,7 @@ const PhiPhi2Days1Night = () => {
                     <div className="text-gray-500 mb-6">за взрослого</div>
                     <div className="space-y-3">
                       <Button 
-                        onClick={() => setShowBookingForm(true)}
+                        onClick={() => setShowBookingModal(true)}
                         className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
                       >
                         Забронировать сейчас
@@ -816,7 +684,7 @@ const PhiPhi2Days1Night = () => {
             <div className="text-xs text-gray-600">взрослый / {excursion.priceChild} {excursion.currency} детский</div>
           </div>
           <Button 
-            onClick={() => setShowBookingForm(true)}
+            onClick={() => setShowBookingModal(true)}
             className="bg-green-600 hover:bg-green-700 text-white px-6"
           >
             Забронировать
@@ -953,155 +821,12 @@ const PhiPhi2Days1Night = () => {
         </div>
       )}
 
-      {/* Booking Modal */}
-      {showBookingForm && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold">Бронирование тура</h3>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowBookingForm(false)}
-                >
-                  <X className="w-4 h-4" />
-                </Button>
-              </div>
-
-              <div className="mb-6">
-                <h4 className="font-semibold text-lg">{excursion.title}</h4>
-                <p className="text-gray-600">{excursion.subtitle}</p>
-              </div>
-
-              {/* Calculator */}
-              <div className="mb-6 space-y-4">
-                <h5 className="font-medium">Количество гостей:</h5>
-                
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div>
-                    <div className="font-medium">Взрослые</div>
-                    <div className="text-sm text-gray-500">{excursion.priceAdult.toLocaleString()} ฿ за человека</div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setAdults(Math.max(1, adults - 1))}
-                      disabled={adults <= 1}
-                      className="h-8 w-8 p-0"
-                    >
-                      <Minus className="w-4 h-4" />
-                    </Button>
-                    <span className="font-semibold w-8 text-center">{adults}</span>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setAdults(adults + 1)}
-                      className="h-8 w-8 p-0"
-                    >
-                      <Plus className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div>
-                    <div className="font-medium">Дети (4-11 лет)</div>
-                    <div className="text-sm text-gray-500">{excursion.priceChild.toLocaleString()} ฿ за ребенка</div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setChildren(Math.max(0, children - 1))}
-                      disabled={children <= 0}
-                      className="h-8 w-8 p-0"
-                    >
-                      <Minus className="w-4 h-4" />
-                    </Button>
-                    <span className="font-semibold w-8 text-center">{children}</span>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setChildren(children + 1)}
-                      className="h-8 w-8 p-0"
-                    >
-                      <Plus className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="border-t pt-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg font-semibold">Итого:</span>
-                    <span className="text-2xl font-bold text-green-600">{totalPrice.toLocaleString()} ฿</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Form */}
-              <div className="space-y-4 mb-6">
-                <div>
-                  <label className="block text-sm font-medium mb-1">Ваше имя *</label>
-                  <input
-                    type="text"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium mb-1">Телефон *</label>
-                  <input
-                    type="tel"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                    placeholder="+7 (999) 123-45-67"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium mb-1">Email</label>
-                  <input
-                    type="email"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium mb-1">Дата поездки *</label>
-                  <input
-                    type="date"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                    value={formData.date}
-                    onChange={(e) => setFormData({...formData, date: e.target.value})}
-                    required
-                  />
-                </div>
-              </div>
-
-              <Button 
-                onClick={handleBooking}
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3"
-              >
-                <Calendar className="w-4 h-4 mr-2" />
-                Отправить заявку
-              </Button>
-
-              <p className="text-xs text-gray-500 text-center mt-3">
-                Бесплатная отмена за 24 часа
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Universal Booking Modal */}
+      <UniversalBookingModal
+        tourData={excursion}
+        isOpen={showBookingModal}
+        onClose={() => setShowBookingModal(false)}
+      />
 
       <Footer />
     </div>

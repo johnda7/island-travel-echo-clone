@@ -32,6 +32,8 @@ export const Tours = ({ filteredTours }: ToursProps) => {
         return '/tours/four-pearls-andaman';
       case 'dostoprimechatelnosti-phuketa':
         return '/excursion/dostoprimechatelnosti-phuketa';
+      case 'rassvetnoe-prikljuchenie':
+        return '/excursion/rassvetnoe-prikljuchenie';
       default:
         return `/tours/${tour.id}`;
     }

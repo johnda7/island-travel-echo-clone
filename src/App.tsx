@@ -14,6 +14,7 @@ import AdminPanel from "./pages/AdminPanel";
 import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 import PearlsAndamanSea from "./pages/PearlsAndamanSea";
 import DostoprimechatelnostiPhuketa from "./pages/DostoprimechatelnostiPhuketa";
+import RassvetnoePrikljuchenie from "./pages/RassvetnoePrikljuchenie";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,9 @@ function App() {
               {/* Достопримечательности Пхукета */}
               <Route path="/excursion/dostoprimechatelnosti-phuketa" element={<DostoprimechatelnostiPhuketa />} />
               <Route path="/tours/dostoprimechatelnosti-phuketa" element={<DostoprimechatelnostiPhuketa />} />
+              {/* Рассветное приключение - 4-Й ТУР ВОССТАНОВЛЕН! */}
+              <Route path="/excursion/rassvetnoe-prikljuchenie" element={<RassvetnoePrikljuchenie />} />
+              <Route path="/tours/rassvetnoe-prikljuchenie" element={<RassvetnoePrikljuchenie />} />
               
               {/* Админ-панель */}
               <Route path="/admin" element={<AdminPanel />} />

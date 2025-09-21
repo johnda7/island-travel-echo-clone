@@ -6,6 +6,7 @@
 import { phiPhiTourData } from '../data/phiPhiTour.ts';
 import { pearlsAndamanSeaTourData } from '../data/pearlsTour.ts';
 import { dostoprimechatelnostiPhuketaTourData } from '../data/dostoprimechatelnostiPhuketaTour.ts';
+import { rassvetnoePrikljuchenieTourData } from '../data/rassvetnoePrikljuchenieTour.ts';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -65,6 +66,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,    // ✅ показываем на главной
     priority: 3,         // 🥉 третий приоритет
     data: () => Promise.resolve(dostoprimechatelnostiPhuketaTourData)
+  },
+
+  // 🌅 РАССВЕТНОЕ ПРИКЛЮЧЕНИЕ - 4-Й ТУР ВОССТАНОВЛЕН!
+  {
+    id: 'rassvetnoe-prikljuchenie',
+    name: 'Рассветное приключение',
+    category: 'adventure',
+    tags: ['рассвет', 'приключения', 'джеймс бонд', 'стеклянный мост', 'beyond skywalk', '1 день', 'утро', 'эксклюзив'],
+    isPopular: true,     // ✅ показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН - показывается в поиске/меню
+    isFeatured: true,    // ✅ показываем на главной
+    priority: 4,         // 🎯 четвертый приоритет
+    data: () => Promise.resolve(rassvetnoePrikljuchenieTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

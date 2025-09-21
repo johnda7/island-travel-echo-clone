@@ -76,7 +76,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
               {/* ✅ РЕАЛЬНОЕ ФОТО ИЗ ДАННЫХ ТУРА */}
               <div className="relative h-48 overflow-hidden">
                 <img 
-                  src={tour.data?.gallery?.[0] || fallbackImage} 
+                  src={tour.data?.mainImage || tour.data?.gallery?.[0] || fallbackImage} 
                   alt={tour.data?.title || tour.name}
                   className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
                   onError={(e) => {

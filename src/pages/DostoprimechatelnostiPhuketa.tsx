@@ -482,9 +482,14 @@ const DostoprimechatelnostiPhuketa = () => {
 
                     <Button 
                       onClick={() => setShowBookingForm(true)}
-                      className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 text-lg"
+                      className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
                     >
-                      Забронировать тур
+                      Забронировать за {totalPrice.toLocaleString()} {excursion.currency}
+                    </Button>
+                    <Button variant="outline" asChild className="w-full py-3 border-gray-300">
+                      <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
+                        Задать вопрос в Telegram
+                      </a>
                     </Button>
 
                     <p className="text-xs text-gray-500 text-center mt-3">

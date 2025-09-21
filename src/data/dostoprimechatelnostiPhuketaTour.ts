@@ -2,6 +2,7 @@
 // 🏛️ ВАЖНО: Все данные взяты с WordPress сайта. Цены актуальные.
 
 import type { TourData } from '@/types/Tour';
+import bigBuddhaMain from '@/assets/dostoprimechatelnosti-phuketa/big-buddha-viewpoint.jpg';
 
 export const dostoprimechatelnostiPhuketaTourData: TourData = {
   // Основные идентификаторы
@@ -27,7 +28,7 @@ export const dostoprimechatelnostiPhuketaTourData: TourData = {
   reviewsCount: 243,
 
   // Медиа контент (все РЕАЛЬНЫЕ фото из WordPress)
-  mainImage: '/src/assets/dostoprimechatelnosti-phuketa/big-buddha-viewpoint.jpg',
+  mainImage: bigBuddhaMain,
   gallery: [
     '/src/assets/dostoprimechatelnosti-phuketa/big-buddha-viewpoint.jpg',
     '/src/assets/dostoprimechatelnosti-phuketa/wat-chalong-main.jpg',

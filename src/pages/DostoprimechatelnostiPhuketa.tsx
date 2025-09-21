@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import TourTags from "@/components/TourTags";
 
 // Import images from WordPress - ALL REAL PHOTOS
 import bigBuddhaMain from "@/assets/dostoprimechatelnosti-phuketa/big-buddha-viewpoint.jpg";
@@ -120,6 +121,16 @@ const excursion = {
     "При посещении храмов необходима закрытая одежда (плечи и колени)",
     "Рекомендуем взять с собой головной убор и солнцезащитный крем",
     "Программа подходит для людей любого возраста"
+  ],
+  
+  tags: [
+    "Достопримечательности",
+    "Большой Будда", 
+    "Храм Ват Чалонг",
+    "Старый город",
+    "Смотровые площадки",
+    "Обзорная экскурсия",
+    "Культура Пхукета"
   ]
 };
 
@@ -419,6 +430,13 @@ const DostoprimechatelnostiPhuketa = () => {
         </div>
       </section>
 
+      {/* Tags section */}
+      <section className="pb-4">
+        <div className="container mx-auto px-4">
+          <TourTags tags={excursion.tags || []} showLabel={false} />
+        </div>
+      </section>
+
       {/* Main content */}
       <div className="container mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-3 gap-8">
@@ -638,6 +656,7 @@ const DostoprimechatelnostiPhuketa = () => {
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm">
               {currentImageIndex + 1} / {excursion.gallery.length}
             </div>
+          </div>
         </div>
       )}
 
@@ -665,172 +684,6 @@ const DostoprimechatelnostiPhuketa = () => {
                     setSelectedImage(image);
                     setCurrentImageIndex(index);
                     closeGallery();
-                  }}
-                >
-                  <img
-                    src={image}
-                    alt={`Gallery ${index + 1}`}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      <Footer />
-    </div>
-  );
-};
-
-export default DostoprimechatelnostiPhuketa;
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Телефон *
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    placeholder="+7 (xxx) xxx-xx-xx"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    placeholder="your@email.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Дата тура *
-                  </label>
-                  <input
-                    type="date"
-                    required
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    value={formData.date}
-                    onChange={(e) => setFormData({...formData, date: e.target.value})}
-                    min={new Date().toISOString().split('T')[0]}
-                  />
-                </div>
-
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-3">Детали бронирования:</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span>Взрослые ({adults} чел.)</span>
-                      <span>{(adults * excursion.priceAdult).toLocaleString()} {excursion.currency}</span>
-                    </div>
-                    {children > 0 && (
-                      <div className="flex justify-between">
-                        <span>Дети ({children} чел.)</span>
-                        <span>{(children * excursion.priceChild).toLocaleString()} {excursion.currency}</span>
-                      </div>
-                    )}
-                    <div className="border-t pt-2 flex justify-between font-semibold">
-                      <span>Итого:</span>
-                      <span className="text-green-600">{totalPrice.toLocaleString()} {excursion.currency}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <Button 
-                  onClick={handleBooking}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3"
-                >
-                  Отправить заявку
-                </Button>
-
-      {/* Image modal - EXACT COPY from PhiPhi */}
-      {selectedImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
-          <div className="relative w-full h-full flex items-center justify-center">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={closeModal}
-              className="absolute top-4 right-4 text-white hover:bg-white hover:bg-opacity-20 z-10"
-            >
-              <X className="h-6 w-6" />
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={prevImage}
-              className="absolute left-4 text-white hover:bg-white hover:bg-opacity-20 z-10"
-            >
-              <ChevronLeft className="h-8 w-8" />
-            </Button>
-
-            <div 
-              className="max-w-4xl max-h-full mx-4"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
-              <img
-                src={selectedImage}
-                alt="Tour photo"
-                className="max-w-full max-h-full object-contain"
-              />
-            </div>
-
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={nextImage}
-              className="absolute right-4 text-white hover:bg-white hover:bg-opacity-20 z-10"
-            >
-              <ChevronRight className="h-8 w-8" />
-            </Button>
-
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm">
-              {currentImageIndex + 1} / {excursion.gallery.length}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Full gallery modal - EXACT COPY from PhiPhi */}
-      {showFullGallery && (
-        <div className="fixed inset-0 bg-black bg-opacity-95 z-50 overflow-y-auto">
-          <div className="min-h-full p-4">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold text-white">Все фотографии ({excursion.gallery.length})</h3>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={closeGallery}
-                className="text-white hover:bg-white hover:bg-opacity-20"
-              >
-                <X className="h-6 w-6" />
-              </Button>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {excursion.gallery.map((image, index) => (
-                <div
-                  key={index}
-                  className="aspect-square relative overflow-hidden rounded-lg cursor-pointer group"
-                  onClick={() => {
-                    closeGallery();
-                    openModal(image, index);
                   }}
                 >
                   <img

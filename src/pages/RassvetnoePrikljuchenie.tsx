@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import TourTags from "@/components/TourTags";
 
 // Импортируем данные тура
 import { rassvetnoePrikljuchenieTourData } from '@/data/rassvetnoePrikljuchenieTour';
@@ -355,26 +356,7 @@ const RassvetnoePrikljuchenie = () => {
       {/* Tags section - компактно под фото как на tisland.travel */}
       <section className="pb-4">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap gap-2">
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Пхи-Пхи
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Майя Бей
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Снорклинг
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Экскурсия с ночевкой
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Огненное шоу
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Лагуна Пиле
-            </span>
-          </div>
+          <TourTags tags={excursion.tags || []} showLabel={false} />
         </div>
       </section>
 

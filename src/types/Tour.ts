@@ -39,6 +39,15 @@ export interface TourData {
   importantInfo?: string[];
   pickupInfo?: string;
   cancellationPolicy?: string;
+  
+  // Для совместимости с компонентами
+  schedule?: {
+    day: string;
+    time: string;
+    activity: string;
+  }[];
+  notIncluded?: string[];
+  whatToBring?: string[];
 
   // Категория и теги
   category?: string;

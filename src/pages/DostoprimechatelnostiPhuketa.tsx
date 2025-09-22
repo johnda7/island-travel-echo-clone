@@ -16,7 +16,9 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3, Minus, Plus } from "lucide-react";
+import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
+import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import TourTags from "@/components/TourTags";
 
 // Import images from WordPress - ALL REAL PHOTOS
 import bigBuddhaMain from "@/assets/dostoprimechatelnosti-phuketa/big-buddha-viewpoint.jpg";
@@ -39,15 +41,18 @@ import elephantMain from "@/assets/dostoprimechatelnosti-phuketa/elephant-feedin
 import elephant1 from "@/assets/dostoprimechatelnosti-phuketa/elephant-feeding-1.jpg";
 
 const excursion = {
+  id: "dostoprimechatelnosti-phuketa",
   title: "Достопримечательности Пхукета",
   subtitle: "Обзорная экскурсия без шопинга (1 день)",
   priceAdult: 1900,
   priceChild: 1400,
+  priceInfant: 0,
   currency: "฿",
   duration: "1 день (8 часов)",
   groupSize: "до 30 человек",
   rating: 4.8,
   reviewsCount: 243,
+  route: "/dostoprimechatelnosti-phuketa",
   mainImage: bigBuddhaMain,
   gallery: [
     bigBuddhaMain,
@@ -125,6 +130,16 @@ const excursion = {
     "При посещении храмов необходима закрытая одежда (плечи и колени)",
     "Рекомендуем взять с собой головной убор и солнцезащитный крем",
     "Программа подходит для людей любого возраста"
+  ],
+  
+  tags: [
+    "Достопримечательности",
+    "Большой Будда", 
+    "Храм Ват Чалонг",
+    "Старый город",
+    "Смотровые площадки",
+    "Обзорная экскурсия",
+    "Культура Пхукета"
   ]
 };
 
@@ -137,59 +152,8 @@ const DostoprimechatelnostiPhuketa = () => {
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [mobileGalleryIndex, setMobileGalleryIndex] = useState<number>(0);
   
-  // Калькулятор цен
-  const [adults, setAdults] = useState(1);
-  const [children, setChildren] = useState(0);
-  
-  // Форма бронирования
-  const [showBookingForm, setShowBookingForm] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    date: ""
-  });
-
-  const totalPrice = adults * excursion.priceAdult + children * excursion.priceChild;
-
-  const handleBooking = async () => {
-    if (!formData.name || !formData.phone || !formData.date) {
-      alert('Пожалуйста, заполните все обязательные поля');
-      return;
-    }
-
-    const message = `🏛️ Новая бронь тура!
-
-📋 Тур: ${excursion.title}
-💰 Цена: ${totalPrice.toLocaleString()} ฿
-👥 Гости: ${adults} взрослых, ${children} детей
-📅 Дата: ${formData.date}
-
-👤 Контактная информация:
-• Имя: ${formData.name}
-• Телефон: ${formData.phone}
-• Email: ${formData.email || 'не указан'}
-
-⏰ Заявка подана: ${new Date().toLocaleString('ru-RU')}`;
-
-    try {
-      // Прямая ссылка на Telegram
-      const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-      window.open(telegramUrl, '_blank');
-      
-      alert('Заявка подготовлена! Откроется Telegram для отправки.');
-      
-      // Очищаем форму
-      setFormData({ name: "", phone: "", email: "", date: "" });
-      setAdults(1);
-      setChildren(0);
-      setShowBookingForm(false);
-      
-    } catch (error) {
-      console.error('Ошибка:', error);
-      alert('Произошла ошибка при отправке заявки. Попробуйте еще раз.');
-    }
-  };
+  // Состояние для модального окна бронирования
+  const [showBookingModal, setShowBookingModal] = useState(false);
 
   // Gallery functions - EXACT COPY from PhiPhi
   const openModal = (image: string, index: number) => {
@@ -431,69 +395,32 @@ const DostoprimechatelnostiPhuketa = () => {
                       <p className="text-gray-600">за взрослого</p>
                     </div>
 
-                    {/* Price calculator */}
+                    {/* Tour info instead of calculator */}
                     <div className="space-y-4 mb-6">
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-700">Взрослые</span>
-                        <div className="flex items-center gap-3">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setAdults(Math.max(1, adults - 1))}
-                            disabled={adults <= 1}
-                            className="h-8 w-8 p-0"
-                          >
-                            <Minus className="h-4 w-4" />
-                          </Button>
-                          <span className="font-semibold w-8 text-center">{adults}</span>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setAdults(adults + 1)}
-                            className="h-8 w-8 p-0"
-                          >
-                            <Plus className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-700">Дети (4-11 лет)</span>
-                        <div className="flex items-center gap-3">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setChildren(Math.max(0, children - 1))}
-                            disabled={children <= 0}
-                            className="h-8 w-8 p-0"
-                          >
-                            <Minus className="h-4 w-4" />
-                          </Button>
-                          <span className="font-semibold w-8 text-center">{children}</span>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setChildren(children + 1)}
-                            className="h-8 w-8 p-0"
-                          >
-                            <Plus className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-
-                      <div className="pt-4 border-t">
-                        <div className="flex justify-between text-lg font-semibold">
-                          <span>Итого:</span>
-                          <span className="text-green-600">{totalPrice.toLocaleString()} {excursion.currency}</span>
+                      <div className="bg-gray-50 p-4 rounded-lg">
+                        <h4 className="font-semibold text-gray-800 mb-2">Цены:</h4>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex justify-between">
+                            <span>Взрослый билет</span>
+                            <span className="font-semibold">{excursion.priceAdult.toLocaleString()} {excursion.currency}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Детский билет (4-11 лет)</span>
+                            <span className="font-semibold">{excursion.priceChild.toLocaleString()} {excursion.currency}</span>
+                          </div>
+                          <div className="flex justify-between text-xs text-gray-600">
+                            <span>До 3-х лет</span>
+                            <span>Бесплатно</span>
+                          </div>
                         </div>
                       </div>
                     </div>
 
                     <Button 
-                      onClick={() => setShowBookingForm(true)}
+                      onClick={() => setShowBookingModal(true)}
                       className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
                     >
-                      Забронировать за {totalPrice.toLocaleString()} {excursion.currency}
+                      Забронировать тур
                     </Button>
                     <Button variant="outline" asChild className="w-full py-3 border-gray-300">
                       <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
@@ -509,6 +436,13 @@ const DostoprimechatelnostiPhuketa = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Tags section */}
+      <section className="pb-4">
+        <div className="container mx-auto px-4">
+          <TourTags tags={excursion.tags || []} showLabel={false} />
         </div>
       </section>
 
@@ -665,7 +599,7 @@ const DostoprimechatelnostiPhuketa = () => {
                     <p className="text-sm text-gray-600">за взрослого</p>
                   </div>
                   <Button 
-                    onClick={() => setShowBookingForm(true)}
+                    onClick={() => setShowBookingModal(true)}
                     className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6"
                   >
                     Забронировать
@@ -677,114 +611,12 @@ const DostoprimechatelnostiPhuketa = () => {
         </div>
       </div>
 
-      {/* Booking modal - EXACT COPY from PhiPhi */}
-      {showBookingForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold">Бронирование тура</h3>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowBookingForm(false)}
-                  className="h-8 w-8 p-0"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Имя *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    placeholder="Ваше имя"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Телефон *
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    placeholder="+7 (xxx) xxx-xx-xx"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    placeholder="your@email.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Дата тура *
-                  </label>
-                  <input
-                    type="date"
-                    required
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    value={formData.date}
-                    onChange={(e) => setFormData({...formData, date: e.target.value})}
-                    min={new Date().toISOString().split('T')[0]}
-                  />
-                </div>
-
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-3">Детали бронирования:</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span>Взрослые ({adults} чел.)</span>
-                      <span>{(adults * excursion.priceAdult).toLocaleString()} {excursion.currency}</span>
-                    </div>
-                    {children > 0 && (
-                      <div className="flex justify-between">
-                        <span>Дети ({children} чел.)</span>
-                        <span>{(children * excursion.priceChild).toLocaleString()} {excursion.currency}</span>
-                      </div>
-                    )}
-                    <div className="border-t pt-2 flex justify-between font-semibold">
-                      <span>Итого:</span>
-                      <span className="text-green-600">{totalPrice.toLocaleString()} {excursion.currency}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <Button 
-                  onClick={handleBooking}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3"
-                >
-                  Отправить заявку
-                </Button>
-
-                <p className="text-xs text-gray-500 text-center">
-                  Нажимая кнопку, вы соглашаетесь с условиями бронирования
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Модальное окно бронирования */}
+      <UniversalBookingModal
+        isOpen={showBookingModal}
+        onClose={() => setShowBookingModal(false)}
+        tourData={excursion}
+      />
 
       {/* Image modal - EXACT COPY from PhiPhi */}
       {selectedImage && (
@@ -837,7 +669,6 @@ const DostoprimechatelnostiPhuketa = () => {
         </div>
       )}
 
-      {/* Full gallery modal - EXACT COPY from PhiPhi */}
       {showFullGallery && (
         <div className="fixed inset-0 bg-black bg-opacity-95 z-50 overflow-y-auto">
           <div className="min-h-full p-4">
@@ -852,15 +683,16 @@ const DostoprimechatelnostiPhuketa = () => {
                 <X className="h-6 w-6" />
               </Button>
             </div>
-
+            
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {excursion.gallery.map((image, index) => (
                 <div
                   key={index}
-                  className="aspect-square relative overflow-hidden rounded-lg cursor-pointer group"
+                  className="relative aspect-square cursor-pointer overflow-hidden rounded-lg"
                   onClick={() => {
+                    setSelectedImage(image);
+                    setCurrentImageIndex(index);
                     closeGallery();
-                    openModal(image, index);
                   }}
                 >
                   <img

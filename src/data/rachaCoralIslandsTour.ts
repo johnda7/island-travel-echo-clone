@@ -1,19 +1,20 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений - используем существующие как заглушки
-import rachaMain from '@/assets/freedom-beach.jpg';
-import coralBeach from '@/assets/kata-beach.jpg';
-import snorkeling from '@/assets/patong-beach.jpg';
-import rachaIsland from '@/assets/karon-beach.jpg';
-import coralIsland from '@/assets/mai-khao-beach.jpg';
-import parasailing from '@/assets/naiharn-beach.jpg';
-import bananaBoat from '@/assets/naiyang-beach.jpg';
-import beachRelax from '@/assets/surin-beach.jpg';
+// Импорты изображений Racha & Coral Islands
+import rachaMain from '@/assets/racha-1-DwZ8WjdT.jpg';
+import coralBeach from '@/assets/racha-2-BFTDCwzO.jpg';
+import snorkeling from '@/assets/racha-3-CZ_Kbhe2.jpg';
+import rachaIsland from '@/assets/racha-4-DSjCJ3HK.jpg';
+import coralIsland from '@/assets/racha-5-VN_u91kE.jpg';
+import parasailing from '@/assets/racha-6-By8TBx_B.jpg';
+import bananaBoat from '@/assets/racha-7-DeqaUxPG.jpg';
+import beachRelax from '@/assets/racha-8-C0I7ZxY9.jpg';
 
 export const rachaCoralIslandsTourData: TourData = {
   id: 'racha-coral-islands-speedboat',
   title: 'Острова Рача и Корал на спидботе',
   subtitle: 'Два райских острова за один день: пляжи с белым песком, снорклинг и водные развлечения!',
+  route: '/excursion/racha-coral-islands-speedboat',
   description: `Познакомьтесь с двумя жемчужинами Андаманского моря в нашем захватывающем туре на острова Рача и Корал!
 
 Остров Рача (Рача Яй) славится своими нетронутыми пляжами с мягким белым песком и кристально чистой бирюзовой водой. Здесь вы найдете один из самых красивых пляжей Таиланда - Патак Бэй, где снимались голливудские фильмы.
@@ -150,7 +151,5 @@ export const rachaCoralIslandsTourData: TourData = {
   
   tags: ['Острова', 'Спидбот', 'Пляжи', 'Снорклинг', 'Парасейлинг', 'Рача', 'Корал'],
   category: 'islands',
-  isPopular: true,
-  isFeatured: false,
-  isActive: true
+  isPopular: true
 };

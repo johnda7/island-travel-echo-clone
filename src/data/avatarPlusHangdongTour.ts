@@ -1,19 +1,20 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений - используем существующие как заглушки
-import avatarMain from '@/assets/surin-beach.jpg';
-import avatarFloating from '@/assets/patong-beach.jpg';
-import zipline from '@/assets/karon-beach.jpg';
-import elephantShow from '@/assets/kata-beach.jpg';
-import canoePaddling from '@/assets/mai-khao-beach.jpg';
-import mountainView from '@/assets/naiharn-beach.jpg';
-import traditionalShow from '@/assets/naiyang-beach.jpg';
-import naturePark from '@/assets/freedom-beach.jpg';
+// Импорты изображений для Аватар тура
+import avatarMain from '@/assets/mayabay-1.jpg';
+import avatarFloating from '@/assets/mayabay-2.jpg';
+import zipline from '@/assets/mayabay-3.jpg';
+import elephantShow from '@/assets/mayabay-5.jpg';
+import canoePaddling from '@/assets/mayabay-6.jpg';
+import mountainView from '@/assets/maya-bay-1.jpg';
+import traditionalShow from '@/assets/maya-bay-2.jpg';
+import naturePark from '@/assets/maya-bay-3.jpg';
 
 export const avatarPlusHangdongTourData: TourData = {
   id: 'avatar-plus-hangdong-adventure',
   title: 'Аватар Плюс + Хангдонг',
   subtitle: 'Полное приключение: горы, зиплайн, парящие горы, шоу слонов и каноэ-туризм!',
+  route: '/excursion/avatar-plus-hangdong-adventure',
   description: `Окунитесь в мир фантастических приключений с нашим комплексным туром "Аватар Плюс + Хангдонг"!
 
 Начинаем с путешествия к знаменитым "парящим горам" - живописным известняковым скалам, покрытым тропической растительностью, которые послужили вдохновением для создания пейзажей планеты Пандора в фильме "Аватар".
@@ -150,7 +151,5 @@ export const avatarPlusHangdongTourData: TourData = {
   
   tags: ['Аватар', 'Зиплайн', 'Слоны', 'Каноэ', 'Горы', 'Хангдонг', 'Приключения'],
   category: 'adventure',
-  isPopular: true,
-  isFeatured: false,
-  isActive: true
+  isPopular: true
 };

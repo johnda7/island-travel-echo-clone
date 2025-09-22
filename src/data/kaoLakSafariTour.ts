@@ -1,19 +1,20 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений - используем существующие как заглушки
-import safariMain from '@/assets/karon-beach.jpg';
-import elephantRiding from '@/assets/kata-beach.jpg';
-import waterfallSwim from '@/assets/mai-khao-beach.jpg';
-import bambooRafting from '@/assets/naiharn-beach.jpg';
-import jungleWalk from '@/assets/naiyang-beach.jpg';
-import localLunch from '@/assets/patong-beach.jpg';
-import groupSafari from '@/assets/surin-beach.jpg';
-import wildlife from '@/assets/freedom-beach.jpg';
+// Импорты изображений для сафари тура
+import safariMain from '@/assets/pearls-1-CIQDkV1S.jpg';
+import elephantRiding from '@/assets/pearls-2-lTnf7Dxc.jpg';
+import waterfallSwim from '@/assets/pearls-3-79DtICyZ.jpg';
+import bambooRafting from '@/assets/pearls-4-p7zrpIz2.jpg';
+import jungleWalk from '@/assets/pearls-5-CszFmGGp.jpg';
+import localLunch from '@/assets/pearls-6-CIe3WiIL.jpg';
+import groupSafari from '@/assets/pearls-7-C8avj7R6.jpg';
+import wildlife from '@/assets/pearls-8-Of51NOPk.jpg';
 
 export const kaoLakSafariTourData: TourData = {
   id: 'kao-lak-safari-1-day',
   title: 'Као Лак Сафари (1 день)',
   subtitle: 'Приключенческое сафари в национальном парке Као Лак: катание на слонах, водопады, бамбуковый рафтинг!',
+  route: '/excursion/kao-lak-safari-1-day',
   description: `Откройте для себя дикую природу национального парка Као Лак в незабываемом однодневном сафари!
 
 Путешествие начинается с живописной дороги через тропические джунгли к слоновьему лагерю, где вас ждет катание на спине настоящих азиатских слонов по джунглевым тропам. Почувствуйте себя исследователем, пробираясь сквозь густые заросли на спине этих величественных животных.
@@ -139,7 +140,5 @@ export const kaoLakSafariTourData: TourData = {
   
   tags: ['Сафари', 'Слоны', 'Водопады', 'Рафтинг', 'Национальный парк', 'Природа', 'Као Лак'],
   category: 'nature',
-  isPopular: true,
-  isFeatured: false,
-  isActive: true
+  isPopular: true
 };

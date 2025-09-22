@@ -1,21 +1,23 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений - используем существующие как заглушки, потом заменим на реальные
-import raftingMain from '@/assets/maya-bay-sunrise.jpg';
-import raftingAction from '@/assets/phi-phi-lagoon.jpg';
-import elephantShow from '@/assets/phi-phi-maya-bay.jpg';
-import elephantFeeding from '@/assets/phi-phi-monkey-beach.jpg';
-import spaRelax from '@/assets/phi-phi-snorkeling.jpg';
-import spaMassage from '@/assets/phi-phi-speedboat.jpg';
-import atvAdventure from '@/assets/phi-phi-sunset.jpg';
-import atvJungle from '@/assets/bangtao-beach.jpg';
-import groupPhoto from '@/assets/freedom-beach.jpg';
-import lunch from '@/assets/kamala-beach.jpg';
+// Импорты изображений для приключенческого тура
+import raftingMain from '@/assets/rang-yai-1.jpg';
+import raftingAction from '@/assets/rang-yai-2.jpg';
+import elephantShow from '@/assets/maya-bay-1.jpg';
+import elephantFeeding from '@/assets/maya-bay-2.jpg';
+import spaRelax from '@/assets/maya-bay-3.jpg';
+import spaMassage from '@/assets/maya-bay-4.jpg';
+import atvAdventure from '@/assets/bamboo-island.webp';
+import groupActivity from '@/assets/mayabay-1.jpg';
+import atvJungle from '@/assets/mayabay-2.jpg';
+import groupPhoto from '@/assets/mayabay-3.jpg';
+import lunch from '@/assets/mayabay-5.jpg';
 
 export const raftingSpaAtvTourData: TourData = {
-  id: 'rafting-slon-spa-atv-1-day',
-  title: 'Рафтинг + Слоны + СПА + ATV (1 день)',
-  subtitle: 'Комплексный тур: рафтинг по горной реке, шоу слонов, расслабляющий SPA и экстремальный ATV за один день!',
+  id: 'rafting-spa-atv-1-day',
+  title: 'Рафтинг+Слоны+SPA+ATV (1 день)',
+  subtitle: 'Супер насыщенный день: рафтинг, шоу слонов, тайский массаж и экстремальные квадроциклы!',
+  route: '/excursion/rafting-spa-atv-1-day',
   description: `Самый насыщенный день активного отдыха на Пхукете! 
 
 Утром отправляемся на захватывающий рафтинг по горной реке среди тропических джунглей. Профессиональные инструкторы обеспечат безопасность, а вы получите максимум адреналина, преодолевая пороги в живописных местах.
@@ -140,9 +142,7 @@ export const raftingSpaAtvTourData: TourData = {
     'Рекомендуется иметь страховку от несчастных случаев'
   ],
   
-  tags: ['Рафтинг', 'Слоны', 'SPA', 'ATV', 'Приключения', 'Активный отдых', 'Экстрим', 'Релакс'],
+  tags: ['Рафтинг', 'Слоны', 'SPA', 'ATV', 'Приключения', 'Адреналин', 'Природа'],
   category: 'adventure',
-  isPopular: true,
-  isFeatured: false,
-  isActive: true
+  isPopular: true
 };

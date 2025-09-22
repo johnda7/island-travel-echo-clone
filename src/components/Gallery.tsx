@@ -1,34 +1,40 @@
 
 import { Link } from "react-router-dom";
 
+// Get the base path for proper asset loading
+const getAssetPath = (path: string) => {
+  const base = import.meta.env.BASE_URL || '/';
+  return base + 'assets/' + path;
+};
+
 const galleryImages = [
   { 
-    src: "/assets/maya-bay-1.jpg",
+    src: getAssetPath("maya-bay-1.jpg"),
     tour: "/excursion/phi-phi-2-days-1-night",
     title: "Майя Бэй"
   },
   { 
-    src: "/assets/maya-bay-2.jpg",
+    src: getAssetPath("maya-bay-2.jpg"),
     tour: "/excursion/phi-phi-2-days-1-night",
     title: "Пхи-Пхи острова"
   },
   { 
-    src: "/assets/bamboo-island.webp",
+    src: getAssetPath("bamboo-island.webp"),
     tour: "/excursion/phi-phi-2-days-1-night",
     title: "Остров Бамбу"
   },
   { 
-    src: "/assets/pileh-lagoon.jpg",
+    src: getAssetPath("pileh-lagoon.jpg"),
     tour: "/excursion/phi-phi-2-days-1-night",
     title: "Лагуна Пиле"
   },
   { 
-    src: "/assets/racha-1.jpg",
+    src: getAssetPath("racha-1.jpg"),
     tour: "/excursion/pearls-andaman-sea",
     title: "Остров Рача"
   },
   { 
-    src: "/assets/james-1.jpg",
+    src: getAssetPath("james-1.jpg"),
     tour: "/excursion/pearls-andaman-sea",
     title: "Остров Джеймса Бонда"
   }

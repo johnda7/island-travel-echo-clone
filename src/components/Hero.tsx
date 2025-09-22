@@ -3,6 +3,12 @@ import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 import { Link } from "react-router-dom";
 
+// Get the base path for proper asset loading
+const getAssetPath = (path: string) => {
+  const base = import.meta.env.BASE_URL || '/';
+  return base + 'assets/' + path;
+};
+
 export const Hero = () => {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -12,7 +18,7 @@ export const Hero = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-out hover:scale-105"
           style={{
-            backgroundImage: `url('/assets/maya-bay-sunrise.jpg')`
+            backgroundImage: `url('${getAssetPath("maya-bay-sunrise.jpg")}')`
           }}
         />
         

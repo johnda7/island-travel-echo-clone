@@ -1,4 +1,4 @@
-import { TourData } from "@/types/tourData";
+import { TourData } from "@/types/Tour";
 
 // Import images from phuketgo
 import mayaBay1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
@@ -23,6 +23,7 @@ export const phiPhi2DaysTourData: TourData = {
   id: "phi-phi-2days",
   title: "Пхи-Пхи 2 дня / 1 ночь",
   subtitle: "Экскурсия с ночёвкой на островах Пхи-Пхи",
+  route: "/excursion/phi-phi-2-days-1-night",
   priceAdult: 4000,
   priceChild: 3500,
   currency: "฿",

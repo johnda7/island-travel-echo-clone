@@ -2,7 +2,26 @@
 // 🏛️ ВАЖНО: Все данные взяты с WordPress сайта. Цены актуальные.
 
 import type { TourData } from '@/types/Tour';
+
+// Import images from WordPress - ALL REAL PHOTOS
 import bigBuddhaMain from '@/assets/dostoprimechatelnosti-phuketa/big-buddha-viewpoint.jpg';
+import watChalongMain from '@/assets/dostoprimechatelnosti-phuketa/wat-chalong-main.jpg';
+import watChalong1 from '@/assets/dostoprimechatelnosti-phuketa/wat-chalong-1.jpg';
+import watChalong2 from '@/assets/dostoprimechatelnosti-phuketa/wat-chalong-2.jpg';
+import oldTownMain from '@/assets/dostoprimechatelnosti-phuketa/old-town-main.jpg';
+import oldTown1 from '@/assets/dostoprimechatelnosti-phuketa/old-town-1.jpg';
+import promthepMain from '@/assets/dostoprimechatelnosti-phuketa/promthep-cape-main.jpg';
+import promthep1 from '@/assets/dostoprimechatelnosti-phuketa/promthep-cape-1.jpg';
+import karonViewpointMain from '@/assets/dostoprimechatelnosti-phuketa/karon-viewpoint-main.jpg';
+import karonViewpoint1 from '@/assets/dostoprimechatelnosti-phuketa/karon-viewpoint-1.jpg';
+import karonViewpoint2 from '@/assets/dostoprimechatelnosti-phuketa/karon-viewpoint-2.jpg';
+import rangHillMain from '@/assets/dostoprimechatelnosti-phuketa/rang-hill-main.jpg';
+import rangHill1 from '@/assets/dostoprimechatelnosti-phuketa/rang-hill-1.jpg';
+import windmillMain from '@/assets/dostoprimechatelnosti-phuketa/windmill-viewpoint-main.jpg';
+import windmill1 from '@/assets/dostoprimechatelnosti-phuketa/windmill-viewpoint-1.jpg';
+import windmill2 from '@/assets/dostoprimechatelnosti-phuketa/windmill-viewpoint-2.jpg';
+import elephantMain from '@/assets/dostoprimechatelnosti-phuketa/elephant-feeding-main.jpg';
+import elephant1 from '@/assets/dostoprimechatelnosti-phuketa/elephant-feeding-1.jpg';
 
 export const dostoprimechatelnostiPhuketaTourData: TourData = {
   // Основные идентификаторы
@@ -30,24 +49,24 @@ export const dostoprimechatelnostiPhuketaTourData: TourData = {
   // Медиа контент (все РЕАЛЬНЫЕ фото из WordPress)
   mainImage: bigBuddhaMain,
   gallery: [
-    '/src/assets/dostoprimechatelnosti-phuketa/big-buddha-viewpoint.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/wat-chalong-main.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/wat-chalong-1.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/wat-chalong-2.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/old-town-main.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/old-town-1.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/promthep-cape-main.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/promthep-cape-1.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/karon-viewpoint-main.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/karon-viewpoint-1.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/karon-viewpoint-2.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/rang-hill-main.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/rang-hill-1.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/windmill-viewpoint-main.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/windmill-viewpoint-1.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/windmill-viewpoint-2.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/elephant-feeding-main.jpg',
-    '/src/assets/dostoprimechatelnosti-phuketa/elephant-feeding-1.jpg'
+    bigBuddhaMain,
+    watChalongMain,
+    watChalong1,
+    watChalong2,
+    oldTownMain,
+    oldTown1,
+    promthepMain,
+    promthep1,
+    karonViewpointMain,
+    karonViewpoint1,
+    karonViewpoint2,
+    rangHillMain,
+    rangHill1,
+    windmillMain,
+    windmill1,
+    windmill2,
+    elephantMain,
+    elephant1
   ],
 
   // Основные достопримечательности

@@ -44,7 +44,8 @@ export interface TourData {
   schedule?: {
     day: string;
     time: string;
-    activity: string;
+    title: string;
+    description: string;
   }[];
   notIncluded?: string[];
   whatToBring?: string[];

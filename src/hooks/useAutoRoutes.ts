@@ -6,8 +6,8 @@ import { TOURS_REGISTRY } from '@/data/toursRegistry';
 
 // Динамические импорты компонентов туров
 const TOUR_COMPONENTS = {
-  'phi-phi-2days': () => import('../tours/phi-phi-2days').then(m => m.PhiPhiTourPage),
-  'pearls-andaman-sea': () => import('../tours/pearls-andaman-sea').then(m => m.PearlsAndamanSeaPage),
+  'phi-phi-2days': () => import('../pages/PhiPhi2Days1Night').then(m => m.default),
+  'pearls-andaman-sea': () => import('../pages/PearlsAndamanSea').then(m => m.default),
   // 🎯 Новые туры добавляются ТОЛЬКО ЗДЕСЬ!
 } as const;
 

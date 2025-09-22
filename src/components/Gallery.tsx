@@ -1,11 +1,37 @@
 
+import { Link } from "react-router-dom";
+
 const galleryImages = [
-  "/src/assets/phi-phi-2days/maya-bay-1.jpg",
-  "/src/assets/phi-phi-2days/maya-bay-2.jpg", 
-  "/src/assets/phi-phi-2days/bamboo-island.webp",
-  "/src/assets/phi-phi-2days/pileh-lagoon.jpg",
-  "/src/assets/phi-phi-2days/viking-cave.jpg",
-  "/src/assets/phi-phi-2days/rang-yai-1.jpg",
+  { 
+    src: "/assets/maya-bay-1.jpg",
+    tour: "/excursion/phi-phi-2-days-1-night",
+    title: "Майя Бэй"
+  },
+  { 
+    src: "/assets/maya-bay-2.jpg",
+    tour: "/excursion/phi-phi-2-days-1-night",
+    title: "Пхи-Пхи острова"
+  },
+  { 
+    src: "/assets/bamboo-island.webp",
+    tour: "/excursion/phi-phi-2-days-1-night",
+    title: "Остров Бамбу"
+  },
+  { 
+    src: "/assets/pileh-lagoon.jpg",
+    tour: "/excursion/phi-phi-2-days-1-night",
+    title: "Лагуна Пиле"
+  },
+  { 
+    src: "/assets/racha-1.jpg",
+    tour: "/excursion/pearls-andaman-sea",
+    title: "Остров Рача"
+  },
+  { 
+    src: "/assets/james-1.jpg",
+    tour: "/excursion/pearls-andaman-sea",
+    title: "Остров Джеймса Бонда"
+  }
 ];
 
 export const Gallery = () => {
@@ -23,21 +49,23 @@ export const Gallery = () => {
         
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {galleryImages.map((image, index) => (
-            <div 
+            <Link 
               key={index} 
+              to={image.tour}
               className="group relative overflow-hidden rounded-lg aspect-square cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl"
             >
               <img 
-                src={image} 
-                alt={`Галерея ${index + 1}`}
+                src={image.src} 
+                alt={image.title}
                 className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-4 left-4 text-white">
-                  <p className="font-semibold">Посмотреть фото</p>
+                  <p className="font-semibold">{image.title}</p>
+                  <p className="text-sm opacity-80">Перейти к туру</p>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

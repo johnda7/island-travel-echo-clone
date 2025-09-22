@@ -40,6 +40,9 @@ function App() {
               <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
               <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
               {/* 4 Pearls of the Andaman Sea */}
+              <Route path="/excursion/pearls-andaman-sea" element={<PearlsAndamanSea />} />
+              <Route path="/tours/pearls-andaman-sea" element={<PearlsAndamanSea />} />
+              {/* OLD URLS FOR BACKWARD COMPATIBILITY */}
               <Route path="/excursion/four-pearls-andaman" element={<PearlsAndamanSea />} />
               <Route path="/tours/four-pearls-andaman" element={<PearlsAndamanSea />} />
               {/* Достопримечательности Пхукета */}

@@ -1,6 +1,6 @@
 // 🚨 ВАЖНО: Этот файл восстановлен из истории и считается защищенным.
 // Не менять структуру/контент без явного согласования. Канонический путь:
-// /excursion/four-pearls-andaman и /tours/four-pearls-andaman
+// /excursion/pearls-andaman-sea и /tours/pearls-andaman-sea
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";

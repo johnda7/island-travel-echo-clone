@@ -124,7 +124,7 @@ export const Header = () => {
       case 'phi-phi-2days':
         return '/excursion/phi-phi-2-days-1-night';
       case 'pearls-andaman-sea':
-        return '/tours/four-pearls-andaman';
+        return '/excursion/pearls-andaman-sea';
       case 'dostoprimechatelnosti-phuketa':
         return '/excursion/dostoprimechatelnosti-phuketa';
       case 'rassvetnoe-prikljuchenie':

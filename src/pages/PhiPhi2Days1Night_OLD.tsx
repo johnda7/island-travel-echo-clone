@@ -1,3 +1,15 @@
+// 🚨🚨🚨 КРИТИЧЕСКАЯ ЗАЩИТА - ЗАПРЕЩЕНО ЛЮБОЕ ИЗМЕНЕНИЕ! 🚨🚨🚨
+// 🔒 ЭТОТ ФАЙЛ ЗАЩИЩЕН ОТ ИЗМЕНЕНИЙ AI АГЕНТАМИ
+// ❌ КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО: менять калькуляторы, формы бронирования, handleBooking
+// ❌ КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО: трогать useState adults/children, totalPrice
+// ❌ КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО: изменять кнопки +/-, модальные окна
+// ❌ КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО: заменять на UniversalBookingModal
+// ✅ ЭТОТ ФАЙЛ - ЭТАЛОН! ТОЛЬКО ДЛЯ КОПИРОВАНИЯ В НОВЫЕ ТУРЫ
+// 🚨 ПРИ ПОПЫТКЕ ИЗМЕНИТЬ - НЕМЕДЛЕННО ОСТАНОВИТЬСЯ И СПРОСИТЬ ПОЛЬЗОВАТЕЛЯ!
+// 
+// 🚨 ВАЖНО: Этот файл восстановлен из истории и считается защищенным.
+// Не менять структуру/контент без явного согласования. Канонический путь:
+// /excursion/phi-phi-2-days-1-night и /tours/phi-phi-2-days-1-night
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
@@ -10,8 +22,47 @@ import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = phiPhi2DaysTourData;
+  schedule: [
+    { day: "1-й день", time: "07:00-07:30", activity: "Сбор гостей из отелей" },
+    { day: "1-й день", time: "08:00-08:30", activity: "Прибытие на пирс и встреча с гидом" },
+    { day: "1-й день", time: "08:30-09:00", activity: "Отправление на острова Пхи-Пхи на большом тихоходном пароме" },
+    { day: "1-й день", time: "10:30-11:00", activity: "Прибытие на остров, заселение в отель, отдых в отеле и у бассейна" },
+    { day: "1-й день", time: "12:30", activity: "Обед в ресторане отеля" },
+    { day: "1-й день", time: "15:00", activity: "Прогулка по близлежащим островам на традиционной тайской лодке-лонгтейле: бухта Майя Бей, бухта Ло Самах, лагуна Пиле, пляж обезьян. Снорклинг" },
+    { day: "1-й день", time: "18:00", activity: "Встреча заката в море" },
+    { day: "1-й день", time: "19:30", activity: "Ужин в ресторане отеля" },
+    { day: "1-й день", time: "20:30", activity: "Вечеринка на пляже с огненным шоу и дискотекой" },
+    { day: "2-й день", time: "07:00-08:00", activity: "Завтрак в отеле" },
+    { day: "2-й день", time: "08:00", activity: "Посещение смотровой площадки на острове Пхи-Пхи Дон (по желанию)" },
+    { day: "2-й день", time: "11:00", activity: "Выселение из отеля. Свободное время для прогулок, купания в море или бассейне, шоппинга" },
+    { day: "2-й день", time: "14:30", activity: "Отправление на Пхукет" },
+    { day: "2-й день", time: "16:00", activity: "Прибытие на Пхукет и отправление в отели" }
+  ],
+  
+  whatToBring: [
+    "Купальные принадлежности (надеть сразу на себя)",
+    "Полотенце",
+    "Защита от солнца: крем с SPF 50+, солнцезащитные очки, головной убор",
+    "Пляжная обувь: шлепки, сандалии, кроксы",
+    "Коралловые тапочки (если есть)",
+    "Комплект сухой сменной одежды",
+    "Предметы личной гигиены",
+    "Средства от комаров",
+    "Телефон, камера, по желанию — непромокаемые чехлы",
+    "Копия паспорта или фото в телефоне",
+    "Деньги на личные расходы и чаевые"
+  ],
+  
+  importantInfo: [
+    "Детский билет 4-11 лет включительно. До 3-х лет включительно бесплатно без места в минивэне",
+    "Программа тура может изменяться в зависимости от погодных условий, приливов и отливов", 
+    "Бухта Майя Бэй закрыта для посещения с 1 августа по 30 сентября",
+    "Программа подходит для беременных, детей до года, людей любого возраста и веса"
+  ]
+};
 
 const PhiPhi2Days1Night = () => {
+  // Галерея
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [showThumbnails, setShowThumbnails] = useState(false);
@@ -20,8 +71,48 @@ const PhiPhi2Days1Night = () => {
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [mobileGalleryIndex, setMobileGalleryIndex] = useState<number>(0);
   
-  // Состояние для модального окна бронирования
+  // Универсальный модал бронирования
   const [showBookingModal, setShowBookingModal] = useState(false);
+  
+  // Калькулятор цен - ВОССТАНОВЛЕНИЕ ОТСУТСТВУЮЩИХ СОСТОЯНИЙ
+  const [adults, setAdults] = useState(1);
+  const [children, setChildren] = useState(0);
+  
+  // Форма бронирования - ВОССТАНОВЛЕНИЕ ОТСУТСТВУЮЩЕГО СОСТОЯНИЯ
+  const [showBookingForm, setShowBookingForm] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    date: ""
+  });
+
+  const totalPrice = adults * excursion.priceAdult + children * excursion.priceChild;
+
+  const handleBooking = async () => {
+    if (!formData.name || !formData.phone || !formData.date) {
+      alert('Пожалуйста, заполните все обязательные поля');
+      return;
+    }
+
+    const message = `🏝️ Новая бронь тура!
+🚢 Тур: ${excursion.title}
+👤 Имя: ${formData.name}
+📞 Телефон: ${formData.phone}
+📧 Email: ${formData.email}
+📅 Дата: ${formData.date}
+👥 Гости: ${adults} взрослых, ${children} детей
+💰 Итого: ${totalPrice.toLocaleString()} ${excursion.currency}`;
+
+    try {
+      window.open(`https://wa.me/66909977417?text=${encodeURIComponent(message)}`, '_blank');
+      setShowBookingForm(false);
+    } catch (error) {
+      console.error('Ошибка отправки:', error);
+    }
+  };
+
+  const minTouchDistance = 50;
 
   const openModal = (image: string, index: number) => {
     setSelectedImage(image);
@@ -128,6 +219,8 @@ const PhiPhi2Days1Night = () => {
           </nav>
         </div>
       </section>
+
+
 
       {/* Gallery section - сразу после хлебных крошек */}
       <section className="pb-2">
@@ -298,43 +391,36 @@ const PhiPhi2Days1Night = () => {
               <div className="sticky top-4">
                 <Card className="shadow-lg border-0">
                   <CardContent className="p-6">
-                    {/* Информация о туре */}
-                    <div className="mb-6">
-                      <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">{excursion.title}</h3>
-                      <p className="text-gray-600 text-sm mb-4">{excursion.subtitle}</p>
-                      
-                      <div className="space-y-3 mb-6 text-sm text-left">
-                        <div className="flex items-center gap-3">
-                          <Clock className="w-4 h-4 text-gray-400" />
-                          <span>Продолжительность: {excursion.duration}</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <Users className="w-4 h-4 text-gray-400" />
-                          <span>Группа: {excursion.groupSize}</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <Calendar className="w-4 h-4 text-gray-400" />
-                          <span>Ежедневно</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <MapPin className="w-4 h-4 text-gray-400" />
-                          <span>Трансфер включен</span>
-                        </div>
+                    <div className="space-y-3 mb-6 text-sm text-left">
+                      <div className="flex items-center gap-3">
+                        <Clock className="w-4 h-4 text-gray-400" />
+                        <span>Продолжительность: {excursion.duration}</span>
                       </div>
-                      
-                      <div className="text-center mb-6">
-                        <div className="text-2xl font-bold text-green-600">
-                          от {excursion.priceAdult.toLocaleString()} {excursion.currency}
-                        </div>
-                        <div className="text-sm text-gray-500">за взрослого</div>
+                      <div className="flex items-center gap-3">
+                        <Users className="w-4 h-4 text-gray-400" />
+                        <span>Группа: {excursion.groupSize}</span>
                       </div>
+                      <div className="flex items-center gap-3">
+                        <Calendar className="w-4 h-4 text-gray-400" />
+                        <span>Ежедневно</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <MapPin className="w-4 h-4 text-gray-400" />
+                        <span>Трансфер включен</span>
+                      </div>
+                    </div>
                       
                       <div className="space-y-3">
                         <Button 
-                          onClick={() => setShowBookingModal(true)}
+                          onClick={() => setShowBookingForm(true)}
                           className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
                         >
-                          Забронировать тур
+                          Забронировать за {totalPrice.toLocaleString()} {excursion.currency}
+                        </Button>
+                        <Button variant="outline" asChild className="w-full py-3 border-gray-300">
+                          <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
+                            Задать вопрос в Telegram
+                          </a>
                         </Button>
                       </div>
                     </div>
@@ -400,25 +486,59 @@ const PhiPhi2Days1Night = () => {
           <div className="text-2xl font-bold text-green-600 mb-4 md:hidden">
             от {excursion.priceAdult} {excursion.currency} <span className="text-base font-normal text-gray-500">за взрослого</span>
           </div>
+        </div>
+      </section>
 
-          {/* Mobile CTA Button - сразу на первом экране */}
-          <div className="lg:hidden mb-8">
-            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-              <div className="text-center">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">Забронировать тур</h3>
-                <div className="text-2xl font-bold text-green-600 mb-4">
-                  от {excursion.priceAdult} {excursion.currency}
+      {/* Booking section - только для мобильных, на десктопе в сайдбаре */}
+      <section className="py-6 bg-gray-50 lg:hidden">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <Card className="shadow-lg border-0">
+              <CardContent className="p-6 md:p-8">
+                <div className="grid md:grid-cols-2 gap-8 items-center">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4 text-gray-900">Забронировать экскурсию</h3>
+                    <div className="space-y-3 mb-6 text-sm">
+                      <div className="flex items-center gap-3">
+                        <Clock className="w-4 h-4 text-gray-400" />
+                        <span>Продолжительность: {excursion.duration}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Users className="w-4 h-4 text-gray-400" />
+                        <span>Группа: {excursion.groupSize}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Calendar className="w-4 h-4 text-gray-400" />
+                        <span>Ежедневно</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <MapPin className="w-4 h-4 text-gray-400" />
+                        <span>Трансфер включен</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-green-600 mb-2">
+                      от {excursion.priceAdult} {excursion.currency}
+                    </div>
+                    <div className="text-gray-500 mb-6">за взрослого</div>
+                    <div className="space-y-3">
+                      <Button 
+                        onClick={() => setShowBookingForm(true)}
+                        className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
+                      >
+                        Забронировать сейчас
+                      </Button>
+                      <Button variant="outline" asChild className="w-full py-3 border-gray-300">
+                        <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
+                          Задать вопрос в Telegram
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-                <Button 
-                  onClick={() => setShowBookingModal(true)}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-4 text-lg font-semibold rounded-xl"
-                >
-                  <Calendar className="w-5 h-5 mr-2" />
-                  Забронировать сейчас
-                </Button>
-                <p className="text-xs text-gray-500 mt-3">Бесплатная отмена за 24 часа</p>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -452,7 +572,6 @@ const PhiPhi2Days1Night = () => {
                       <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">День</th>
                       <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">Время</th>
                       <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">Активность</th>
-                      <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">Описание</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -460,8 +579,7 @@ const PhiPhi2Days1Night = () => {
                       <tr key={idx} className="border-b last:border-b-0 hover:bg-gray-50 transition-colors">
                         <td className="py-4 px-6 text-sm font-medium text-gray-600">{item.day}</td>
                         <td className="py-4 px-6 text-sm text-gray-600">{item.time}</td>
-                        <td className="py-4 px-6 text-sm font-medium text-gray-700">{item.title}</td>
-                        <td className="py-4 px-6 text-sm text-gray-700">{item.description}</td>
+                        <td className="py-4 px-6 text-sm text-gray-700">{item.activity}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -495,22 +613,37 @@ const PhiPhi2Days1Night = () => {
                   </div>
                 </div>
                 
-                <div>
-                  <h3 className="text-2xl font-bold mb-4 text-amber-600">Важно знать</h3>
-                  <ul className="space-y-2 text-gray-700">
-                    {excursion.importantInfo.map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <span className="text-amber-600 font-bold">!</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                <div className="grid md:grid-cols-2 gap-12">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4 text-blue-600">Взять с собой</h3>
+                    <ul className="space-y-2 text-gray-700">
+                      {excursion.whatToBring.map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="text-blue-600 font-bold">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4 text-amber-600">Важно знать</h3>
+                    <ul className="space-y-2 text-gray-700">
+                      {excursion.importantInfo.map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="text-amber-600 font-bold">!</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+
 
       {/* Mobile booking bar - фиксированная кнопка внизу */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40">
@@ -522,7 +655,7 @@ const PhiPhi2Days1Night = () => {
             <div className="text-xs text-gray-600">взрослый / {excursion.priceChild} {excursion.currency} детский</div>
           </div>
           <Button 
-            onClick={() => setShowBookingModal(true)}
+            onClick={() => setShowBookingForm(true)}
             className="bg-green-600 hover:bg-green-700 text-white px-6"
           >
             Забронировать
@@ -659,12 +792,155 @@ const PhiPhi2Days1Night = () => {
         </div>
       )}
 
-      {/* Модальное окно бронирования */}
-      <UniversalBookingModal
-        isOpen={showBookingModal}
-        onClose={() => setShowBookingModal(false)}
-        tourData={excursion}
-      />
+      {/* Booking Modal */}
+      {showBookingForm && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold">Бронирование тура</h3>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowBookingForm(false)}
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+
+              <div className="mb-6">
+                <h4 className="font-semibold text-lg">{excursion.title}</h4>
+                <p className="text-gray-600">{excursion.subtitle}</p>
+              </div>
+
+              {/* Calculator */}
+              <div className="mb-6 space-y-4">
+                <h5 className="font-medium">Количество гостей:</h5>
+                
+                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div>
+                    <div className="font-medium">Взрослые</div>
+                    <div className="text-sm text-gray-500">{excursion.priceAdult.toLocaleString()} ฿ за человека</div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setAdults(Math.max(1, adults - 1))}
+                      disabled={adults <= 1}
+                      className="h-8 w-8 p-0"
+                    >
+                      <Minus className="w-4 h-4" />
+                    </Button>
+                    <span className="font-semibold w-8 text-center">{adults}</span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setAdults(adults + 1)}
+                      className="h-8 w-8 p-0"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div>
+                    <div className="font-medium">Дети (4-11 лет)</div>
+                    <div className="text-sm text-gray-500">{excursion.priceChild.toLocaleString()} ฿ за ребенка</div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setChildren(Math.max(0, children - 1))}
+                      disabled={children <= 0}
+                      className="h-8 w-8 p-0"
+                    >
+                      <Minus className="w-4 h-4" />
+                    </Button>
+                    <span className="font-semibold w-8 text-center">{children}</span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setChildren(children + 1)}
+                      className="h-8 w-8 p-0"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="border-t pt-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg font-semibold">Итого:</span>
+                    <span className="text-2xl font-bold text-green-600">{totalPrice.toLocaleString()} ฿</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Form */}
+              <div className="space-y-4 mb-6">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Ваше имя *</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium mb-1">Телефон *</label>
+                  <input
+                    type="tel"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    placeholder="+7 (999) 123-45-67"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium mb-1">Email</label>
+                  <input
+                    type="email"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium mb-1">Дата поездки *</label>
+                  <input
+                    type="date"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    value={formData.date}
+                    onChange={(e) => setFormData({...formData, date: e.target.value})}
+                    required
+                  />
+                </div>
+              </div>
+
+              <Button 
+                onClick={handleBooking}
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3"
+              >
+                <Calendar className="w-4 h-4 mr-2" />
+                Отправить заявку
+              </Button>
+
+              <p className="text-xs text-gray-500 text-center mt-3">
+                Бесплатная отмена за 24 часа
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>

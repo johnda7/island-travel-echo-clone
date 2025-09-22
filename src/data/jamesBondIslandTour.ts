@@ -1,14 +1,14 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений - используем существующие как заглушки
-import jamesBondMain from '@/assets/patong-beach.jpg';
-import jamesBondRock from '@/assets/karon-beach.jpg';
-import phangNgaBay from '@/assets/kata-beach.jpg';
-import kooPingKan from '@/assets/mai-khao-beach.jpg';
-import seaCanoe from '@/assets/naiharn-beach.jpg';
-import floatingVillage from '@/assets/naiyang-beach.jpg';
-import jamesBondIsland from '@/assets/surin-beach.jpg';
-import longtailBoat from '@/assets/freedom-beach.jpg';
+// Реальные фото для тура Остров Джеймса Бонда
+import jamesBondMain from '@/assets/james-bond-island/james-bond-main.jpg';
+import jamesBondRock from '@/assets/james-bond-island/james-bond-rock.jpg';
+import phangNgaBay from '@/assets/james-bond-island/phang-nga-bay.jpg';
+import kooPingKan from '@/assets/james-bond-island/koo-ping-kan.jpg';
+import seaCanoe from '@/assets/james-bond-island/sea-canoe.jpg';
+import floatingVillage from '@/assets/james-bond-island/floating-village.jpg';
+import jamesBondIsland from '@/assets/james-bond-island/james-bond-island.jpg';
+import longtailBoat from '@/assets/james-bond-island/longtail-boat.jpg';
 
 export const jamesBondIslandTourData: TourData = {
   id: 'james-bond-island-phang-nga',

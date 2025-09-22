@@ -1,14 +1,14 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений - используем существующие как заглушки
-import rachaMain from '@/assets/freedom-beach.jpg';
-import coralBeach from '@/assets/kata-beach.jpg';
-import snorkeling from '@/assets/patong-beach.jpg';
-import rachaIsland from '@/assets/karon-beach.jpg';
-import coralIsland from '@/assets/mai-khao-beach.jpg';
-import parasailing from '@/assets/naiharn-beach.jpg';
-import bananaBoat from '@/assets/naiyang-beach.jpg';
-import beachRelax from '@/assets/surin-beach.jpg';
+// Реальные фото для тура Рача и Корал
+import rachaMain from '@/assets/racha-coral-islands/racha-main.jpg';
+import coralBeach from '@/assets/racha-coral-islands/coral-beach.jpg';
+import snorkeling from '@/assets/racha-coral-islands/snorkeling.jpg';
+import rachaIsland from '@/assets/racha-coral-islands/racha-island.jpg';
+import coralIsland from '@/assets/racha-coral-islands/coral-island.jpg';
+import parasailing from '@/assets/racha-coral-islands/parasailing.jpg';
+import bananaBoat from '@/assets/racha-coral-islands/banana-boat.jpg';
+import beachRelax from '@/assets/racha-coral-islands/beach-relax.jpg';
 
 export const rachaCoralIslandsTourData: TourData = {
   id: 'racha-coral-islands-speedboat',

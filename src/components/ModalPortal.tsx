@@ -32,7 +32,6 @@ export const ModalPortal = ({ children }: ModalPortalProps) => {
       root.style.position = 'fixed';
       root.style.inset = '0';
       root.style.zIndex = '9999';
-      root.style.pointerEvents = 'none';
       document.body.appendChild(root);
     }
     return () => {
@@ -44,7 +43,7 @@ export const ModalPortal = ({ children }: ModalPortalProps) => {
   if (!container) return null;
 
   return createPortal(
-    <div style={{ pointerEvents: 'auto' }}>
+    <div>
       {children}
     </div>,
     container

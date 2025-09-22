@@ -20,6 +20,7 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Gri
 import { phiPhiTourData } from "@/data/phiPhiTour";
 import { pearlsAndamanSeaTourData } from "@/data/pearlsTour";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import TourTags from "@/components/TourTags";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = pearlsAndamanSeaTourData;
@@ -364,26 +365,7 @@ const PearlsAndamanSea = () => {
       {/* Tags section - компактно под фото как на tisland.travel */}
       <section className="pb-4">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap gap-2">
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Пхи-Пхи
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Майя Бей
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Снорклинг
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Экскурсия с ночевкой
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Огненное шоу
-            </span>
-            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors">
-              Лагуна Пиле
-            </span>
-          </div>
+          <TourTags tags={excursion.tags || []} showLabel={false} />
         </div>
       </section>
 

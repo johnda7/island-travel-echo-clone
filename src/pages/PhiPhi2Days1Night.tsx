@@ -24,11 +24,6 @@ const PhiPhi2Days1Night = () => {
   // Состояние для модального окна бронирования
   const [showBookingModal, setShowBookingModal] = useState(false);
 
-  // ОТЛАДКА: Проверяем данные тура
-  console.log("PhiPhi2Days1Night: excursion data:", excursion);
-  console.log("PhiPhi2Days1Night: priceAdult:", excursion.priceAdult);
-  console.log("PhiPhi2Days1Night: priceChild:", excursion.priceChild);
-  console.log("PhiPhi2Days1Night: showBookingModal:", showBookingModal);
 
   const openModal = (image: string, index: number) => {
     setSelectedImage(image);

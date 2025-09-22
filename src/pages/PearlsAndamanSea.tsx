@@ -20,6 +20,7 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Gri
 import { phiPhiTourData } from "@/data/phiPhiTour";
 import { pearlsAndamanSeaTourData } from "@/data/pearlsTour";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import { ModalPortal } from "@/components/ModalPortal";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = pearlsAndamanSeaTourData;
@@ -690,11 +691,13 @@ const PearlsAndamanSea = () => {
       )}
 
       {/* Модальное окно бронирования */}
-      <UniversalBookingModal
-        isOpen={showBookingModal}
-        onClose={() => setShowBookingModal(false)}
-        tourData={excursion}
-      />
+      <ModalPortal>
+        <UniversalBookingModal
+          isOpen={showBookingModal}
+          onClose={() => setShowBookingModal(false)}
+          tourData={excursion}
+        />
+      </ModalPortal>
 
       <Footer />
     </div>

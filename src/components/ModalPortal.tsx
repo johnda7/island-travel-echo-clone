@@ -33,6 +33,12 @@ export const ModalPortal = ({ children }: ModalPortalProps) => {
       root.style.inset = '0';
       root.style.zIndex = '9999';
       document.body.appendChild(root);
+    } else {
+      // Нормализуем стили на случай старых значений из предыдущих версий
+      root.style.position = 'fixed';
+      root.style.inset = '0';
+      root.style.zIndex = '9999';
+      root.style.pointerEvents = 'auto';
     }
     return () => {
       // Не удаляем корень, чтобы переиспользовать между страницами

@@ -11,9 +11,10 @@ import { Badge } from "@/components/ui/badge";
 
 interface ToursProps {
   filteredTours?: TourWithMeta[];
+  onTagClick?: (tag: string) => void;
 }
 
-export const Tours = ({ filteredTours }: ToursProps) => {
+export const Tours = ({ filteredTours, onTagClick }: ToursProps) => {
   const { popularTours, loading } = useTours();
   
   // Использовать переданные туры или популярные по умолчанию
@@ -141,7 +142,12 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                   {/* ✅ ЦЕНТРАЛИЗОВАННЫЕ ТЕГИ ИЗ ДАННЫХ */}
                   <div className="flex flex-wrap gap-1 mb-4">
                     {tour.tags?.slice(0, 3).map((tag: string, index: number) => (
-                      <Badge key={index} variant="secondary" className="text-xs">
+                      <Badge 
+                        key={index} 
+                        variant="secondary" 
+                        className={`text-xs ${onTagClick ? 'cursor-pointer hover:bg-gray-300 transition-colors' : ''}`}
+                        onClick={onTagClick ? () => onTagClick(tag) : undefined}
+                      >
                         #{tag}
                       </Badge>
                     ))}

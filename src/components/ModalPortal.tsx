@@ -32,13 +32,14 @@ export const ModalPortal = ({ children }: ModalPortalProps) => {
       root.style.position = 'fixed';
       root.style.inset = '0';
       root.style.zIndex = '9999';
+      root.style.pointerEvents = 'none'; // по умолчанию не блокируем клики по сайту
       document.body.appendChild(root);
     } else {
       // Нормализуем стили на случай старых значений из предыдущих версий
       root.style.position = 'fixed';
       root.style.inset = '0';
       root.style.zIndex = '9999';
-      root.style.pointerEvents = 'auto';
+      root.style.pointerEvents = 'none';
     }
     return () => {
       // Не удаляем корень, чтобы переиспользовать между страницами
@@ -49,7 +50,7 @@ export const ModalPortal = ({ children }: ModalPortalProps) => {
   if (!container) return null;
 
   return createPortal(
-    <div>
+    <div style={{ pointerEvents: 'auto' }}>
       {children}
     </div>,
     container

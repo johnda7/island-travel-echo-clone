@@ -1,14 +1,14 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений - используем существующие как заглушки
-import avatarMain from '@/assets/surin-beach.jpg';
-import avatarFloating from '@/assets/patong-beach.jpg';
-import zipline from '@/assets/karon-beach.jpg';
-import elephantShow from '@/assets/kata-beach.jpg';
-import canoePaddling from '@/assets/mai-khao-beach.jpg';
-import mountainView from '@/assets/naiharn-beach.jpg';
-import traditionalShow from '@/assets/naiyang-beach.jpg';
-import naturePark from '@/assets/freedom-beach.jpg';
+// Реальные фото для тура Аватар Плюс + Хангдонг
+import avatarMain from '@/assets/avatar-plus-hangdong/avatar-main.jpg';
+import avatarFloating from '@/assets/avatar-plus-hangdong/avatar-floating.jpg';
+import zipline from '@/assets/avatar-plus-hangdong/zipline.jpg';
+import elephantShow from '@/assets/avatar-plus-hangdong/elephant-show.jpg';
+import canoePaddling from '@/assets/avatar-plus-hangdong/canoe-paddling.jpg';
+import mountainView from '@/assets/avatar-plus-hangdong/mountain-view.jpg';
+import traditionalShow from '@/assets/avatar-plus-hangdong/traditional-show.jpg';
+import naturePark from '@/assets/avatar-plus-hangdong/nature-park.jpg';
 
 export const avatarPlusHangdongTourData: TourData = {
   id: 'avatar-plus-hangdong-adventure',

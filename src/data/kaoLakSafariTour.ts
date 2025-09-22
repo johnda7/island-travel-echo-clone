@@ -1,14 +1,14 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений - используем существующие как заглушки
-import safariMain from '@/assets/karon-beach.jpg';
-import elephantRiding from '@/assets/kata-beach.jpg';
-import waterfallSwim from '@/assets/mai-khao-beach.jpg';
-import bambooRafting from '@/assets/naiharn-beach.jpg';
-import jungleWalk from '@/assets/naiyang-beach.jpg';
-import localLunch from '@/assets/patong-beach.jpg';
-import groupSafari from '@/assets/surin-beach.jpg';
-import wildlife from '@/assets/freedom-beach.jpg';
+// Реальные фото для тура Као Лак Сафари
+import safariMain from '@/assets/kao-lak-safari/safari-main.jpg';
+import elephantRiding from '@/assets/kao-lak-safari/elephant-riding.jpg';
+import waterfallSwim from '@/assets/kao-lak-safari/waterfall-swim.jpg';
+import bambooRafting from '@/assets/kao-lak-safari/bamboo-rafting.jpg';
+import jungleWalk from '@/assets/kao-lak-safari/jungle-walk.jpg';
+import localLunch from '@/assets/kao-lak-safari/local-lunch.jpg';
+import groupSafari from '@/assets/kao-lak-safari/group-safari.jpg';
+import wildlife from '@/assets/kao-lak-safari/wildlife.jpg';
 
 export const kaoLakSafariTourData: TourData = {
   id: 'kao-lak-safari-1-day',

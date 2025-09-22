@@ -1,16 +1,16 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений - используем существующие как заглушки, потом заменим на реальные
-import raftingMain from '@/assets/maya-bay-sunrise.jpg';
-import raftingAction from '@/assets/phi-phi-lagoon.jpg';
-import elephantShow from '@/assets/phi-phi-maya-bay.jpg';
-import elephantFeeding from '@/assets/phi-phi-monkey-beach.jpg';
-import spaRelax from '@/assets/phi-phi-snorkeling.jpg';
-import spaMassage from '@/assets/phi-phi-speedboat.jpg';
-import atvAdventure from '@/assets/phi-phi-sunset.jpg';
-import atvJungle from '@/assets/bangtao-beach.jpg';
-import groupPhoto from '@/assets/freedom-beach.jpg';
-import lunch from '@/assets/kamala-beach.jpg';
+// Реальные фото для тура Рафтинг + SPA + ATV
+import raftingMain from '@/assets/rafting-spa-atv/rafting-main.jpg';
+import raftingAction from '@/assets/rafting-spa-atv/rafting-action.jpg';
+import elephantShow from '@/assets/rafting-spa-atv/elephant-show.jpg';
+import elephantFeeding from '@/assets/rafting-spa-atv/elephant-feeding.jpg';
+import spaRelax from '@/assets/rafting-spa-atv/spa-relax.jpg';
+import spaMassage from '@/assets/rafting-spa-atv/spa-massage.jpg';
+import atvAdventure from '@/assets/rafting-spa-atv/atv-adventure.jpg';
+import atvJungle from '@/assets/rafting-spa-atv/atv-jungle.jpg';
+import groupPhoto from '@/assets/rafting-spa-atv/group-photo.jpg';
+import lunch from '@/assets/rafting-spa-atv/lunch.jpg';
 
 export const raftingSpaAtvTourData: TourData = {
   id: 'rafting-slon-spa-atv-1-day',

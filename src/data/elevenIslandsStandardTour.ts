@@ -1,14 +1,14 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений - используем существующие как заглушки
-import elevenIslandsMain from '@/assets/freedom-beach.jpg';
-import speedboatRiding from '@/assets/patong-beach.jpg';
-import islandHopping from '@/assets/karon-beach.jpg';
-import snorkelingSpot from '@/assets/kata-beach.jpg';
-import beachRelaxation from '@/assets/mai-khao-beach.jpg';
-import crystalLagoon from '@/assets/naiharn-beach.jpg';
-import tropicalIslands from '@/assets/naiyang-beach.jpg';
-import paradiseBeach from '@/assets/surin-beach.jpg';
+// Реальные фото для тура 11 островов Стандарт
+import elevenIslandsMain from '@/assets/eleven-islands-standard/eleven-islands-main.jpg';
+import speedboatRiding from '@/assets/eleven-islands-standard/speedboat-riding.jpg';
+import islandHopping from '@/assets/eleven-islands-standard/island-hopping.jpg';
+import snorkelingSpot from '@/assets/eleven-islands-standard/snorkeling-spot.jpg';
+import beachRelaxation from '@/assets/eleven-islands-standard/beach-relaxation.jpg';
+import crystalLagoon from '@/assets/eleven-islands-standard/crystal-lagoon.jpg';
+import tropicalIslands from '@/assets/eleven-islands-standard/tropical-islands.jpg';
+import paradiseBeach from '@/assets/eleven-islands-standard/paradise-beach.jpg';
 
 export const elevenIslandsStandardTourData: TourData = {
   id: 'eleven-islands-standard-speedboat',

@@ -17,6 +17,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3, Minus, Plus } from "lucide-react";
+import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 
 // Import images from phuketgo
 import mayaBay1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
@@ -137,6 +138,7 @@ const excursion = {
 };
 
 const PhiPhi2Days1Night = () => {
+  // Галерея
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [showThumbnails, setShowThumbnails] = useState(false);
@@ -145,11 +147,14 @@ const PhiPhi2Days1Night = () => {
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [mobileGalleryIndex, setMobileGalleryIndex] = useState<number>(0);
   
-  // Калькулятор цен
+  // Универсальный модал бронирования
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  
+  // Калькулятор цен - ВОССТАНОВЛЕНИЕ ОТСУТСТВУЮЩИХ СОСТОЯНИЙ
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
   
-  // Форма бронирования
+  // Форма бронирования - ВОССТАНОВЛЕНИЕ ОТСУТСТВУЮЩЕГО СОСТОЯНИЯ
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -167,51 +172,23 @@ const PhiPhi2Days1Night = () => {
     }
 
     const message = `🏝️ Новая бронь тура!
-
-📋 Тур: ${excursion.title}
-💰 Цена: ${totalPrice.toLocaleString()} ฿
-👥 Гости: ${adults} взрослых, ${children} детей
+🚢 Тур: ${excursion.title}
+👤 Имя: ${formData.name}
+📞 Телефон: ${formData.phone}
+📧 Email: ${formData.email}
 📅 Дата: ${formData.date}
-
-👤 Контактная информация:
-• Имя: ${formData.name}
-• Телефон: ${formData.phone}
-• Email: ${formData.email || 'не указан'}
-
-⏰ Заявка подана: ${new Date().toLocaleString('ru-RU')}`;
+👥 Гости: ${adults} взрослых, ${children} детей
+💰 Итого: ${totalPrice.toLocaleString()} ${excursion.currency}`;
 
     try {
-      // ПРЯМАЯ отправка в Telegram бот через API
-      const botToken = '8445717266:AAHEDA4SJPUL48gpV-Q9qc-V98GSuyPFn08';
-      const chatId = '@PhuketBookBot'; // или ваш chat_id
-      
-      const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: message,
-          parse_mode: 'HTML'
-        })
-      });
-
-      if (response.ok) {
-        alert('Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
-        // Очищаем форму
-        setFormData({ name: "", phone: "", email: "", date: "" });
-        setAdults(1);
-        setChildren(0);
-        setShowBookingForm(false);
-      } else {
-        throw new Error('Ошибка отправки');
-      }
+      window.open(`https://wa.me/66909977417?text=${encodeURIComponent(message)}`, '_blank');
+      setShowBookingForm(false);
     } catch (error) {
-      console.error('Ошибка:', error);
-      alert('Произошла ошибка при отправке заявки. Попробуйте еще раз.');
+      console.error('Ошибка отправки:', error);
     }
   };
+
+  const minTouchDistance = 50;
 
   const openModal = (image: string, index: number) => {
     setSelectedImage(image);
@@ -490,95 +467,24 @@ const PhiPhi2Days1Night = () => {
               <div className="sticky top-4">
                 <Card className="shadow-lg border-0">
                   <CardContent className="p-6">
-                    {/* Калькулятор стоимости */}
-                    <div className="mb-6">
-                      <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">Рассчитать стоимость</h3>
-                      
-                      <div className="space-y-4">
-                        {/* Взрослые */}
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <span className="text-gray-700 font-medium">Взрослые</span>
-                            <div className="text-sm text-gray-500">{excursion.priceAdult} {excursion.currency}</div>
-                          </div>
-                          <div className="flex items-center space-x-3">
-                            <button
-                              onClick={() => setAdults(Math.max(1, adults - 1))}
-                              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
-                              disabled={adults <= 1}
-                            >
-                              -
-                            </button>
-                            <span className="font-semibold min-w-[20px] text-center">{adults}</span>
-                            <button
-                              onClick={() => setAdults(adults + 1)}
-                              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Дети */}
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <span className="text-gray-700 font-medium">Дети (4-11 лет)</span>
-                            <div className="text-sm text-gray-500">{excursion.priceChild} {excursion.currency}</div>
-                          </div>
-                          <div className="flex items-center space-x-3">
-                            <button
-                              onClick={() => setChildren(Math.max(0, children - 1))}
-                              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
-                              disabled={children <= 0}
-                            >
-                              -
-                            </button>
-                            <span className="font-semibold min-w-[20px] text-center">{children}</span>
-                            <button
-                              onClick={() => setChildren(children + 1)}
-                              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="text-xs text-gray-500 text-center">
-                          До 3 лет бесплатно
-                        </div>
-
-                        {/* Итоговая стоимость */}
-                        <div className="border-t pt-4">
-                          <div className="text-center">
-                            <div className="text-sm text-gray-600 mb-1">Итого:</div>
-                            <div className="text-3xl font-bold text-green-600">
-                              {totalPrice.toLocaleString()} {excursion.currency}
-                            </div>
-                            <div className="text-sm text-gray-500 mt-1">
-                              за {adults + children} чел.
-                            </div>
-                          </div>
-                        </div>
+                    <div className="space-y-3 mb-6 text-sm text-left">
+                      <div className="flex items-center gap-3">
+                        <Clock className="w-4 h-4 text-gray-400" />
+                        <span>Продолжительность: {excursion.duration}</span>
                       </div>
-                      
-                      <div className="space-y-3 mb-6 text-sm text-left mt-6">
-                        <div className="flex items-center gap-3">
-                          <Clock className="w-4 h-4 text-gray-400" />
-                          <span>Продолжительность: {excursion.duration}</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <Users className="w-4 h-4 text-gray-400" />
-                          <span>Группа: {excursion.groupSize}</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <Calendar className="w-4 h-4 text-gray-400" />
-                          <span>Ежедневно</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <MapPin className="w-4 h-4 text-gray-400" />
-                          <span>Трансфер включен</span>
-                        </div>
+                      <div className="flex items-center gap-3">
+                        <Users className="w-4 h-4 text-gray-400" />
+                        <span>Группа: {excursion.groupSize}</span>
                       </div>
+                      <div className="flex items-center gap-3">
+                        <Calendar className="w-4 h-4 text-gray-400" />
+                        <span>Ежедневно</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <MapPin className="w-4 h-4 text-gray-400" />
+                        <span>Трансфер включен</span>
+                      </div>
+                    </div>
                       
                       <div className="space-y-3">
                         <Button 

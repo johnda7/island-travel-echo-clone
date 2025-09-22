@@ -14,6 +14,13 @@ import { phiPhiTourData } from '../data/phiPhiTour.ts';
 import { pearlsAndamanSeaTourData } from '../data/pearlsTour.ts';
 import { dostoprimechatelnostiPhuketaTourData } from '../data/dostoprimechatelnostiPhuketaTour.ts';
 import { rassvetnoePrikljuchenieTourData } from '../data/rassvetnoePrikljuchenieTour.ts';
+// НОВЫЕ 6 ТУРОВ
+import { raftingSpaAtvTourData } from '../data/raftingSpaAtvTour.ts';
+import { kaoLakSafariTourData } from '../data/kaoLakSafariTour.ts';
+import { rachaCoralIslandsTourData } from '../data/rachaCoralIslandsTour.ts';
+import { jamesBondIslandTourData } from '../data/jamesBondIslandTour.ts';
+import { avatarPlusHangdongTourData } from '../data/avatarPlusHangdongTour.ts';
+import { elevenIslandsStandardTourData } from '../data/elevenIslandsStandardTour.ts';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -86,6 +93,86 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,    // ✅ показываем на главной
     priority: 4,         // 🎯 четвертый приоритет
     data: () => Promise.resolve(rassvetnoePrikljuchenieTourData)
+  },
+  
+  // 🚀 НОВЫЕ 6 ТУРОВ - ПОЛНАЯ КОЛЛЕКЦИЯ!
+  
+  // 5. Рафтинг + SPA + ATV (1 день)
+  {
+    id: 'rafting-spa-atv-1-day',
+    name: 'Рафтинг + Слоны + SPA + ATV (1 день)',
+    category: 'adventure',
+    tags: ['рафтинг', 'слоны', 'spa', 'atv', 'приключения', '1 день', 'активный', 'комбо'],
+    isPopular: true,     // ✅ показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: false,   // ❌ не на главной (пока)
+    priority: 5,
+    data: () => Promise.resolve(raftingSpaAtvTourData)
+  },
+
+  // 6. Као Лак Сафари (1 день)
+  {
+    id: 'kao-lak-safari-1-day',
+    name: 'Као Лак Сафари (1 день)',
+    category: 'adventure',
+    tags: ['сафари', 'слоны', 'водопады', 'рафтинг', 'джунгли', '1 день', 'природа', 'као лак'],
+    isPopular: true,     // ✅ показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: false,   // ❌ не на главной (пока)
+    priority: 6,
+    data: () => Promise.resolve(kaoLakSafariTourData)
+  },
+
+  // 7. Острова Рача и Корал на спидботе
+  {
+    id: 'racha-coral-islands-speedboat',
+    name: 'Острова Рача и Корал на спидботе',
+    category: 'islands',
+    tags: ['острова', 'рача', 'корал', 'спидбот', 'снорклинг', 'парасейлинг', 'пляжи', '1 день'],
+    isPopular: true,     // ✅ показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: false,   // ❌ не на главной (пока)
+    priority: 7,
+    data: () => Promise.resolve(rachaCoralIslandsTourData)
+  },
+
+  // 8. Остров Джеймса Бонда (залив Пханг Нга)
+  {
+    id: 'james-bond-island-phang-nga',
+    name: 'Остров Джеймса Бонда (залив Пханг Нга)',
+    category: 'islands',
+    tags: ['джеймс бонд', 'пханг нга', 'каякинг', 'пещеры', 'плавучая деревня', 'лонгтейл', '1 день'],
+    isPopular: true,     // ✅ показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: true,    // ✅ показываем на главной (популярный тур!)
+    priority: 8,
+    data: () => Promise.resolve(jamesBondIslandTourData)
+  },
+
+  // 9. Аватар Плюс + Хангдонг
+  {
+    id: 'avatar-plus-hangdong-adventure',
+    name: 'Аватар Плюс + Хангдонг',
+    category: 'adventure',
+    tags: ['аватар', 'зиплайн', 'слоны', 'каноэ', 'горы', 'хангдонг', 'приключения', '1 день'],
+    isPopular: true,     // ✅ показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: false,   // ❌ не на главной (пока)
+    priority: 9,
+    data: () => Promise.resolve(avatarPlusHangdongTourData)
+  },
+
+  // 10. 11 островов Стандарт на спидботе
+  {
+    id: 'eleven-islands-standard-speedboat',
+    name: '11 островов Стандарт на спидботе',
+    category: 'islands',
+    tags: ['11 островов', 'спидбот', 'хоппинг', 'снорклинг', 'пхи-пхи', 'бамбу', 'лагуны', '1 день'],
+    isPopular: false,    // ❌ не в популярных (очень длинный тур)
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: false,   // ❌ не на главной
+    priority: 10,
+    data: () => Promise.resolve(elevenIslandsStandardTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

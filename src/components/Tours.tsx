@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, Users, Calendar, Star, MapPin } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { useTours, TourWithMeta } from "@/hooks/useTours";
 import type { TourData } from "@/types/Tour";
@@ -15,13 +15,33 @@ interface ToursProps {
 
 export const Tours = ({ filteredTours }: ToursProps) => {
   const { popularTours, loading } = useTours();
+  const navigate = useNavigate();
+  
+  // Состояние для фильтрации по тегам
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
   
   // Использовать переданные туры или популярные по умолчанию
-  const toursToShow = filteredTours || popularTours;
+  let toursToShow = filteredTours || popularTours;
+  
+  // Фильтровать по выбранному тегу
+  if (selectedTag) {
+    toursToShow = toursToShow.filter(tour => 
+      tour.tags?.some(tag => tag.toLowerCase() === selectedTag.toLowerCase())
+    );
+  }
   
   // Состояние для модального окна бронирования
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [selectedTour, setSelectedTour] = useState<TourData | null>(null);
+
+  // Функция для обработки клика по тегу
+  const handleTagClick = (tag: string) => {
+    if (selectedTag === tag) {
+      setSelectedTag(null); // Убрать фильтр если тег уже выбран
+    } else {
+      setSelectedTag(tag); // Установить новый фильтр
+    }
+  };
 
   // Простая функция для определения пути тура
   const getDetailPath = (tour: TourWithMeta) => {
@@ -70,6 +90,24 @@ export const Tours = ({ filteredTours }: ToursProps) => {
               : 'Выберите лучшее приключение для незабываемого отдыха в Таиланде'
             }
           </p>
+          
+          {/* Индикатор активного фильтра */}
+          {selectedTag && (
+            <div className="mt-4 flex justify-center items-center gap-2">
+              <span className="text-sm text-gray-600">Фильтр по тегу:</span>
+              <Badge variant="default" className="bg-blue-600">
+                #{selectedTag}
+              </Badge>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setSelectedTag(null)}
+                className="text-xs"
+              >
+                Очистить
+              </Button>
+            </div>
+          )}
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -138,10 +176,21 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                     )}
                   </div>
                   
-                  {/* ✅ ЦЕНТРАЛИЗОВАННЫЕ ТЕГИ ИЗ ДАННЫХ */}
+                  {/* ✅ ЦЕНТРАЛИЗОВАННЫЕ КЛИКАБЕЛЬНЫЕ ТЕГИ ИЗ ДАННЫХ */}
                   <div className="flex flex-wrap gap-1 mb-4">
                     {tour.tags?.slice(0, 3).map((tag: string, index: number) => (
-                      <Badge key={index} variant="secondary" className="text-xs">
+                      <Badge 
+                        key={index} 
+                        variant={selectedTag === tag ? "default" : "secondary"} 
+                        className={`text-xs cursor-pointer transition-colors hover:bg-blue-100 ${
+                          selectedTag === tag ? "bg-blue-600 text-white" : ""
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleTagClick(tag);
+                        }}
+                      >
                         #{tag}
                       </Badge>
                     ))}

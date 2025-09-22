@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
 import { dostoprimechatelnostiPhuketaTourData } from "@/data/dostoprimechatelnostiPhuketaTour";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import { ModalPortal } from "@/components/ModalPortal";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = dostoprimechatelnostiPhuketaTourData;
@@ -660,11 +661,13 @@ const DostoprimechatelnostiPhuketa = () => {
       )}
 
       {/* Модальное окно бронирования */}
-      <UniversalBookingModal
-        isOpen={showBookingModal}
-        onClose={() => setShowBookingModal(false)}
-        tourData={excursion}
-      />
+      <ModalPortal>
+        <UniversalBookingModal
+          isOpen={showBookingModal}
+          onClose={() => setShowBookingModal(false)}
+          tourData={excursion}
+        />
+      </ModalPortal>
 
       <Footer />
     </div>

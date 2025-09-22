@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Clock, Users, Calendar, Star, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import { ModalPortal } from "@/components/ModalPortal";
 import { useTours, TourWithMeta } from "@/hooks/useTours";
 import type { TourData } from "@/types/Tour";
 import fallbackImage from "@/assets/maya-bay-sunrise.jpg";
@@ -197,11 +198,13 @@ export const Tours = ({ filteredTours }: ToursProps) => {
       
       {/* Модальное окно бронирования */}
       {selectedTour && (
-        <UniversalBookingModal
-          isOpen={showBookingModal}
-          onClose={() => setShowBookingModal(false)}
-          tourData={selectedTour}
-        />
+        <ModalPortal>
+          <UniversalBookingModal
+            isOpen={showBookingModal}
+            onClose={() => setShowBookingModal(false)}
+            tourData={selectedTour}
+          />
+        </ModalPortal>
       )}
     </section>
   );

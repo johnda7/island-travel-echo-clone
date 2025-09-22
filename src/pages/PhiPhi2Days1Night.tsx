@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
 import { phiPhi2DaysTourData } from "@/data/phiPhi2DaysTour";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import { ModalPortal } from "@/components/ModalPortal";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = phiPhi2DaysTourData;
@@ -22,6 +23,12 @@ const PhiPhi2Days1Night = () => {
   
   // Состояние для модального окна бронирования
   const [showBookingModal, setShowBookingModal] = useState(false);
+
+  // ОТЛАДКА: Проверяем данные тура
+  console.log("PhiPhi2Days1Night: excursion data:", excursion);
+  console.log("PhiPhi2Days1Night: priceAdult:", excursion.priceAdult);
+  console.log("PhiPhi2Days1Night: priceChild:", excursion.priceChild);
+  console.log("PhiPhi2Days1Night: showBookingModal:", showBookingModal);
 
   const openModal = (image: string, index: number) => {
     setSelectedImage(image);
@@ -331,7 +338,11 @@ const PhiPhi2Days1Night = () => {
                       
                       <div className="space-y-3">
                         <Button 
-                          onClick={() => setShowBookingModal(true)}
+                          onClick={() => {
+                            console.log("PhiPhi2Days1Night: Кнопка 'Забронировать' нажата");
+                            console.log("PhiPhi2Days1Night: excursion перед передачей в модал:", excursion);
+                            setShowBookingModal(true);
+                          }}
                           className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
                         >
                           Забронировать тур
@@ -410,7 +421,10 @@ const PhiPhi2Days1Night = () => {
                   от {excursion.priceAdult} {excursion.currency}
                 </div>
                 <Button 
-                  onClick={() => setShowBookingModal(true)}
+                  onClick={() => {
+                    console.log("PhiPhi2Days1Night: Мобильная кнопка 'Забронировать' нажата");
+                    setShowBookingModal(true);
+                  }}
                   className="w-full bg-green-600 hover:bg-green-700 text-white py-4 text-lg font-semibold rounded-xl"
                 >
                   <Calendar className="w-5 h-5 mr-2" />
@@ -660,11 +674,13 @@ const PhiPhi2Days1Night = () => {
       )}
 
       {/* Модальное окно бронирования */}
-      <UniversalBookingModal
-        isOpen={showBookingModal}
-        onClose={() => setShowBookingModal(false)}
-        tourData={excursion}
-      />
+      <ModalPortal>
+        <UniversalBookingModal
+          isOpen={showBookingModal}
+          onClose={() => setShowBookingModal(false)}
+          tourData={excursion}
+        />
+      </ModalPortal>
 
       <Footer />
     </div>

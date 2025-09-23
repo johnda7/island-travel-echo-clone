@@ -17,8 +17,6 @@ import PearlsAndamanSea from "./pages/PearlsAndamanSea";
 import DostoprimechatelnostiPhuketa from "./pages/DostoprimechatelnostiPhuketa";
 import RassvetnoePrikljuchenie from "./pages/RassvetnoePrikljuchenie";
 // НОВЫЕ 6 ТУРОВ
-import RaftingSpaAtvTour from "./pages/RaftingSpaAtvTour";
-import KaoLakSafariTour from "./pages/KaoLakSafariTour";
 
 import JamesBondIslandTour from "./pages/JamesBondIslandTour";
 
@@ -64,9 +62,8 @@ function App() {
               <Route path="/tours/rassvetnoe-prikljuchenie" element={<RassvetnoePrikljuchenie />} />
               
               {/* НОВЫЕ 6 ТУРОВ - ПОЛНЫЙ СПИСОК */}
-              {/* 1. Рафтинг + SPA + ATV */}
-              <Route path="/excursion/rafting-spa-atv-1-day" element={<RaftingSpaAtvTour />} />
-              <Route path="/tours/rafting-spa-atv-1-day" element={<RaftingSpaAtvTour />} />
+              {/* 1. Рафтинг + SPA + ATV - ВРЕМЕННО ОТКЛЮЧЕН */}
+              
               
                {/* 2. Као Лак Сафари - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ЧЕРЕЗ CMS/DynamicTourPage */}
               

@@ -15,8 +15,6 @@ import { pearlsAndamanSeaTourData } from '../data/pearlsTour.ts';
 import { dostoprimechatelnostiPhuketaTourData } from '../data/dostoprimechatelnostiPhuketaTour.ts';
 import { rassvetnoePrikljuchenieTourData } from '../data/rassvetnoePrikljuchenieTour.ts';
 // НОВЫЕ 6 ТУРОВ
-import { raftingSpaAtvTourData } from '../data/raftingSpaAtvTour.ts';
-import { kaoLakSafariTourData } from '../data/kaoLakSafariTour.ts';
 
 import { jamesBondIslandTourData } from '../data/jamesBondIslandTour.ts';
 import { avatarPlusHangdongTourData } from '../data/avatarPlusHangdongTour.ts';
@@ -104,11 +102,11 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     name: 'РАФТИНГ + СЛОНОВЬЕ СПА + ATV 1 день',
     category: 'adventure',
     tags: ['рафтинг', 'слоны', 'spa', 'atv', 'приключения', '1 день', 'активный', 'комбо'],
-    isPopular: true,     // ✅ показываем в популярных
-    isActive: true,      // ✅ АКТИВИРОВАН
-    isFeatured: true,    // ✅ показываем на главной - НОВЫЙ ТУР!
+    isPopular: false,     // ❌ временно скрыто
+    isActive: false,      // ❌ ДЕАКТИВИРОВАН - файл удален
+    isFeatured: false,    // ❌ временно скрыто
     priority: 5,
-    data: () => Promise.resolve(raftingSpaAtvTourData)
+    data: () => Promise.reject(new Error('Tour temporarily unavailable'))
   },
 
   // 6. Као Лак Сафари (1 день)
@@ -117,11 +115,11 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     name: 'Као Лак Сафари (1 день)',
     category: 'adventure',
     tags: ['сафари', 'слоны', 'водопады', 'рафтинг', 'джунгли', '1 день', 'природа', 'као лак'],
-    isPopular: true,     // ✅ показываем в популярных
-    isActive: true,      // ✅ АКТИВИРОВАН
+    isPopular: false,     // ❌ временно скрыто
+    isActive: false,      // ❌ ДЕАКТИВИРОВАН - файл удален
     isFeatured: false,   // ❌ не на главной (пока)
     priority: 6,
-    data: () => Promise.resolve(kaoLakSafariTourData)
+    data: () => Promise.reject(new Error('Tour temporarily unavailable'))
   },
 
 

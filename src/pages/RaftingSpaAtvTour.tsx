@@ -179,13 +179,29 @@ const RaftingSpaAtvTour = () => {
               <div className="mt-4 px-4">
                 <button
                   onClick={openGallery}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors mb-4"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                   Показать все {excursion.gallery.length} фото
                 </button>
+                
+                {/* Mobile CTA Button - сразу после галереи */}
+                <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-2">Забронировать тур</h3>
+                    <div className="text-2xl font-bold text-green-600 mb-4">
+                      от {excursion.priceAdult} {excursion.currency}
+                    </div>
+                    <Button 
+                      onClick={() => setShowBookingModal(true)}
+                      className="w-full bg-green-600 hover:bg-green-700 text-white py-4 text-lg font-semibold rounded-xl"
+                    >
+                      Забронировать тур
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

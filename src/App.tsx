@@ -21,7 +21,7 @@ import RaftingSpaAtvTour from "./pages/RaftingSpaAtvTour";
 import KaoLakSafariTour from "./pages/KaoLakSafariTour";
 
 import JamesBondIslandTour from "./pages/JamesBondIslandTour";
-import AvatarPlusHangdongTour from "./pages/AvatarPlusHangdongTour";
+
 import ElevenIslandsStandardTour from "./pages/ElevenIslandsStandardTour";
 
 const queryClient = new QueryClient();
@@ -74,9 +74,7 @@ function App() {
               
                {/* 4. Остров Джеймса Бонда - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ЧЕРЕЗ CMS/DynamicTourPage */}
               
-              {/* 5. Аватар Плюс + Хангдонг */}
-              <Route path="/excursion/avatar-plus-hangdong-adventure" element={<AvatarPlusHangdongTour />} />
-              <Route path="/tours/avatar-plus-hangdong-adventure" element={<AvatarPlusHangdongTour />} />
+               {/* 5. Аватар Плюс + Хангдонг - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ЧЕРЕЗ CMS/DynamicTourPage */}
               
               {/* 6. 11 островов Стандарт */}
               <Route path="/excursion/eleven-islands-standard-speedboat" element={<ElevenIslandsStandardTour />} />

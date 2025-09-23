@@ -1,12 +1,12 @@
 import type { TourData } from "@/types/Tour";
-// Импортируем изображения как модули
+// Импортируем изображения как модули - используем существующие файлы
 import mainImage from "@/assets/phi-phi-maya-bay.jpg";
-import jamesBondImage from "@/assets/james-1.jpg";
+import jamesBondImage from "@/assets/phi-phi-2days/james-1.jpg";
 import hongIslandImage from "@/assets/freedom-beach.jpg";
-import phiPhiImage from "@/assets/mayabay-1.jpg";
-import vikingCaveImage from "@/assets/viking-cave.jpg";
-import mayaBayImage from "@/assets/maya-bay-1.jpg";
-import pilehLagoonImage from "@/assets/pileh-lagoon.jpg";
+import phiPhiImage from "@/assets/phi-phi-2days/mayabay-1.jpg";
+import vikingCaveImage from "@/assets/phi-phi-2days/viking-cave.jpg";
+import mayaBayImage from "@/assets/phi-phi-2days/maya-bay-1.jpg";
+import pilehLagoonImage from "@/assets/phi-phi-2days/pileh-lagoon.jpg";
 import panyiVillageImage from "@/assets/patong-beach.jpg";
 
 export const elevenIslandsMegaTourData: TourData = {

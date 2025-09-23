@@ -129,8 +129,11 @@ const DynamicTourPage = () => {
       <div className="min-h-screen bg-white">
         <Header />
         <div className="container mx-auto px-4 py-16 text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Загрузка тура...</p>
+          <div className="relative mx-auto w-32 h-32">
+            <div className="animate-spin rounded-full h-32 w-32 border-4 border-gray-200"></div>
+            <div className="animate-spin rounded-full h-32 w-32 border-4 border-green-600 border-t-transparent absolute top-0 left-0"></div>
+          </div>
+          <p className="mt-6 text-lg text-gray-600 animate-pulse">Загрузка тура...</p>
         </div>
         <Footer />
       </div>

@@ -7,6 +7,7 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight } fr
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
 import { useCMSTours, CMSTour } from "@/hooks/useCMSTours";
+import fallbackImage from "@/assets/maya-bay-sunrise.jpg";
 
 const DynamicTourPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -192,9 +193,12 @@ const DynamicTourPage = () => {
                     src={image.image_url} 
                     alt={image.alt_text || tour.title}
                     className="w-full h-full object-cover transition-opacity duration-300"
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    decoding="async"
+                    fetchpriority={index === 0 ? 'high' : 'auto'}
                     onError={(e) => {
                       console.log('❌ Не удалось загрузить изображение:', image.image_url);
-                      e.currentTarget.src = '/assets/surin-beach.jpg'; // fallback
+                      e.currentTarget.src = fallbackImage; // корректный fallback asset
                     }}
                     onLoad={() => {
                       console.log('✅ Изображение загружено:', image.image_url);
@@ -243,9 +247,12 @@ const DynamicTourPage = () => {
                       src={image.image_url} 
                       alt={image.alt_text || tour.title}
                       className="w-full h-full object-cover transition-opacity duration-300"
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
+                      fetchpriority={index === 0 ? 'high' : 'auto'}
                       onError={(e) => {
                         console.log('❌ Не удалось загрузить изображение:', image.image_url);
-                        e.currentTarget.src = '/assets/surin-beach.jpg'; // fallback
+                        e.currentTarget.src = fallbackImage; // корректный fallback asset
                       }}
                       onLoad={() => {
                         console.log('✅ Изображение загружено:', image.image_url);

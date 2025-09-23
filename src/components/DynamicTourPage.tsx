@@ -12,6 +12,7 @@ const DynamicTourPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const { tours, loading } = useCMSTours();
   
+  // ВСЕ ХУКИ ДОЛЖНЫ БЫТЬ В НАЧАЛЕ - ДО ЛЮБЫХ УСЛОВНЫХ RETURNS
   // Галерея состояния
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
@@ -22,45 +23,22 @@ const DynamicTourPage = () => {
   // Состояние для модального окна бронирования
   const [showBookingModal, setShowBookingModal] = useState(false);
 
-  // Пока загружаются туры - показываем спиннер
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white">
-        <Header />
-        <div className="container mx-auto px-4 py-16 text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-green-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Загрузка тура...</p>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
-
   // Получаем тур из загруженного списка
   const tour = tours.find(t => t.slug === slug);
-  console.log('🔍 Ищем тур:', slug);
-  console.log('📋 Доступные туры:', tours.map(t => t.slug));
-  console.log('🎯 Найденный тур:', tour?.title || 'НЕ НАЙДЕН');
 
-  // Если тур не найден ПОСЛЕ загрузки - редирект на 404
-  if (!tour) {
-    console.log('❌ Тур не найден, редирект на 404');
-    return <Navigate to="/404" replace />;
-  }
-
-  // Функции для галереи (такие же как в оригинальном компоненте)
-  const openModal = (image: string, index: number) => {
+  // Функции для галереи (все хуки включая useCallback должны быть здесь)
+  const openModal = useCallback((image: string, index: number) => {
     setSelectedImage(image);
     setCurrentImageIndex(index);
     setShowFullGallery(true);
-  };
+  }, []);
 
-  const openGallery = () => {
+  const openGallery = useCallback(() => {
     if (!tour?.gallery.length) return;
     setShowFullGallery(true);
     setSelectedImage(tour.gallery[0].image_url);
     setCurrentImageIndex(0);
-  };
+  }, [tour]);
 
   const closeModal = useCallback(() => {
     setSelectedImage(null);
@@ -126,7 +104,27 @@ const DynamicTourPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showFullGallery, nextImage, prevImage, closeModal]);
 
-  // Конвертируем тур в формат, совместимый с UniversalBookingModal - КАК В СТАТИЧЕСКИХ ТУРАХ
+  // ТЕПЕРЬ УСЛОВНЫЕ RETURNS - ПОСЛЕ ВСЕХ ХУКОВ
+  // Пока загружаются туры - показываем спиннер
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <div className="container mx-auto px-4 py-16 text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-green-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Загрузка тура...</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Если тур не найден ПОСЛЕ загрузки - редирект на 404
+  if (!tour) {
+    return <Navigate to="/404" replace />;
+  }
+
+  // Конвертируем тур в формат, совместимый с UniversalBookingModal
   const tourData = {
     id: tour.id,
     title: tour.title,

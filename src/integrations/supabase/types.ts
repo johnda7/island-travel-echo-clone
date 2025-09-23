@@ -387,7 +387,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_all_tours: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
+      get_tour_with_gallery: {
+        Args: { tour_slug: string }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never

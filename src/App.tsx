@@ -10,6 +10,7 @@ import About from "./pages/About";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import AdminPanel from "./pages/AdminPanel";
+import DynamicTourPage from "@/components/DynamicTourPage";
 // ТОЛЬКО ЗАЩИЩЕННЫЕ СТРАНИЦЫ ТУРОВ (эталоны PhiPhi и Pearls)
 import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 import PearlsAndamanSea from "./pages/PearlsAndamanSea";
@@ -41,6 +42,9 @@ function App() {
               <Route path="/tours" element={<Tours />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<ContactPage />} />
+              
+              {/* Динамический роутинг для новых туров из CMS */}
+              <Route path="/tours/:slug" element={<DynamicTourPage />} />
               
               {/* ЗАЩИЩЕННЫЕ ПОЛНЫЕ СТРАНИЦЫ ТУРОВ (эталоны) */}
               {/* Phi Phi 2 days / 1 night */}

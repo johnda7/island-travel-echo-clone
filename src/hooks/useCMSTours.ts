@@ -1,0 +1,211 @@
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+
+export interface CMSTour {
+  id: string;
+  title: string;
+  subtitle: string;
+  slug: string;
+  description: string;
+  short_description: string;
+  price_adult: number;
+  price_child: number;
+  currency: string;
+  duration: string;
+  group_size: string;
+  highlights: string[];
+  included: string[];
+  excluded: string[];
+  requirements: string[];
+  important_info: string[];
+  tags: string[];
+  is_active: boolean;
+  is_featured: boolean;
+  created_at: string;
+  gallery: {
+    id: string;
+    image_url: string;
+    alt_text: string;
+    caption: string;
+    is_main: boolean;
+    sort_order: number;
+  }[];
+  itinerary: {
+    day_number: number;
+    title: string;
+    description: string;
+    activities: string[];
+    meals_included: string[];
+    accommodation: string;
+  }[];
+}
+
+export const useCMSTours = () => {
+  const [tours, setTours] = useState<CMSTour[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchTours = async () => {
+    try {
+      setLoading(true);
+      
+      // Используем прямой запрос вместо RPC пока не настроили типы
+      const { data, error } = await supabase
+        .from('tours')
+        .select(`
+          *,
+          tour_gallery (
+            id, image_url, alt_text, caption, is_main, sort_order
+          )
+        `)
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      
+      const transformedTours: CMSTour[] = data?.map(tour => ({
+        ...tour,
+        gallery: tour.tour_gallery || [],
+        itinerary: []
+      })) || [];
+      
+      setTours(transformedTours);
+    } catch (err) {
+      console.error('Error fetching tours:', err);
+      setError(err instanceof Error ? err.message : 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getTourBySlug = async (slug: string): Promise<CMSTour | null> => {
+    try {
+      const { data, error } = await supabase
+        .from('tours')
+        .select(`
+          *,
+          tour_gallery (
+            id, image_url, alt_text, caption, is_main, sort_order
+          ),
+          tour_itinerary (
+            day_number, title, description, activities, meals_included, accommodation
+          )
+        `)
+        .eq('slug', slug)
+        .eq('is_active', true)
+        .single();
+      
+      if (error) throw error;
+      
+      if (!data) return null;
+
+      return {
+        ...data,
+        gallery: data.tour_gallery || [],
+        itinerary: data.tour_itinerary || []
+      };
+    } catch (err) {
+      console.error('Error fetching tour:', err);
+      return null;
+    }
+  };
+
+  const searchTours = async (query: string): Promise<CMSTour[]> => {
+    try {
+      const { data, error } = await supabase
+        .from('tours')
+        .select(`
+          *,
+          tour_gallery (
+            id, image_url, alt_text, caption, is_main, sort_order
+          )
+        `)
+        .or(`title.ilike.%${query}%, tags.cs.{${query}}`)
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      
+      return data?.map(tour => ({
+        ...tour,
+        gallery: tour.tour_gallery || [],
+        itinerary: []
+      })) || [];
+    } catch (err) {
+      console.error('Error searching tours:', err);
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    fetchTours();
+  }, []);
+
+  return {
+    tours,
+    loading,
+    error,
+    fetchTours,
+    getTourBySlug,
+    searchTours,
+  };
+};
+
+export const useCMSBookings = () => {
+  const createBooking = async (booking: {
+    tour_id: string;
+    customer_name: string;
+    customer_email: string;
+    customer_phone: string;
+    booking_date: string;
+    adults_count: number;
+    children_count: number;
+    total_price: number;
+    currency: string;
+    special_requests?: string;
+  }) => {
+    try {
+      const { data, error } = await supabase
+        .from('bookings')
+        .insert([booking])
+        .select()
+        .single();
+
+      if (error) throw error;
+      
+      return { data, error: null };
+    } catch (err) {
+      console.error('Error creating booking:', err);
+      return { 
+        data: null, 
+        error: err instanceof Error ? err.message : 'Failed to create booking' 
+      };
+    }
+  };
+
+  const getBookings = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('bookings')
+        .select(`
+          *,
+          tours (title, slug)
+        `)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      return { data, error: null };
+    } catch (err) {
+      console.error('Error fetching bookings:', err);
+      return { 
+        data: null, 
+        error: err instanceof Error ? err.message : 'Failed to fetch bookings' 
+      };
+    }
+  };
+
+  return {
+    createBooking,
+    getBookings,
+  };
+};

@@ -25,6 +25,16 @@ const DynamicTourPage = () => {
 
   // Получаем тур из загруженного списка
   const tour = tours.find(t => t.slug === slug);
+  
+  // Отладка - проверяем есть ли галерея
+  console.log('🖼️ GALLERY DEBUG:', {
+    slug,
+    tourFound: !!tour,
+    tourTitle: tour?.title,
+    hasGallery: !!tour?.gallery,
+    galleryLength: tour?.gallery?.length || 0,
+    firstImage: tour?.gallery?.[0]?.image_url
+  });
 
   // Функции для галереи (все хуки включая useCallback должны быть здесь)
   const openModal = useCallback((image: string, index: number) => {
@@ -36,7 +46,8 @@ const DynamicTourPage = () => {
   const openGallery = useCallback(() => {
     if (!tour?.gallery.length) return;
     setShowFullGallery(true);
-    setSelectedImage(tour.gallery[0].image_url);
+    const imageUrl = tour.gallery[0].image_url;
+    setSelectedImage(imageUrl.startsWith('/') ? imageUrl.substring(1) : imageUrl);
     setCurrentImageIndex(0);
   }, [tour]);
 
@@ -49,7 +60,8 @@ const DynamicTourPage = () => {
     if (!tour?.gallery) return;
     setCurrentImageIndex((prev) => {
       const nextIndex = (prev + 1) % tour.gallery.length;
-      setSelectedImage(tour.gallery[nextIndex].image_url);
+      const imageUrl = tour.gallery[nextIndex].image_url;
+      setSelectedImage(imageUrl.startsWith('/') ? imageUrl.substring(1) : imageUrl);
       return nextIndex;
     });
   }, [tour]);
@@ -58,7 +70,8 @@ const DynamicTourPage = () => {
     if (!tour?.gallery) return;
     setCurrentImageIndex((prev) => {
       const prevIndex = prev === 0 ? tour.gallery.length - 1 : prev - 1;
-      setSelectedImage(tour.gallery[prevIndex].image_url);
+      const imageUrl = tour.gallery[prevIndex].image_url;
+      setSelectedImage(imageUrl.startsWith('/') ? imageUrl.substring(1) : imageUrl);
       return prevIndex;
     });
   }, [tour]);
@@ -176,12 +189,22 @@ const DynamicTourPage = () => {
                   className={`cursor-pointer group relative overflow-hidden rounded-lg ${
                     index === 0 ? 'col-span-2 row-span-2' : ''
                   }`}
-                  onClick={() => index === 4 ? openGallery() : openModal(image.image_url, index)}
+                  onClick={() => index === 4 ? openGallery() : openModal(
+                    image.image_url.startsWith('/') ? image.image_url.substring(1) : image.image_url, 
+                    index
+                  )}
                 >
                   <img 
-                    src={image.image_url} 
+                    src={image.image_url.startsWith('/') ? image.image_url.substring(1) : image.image_url} 
                     alt={image.alt_text || tour.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      console.log('❌ Не удалось загрузить изображение:', image.image_url);
+                      e.currentTarget.src = '/assets/surin-beach.jpg'; // fallback
+                    }}
+                    onLoad={() => {
+                      console.log('✅ Изображение загружено:', image.image_url);
+                    }}
                   />
                   {index === 4 && tour.gallery.length > 5 && (
                     <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -220,12 +243,22 @@ const DynamicTourPage = () => {
                     className={`cursor-pointer group relative overflow-hidden rounded-lg ${
                       index === 0 ? 'col-span-2 row-span-2' : ''
                     }`}
-                    onClick={() => index === 4 ? openGallery() : openModal(image.image_url, index)}
+                    onClick={() => index === 4 ? openGallery() : openModal(
+                      image.image_url.startsWith('/') ? image.image_url.substring(1) : image.image_url, 
+                      index
+                    )}
                   >
                     <img 
-                      src={image.image_url} 
+                      src={image.image_url.startsWith('/') ? image.image_url.substring(1) : image.image_url} 
                       alt={image.alt_text || tour.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        console.log('❌ Не удалось загрузить изображение:', image.image_url);
+                        e.currentTarget.src = 'assets/surin-beach.jpg'; // fallback без /
+                      }}
+                      onLoad={() => {
+                        console.log('✅ Изображение загружено:', image.image_url);
+                      }}
                     />
                     {index === 4 && tour.gallery.length > 5 && (
                       <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">

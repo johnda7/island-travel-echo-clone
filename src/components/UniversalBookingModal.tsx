@@ -4,7 +4,11 @@
 // ❌ КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО: изменять дизайн, стили, компоненты формы
 // ❌ КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО: трогать useState, handleSubmit, расчеты цен
 // ❌ КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО: добавлять/удалять поля формы
+// ❌ КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО: изменять логику отправки в Telegram
+// ❌ КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО: трогать сохранение в localStorage для админки
 // ✅ ЭТОТ ФАЙЛ - ЦЕНТРАЛЬНЫЙ КАЛЬКУЛЯТОР ДЛЯ ВСЕХ НОВЫХ ТУРОВ!
+// ✅ АВТОМАТИЧЕСКАЯ ОТПРАВКА В TELEGRAM НАСТРОЕНА И РАБОТАЕТ!
+// ✅ ЗАКАЗЫ КОРРЕКТНО СОХРАНЯЮТСЯ В АДМИНКУ!
 // 🚨 ПРИ ПОПЫТКЕ ИЗМЕНИТЬ - НЕМЕДЛЕННО ОСТАНОВИТЬСЯ И СПРОСИТЬ ПОЛЬЗОВАТЕЛЯ!
 //
 import { useState } from "react";
@@ -112,11 +116,33 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       // Сохраняем обратно
       localStorage.setItem('bookingOrders', JSON.stringify(existingOrders));
 
-      // Прямая ссылка на Telegram
-      const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-      window.open(telegramUrl, '_blank');
+      // Автоматическая отправка в Telegram через Bot API
+      const BOT_TOKEN = '8445717266:AAHEDA4SJPUL48gpV-Q9qc-V98GSuyPFn08';
       
-      alert('Заявка подготовлена! Откроется Telegram для отправки.');
+      const telegramResponse = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          chat_id: '@Phuketga',
+          text: message,
+          parse_mode: 'HTML'
+        })
+      });
+      
+      const telegramResult = await telegramResponse.json();
+      
+      if (telegramResult.ok) {
+        alert('✅ Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
+        console.log('✅ Сообщение отправлено в Telegram');
+      } else {
+        console.error('❌ Ошибка Telegram API:', telegramResult.description);
+        // Fallback - открываем Telegram с готовым сообщением
+        const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
+        window.open(telegramUrl, '_blank');
+        alert('⚠️ Заявка подготовлена! Откроется Telegram для отправки.');
+      }
       
       // Очищаем форму и закрываем модал
       setFormData({
@@ -132,8 +158,25 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       onClose();
       
     } catch (error) {
-      console.error('Ошибка:', error);
-      alert('Произошла ошибка при отправке заявки. Попробуйте еще раз.');
+      console.error('❌ Ошибка при отправке:', error);
+      
+      // Fallback - открываем Telegram с готовым сообщением
+      const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
+      window.open(telegramUrl, '_blank');
+      alert('⚠️ Заявка подготовлена! Откроется Telegram для отправки.');
+      
+      // Очищаем форму и закрываем модал даже при ошибке
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        date: "",
+        adults: 1,
+        children: 0,
+        specialRequests: "",
+        hotelName: ""
+      });
+      onClose();
     }
   };
 

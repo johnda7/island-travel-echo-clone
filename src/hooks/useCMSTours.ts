@@ -80,6 +80,7 @@ export const useCMSTours = () => {
 
   const getTourBySlug = async (slug: string): Promise<CMSTour | null> => {
     try {
+      console.log('Fetching tour by slug:', slug);
       const { data, error } = await supabase
         .from('tours')
         .select(`
@@ -93,12 +94,19 @@ export const useCMSTours = () => {
         `)
         .eq('slug', slug)
         .eq('is_active', true)
-        .single();
+        .maybeSingle();
       
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
       
-      if (!data) return null;
+      if (!data) {
+        console.log('No tour found for slug:', slug);
+        return null;
+      }
 
+      console.log('Tour found:', data.title);
       return {
         ...data,
         gallery: data.tour_gallery || [],

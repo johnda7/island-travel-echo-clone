@@ -48,14 +48,18 @@ export const useCMSTours = () => {
   const fetchTours = async () => {
     try {
       setLoading(true);
+      console.log('🔄 Загружаем туры из CMS...');
       
-      // Используем прямой запрос вместо RPC пока не настроили типы
+      // Загружаем туры с полной информацией включая itinerary
       const { data, error } = await supabase
         .from('tours')
         .select(`
           *,
           tour_gallery (
             id, image_url, alt_text, caption, is_main, sort_order
+          ),
+          tour_itinerary (
+            day_number, title, description, activities, meals_included, accommodation, sort_order
           )
         `)
         .eq('is_active', true)
@@ -65,13 +69,16 @@ export const useCMSTours = () => {
       
       const transformedTours: CMSTour[] = data?.map(tour => ({
         ...tour,
-        gallery: tour.tour_gallery || [],
-        itinerary: []
+        gallery: tour.tour_gallery?.sort((a, b) => a.sort_order - b.sort_order) || [],
+        itinerary: tour.tour_itinerary?.sort((a, b) => a.sort_order - b.sort_order) || []
       })) || [];
+      
+      console.log('✅ Загружено туров:', transformedTours.length);
+      console.log('📋 Слаги туров:', transformedTours.map(t => t.slug));
       
       setTours(transformedTours);
     } catch (err) {
-      console.error('Error fetching tours:', err);
+      console.error('❌ Ошибка загрузки туров:', err);
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);

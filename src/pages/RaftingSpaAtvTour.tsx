@@ -665,16 +665,6 @@ const RaftingSpaAtvTour = () => {
         </div>
       )}
 
-      {/* ОБЯЗАТЕЛЬНО: Модальное окно бронирования через портал */}
-      <ModalPortal>
-        <UniversalBookingModal
-          isOpen={showBookingModal}
-          onClose={() => setShowBookingModal(false)}
-          tourData={excursion}
-        />
-      </ModalPortal>
-
-      <Footer />
 
       {/* Mobile booking bar - фиксированная кнопка внизу */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40">

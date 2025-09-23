@@ -13,6 +13,7 @@ const DynamicTourPage = () => {
   const { getTourBySlug } = useCMSTours();
   
   const [tour, setTour] = useState<CMSTour | null>(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
   // Галерея состояния
@@ -29,6 +30,9 @@ const DynamicTourPage = () => {
     const fetchTour = async () => {
       if (!slug) return;
       
+      setLoading(true);
+      setError(null);
+      
       try {
         const tourData = await getTourBySlug(slug);
         setTour(tourData);
@@ -38,6 +42,8 @@ const DynamicTourPage = () => {
       } catch (err) {
         setError('Ошибка загрузки тура');
         console.error('Error fetching tour:', err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -121,6 +127,19 @@ const DynamicTourPage = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showFullGallery, nextImage, prevImage, closeModal]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <div className="container mx-auto px-4 py-16 text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-green-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Загрузка тура...</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   if (error || !tour) {
     return <Navigate to="/404" replace />;

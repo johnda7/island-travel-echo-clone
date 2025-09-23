@@ -1,22 +1,24 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений для приключенческого тура
-import raftingMain from '@/assets/rang-yai-1.jpg';
-import raftingAction from '@/assets/rang-yai-2.jpg';
-import elephantShow from '@/assets/maya-bay-1.jpg';
-import elephantFeeding from '@/assets/maya-bay-2.jpg';
-import spaRelax from '@/assets/maya-bay-3.jpg';
-import spaMassage from '@/assets/maya-bay-4.jpg';
-import atvAdventure from '@/assets/bamboo-island.webp';
-import groupActivity from '@/assets/mayabay-1.jpg';
-import atvJungle from '@/assets/mayabay-2.jpg';
-import groupPhoto from '@/assets/mayabay-3.jpg';
-import lunch from '@/assets/mayabay-5.jpg';
+// Импорты изображений с оригинального сайта
+import raftingMain from '@/assets/rafting-spa-atv/rafting21-scaled.jpg';
+import hongIsland from '@/assets/rafting-spa-atv/hong-island1.jpg';
+import hotspringSpa from '@/assets/rafting-spa-atv/the-hotspring-beach-resort-spa-1.jpeg';
+import atvMain from '@/assets/rafting-spa-atv/atv-1-scaled.jpg';
+import elephantPark from '@/assets/rafting-spa-atv/bangkaew-elephant-park11.jpg';
+import cave from '@/assets/rafting-spa-atv/cave-scaled.jpg';
+import lake from '@/assets/rafting-spa-atv/lake1-scaled.jpg';
+import monkeysTemple from '@/assets/rafting-spa-atv/monkeys-at-suwan-khuha-temple-1.webp';
+import park from '@/assets/rafting-spa-atv/park-scaled.jpg';
+import raftingAction from '@/assets/rafting-spa-atv/rafting-scaled.jpg';
+import buddhaStatue from '@/assets/rafting-spa-atv/statue-of-the-reclining-buddha.webp';
+import waterfall from '@/assets/rafting-spa-atv/waterfall-1.jpg';
+import zipline from '@/assets/rafting-spa-atv/zipline-scaled.jpg';
 
 export const raftingSpaAtvTourData: TourData = {
   id: 'rafting-spa-atv-1-day',
-  title: 'Рафтинг+Слоны+SPA+ATV (1 день)',
-  subtitle: 'Супер насыщенный день: рафтинг, шоу слонов, тайский массаж и экстремальные квадроциклы!',
+  title: 'РАФТИНГ + СЛОНОВЬЕ СПА + ATV 1 день',
+  subtitle: 'Супер насыщенный день: рафтинг по горной реке, слоновий питомник, традиционное SPA и экстремальные квадроциклы!',
   route: '/excursion/rafting-spa-atv-1-day',
   description: `Самый насыщенный день активного отдыха на Пхукете! 
 
@@ -33,19 +35,22 @@ export const raftingSpaAtvTourData: TourData = {
   mainImage: raftingMain,
   gallery: [
     raftingMain,
+    hongIsland,
+    hotspringSpa,
+    atvMain,
+    elephantPark,
+    cave,
+    lake,
+    monkeysTemple,
+    park,
     raftingAction,
-    elephantShow,
-    elephantFeeding,
-    spaRelax,
-    spaMassage,
-    atvAdventure,
-    atvJungle,
-    groupPhoto,
-    lunch
+    buddhaStatue,
+    waterfall,
+    zipline
   ],
   
-  priceAdult: 2800,
-  priceChild: 2400,
+  priceAdult: 2000,
+  priceChild: 1700,
   currency: '฿',
   
   duration: '8-9 часов',

@@ -1,14 +1,14 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений для Аватар тура
-import avatarMain from '@/assets/mayabay-1.jpg';
-import avatarFloating from '@/assets/mayabay-2.jpg';
-import zipline from '@/assets/mayabay-3.jpg';
-import elephantShow from '@/assets/mayabay-5.jpg';
-import canoePaddling from '@/assets/mayabay-6.jpg';
-import mountainView from '@/assets/maya-bay-1.jpg';
-import traditionalShow from '@/assets/maya-bay-2.jpg';
-import naturePark from '@/assets/maya-bay-3.jpg';
+// Импорты изображений для Аватар тура - использую существующие фото
+import avatarMain from '@/assets/phi-phi-2days/mayabay-1.jpg';
+import avatarFloating from '@/assets/phi-phi-2days/mayabay-2.jpg';
+import zipline from '@/assets/phi-phi-2days/mayabay-3.jpg';
+import elephantShow from '@/assets/phi-phi-2days/mayabay-5.jpg';
+import canoePaddling from '@/assets/phi-phi-2days/mayabay-6.jpg';
+import mountainView from '@/assets/phi-phi-2days/maya-bay-1.jpg';
+import traditionalShow from '@/assets/phi-phi-2days/maya-bay-2.jpg';
+import naturePark from '@/assets/phi-phi-2days/maya-bay-3.jpg';
 
 export const avatarPlusHangdongTourData: TourData = {
   id: 'avatar-plus-hangdong-adventure',

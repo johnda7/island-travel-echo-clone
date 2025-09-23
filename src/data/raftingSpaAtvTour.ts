@@ -1,16 +1,16 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений - используем существующие как заглушки, потом заменим на реальные
-import raftingMain from '@/assets/maya-bay-sunrise.jpg';
-import raftingAction from '@/assets/phi-phi-lagoon.jpg';
-import elephantShow from '@/assets/phi-phi-maya-bay.jpg';
-import elephantFeeding from '@/assets/phi-phi-monkey-beach.jpg';
-import spaRelax from '@/assets/phi-phi-snorkeling.jpg';
-import spaMassage from '@/assets/phi-phi-speedboat.jpg';
-import atvAdventure from '@/assets/phi-phi-sunset.jpg';
-import atvJungle from '@/assets/bangtao-beach.jpg';
-import groupPhoto from '@/assets/freedom-beach.jpg';
-import lunch from '@/assets/kamala-beach.jpg';
+// Импорты изображений - используем подходящие изображения для рафтинга, SPA и ATV
+import raftingMain from '@/assets/dostoprimechatelnosti-phuketa/rafting.jpg';
+import raftingAction from '@/assets/dostoprimechatelnosti-phuketa/rafting.jpg';
+import elephantShow from '@/assets/rassvetnoe-prikljuchenie/elephant-show.jpg';
+import elephantFeeding from '@/assets/dostoprimechatelnosti-phuketa/elephant-feeding-1.jpg';
+import spaRelax from '@/assets/rassvetnoe-prikljuchenie/elephant-spa.jpg';
+import spaMassage from '@/assets/dostoprimechatelnosti-phuketa/muay-thai.webp';
+import atvAdventure from '@/assets/dostoprimechatelnosti-phuketa/karon-viewpoint-1.jpg';
+import atvJungle from '@/assets/dostoprimechatelnosti-phuketa/karon-viewpoint-2.jpg';
+import groupPhoto from '@/assets/rassvetnoe-prikljuchenie/baby-elephant-show.jpg';
+import lunch from '@/assets/dostoprimechatelnosti-phuketa/seafood-market-1.jpg';
 
 export const raftingSpaAtvTourData: TourData = {
   id: 'rafting-slon-spa-atv-1-day',

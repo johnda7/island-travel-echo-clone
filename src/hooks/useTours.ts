@@ -123,8 +123,10 @@ export const useTours = () => {
           } as TourData
         }));
 
-        // 🔄 ОБЪЕДИНЕНИЕ ВСЕХ ТУРОВ
-        const allToursWithMeta = [...staticToursWithMeta, ...cmsToursWithMeta];
+        // 🔄 ОБЪЕДИНЕНИЕ ВСЕХ ТУРОВ - ПРИОРИТЕТ CMS НАД СТАТИЧЕСКИМИ
+        const cmsIds = new Set(cmsToursWithMeta.map(tour => tour.id));
+        const filteredStaticTours = staticToursWithMeta.filter(tour => !cmsIds.has(tour.id));
+        const allToursWithMeta = [...filteredStaticTours, ...cmsToursWithMeta];
 
         // Сортировка по приоритету
         allToursWithMeta.sort((a, b) => a.priority - b.priority);

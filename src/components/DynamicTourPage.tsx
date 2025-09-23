@@ -15,6 +15,7 @@ const DynamicTourPage = () => {
   const [tour, setTour] = useState<CMSTour | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [minLoadingTime, setMinLoadingTime] = useState(true); // Минимальное время показа спиннера
   
   // Галерея состояния
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -31,15 +32,31 @@ const DynamicTourPage = () => {
       if (!slug) return;
       
       setLoading(true);
+      setError(null);
+      
+      // Минимальное время показа спиннера для избежания "дерганья"
+      const startTime = Date.now();
+      const minTime = 800; // 800ms минимум
+      
       try {
         const tourData = await getTourBySlug(slug);
+        
+        // Ждем минимальное время
+        const elapsed = Date.now() - startTime;
+        if (elapsed < minTime) {
+          await new Promise(resolve => setTimeout(resolve, minTime - elapsed));
+        }
+        
         setTour(tourData);
-        setError(null);
+        if (!tourData) {
+          setError('Тур не найден');
+        }
       } catch (err) {
         setError('Ошибка загрузки тура');
         console.error('Error fetching tour:', err);
       } finally {
         setLoading(false);
+        setMinLoadingTime(false);
       }
     };
 
@@ -124,7 +141,7 @@ const DynamicTourPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showFullGallery, nextImage, prevImage, closeModal]);
 
-  if (loading) {
+  if (loading || minLoadingTime) {
     return (
       <div className="min-h-screen bg-white">
         <Header />

@@ -1,14 +1,16 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений для Аватар тура - использую существующие фото
-import avatarMain from '@/assets/phi-phi-2days/mayabay-1.jpg';
-import avatarFloating from '@/assets/phi-phi-2days/mayabay-2.jpg';
-import zipline from '@/assets/phi-phi-2days/mayabay-3.jpg';
-import elephantShow from '@/assets/phi-phi-2days/mayabay-5.jpg';
-import canoePaddling from '@/assets/phi-phi-2days/mayabay-6.jpg';
-import mountainView from '@/assets/phi-phi-2days/maya-bay-1.jpg';
-import traditionalShow from '@/assets/phi-phi-2days/maya-bay-2.jpg';
-import naturePark from '@/assets/phi-phi-2days/maya-bay-3.jpg';
+// Импорты изображений с рафтинг тура как временная заглушка
+import avatarMain from '@/assets/rafting-spa-atv/rafting21-scaled.jpg';
+import museum1 from '@/assets/rafting-spa-atv/hong-island1.jpg';
+import museum2 from '@/assets/rafting-spa-atv/atv-1-scaled.jpg';
+import museum3 from '@/assets/rafting-spa-atv/cave-scaled.jpg';
+import museum4 from '@/assets/rafting-spa-atv/lake1-scaled.jpg';
+import waterfall1 from '@/assets/rafting-spa-atv/waterfall-1.jpg';
+import waterfall2 from '@/assets/rafting-spa-atv/zipline-scaled.jpg';
+import waterfall3 from '@/assets/rafting-spa-atv/park-scaled.jpg';
+import elephantShow1 from '@/assets/rafting-spa-atv/bangkaew-elephant-park11.jpg';
+import elephantShow2 from '@/assets/rafting-spa-atv/rafting-scaled.jpg';
 
 export const avatarPlusHangdongTourData: TourData = {
   id: 'avatar-plus-hangdong-adventure',
@@ -28,13 +30,15 @@ export const avatarPlusHangdongTourData: TourData = {
   mainImage: avatarMain,
   gallery: [
     avatarMain,
-    avatarFloating,
-    zipline,
-    elephantShow,
-    canoePaddling,
-    mountainView,
-    traditionalShow,
-    naturePark
+    museum1,
+    museum2,
+    museum3,
+    waterfall1,
+    waterfall2,
+    elephantShow1,
+    elephantShow2,
+    museum4,
+    waterfall3
   ],
   
   priceAdult: 2600,

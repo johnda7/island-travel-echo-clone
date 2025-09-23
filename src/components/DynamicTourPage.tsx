@@ -10,11 +10,10 @@ import { useCMSTours, CMSTour } from "@/hooks/useCMSTours";
 
 const DynamicTourPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { getTourBySlug } = useCMSTours();
+  const { tours } = useCMSTours();
   
-  const [tour, setTour] = useState<CMSTour | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // Получаем тур из уже загруженного списка - КАК В СТАТИЧЕСКИХ ТУРАХ
+  const tour = tours.find(t => t.slug === slug);
   
   // Галерея состояния
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -26,29 +25,10 @@ const DynamicTourPage = () => {
   // Состояние для модального окна бронирования
   const [showBookingModal, setShowBookingModal] = useState(false);
 
-  useEffect(() => {
-    const fetchTour = async () => {
-      if (!slug) return;
-      
-      setLoading(true);
-      setError(null);
-      
-      try {
-        const tourData = await getTourBySlug(slug);
-        setTour(tourData);
-        if (!tourData) {
-          setError('Тур не найден');
-        }
-      } catch (err) {
-        setError('Ошибка загрузки тура');
-        console.error('Error fetching tour:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTour();
-  }, [slug, getTourBySlug]);
+  // Если тур не найден - редирект на 404 (КАК В СТАТИЧЕСКИХ ТУРАХ)
+  if (!tour) {
+    return <Navigate to="/404" replace />;
+  }
 
   // Функции для галереи (такие же как в оригинальном компоненте)
   const openModal = (image: string, index: number) => {
@@ -128,24 +108,7 @@ const DynamicTourPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showFullGallery, nextImage, prevImage, closeModal]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white">
-        <Header />
-        <div className="container mx-auto px-4 py-16 text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-green-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Загрузка тура...</p>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (error || !tour) {
-    return <Navigate to="/404" replace />;
-  }
-
-  // Конвертируем тур в формат, совместимый с UniversalBookingModal
+  // Конвертируем тур в формат, совместимый с UniversalBookingModal - КАК В СТАТИЧЕСКИХ ТУРАХ
   const tourData = {
     id: tour.id,
     title: tour.title,

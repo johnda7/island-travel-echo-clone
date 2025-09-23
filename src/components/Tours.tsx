@@ -83,7 +83,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                 <img 
                   src={tour.data?.mainImage || tour.data?.gallery?.[0] || fallbackImage} 
                   alt={tour.data?.title || tour.name}
-                  className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover object-center transition-opacity duration-300"
                   loading="lazy"
                   onError={(e) => {
                     e.currentTarget.src = fallbackImage;

@@ -191,7 +191,7 @@ const DynamicTourPage = () => {
                   <img 
                     src={image.image_url} 
                     alt={image.alt_text || tour.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover transition-opacity duration-300"
                     onError={(e) => {
                       console.log('❌ Не удалось загрузить изображение:', image.image_url);
                       e.currentTarget.src = '/assets/surin-beach.jpg'; // fallback
@@ -242,7 +242,7 @@ const DynamicTourPage = () => {
                     <img 
                       src={image.image_url} 
                       alt={image.alt_text || tour.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover transition-opacity duration-300"
                       onError={(e) => {
                         console.log('❌ Не удалось загрузить изображение:', image.image_url);
                         e.currentTarget.src = '/assets/surin-beach.jpg'; // fallback

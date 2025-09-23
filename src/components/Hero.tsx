@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Waves, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 // Get the base path for proper asset loading
@@ -60,12 +60,15 @@ export const Hero = () => {
           <Button 
             size="lg" 
             asChild 
-            className="group bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white px-10 py-4 text-xl font-semibold rounded-full shadow-2xl hover:shadow-cyan-500/50 transition-all duration-500 transform hover:scale-110 border border-white/20 backdrop-blur-sm"
+            className="group relative overflow-hidden bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 hover:from-cyan-400 hover:via-blue-400 hover:to-indigo-500 text-white px-12 py-5 text-xl font-bold rounded-2xl shadow-2xl hover:shadow-cyan-400/60 transition-all duration-700 transform hover:scale-105 border border-white/30 backdrop-blur-md before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500"
           >
-            <Link to="/tours">
-              <span className="mr-2">🚤</span>
-              Выбрать тур
-              <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
+            <Link to="/tours" className="flex items-center relative z-10">
+              <Waves className="w-6 h-6 mr-3 group-hover:animate-pulse transition-all duration-300" />
+              <span className="relative">
+                Выбрать тур
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white/60 group-hover:w-full transition-all duration-500"></span>
+              </span>
+              <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform duration-500" />
             </Link>
           </Button>
         </div>

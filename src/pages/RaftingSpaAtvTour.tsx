@@ -675,6 +675,27 @@ const RaftingSpaAtvTour = () => {
       </ModalPortal>
 
       <Footer />
+
+      {/* Fixed bottom booking button for mobile - Sticky CTA */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50 md:hidden shadow-lg">
+        <div className="flex items-center justify-between">
+          <div className="flex-1">
+            <div className="text-lg font-bold text-green-600">
+              от {excursion.priceAdult.toLocaleString()} {excursion.currency}
+            </div>
+            <div className="text-sm text-gray-500">за взрослого</div>
+          </div>
+          <Button 
+            onClick={() => setShowBookingModal(true)}
+            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 font-semibold rounded-lg ml-4"
+          >
+            Забронировать
+          </Button>
+        </div>
+      </div>
+
+      {/* Add bottom padding to prevent content hiding behind fixed button */}
+      <div className="h-20 md:hidden" />
     </div>
   );
 };

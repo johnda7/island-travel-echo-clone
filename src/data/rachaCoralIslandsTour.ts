@@ -12,6 +12,7 @@ import beachRelax from '@/assets/surin-beach.jpg';
 
 export const rachaCoralIslandsTourData: TourData = {
   id: 'racha-coral-islands-speedboat',
+  route: '/tours/racha-coral-islands-speedboat',
   title: 'Острова Рача и Корал на спидботе',
   subtitle: 'Два райских острова за один день: пляжи с белым песком, снорклинг и водные развлечения!',
   description: `Познакомьтесь с двумя жемчужинами Андаманского моря в нашем захватывающем туре на острова Рача и Корал!
@@ -150,7 +151,5 @@ export const rachaCoralIslandsTourData: TourData = {
   
   tags: ['Острова', 'Спидбот', 'Пляжи', 'Снорклинг', 'Парасейлинг', 'Рача', 'Корал'],
   category: 'islands',
-  isPopular: true,
-  isFeatured: false,
-  isActive: true
+  isPopular: true
 };

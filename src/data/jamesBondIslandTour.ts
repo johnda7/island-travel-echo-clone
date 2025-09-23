@@ -12,6 +12,7 @@ import longtailBoat from '@/assets/freedom-beach.jpg';
 
 export const jamesBondIslandTourData: TourData = {
   id: 'james-bond-island-phang-nga',
+  route: '/tours/james-bond-island-phang-nga',
   title: 'Остров Джеймса Бонда (залив Пханг Нга)',
   subtitle: 'Легендарный остров из фильма о Джеймсе Бонде, морские каньоны и плавучая деревня!',
   description: `Отправляйтесь в незабываемое путешествие к знаменитому острову Джеймса Бонда в заливе Пханг Нга!
@@ -151,7 +152,5 @@ export const jamesBondIslandTourData: TourData = {
   
   tags: ['Джеймс Бонд', 'Пханг Нга', 'Каякинг', 'Плавучая деревня', 'Лонгтейл', 'Пещеры', 'Известняк'],
   category: 'islands',
-  isPopular: true,
-  isFeatured: true,
-  isActive: true
+  isPopular: true
 };

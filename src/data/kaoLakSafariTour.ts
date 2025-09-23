@@ -12,6 +12,7 @@ import wildlife from '@/assets/freedom-beach.jpg';
 
 export const kaoLakSafariTourData: TourData = {
   id: 'kao-lak-safari-1-day',
+  route: '/tours/kao-lak-safari-1-day',
   title: 'Као Лак Сафари (1 день)',
   subtitle: 'Приключенческое сафари в национальном парке Као Лак: катание на слонах, водопады, бамбуковый рафтинг!',
   description: `Откройте для себя дикую природу национального парка Као Лак в незабываемом однодневном сафари!
@@ -139,7 +140,5 @@ export const kaoLakSafariTourData: TourData = {
   
   tags: ['Сафари', 'Слоны', 'Водопады', 'Рафтинг', 'Национальный парк', 'Природа', 'Као Лак'],
   category: 'nature',
-  isPopular: true,
-  isFeatured: false,
-  isActive: true
+  isPopular: true
 };

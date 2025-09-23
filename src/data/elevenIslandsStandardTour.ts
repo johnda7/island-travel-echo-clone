@@ -12,6 +12,7 @@ import paradiseBeach from '@/assets/surin-beach.jpg';
 
 export const elevenIslandsStandardTourData: TourData = {
   id: 'eleven-islands-standard-speedboat',
+  route: '/tours/eleven-islands-standard-speedboat',
   title: '11 островов Стандарт на спидботе',
   subtitle: 'Грандиозное островное приключение: 11 тропических островов за один день!',
   description: `Отправляйтесь в самое масштабное островное приключение Таиланда - тур по 11 экзотическим островам!
@@ -151,7 +152,5 @@ export const elevenIslandsStandardTourData: TourData = {
   
   tags: ['11 островов', 'Спидбот', 'Хоппинг', 'Снорклинг', 'Пхи-Пхи', 'Бамбу', 'Лагуны'],
   category: 'islands',
-  isPopular: false,
-  isFeatured: false,
-  isActive: true
+  isPopular: false
 };

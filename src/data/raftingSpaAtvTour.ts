@@ -14,6 +14,7 @@ import lunch from '@/assets/kamala-beach.jpg';
 
 export const raftingSpaAtvTourData: TourData = {
   id: 'rafting-slon-spa-atv-1-day',
+  route: '/tours/rafting-spa-atv-1-day',
   title: 'Рафтинг + Слоны + СПА + ATV (1 день)',
   subtitle: 'Комплексный тур: рафтинг по горной реке, шоу слонов, расслабляющий SPA и экстремальный ATV за один день!',
   description: `Самый насыщенный день активного отдыха на Пхукете! 
@@ -142,7 +143,5 @@ export const raftingSpaAtvTourData: TourData = {
   
   tags: ['Рафтинг', 'Слоны', 'SPA', 'ATV', 'Приключения', 'Активный отдых', 'Экстрим', 'Релакс'],
   category: 'adventure',
-  isPopular: true,
-  isFeatured: false,
-  isActive: true
+  isPopular: true
 };

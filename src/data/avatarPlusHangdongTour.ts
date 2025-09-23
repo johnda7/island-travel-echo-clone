@@ -12,6 +12,7 @@ import naturePark from '@/assets/freedom-beach.jpg';
 
 export const avatarPlusHangdongTourData: TourData = {
   id: 'avatar-plus-hangdong-adventure',
+  route: '/tours/avatar-plus-hangdong-adventure',
   title: 'Аватар Плюс + Хангдонг',
   subtitle: 'Полное приключение: горы, зиплайн, парящие горы, шоу слонов и каноэ-туризм!',
   description: `Окунитесь в мир фантастических приключений с нашим комплексным туром "Аватар Плюс + Хангдонг"!
@@ -150,7 +151,5 @@ export const avatarPlusHangdongTourData: TourData = {
   
   tags: ['Аватар', 'Зиплайн', 'Слоны', 'Каноэ', 'Горы', 'Хангдонг', 'Приключения'],
   category: 'adventure',
-  isPopular: true,
-  isFeatured: false,
-  isActive: true
+  isPopular: true
 };

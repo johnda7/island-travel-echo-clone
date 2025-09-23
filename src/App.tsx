@@ -68,9 +68,7 @@ function App() {
               <Route path="/excursion/rafting-spa-atv-1-day" element={<RaftingSpaAtvTour />} />
               <Route path="/tours/rafting-spa-atv-1-day" element={<RaftingSpaAtvTour />} />
               
-              {/* 2. Као Лак Сафари */}
-              <Route path="/excursion/kao-lak-safari-1-day" element={<KaoLakSafariTour />} />
-              <Route path="/tours/kao-lak-safari-1-day" element={<KaoLakSafariTour />} />
+               {/* 2. Као Лак Сафари - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ЧЕРЕЗ CMS/DynamicTourPage */}
               
               
               

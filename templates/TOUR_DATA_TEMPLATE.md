@@ -1,63 +1,64 @@
-# Шаблон данных тура (TourData)
+# Шаблон создания тура в CMS
 
-Используйте этот шаблон для создания файла `src/data/<slug>Tour.ts`.
+Теперь мы используем Supabase CMS для создания туров вместо файлов .ts.
 
-```ts
-// src/data/<slug>Tour.ts
-import type { TourData } from "@/types/Tour";
-// Импортируйте изображения как модули (не строки путей)
-import mainImage from "@/assets/<your-main-image>.jpg";
-import img1 from "@/assets/<your-image-1>.jpg";
-import img2 from "@/assets/<your-image-2>.jpg";
+## Процесс создания тура:
 
-export const <camelCaseSlug>TourData: TourData = {
-  id: "<slug>",                // совмещать с маршрутами и реестром
-  title: "Название тура",
-  subtitle: "Короткий подзаголовок тура",
-  currency: "฿",
-  priceAdult: 4000,
-  priceChild: 3500,
-  duration: "1 день",
-  groupSize: "до 30 человек",
-  rating: 4.9,
-  reviewsCount: 52,
-  mainImage,
-  gallery: [mainImage, img1, img2],
-  description: "Длинное описание тура...",
-  highlights: [
-    "Главная фишка 1",
-    "Главная фишка 2",
-    "Главная фишка 3"
-  ],
-  itinerary: [
-    { day: "День 1", time: "08:00", activity: "Сбор гостей" },
-    { day: "День 1", time: "10:00", activity: "Переезд/морская прогулка" },
-  ],
-  included: [
-    "Трансфер",
-    "Страховка",
-    "Обед"
-  ],
-  excluded: [
-    "Личные расходы",
-    "Напитки"
-  ],
-  requirements: [
-    "Купальник, полотенце",
-    "Солнцезащитный крем"
-  ],
-  importantInfo: [
-    "Возможны изменения по погоде"
-  ],
-  tags: ["морские", "популярные"],
-  category: "islands",        // islands | mainland
-  isPopular: true,
-  isFeatured: false,
-  isActive: true
-};
-```
+1. **Получение данных с сайта**:
+   - Используйте `lov-fetch-website` для получения данных с phuketgo.aaddaa.com
+   - Изучите полный контент: название, описание, цены, галерею
 
-Советы:
-- Всегда используйте импорты изображений.
-- Убедитесь, что `id` совпадает с путями маршрутов и `toursRegistry`.
-- Цена для детей — 0, если нет детского тарифа.
+2. **Создание тура в CMS**:
+   ```sql
+   INSERT INTO public.tours (
+     title,              -- "Название тура"
+     subtitle,           -- "Короткий подзаголовок тура"
+     slug,               -- "tour-slug" (для URL)
+     description,        -- Полное описание из сайта
+     short_description,  -- Краткое описание для карточек
+     price_adult,        -- Цена взрослый (число)
+     price_child,        -- Цена ребёнок (число) 
+     currency,           -- "THB"
+     duration,           -- "1 день (9:00-17:00)"
+     group_size,         -- "до 30 человек"
+     difficulty_level,   -- "легкий"/"средний"/"сложный"
+     highlights,         -- ARRAY[...] главные особенности
+     included,           -- ARRAY[...] что включено
+     excluded,           -- ARRAY[...] что не включено  
+     requirements,       -- ARRAY[...] что взять с собой
+     important_info,     -- ARRAY[...] важная информация
+     meta_title,         -- SEO заголовок
+     meta_description,   -- SEO описание
+     tags,               -- ARRAY[...] теги для поиска
+     is_active,          -- true
+     is_featured,        -- true/false
+     sort_order          -- число для сортировки
+   ) VALUES (...);
+   ```
+
+3. **Добавление галереи**:
+   ```sql
+   INSERT INTO public.tour_gallery (
+     tour_id, image_url, alt_text, caption, is_main, sort_order
+   ) SELECT t.id, 'https://...', '...', '...', true, 1
+   FROM public.tours t WHERE t.slug = 'tour-slug';
+   ```
+
+4. **Добавление итинерария**:
+   ```sql
+   INSERT INTO public.tour_itinerary (
+     tour_id, day_number, title, description, sort_order
+   ) SELECT t.id, 1, 'ДЕНЬ 1', 'Программа дня...', 1
+   FROM public.tours t WHERE t.slug = 'tour-slug';
+   ```
+
+5. **Удаление старых маршрутов**:
+   - Убрать статичные маршруты из App.tsx
+   - Тур автоматически использует DynamicTourPage
+
+## Важные моменты:
+- Всегда используйте оригинальные URL изображений с сайта
+- Slug должен совпадать с существующими маршрутами
+- Цены указывайте как числа (без валюты)
+- Все массивы (highlights, included, etc.) заполняйте данными с сайта
+- Малыши 0-3 лет обычно бесплатно - указывайте в important_info

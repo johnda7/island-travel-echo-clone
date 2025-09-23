@@ -46,8 +46,7 @@ const DynamicTourPage = () => {
   const openGallery = useCallback(() => {
     if (!tour?.gallery.length) return;
     setShowFullGallery(true);
-    const imageUrl = tour.gallery[0].image_url;
-    setSelectedImage(imageUrl.startsWith('/') ? imageUrl.substring(1) : imageUrl);
+    setSelectedImage(tour.gallery[0].image_url);
     setCurrentImageIndex(0);
   }, [tour]);
 
@@ -60,8 +59,7 @@ const DynamicTourPage = () => {
     if (!tour?.gallery) return;
     setCurrentImageIndex((prev) => {
       const nextIndex = (prev + 1) % tour.gallery.length;
-      const imageUrl = tour.gallery[nextIndex].image_url;
-      setSelectedImage(imageUrl.startsWith('/') ? imageUrl.substring(1) : imageUrl);
+      setSelectedImage(tour.gallery[nextIndex].image_url);
       return nextIndex;
     });
   }, [tour]);
@@ -70,8 +68,7 @@ const DynamicTourPage = () => {
     if (!tour?.gallery) return;
     setCurrentImageIndex((prev) => {
       const prevIndex = prev === 0 ? tour.gallery.length - 1 : prev - 1;
-      const imageUrl = tour.gallery[prevIndex].image_url;
-      setSelectedImage(imageUrl.startsWith('/') ? imageUrl.substring(1) : imageUrl);
+      setSelectedImage(tour.gallery[prevIndex].image_url);
       return prevIndex;
     });
   }, [tour]);
@@ -189,13 +186,10 @@ const DynamicTourPage = () => {
                   className={`cursor-pointer group relative overflow-hidden rounded-lg ${
                     index === 0 ? 'col-span-2 row-span-2' : ''
                   }`}
-                  onClick={() => index === 4 ? openGallery() : openModal(
-                    image.image_url.startsWith('/') ? image.image_url.substring(1) : image.image_url, 
-                    index
-                  )}
+                  onClick={() => index === 4 ? openGallery() : openModal(image.image_url, index)}
                 >
                   <img 
-                    src={image.image_url.startsWith('/') ? image.image_url.substring(1) : image.image_url} 
+                    src={image.image_url} 
                     alt={image.alt_text || tour.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     onError={(e) => {
@@ -243,18 +237,15 @@ const DynamicTourPage = () => {
                     className={`cursor-pointer group relative overflow-hidden rounded-lg ${
                       index === 0 ? 'col-span-2 row-span-2' : ''
                     }`}
-                    onClick={() => index === 4 ? openGallery() : openModal(
-                      image.image_url.startsWith('/') ? image.image_url.substring(1) : image.image_url, 
-                      index
-                    )}
+                    onClick={() => index === 4 ? openGallery() : openModal(image.image_url, index)}
                   >
                     <img 
-                      src={image.image_url.startsWith('/') ? image.image_url.substring(1) : image.image_url} 
+                      src={image.image_url} 
                       alt={image.alt_text || tour.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       onError={(e) => {
                         console.log('❌ Не удалось загрузить изображение:', image.image_url);
-                        e.currentTarget.src = 'assets/surin-beach.jpg'; // fallback без /
+                        e.currentTarget.src = '/assets/surin-beach.jpg'; // fallback
                       }}
                       onLoad={() => {
                         console.log('✅ Изображение загружено:', image.image_url);

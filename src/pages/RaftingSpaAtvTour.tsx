@@ -696,6 +696,17 @@ const RaftingSpaAtvTour = () => {
 
       {/* Add bottom padding to prevent content hiding behind fixed button */}
       <div className="h-20 md:hidden" />
+
+      {/* Модальное окно бронирования — ОБЯЗАТЕЛЬНО через портал */}
+      <ModalPortal>
+        <UniversalBookingModal
+          isOpen={showBookingModal}
+          onClose={() => setShowBookingModal(false)}
+          tourData={excursion}
+        />
+      </ModalPortal>
+
+      <Footer />
     </div>
   );
 };

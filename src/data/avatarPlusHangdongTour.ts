@@ -1,20 +1,23 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений - используем существующие как заглушки
-import avatarMain from '@/assets/surin-beach.jpg';
-import avatarFloating from '@/assets/patong-beach.jpg';
-import zipline from '@/assets/karon-beach.jpg';
-import elephantShow from '@/assets/kata-beach.jpg';
-import canoePaddling from '@/assets/mai-khao-beach.jpg';
-import mountainView from '@/assets/naiharn-beach.jpg';
-import traditionalShow from '@/assets/naiyang-beach.jpg';
-import naturePark from '@/assets/freedom-beach.jpg';
+// Импорты изображений с рафтинг тура как временная заглушка
+import avatarMain from '@/assets/rafting-spa-atv/rafting21-scaled.jpg';
+import museum1 from '@/assets/rafting-spa-atv/hong-island1.jpg';
+import museum2 from '@/assets/rafting-spa-atv/atv-1-scaled.jpg';
+import museum3 from '@/assets/rafting-spa-atv/cave-scaled.jpg';
+import museum4 from '@/assets/rafting-spa-atv/lake1-scaled.jpg';
+import waterfall1 from '@/assets/rafting-spa-atv/waterfall-1.jpg';
+import waterfall2 from '@/assets/rafting-spa-atv/zipline-scaled.jpg';
+import waterfall3 from '@/assets/rafting-spa-atv/park-scaled.jpg';
+import elephantShow1 from '@/assets/rafting-spa-atv/bangkaew-elephant-park11.jpg';
+import elephantShow2 from '@/assets/rafting-spa-atv/rafting-scaled.jpg';
 
 export const avatarPlusHangdongTourData: TourData = {
   id: 'avatar-plus-hangdong-adventure',
   route: '/tours/avatar-plus-hangdong-adventure',
   title: 'Аватар Плюс + Хангдонг',
   subtitle: 'Полное приключение: горы, зиплайн, парящие горы, шоу слонов и каноэ-туризм!',
+  route: '/excursion/avatar-plus-hangdong-adventure',
   description: `Окунитесь в мир фантастических приключений с нашим комплексным туром "Аватар Плюс + Хангдонг"!
 
 Начинаем с путешествия к знаменитым "парящим горам" - живописным известняковым скалам, покрытым тропической растительностью, которые послужили вдохновением для создания пейзажей планеты Пандора в фильме "Аватар".
@@ -28,13 +31,15 @@ export const avatarPlusHangdongTourData: TourData = {
   mainImage: avatarMain,
   gallery: [
     avatarMain,
-    avatarFloating,
-    zipline,
-    elephantShow,
-    canoePaddling,
-    mountainView,
-    traditionalShow,
-    naturePark
+    museum1,
+    museum2,
+    museum3,
+    waterfall1,
+    waterfall2,
+    elephantShow1,
+    elephantShow2,
+    museum4,
+    waterfall3
   ],
   
   priceAdult: 2600,

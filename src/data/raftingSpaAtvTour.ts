@@ -1,5 +1,28 @@
 import type { TourData } from '@/types/Tour';
 
+<<<<<<< HEAD
+// Импорты изображений с оригинального сайта
+import raftingMain from '@/assets/rafting-spa-atv/rafting21-scaled.jpg';
+import hongIsland from '@/assets/rafting-spa-atv/hong-island1.jpg';
+import hotspringSpa from '@/assets/rafting-spa-atv/the-hotspring-beach-resort-spa-1.jpeg';
+import atvMain from '@/assets/rafting-spa-atv/atv-1-scaled.jpg';
+import elephantPark from '@/assets/rafting-spa-atv/bangkaew-elephant-park11.jpg';
+import cave from '@/assets/rafting-spa-atv/cave-scaled.jpg';
+import lake from '@/assets/rafting-spa-atv/lake1-scaled.jpg';
+import monkeysTemple from '@/assets/rafting-spa-atv/monkeys-at-suwan-khuha-temple-1.webp';
+import park from '@/assets/rafting-spa-atv/park-scaled.jpg';
+import raftingAction from '@/assets/rafting-spa-atv/rafting-scaled.jpg';
+import buddhaStatue from '@/assets/rafting-spa-atv/statue-of-the-reclining-buddha.webp';
+import waterfall from '@/assets/rafting-spa-atv/waterfall-1.jpg';
+import zipline from '@/assets/rafting-spa-atv/zipline-scaled.jpg';
+
+export const raftingSpaAtvTourData: TourData = {
+  id: 'rafting-spa-atv-1-day',
+  title: 'РАФТИНГ + СЛОНОВЬЕ СПА + ATV 1 день',
+  subtitle: 'Супер насыщенный день: рафтинг по горной реке, слоновий питомник, традиционное SPA и экстремальные квадроциклы!',
+  route: '/excursion/rafting-spa-atv-1-day',
+  description: `Самый насыщенный день активного отдыха на Пхукете! 
+=======
 // Импорты изображений - используем подходящие изображения для рафтинга, SPA, слонов и ATV
 import raftingMain from '@/assets/dostoprimechatelnosti-phuketa/rafting.jpg';
 import elephantShow from '@/assets/rassvetnoe-prikljuchenie/elephant-show.jpg';
@@ -18,6 +41,7 @@ export const raftingSpaAtvTourData: TourData = {
   title: 'РАФТИНГ + СЛОНОВЬЕ СПА + ATV 1 день',
   subtitle: 'Сплав по реке, слоновье СПА и приключения на квадроциклах в джунглях',
   description: `Невероятное приключение в один день: сплав по реке, слоновье СПА и тропический водопад.
+>>>>>>> origin/main
 
 ЭТОТ ТУР ДЛЯ ТЕХ КТО:
 
@@ -31,6 +55,20 @@ export const raftingSpaAtvTourData: TourData = {
   mainImage: raftingMain,
   gallery: [
     raftingMain,
+<<<<<<< HEAD
+    hongIsland,
+    hotspringSpa,
+    atvMain,
+    elephantPark,
+    cave,
+    lake,
+    monkeysTemple,
+    park,
+    raftingAction,
+    buddhaStatue,
+    waterfall,
+    zipline
+=======
     elephantShow,
     elephantFeeding,
     elephantSpa,
@@ -40,6 +78,7 @@ export const raftingSpaAtvTourData: TourData = {
     atvJungle,
     watChalong,
     seafoodMarket
+>>>>>>> origin/main
   ],
   
   priceAdult: 2000,
@@ -116,7 +155,12 @@ export const raftingSpaAtvTourData: TourData = {
     'Новые квадроциклы мощностью 250 кубов с экстремальной трассой'
   ],
   
+<<<<<<< HEAD
+  tags: ['Рафтинг', 'Слоны', 'SPA', 'ATV', 'Приключения', 'Адреналин', 'Природа'],
+  category: 'adventure',
+=======
   tags: ['приключения', 'рафтинг', 'слоны', 'квадроциклы', 'джунгли', 'активный отдых', 'национальный парк', 'храмы'],
   category: 'mainland',
+>>>>>>> origin/main
   isPopular: true
 };

@@ -1,20 +1,21 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений - используем существующие как заглушки
-import jamesBondMain from '@/assets/patong-beach.jpg';
-import jamesBondRock from '@/assets/karon-beach.jpg';
-import phangNgaBay from '@/assets/kata-beach.jpg';
-import kooPingKan from '@/assets/mai-khao-beach.jpg';
-import seaCanoe from '@/assets/naiharn-beach.jpg';
-import floatingVillage from '@/assets/naiyang-beach.jpg';
-import jamesBondIsland from '@/assets/surin-beach.jpg';
-import longtailBoat from '@/assets/freedom-beach.jpg';
+// Импорты изображений James Bond Island
+import jamesBondMain from '@/assets/james-1-CrrUEsJ1.jpg';
+import jamesBondRock from '@/assets/james-2-Voq4mfXH.jpg';
+import phangNgaBay from '@/assets/james-3-CZncWmAG.webp';
+import kooPingKan from '@/assets/james-4-BKlK7Ymz.webp';
+import seaCanoe from '@/assets/james-5-DsMmvbXh.webp';
+import floatingVillage from '@/assets/james-6-DKlj8kUA.webp';
+import jamesBondIsland from '@/assets/james-7-B5bdZZ8d.webp';
+import longtailBoat from '@/assets/phi-phi-speedboat.jpg';
 
 export const jamesBondIslandTourData: TourData = {
   id: 'james-bond-island-phang-nga',
   route: '/tours/james-bond-island-phang-nga',
   title: 'Остров Джеймса Бонда (залив Пханг Нга)',
   subtitle: 'Легендарный остров из фильма о Джеймсе Бонде, морские каньоны и плавучая деревня!',
+  route: '/excursion/james-bond-island-phang-nga',
   description: `Отправляйтесь в незабываемое путешествие к знаменитому острову Джеймса Бонда в заливе Пханг Нга!
 
 Этот уникальный тур познакомит вас с одним из самых фотографируемых мест Таиланда - скалой Ко Тапу, известной как остров Джеймса Бонда после съемок фильма "Человек с золотым пистолетом" в 1974 году.

@@ -1,20 +1,21 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений - используем существующие как заглушки
-import elevenIslandsMain from '@/assets/freedom-beach.jpg';
-import speedboatRiding from '@/assets/patong-beach.jpg';
-import islandHopping from '@/assets/karon-beach.jpg';
-import snorkelingSpot from '@/assets/kata-beach.jpg';
-import beachRelaxation from '@/assets/mai-khao-beach.jpg';
-import crystalLagoon from '@/assets/naiharn-beach.jpg';
-import tropicalIslands from '@/assets/naiyang-beach.jpg';
-import paradiseBeach from '@/assets/surin-beach.jpg';
+// Импорты изображений для 11 островов
+import elevenIslandsMain from '@/assets/phi-phi-speedboat.jpg';
+import speedboatRiding from '@/assets/phi-phi-lagoon.jpg';
+import islandHopping from '@/assets/phi-phi-maya-bay.jpg';
+import snorkelingSpot from '@/assets/phi-phi-snorkeling.jpg';
+import beachRelaxation from '@/assets/phi-phi-monkey-beach.jpg';
+import crystalLagoon from '@/assets/phi-phi-sunset.jpg';
+import tropicalIslands from '@/assets/racha-9-BwiEFStW.jpg';
+import paradiseBeach from '@/assets/racha-10-KRAnqfNA.jpg';
 
 export const elevenIslandsStandardTourData: TourData = {
   id: 'eleven-islands-standard-speedboat',
   route: '/tours/eleven-islands-standard-speedboat',
   title: '11 островов Стандарт на спидботе',
   subtitle: 'Грандиозное островное приключение: 11 тропических островов за один день!',
+  route: '/excursion/eleven-islands-standard-speedboat',
   description: `Отправляйтесь в самое масштабное островное приключение Таиланда - тур по 11 экзотическим островам!
 
 Этот захватывающий тур объединяет лучшие острова Андаманского моря в одно незабываемое путешествие. Вы посетите знаменитые острова Пхи-Пхи, Бамбу, Москито, а также скрытые жемчужины, известные только местным жителям.

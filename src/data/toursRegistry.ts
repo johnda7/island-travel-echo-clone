@@ -101,12 +101,12 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
   // 5. Рафтинг + SPA + ATV (1 день)
   {
     id: 'rafting-spa-atv-1-day',
-    name: 'Рафтинг + Слоны + SPA + ATV (1 день)',
+    name: 'РАФТИНГ + СЛОНОВЬЕ СПА + ATV 1 день',
     category: 'adventure',
     tags: ['рафтинг', 'слоны', 'spa', 'atv', 'приключения', '1 день', 'активный', 'комбо'],
     isPopular: true,     // ✅ показываем в популярных
     isActive: true,      // ✅ АКТИВИРОВАН
-    isFeatured: false,   // ❌ не на главной (пока)
+    isFeatured: true,    // ✅ показываем на главной - НОВЫЙ ТУР!
     priority: 5,
     data: () => Promise.resolve(raftingSpaAtvTourData)
   },

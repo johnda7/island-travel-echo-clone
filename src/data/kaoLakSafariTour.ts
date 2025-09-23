@@ -1,20 +1,23 @@
 import { TourData } from '@/types/Tour';
 
-// Импорты изображений - используем существующие как заглушки
-import safariMain from '@/assets/karon-beach.jpg';
-import elephantRiding from '@/assets/kata-beach.jpg';
-import waterfallSwim from '@/assets/mai-khao-beach.jpg';
-import bambooRafting from '@/assets/naiharn-beach.jpg';
-import jungleWalk from '@/assets/naiyang-beach.jpg';
-import localLunch from '@/assets/patong-beach.jpg';
-import groupSafari from '@/assets/surin-beach.jpg';
-import wildlife from '@/assets/freedom-beach.jpg';
+// Импорты изображений с оригинального сайта Као Лак Сафари
+import kaoLakMain from '@/assets/kao-lak-safari/6798780e8ebf0-17645-1200-800.jpg';
+import hotspringSpa from '@/assets/kao-lak-safari/the-hotspring-beach-resort-spa-1.jpeg';
+import airplaneBeach from '@/assets/kao-lak-safari/airplane-beach_-1.jpg';
+import safariMap1 from '@/assets/kao-lak-safari/snimok-jekrana-2025-09-06-v-20.53.08.png';
+import safariMap2 from '@/assets/kao-lak-safari/snimok-jekrana-2025-09-06-v-20.53.32.png';
 
 export const kaoLakSafariTourData: TourData = {
   id: 'kao-lak-safari-1-day',
+<<<<<<< HEAD
+  title: 'КАО ЛАК SAFARI 1 день',
+  subtitle: 'Приключенческое сафари в национальном парке Као Лак: слоны, водопады, джунгли и экзотическая природа!',
+  route: '/excursion/kao-lak-safari-1-day',
+=======
   route: '/tours/kao-lak-safari-1-day',
   title: 'Као Лак Сафари (1 день)',
   subtitle: 'Приключенческое сафари в национальном парке Као Лак: катание на слонах, водопады, бамбуковый рафтинг!',
+>>>>>>> origin/main
   description: `Откройте для себя дикую природу национального парка Као Лак в незабываемом однодневном сафари!
 
 Путешествие начинается с живописной дороги через тропические джунгли к слоновьему лагерю, где вас ждет катание на спине настоящих азиатских слонов по джунглевым тропам. Почувствуйте себя исследователем, пробираясь сквозь густые заросли на спине этих величественных животных.
@@ -25,20 +28,17 @@ export const kaoLakSafariTourData: TourData = {
 
 Завершаем день прогулкой по джунглевым тропам с местным гидом, который расскажет о флоре и фауне региона, покажет лекарственные растения и поделится секретами выживания в джунглях.`,
   
-  mainImage: safariMain,
+  mainImage: kaoLakMain,
   gallery: [
-    safariMain,
-    elephantRiding,
-    waterfallSwim,
-    bambooRafting,
-    jungleWalk,
-    localLunch,
-    groupSafari,
-    wildlife
+    kaoLakMain,
+    hotspringSpa,
+    airplaneBeach,
+    safariMap1,
+    safariMap2
   ],
   
-  priceAdult: 2200,
-  priceChild: 1900,
+  priceAdult: 1700,
+  priceChild: 1300,
   currency: '฿',
   
   duration: '7-8 часов',

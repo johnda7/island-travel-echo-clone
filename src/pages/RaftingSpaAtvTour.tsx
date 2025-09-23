@@ -366,32 +366,32 @@ const RaftingSpaAtvTour = () => {
             <div className="text-gray-500">•</div>
             <div className="text-gray-600">{excursion.groupSize}</div>
             <div className="text-gray-500">•</div>
-            <div className="text-gray-600">{excursion.duration}</div>
+          <div className="text-gray-600">{excursion.duration}</div>
+        </div>
+        {/* Mobile price */}
+        <div className="text-2xl font-bold text-green-600 mb-4 md:hidden">
+          от {excursion.priceAdult} {excursion.currency} <span className="text-base font-normal text-gray-500">за взрослого</span>
+        </div>
+
+        {/* Mobile CTA Button - сразу на первом экране */}
+        <div className="lg:hidden mb-8">
+          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+            <div className="text-center">
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Забронировать тур</h3>
+              <div className="text-2xl font-bold text-green-600 mb-4">
+                от {excursion.priceAdult} {excursion.currency}
+              </div>
+              <Button 
+                onClick={() => setShowBookingModal(true)}
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-4 text-lg font-semibold rounded-xl"
+              >
+                Забронировать тур
+              </Button>
+            </div>
           </div>
         </div>
-      </section>
-
-      {/* Mobile booking card */}
-      <section className="lg:hidden mb-8">
-        <div className="container mx-auto px-4">
-          <Card className="shadow-lg border-0">
-            <CardContent className="p-6">
-              <div className="text-center mb-6">
-                <div className="text-2xl font-bold text-green-600 mb-2">
-                  от {excursion.priceAdult.toLocaleString()} {excursion.currency}
-                </div>
-                <div className="text-sm text-gray-500 mb-4">за взрослого</div>
-                <Button 
-                  onClick={() => setShowBookingModal(true)}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
-                >
-                  Забронировать тур
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+      </div>
+    </section>
 
       {/* Description */}
       <section className="py-8">

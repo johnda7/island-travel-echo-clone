@@ -86,11 +86,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                   className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
                   loading="lazy"
                   onError={(e) => {
-                    console.log(`Image failed to load for tour ${tour.id}:`, e.currentTarget.src);
                     e.currentTarget.src = fallbackImage;
-                  }}
-                  onLoad={() => {
-                    console.log(`Image loaded successfully for tour ${tour.id}`);
                   }}
                 />
                 {tour.isPopular && (

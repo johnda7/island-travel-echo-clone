@@ -69,16 +69,11 @@ export const useCMSTours = () => {
       
       console.log('🔍 RAW DATA from DB:', data?.length, data?.map(t => ({ slug: t.slug, title: t.title })));
       
-      const transformedTours: CMSTour[] = data?.map(tour => {
-        const gallery = tour.tour_gallery?.sort((a, b) => a.sort_order - b.sort_order) || [];
-        console.log(`🖼️ Gallery for ${tour.slug}:`, gallery.map(g => g.image_url));
-        
-        return {
-          ...tour,
-          gallery,
-          itinerary: tour.tour_itinerary?.sort((a, b) => a.sort_order - b.sort_order) || []
-        };
-      }) || [];
+      const transformedTours: CMSTour[] = data?.map(tour => ({
+        ...tour,
+        gallery: tour.tour_gallery?.sort((a, b) => a.sort_order - b.sort_order) || [],
+        itinerary: tour.tour_itinerary?.sort((a, b) => a.sort_order - b.sort_order) || []
+      })) || [];
       
       console.log('✅ Загружено туров:', transformedTours.length);
       console.log('📋 Слаги туров:', transformedTours.map(t => t.slug));

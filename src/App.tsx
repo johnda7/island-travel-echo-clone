@@ -74,9 +74,7 @@ function App() {
               
               
               
-              {/* 4. Остров Джеймса Бонда */}
-              <Route path="/excursion/james-bond-island-phang-nga" element={<JamesBondIslandTour />} />
-              <Route path="/tours/james-bond-island-phang-nga" element={<JamesBondIslandTour />} />
+               {/* 4. Остров Джеймса Бонда - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ЧЕРЕЗ CMS/DynamicTourPage */}
               
               {/* 5. Аватар Плюс + Хангдонг */}
               <Route path="/excursion/avatar-plus-hangdong-adventure" element={<AvatarPlusHangdongTour />} />

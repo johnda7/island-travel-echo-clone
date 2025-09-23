@@ -67,6 +67,8 @@ export const useCMSTours = () => {
       
       if (error) throw error;
       
+      console.log('🔍 RAW DATA from DB:', data?.length, data?.map(t => ({ slug: t.slug, title: t.title })));
+      
       const transformedTours: CMSTour[] = data?.map(tour => ({
         ...tour,
         gallery: tour.tour_gallery?.sort((a, b) => a.sort_order - b.sort_order) || [],
@@ -75,6 +77,7 @@ export const useCMSTours = () => {
       
       console.log('✅ Загружено туров:', transformedTours.length);
       console.log('📋 Слаги туров:', transformedTours.map(t => t.slug));
+      console.log('🎯 Есть ли eleven-islands-mega:', transformedTours.find(t => t.slug === 'eleven-islands-mega')?.title);
       
       setTours(transformedTours);
     } catch (err) {

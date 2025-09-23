@@ -1,13 +1,13 @@
 import type { TourData } from "@/types/Tour";
-// Импортируем изображения как модули - используем существующие файлы
-import mainImage from "@/assets/phi-phi-maya-bay.jpg";
-import jamesBondImage from "@/assets/phi-phi-2days/james-1.jpg";
-import hongIslandImage from "@/assets/freedom-beach.jpg";
-import phiPhiImage from "@/assets/phi-phi-2days/mayabay-1.jpg";
-import vikingCaveImage from "@/assets/phi-phi-2days/viking-cave.jpg";
-import mayaBayImage from "@/assets/phi-phi-2days/maya-bay-1.jpg";
-import pilehLagoonImage from "@/assets/phi-phi-2days/pileh-lagoon.jpg";
-import panyiVillageImage from "@/assets/patong-beach.jpg";
+// Импортируем изображения как модули - скачанные с оригинального сайта тура
+import mainImage from "@/assets/eleven-islands-mega/james-bond-island.jpg";
+import hongIslandImage from "@/assets/eleven-islands-mega/hong-island.jpg";
+import mayaBayImage from "@/assets/eleven-islands-mega/maya-bay1.jpg";
+import pilehLagoonImage from "@/assets/eleven-islands-mega/pileh-lagoon.jpg";
+import vikingCaveImage from "@/assets/eleven-islands-mega/viking-cave.jpg";
+import kohPanyiImage from "@/assets/eleven-islands-mega/koh-panyi.jpg";
+import canoeingImage from "@/assets/eleven-islands-mega/canoeing-talu-island.jpg";
+import phiPhiDonImage from "@/assets/eleven-islands-mega/phi-phi-don.jpg";
 
 export const elevenIslandsMegaTourData: TourData = {
   id: "eleven-islands-mega",
@@ -22,7 +22,7 @@ export const elevenIslandsMegaTourData: TourData = {
   rating: 4.9,
   reviewsCount: 127,
   mainImage,
-  gallery: [mainImage, jamesBondImage, hongIslandImage, phiPhiImage, vikingCaveImage, mayaBayImage, pilehLagoonImage, panyiVillageImage],
+  gallery: [mainImage, hongIslandImage, mayaBayImage, pilehLagoonImage, vikingCaveImage, kohPanyiImage, canoeingImage, phiPhiDonImage],
   description: `🌴 **11 ОСТРОВОВ МЕГА-ТУР** - это грандиозное островное приключение, объединяющее три самых популярных направления Таиланда в одном эпичном дне!
 
 **🎬 Остров Джеймса Бонда** - легендарное место съемок фильмов о Джеймсе Бонде с его знаменитой скалой Као Пинг Кан.

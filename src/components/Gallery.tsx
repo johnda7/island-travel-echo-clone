@@ -77,14 +77,14 @@ export const Gallery = () => {
             <Link 
               key={index} 
               to={image.tour}
-              className={`group relative overflow-hidden rounded-2xl aspect-square cursor-pointer transform transition-all duration-700 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/30 animate-fade-in backdrop-blur-sm border border-white/20`}
+              className={`group relative overflow-hidden rounded-2xl aspect-square cursor-pointer transform transition-all duration-300 hover:shadow-lg animate-fade-in backdrop-blur-sm border border-white/20`}
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Image */}
               <img 
                 src={image.src} 
                 alt={image.title}
-                className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                className="w-full h-full object-cover object-center"
               />
               
               {/* Gradient Overlay */}

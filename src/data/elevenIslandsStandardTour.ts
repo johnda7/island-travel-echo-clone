@@ -12,7 +12,6 @@ import paradiseBeach from '@/assets/racha-10-KRAnqfNA.jpg';
 
 export const elevenIslandsStandardTourData: TourData = {
   id: 'eleven-islands-standard-speedboat',
-  route: '/tours/eleven-islands-standard-speedboat',
   title: '11 островов Стандарт на спидботе',
   subtitle: 'Грандиозное островное приключение: 11 тропических островов за один день!',
   route: '/excursion/eleven-islands-standard-speedboat',

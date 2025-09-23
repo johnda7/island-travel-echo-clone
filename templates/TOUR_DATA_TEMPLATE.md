@@ -1,46 +1,54 @@
-# Шаблон создания тура в CMS
+# Шаблон создания тура в CMS - СКОРОСТЬ 10X
+
+⚡ **ПРИНЦИП: МАКСИМАЛЬНАЯ СКОРОСТЬ - НЕ ЭКОНОМИТЬ ТОКЕНЫ!**
 
 Теперь мы используем Supabase CMS для создания туров вместо файлов .ts.
 
-## Процесс создания тура:
+## ⚡ ULTRA-FAST процесс создания тура:
 
-1. **Получение данных с сайта**:
-   - Используйте `lov-fetch-website` для получения данных с phuketgo.aaddaa.com
-   - Изучите полный контент: название, описание, цены, галерею
+1. **БЫСТРОЕ получение данных с сайта**:
+   - Используйте `lov-fetch-website` для **МГНОВЕННОГО** получения данных с phuketgo.aaddaa.com
+   - **BULK EXTRACT** полный контент: название, описание, цены, галерею **ПАРАЛЛЕЛЬНО**
 
-2. **Создание тура в CMS**:
+2. **МАССОВОЕ создание тура в CMS (BULK INSERT)**:
    ```sql
+   -- ⚡ SINGLE OPERATION INSERT - НЕ ПО ЧАСТЯМ!
    INSERT INTO public.tours (
-     title,              -- "Название тура"
-     subtitle,           -- "Короткий подзаголовок тура"
-     slug,               -- "tour-slug" (для URL)
-     description,        -- Полное описание из сайта
-     short_description,  -- Краткое описание для карточек
-     price_adult,        -- Цена взрослый (число)
-     price_child,        -- Цена ребёнок (число) 
-     currency,           -- "THB"
-     duration,           -- "1 день (9:00-17:00)"
-     group_size,         -- "до 30 человек"
-     difficulty_level,   -- "легкий"/"средний"/"сложный"
-     highlights,         -- ARRAY[...] главные особенности
-     included,           -- ARRAY[...] что включено
-     excluded,           -- ARRAY[...] что не включено  
-     requirements,       -- ARRAY[...] что взять с собой
-     important_info,     -- ARRAY[...] важная информация
-     meta_title,         -- SEO заголовок
-     meta_description,   -- SEO описание
-     tags,               -- ARRAY[...] теги для поиска
-     is_active,          -- true
-     is_featured,        -- true/false
-     sort_order          -- число для сортировки
-   ) VALUES (...);
+     title,              -- "Название тура" **INSTANT**
+     subtitle,           -- "Короткий подзаголовок тура" **FAST**
+     slug,               -- "tour-slug" (для URL) **AUTO-GENERATED**
+     description,        -- Полное описание из сайта **BULK COPY**
+     short_description,  -- Краткое описание для карточек **AUTO-EXCERPT**
+     price_adult,        -- Цена взрослый (число) **REAL PRICE**
+     price_child,        -- Цена ребёнок (число) **REAL PRICE**
+     currency,           -- "THB" **CONSTANT**
+     duration,           -- "1 день (9:00-17:00)" **FROM SOURCE**
+     group_size,         -- "до 30 человек" **FROM SOURCE**
+     difficulty_level,   -- "легкий"/"средний"/"сложный" **AUTO-DETECT**
+     highlights,         -- ARRAY[...] главные особенности **BULK ARRAY**
+     included,           -- ARRAY[...] что включено **MASS INSERT**
+     excluded,           -- ARRAY[...] что не включено **BATCH INSERT**
+     requirements,       -- ARRAY[...] что взять с собой **INSTANT ARRAY**
+     important_info,     -- ARRAY[...] важная информация **FAST ARRAY**
+     meta_title,         -- SEO заголовок **AUTO-SEO**
+     meta_description,   -- SEO описание **AUTO-META**
+     tags,               -- ARRAY[...] теги для поиска **AUTO-TAGS**
+     is_active,          -- true **DEFAULT TRUE**
+     is_featured,        -- true/false **SMART DEFAULT**
+     sort_order          -- число для сортировки **AUTO-INCREMENT**
+   ) VALUES (...); -- ⚡ SINGLE MASSIVE INSERT
    ```
 
-3. **Добавление галереи**:
+3. **ПАРАЛЛЕЛЬНОЕ добавление галереи (BULK GALLERY)**:
    ```sql
+   -- 🚀 MASS GALLERY INSERT - ВСЕ ФОТО СРАЗУ
    INSERT INTO public.tour_gallery (
      tour_id, image_url, alt_text, caption, is_main, sort_order
-   ) SELECT t.id, 'https://...', '...', '...', true, 1
+   ) SELECT t.id, unnest(ARRAY['https://img1.jpg', 'https://img2.jpg', ...]), 
+            unnest(ARRAY['alt1', 'alt2', ...]), 
+            unnest(ARRAY['caption1', 'caption2', ...]),
+            unnest(ARRAY[true, false, false, ...]),
+            unnest(ARRAY[1, 2, 3, ...])
    FROM public.tours t WHERE t.slug = 'tour-slug';
    ```
 

@@ -14,7 +14,6 @@ import elephantShow2 from '@/assets/rafting-spa-atv/rafting-scaled.jpg';
 
 export const avatarPlusHangdongTourData: TourData = {
   id: 'avatar-plus-hangdong-adventure',
-  route: '/tours/avatar-plus-hangdong-adventure',
   title: 'Аватар Плюс + Хангдонг',
   subtitle: 'Полное приключение: горы, зиплайн, парящие горы, шоу слонов и каноэ-туризм!',
   route: '/excursion/avatar-plus-hangdong-adventure',

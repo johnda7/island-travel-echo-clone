@@ -15,8 +15,6 @@ import { pearlsAndamanSeaTourData } from '../data/pearlsTour.ts';
 import { dostoprimechatelnostiPhuketaTourData } from '../data/dostoprimechatelnostiPhuketaTour.ts';
 import { rassvetnoePrikljuchenieTourData } from '../data/rassvetnoePrikljuchenieTour.ts';
 // НОВЫЕ 6 ТУРОВ
-import { raftingSpaAtvTourData } from '../data/raftingSpaAtvTour.ts';
-import { kaoLakSafariTourData } from '../data/kaoLakSafariTour.ts';
 
 import { jamesBondIslandTourData } from '../data/jamesBondIslandTour.ts';
 import { avatarPlusHangdongTourData } from '../data/avatarPlusHangdongTour.ts';
@@ -98,31 +96,35 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
   
   // 🚀 НОВЫЕ 6 ТУРОВ - ПОЛНАЯ КОЛЛЕКЦИЯ!
   
-  // 5. Рафтинг + SPA + ATV (1 день)
+  // 5. Рафтинг + SPA + ATV (1 день) - ВРЕМЕННО ОТКЛЮЧЕН
+  /*
   {
     id: 'rafting-spa-atv-1-day',
     name: 'РАФТИНГ + СЛОНОВЬЕ СПА + ATV 1 день',
     category: 'adventure',
     tags: ['рафтинг', 'слоны', 'spa', 'atv', 'приключения', '1 день', 'активный', 'комбо'],
-    isPopular: true,     // ✅ показываем в популярных
-    isActive: true,      // ✅ АКТИВИРОВАН
-    isFeatured: true,    // ✅ показываем на главной - НОВЫЙ ТУР!
+    isPopular: true,
+    isActive: false,
+    isFeatured: false,
     priority: 5,
     data: () => Promise.resolve(raftingSpaAtvTourData)
   },
+  */
 
-  // 6. Као Лак Сафари (1 день)
+  // 6. Као Лак Сафари (1 день) - ВРЕМЕННО ОТКЛЮЧЕН
+  /*
   {
     id: 'kao-lak-safari-1-day',
-    name: 'Као Лак Сафари (1 день)',
-    category: 'adventure',
-    tags: ['сафари', 'слоны', 'водопады', 'рафтинг', 'джунгли', '1 день', 'природа', 'као лак'],
-    isPopular: true,     // ✅ показываем в популярных
-    isActive: true,      // ✅ АКТИВИРОВАН
-    isFeatured: false,   // ❌ не на главной (пока)
+    name: 'КАО ЛАК SAFARI 1 день',
+    category: 'safari',
+    tags: ['сафари', 'као лак', 'слоны', 'национальный парк', 'водопады', 'джунгли', '1 день'],
+    isPopular: true,
+    isActive: false,
+    isFeatured: false,
     priority: 6,
     data: () => Promise.resolve(kaoLakSafariTourData)
   },
+  */
 
 
   // 8. Остров Джеймса Бонда (залив Пханг Нга)

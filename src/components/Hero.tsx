@@ -16,7 +16,7 @@ export const Hero = () => {
       <div className="absolute inset-0">
         {/* Main Background Image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-out hover:scale-105"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url('${getAssetPath("maya-bay-sunrise.jpg")}')`
           }}
@@ -72,7 +72,7 @@ export const Hero = () => {
           <Button 
             size="lg" 
             asChild 
-            className="group relative overflow-hidden bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 hover:from-cyan-400 hover:via-blue-400 hover:to-indigo-500 text-white px-12 py-5 text-xl font-bold rounded-2xl shadow-2xl hover:shadow-cyan-400/60 transition-all duration-700 transform hover:scale-105 border border-white/30 backdrop-blur-md before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500"
+            className="group relative overflow-hidden bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 hover:from-cyan-400 hover:via-blue-400 hover:to-indigo-500 text-white px-12 py-5 text-xl font-bold rounded-2xl shadow-2xl hover:shadow-cyan-400/60 transition-all duration-300 border border-white/30 backdrop-blur-md"
           >
             <Link to="/tours" className="flex items-center relative z-10">
               <Waves className="w-6 h-6 mr-3 group-hover:animate-pulse transition-all duration-300" />

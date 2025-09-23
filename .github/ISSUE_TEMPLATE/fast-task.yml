@@ -1,0 +1,27 @@
+name: Fast Task
+description: Быстрая задача с фокусом на результат
+title: "[FAST] "
+labels: ["fast-10x"]
+body:
+  - type: textarea
+    id: task
+    attributes:
+      label: Задача
+      placeholder: что нужно сделать
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Контекст
+      placeholder: ссылки, файлы, требования
+  - type: textarea
+    id: assumptions
+    attributes:
+      label: Допущения (если данных нет)
+      placeholder: перечисли до 5 шт.
+  - type: input
+    id: loop
+    attributes:
+      label: Fast loop
+      placeholder: dialog → ship → dialog (MVP сразу, расширения по запросу)

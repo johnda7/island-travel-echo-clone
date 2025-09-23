@@ -20,6 +20,8 @@ import { jamesBondIslandTourData } from '../data/jamesBondIslandTour.ts';
 import { avatarPlusHangdongTourData } from '../data/avatarPlusHangdongTour.ts';
 import { elevenIslandsStandardTourData } from '../data/elevenIslandsStandardTour.ts';
 import { elevenIslandsMegaTourData } from '../data/elevenIslandsMegaTour.ts';
+import { raftingSpaAtvTourData } from '../data/raftingSpaAtvTour.ts';
+import { kaoLakSafariTourData } from '../data/kaoLakSafariTour.ts';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -102,11 +104,11 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     name: 'РАФТИНГ + СЛОНОВЬЕ СПА + ATV 1 день',
     category: 'adventure',
     tags: ['рафтинг', 'слоны', 'spa', 'atv', 'приключения', '1 день', 'активный', 'комбо'],
-    isPopular: false,     // ❌ временно скрыто
-    isActive: false,      // ❌ ДЕАКТИВИРОВАН - файл удален
-    isFeatured: false,    // ❌ временно скрыто
+    isPopular: true,     // ✅ АКТИВИРОВАН - показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН - показывается в поиске/меню
+    isFeatured: false,   // ❌ не на главной (пока)
     priority: 5,
-    data: () => Promise.reject(new Error('Tour temporarily unavailable'))
+    data: () => Promise.resolve(raftingSpaAtvTourData)
   },
 
   // 6. Као Лак Сафари (1 день)
@@ -114,12 +116,12 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     id: 'kao-lak-safari-1-day',
     name: 'Као Лак Сафари (1 день)',
     category: 'adventure',
-    tags: ['сафари', 'слоны', 'водопады', 'рафтинг', 'джунгли', '1 день', 'природа', 'као лак'],
-    isPopular: false,     // ❌ временно скрыто
-    isActive: false,      // ❌ ДЕАКТИВИРОВАН - файл удален
+    tags: ['сафари', 'слоны', 'водопады', 'джунгли', '1 день', 'природа', 'као лак'],
+    isPopular: true,     // ✅ АКТИВИРОВАН - показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН - показывается в поиске/меню
     isFeatured: false,   // ❌ не на главной (пока)
     priority: 6,
-    data: () => Promise.reject(new Error('Tour temporarily unavailable'))
+    data: () => Promise.resolve(kaoLakSafariTourData)
   },
 
 

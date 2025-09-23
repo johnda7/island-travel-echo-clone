@@ -19,7 +19,7 @@ import RassvetnoePrikljuchenie from "./pages/RassvetnoePrikljuchenie";
 // НОВЫЕ 6 ТУРОВ
 import RaftingSpaAtvTour from "./pages/RaftingSpaAtvTour";
 import KaoLakSafariTour from "./pages/KaoLakSafariTour";
-import RachaCoralIslandsTour from "./pages/RachaCoralIslandsTour";
+
 import JamesBondIslandTour from "./pages/JamesBondIslandTour";
 import AvatarPlusHangdongTour from "./pages/AvatarPlusHangdongTour";
 import ElevenIslandsStandardTour from "./pages/ElevenIslandsStandardTour";
@@ -72,9 +72,7 @@ function App() {
               <Route path="/excursion/kao-lak-safari-1-day" element={<KaoLakSafariTour />} />
               <Route path="/tours/kao-lak-safari-1-day" element={<KaoLakSafariTour />} />
               
-              {/* 3. Острова Рача и Корал */}
-              <Route path="/excursion/racha-coral-islands-speedboat" element={<RachaCoralIslandsTour />} />
-              <Route path="/tours/racha-coral-islands-speedboat" element={<RachaCoralIslandsTour />} />
+              
               
               {/* 4. Остров Джеймса Бонда */}
               <Route path="/excursion/james-bond-island-phang-nga" element={<JamesBondIslandTour />} />

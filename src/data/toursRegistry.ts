@@ -17,7 +17,7 @@ import { rassvetnoePrikljuchenieTourData } from '../data/rassvetnoePrikljuchenie
 // НОВЫЕ 6 ТУРОВ
 import { raftingSpaAtvTourData } from '../data/raftingSpaAtvTour.ts';
 import { kaoLakSafariTourData } from '../data/kaoLakSafariTour.ts';
-import { rachaCoralIslandsTourData } from '../data/rachaCoralIslandsTour.ts';
+
 import { jamesBondIslandTourData } from '../data/jamesBondIslandTour.ts';
 import { avatarPlusHangdongTourData } from '../data/avatarPlusHangdongTour.ts';
 import { elevenIslandsStandardTourData } from '../data/elevenIslandsStandardTour.ts';
@@ -123,18 +123,6 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     data: () => Promise.resolve(kaoLakSafariTourData)
   },
 
-  // 7. Острова Рача и Корал на спидботе
-  {
-    id: 'racha-coral-islands-speedboat',
-    name: 'Острова Рача и Корал на спидботе',
-    category: 'islands',
-    tags: ['острова', 'рача', 'корал', 'спидбот', 'снорклинг', 'парасейлинг', 'пляжи', '1 день'],
-    isPopular: true,     // ✅ показываем в популярных
-    isActive: true,      // ✅ АКТИВИРОВАН
-    isFeatured: false,   // ❌ не на главной (пока)
-    priority: 7,
-    data: () => Promise.resolve(rachaCoralIslandsTourData)
-  },
 
   // 8. Остров Джеймса Бонда (залив Пханг Нга)
   {

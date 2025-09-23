@@ -21,6 +21,7 @@ import { kaoLakSafariTourData } from '../data/kaoLakSafariTour.ts';
 import { jamesBondIslandTourData } from '../data/jamesBondIslandTour.ts';
 import { avatarPlusHangdongTourData } from '../data/avatarPlusHangdongTour.ts';
 import { elevenIslandsStandardTourData } from '../data/elevenIslandsStandardTour.ts';
+import { elevenIslandsMegaTourData } from '../data/elevenIslandsMegaTour.ts';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -161,6 +162,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: false,   // ❌ не на главной
     priority: 10,
     data: () => Promise.resolve(elevenIslandsStandardTourData)
+  },
+
+  // 11. 11 островов МЕГА-ТУР (премиум версия)
+  {
+    id: 'eleven-islands-mega',
+    name: '11 ОСТРОВОВ МЕГА-ТУР',
+    category: 'islands',
+    tags: ['мега-тур', '11 островов', 'джеймс бонд', 'пхи-пхи', 'хонг', 'премиум', 'комфорт+', '1 день'],
+    isPopular: true,     // ✅ показываем в популярных (премиум версия!)
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: true,    // ✅ показываем на главной
+    priority: 11,
+    data: () => Promise.resolve(elevenIslandsMegaTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

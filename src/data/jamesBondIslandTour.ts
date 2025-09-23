@@ -12,6 +12,7 @@ import longtailBoat from '@/assets/phi-phi-speedboat.jpg';
 
 export const jamesBondIslandTourData: TourData = {
   id: 'james-bond-island-phang-nga',
+  route: '/tours/james-bond-island-phang-nga',
   title: 'Остров Джеймса Бонда (залив Пханг Нга)',
   subtitle: 'Легендарный остров из фильма о Джеймсе Бонде, морские каньоны и плавучая деревня!',
   route: '/excursion/james-bond-island-phang-nga',

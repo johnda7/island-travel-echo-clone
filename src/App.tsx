@@ -10,6 +10,7 @@ import About from "./pages/About";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import AdminPanel from "./pages/AdminPanel";
+import DynamicTourPage from "@/components/DynamicTourPage";
 // ТОЛЬКО ЗАЩИЩЕННЫЕ СТРАНИЦЫ ТУРОВ (эталоны PhiPhi и Pearls)
 import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 import PearlsAndamanSea from "./pages/PearlsAndamanSea";
@@ -18,9 +19,9 @@ import RassvetnoePrikljuchenie from "./pages/RassvetnoePrikljuchenie";
 // НОВЫЕ 6 ТУРОВ
 import RaftingSpaAtvTour from "./pages/RaftingSpaAtvTour";
 import KaoLakSafariTour from "./pages/KaoLakSafariTour";
-import RachaCoralIslandsTour from "./pages/RachaCoralIslandsTour";
+
 import JamesBondIslandTour from "./pages/JamesBondIslandTour";
-import AvatarPlusHangdongTour from "./pages/AvatarPlusHangdongTour";
+
 import ElevenIslandsStandardTour from "./pages/ElevenIslandsStandardTour";
 
 const queryClient = new QueryClient();
@@ -41,6 +42,9 @@ function App() {
               <Route path="/tours" element={<Tours />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<ContactPage />} />
+              
+              {/* Динамический роутинг для новых туров из CMS */}
+              <Route path="/tours/:slug" element={<DynamicTourPage />} />
               
               {/* ЗАЩИЩЕННЫЕ ПОЛНЫЕ СТРАНИЦЫ ТУРОВ (эталоны) */}
               {/* Phi Phi 2 days / 1 night */}
@@ -64,21 +68,13 @@ function App() {
               <Route path="/excursion/rafting-spa-atv-1-day" element={<RaftingSpaAtvTour />} />
               <Route path="/tours/rafting-spa-atv-1-day" element={<RaftingSpaAtvTour />} />
               
-              {/* 2. Као Лак Сафари */}
-              <Route path="/excursion/kao-lak-safari-1-day" element={<KaoLakSafariTour />} />
-              <Route path="/tours/kao-lak-safari-1-day" element={<KaoLakSafariTour />} />
+               {/* 2. Као Лак Сафари - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ЧЕРЕЗ CMS/DynamicTourPage */}
               
-              {/* 3. Острова Рача и Корал */}
-              <Route path="/excursion/racha-coral-islands-speedboat" element={<RachaCoralIslandsTour />} />
-              <Route path="/tours/racha-coral-islands-speedboat" element={<RachaCoralIslandsTour />} />
               
-              {/* 4. Остров Джеймса Бонда */}
-              <Route path="/excursion/james-bond-island-phang-nga" element={<JamesBondIslandTour />} />
-              <Route path="/tours/james-bond-island-phang-nga" element={<JamesBondIslandTour />} />
               
-              {/* 5. Аватар Плюс + Хангдонг */}
-              <Route path="/excursion/avatar-plus-hangdong-adventure" element={<AvatarPlusHangdongTour />} />
-              <Route path="/tours/avatar-plus-hangdong-adventure" element={<AvatarPlusHangdongTour />} />
+               {/* 4. Остров Джеймса Бонда - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ЧЕРЕЗ CMS/DynamicTourPage */}
+              
+               {/* 5. Аватар Плюс + Хангдонг - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ЧЕРЕЗ CMS/DynamicTourPage */}
               
               {/* 6. 11 островов Стандарт */}
               <Route path="/excursion/eleven-islands-standard-speedboat" element={<ElevenIslandsStandardTour />} />

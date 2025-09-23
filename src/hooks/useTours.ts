@@ -1,8 +1,10 @@
 // 🎯 ЦЕНТРАЛЬНЫЙ ХУК ДЛЯ WORDPRESS-ПОДОБНОЙ СИСТЕМЫ ТУРОВ
-// Принцип: "Один источник правды для всех туров"
+// Принцип: "Один источник правды для всех туров" - СТАТИЧЕСКИЕ + CMS
+// 🔄 ГИБРИДНАЯ СИСТЕМА: Старые туры из файлов + Новые туры из CMS
 
 import { useState, useEffect, useMemo } from 'react';
 import { TOURS_REGISTRY, getToursByCategory, getToursByTag, searchTours } from '@/data/toursRegistry';
+import { useCMSTours, CMSTour } from '@/hooks/useCMSTours';
 import type { TourData } from '@/types/Tour';
 
 export interface TourWithMeta {
@@ -34,6 +36,9 @@ export interface ToursState {
 }
 
 export const useTours = () => {
+  // 🔄 ГИБРИДНАЯ СИСТЕМА: Загружаем туры из CMS
+  const { tours: cmsTours, loading: cmsLoading } = useCMSTours();
+  
   const [state, setState] = useState<ToursState>({
     allTours: [],
     popularTours: [],
@@ -46,13 +51,14 @@ export const useTours = () => {
     searchQuery: ''
   });
 
-  // 🎯 ЗАГРУЗКА ДАННЫХ ТУРОВ
+  // 🎯 ЗАГРУЗКА ГИБРИДНЫХ ДАННЫХ: СТАТИЧЕСКИЕ + CMS
   useEffect(() => {
     const loadTours = async () => {
       try {
         setState(prev => ({ ...prev, loading: true }));
         
-        const toursWithMeta: TourWithMeta[] = await Promise.all(
+        // 📦 СТАТИЧЕСКИЕ ТУРЫ из файлов
+        const staticToursWithMeta: TourWithMeta[] = await Promise.all(
           TOURS_REGISTRY
             .filter(tour => tour.isActive)
             .map(async (tour) => {
@@ -69,7 +75,7 @@ export const useTours = () => {
                   data
                 };
               } catch (error) {
-                console.warn(`Failed to load tour ${tour.id}:`, error);
+                console.warn(`Failed to load static tour ${tour.id}:`, error);
                 return {
                   id: tour.id,
                   name: tour.name,
@@ -83,18 +89,57 @@ export const useTours = () => {
             })
         );
 
-        // Сортировка по приоритету
-        toursWithMeta.sort((a, b) => a.priority - b.priority);
+        // 🎯 CMS ТУРЫ из Supabase
+        const cmsToursWithMeta: TourWithMeta[] = cmsTours.map((cmsTour: CMSTour, index: number) => ({
+          id: cmsTour.slug,
+          name: cmsTour.title,
+          category: 'islands', // по умолчанию, можно расширить
+          tags: cmsTour.tags || [],
+          isPopular: cmsTour.is_featured || false,
+          isFeatured: cmsTour.is_featured || false,
+          priority: 100 + index, // CMS туры после статических
+          data: {
+            id: cmsTour.slug,
+            route: `/tours/${cmsTour.slug}`,
+            title: cmsTour.title,
+            subtitle: cmsTour.subtitle,
+            description: cmsTour.description,
+            mainImage: cmsTour.gallery[0]?.image_url || '',
+            gallery: cmsTour.gallery.map(g => g.image_url),
+            priceAdult: cmsTour.price_adult,
+            priceChild: cmsTour.price_child,
+            currency: cmsTour.currency,
+            duration: cmsTour.duration,
+            groupSize: cmsTour.group_size,
+            rating: 4.8,
+            reviewsCount: 127,
+            highlights: cmsTour.highlights || [],
+            included: cmsTour.included || [],
+            excluded: cmsTour.excluded || [],
+            requirements: cmsTour.requirements || [],
+            importantInfo: cmsTour.important_info || [],
+            tags: cmsTour.tags || [],
+            category: 'islands'
+          } as TourData
+        }));
 
-        const categories = Array.from(new Set(toursWithMeta.map(t => t.category)));
-        const tags = Array.from(new Set(toursWithMeta.flatMap(t => t.tags)));
+        // 🔄 ОБЪЕДИНЕНИЕ ВСЕХ ТУРОВ - ПРИОРИТЕТ CMS НАД СТАТИЧЕСКИМИ
+        const cmsIds = new Set(cmsToursWithMeta.map(tour => tour.id));
+        const filteredStaticTours = staticToursWithMeta.filter(tour => !cmsIds.has(tour.id));
+        const allToursWithMeta = [...filteredStaticTours, ...cmsToursWithMeta];
+
+        // Сортировка по приоритету
+        allToursWithMeta.sort((a, b) => a.priority - b.priority);
+
+        const categories = Array.from(new Set(allToursWithMeta.map(t => t.category)));
+        const tags = Array.from(new Set(allToursWithMeta.flatMap(t => t.tags)));
 
         setState(prev => ({
           ...prev,
-          allTours: toursWithMeta,
-          popularTours: toursWithMeta.filter(t => t.isPopular),
-          featuredTours: toursWithMeta.filter(t => t.isFeatured),
-          filteredTours: toursWithMeta,
+          allTours: allToursWithMeta,
+          popularTours: allToursWithMeta.filter(t => t.isPopular),
+          featuredTours: allToursWithMeta.filter(t => t.isFeatured),
+          filteredTours: allToursWithMeta,
           categories,
           tags,
           loading: false
@@ -105,8 +150,11 @@ export const useTours = () => {
       }
     };
 
-    loadTours();
-  }, []);
+    // Загружаем только когда CMS данные готовы
+    if (!cmsLoading) {
+      loadTours();
+    }
+  }, [cmsLoading, cmsTours]);
 
   // 🔍 ФИЛЬТРАЦИЯ ПО КАТЕГОРИИ И ПОИСКУ
   const filteredTours = useMemo(() => {

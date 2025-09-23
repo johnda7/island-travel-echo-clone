@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Waves, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 // Get the base path for proper asset loading
@@ -50,22 +50,37 @@ export const Hero = () => {
         </div>
         
         {/* Subtitle with Animation */}
-        <p className="text-xl md:text-2xl mb-10 text-gray-100 max-w-3xl mx-auto leading-relaxed animate-fade-in delay-300 drop-shadow-md">
-          🏝️ Кристально чистые воды • 🌅 Закаты мечты • 🐠 Подводный мир<br />
-          Откройте для себя магию тайских островов с нашими эксклюзивными турами
-        </p>
+        <div className="mb-12 animate-fade-in delay-300 max-w-4xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-6 mb-6 text-lg md:text-xl">
+            <span className="flex items-center bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300">
+              🏝️ <span className="ml-2 bg-gradient-to-r from-cyan-200 to-blue-200 bg-clip-text text-transparent font-semibold">Кристально чистые воды</span>
+            </span>
+            <span className="flex items-center bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300">
+              🌅 <span className="ml-2 bg-gradient-to-r from-orange-200 to-yellow-200 bg-clip-text text-transparent font-semibold">Закаты мечты</span>
+            </span>
+            <span className="flex items-center bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300">
+              🐠 <span className="ml-2 bg-gradient-to-r from-emerald-200 to-teal-200 bg-clip-text text-transparent font-semibold">Подводный мир</span>
+            </span>
+          </div>
+          <p className="text-xl md:text-2xl text-white/90 leading-relaxed font-light tracking-wide">
+            Откройте для себя <span className="bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent font-semibold">магию тайских островов</span> с нашими эксклюзивными турами
+          </p>
+        </div>
         
         {/* Call to Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in delay-500">
           <Button 
             size="lg" 
             asChild 
-            className="group bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white px-10 py-4 text-xl font-semibold rounded-full shadow-2xl hover:shadow-cyan-500/50 transition-all duration-500 transform hover:scale-110 border border-white/20 backdrop-blur-sm"
+            className="group relative overflow-hidden bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 hover:from-cyan-400 hover:via-blue-400 hover:to-indigo-500 text-white px-12 py-5 text-xl font-bold rounded-2xl shadow-2xl hover:shadow-cyan-400/60 transition-all duration-700 transform hover:scale-105 border border-white/30 backdrop-blur-md before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500"
           >
-            <Link to="/tours">
-              <span className="mr-2">🚤</span>
-              Выбрать тур
-              <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
+            <Link to="/tours" className="flex items-center relative z-10">
+              <Waves className="w-6 h-6 mr-3 group-hover:animate-pulse transition-all duration-300" />
+              <span className="relative">
+                Выбрать тур
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white/60 group-hover:w-full transition-all duration-500"></span>
+              </span>
+              <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform duration-500" />
             </Link>
           </Button>
         </div>

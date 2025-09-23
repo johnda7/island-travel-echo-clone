@@ -637,7 +637,7 @@ const RassvetnoePrikljuchenie = () => {
                       <tr key={idx} className="border-b last:border-b-0 hover:bg-gray-50 transition-colors">
                         <td className="py-4 px-6 text-sm font-medium text-gray-600">{item.day}</td>
                         <td className="py-4 px-6 text-sm text-gray-600">{item.time}</td>
-                        <td className="py-4 px-6 text-sm text-gray-700">{item.activity}</td>
+                        <td className="py-4 px-6 text-sm text-gray-700">{item.description}</td>
                       </tr>
                     ))}
                   </tbody>

@@ -26,6 +26,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
 
   // Простая функция для определения пути тура
   const getDetailPath = (tour: TourWithMeta) => {
+    // 🔄 ГИБРИДНАЯ МАРШРУТИЗАЦИЯ: Статические туры имеют специальные пути, CMS туры - динамические
     switch (tour.id) {
       case 'phi-phi-2days':
         return '/excursion/phi-phi-2-days-1-night';
@@ -36,6 +37,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
       case 'rassvetnoe-prikljuchenie':
         return '/excursion/rassvetnoe-prikljuchenie';
       default:
+        // ✅ ВСЕ CMS ТУРЫ И НОВЫЕ СТАТИЧЕСКИЕ ТУРЫ используют динамический роутинг
         return `/tours/${tour.id}`;
     }
   };
@@ -82,6 +84,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                   src={tour.data?.mainImage || tour.data?.gallery?.[0] || fallbackImage} 
                   alt={tour.data?.title || tour.name}
                   className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
                   onError={(e) => {
                     e.currentTarget.src = fallbackImage;
                   }}

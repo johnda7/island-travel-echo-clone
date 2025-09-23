@@ -17,10 +17,11 @@ import { rassvetnoePrikljuchenieTourData } from '../data/rassvetnoePrikljuchenie
 // НОВЫЕ 6 ТУРОВ
 import { raftingSpaAtvTourData } from '../data/raftingSpaAtvTour.ts';
 import { kaoLakSafariTourData } from '../data/kaoLakSafariTour.ts';
-import { rachaCoralIslandsTourData } from '../data/rachaCoralIslandsTour.ts';
+
 import { jamesBondIslandTourData } from '../data/jamesBondIslandTour.ts';
 import { avatarPlusHangdongTourData } from '../data/avatarPlusHangdongTour.ts';
 import { elevenIslandsStandardTourData } from '../data/elevenIslandsStandardTour.ts';
+import { elevenIslandsMegaTourData } from '../data/elevenIslandsMegaTour.ts';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -123,18 +124,6 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     data: () => Promise.resolve(kaoLakSafariTourData)
   },
 
-  // 7. Острова Рача и Корал на спидботе
-  {
-    id: 'racha-coral-islands-speedboat',
-    name: 'Острова Рача и Корал на спидботе',
-    category: 'islands',
-    tags: ['острова', 'рача', 'корал', 'спидбот', 'снорклинг', 'парасейлинг', 'пляжи', '1 день'],
-    isPopular: true,     // ✅ показываем в популярных
-    isActive: true,      // ✅ АКТИВИРОВАН
-    isFeatured: false,   // ❌ не на главной (пока)
-    priority: 7,
-    data: () => Promise.resolve(rachaCoralIslandsTourData)
-  },
 
   // 8. Остров Джеймса Бонда (залив Пханг Нга)
   {
@@ -173,6 +162,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: false,   // ❌ не на главной
     priority: 10,
     data: () => Promise.resolve(elevenIslandsStandardTourData)
+  },
+
+  // 11. 11 островов МЕГА-ТУР (премиум версия)
+  {
+    id: 'eleven-islands-mega',
+    name: '11 ОСТРОВОВ МЕГА-ТУР',
+    category: 'islands',
+    tags: ['мега-тур', '11 островов', 'джеймс бонд', 'пхи-пхи', 'хонг', 'премиум', 'комфорт+', '1 день'],
+    isPopular: true,     // ✅ показываем в популярных (премиум версия!)
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: true,    // ✅ показываем на главной
+    priority: 11,
+    data: () => Promise.resolve(elevenIslandsMegaTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

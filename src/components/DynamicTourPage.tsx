@@ -13,9 +13,7 @@ const DynamicTourPage = () => {
   const { getTourBySlug } = useCMSTours();
   
   const [tour, setTour] = useState<CMSTour | null>(null);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [minLoadingTime, setMinLoadingTime] = useState(true); // Минимальное время показа спиннера
   
   // Галерея состояния
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -31,22 +29,8 @@ const DynamicTourPage = () => {
     const fetchTour = async () => {
       if (!slug) return;
       
-      setLoading(true);
-      setError(null);
-      
-      // Минимальное время показа спиннера для избежания "дерганья"
-      const startTime = Date.now();
-      const minTime = 800; // 800ms минимум
-      
       try {
         const tourData = await getTourBySlug(slug);
-        
-        // Ждем минимальное время
-        const elapsed = Date.now() - startTime;
-        if (elapsed < minTime) {
-          await new Promise(resolve => setTimeout(resolve, minTime - elapsed));
-        }
-        
         setTour(tourData);
         if (!tourData) {
           setError('Тур не найден');
@@ -54,9 +38,6 @@ const DynamicTourPage = () => {
       } catch (err) {
         setError('Ошибка загрузки тура');
         console.error('Error fetching tour:', err);
-      } finally {
-        setLoading(false);
-        setMinLoadingTime(false);
       }
     };
 
@@ -140,22 +121,6 @@ const DynamicTourPage = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showFullGallery, nextImage, prevImage, closeModal]);
-
-  if (loading || minLoadingTime) {
-    return (
-      <div className="min-h-screen bg-white">
-        <Header />
-        <div className="container mx-auto px-4 py-16 text-center">
-          <div className="relative mx-auto w-32 h-32">
-            <div className="animate-spin rounded-full h-32 w-32 border-4 border-gray-200"></div>
-            <div className="animate-spin rounded-full h-32 w-32 border-4 border-green-600 border-t-transparent absolute top-0 left-0"></div>
-          </div>
-          <p className="mt-6 text-lg text-gray-600 animate-pulse">Загрузка тура...</p>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
 
   if (error || !tour) {
     return <Navigate to="/404" replace />;

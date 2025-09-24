@@ -21,6 +21,7 @@ import { elevenIslandsStandardTourData } from '../data/elevenIslandsStandardTour
 import { elevenIslandsMegaTourData } from '../data/elevenIslandsMegaTour.ts';
 import { raftingSpaAtvTourData } from '../data/raftingSpaAtvTour.ts';
 import { kaoLakSafariTourData } from '../data/kaoLakSafariTour.ts';
+import { avatarPlusTourData } from "./avatarPlusTour";
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {

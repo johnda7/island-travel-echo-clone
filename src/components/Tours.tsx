@@ -36,6 +36,8 @@ export const Tours = ({ filteredTours }: ToursProps) => {
         return '/excursion/dostoprimechatelnosti-phuketa';
       case 'rassvetnoe-prikljuchenie':
         return '/excursion/rassvetnoe-prikljuchenie';
+      case 'avatar-plus-hangdong-adventure':
+        return '/excursion/avatar-plus-hangdong-adventure';
       default:
         // ✅ ВСЕ CMS ТУРЫ И НОВЫЕ СТАТИЧЕСКИЕ ТУРЫ используют динамический роутинг
         return `/tours/${tour.id}`;

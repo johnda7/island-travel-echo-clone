@@ -1,4 +1,3 @@
-
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 import { Menu, X, Search } from "lucide-react";
 import { useState, useEffect, useRef, useMemo } from "react";
@@ -129,6 +128,8 @@ export const Header = () => {
         return '/excursion/dostoprimechatelnosti-phuketa';
       case 'rassvetnoe-prikljuchenie':
         return '/excursion/rassvetnoe-prikljuchenie';
+      case 'avatar-plus-hangdong-adventure':
+        return '/excursion/avatar-plus-hangdong-adventure';
       default:
         return `/tours/${tourId}`;
     }

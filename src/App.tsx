@@ -22,6 +22,8 @@ import JamesBondIslandTour from "./pages/JamesBondIslandTour";
 
 import ElevenIslandsStandardTour from "./pages/ElevenIslandsStandardTour";
 
+import AvatarPlusHongdong from "./pages/AvatarPlusHongdong";
+
 const queryClient = new QueryClient();
 
 function App() {

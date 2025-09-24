@@ -3,13 +3,19 @@ import { Button } from "@/components/ui/button";
 import { Clock, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { UniversalBookingModal } from "./UniversalBookingModal";
+import { useState } from "react";
+import { TourData } from "@/types/Tour";
+// Импорты изображений для корректной обработки Vite (GitHub Pages base path)
+import imgPhiPhi from "@/assets/phi-phi-maya-bay-LeJ2QhJv.jpg";
+import imgJames from "@/assets/james-1-CrrUEsJ1.jpg";
+import imgRacha from "@/assets/racha-1-DwZ8WjdT.jpg";
 
 const tours = [
   {
     id: "phi-phi",
     title: "Острова Пхи Пхи",
     description: "Исследуйте знаменитые острова Пхи Пхи с кристально чистой водой",
-    image: "/assets/phi-phi-maya-bay-LeJ2QhJv.jpg",
+  image: imgPhiPhi,
     duration: "8 часов",
     price: "2000 ฿",
     maxGuests: 12,
@@ -26,7 +32,7 @@ const tours = [
     id: "james-bond-island",
     title: "Остров Джеймса Бонда",
     description: "Посетите легендарный остров из фильма о Джеймсе Бонде",
-    image: "/assets/james-1-CrrUEsJ1.jpg",
+  image: imgJames,
     duration: "7 часов",
     price: "1800 ฿",
     maxGuests: 15,
@@ -43,7 +49,7 @@ const tours = [
     id: "racha-island",
     title: "Остров Рача",
     description: "Откройте для себя жемчужину Андаманского моря",
-    image: "/assets/racha-1-DwZ8WjdT.jpg",
+  image: imgRacha,
     duration: "6 часов",
     price: "1600 ฿",
     maxGuests: 10,
@@ -59,6 +65,38 @@ const tours = [
 ];
 
 export const Tours = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedTour, setSelectedTour] = useState<TourData | null>(null);
+
+  const openBooking = (tour: (typeof tours)[number]) => {
+    const numericPrice = Number(tour.price.replace(/[^0-9]/g, "")) || 0;
+    const tourData: TourData = {
+      id: tour.id,
+      title: tour.title,
+      subtitle: tour.title,
+      description: tour.description,
+      route: tour.id,
+      priceAdult: numericPrice,
+      priceChild: Math.round(numericPrice * 0.5),
+      currency: "฿",
+      duration: tour.duration,
+      groupSize: `до ${tour.maxGuests}`,
+      rating: 5,
+      reviewsCount: 0,
+      mainImage: tour.image,
+      gallery: [tour.image],
+      highlights: tour.highlights,
+      isPopular: tour.isPopular ?? false
+    };
+    setSelectedTour(tourData);
+    setModalOpen(true);
+  };
+
+  const closeBooking = () => {
+    setModalOpen(false);
+    setSelectedTour(null);
+  };
+
   return (
     <section className="py-20 bg-gradient-to-b from-blue-50 to-cyan-50">
       <div className="container mx-auto px-4">
@@ -120,15 +158,12 @@ export const Tours = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <UniversalBookingModal
-                    tourTitle={tour.title}
-                    tourPrice={tour.price}
-                    trigger={
-                      <Button className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
-                        Забронировать
-                      </Button>
-                    }
-                  />
+                  <Button
+                    onClick={() => openBooking(tour)}
+                    className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+                  >
+                    Забронировать
+                  </Button>
 
                   {tour.id === 'james-bond-island' && (
                     <Link to="/james-bond-island-tour">
@@ -142,6 +177,13 @@ export const Tours = () => {
             </Card>
           ))}
         </div>
+        {selectedTour && (
+          <UniversalBookingModal
+            isOpen={modalOpen}
+            onClose={closeBooking}
+            tourData={selectedTour}
+          />
+        )}
       </div>
     </section>
   );

@@ -1,4 +1,12 @@
 import { TourData } from '@/types/Tour';
+import avatar01 from '@/assets/avatar-plus-hangdong/avatar-01.jpg';
+import avatar02 from '@/assets/avatar-plus-hangdong/avatar-02.jpg';
+import avatar03 from '@/assets/avatar-plus-hangdong/avatar-03.jpg';
+import avatar04 from '@/assets/avatar-plus-hangdong/avatar-04.jpg';
+import avatar05 from '@/assets/avatar-plus-hangdong/avatar-05.jpg';
+import avatar06 from '@/assets/avatar-plus-hangdong/avatar-06.jpg';
+import avatar07 from '@/assets/avatar-plus-hangdong/avatar-07.jpg';
+import avatar08 from '@/assets/avatar-plus-hangdong/avatar-08.jpg';
 
 /**
  * 🚫 ЗАПРЕТ НА ОБМАН
@@ -17,14 +25,16 @@ export const avatarPlusHangdongTourData: TourData = {
 
 Завершается день релаксом в горячих источниках со специальными купелями (горячая, холодная и пресная вода) и наблюдением за закатом на пляже Натай. При желании можно заказать романтический ужин на берегу моря.`,
   
-  mainImage: "/assets/avatar-plus-hangdong/avatar-01.jpg",
+  mainImage: avatar01,
   gallery: [
-    "/assets/avatar-plus-hangdong/avatar-01.jpg",
-    "/assets/avatar-plus-hangdong/avatar-02.jpg",
-    "/assets/avatar-plus-hangdong/avatar-03.jpg",
-    "/assets/avatar-plus-hangdong/avatar-04.jpg",
-    "/assets/avatar-plus-hangdong/avatar-05.jpg",
-    "/assets/avatar-plus-hangdong/avatar-06.jpg"
+    avatar01,
+    avatar02,
+    avatar03,
+    avatar04,
+    avatar05,
+    avatar06,
+    avatar07,
+    avatar08
   ],
   
   priceAdult: 3500,

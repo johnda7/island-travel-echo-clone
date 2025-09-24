@@ -21,6 +21,7 @@ import RassvetnoePrikljuchenie from "./pages/RassvetnoePrikljuchenie";
 import JamesBondIslandTour from "./pages/JamesBondIslandTour";
 
 import ElevenIslandsStandardTour from "./pages/ElevenIslandsStandardTour";
+import AvatarPlusHangdongTour from "./pages/AvatarPlusHangdongTour";
 
 const queryClient = new QueryClient();
 
@@ -63,9 +64,10 @@ function App() {
               
               {/* НОВЫЕ 6 ТУРОВ - ПОЛНЫЙ СПИСОК */}
               {/* 1. Рафтинг + SPA + ATV - ВРЕМЕННО ОТКЛЮЧЕН */}
-              
-              
-               {/* 2. Као Лак Сафари - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ЧЕРЕЗ CMS/DynamicTourPage */}
+              {/* 2. Аватар Плюс + Хангдонг - статическая страница */}
+              <Route path="/excursion/avatar-plus-hangdong-adventure" element={<AvatarPlusHangdongTour />} />
+              <Route path="/tours/avatar-plus-hangdong-adventure" element={<AvatarPlusHangdongTour />} />
+              {/* 2. Као Лак Сафари - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ЧЕРЕЗ CMS/DynamicTourPage */}
               
               
               

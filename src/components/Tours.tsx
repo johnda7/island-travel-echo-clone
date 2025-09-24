@@ -9,6 +9,7 @@ import { TourData } from "@/types/Tour";
 import imgPhiPhi from "@/assets/phi-phi-maya-bay-LeJ2QhJv.jpg";
 import imgJames from "@/assets/james-1-CrrUEsJ1.jpg";
 import imgRacha from "@/assets/racha-1-DwZ8WjdT.jpg";
+import { avatarPlusImages } from "@/assets/avatar-plus/images";
 
 const tours = [
   {
@@ -60,6 +61,24 @@ const tours = [
       "Тропический обед",
       "Релакс на пляже",
       "Трансфер из отеля"
+    ]
+  },
+  {
+    id: "avatar-plus-hangdong-adventure",
+    title: "Avatar Plus: Хангдонг Авантюра",
+    description: "Погрузитесь в мир горячих источников, музеев и природных красот",
+    image: avatarPlusImages.main,
+    duration: "10 часов",
+    price: "2500 ฿", 
+    maxGuests: 8,
+    isPopular: true,
+    highlights: [
+      "Горячие источники Avatar Plus",
+      "Музей Бенджаран",
+      "Живописные пейзажи Хангдонга",
+      "Традиционный тайский обед",
+      "Комфортный трансфер из отеля",
+      "Гид-экскурсовод"
     ]
   }
 ];

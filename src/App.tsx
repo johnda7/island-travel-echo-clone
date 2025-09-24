@@ -42,9 +42,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<ContactPage />} />
               
-              {/* Динамический роутинг для новых туров из CMS */}
-              <Route path="/tours/:slug" element={<DynamicTourPage />} />
-              
+              {/* СТАТИЧЕСКИЕ ТУРЫ - ДОЛЖНЫ БЫТЬ ПЕРЕД ДИНАМИЧЕСКИМ РОУТОМ! */}
               {/* ЗАЩИЩЕННЫЕ ПОЛНЫЕ СТРАНИЦЫ ТУРОВ (эталоны) */}
               {/* Phi Phi 2 days / 1 night */}
               <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
@@ -78,6 +76,9 @@ function App() {
               {/* 6. 11 островов Стандарт */}
               <Route path="/excursion/eleven-islands-standard-speedboat" element={<ElevenIslandsStandardTour />} />
               <Route path="/tours/eleven-islands-standard-speedboat" element={<ElevenIslandsStandardTour />} />
+              
+              {/* Динамический роутинг для новых туров из CMS - ПОСЛЕ ВСЕХ СТАТИЧЕСКИХ! */}
+              <Route path="/tours/:slug" element={<DynamicTourPage />} />
               
               {/* Админ-панель */}
               <Route path="/admin" element={<AdminPanel />} />

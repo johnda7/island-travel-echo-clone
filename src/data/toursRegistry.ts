@@ -21,6 +21,7 @@ import { elevenIslandsStandardTourData } from '../data/elevenIslandsStandardTour
 import { elevenIslandsMegaTourData } from '../data/elevenIslandsMegaTour.ts';
 import { raftingSpaAtvTourData } from '../data/raftingSpaAtvTour.ts';
 import { kaoLakSafariTourData } from '../data/kaoLakSafariTour.ts';
+import { avatarPlusTourData } from '../data/avatarPlusTour.ts';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -137,7 +138,18 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     data: () => Promise.resolve(jamesBondIslandTourData)
   },
 
-  // 9. Аватар Плюс + Хангдонг - УДАЛЕН
+  // 9. Аватар Плюс + Хангдонг - ВОССТАНОВЛЕН
+  {
+    id: 'avatar-plus-hangdong-adventure',
+    name: 'Аватар Плюс',
+    category: 'adventure',
+    tags: ['аватар', 'пещеры', 'приключения', 'джунгли', 'природа', '1 день', 'активный', 'треккинг'],
+    isPopular: true,     // ✅ показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН - показывается в поиске/меню
+    isFeatured: true,    // ✅ показываем на главной
+    priority: 9,
+    data: () => Promise.resolve(avatarPlusTourData)
+  },
 
   // 10. 11 островов Стандарт на спидботе
   {

@@ -9,6 +9,11 @@ import { avatarPlusHangdongTourData as excursion } from "@/data/avatarPlusHangdo
 
 const AvatarPlusHangdongTour = () => {
   const [showBookingModal, setShowBookingModal] = useState(false);
+  
+  // ОТЛАДКА - проверяем что статическая страница загружается
+  console.log("🔥 STATIC AVATAR PAGE LOADED! Не CMS версия!");
+  console.log("🖼️ Main Image:", excursion.mainImage);
+  console.log("📷 Gallery:", excursion.gallery);
 
   return (
     <div className="min-h-screen bg-white">
@@ -26,6 +31,11 @@ const AvatarPlusHangdongTour = () => {
               src={excursion.mainImage} 
               alt={excursion.title}
               className="w-full h-96 object-cover rounded-lg shadow-lg"
+              onLoad={() => console.log("✅ СТАТИЧЕСКОЕ ФОТО ЗАГРУЖЕНО:", excursion.mainImage)}
+              onError={(e) => {
+                console.error("❌ ОШИБКА ЗАГРУЗКИ ФОТО:", excursion.mainImage);
+                e.currentTarget.src = '/assets/maya-bay-sunrise.jpg';
+              }}
             />
           </div>
 
@@ -71,6 +81,11 @@ const AvatarPlusHangdongTour = () => {
                   src={image}
                   alt={`${excursion.title} - фото ${index + 1}`}
                   className="w-full h-32 object-cover rounded-lg shadow-md"
+                  onLoad={() => console.log(`✅ Галерея ${index + 1} загружена:`, image)}
+                  onError={(e) => {
+                    console.error(`❌ Галерея ${index + 1} ошибка:`, image);
+                    e.currentTarget.src = '/assets/maya-bay-sunrise.jpg';
+                  }}
                 />
               ))}
             </div>

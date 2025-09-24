@@ -95,23 +95,37 @@ const DynamicTourPage = () => {
     setShowFullGallery(false);
   }, []);
 
+  // Унифицированная нормализация галереи (поддержка строк и объектов)
+  const normalizeGallery = useCallback((g: any[] | undefined) => {
+    if (!g || !Array.isArray(g)) return [] as { id: string; image_url: string; alt_text?: string }[];
+    return g.map((item: any, i: number) => {
+      if (typeof item === 'string') {
+        return { id: String(i), image_url: item, alt_text: tour?.title || '' };
+      }
+      if (item && typeof item.image_url === 'string') return item;
+      return null;
+    }).filter(Boolean) as { id: string; image_url: string; alt_text?: string }[];
+  }, [tour?.title]);
+
+  const normalizedGallery = normalizeGallery(tour?.gallery);
+
   const nextImage = useCallback(() => {
-    if (!tour?.gallery) return;
+    if (!normalizedGallery.length) return;
     setCurrentImageIndex((prev) => {
-      const nextIndex = (prev + 1) % tour.gallery.length;
-      setSelectedImage(tour.gallery[nextIndex].image_url);
+      const nextIndex = (prev + 1) % normalizedGallery.length;
+      setSelectedImage(normalizedGallery[nextIndex].image_url);
       return nextIndex;
     });
-  }, [tour]);
+  }, [normalizedGallery]);
 
   const prevImage = useCallback(() => {
-    if (!tour?.gallery) return;
+    if (!normalizedGallery.length) return;
     setCurrentImageIndex((prev) => {
-      const prevIndex = prev === 0 ? tour.gallery.length - 1 : prev - 1;
-      setSelectedImage(tour.gallery[prevIndex].image_url);
+      const prevIndex = prev === 0 ? normalizedGallery.length - 1 : prev - 1;
+      setSelectedImage(normalizedGallery[prevIndex].image_url);
       return prevIndex;
     });
-  }, [tour]);
+  }, [normalizedGallery]);
 
   // Touch handlers
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -185,7 +199,7 @@ const DynamicTourPage = () => {
     currency: tour.currency,
     duration: tour.duration,
     groupSize: tour.group_size,
-    gallery: tour.gallery.map(g => g.image_url),
+  gallery: normalizedGallery.map(g => g.image_url),
     highlights: tour.highlights,
     included: tour.included,
     excluded: tour.excluded,
@@ -195,7 +209,7 @@ const DynamicTourPage = () => {
     route: `/tours/${tour.slug}`,
     rating: 4.8,
     reviewsCount: 127,
-    mainImage: tour.gallery[0]?.image_url || fallbackImage
+    mainImage: normalizedGallery[0]?.image_url || fallbackImage
   };
 
   return (
@@ -220,7 +234,7 @@ const DynamicTourPage = () => {
           {/* Мобильная галерея */}
           <div className="md:hidden mb-6">
             <div className="grid grid-cols-4 gap-2 h-64">
-              {tour.gallery.slice(0, 5).map((image, index) => (
+              {normalizedGallery.slice(0, 5).map((image, index) => (
                 <div 
                   key={image.id}
                   className={`cursor-pointer group relative overflow-hidden rounded-lg ${
@@ -247,10 +261,10 @@ const DynamicTourPage = () => {
                       }}
                     />
                   </div>
-                  {index === 4 && tour.gallery.length > 5 && (
+                  {index === 4 && normalizedGallery.length > 5 && (
                     <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                       <div className="text-white text-center">
-                        <div className="text-lg font-semibold mb-1">+{tour.gallery.length - 5}</div>
+                        <div className="text-lg font-semibold mb-1">+{normalizedGallery.length - 5}</div>
                         <div className="text-sm">фото</div>
                       </div>
                     </div>
@@ -267,7 +281,7 @@ const DynamicTourPage = () => {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                Показать все {tour.gallery.length} фото
+                Показать все {normalizedGallery.length} фото
               </button>
             </div>
           </div>
@@ -278,7 +292,7 @@ const DynamicTourPage = () => {
             {/* Галерея - Левая сторона */}
             <div className="lg:col-span-2">
               <div className="grid grid-cols-4 gap-2 h-96">
-                {tour.gallery.slice(0, 5).map((image, index) => (
+                {normalizedGallery.slice(0, 5).map((image, index) => (
                   <div 
                     key={image.id}
                     className={`cursor-pointer group relative overflow-hidden rounded-lg ${
@@ -305,10 +319,10 @@ const DynamicTourPage = () => {
                         }}
                       />
                     </div>
-                    {index === 4 && tour.gallery.length > 5 && (
+                    {index === 4 && normalizedGallery.length > 5 && (
                       <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                         <div className="text-white text-center">
-                          <div className="text-lg font-semibold mb-1">+{tour.gallery.length - 5}</div>
+                          <div className="text-lg font-semibold mb-1">+{normalizedGallery.length - 5}</div>
                           <div className="text-sm">фото</div>
                         </div>
                       </div>
@@ -325,7 +339,7 @@ const DynamicTourPage = () => {
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  Показать все {tour.gallery.length} фото
+                  Показать все {normalizedGallery.length} фото
                 </button>
               </div>
 

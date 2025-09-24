@@ -21,7 +21,7 @@ import { elevenIslandsStandardTourData } from '../data/elevenIslandsStandardTour
 import { elevenIslandsMegaTourData } from '../data/elevenIslandsMegaTour.ts';
 import { raftingSpaAtvTourData } from '../data/raftingSpaAtvTour.ts';
 import { kaoLakSafariTourData } from '../data/kaoLakSafariTour.ts';
-import { avatarPlusHangdongTourData } from '../data/avatarPlusHangdongTour.ts';
+// Avatar+ переносим на ленивый импорт из одного файла тура
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -176,7 +176,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: true,    // ✅ показываем на главной
     priority: 12,
-    data: () => Promise.resolve(avatarPlusHangdongTourData)
+    data: () => import('./tours/avatarPlusHangdong').then(m => m.avatarPlusHangdong)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

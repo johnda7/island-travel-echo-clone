@@ -6,8 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
-import { useCMSTours, CMSTour } from "@/hooks/useCMSTours";
+import { useCMSTours } from "@/hooks/useCMSTours";
 import fallbackImage from "@/assets/maya-bay-sunrise.jpg";
+import { TOURS_REGISTRY } from '@/data/toursRegistry';
+import type { TourData } from '@/types/Tour';
 
 const DynamicTourPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -24,18 +26,55 @@ const DynamicTourPage = () => {
   // Состояние для модального окна бронирования
   const [showBookingModal, setShowBookingModal] = useState(false);
 
-  // Получаем тур из загруженного списка
-  const tour = tours.find(t => t.slug === slug);
+  // CMS тур если есть
+  const cmsTour = tours.find(t => t.slug === slug);
+  // Унифицированный тур (CMS или статический адаптированный)
+  const [tour, setTour] = useState<any | null>(null);
+  const [staticLoading, setStaticLoading] = useState(false);
+
+  // Нормализация статического TourData в формат CMS-подобного объекта
+  const adaptStatic = (data: TourData) => {
+    return {
+      id: data.id,
+      slug: data.id,
+      title: data.title,
+      subtitle: data.subtitle || '',
+      description: data.description || '',
+      price_adult: data.priceAdult || 0,
+      price_child: data.priceChild || 0,
+      currency: data.currency || '฿',
+      duration: data.duration || '',
+      group_size: data.groupSize || '',
+      gallery: (data.gallery && data.gallery.length ? data.gallery : [data.mainImage]).filter(Boolean).map((url, i) => ({ id: String(i), image_url: url as string, alt_text: data.title })),
+      highlights: data.highlights || [],
+      included: data.included || [],
+      excluded: data.excluded || [],
+      requirements: data.requirements || [],
+      important_info: data.importantInfo || [],
+      tags: data.tags || []
+    };
+  };
+
+  // Выбор источника тура
+  useEffect(() => {
+    if (!slug) return;
+    if (cmsTour) { setTour(cmsTour); return; }
+    // Статический fallback
+    const entry = TOURS_REGISTRY.find(t => t.id === slug && t.isActive);
+    if (!entry) { setTour(null); return; }
+    setStaticLoading(true);
+    entry.data()
+      .then(adaptStatic)
+      .then(setTour)
+      .catch(() => setTour(null))
+      .finally(() => setStaticLoading(false));
+  }, [slug, cmsTour]);
   
   // Отладка - проверяем есть ли галерея
-  console.log('🖼️ GALLERY DEBUG:', {
-    slug,
-    tourFound: !!tour,
-    tourTitle: tour?.title,
-    hasGallery: !!tour?.gallery,
-    galleryLength: tour?.gallery?.length || 0,
-    firstImage: tour?.gallery?.[0]?.image_url
-  });
+  if (tour) {
+    // eslint-disable-next-line no-console
+    console.log('⚙️ DynamicTourPage loaded:', { slug, source: cmsTour ? 'cms' : 'static', gallery: tour.gallery?.length });
+  }
 
   // Функции для галереи (все хуки включая useCallback должны быть здесь)
   const openModal = useCallback((image: string, index: number) => {
@@ -45,7 +84,7 @@ const DynamicTourPage = () => {
   }, []);
 
   const openGallery = useCallback(() => {
-    if (!tour?.gallery.length) return;
+    if (!tour?.gallery?.length) return;
     setShowFullGallery(true);
     setSelectedImage(tour.gallery[0].image_url);
     setCurrentImageIndex(0);
@@ -117,7 +156,10 @@ const DynamicTourPage = () => {
 
   // ТЕПЕРЬ УСЛОВНЫЕ RETURNS - ПОСЛЕ ВСЕХ ХУКОВ
   // Пока загружаются туры - показываем спиннер
-  if (loading) {
+  if (loading || staticLoading || !tour) {
+    if (!tour) {
+      // Показываем скелет до определения (избегаем мигания между состояниями)
+    }
     return (
       <div className="min-h-screen bg-white">
         <Header />
@@ -129,11 +171,8 @@ const DynamicTourPage = () => {
       </div>
     );
   }
-
-  // Если тур не найден ПОСЛЕ загрузки - редирект на 404
-  if (!tour) {
-    return <Navigate to="/404" replace />;
-  }
+  // Если после загрузки всё ещё нет тура
+  if (!tour) return <Navigate to="/404" replace />;
 
   // Конвертируем тур в формат, совместимый с UniversalBookingModal
   const tourData = {
@@ -156,7 +195,7 @@ const DynamicTourPage = () => {
     route: `/tours/${tour.slug}`,
     rating: 4.8,
     reviewsCount: 127,
-    mainImage: tour.gallery[0]?.image_url || '/placeholder.jpg'
+    mainImage: tour.gallery[0]?.image_url || fallbackImage
   };
 
   return (
@@ -195,7 +234,7 @@ const DynamicTourPage = () => {
                     className="w-full h-full object-cover transition-opacity duration-300"
                     loading={index === 0 ? 'eager' : 'lazy'}
                     decoding="async"
-                    fetchpriority={index === 0 ? 'high' : 'auto'}
+                    fetchPriority={index === 0 ? 'high' : 'auto'}
                     onError={(e) => {
                       console.log('❌ Не удалось загрузить изображение:', image.image_url);
                       e.currentTarget.src = fallbackImage; // корректный fallback asset
@@ -249,7 +288,7 @@ const DynamicTourPage = () => {
                       className="w-full h-full object-cover transition-opacity duration-300"
                       loading={index === 0 ? 'eager' : 'lazy'}
                       decoding="async"
-                      fetchpriority={index === 0 ? 'high' : 'auto'}
+                      fetchPriority={index === 0 ? 'high' : 'auto'}
                       onError={(e) => {
                         console.log('❌ Не удалось загрузить изображение:', image.image_url);
                         e.currentTarget.src = fallbackImage; // корректный fallback asset

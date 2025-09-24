@@ -22,35 +22,11 @@ function run() {
   const buildMark = `<!-- build:${ts} -->\n`;
   html += buildMark;
   
-  // Создаем специальный 404.html для GitHub Pages SPA routing
-  const spa404Html = `<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Island Travel</title>
-    <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // https://github.com/rafgraph/spa-github-pages
-      var pathSegmentsToKeep = 1;
-      var l = window.location;
-      l.replace(
-        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + 
-        '/#' + l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/') + 
-        (l.search ? '&' + l.search.slice(1) : '') +
-        l.hash
-      );
-    </script>
-  </head>
-  <body>
-  </body>
-</html>`;
-  
   // Сохраняем файлы
   fs.writeFileSync(indexPath, html, "utf8");
-  fs.writeFileSync(fallbackPath, spa404Html, "utf8");
+  fs.writeFileSync(fallbackPath, html, "utf8");
   
-  console.log("postbuild: appended build timestamp and wrote SPA 404.html");
+  console.log("postbuild: appended build timestamp and wrote 404.html");
   console.log(`postbuild: timestamp - ${ts}`);
 }
 

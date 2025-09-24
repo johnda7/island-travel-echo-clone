@@ -26,12 +26,12 @@ const Index = () => {
       </Helmet>
       <Header />
       <Hero />
-      <Advantages />
-      <Gallery />
-      <Tours />
-      <Reviews />
-      <FAQ />
-      <Contact />
+  <Advantages />
+  <Gallery />
+  <Tours />
+  <Reviews />
+  <FAQ />
+  <Contact />
       <Footer />
     </div>
   );

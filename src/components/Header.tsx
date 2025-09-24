@@ -1,10 +1,8 @@
 
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
-import { Menu, X, Search } from "lucide-react";
-import { useState, useEffect, useRef, useMemo } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useTours } from "@/hooks/useTours";
-import { useAutoMenu } from "@/hooks/useAutoMenu";
+import { Menu, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
 import logoImage from "@/assets/logo.jpg";
 
 export const Header = () => {
@@ -13,134 +11,86 @@ export const Header = () => {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
-  const desktopListboxId = "search-results-desktop";
-  const mobileListboxId = "search-results-mobile";
-  
-  // Используем централизованную систему туров
-  const { allTours, loading } = useTours();
-  const { mainMenuItems, categories } = useAutoMenu();
 
-  // Debounce for mobile performance
-  const [debouncedQuery, setDebouncedQuery] = useState('');
-  useEffect(() => {
-    const id = setTimeout(() => setDebouncedQuery(searchQuery.trim()), 180);
-    return () => clearTimeout(id);
-  }, [searchQuery]);
+  // Tours data for search - все 22 тура
+  const allTours = [
+    { name: "Пхи-Пхи 2 дня / 1 ночь", href: "/phi-phi-2-days-1-night", description: "Экскурсия с ночёвкой на островах Пхи-Пхи" },
+    { name: "Острова Пхи-Пхи на спидботе", href: "/phi-phi-islands-speedboat", description: "Скоростная экскурсия на знаменитые острова" },
+    { name: "Пхи-Пхи Ле и лагуна", href: "/koh-phi-phi-leh-lagoon", description: "Экскурсия к острову Пхи-Пхи Ле и Изумрудной лагуне" },
+    { name: "Майя Бей на рассвете", href: "/maya-bay-sunrise", description: "Встреча рассвета в легендарной бухте" },
+    { name: "Остров Джеймса Бонда", href: "/james-bond-island", description: "Экскурсия к острову из фильма о Джеймсе Бонде" },
+    { name: "11 ОСТРОВОВ МЕГА-ТУР | ОДИН ЭПИЧНЫЙ ДЕНЬ", href: "/tours/11-ostrovov", description: "Грандиозный тур на 11 островов за один день: Джеймс Бонд, Пхи-Пхи, Хонг и другие жемчужины Андаманского моря" },
+    { name: "Аватар Плюс", href: "/tours/avatar-pljus", description: "Экскурсия в стиле Аватар: смотровые площадки, водопады, горячие источники, слоновье шоу" },
+    { name: "Коралловый остров + Парасейлинг", href: "/excursion/coral-island-parasailing", description: "Водные развлечения и парасейлинг" },
+    { name: "Остров Рача Яй", href: "/excursion/racha-yai-island", description: "Снорклинг на живописном острове" },
+    { name: "Наблюдение за китами", href: "/excursion/whale-watching-tour", description: "Уникальная экскурсия для наблюдения за китами" },
+    { name: "Пляжные туры", href: "/category/beach-tours", description: "Экскурсии по лучшим пляжам Пхукета" },
+    { name: "Городские туры", href: "/category/city-tours", description: "Обзорные экскурсии по городу Пхукет" },
+    { name: "Приключенческие туры", href: "/category/adventure-tours", description: "Экстремальные и активные туры" },
+    { name: "Групповые туры", href: "/category/group-tours", description: "Экскурсии для больших групп" },
+  { name: "Достопримечательности Пхукета (без шопинга)", href: "/excursion/dostoprimechatelnosti-phuketa-1-den-obzornaja-jekskursija-bez-shopinga", description: "1 день, обзорная экскурсия без магазинов" },
+    { name: "Что посетить", href: "/what-to-visit", description: "Главные достопримечательности Пхукета" },
+    { name: "Экскурсии", href: "/tours", description: "Все экскурсии и туры" },
+    { name: "Направления", href: "/destinations", description: "Популярные направления" },
+    { name: "Пляжи", href: "/beaches", description: "Лучшие пляжи Пхукета" },
+  { name: "Достопримечательности", href: "/dostoprimechatelnosti", description: "Интересные места для посещения" },
+    { name: "Морские экскурсии", href: "/tours", description: "Туры по морю и островам" },
+    { name: "Семейные туры", href: "/tours", description: "Экскурсии для всей семьи" },
+    { name: "СПА и релакс", href: "/tours", description: "Расслабляющие туры и спа-процедуры" },
+    { name: "Шоу программы", href: "/tours", description: "Развлекательные шоу и представления" }
+  ];
 
-  // Filter tours based on (debounced) search query
-  const filteredTours = useMemo(() => {
-    const q = (debouncedQuery || '').toLowerCase();
-    if (!q) return [];
-    return allTours.filter(tour =>
-      tour.data && (
-        tour.name.toLowerCase().includes(q) ||
-        tour.data.title.toLowerCase().includes(q) ||
-        tour.data.subtitle?.toLowerCase().includes(q) ||
-        tour.data.description?.toLowerCase().includes(q) ||
-        tour.tags.some(tag => tag.toLowerCase().includes(q))
-      )
-    );
-  }, [allTours, debouncedQuery]);
-
-  // Helper: highlight matches in a text
-  const highlightMatches = (text: string | undefined, q: string) => {
-    if (!text) return null;
-    if (!q) return text;
-    const idx = text.toLowerCase().indexOf(q.toLowerCase());
-    if (idx === -1) return text;
-    const before = text.slice(0, idx);
-    const match = text.slice(idx, idx + q.length);
-    const after = text.slice(idx + q.length);
-    return (
-      <>
-        {before}
-        <mark className="bg-yellow-200 text-inherit rounded px-0.5">{match}</mark>
-        {after}
-      </>
-    );
-  };
-
-  // Debug logging removed in production
+  // Filter tours based on search query
+  const filteredTours = allTours.filter(tour =>
+    tour.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    tour.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   // Close search results when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Node;
-      
-      // Close desktop search
-      if (searchRef.current && !searchRef.current.contains(target)) {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setShowSearchResults(false);
       }
-      
-      // Close mobile search
-      if (mobileSearchRef.current && !mobileSearchRef.current.contains(target)) {
+      if (mobileSearchRef.current && !mobileSearchRef.current.contains(event.target as Node)) {
         setShowMobileSearch(false);
         setSearchQuery('');
-        setShowSearchResults(false);
       }
     };
 
-    if (showSearchResults || showMobileSearch) {
-      document.addEventListener('mousedown', handleClickOutside);
-      document.addEventListener('touchstart', handleClickOutside);
-    }
-
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
     };
-  }, [showSearchResults, showMobileSearch]);
+  }, []);
 
-  // Close search when location changes (separate useEffect)
-  useEffect(() => {
-    setShowSearchResults(false);
-    setShowMobileSearch(false);
-    setSearchQuery('');
-  }, [location.pathname]);
-
-  // Handle Enter key: go to the first result
-  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Escape') {
-      setShowSearchResults(false);
-      setShowMobileSearch(false);
-      setSearchQuery('');
-      return;
-    }
-    if (e.key === 'Enter' && filteredTours.length > 0) {
-      const first = filteredTours[0];
-      navigate(getTourPath(first.id));
-      setShowSearchResults(false);
-      setShowMobileSearch(false);
-      setSearchQuery('');
-    }
-  };
-
-  // Простая функция для определения пути тура
-  const getTourPath = (tourId: string) => {
-    switch (tourId) {
-      case 'phi-phi-2days':
-        return '/excursion/phi-phi-2-days-1-night';
-      case 'pearls-andaman-sea':
-        return '/excursion/pearls-andaman-sea';
-      case 'dostoprimechatelnosti-phuketa':
-        return '/excursion/dostoprimechatelnosti-phuketa';
-      case 'rassvetnoe-prikljuchenie':
-        return '/excursion/rassvetnoe-prikljuchenie';
-      default:
-        return `/tours/${tourId}`;
-    }
-  };
-  useEffect(() => {
-    if (showMobileSearch) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      return () => { document.body.style.overflow = prev; };
-    }
-  }, [showMobileSearch]);
-
+  const navigation = [
+    {
+      name: "Что посетить",
+      href: "/what-to-visit"
+    },
+    { 
+      name: "Туры", 
+      href: "/tours",
+      subItems: [
+        { name: "Все туры", href: "/tours" },
+        { name: "Морские", href: "/tours#морские" },
+        { name: "Сухопутные", href: "/tours#сухопутные" },
+        { name: "Обзорные", href: "/tours#обзорные" },
+        { name: "Пляжи и острова", href: "/tours#пляжи-и-острова" },
+        { name: "Приключения", href: "/tours#приключения" },
+        { name: "Городские", href: "/tours#городские" },
+        { name: "Шоу", href: "/tours#шоу" },
+        { name: "Семейные", href: "/tours#семейные" },
+        { name: "СПА и релакс", href: "/tours#спа-и-релакс" }
+      ]
+    },
+    { name: "Направления", href: "/destinations" },
+    { name: "О нас", href: "/about" },
+    { name: "Контакты", href: "/contact" }
+  ];
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg z-50">
@@ -152,7 +102,7 @@ export const Header = () => {
               <img 
                 src={logoImage} 
                 alt="Phuket Go Logo" 
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover"
               />
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
@@ -169,52 +119,29 @@ export const Header = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setShowSearchResults(true)}
-                onKeyDown={handleSearchKeyDown}
                 className="w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                role="combobox"
-                aria-expanded={showSearchResults && searchQuery.length > 0}
-                aria-controls={desktopListboxId}
-                aria-autocomplete="list"
               />
               <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
               </svg>
               
               {/* Search Results Dropdown */}
-              {showSearchResults && searchQuery.length > 0 && (
-                <div className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-[60] max-h-80 overflow-y-auto" role="listbox" id={desktopListboxId}>
-                  <span className="sr-only" aria-live="polite">
-                    {loading ? 'Идёт загрузка' : `Найдено: ${filteredTours.length}`}
-                  </span>
-                  {loading ? (
-                    <div className="px-4 py-3 text-gray-500 text-sm">Идёт загрузка…</div>
-                  ) : filteredTours.length > 0 ? (
-                    filteredTours.map((tour) => (
-                      <Link
-                        key={tour.id}
-                        to={getTourPath(tour.id)}
-                        className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSearchQuery('');
-                          setShowSearchResults(false);
-                        }}
-                        role="option"
-                      >
-                        <div className="font-medium text-gray-900">{highlightMatches(tour.data?.title || tour.name, debouncedQuery)}</div>
-                        <div className="text-sm text-gray-500">{highlightMatches(tour.data?.subtitle || tour.data?.description, debouncedQuery)}</div>
-                        <div className="flex gap-1 mt-1">
-                          {tour.tags.slice(0, 3).map((tag, index) => (
-                            <span key={index} className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">{highlightMatches(tag, debouncedQuery as string)}</span>
-                          ))}
-                        </div>
-                      </Link>
-                    ))
-                  ) : (
-                    <div className="px-4 py-3 text-gray-500 text-sm">
-                      Туры не найдены. Попробуйте изменить запрос.
-                    </div>
-                  )}
+              {showSearchResults && searchQuery && filteredTours.length > 0 && (
+                <div className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
+                  {filteredTours.map((tour) => (
+                    <Link
+                      key={tour.href}
+                      to={tour.href}
+                      className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
+                      onClick={() => {
+                        setSearchQuery('');
+                        setShowSearchResults(false);
+                      }}
+                    >
+                      <div className="font-medium text-gray-900">{tour.name}</div>
+                      <div className="text-sm text-gray-500">{tour.description}</div>
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>
@@ -230,24 +157,71 @@ export const Header = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                   </svg>
                 </button>
-              ) : null}
+              ) : (
+                <div className="md:hidden fixed top-16 left-0 right-0 z-50 bg-white border-b shadow-lg" ref={mobileSearchRef}>
+                  <div className="container mx-auto px-4 py-3">
+                    <input
+                      type="text"
+                      placeholder="Поиск туров..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onFocus={() => setShowSearchResults(true)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
+                      autoFocus
+                    />
+                    {/* Mobile Search Results */}
+                    {showSearchResults && searchQuery && filteredTours.length > 0 && (
+                      <div className="mt-3 max-h-80 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg">
+                        {filteredTours.map((tour) => (
+                          <Link
+                            key={tour.href}
+                            to={tour.href}
+                            className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
+                            onClick={() => {
+                              setSearchQuery('');
+                              setShowSearchResults(false);
+                              setShowMobileSearch(false);
+                            }}
+                          >
+                            <div className="font-medium text-gray-900">{tour.name}</div>
+                            <div className="text-sm text-gray-500 mt-1">{tour.description}</div>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Menu button for all devices */}
-          <button
-            className="p-2 ml-4"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Search and Menu buttons */}
+          <div className="flex items-center space-x-2">
+            {/* Mobile Search Button */}
+            <button
+              className="md:hidden p-2"
+              onClick={() => setShowMobileSearch(!showMobileSearch)}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
+            </button>
+            
+            {/* Menu button for all devices */}
+            <button
+              className="p-2"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Navigation Menu */}
         {isOpen && (
           <div className="absolute top-16 left-0 right-0 bg-white border-t shadow-lg max-h-[80vh] overflow-y-auto">
             <nav className="px-4 py-2 space-y-1">
-              {mainMenuItems.map((item) => (
+              {navigation.map((item) => (
                 <div key={item.name}>
                   <Link
                     to={item.href}
@@ -272,79 +246,8 @@ export const Header = () => {
                   )}
                 </div>
               ))}
-            </nav>
-          </div>
-        )}
 
-        {/* Mobile Search Modal */}
-        {showMobileSearch && (
-          <div className="md:hidden fixed top-16 left-0 right-0 z-[60] bg-white border-b shadow-lg" ref={mobileSearchRef}>
-            <div className="container mx-auto px-4 py-3">
-              <div className="flex items-center space-x-3">
-                <input
-                  type="text"
-                  placeholder="Поиск туров..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => setShowSearchResults(true)}
-                  onKeyDown={handleSearchKeyDown}
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
-                  autoFocus
-                  role="combobox"
-                  aria-expanded={showSearchResults && searchQuery.length > 0}
-                  aria-controls={mobileListboxId}
-                  aria-autocomplete="list"
-                />
-                <button
-                  onClick={() => {
-                    setShowMobileSearch(false);
-                    setSearchQuery('');
-                    setShowSearchResults(false);
-                  }}
-                  className="p-2 text-gray-500 hover:text-gray-700"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-              {/* Mobile Search Results */}
-              {showSearchResults && searchQuery.length > 0 && (
-                <div className="mt-3 max-h-80 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg" role="listbox" id={mobileListboxId}>
-                  <span className="sr-only" aria-live="polite">
-                    {loading ? 'Идёт загрузка' : `Найдено: ${filteredTours.length}`}
-                  </span>
-                  {loading ? (
-                    <div className="px-4 py-3 text-gray-500 text-sm">Идёт загрузка…</div>
-                  ) : filteredTours.length > 0 ? (
-                    filteredTours.map((tour) => (
-                      <Link
-                        key={tour.id}
-                        to={getTourPath(tour.id)}
-                        className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors active:bg-gray-100"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSearchQuery('');
-                          setShowSearchResults(false);
-                          setShowMobileSearch(false);
-                        }}
-                        role="option"
-                      >
-                        <div className="font-medium text-gray-900">{highlightMatches(tour.data?.title || tour.name, debouncedQuery)}</div>
-                        <div className="text-sm text-gray-500 mt-1">{highlightMatches(tour.data?.subtitle || tour.data?.description, debouncedQuery)}</div>
-                        <div className="flex gap-1 mt-1">
-                          {tour.tags.slice(0, 3).map((tag, index) => (
-                            <span key={index} className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">{highlightMatches(tag, debouncedQuery as string)}</span>
-                          ))}
-                        </div>
-                      </Link>
-                    ))
-                  ) : (
-                    <div className="px-4 py-3 text-gray-500 text-sm">
-                      Ничего не найдено. Попробуйте другой запрос.
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+            </nav>
           </div>
         )}
       </div>

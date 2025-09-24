@@ -78,17 +78,22 @@ export const Tours = ({ filteredTours }: ToursProps) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {toursToShow.map((tour) => (
             <Card key={tour.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              {/* ✅ РЕАЛЬНОЕ ФОТО ИЗ ДАННЫХ ТУРА */}
+              {/* ✅ СТАБИЛИЗИРОВАННОЕ ФОТО БЕЗ ДЕРГАНИЯ */}
               <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={tour.data?.mainImage || tour.data?.gallery?.[0] || fallbackImage} 
-                  alt={tour.data?.title || tour.name}
-                  className="w-full h-full object-cover object-center transition-opacity duration-300"
-                  loading="lazy"
-                  onError={(e) => {
-                    e.currentTarget.src = fallbackImage;
-                  }}
-                />
+                <div className="w-full h-full bg-gray-100">
+                  <img 
+                    src={tour.data?.mainImage || tour.data?.gallery?.[0] || fallbackImage} 
+                    alt={tour.data?.title || tour.name}
+                    className="w-full h-full object-cover object-center"
+                    width={400}
+                    height={225}
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                      e.currentTarget.src = fallbackImage;
+                    }}
+                  />
+                </div>
                 {tour.isPopular && (
                   <Badge className="absolute top-4 right-4 bg-orange-500 hover:bg-orange-600">
                     🔥 Популярно

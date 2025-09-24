@@ -228,21 +228,25 @@ const DynamicTourPage = () => {
                   }`}
                   onClick={() => index === 4 ? openGallery() : openModal(image.image_url, index)}
                 >
-                  <img 
-                    src={image.image_url} 
-                    alt={image.alt_text || tour.title}
-                    className="w-full h-full object-cover transition-opacity duration-300"
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    decoding="async"
-                    fetchPriority={index === 0 ? 'high' : 'auto'}
-                    onError={(e) => {
-                      console.log('❌ Не удалось загрузить изображение:', image.image_url);
-                      e.currentTarget.src = fallbackImage; // корректный fallback asset
-                    }}
-                    onLoad={() => {
-                      console.log('✅ Изображение загружено:', image.image_url);
-                    }}
-                  />
+                  <div className="w-full h-full bg-gray-100">
+                    <img 
+                      src={image.image_url} 
+                      alt={image.alt_text || tour.title}
+                      className="w-full h-full object-cover object-center"
+                      width={index === 0 ? 800 : 300}
+                      height={index === 0 ? 450 : 225}
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
+                      fetchPriority={index === 0 ? 'high' : 'auto'}
+                      onError={(e) => {
+                        console.log('❌ Не удалось загрузить изображение:', image.image_url);
+                        e.currentTarget.src = fallbackImage; // корректный fallback asset
+                      }}
+                      onLoad={() => {
+                        console.log('✅ Изображение загружено:', image.image_url);
+                      }}
+                    />
+                  </div>
                   {index === 4 && tour.gallery.length > 5 && (
                     <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                       <div className="text-white text-center">
@@ -282,21 +286,25 @@ const DynamicTourPage = () => {
                     }`}
                     onClick={() => index === 4 ? openGallery() : openModal(image.image_url, index)}
                   >
-                    <img 
-                      src={image.image_url} 
-                      alt={image.alt_text || tour.title}
-                      className="w-full h-full object-cover transition-opacity duration-300"
-                      loading={index === 0 ? 'eager' : 'lazy'}
-                      decoding="async"
-                      fetchPriority={index === 0 ? 'high' : 'auto'}
-                      onError={(e) => {
-                        console.log('❌ Не удалось загрузить изображение:', image.image_url);
-                        e.currentTarget.src = fallbackImage; // корректный fallback asset
-                      }}
-                      onLoad={() => {
-                        console.log('✅ Изображение загружено:', image.image_url);
-                      }}
-                    />
+                    <div className="w-full h-full bg-gray-100">
+                      <img 
+                        src={image.image_url} 
+                        alt={image.alt_text || tour.title}
+                        className="w-full h-full object-cover object-center"
+                        width={index === 0 ? 600 : 200}
+                        height={index === 0 ? 400 : 200}
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                        decoding="async"
+                        fetchPriority={index === 0 ? 'high' : 'auto'}
+                        onError={(e) => {
+                          console.log('❌ Не удалось загрузить изображение:', image.image_url);
+                          e.currentTarget.src = fallbackImage; // корректный fallback asset
+                        }}
+                        onLoad={() => {
+                          console.log('✅ Изображение загружено:', image.image_url);
+                        }}
+                      />
+                    </div>
                     {index === 4 && tour.gallery.length > 5 && (
                       <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                         <div className="text-white text-center">

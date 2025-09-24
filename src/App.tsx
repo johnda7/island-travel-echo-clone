@@ -21,7 +21,6 @@ import RassvetnoePrikljuchenie from "./pages/RassvetnoePrikljuchenie";
 import JamesBondIslandTour from "./pages/JamesBondIslandTour";
 
 import ElevenIslandsStandardTour from "./pages/ElevenIslandsStandardTour";
-import AvatarPlusHangdongTour from "./pages/AvatarPlusHangdongTour";
 
 const queryClient = new QueryClient();
 
@@ -42,7 +41,9 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<ContactPage />} />
               
-              {/* СТАТИЧЕСКИЕ ТУРЫ - ДОЛЖНЫ БЫТЬ ПЕРЕД ДИНАМИЧЕСКИМ РОУТОМ! */}
+              {/* Динамический роутинг для новых туров из CMS */}
+              <Route path="/tours/:slug" element={<DynamicTourPage />} />
+              
               {/* ЗАЩИЩЕННЫЕ ПОЛНЫЕ СТРАНИЦЫ ТУРОВ (эталоны) */}
               {/* Phi Phi 2 days / 1 night */}
               <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
@@ -62,23 +63,19 @@ function App() {
               
               {/* НОВЫЕ 6 ТУРОВ - ПОЛНЫЙ СПИСОК */}
               {/* 1. Рафтинг + SPA + ATV - ВРЕМЕННО ОТКЛЮЧЕН */}
-              {/* 2. Аватар Плюс + Хангдонг - статическая страница */}
-              <Route path="/excursion/avatar-plus-hangdong-adventure" element={<AvatarPlusHangdongTour />} />
-              <Route path="/tours/avatar-plus-hangdong-adventure" element={<AvatarPlusHangdongTour />} />
+              {/* 2. Аватар Плюс + Хангдонг - УДАЛЕН */}
+              
               {/* 2. Као Лак Сафари - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ЧЕРЕЗ CMS/DynamicTourPage */}
               
               
               
                {/* 4. Остров Джеймса Бонда - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ЧЕРЕЗ CMS/DynamicTourPage */}
               
-               {/* 5. Аватар Плюс + Хангдонг - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ЧЕРЕЗ CMS/DynamicTourPage */}
+               {/* 5. Аватар Плюс + Хангдонг - УДАЛЕН */}
               
               {/* 6. 11 островов Стандарт */}
               <Route path="/excursion/eleven-islands-standard-speedboat" element={<ElevenIslandsStandardTour />} />
               <Route path="/tours/eleven-islands-standard-speedboat" element={<ElevenIslandsStandardTour />} />
-              
-              {/* Динамический роутинг для новых туров из CMS - ПОСЛЕ ВСЕХ СТАТИЧЕСКИХ! */}
-              <Route path="/tours/:slug" element={<DynamicTourPage />} />
               
               {/* Админ-панель */}
               <Route path="/admin" element={<AdminPanel />} />

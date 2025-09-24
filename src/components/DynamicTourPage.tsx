@@ -231,7 +231,9 @@ const DynamicTourPage = () => {
                   <img 
                     src={image.image_url} 
                     alt={image.alt_text || tour.title}
-                    className="w-full h-full object-cover transition-opacity duration-300"
+                    className="w-full h-full object-cover select-none"
+                    width={index === 0 ? 600 : 300}
+                    height={index === 0 ? 400 : 200}
                     loading={index === 0 ? 'eager' : 'lazy'}
                     decoding="async"
                     fetchPriority={index === 0 ? 'high' : 'auto'}
@@ -285,7 +287,9 @@ const DynamicTourPage = () => {
                     <img 
                       src={image.image_url} 
                       alt={image.alt_text || tour.title}
-                      className="w-full h-full object-cover transition-opacity duration-300"
+                      className="w-full h-full object-cover select-none"
+                      width={index === 0 ? 600 : 300}
+                      height={index === 0 ? 400 : 200}
                       loading={index === 0 ? 'eager' : 'lazy'}
                       decoding="async"
                       fetchPriority={index === 0 ? 'high' : 'auto'}

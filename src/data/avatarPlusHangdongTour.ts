@@ -1,4 +1,7 @@
 import { TourData } from '@/types/Tour';
+
+// ✅ ЯВНЫЕ ИМПОРТЫ ФОТОГРАФИЙ (БЕЗ GLOB)
+import avatarMain from '@/assets/avatar-plus-hangdong/avatar-main.jpeg';
 import avatar01 from '@/assets/avatar-plus-hangdong/avatar-01.jpg';
 import avatar02 from '@/assets/avatar-plus-hangdong/avatar-02.jpg';
 import avatar03 from '@/assets/avatar-plus-hangdong/avatar-03.jpg';
@@ -7,13 +10,6 @@ import avatar05 from '@/assets/avatar-plus-hangdong/avatar-05.jpg';
 import avatar06 from '@/assets/avatar-plus-hangdong/avatar-06.jpg';
 import avatar07 from '@/assets/avatar-plus-hangdong/avatar-07.jpg';
 import avatar08 from '@/assets/avatar-plus-hangdong/avatar-08.jpg';
-
-/**
- * 🚫 ЗАПРЕТ НА ОБМАН
- * Любые изменения в этом файле должны быть РЕАЛЬНО выполнены
- * через инструменты, а не просто написаны в комментариях
- * Cache buster - updated 2025-09-24
- */
 
 export const avatarPlusHangdongTourData: TourData = {
   id: 'avatar-plus-hangdong-adventure',
@@ -26,8 +22,12 @@ export const avatarPlusHangdongTourData: TourData = {
 
 Завершается день релаксом в горячих источниках со специальными купелями (горячая, холодная и пресная вода) и наблюдением за закатом на пляже Натай. При желании можно заказать романтический ужин на берегу моря.`,
   
-  mainImage: avatar01,
+  // ✅ ЯВНО УКАЗЫВАЕМ ГЛАВНОЕ ИЗОБРАЖЕНИЕ
+  mainImage: avatarMain,
+  
+  // ✅ ГАЛЕРЕЯ С ГЛАВНЫМ ФОТО ПЕРВЫМ
   gallery: [
+    avatarMain,
     avatar01,
     avatar02,
     avatar03,

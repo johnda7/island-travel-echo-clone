@@ -41,6 +41,7 @@
 - **Хостинг:** GitHub Pages
 - **Репозиторий:** https://github.com/johnda7/island-travel-echo-clone
 - **Владелец:** johnda7
+- **💻 GitHub Codespaces:** https://codespaces.new/johnda7/island-travel-echo-clone
 
 ### 🚀 **ДЕПЛОЙ:**
 - **Автоматический:** при пуше в main ветку срабатывает GitHub Actions

@@ -1,7 +1,8 @@
 # 🏝️ Island Travel Echo Clone - Обновленная система бронирования
 
 **Живой сайт**: https://johnda7.github.io/island-travel-echo-clone/  
-**Lovable проект**: https://lovable.dev/projects/3875c40a-aaeb-47ea-bedc-679166dacdea
+**Lovable проект**: https://lovable.dev/projects/3875c40a-aaeb-47ea-bedc-679166dacdea  
+**💻 GitHub Codespaces**: https://codespaces.new/johnda7/island-travel-echo-clone
 
 ## 🚀 ОБНОВЛЕНИЯ (20.09.2025)
 - ✅ Добавлен динамический маршрут шаблона туров: `/tour/:tourId` (универсальный шаблон TourTemplate)
@@ -255,6 +256,9 @@ npm run dev
 
 **Use GitHub Codespaces**
 
+🚀 **Прямая ссылка на создание Codespace:** https://codespaces.new/johnda7/island-travel-echo-clone
+
+Альтернативный способ:
 - Navigate to the main page of your repository.
 - Click on the "Code" button (green button) near the top right.
 - Select the "Codespaces" tab.

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
-import { useCMSTours } from "@/hooks/useCMSTours";
+import { useCMSTours, type CMSTour } from "@/hooks/useCMSTours";
 import fallbackImage from "@/assets/maya-bay-sunrise.jpg";
 import { TOURS_REGISTRY } from '@/data/toursRegistry';
 import type { TourData } from '@/types/Tour';
@@ -29,7 +29,7 @@ const DynamicTourPage = () => {
   // CMS тур если есть
   const cmsTour = tours.find(t => t.slug === slug);
   // Унифицированный тур (CMS или статический адаптированный)
-  const [tour, setTour] = useState<any | null>(null);
+  const [tour, setTour] = useState<CMSTour | null>(null);
   const [staticLoading, setStaticLoading] = useState(false);
 
   // Нормализация статического TourData в формат CMS-подобного объекта
@@ -72,7 +72,6 @@ const DynamicTourPage = () => {
   
   // Отладка - проверяем есть ли галерея
   if (tour) {
-    // eslint-disable-next-line no-console
     console.log('⚙️ DynamicTourPage loaded:', { slug, source: cmsTour ? 'cms' : 'static', gallery: tour.gallery?.length });
   }
 

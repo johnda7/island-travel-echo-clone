@@ -21,6 +21,7 @@ import { elevenIslandsStandardTourData } from '../data/elevenIslandsStandardTour
 import { elevenIslandsMegaTourData } from '../data/elevenIslandsMegaTour.ts';
 import { raftingSpaAtvTourData } from '../data/raftingSpaAtvTour.ts';
 import { kaoLakSafariTourData } from '../data/kaoLakSafariTour.ts';
+import { avatarPlusHangdongTourData } from '../data/avatarPlusHangdongTour.ts';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -163,6 +164,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,    // ✅ показываем на главной
     priority: 11,
     data: () => Promise.resolve(elevenIslandsMegaTourData)
+  },
+
+  // 12. Аватар+ Экскурсия в Хангдонг
+  {
+    id: 'avatar-plus-hangdong-adventure',
+    name: 'Аватар+ Экскурсия в Хангдонг',
+    category: 'adventure',
+    tags: ['приключения', 'природа', 'слоны', 'водопады', '1 день', 'джунгли', 'активный', 'семейный'],
+    isPopular: true,     // ✅ показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: true,    // ✅ показываем на главной
+    priority: 12,
+    data: () => Promise.resolve(avatarPlusHangdongTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

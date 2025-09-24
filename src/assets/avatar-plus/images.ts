@@ -4,16 +4,13 @@
 // Главное фото горячих источников
 import hotspringMain from './hotspring-main.jpeg'
 
-// Музей Бенджаран (5 фото)
-import benyaran1 from './benyaran-1.jpg'
-import benyaran2 from './benyaran-2.jpg'
-import benyaran3 from './benyaran-3.jpg'
-import benyaran4 from './benyaran-4.jpg'
-import benyaran5 from './benyaran-5.jpg'
-
-// Горячие источники (дополнительные фото)
-import hotspring2 from './hotspring-2.jpeg'
-import hotspring3 from './hotspring-3.jpeg'
+// Avatar Plus фотографии (6 фото)
+import avatar1 from './avatar-01.jpg'
+import avatar2 from './avatar-02.jpg'
+import avatar3 from './avatar-03.jpg'
+import avatar4 from './avatar-04.jpg'
+import avatar5 from './avatar-05.jpg'
+import avatar6 from './avatar-06.jpg'
 
 export const avatarPlusImages = {
   // Главное фото для карточки тура
@@ -28,24 +25,22 @@ export const avatarPlusImages = {
   // Все фото для галереи (7 штук)
   gallery: [
     hotspringMain,  // Главное фото горячих источников
-    benyaran1,      // Музей Бенджаран - вход
-    benyaran2,      // Музей Бенджаран - экспозиция 1
-    benyaran3,      // Музей Бенджаран - экспозиция 2
-    benyaran4,      // Музей Бенджаран - экспозиция 3
-    benyaran5,      // Музей Бенджаран - общий вид
-    hotspring2,     // Горячие источники - панорама
-    hotspring3      // Горячие источники - крупный план
+    avatar1,        // Аватар фото 1
+    avatar2,        // Аватар фото 2
+    avatar3,        // Аватар фото 3
+    avatar4,        // Аватар фото 4
+    avatar5,        // Аватар фото 5
+    avatar6         // Аватар фото 6
   ]
 }
 
 // Экспорт отдельных изображений для гибкости
 export {
   hotspringMain,
-  benyaran1,
-  benyaran2,
-  benyaran3,
-  benyaran4,
-  benyaran5,
-  hotspring2,
-  hotspring3
+  avatar1,
+  avatar2,
+  avatar3,
+  avatar4,
+  avatar5,
+  avatar6
 }

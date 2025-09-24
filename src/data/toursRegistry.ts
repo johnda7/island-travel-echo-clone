@@ -17,6 +17,7 @@ import { rassvetnoePrikljuchenieTourData } from '../data/rassvetnoePrikljuchenie
 // НОВЫЕ 6 ТУРОВ
 
 import { jamesBondIslandTourData } from '../data/jamesBondIslandTour.ts';
+import { avatarPlusHangdongTourData } from '../data/avatarPlusHangdongTour.ts';
 import { elevenIslandsStandardTourData } from '../data/elevenIslandsStandardTour.ts';
 import { elevenIslandsMegaTourData } from '../data/elevenIslandsMegaTour.ts';
 import { raftingSpaAtvTourData } from '../data/raftingSpaAtvTour.ts';
@@ -137,7 +138,18 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     data: () => Promise.resolve(jamesBondIslandTourData)
   },
 
-  // 9. Аватар Плюс + Хангдонг - УДАЛЕН
+  // 9. Аватар Плюс + Хангдонг - ВОССТАНОВЛЕН
+  {
+    id: 'avatar-plus-hangdong-adventure',
+    name: 'Аватар Плюс + Хангдонг',
+    category: 'nature',
+    tags: ['природа', 'водопады', 'горячие источники', 'музей', 'релакс', 'джунгли', '1 день'],
+    isPopular: true,     // ✅ популярный тур!
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: true,    // ✅ показываем на главной
+    priority: 9,
+    data: () => Promise.resolve(avatarPlusHangdongTourData)
+  },
 
   // 10. 11 островов Стандарт на спидботе
   {

@@ -24,7 +24,9 @@ export const avatarPlusHangdongTourData: TourData = {
     "/assets/avatar-plus-hangdong/avatar-03.jpg",
     "/assets/avatar-plus-hangdong/avatar-04.jpg",
     "/assets/avatar-plus-hangdong/avatar-05.jpg",
-    "/assets/avatar-plus-hangdong/avatar-06.jpg"
+    "/assets/avatar-plus-hangdong/avatar-06.jpg",
+    "/assets/avatar-plus-hangdong/avatar-07.jpg",
+    "/assets/avatar-plus-hangdong/avatar-08.jpg"
   ],
   
   priceAdult: 3500,

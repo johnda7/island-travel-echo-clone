@@ -49,7 +49,7 @@ const AvatarPlusHangdongTour = () => {
                 </div>
               </div>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-                {galleryImages.slice(1, 5).map((image, index) => (
+                {galleryImages.slice(1, 8).map((image, index) => (
                   <img
                     key={index}
                     src={image}

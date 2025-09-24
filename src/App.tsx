@@ -21,6 +21,7 @@ import RassvetnoePrikljuchenie from "./pages/RassvetnoePrikljuchenie";
 import JamesBondIslandTour from "./pages/JamesBondIslandTour";
 
 import ElevenIslandsStandardTour from "./pages/ElevenIslandsStandardTour";
+import AvatarPlusHangdongAdventure from "./pages/AvatarPlusHangdongAdventure";
 
 const queryClient = new QueryClient();
 
@@ -63,7 +64,10 @@ function App() {
               
               {/* НОВЫЕ 6 ТУРОВ - ПОЛНЫЙ СПИСОК */}
               {/* 1. Рафтинг + SPA + ATV - ВРЕМЕННО ОТКЛЮЧЕН */}
-              {/* 2. Аватар Плюс + Хангдонг - УДАЛЕН */}
+              
+              {/* 2. Аватар Плюс + Хангдонг - ВОССТАНОВЛЕН! */}
+              <Route path="/excursion/avatar-plus-hangdong-adventure" element={<AvatarPlusHangdongAdventure />} />
+              <Route path="/tours/avatar-plus-hangdong-adventure" element={<AvatarPlusHangdongAdventure />} />
               
               {/* 2. Као Лак Сафари - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ЧЕРЕЗ CMS/DynamicTourPage */}
               
@@ -71,7 +75,7 @@ function App() {
               
                {/* 4. Остров Джеймса Бонда - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ЧЕРЕЗ CMS/DynamicTourPage */}
               
-               {/* 5. Аватар Плюс + Хангдонг - УДАЛЕН */}
+               {/* 5. Аватар Плюс + Хангдонг - ВОССТАНОВЛЕН! (дублирование ссылки) */}
               
               {/* 6. 11 островов Стандарт */}
               <Route path="/excursion/eleven-islands-standard-speedboat" element={<ElevenIslandsStandardTour />} />

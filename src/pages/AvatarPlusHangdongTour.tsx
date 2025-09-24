@@ -59,6 +59,23 @@ const AvatarPlusHangdongTour = () => {
                 ))}
               </div>
             </div>
+            
+            {/* Additional gallery images for the full 8-image gallery */}
+            {galleryImages.length > 5 && (
+              <div className="mt-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Больше фото тура</h3>
+                <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                  {galleryImages.slice(5).map((image, index) => (
+                    <img
+                      key={index + 5}
+                      src={image}
+                      alt={`Аватар Тур ${index + 6}`}
+                      className="h-32 w-full rounded-xl object-cover hover:scale-105 transition-transform duration-200 cursor-pointer"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
               <Card>
                 <CardContent className="flex items-start gap-3 p-5">

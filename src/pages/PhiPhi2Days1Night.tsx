@@ -8,6 +8,7 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Gri
 import { phiPhi2DaysTourData } from "@/data/phiPhi2DaysTour";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
+import { MobileBookingBar } from "@/components/MobileBookingBar";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = phiPhi2DaysTourData;
@@ -522,22 +523,12 @@ const PhiPhi2Days1Night = () => {
       </section>
 
       {/* Mobile booking bar - фиксированная кнопка внизу */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40">
-        <div className="flex items-center justify-between gap-4">
-          <div className="text-left">
-            <div className="text-lg font-bold text-green-600">
-              от {excursion.priceAdult} {excursion.currency}
-            </div>
-            <div className="text-xs text-gray-600">взрослый / {excursion.priceChild} {excursion.currency} детский</div>
-          </div>
-          <Button 
-            onClick={() => setShowBookingModal(true)}
-            className="bg-green-600 hover:bg-green-700 text-white px-6"
-          >
-            Забронировать
-          </Button>
-        </div>
-      </div>
+      <MobileBookingBar 
+        priceAdult={excursion.priceAdult}
+        priceChild={excursion.priceChild}
+        currency={excursion.currency}
+        onBookingClick={() => setShowBookingModal(true)}
+      />
 
       {/* Mobile-first Gallery Modal */}
       {selectedImage && showFullGallery && (

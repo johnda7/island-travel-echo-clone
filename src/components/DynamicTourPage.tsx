@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
+import { MobileBookingBar } from "@/components/MobileBookingBar";
 import { useCMSTours } from "@/hooks/useCMSTours";
 import fallbackImage from "@/assets/maya-bay-sunrise.jpg";
 import { TOURS_REGISTRY } from '@/data/toursRegistry';
@@ -537,25 +538,12 @@ const DynamicTourPage = () => {
       )}
 
       {/* Мобильная панель бронирования */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40">
-        <div className="flex items-center justify-between gap-4">
-          <div className="text-left">
-            <div className="text-lg font-bold text-green-600">
-              от {tour.price_adult.toLocaleString()} {tour.currency}
-            </div>
-            <div className="text-xs text-gray-600">взрослый / {tour.price_child.toLocaleString()} {tour.currency} детский</div>
-          </div>
-          <Button 
-            onClick={() => setShowBookingModal(true)}
-            className="bg-green-600 hover:bg-green-700 text-white px-6"
-          >
-            Забронировать
-          </Button>
-        </div>
-      </div>
-
-      {/* Отступ снизу */}
-      <div className="h-20 lg:hidden" />
+      <MobileBookingBar 
+        priceAdult={tour.price_adult}
+        priceChild={tour.price_child}
+        currency={tour.currency}
+        onBookingClick={() => setShowBookingModal(true)}
+      />
 
       {/* Модальное окно бронирования */}
       <ModalPortal>

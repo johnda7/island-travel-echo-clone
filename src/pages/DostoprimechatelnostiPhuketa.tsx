@@ -8,6 +8,7 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Gri
 import { dostoprimechatelnostiPhuketaTourData } from "@/data/dostoprimechatelnostiPhuketaTour";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
+import { MobileBookingBar } from "@/components/MobileBookingBar";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = dostoprimechatelnostiPhuketaTourData;
@@ -407,35 +408,6 @@ const DostoprimechatelnostiPhuketa = () => {
           <div className="text-2xl font-bold text-green-600 mb-4 md:hidden">
             от {excursion.priceAdult} {excursion.currency} <span className="text-base font-normal text-gray-500">за взрослого</span>
           </div>
-
-          {/* Mobile CTA Button - сразу на первом экране */}
-          <div className="lg:hidden mb-8">
-            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-              <div className="text-center">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">Забронировать тур</h3>
-                <div className="text-2xl font-bold text-green-600 mb-4">
-                  от {excursion.priceAdult} {excursion.currency}
-                </div>
-                {/* Мобильные кнопки в ряду - обновление 26.09.2025 */}
-                <div className="flex gap-3">
-                  <Button 
-                    onClick={() => window.open('https://t.me/Phuketga', '_blank')}
-                    className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-4 text-lg font-semibold rounded-xl"
-                  >
-                    Telegram
-                  </Button>
-                  <Button 
-                    onClick={() => setShowBookingModal(true)}
-                    className="flex-1 bg-green-600 hover:bg-green-700 text-white py-4 text-lg font-semibold rounded-xl"
-                  >
-                    <Calendar className="w-5 h-5 mr-2" />
-                    Забронировать
-                  </Button>
-                </div>
-                <p className="text-xs text-gray-500 mt-3">Бесплатная отмена за 24 часа</p>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -529,22 +501,12 @@ const DostoprimechatelnostiPhuketa = () => {
       </section>
 
       {/* Mobile booking bar - фиксированная кнопка внизу */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40">
-        <div className="flex items-center justify-between gap-4">
-          <div className="text-left">
-            <div className="text-lg font-bold text-green-600">
-              от {excursion.priceAdult} {excursion.currency}
-            </div>
-            <div className="text-xs text-gray-600">взрослый / {excursion.priceChild} {excursion.currency} детский</div>
-          </div>
-          <Button 
-            onClick={() => setShowBookingModal(true)}
-            className="bg-green-600 hover:bg-green-700 text-white px-6"
-          >
-            Забронировать
-          </Button>
-        </div>
-      </div>
+      <MobileBookingBar 
+        priceAdult={excursion.priceAdult}
+        priceChild={excursion.priceChild}
+        currency={excursion.currency}
+        onBookingClick={() => setShowBookingModal(true)}
+      />
 
       {/* Mobile-first Gallery Modal */}
       {selectedImage && showFullGallery && (

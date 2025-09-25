@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTours } from "@/hooks/useTours";
 import { useAutoMenu } from "@/hooks/useAutoMenu";
+import { getTourDetailPath } from "@/lib/paths";
 import logoImage from "@/assets/logo.jpg";
 
 export const Header = () => {
@@ -111,28 +112,13 @@ export const Header = () => {
     }
     if (e.key === 'Enter' && filteredTours.length > 0) {
       const first = filteredTours[0];
-      navigate(getTourPath(first.id));
+      navigate(getTourDetailPath(first.id));
       setShowSearchResults(false);
       setShowMobileSearch(false);
       setSearchQuery('');
     }
   };
 
-  // Простая функция для определения пути тура
-  const getTourPath = (tourId: string) => {
-    switch (tourId) {
-      case 'phi-phi-2days':
-        return '/excursion/phi-phi-2-days-1-night';
-      case 'pearls-andaman-sea':
-        return '/excursion/pearls-andaman-sea';
-      case 'dostoprimechatelnosti-phuketa':
-        return '/excursion/dostoprimechatelnosti-phuketa';
-      case 'rassvetnoe-prikljuchenie':
-        return '/excursion/rassvetnoe-prikljuchenie';
-      default:
-        return `/tours/${tourId}`;
-    }
-  };
   useEffect(() => {
     if (showMobileSearch) {
       const prev = document.body.style.overflow;
@@ -192,7 +178,7 @@ export const Header = () => {
                     filteredTours.map((tour) => (
                       <Link
                         key={tour.id}
-                        to={getTourPath(tour.id)}
+                        to={getTourDetailPath(tour.id)}
                         className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors"
                         onClick={(e) => {
                           e.stopPropagation();
@@ -318,7 +304,7 @@ export const Header = () => {
                     filteredTours.map((tour) => (
                       <Link
                         key={tour.id}
-                        to={getTourPath(tour.id)}
+                        to={getTourDetailPath(tour.id)}
                         className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors active:bg-gray-100"
                         onClick={(e) => {
                           e.stopPropagation();

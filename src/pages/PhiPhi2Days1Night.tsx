@@ -123,7 +123,7 @@ const PhiPhi2Days1Night = () => {
               <span>›</span>
               <Link to="/tours" className="hover:text-green-600 transition-colors">Туры</Link>
               <span>›</span>
-              <Link to="/tours?category=marine" className="hover:text-green-600 transition-colors">Морские экскурсии</Link>
+              <Link to="/tours?category=islands" className="hover:text-green-600 transition-colors">Острова</Link>
               <span>›</span>
               <span className="text-gray-700">Пхи-Пхи 2 дня / 1 ночь</span>
             </div>

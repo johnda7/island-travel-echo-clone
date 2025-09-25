@@ -15,26 +15,75 @@ export const rassvetnoePrikljuchenieTourData: TourData = {
   id: "rassvetnoe-prikljuchenie",
   title: "РАССВЕТНОЕ ПРИКЛЮЧЕНИЕ: Стеклянный мост Beyond Skywalk, о.Джеймса Бонда, пляж с самолётами и кувшинки Ma Doo Bua 1 ДЕНЬ",
   subtitle: "Не упустите шанс начать день с ярких впечатлений! Природа, приключения, фотографии, экзотические острова и таинственные пещеры. Уникальный старт дня — с рассветом и живописными видами",
-  description: `ЭТОТ ТУР ДЛЯ ТЕХ КТО:
+  description: `<div class="space-y-6">
+<div>
+<h3 class="text-lg font-semibold text-gray-900 mb-3">Этот тур для тех кто:</h3>
+<ul class="space-y-2">
+<li class="flex items-start space-x-3">
+<div class="flex-shrink-0 w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+<span class="text-gray-700">Хочет начать день с волнующих приключений и незабываемых видов</span>
+</li>
+<li class="flex items-start space-x-3">
+<div class="flex-shrink-0 w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+<span class="text-gray-700">Любит делать яркие фотографии и запечатлеть уникальные моменты</span>
+</li>
+<li class="flex items-start space-x-3">
+<div class="flex-shrink-0 w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+<span class="text-gray-700">Мечтает увидеть знаменитый остров Джеймса Бонда и другие природные чудеса Пханг Нга</span>
+</li>
+<li class="flex items-start space-x-3">
+<div class="flex-shrink-0 w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+<span class="text-gray-700">Хочет погрузиться в атмосферу утреннего спокойствия и красоты</span>
+</li>
+</ul>
+</div>
 
-➔ Хочет начать день с волнующих приключений и незабываемых видов.
-➔ Любит делать яркие фотографии и запечатлеть уникальные моменты.
-➔ Мечтает увидеть знаменитый остров Джеймса Бонда и другие природные чудеса Пханг Нга.
-➔ Хочет погрузиться в атмосферу утреннего спокойствия и красоты.
+<div>
+<h3 class="text-lg font-semibold text-gray-900 mb-3">Что вас ждет:</h3>
+<ul class="space-y-3">
+<li class="flex items-start space-x-3">
+<div class="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+<span class="text-gray-700"><strong>Ранний выезд из отеля:</strong> погружение в атмосферу нового дня с самого его начала</span>
+</li>
+<li class="flex items-start space-x-3">
+<div class="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+<span class="text-gray-700"><strong>Смотровая площадка Beyond Skywalk:</strong> уникальная возможность пройти по стеклянному мосту и насладиться панорамными видами залива Пханг Нга</span>
+</li>
+<li class="flex items-start space-x-3">
+<div class="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+<span class="text-gray-700"><strong>Встреча рассвета:</strong> почувствуйте магию первых лучей солнца, освещающих воды и острова залива. Остановитесь, чтобы сделать невероятные фотографии</span>
+</li>
+<li class="flex items-start space-x-3">
+<div class="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+<span class="text-gray-700"><strong>Завтрак с видом:</strong> наслаждайтесь утренним приемом пищи в ресторане на вершине с потрясающими видами</span>
+</li>
+<li class="flex items-start space-x-3">
+<div class="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+<span class="text-gray-700"><strong>Прогулка на длиннохвостой лодке:</strong> водное путешествие по таинственным пещерам и островам залива Пханг Нга</span>
+</li>
+<li class="flex items-start space-x-3">
+<div class="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+<span class="text-gray-700"><strong>Остров Джеймса Бонда:</strong> обзор знаменитого острова с его скалами и зеленью</span>
+</li>
+<li class="flex items-start space-x-3">
+<div class="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+<span class="text-gray-700"><strong>Необитаемые острова:</strong> осмотр островов по пути, раскрывающих нетронутую красоту природы</span>
+</li>
+<li class="flex items-start space-x-3">
+<div class="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+<span class="text-gray-700"><strong>Пляж с самолётами:</strong> захватывающие снимки на фоне взлетающих прямо над вами самолётов и купание на пляже</span>
+</li>
+<li class="flex items-start space-x-3">
+<div class="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+<span class="text-gray-700"><strong>Кафе с кувшинками Ma Doo Bua:</strong> фотосессия среди гигантских водяных лилий</span>
+</li>
+</ul>
+</div>
 
-ЧТО ВАС ЖДЕТ:
-
-➔ Ранний выезд из отеля: погружение в атмосферу нового дня с самого его начала.
-➔ Смотровая площадка Beyond Skywalk: уникальная возможность пройти по стеклянному мосту и насладиться панорамными видами залива Пханг Нга.
-➔ Встреча рассвета: почувствуйте магию первых лучей солнца, освещающих воды и острова залива. Остановитесь, чтобы сделать невероятные фотографии.
-➔ Завтрак с видом: наслаждайтесь утренним приемом пищи в ресторане на вершине с потрясающими видами, которые запомнятся надолго.
-➔ Прогулка на длиннохвостой лодке: вода, пещеры и таинственные острова залива Пханг Нга:
-➔ Обзор знаменитого острова Джеймса Бонда с его скалами и зеленью.
-➔ Обзор необитаемых островов по пути, раскрывающих нетронутую красоту природы.
-➔ Пляж с самолётами: сделайте захватывающие снимки на фоне взлетающих прямо над вами самолётов. Купание на пляже для полного погружения в атмосферу отдыха.
-➔ Кафе с кувшинками.
-
-Погрузитесь в утреннюю тишину и красоту Таиланда: рассвет на смотровой площадке, лодочная прогулка по таинственным пещерам, пляж с самолётами и уютное кафе среди кувшинок — всё это за один незабываемый день.`,
+<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+<p class="text-blue-800 text-sm italic">Погрузитесь в утреннюю тишину и красоту Таиланда: рассвет на смотровой площадке, лодочная прогулка по таинственным пещерам, пляж с самолётами и уютное кафе среди кувшинок — всё это за один незабываемый день.</p>
+</div>
+</div>`,
   priceAdult: 2500,
   priceChild: 2198,
   priceInfant: 0, // Младенцы бесплатно

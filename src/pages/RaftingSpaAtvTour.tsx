@@ -115,16 +115,22 @@ const RaftingSpaAtvTour = () => {
     <div className="min-h-screen bg-white">
       <Header />
 
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center space-x-2 text-sm text-gray-600">
-          <Link to="/" className="hover:text-blue-600">Главная</Link>
-          <span>/</span>
-          <Link to="/tours" className="hover:text-blue-600">Экскурсии</Link>
-          <span>/</span>
-          <span className="text-gray-900">Рафтинг + Слоновье СПА + ATV</span>
+      {/* Breadcrumbs - как в эталоне */}
+      <section className="pt-20 pb-4">
+        <div className="container mx-auto px-4">
+          <nav className="text-sm text-gray-500">
+            <div className="flex items-center space-x-2">
+              <Link to="/" className="hover:text-green-600 transition-colors">Главная</Link>
+              <span>›</span>
+              <Link to="/tours" className="hover:text-green-600 transition-colors">Туры</Link>
+              <span>›</span>
+              <Link to="/tours?category=adventure" className="hover:text-green-600 transition-colors">Приключения</Link>
+              <span>›</span>
+              <span className="text-gray-700">Рафтинг + Слоновье СПА + ATV</span>
+            </div>
+          </nav>
         </div>
-      </div>
+      </section>
 
       {/* Main Content - Gallery + Booking Section */}
       <section className="py-4">
@@ -348,6 +354,17 @@ const RaftingSpaAtvTour = () => {
                   >
                     Забронировать тур
                   </Button>
+                  
+                  {/* Telegram кнопка - как в эталоне */}
+                  <Button
+                    variant="outline"
+                    asChild
+                    className="w-full py-3 border-gray-300 mt-3"
+                  >
+                    <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
+                      📱 Связаться в Telegram
+                    </a>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -403,6 +420,17 @@ const RaftingSpaAtvTour = () => {
               className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
             >
               Забронировать тур
+            </Button>
+            
+            {/* Telegram кнопка для мобильной карточки */}
+            <Button
+              variant="outline"
+              asChild
+              className="w-full py-3 border-gray-300 mt-3"
+            >
+              <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
+                📱 Связаться в Telegram
+              </a>
             </Button>
           </div>
         </div>
@@ -575,7 +603,7 @@ const RaftingSpaAtvTour = () => {
             onClick={() => setShowBookingModal(true)}
             className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg font-semibold"
           >
-            Забронировать тур за {excursion.priceAdult.toLocaleString()} {excursion.currency}
+            Забронировать тур
           </Button>
         </div>
       </section>

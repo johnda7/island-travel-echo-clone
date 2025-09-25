@@ -171,45 +171,186 @@ const RassvetnoePrikljuchenie = () => {
           </div>
         </div>
 
-        {/* Десктопная галерея - сетка 2x2 как на tisland.travel */}
-        <div className="hidden md:block">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-4 gap-2 h-[400px]">
-              {/* Большое главное фото */}
-              <div className="col-span-2 row-span-2 relative group cursor-pointer" onClick={() => openModal(excursion.mainImage, 0)}>
-                <img
-                  src={excursion.mainImage}
-                  alt={`${excursion.title} - главное фото`}
-                  className="w-full h-full object-cover rounded-lg transition-transform group-hover:scale-105"
-                />
-              </div>
-
-              {/* Малые фото справа */}
-              {excursion.gallery.slice(1, 5).map((image, index) => (
+        {/* Десктопная версия */}
+        <div className="container mx-auto px-4 hidden md:block">
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Галерея - левая часть на десктопе */}
+            <div className="lg:col-span-2">
+              {/* Десктопная галерея как на tisland.travel */}
+              <div className="hidden md:block">
+                <div className="grid grid-cols-4 gap-2 h-96">
+                {/* Большое главное фото */}
                 <div 
-                  key={index + 1} 
-                  className="relative group cursor-pointer"
-                  onClick={() => openModal(image, index + 1)}
+                  className="col-span-2 row-span-2 cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={() => openModal(excursion.gallery[0], 0)}
                 >
-                  <img
-                    src={image}
-                    alt={`${excursion.title} - фото ${index + 2}`}
-                    className="w-full h-full object-cover rounded-lg transition-transform group-hover:scale-105"
+                  <img 
+                    src={excursion.gallery[0]} 
+                    alt={excursion.title}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
-                  {index === 3 && excursion.gallery.length > 5 && (
-                    <div 
-                      className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg text-white font-semibold cursor-pointer hover:bg-black/60 transition-colors"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openGallery();
-                      }}
-                    >
-                      +{excursion.gallery.length - 5} фото
-                    </div>
-                  )}
                 </div>
-              ))}
+
+                {/* Два средних фото справа сверху */}
+                <div 
+                  className="cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={() => openModal(excursion.gallery[1], 1)}
+                >
+                  <img 
+                    src={excursion.gallery[1]} 
+                    alt="Gallery 2"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                
+                <div 
+                  className="cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={() => openModal(excursion.gallery[2], 2)}
+                >
+                  <img 
+                    src={excursion.gallery[2]} 
+                    alt="Gallery 3"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+
+                {/* Два средних фото справа снизу */}
+                <div 
+                  className="cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={() => openModal(excursion.gallery[3], 3)}
+                >
+                  <img 
+                    src={excursion.gallery[3]} 
+                    alt="Gallery 4"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                
+                <div 
+                  className="cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={openGallery}
+                >
+                  <img 
+                    src={excursion.gallery[4]} 
+                    alt="Gallery 5"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="text-white text-center">
+                      <div className="text-lg font-semibold mb-1">+{excursion.gallery.length - 5}</div>
+                      <div className="text-sm">фото</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
+              {/* Кнопка показать все фото */}
+              <div className="mt-4">
+                <button
+                  onClick={openGallery}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2v12a2 2 0 002 2z" />
+                  </svg>
+                  Показать все {excursion.gallery.length} фото
+                </button>
+              </div>
+            </div>
+
+            {/* Desktop Booking Sidebar - справа от фото */}
+            <div className="hidden lg:block">
+              <div className="sticky top-4">
+                <div className="bg-white shadow-lg border-0 rounded-lg">
+                  <div className="p-6">
+                    {/* Информация о туре */}
+                    <div className="mb-6">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">{excursion.title}</h3>
+                      <p className="text-gray-600 text-sm mb-4">{excursion.subtitle}</p>
+                      
+                      <div className="space-y-3 mb-6 text-sm text-left">
+                        <div className="flex items-center gap-3">
+                          <Clock className="w-4 h-4 text-gray-400" />
+                          <span>Продолжительность: {excursion.duration}</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <Users className="w-4 h-4 text-gray-400" />
+                          <span>Группа: {excursion.groupSize}</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <Calendar className="w-4 h-4 text-gray-400" />
+                          <span>Ежедневно</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <MapPin className="w-4 h-4 text-gray-400" />
+                          <span>Трансфер включен</span>
+                        </div>
+                      </div>
+                      
+                      <div className="text-center mb-6">
+                        <div className="text-2xl font-bold text-green-600">
+                          от {excursion.priceAdult.toLocaleString()} {excursion.currency}
+                        </div>
+                        <div className="text-sm text-gray-500">за взрослого</div>
+                      </div>
+                      
+                      <div className="space-y-3">
+                        <button 
+                          onClick={() => setShowBookingModal(true)}
+                          className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold rounded-md transition-colors"
+                        >
+                          Забронировать тур
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Tags section - компактно под фото как на tisland.travel */}
+      <section className="pb-4">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-wrap gap-2">
+            {excursion.tags.map((tag, index) => (
+              <span key={index} className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Title and meta info - после тегов */}
+      <section className="py-6">
+        <div className="container mx-auto px-4">
+          <h1 className="text-2xl md:text-4xl font-bold mb-4 text-gray-900 leading-tight">
+            {excursion.title}
+          </h1>
+          <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+            {excursion.subtitle}
+          </p>
+          
+          <div className="flex flex-wrap items-center gap-4 mb-6">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+              <Star className="w-3 h-3 mr-1 fill-current" />
+              {excursion.rating} ({excursion.reviewsCount} отзывов)
+            </span>
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+              <Clock className="w-3 h-3 mr-1" />
+              {excursion.duration}
+            </span>
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+              <Users className="w-3 h-3 mr-1" />
+              {excursion.groupSize}
+            </span>
+            <span className="text-2xl font-bold text-green-600">
+              от {excursion.priceAdult.toLocaleString()} {excursion.currency}
+            </span>
           </div>
         </div>
       </section>
@@ -220,25 +361,6 @@ const RassvetnoePrikljuchenie = () => {
           <div className="lg:grid lg:grid-cols-3 lg:gap-8">
             {/* Левая колонка - основная информация */}
             <div className="lg:col-span-2">
-              <div className="mb-6">
-                <div className="flex flex-wrap items-center gap-4 mb-3">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                    <Star className="w-3 h-3 mr-1 fill-current" />
-                    {excursion.rating} ({excursion.reviewsCount} отзывов)
-                  </span>
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                    <Clock className="w-3 h-3 mr-1" />
-                    {excursion.duration}
-                  </span>
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                    <Users className="w-3 h-3 mr-1" />
-                    {excursion.groupSize}
-                  </span>
-                </div>
-                
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{excursion.title}</h1>
-                <p className="text-xl text-gray-600 mb-6">{excursion.subtitle}</p>
-              </div>
 
               {/* Краткое описание */}
               <div className="bg-gray-50 rounded-lg p-6 mb-8">

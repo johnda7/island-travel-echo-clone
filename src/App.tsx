@@ -29,6 +29,7 @@ import ElevenIslandsMegaTour from "./pages/ElevenIslandsMegaTour";
 
 // Динамический компонент для CMS туров
 import DynamicTourPage from "./components/DynamicTourPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ function App() {
         <Toaster />
         <Sonner />
         <HashRouter>
+          <ScrollToTop />
           <ErrorBoundary>
             <Routes>
               <Route path="/" element={<Index />} />

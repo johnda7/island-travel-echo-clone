@@ -63,6 +63,7 @@ export const useCMSTours = () => {
           )
         `)
         .eq('is_active', true)
+        .neq('slug', 'avatar-plus-hangdong-adventure')  // 🚫 ИСКЛЮЧАЕМ СТАРУЮ СТРАНИЦУ
         .order('created_at', { ascending: false });
       
       if (error) throw error;
@@ -90,6 +91,11 @@ export const useCMSTours = () => {
 
   const getTourBySlug = async (slug: string): Promise<CMSTour | null> => {
     try {
+      // 🚫 БЛОКИРУЕМ СТАРУЮ СТРАНИЦУ ПОЛНОСТЬЮ
+      if (slug === 'avatar-plus-hangdong-adventure') {
+        return null;
+      }
+      
       console.log('Fetching tour by slug:', slug);
       const { data, error } = await supabase
         .from('tours')

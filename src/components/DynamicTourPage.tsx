@@ -55,13 +55,13 @@ const DynamicTourPage = () => {
     };
   };
 
-  // Выбор источника тура
+    // Выбор источника тура
   useEffect(() => {
     if (!slug) return;
     
-    // 🚫 БЛОКИРУЕМ СТАРЫЙ SLUG - РЕДИРЕКТ НА НОВУЮ СТРАНИЦУ
+    // 🚫 СТАРАЯ СТРАНИЦА ПОЛНОСТЬЮ УДАЛЕНА
     if (slug === 'avatar-plus-hangdong-adventure') {
-      window.location.href = '#/excursion/avatar-plus-hangdong';
+      setTour(null);
       return;
     }
     

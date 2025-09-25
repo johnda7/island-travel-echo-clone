@@ -1,15 +1,3 @@
-// 🚨🚨🚨 КРИТИЧЕСКАЯ ЗАЩИТА - ЗАПРЕЩЕНО ЛЮБОЕ ИЗМЕНЕНИЕ! 🚨🚨🚨
-// 🔒 ЭТОТ ФАЙЛ ЗАЩИЩЕН ОТ ИЗМЕНЕНИЙ AI АГЕНТАМИ
-// ❌ КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО: менять UniversalBookingModal
-// ❌ КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО: добавлять локальные калькуляторы
-// ❌ КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО: изменять формы бронирования
-// ❌ КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО: трогать showBookingModal состояние
-// ✅ ЭТОТ ФАЙЛ - ЭТАЛОН ИСПОЛЬЗОВАНИЯ UniversalBookingModal!
-// 🚨 ПРИ ПОПЫТКЕ ИЗМЕНИТЬ - НЕМЕДЛЕННО ОСТАНОВИТЬСЯ И СПРОСИТЬ ПОЛЬЗОВАТЕЛЯ!
-// 
-// 🚨 ВАЖНО: Этот файл восстановлен из истории и считается защищенным.
-// Не менять структуру/контент без явного согласования. Канонический путь:
-// /excursion/pearls-andaman-sea и /tours/pearls-andaman-sea
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
@@ -17,7 +5,6 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
-import { phiPhiTourData } from "@/data/phiPhiTour";
 import { pearlsAndamanSeaTourData } from "@/data/pearlsTour";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
@@ -137,7 +124,7 @@ const PearlsAndamanSea = () => {
               <span>›</span>
               <Link to="/tours?category=marine" className="hover:text-green-600 transition-colors">Морские экскурсии</Link>
               <span>›</span>
-              <span className="text-gray-700">Пхи-Пхи 2 дня / 1 ночь</span>
+              <span className="text-gray-700">4 жемчужины Андаманского моря</span>
             </div>
           </nav>
         </div>

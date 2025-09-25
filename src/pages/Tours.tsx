@@ -94,7 +94,7 @@ const Tours = () => {
                       <button
                         key={tag}
                         onClick={() => handleTagClick(tag)}
-                        className={`px-2 py-1 text-xs font-medium rounded transition-all duration-200 border ${
+                        className={`px-2 py-1 text-xs font-medium rounded transition-all duration-200 border cursor-pointer ${
                           activeTag === tag
                             ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
                             : 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300'
@@ -113,7 +113,7 @@ const Tours = () => {
                       <button
                         key={tag}
                         onClick={() => handleTagClick(tag)}
-                        className={`px-2 py-1 text-xs font-medium rounded transition-all duration-200 border ${
+                        className={`px-2 py-1 text-xs font-medium rounded transition-all duration-200 border cursor-pointer ${
                           activeTag === tag
                             ? 'bg-green-600 text-white border-green-600 shadow-sm'
                             : 'bg-green-50 text-green-700 border-green-200 hover:bg-green-100 hover:border-green-300'
@@ -132,7 +132,7 @@ const Tours = () => {
                       <button
                         key={tag}
                         onClick={() => handleTagClick(tag)}
-                        className={`px-2 py-1 text-xs font-medium rounded transition-all duration-200 border ${
+                        className={`px-2 py-1 text-xs font-medium rounded transition-all duration-200 border cursor-pointer ${
                           activeTag === tag
                             ? 'bg-purple-600 text-white border-purple-600 shadow-sm'
                             : 'bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100 hover:border-purple-300'
@@ -151,7 +151,7 @@ const Tours = () => {
                       <button
                         key={tag}
                         onClick={() => handleTagClick(tag)}
-                        className={`px-2 py-1 text-xs font-medium rounded transition-all duration-200 border ${
+                        className={`px-2 py-1 text-xs font-medium rounded transition-all duration-200 border cursor-pointer ${
                           activeTag === tag
                             ? 'bg-orange-600 text-white border-orange-600 shadow-sm'
                             : 'bg-orange-50 text-orange-700 border-orange-200 hover:bg-orange-100 hover:border-orange-300'
@@ -170,7 +170,7 @@ const Tours = () => {
                       <button
                         key={tag}
                         onClick={() => handleTagClick(tag)}
-                        className={`px-2 py-1 text-xs font-medium rounded transition-all duration-200 border ${
+                        className={`px-2 py-1 text-xs font-medium rounded transition-all duration-200 border cursor-pointer ${
                           activeTag === tag
                             ? 'bg-pink-600 text-white border-pink-600 shadow-sm'
                             : 'bg-pink-50 text-pink-700 border-pink-200 hover:bg-pink-100 hover:border-pink-300'
@@ -201,7 +201,7 @@ const Tours = () => {
                       <button
                         key={tag}
                         onClick={() => handleTagClick(tag)}
-                        className={`px-2 py-1 text-xs font-medium rounded transition-all duration-200 border ${
+                        className={`px-2 py-1 text-xs font-medium rounded transition-all duration-200 border cursor-pointer ${
                           activeTag === tag
                             ? 'bg-gray-600 text-white border-gray-600 shadow-sm'
                             : 'bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100 hover:border-gray-300'

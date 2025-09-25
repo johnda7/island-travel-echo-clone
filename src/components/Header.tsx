@@ -258,9 +258,9 @@ export const Header = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
               </svg>
               
-              {/* Mobile Search Results Dropdown - Same as Desktop */}
+              {/* Mobile Search Results Dropdown - Centered */}
               {showSearchResults && searchQuery.length > 0 && (
-                <div className="absolute top-full mt-1 w-[calc(100vw-2rem)] max-w-sm bg-white border border-gray-200 rounded-lg shadow-xl z-[60] max-h-80 overflow-y-auto left-1/2 transform -translate-x-1/2" role="listbox" id="mobile-search-results">
+                <div className="absolute top-full mt-1 w-80 bg-white border border-gray-200 rounded-lg shadow-xl z-[60] max-h-80 overflow-y-auto left-1/2 -translate-x-1/2" role="listbox" id="mobile-search-results">
                   {/* Stats Header */}
                   <div className="px-4 py-2 border-b border-gray-100 bg-gray-50">
                     <span className="text-sm text-gray-600">

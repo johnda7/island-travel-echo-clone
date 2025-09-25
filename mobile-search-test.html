@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Search Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            width: 100%;
+            padding: 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h2>🧪 Mobile Search Test</h2>
+        
+        <button class="test-button" onclick="testLocalhost()">
+            🔍 Test Localhost Search
+        </button>
+        
+        <button class="test-button" onclick="testLiveSearch()">
+            🌐 Test Live Search
+        </button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function testLocalhost() {
+            addResult('🔄 Opening localhost:8080...');
+            window.open('http://localhost:8080/', '_blank');
+        }
+        
+        function testLiveSearch() {
+            addResult('🔄 Opening live site...');
+            window.open('https://johnda7.github.io/island-travel-echo-clone/', '_blank');
+        }
+        
+        function addResult(message) {
+            const results = document.getElementById('results');
+            const result = document.createElement('div');
+            result.className = 'result';
+            result.textContent = message;
+            results.appendChild(result);
+        }
+        
+        // Instructions
+        addResult('📱 Instructions: Open in mobile view, tap search icon, try typing "пхи" or "raf"');
+    </script>
+</body>
+</html>

@@ -306,7 +306,7 @@ const RaftingSpaAtvTour = () => {
                   {excursion.tags.map((tag, index) => (
                     <span 
                       key={index}
-                      className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors"
+                      className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium"
                     >
                       {tag}
                     </span>
@@ -376,7 +376,7 @@ const RaftingSpaAtvTour = () => {
               {excursion.tags.map((tag, index) => (
                 <span 
                   key={index}
-                  className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 cursor-pointer transition-colors"
+                  className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium"
                 >
                   {tag}
                 </span>

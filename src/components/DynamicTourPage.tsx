@@ -58,6 +58,13 @@ const DynamicTourPage = () => {
   // Выбор источника тура
   useEffect(() => {
     if (!slug) return;
+    
+    // 🚫 БЛОКИРУЕМ СТАРЫЙ SLUG - РЕДИРЕКТ НА НОВУЮ СТРАНИЦУ
+    if (slug === 'avatar-plus-hangdong-adventure') {
+      window.location.href = '#/excursion/avatar-plus-hangdong';
+      return;
+    }
+    
     if (cmsTour) { setTour(cmsTour); return; }
     // Статический fallback
     const entry = TOURS_REGISTRY.find(t => t.id === slug && t.isActive);

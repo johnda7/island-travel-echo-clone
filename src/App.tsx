@@ -25,6 +25,7 @@ import RachaCoralIslandsTour from "./pages/RachaCoralIslandsTour";
 import RaftingSpaAtvTour from "./pages/RaftingSpaAtvTour";
 import KaoLakSafariTour from "./pages/KaoLakSafariTour";
 import AvatarPlusHangdong from "./pages/AvatarPlusHangdong";
+import ElevenIslandsMegaTour from "./pages/ElevenIslandsMegaTour";
 
 // Динамический компонент для CMS туров
 import DynamicTourPage from "./components/DynamicTourPage";
@@ -77,6 +78,9 @@ function App() {
               
               <Route path="/excursion/avatar-plus-hangdong" element={<AvatarPlusHangdong />} />
               <Route path="/tours/avatar-plus-hangdong" element={<AvatarPlusHangdong />} />
+              
+              <Route path="/excursion/eleven-islands-mega" element={<ElevenIslandsMegaTour />} />
+              <Route path="/tours/eleven-islands-mega" element={<ElevenIslandsMegaTour />} />
               
               {/* Динамические туры из CMS */}
               <Route path="/tours/:slug" element={<DynamicTourPage />} />

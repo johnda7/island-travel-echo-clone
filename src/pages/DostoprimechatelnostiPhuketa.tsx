@@ -8,7 +8,6 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Gri
 import { dostoprimechatelnostiPhuketaTourData } from "@/data/dostoprimechatelnostiPhuketaTour";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
-import { MobileBookingBar } from "@/components/MobileBookingBar";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = dostoprimechatelnostiPhuketaTourData;
@@ -155,6 +154,28 @@ const DostoprimechatelnostiPhuketa = () => {
                       alt={`Gallery ${index + 1}`}
                       className="w-full h-full object-cover object-center"
                     />
+                    
+                    {/* Бейджи и рейтинг только на первом слайде */}
+                    {index === 0 && (
+                      <>
+                        {/* Бейджи как у конкурентов */}
+                        <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                          <span className="px-2 py-1 bg-red-500 text-white text-xs font-medium rounded-md">
+                            ХИТ
+                          </span>
+                          <span className="px-2 py-1 bg-green-600 text-white text-xs font-medium rounded-md">
+                            Культурный
+                          </span>
+                        </div>
+
+                        {/* Рейтинг в правом верхнем углу */}
+                        <div className="absolute top-3 right-3 flex items-center gap-1 bg-white bg-opacity-90 backdrop-blur-sm px-2 py-1 rounded-md">
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <span className="text-sm font-medium text-gray-900">{excursion.rating}</span>
+                        </div>
+                      </>
+                    )}
+                    
                     {/* Overlay с количеством фото на последнем слайде */}
                     {index === 5 && excursion.gallery.length > 6 && (
                       <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -215,7 +236,7 @@ const DostoprimechatelnostiPhuketa = () => {
               {/* Десктопная галерея как на tisland.travel */}
               <div className="hidden md:block">
                 <div className="grid grid-cols-4 gap-2 h-96">
-                {/* Большое главное фото */}
+                {/* Большое главное фото с бейджами как на tisland.travel */}
                 <div 
                   className="col-span-2 row-span-2 cursor-pointer group relative overflow-hidden rounded-lg"
                   onClick={() => openModal(excursion.gallery[0], 0)}
@@ -225,6 +246,26 @@ const DostoprimechatelnostiPhuketa = () => {
                     alt="Big Buddha"
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
+                  
+                  {/* Бейджи как у конкурентов - в левом верхнем углу */}
+                  <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                    <span className="px-2 py-1 bg-red-500 text-white text-xs font-medium rounded-md">
+                      ХИТ
+                    </span>
+                    <span className="px-2 py-1 bg-green-600 text-white text-xs font-medium rounded-md">
+                      Культурный тур
+                    </span>
+                    <span className="px-2 py-1 bg-blue-500 text-white text-xs font-medium rounded-md">
+                      Семейный
+                    </span>
+                  </div>
+
+                  {/* Рейтинг в правом верхнем углу */}
+                  <div className="absolute top-3 right-3 flex items-center gap-1 bg-white bg-opacity-90 backdrop-blur-sm px-2 py-1 rounded-md">
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    <span className="text-sm font-medium text-gray-900">{excursion.rating}</span>
+                    <span className="text-xs text-gray-600">({excursion.reviewsCount})</span>
+                  </div>
                 </div>
 
                 {/* Два средних фото справа сверху */}
@@ -415,13 +456,36 @@ const DostoprimechatelnostiPhuketa = () => {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-4 gap-12">
             <div className="lg:col-span-3">
-              {/* Описание и highlights одним блоком */}
-              <h2 className="text-3xl font-bold mb-6 text-gray-900">Описание экскурсии</h2>
-              <div className="prose prose-lg max-w-none">
-                <p className="text-gray-700 leading-relaxed mb-6 text-lg">
+              {/* Структурированное описание как у tisland.travel */}
+              <h2 className="text-3xl font-bold mb-6 text-gray-900">Описание</h2>
+              <div className="prose prose-lg max-w-none mb-8">
+                <p className="text-gray-700 leading-relaxed text-lg">
                   {excursion.description}
                 </p>
-                <ul className="mb-12 space-y-2 text-gray-700">
+              </div>
+
+              {/* Программа по времени как у конкурентов */}
+              <h3 className="text-2xl font-bold mb-6 text-gray-900">Программа:</h3>
+              <div className="bg-gray-50 rounded-lg p-6 mb-8">
+                <div className="space-y-4">
+                  {excursion.schedule.map((item, index) => (
+                    <div key={index} className="flex gap-4 border-l-4 border-green-600 pl-4">
+                      <div className="flex-shrink-0 w-16">
+                        <span className="text-sm font-bold text-green-600">{item.time}</span>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
+                        <p className="text-gray-600 text-sm">{item.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Ключевые особенности */}
+              <div className="mb-12">
+                <h3 className="text-2xl font-bold mb-4 text-gray-900">Особенности тура</h3>
+                <ul className="space-y-2 text-gray-700">
                   {excursion.highlights.map((highlight, index) => (
                     <li key={index} className="flex items-start gap-3">
                       <span className="text-green-600 font-bold">•</span>
@@ -431,36 +495,11 @@ const DostoprimechatelnostiPhuketa = () => {
                 </ul>
               </div>
 
-              {/* Программа тура — компактная таблица */}
-              <h2 className="text-3xl font-bold mb-6 text-gray-900">Программа тура</h2>
-              <div className="overflow-x-auto mb-12 bg-white rounded-lg shadow-sm border">
-                <table className="min-w-full">
-                  <thead>
-                    <tr className="bg-gray-50 border-b">
-                      <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">День</th>
-                      <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">Время</th>
-                      <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">Активность</th>
-                      <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">Описание</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {excursion.schedule.map((item, idx) => (
-                      <tr key={idx} className="border-b last:border-b-0 hover:bg-gray-50 transition-colors">
-                        <td className="py-4 px-6 text-sm font-medium text-gray-600">{item.day}</td>
-                        <td className="py-4 px-6 text-sm text-gray-600">{item.time}</td>
-                        <td className="py-4 px-6 text-sm font-medium text-gray-700">{item.title}</td>
-                        <td className="py-4 px-6 text-sm text-gray-700">{item.description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              {/* Включено / Не включено / Взять с собой / Важно знать — простые списки */}
+              {/* Включено / Не включено / Важно знать — как у конкурентов */}
               <div className="space-y-12">
                 <div className="grid md:grid-cols-2 gap-12">
                   <div>
-                    <h3 className="text-2xl font-bold mb-4 text-green-600">Включено в стоимость</h3>
+                    <h3 className="text-2xl font-bold mb-4 text-green-600">В цену включено</h3>
                     <ul className="space-y-2 text-gray-700">
                       {excursion.included.map((item, index) => (
                         <li key={index} className="flex items-start gap-3">
@@ -471,7 +510,7 @@ const DostoprimechatelnostiPhuketa = () => {
                     </ul>
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold mb-4 text-red-600">Не включено</h3>
+                    <h3 className="text-2xl font-bold mb-4 text-red-600">Дополнительные расходы</h3>
                     <ul className="space-y-2 text-gray-700">
                       {excursion.notIncluded.map((item, index) => (
                         <li key={index} className="flex items-start gap-3">
@@ -482,13 +521,29 @@ const DostoprimechatelnostiPhuketa = () => {
                     </ul>
                   </div>
                 </div>
-                
+
+                {/* Секция "Взять с собой" как у конкурентов tisland.travel */}
+                {excursion.whatToBring && (
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4 text-blue-600">Взять с собой</h3>
+                    <ul className="space-y-2 text-gray-700">
+                      {excursion.whatToBring.map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="text-blue-600 font-bold">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Секция "Важно знать" */}
                 <div>
                   <h3 className="text-2xl font-bold mb-4 text-amber-600">Важно знать</h3>
                   <ul className="space-y-2 text-gray-700">
                     {excursion.importantInfo.map((item, index) => (
                       <li key={index} className="flex items-start gap-3">
-                        <span className="text-amber-600 font-bold">!</span>
+                        <span className="text-amber-600 font-bold">⚠️</span>
                         <span>{item}</span>
                       </li>
                     ))}

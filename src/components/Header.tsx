@@ -205,16 +205,17 @@ export const Header = () => {
               )}
             </div>
 
-            {/* Mobile Search */}
+            {/* Mobile Search Button */}
             <div className="md:hidden relative">
               {!showMobileSearch ? (
                 <button 
-                  className="p-2 text-gray-700 hover:text-green-600 transition-colors"
+                  className="flex items-center space-x-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
                   onClick={() => setShowMobileSearch(true)}
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                   </svg>
+                  <span className="text-sm font-medium">Поиск</span>
                 </button>
               ) : null}
             </div>
@@ -262,76 +263,207 @@ export const Header = () => {
           </div>
         )}
 
-        {/* Mobile Search Modal */}
+        {/* Mobile Search Modal - Google/Яндекс Style */}
         {showMobileSearch && (
-          <div className="md:hidden fixed top-16 left-0 right-0 z-[60] bg-white border-b shadow-lg" ref={mobileSearchRef}>
-            <div className="container mx-auto px-4 py-3">
-              <div className="flex items-center space-x-3">
-                <input
-                  type="text"
-                  placeholder="Поиск туров..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => setShowSearchResults(true)}
-                  onKeyDown={handleSearchKeyDown}
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
-                  autoFocus
-                  role="combobox"
-                  aria-expanded={showSearchResults && searchQuery.length > 0}
-                  aria-controls={mobileListboxId}
-                  aria-autocomplete="list"
-                />
-                <button
-                  onClick={() => {
-                    setShowMobileSearch(false);
-                    setSearchQuery('');
-                    setShowSearchResults(false);
-                  }}
-                  className="p-2 text-gray-500 hover:text-gray-700"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-              {/* Mobile Search Results */}
-              {showSearchResults && searchQuery.length > 0 && (
-                <div className="mt-3 max-h-80 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg" role="listbox" id={mobileListboxId}>
-                  <span className="sr-only" aria-live="polite">
-                    {loading ? 'Идёт загрузка' : `Найдено: ${filteredTours.length}`}
-                  </span>
-                  {loading ? (
-                    <div className="px-4 py-3 text-gray-500 text-sm">Идёт загрузка…</div>
-                  ) : filteredTours.length > 0 ? (
-                    filteredTours.map((tour) => (
-                      <Link
-                        key={tour.id}
-                        to={getTourDetailPath(tour.id)}
-                        className="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors active:bg-gray-100"
-                        onClick={(e) => {
-                          e.stopPropagation();
+          <>
+            {/* Backdrop Overlay */}
+            <div 
+              className="md:hidden fixed inset-0 bg-black/20 z-[70] backdrop-blur-sm"
+              onClick={() => {
+                setShowMobileSearch(false);
+                setSearchQuery('');
+                setShowSearchResults(false);
+              }}
+            />
+            
+            {/* Search Modal */}
+            <div className="md:hidden fixed inset-0 z-[80] flex flex-col bg-white" ref={mobileSearchRef}>
+              {/* Search Header */}
+              <div className="flex-shrink-0 px-4 py-4 border-b bg-white shadow-sm">
+                <div className="flex items-center space-x-3">
+                  {/* Back Button */}
+                  <button
+                    onClick={() => {
+                      setShowMobileSearch(false);
+                      setSearchQuery('');
+                      setShowSearchResults(false);
+                    }}
+                    className="p-2 text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  
+                  {/* Search Input */}
+                  <div className="relative flex-1">
+                    <input
+                      type="text"
+                      placeholder="Поиск туров на Пхукете..."
+                      value={searchQuery}
+                      onChange={(e) => {
+                        setSearchQuery(e.target.value);
+                        if (e.target.value.length > 0) {
+                          setShowSearchResults(true);
+                        }
+                      }}
+                      className="w-full px-4 py-3 text-base bg-gray-50 border-0 rounded-lg focus:outline-none focus:bg-white focus:ring-2 focus:ring-green-500 transition-colors"
+                      autoFocus
+                      role="combobox"
+                      aria-expanded={showSearchResults && searchQuery.length > 0}
+                      aria-controls={mobileListboxId}
+                      aria-autocomplete="list"
+                    />
+                    
+                    {/* Clear Button */}
+                    {searchQuery.length > 0 && (
+                      <button
+                        onClick={() => {
                           setSearchQuery('');
                           setShowSearchResults(false);
-                          setShowMobileSearch(false);
                         }}
-                        role="option"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600"
                       >
-                        <div className="font-medium text-gray-900">{highlightMatches(tour.data?.title || tour.name, debouncedQuery)}</div>
-                        <div className="text-sm text-gray-500 mt-1">{highlightMatches(tour.data?.subtitle || tour.data?.description, debouncedQuery)}</div>
-                        <div className="flex gap-1 mt-1">
-                          {tour.tags.slice(0, 3).map((tag, index) => (
-                            <span key={index} className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">{highlightMatches(tag, debouncedQuery as string)}</span>
-                          ))}
-                        </div>
-                      </Link>
-                    ))
-                  ) : (
-                    <div className="px-4 py-3 text-gray-500 text-sm">
-                      Ничего не найдено. Попробуйте другой запрос.
-                    </div>
-                  )}
+                        <X className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
                 </div>
-              )}
+                
+                {/* Search Stats */}
+                {searchQuery.length > 0 && (
+                  <div className="mt-2 px-2">
+                    <span className="text-sm text-gray-500">
+                      {loading ? 'Поиск...' : `Найдено: ${filteredTours.length} туров`}
+                    </span>
+                  </div>
+                )}
+              </div>
+              
+              {/* Search Results */}
+              <div className="flex-1 overflow-y-auto">
+                {searchQuery.length === 0 ? (
+                  /* Popular Searches */
+                  <div className="p-4 space-y-4">
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-900 mb-2">Популярные запросы</h3>
+                      <div className="space-y-2">
+                        {['Пхи-Пхи', 'Джеймс Бонд', 'рафтинг', 'слоны', 'рассвет', '11 островов'].map((term) => (
+                          <button
+                            key={term}
+                            onClick={() => {
+                              setSearchQuery(term);
+                              setShowSearchResults(true);
+                            }}
+                            className="flex items-center space-x-3 w-full p-2 text-left hover:bg-gray-50 rounded-lg transition-colors"
+                          >
+                            <Search className="w-4 h-4 text-gray-400" />
+                            <span className="text-gray-700">{term}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-900 mb-2">Категории</h3>
+                      <div className="space-y-2">
+                        {['Морские туры', 'Активные туры', 'Культурные туры', 'Семейные туры'].map((category) => (
+                          <button
+                            key={category}
+                            onClick={() => {
+                              setSearchQuery(category);
+                              setShowSearchResults(true);
+                            }}
+                            className="flex items-center space-x-3 w-full p-2 text-left hover:bg-gray-50 rounded-lg transition-colors"
+                          >
+                            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14-4l-3 3.5M5 7l3 3.5m6-3.5v8" />
+                            </svg>
+                            <span className="text-gray-700">{category}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  /* Search Results */
+                  <div role="listbox" id={mobileListboxId}>
+                    <span className="sr-only" aria-live="polite">
+                      {loading ? 'Идёт загрузка' : `Найдено: ${filteredTours.length}`}
+                    </span>
+                    {loading ? (
+                      <div className="p-8 text-center">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500 mx-auto mb-4"></div>
+                        <div className="text-gray-500">Поиск туров...</div>
+                      </div>
+                    ) : filteredTours.length > 0 ? (
+                      <div className="divide-y divide-gray-100">
+                        {filteredTours.map((tour) => (
+                          <Link
+                            key={tour.id}
+                            to={getTourDetailPath(tour.id)}
+                            className="block p-4 hover:bg-gray-50 active:bg-gray-100 transition-colors"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSearchQuery('');
+                              setShowSearchResults(false);
+                              setShowMobileSearch(false);
+                            }}
+                            role="option"
+                          >
+                            <div className="flex items-start space-x-3">
+                              {/* Tour Icon */}
+                              <div className="flex-shrink-0 w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                              </div>
+                              
+                              {/* Tour Info */}
+                              <div className="flex-1 min-w-0">
+                                <div className="font-medium text-gray-900 text-base leading-5">
+                                  {highlightMatches(tour.data?.title || tour.name, debouncedQuery)}
+                                </div>
+                                <div className="text-sm text-gray-600 mt-1 line-clamp-2 leading-5">
+                                  {highlightMatches(tour.data?.subtitle || tour.data?.description, debouncedQuery)}
+                                </div>
+                                <div className="flex flex-wrap gap-1 mt-2">
+                                  {tour.tags.slice(0, 3).map((tag, index) => (
+                                    <span key={index} className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full">
+                                      {highlightMatches(tag, debouncedQuery as string)}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                              
+                              {/* Price */}
+                              {tour.data?.priceAdult && (
+                                <div className="flex-shrink-0 text-right">
+                                  <div className="text-sm font-semibold text-green-600">от {tour.data.priceAdult} ฿</div>
+                                  <div className="text-xs text-gray-500">за взрослого</div>
+                                </div>
+                              )}
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="p-8 text-center">
+                        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                          <Search className="w-6 h-6 text-gray-400" />
+                        </div>
+                        <div className="text-gray-900 font-medium mb-2">Туры не найдены</div>
+                        <div className="text-gray-500 text-sm">
+                          Попробуйте изменить поисковый запрос или выберите из популярных категорий
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          </>
         )}
       </div>
     </header>

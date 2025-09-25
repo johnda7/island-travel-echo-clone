@@ -176,9 +176,9 @@ const RassvetnoePrikljuchenie = () => {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-4 gap-2 h-[400px]">
               {/* Большое главное фото */}
-              <div className="col-span-2 row-span-2 relative group cursor-pointer" onClick={() => openModal(excursion.gallery[0], 0)}>
+              <div className="col-span-2 row-span-2 relative group cursor-pointer" onClick={() => openModal(excursion.mainImage, 0)}>
                 <img
-                  src={excursion.gallery[0]}
+                  src={excursion.mainImage}
                   alt={`${excursion.title} - главное фото`}
                   className="w-full h-full object-cover rounded-lg transition-transform group-hover:scale-105"
                 />

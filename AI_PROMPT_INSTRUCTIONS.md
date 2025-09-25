@@ -22,6 +22,11 @@ open_simple_browser https://johnda7.github.io/island-travel-echo-clone/
 - **Обновление:** автоматически через GitHub Actions после git push
 - **Время:** 2-3 минуты от коммита до обновления на сайте
 
+### 🆕 **ПОСЛЕДНИЕ ОБНОВЛЕНИЯ (26.09.2025):**
+- ✅ **Telegram интеграция в главный шаблон** - добавлены кнопки "Написать в Telegram" в DostoprimechatelnostiPhuketa.tsx
+- ✅ **Улучшена мобильная версия** - кнопки в одном ряду (Telegram слева, Забронировать справа)
+- ✅ **Обновлен промт** - добавлена информация о Telegram кнопках для новых туров
+
 ### 🔗 **БЫСТРЫЕ ССЫЛКИ:**
 - 🏠 **Главная:** https://johnda7.github.io/island-travel-echo-clone/
 - 🎯 **Эталон (новый шаблон):** https://johnda7.github.io/island-travel-echo-clone/#/excursion/dostoprimechatelnosti-phuketa
@@ -543,6 +548,8 @@ npm run build && git add -A && git commit -m "feat: добавлен тур [н�
   - ✅ Breadcrumbs навигация как на tisland.travel
   - ✅ Tags секция под фото для SEO
   - ✅ Мобильные точки навигации в галерее
+  - ✅ **Telegram кнопки интеграция** - кнопки "Написать в Telegram" в десктоп и мобильной версии
+  - ✅ **Мобильная оптимизация** - две кнопки в одном ряду (Telegram + Забронировать)
   - ✅ Полная типизация TypeScript
   - ✅ Эталонный дизайн и UX
 
@@ -621,12 +628,42 @@ npm run build && git add -A && git commit -m "feat: добавлен тур [н�
 ```
 
 **📱 TELEGRAM КНОПКА (ОБЯЗАТЕЛЬНО!):**
+
+**ДЕСКТОП ВЕРСИЯ (вертикальная компоновка):**
 ```typescript
-<Button variant="outline" asChild className="w-full py-3 border-gray-300">
-  <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
-    Задать вопрос в Telegram
-  </a>
-</Button>
+<div className="space-y-3">
+  <Button 
+    onClick={() => setShowBookingModal(true)}
+    className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
+  >
+    Забронировать тур
+  </Button>
+  <Button 
+    onClick={() => window.open('https://t.me/Phuketga', '_blank')}
+    className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 font-semibold"
+  >
+    Написать в Telegram
+  </Button>
+</div>
+```
+
+**МОБИЛЬНАЯ ВЕРСИЯ (горизонтальная компоновка - УЛУЧШЕНО 26.09.2025):**
+```typescript
+<div className="flex gap-3">
+  <Button 
+    onClick={() => window.open('https://t.me/Phuketga', '_blank')}
+    className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-4 text-lg font-semibold rounded-xl"
+  >
+    Telegram
+  </Button>
+  <Button 
+    onClick={() => setShowBookingModal(true)}
+    className="flex-1 bg-green-600 hover:bg-green-700 text-white py-4 text-lg font-semibold rounded-xl"
+  >
+    <Calendar className="w-5 h-5 mr-2" />
+    Забронировать
+  </Button>
+</div>
 ```
 
 **🧮 КАЛЬКУЛЯТОР ЦЕН:**

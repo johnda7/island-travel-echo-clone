@@ -354,25 +354,30 @@ const RassvetnoePrikljuchenie = () => {
                 <Card className="shadow-lg border-2 border-gray-100">
                   <CardContent className="p-6">
                     <div className="text-center mb-6">
-                      <div className="text-3xl font-bold text-gray-900">
+                      <div className="text-2xl font-bold text-green-600">
                         от {excursion.priceAdult.toLocaleString()} {excursion.currency}
                       </div>
                       <div className="text-sm text-gray-500">за взрослого</div>
-                      {excursion.priceChild && (
-                        <div className="text-lg text-gray-600 mt-1">
-                          {excursion.priceChild.toLocaleString()} {excursion.currency} за ребенка
-                        </div>
-                      )}
                     </div>
 
                     {/* Кнопка бронирования */}
                     <Button
                       size="lg"
-                      className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-4 text-lg shadow-lg hover:shadow-xl transition-all duration-200"
+                      className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3"
                       onClick={() => setShowBookingModal(true)}
                     >
-                      <Calendar className="w-5 h-5 mr-2" />
                       Забронировать тур
+                    </Button>
+
+                    {/* Telegram кнопка */}
+                    <Button
+                      variant="outline"
+                      asChild
+                      className="w-full py-3 border-gray-300 mt-3"
+                    >
+                      <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
+                        📱 Связаться в Telegram
+                      </a>
                     </Button>
 
                     {/* Дополнительная информация */}
@@ -396,8 +401,7 @@ const RassvetnoePrikljuchenie = () => {
                       <h3 className="text-lg font-semibold text-gray-800 mb-2">Забронировать тур</h3>
                       <p className="text-sm text-gray-600 mb-4">Оставьте заявку и мы свяжемся с вами для подтверждения</p>
                       <Button
-                        variant="outline"
-                        className="w-full border-green-300 text-green-700 hover:bg-green-50"
+                        className="w-full bg-green-600 hover:bg-green-700 text-white"
                         onClick={() => setShowBookingModal(true)}
                       >
                         <Calendar className="w-4 h-4 mr-2" />
@@ -412,16 +416,22 @@ const RassvetnoePrikljuchenie = () => {
         </div>
       </section>
 
-      {/* Кнопка бронирования внизу для мобильных */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 lg:hidden z-40">
-        <Button
-          size="lg"
-          className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-4 text-lg shadow-lg"
-          onClick={() => setShowBookingModal(true)}
-        >
-          <Calendar className="w-5 h-5 mr-2" />
-          Забронировать
-        </Button>
+      {/* Кнопка бронирования внизу для мобильных - как в эталоне */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40">
+        <div className="flex items-center justify-between gap-4">
+          <div className="text-left">
+            <div className="text-lg font-bold text-green-600">
+              от {excursion.priceAdult} {excursion.currency}
+            </div>
+            <div className="text-xs text-gray-600">взрослый / {excursion.priceChild} {excursion.currency} детский</div>
+          </div>
+          <Button 
+            onClick={() => setShowBookingModal(true)}
+            className="bg-green-600 hover:bg-green-700 text-white px-6"
+          >
+            Забронировать
+          </Button>
+        </div>
       </div>
 
       {/* Полноэкранная галерея */}

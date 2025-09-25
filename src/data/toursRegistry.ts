@@ -17,7 +17,6 @@ import { rassvetnoePrikljuchenieTourData } from '../data/rassvetnoePrikljuchenie
 // НОВЫЕ 6 ТУРОВ
 
 import { jamesBondIslandTourData } from '../data/jamesBondIslandTour.ts';
-import { avatarPlusHangdongTourData } from '../data/avatarPlusHangdongTour.ts';
 import { elevenIslandsStandardTourData } from '../data/elevenIslandsStandardTour.ts';
 import { elevenIslandsMegaTourData } from '../data/elevenIslandsMegaTour.ts';
 import { raftingSpaAtvTourData } from '../data/raftingSpaAtvTour.ts';
@@ -148,7 +147,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: false,   // ❌ не на главной (пока)
     priority: 9,
-    data: () => Promise.resolve(avatarPlusHangdongTourData)
+    data: () => import('./avatarPlusHangdongTour').then(m => m.avatarPlusHangdongTour)
   },
 
   // 10. 11 островов Стандарт на спидботе

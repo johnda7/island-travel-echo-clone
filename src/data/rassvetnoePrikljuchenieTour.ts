@@ -46,13 +46,13 @@ export const rassvetnoePrikljuchenieTourData: TourData = {
   route: "/rassvetnoe-prikljuchenie",
   mainImage: airplaneBeach,
   gallery: [
-    airplaneBeach,
-    beyondSkywalk,
-    babyElephantShow,
-    elephantShow,
-    elephantSpa,
-    showeringElephant,
-    blackMonkStatue
+    airplaneBeach,        // Горизонтальное 2560x1708 - главное фото пляжа с самолетами
+    beyondSkywalk,        // Горизонтальное 1920x1280 - стеклянный мост  
+    elephantShow,         // Горизонтальное 2560x1920 - шоу слонов
+    babyElephantShow,     // Вертикальное 960x1280 - детское шоу слонов
+    elephantSpa,          // Вертикальное 960x1280 - спа со слонами
+    showeringElephant     // Вертикальное 960x1280 - слон под душем
+    // Убрали blackMonkStatue (408x612) - слишком маленькое и нарушает композицию
   ],
   highlights: [
     "Встреча рассвета на стеклянном мосту Beyond Skywalk",

@@ -30,20 +30,31 @@ export const Header = () => {
     const id = setTimeout(() => setDebouncedQuery(searchQuery.trim()), 180);
     return () => clearTimeout(id);
   }, [searchQuery]);
+  
+  // Debug logging removed
 
   // Filter tours based on (debounced) search query
   const filteredTours = useMemo(() => {
     const q = (debouncedQuery || '').toLowerCase();
     if (!q) return [];
-    return allTours.filter(tour =>
-      tour.data && (
-        tour.name.toLowerCase().includes(q) ||
-        tour.data.title.toLowerCase().includes(q) ||
-        tour.data.subtitle?.toLowerCase().includes(q) ||
-        tour.data.description?.toLowerCase().includes(q) ||
-        tour.tags.some(tag => tag.toLowerCase().includes(q))
-      )
-    );
+    
+    return allTours.filter(tour => {
+      // Поиск по базовым полям (всегда доступны)
+      const nameMatch = tour.name.toLowerCase().includes(q);
+      const tagsMatch = tour.tags.some(tag => tag.toLowerCase().includes(q));
+      
+      // Поиск по данным тура (если загружены)
+      let dataMatch = false;
+      if (tour.data) {
+        dataMatch = 
+          tour.data.title?.toLowerCase().includes(q) ||
+          tour.data.subtitle?.toLowerCase().includes(q) ||
+          tour.data.description?.toLowerCase().includes(q) ||
+          false;
+      }
+      
+      return nameMatch || tagsMatch || dataMatch;
+    });
   }, [allTours, debouncedQuery]);
 
   // Helper: highlight matches in a text

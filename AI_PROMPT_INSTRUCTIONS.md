@@ -22,6 +22,12 @@ open_simple_browser https://johnda7.github.io/island-travel-echo-clone/
 - **Обновление:** автоматически через GitHub Actions после git push
 - **Время:** 2-3 минуты от коммита до обновления на сайте
 
+### 🔗 **БЫСТРЫЕ ССЫЛКИ:**
+- 🏠 **Главная:** https://johnda7.github.io/island-travel-echo-clone/
+- 🎯 **Эталон (новый шаблон):** https://johnda7.github.io/island-travel-echo-clone/#/excursion/dostoprimechatelnosti-phuketa
+- 🛡️ **Админка (CRM):** https://johnda7.github.io/island-travel-echo-clone/#/admin
+- 📊 **Все туры:** https://johnda7.github.io/island-travel-echo-clone/#/tours
+
 ---
 
 ## ⚡ CRITICAL: ANTI-DECEPTION SYSTEM (ZERO TOLERANCE)

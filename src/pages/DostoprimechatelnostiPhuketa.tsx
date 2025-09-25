@@ -416,6 +416,7 @@ const DostoprimechatelnostiPhuketa = () => {
                 <div className="text-2xl font-bold text-green-600 mb-4">
                   от {excursion.priceAdult} {excursion.currency}
                 </div>
+                {/* Мобильные кнопки в ряду - обновление 26.09.2025 */}
                 <div className="flex gap-3">
                   <Button 
                     onClick={() => window.open('https://t.me/Phuketga', '_blank')}

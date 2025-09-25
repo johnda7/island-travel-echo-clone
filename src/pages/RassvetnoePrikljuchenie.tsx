@@ -243,7 +243,7 @@ const RassvetnoePrikljuchenie = () => {
               {/* Краткое описание */}
               <div className="bg-gray-50 rounded-lg p-6 mb-8">
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">О туре</h2>
-                <p className="text-gray-700 leading-relaxed">{excursion.description}</p>
+                <div className="text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: excursion.description }} />
               </div>
 
               {/* Основные моменты */}

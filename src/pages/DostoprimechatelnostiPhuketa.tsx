@@ -555,13 +555,34 @@ const DostoprimechatelnostiPhuketa = () => {
         </div>
       </section>
 
-      {/* Mobile booking bar - фиксированная кнопка внизу */}
-      <MobileBookingBar 
-        priceAdult={excursion.priceAdult}
-        priceChild={excursion.priceChild}
-        currency={excursion.currency}
-        onBookingClick={() => setShowBookingModal(true)}
-      />
+      {/* Mobile booking bar - фиксированная панель с ценой и двумя кнопками */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50">
+        <div className="flex items-center gap-3">
+          <div className="text-left">
+            <div className="text-lg font-bold text-green-600">
+              от {excursion.priceAdult} {excursion.currency}
+            </div>
+            <div className="text-xs text-gray-600">взрослый / {excursion.priceChild} {excursion.currency} детский</div>
+          </div>
+          <div className="flex gap-2 flex-1">
+            <button
+              onClick={() => {
+                const message = `🌴 Хочу забронировать тур: ${excursion.title}\n\n💰 Цена: от ${excursion.priceAdult} ${excursion.currency}\n⏰ Длительность: ${excursion.duration}\n\n📱 Свяжитесь со мной для бронирования!`;
+                window.location.href = `https://t.me/islandhopping_phuket?text=${encodeURIComponent(message)}`;
+              }}
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 flex-1 bg-blue-500 hover:bg-blue-600 text-white py-3 text-sm font-medium"
+            >
+              Написать в Telegram
+            </button>
+            <Button 
+              onClick={() => setShowBookingModal(true)}
+              className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 text-sm font-medium"
+            >
+              Забронировать
+            </Button>
+          </div>
+        </div>
+      </div>
 
       {/* Mobile-first Gallery Modal */}
       {selectedImage && showFullGallery && (

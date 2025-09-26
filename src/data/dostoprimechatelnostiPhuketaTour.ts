@@ -11,7 +11,6 @@ import watChalong2 from '@/assets/dostoprimechatelnosti-phuketa/wat-chalong-2.jp
 import oldTownMain from '@/assets/dostoprimechatelnosti-phuketa/old-town-main.jpg';
 import oldTown1 from '@/assets/dostoprimechatelnosti-phuketa/old-town-1.jpg';
 import promthepMain from '@/assets/dostoprimechatelnosti-phuketa/promthep-cape-main.jpg';
-import promthep1 from '@/assets/dostoprimechatelnosti-phuketa/promthep-cape-1.jpg';
 import karonViewpointMain from '@/assets/dostoprimechatelnosti-phuketa/karon-viewpoint-main.jpg';
 import karonViewpoint1 from '@/assets/dostoprimechatelnosti-phuketa/karon-viewpoint-1.jpg';
 import karonViewpoint2 from '@/assets/dostoprimechatelnosti-phuketa/karon-viewpoint-2.jpg';
@@ -56,7 +55,6 @@ export const dostoprimechatelnostiPhuketaTourData: TourData = {
     oldTownMain,
     oldTown1,
     promthepMain,
-    promthep1,
     karonViewpointMain,
     karonViewpoint1,
     karonViewpoint2,

@@ -136,7 +136,7 @@ const DostoprimechatelnostiPhuketa = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-white ${isWebApp ? 'pb-4' : 'pb-20 lg:pb-0'}`}>
+    <div className={`min-h-screen bg-white overflow-x-hidden ${isWebApp ? 'pb-4' : 'pb-20 lg:pb-0'}`}>
       {/* Header показываем только в браузере */}
       {!isWebApp && <Header />}
       

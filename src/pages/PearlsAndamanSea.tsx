@@ -8,11 +8,15 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Gri
 import { pearlsAndamanSeaTourData } from "@/data/pearlsTour";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
+import { MobileBookingBar } from "@/components/MobileBookingBar";
+import { useTelegram } from "@/contexts/TelegramContext";
+import { TelegramNav } from "@/components/TelegramNav";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = pearlsAndamanSeaTourData;
 
 const PearlsAndamanSea = () => {
+  const { isWebApp, user, hapticFeedback } = useTelegram();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [showThumbnails, setShowThumbnails] = useState(false);
@@ -110,30 +114,40 @@ const PearlsAndamanSea = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-20 lg:pb-0">
-      <Header />
+    <div className={`min-h-screen bg-white overflow-x-hidden ${isWebApp ? 'pb-4' : 'pb-20 lg:pb-0'}`}>
+      {/* Telegram Web App навигация */}
+      {isWebApp && (
+        <TelegramNav 
+          title="4 жемчужины Андаманского моря"
+        />
+      )}
+
+      {/* Обычный Header только в браузере */}
+      {!isWebApp && <Header />}
       
-      {/* Breadcrumbs - как на tisland.travel */}
-      <section className="pt-20 pb-4">
-        <div className="container mx-auto px-4">
-          <nav className="text-sm text-gray-500">
-            <div className="flex items-center space-x-2">
-              <Link to="/" className="hover:text-green-600 transition-colors">Главная</Link>
-              <span>›</span>
-              <Link to="/tours" className="hover:text-green-600 transition-colors">Туры</Link>
-              <span>›</span>
-              <Link to="/tours?category=marine" className="hover:text-green-600 transition-colors">Морские экскурсии</Link>
-              <span>›</span>
-              <span className="text-gray-700">4 жемчужины Андаманского моря</span>
-            </div>
-          </nav>
-        </div>
-      </section>
+      {/* Breadcrumbs - как на tisland.travel, только в браузере */}
+      {!isWebApp && (
+        <section className="pt-20 pb-4">
+          <div className="container mx-auto px-4">
+            <nav className="text-sm text-gray-500">
+              <div className="flex items-center space-x-2">
+                <Link to="/" className="hover:text-green-600 transition-colors">Главная</Link>
+                <span>›</span>
+                <Link to="/tours" className="hover:text-green-600 transition-colors">Туры</Link>
+                <span>›</span>
+                <Link to="/tours?category=marine" className="hover:text-green-600 transition-colors">Морские экскурсии</Link>
+                <span>›</span>
+                <span className="text-gray-700">4 жемчужины Андаманского моря</span>
+              </div>
+            </nav>
+          </div>
+        </section>
+      )}
 
 
 
       {/* Gallery section - сразу после хлебных крошек */}
-      <section className="pb-2">
+      <section className={isWebApp ? "pb-2" : "pb-2"}>
         {/* Мобильная карусель - во всю ширину экрана как на tisland.travel */}
         <div className="md:hidden">
           <div className="relative">
@@ -300,13 +314,13 @@ const PearlsAndamanSea = () => {
             <div className="hidden lg:block">
               <div className="sticky top-4">
                 <Card className="shadow-lg border-0">
-                  <CardContent className="p-6">
+                  <CardContent className="p-4">
                     {/* Информация о туре */}
-                    <div className="mb-6">
-                      <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">{excursion.title}</h3>
-                      <p className="text-gray-600 text-sm mb-4">{excursion.subtitle}</p>
+                    <div className="mb-4">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-3 text-center">{excursion.title}</h3>
+                      <p className="text-gray-600 text-sm mb-3">{excursion.subtitle}</p>
                       
-                      <div className="space-y-3 mb-6 text-sm text-left">
+                      <div className="space-y-2 mb-4 text-sm text-left">
                         <div className="flex items-center gap-3">
                           <Clock className="w-4 h-4 text-gray-400" />
                           <span>Продолжительность: {excursion.duration}</span>
@@ -325,14 +339,14 @@ const PearlsAndamanSea = () => {
                         </div>
                       </div>
                       
-                      <div className="text-center mb-6">
+                      <div className="text-center mb-4">
                         <div className="text-2xl font-bold text-green-600">
                           от {excursion.priceAdult.toLocaleString()} {excursion.currency}
                         </div>
                         <div className="text-sm text-gray-500">за взрослого</div>
                       </div>
                       
-                      <div className="space-y-3">
+                      <div className="space-y-2">
                         <Button 
                           onClick={() => setShowBookingModal(true)}
                           className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
@@ -376,12 +390,12 @@ const PearlsAndamanSea = () => {
       </section>
 
       {/* Title and meta info - после тегов */}
-      <section className="py-6">
+      <section className="py-4">
         <div className="container mx-auto px-4">
-          <h1 className="text-2xl md:text-4xl font-bold mb-4 text-gray-900 leading-tight">
+          <h1 className="text-2xl md:text-4xl font-bold mb-3 text-gray-900 leading-tight">
             {excursion.title}
           </h1>
-          <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+          <p className="text-lg text-gray-600 mb-4 leading-relaxed">
             {excursion.subtitle}
           </p>
           <div className="flex flex-wrap items-center gap-4 mb-4">
@@ -428,17 +442,17 @@ const PearlsAndamanSea = () => {
 
       {/* Removed: Duplicated booking section - теперь кнопка на первом экране */}
 
-      <section className="py-16">
+      <section className="py-8">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-4 gap-12">
+          <div className="grid lg:grid-cols-4 gap-8">
             <div className="lg:col-span-3">
               {/* Описание и highlights одним блоком */}
-              <h2 className="text-3xl font-bold mb-6 text-gray-900">Описание экскурсии</h2>
+              <h2 className="text-3xl font-bold mb-4 text-gray-900">Описание экскурсии</h2>
               <div className="prose prose-lg max-w-none">
                 <p className="text-gray-700 leading-relaxed mb-6 text-lg">
                   {excursion.description}
                 </p>
-                <ul className="mb-12 space-y-2 text-gray-700">
+                <ul className="mb-8 space-y-2 text-gray-700">
                   {excursion.highlights.map((highlight, index) => (
                     <li key={index} className="flex items-start gap-3">
                       <span className="text-green-600 font-bold">•</span>
@@ -449,7 +463,7 @@ const PearlsAndamanSea = () => {
               </div>
 
               {/* Программа тура — компактная таблица */}
-              <h2 className="text-3xl font-bold mb-6 text-gray-900">Программа тура</h2>
+              <h2 className="text-3xl font-bold mb-4 text-gray-900">Программа тура</h2>
               <div className="overflow-x-auto mb-12 bg-white rounded-lg shadow-sm border">
                 <table className="min-w-full">
                   <thead>
@@ -686,7 +700,21 @@ const PearlsAndamanSea = () => {
         />
       </ModalPortal>
 
-      <Footer />
+      {/* Мобильная панель бронирования - показываем только в браузерном режиме */}
+      {!isWebApp && (
+        <MobileBookingBar
+          priceAdult={excursion.priceAdult}
+          priceChild={excursion.priceChild}
+          currency={excursion.currency}
+          onBookingClick={() => {
+            hapticFeedback('light');
+            setShowBookingModal(true);
+          }}
+        />
+      )}
+
+      {/* Footer показываем только в браузере */}
+      {!isWebApp && <Footer />}
     </div>
   );
 };

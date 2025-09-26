@@ -8,11 +8,17 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Gri
 import { dostoprimechatelnostiPhuketaTourData } from "@/data/dostoprimechatelnostiPhuketaTour";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
+import { MobileBookingBar } from "@/components/MobileBookingBar";
+import { useTelegram } from "@/contexts/TelegramContext";
+import { TelegramNav } from "@/components/TelegramNav";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = dostoprimechatelnostiPhuketaTourData;
 
 const DostoprimechatelnostiPhuketa = () => {
+  // Telegram Web App интеграция
+  const { isWebApp, user, hapticFeedback, showMainButton, hideMainButton } = useTelegram();
+  
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [showThumbnails, setShowThumbnails] = useState(false);
@@ -100,6 +106,26 @@ const DostoprimechatelnostiPhuketa = () => {
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [selectedImage, handleKeyPress]);
 
+  // Telegram Web App initialization
+  useEffect(() => {
+    if (isWebApp) {
+      // Устанавливаем title для Telegram
+      document.title = excursion.title;
+      
+      // Показываем основную кнопку в Telegram для быстрого бронирования
+      showMainButton('Забронировать тур', () => {
+        hapticFeedback('medium');
+        setShowBookingModal(true);
+      });
+    }
+    
+    return () => {
+      if (isWebApp) {
+        hideMainButton();
+      }
+    };
+  }, [isWebApp, showMainButton, hideMainButton, hapticFeedback]);
+
   // Handle mobile gallery scroll
   const handleMobileGalleryScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const container = e.currentTarget;
@@ -110,28 +136,34 @@ const DostoprimechatelnostiPhuketa = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-20 lg:pb-0">
-      <Header />
+    <div className={`min-h-screen bg-white ${isWebApp ? 'pb-4' : 'pb-20 lg:pb-0'}`}>
+      {/* Header показываем только в браузере */}
+      {!isWebApp && <Header />}
       
-      {/* Breadcrumbs - как на tisland.travel */}
-      <section className="pt-20 pb-4">
-        <div className="container mx-auto px-4">
-          <nav className="text-sm text-gray-500">
-            <div className="flex items-center space-x-2">
-              <Link to="/" className="hover:text-green-600 transition-colors">Главная</Link>
-              <span>›</span>
-              <Link to="/tours" className="hover:text-green-600 transition-colors">Туры</Link>
-              <span>›</span>
-              <Link to="/tours?category=cultural" className="hover:text-green-600 transition-colors">Культурные экскурсии</Link>
-              <span>›</span>
-              <span className="text-gray-700">Достопримечательности Пхукета</span>
-            </div>
-          </nav>
-        </div>
-      </section>
+      {/* Telegram навигация показываем только в Telegram */}
+      <TelegramNav title="Достопримечательности Пхукета" />
+      
+      {/* Breadcrumbs - только в браузере */}
+      {!isWebApp && (
+        <section className="pt-20 pb-4">
+          <div className="container mx-auto px-4">
+            <nav className="text-sm text-gray-500">
+              <div className="flex items-center space-x-2">
+                <Link to="/" className="hover:text-green-600 transition-colors">Главная</Link>
+                <span>›</span>
+                <Link to="/tours" className="hover:text-green-600 transition-colors">Туры</Link>
+                <span>›</span>
+                <Link to="/tours?category=cultural" className="hover:text-green-600 transition-colors">Культурные экскурсии</Link>
+                <span>›</span>
+                <span className="text-gray-700">Достопримечательности Пхукета</span>
+              </div>
+            </nav>
+          </div>
+        </section>
+      )}
 
-      {/* Gallery section - сразу после хлебных крошек */}
-      <section className="pb-2">
+      {/* Gallery section - адаптируется под режим */}
+      <section className={isWebApp ? "pb-2" : "pb-2"}>
         {/* Мобильная карусель - во всю ширину экрана как на tisland.travel */}
         <div className="md:hidden">
           <div className="relative">
@@ -555,35 +587,6 @@ const DostoprimechatelnostiPhuketa = () => {
         </div>
       </section>
 
-      {/* Mobile booking bar - фиксированная панель с ценой и двумя кнопками */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50">
-        <div className="flex items-center gap-3">
-          <div className="text-left">
-            <div className="text-lg font-bold text-green-600">
-              от {excursion.priceAdult} {excursion.currency}
-            </div>
-            <div className="text-xs text-gray-600">взрослый / {excursion.priceChild} {excursion.currency} детский</div>
-          </div>
-          <div className="flex gap-2 flex-1">
-            <button
-              onClick={() => {
-                const message = `🌴 Хочу забронировать тур: ${excursion.title}\n\n💰 Цена: от ${excursion.priceAdult} ${excursion.currency}\n⏰ Длительность: ${excursion.duration}\n\n📱 Свяжитесь со мной для бронирования!`;
-                window.location.href = `https://t.me/islandhopping_phuket?text=${encodeURIComponent(message)}`;
-              }}
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 flex-1 bg-blue-500 hover:bg-blue-600 text-white py-3 text-sm font-medium"
-            >
-              Написать в Telegram
-            </button>
-            <Button 
-              onClick={() => setShowBookingModal(true)}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 text-sm font-medium"
-            >
-              Забронировать
-            </Button>
-          </div>
-        </div>
-      </div>
-
       {/* Mobile-first Gallery Modal */}
       {selectedImage && showFullGallery && (
         <div className="fixed inset-0 bg-black z-50 flex flex-col">
@@ -722,7 +725,21 @@ const DostoprimechatelnostiPhuketa = () => {
         />
       </ModalPortal>
 
-      <Footer />
+      {/* Мобильная панель бронирования - показываем только в браузерном режиме */}
+      {!isWebApp && (
+        <MobileBookingBar
+          priceAdult={excursion.priceAdult}
+          priceChild={excursion.priceChild}
+          currency={excursion.currency}
+          onBookingClick={() => {
+            hapticFeedback('light');
+            setShowBookingModal(true);
+          }}
+        />
+      )}
+
+      {/* Footer показываем только в браузере */}
+      {!isWebApp && <Footer />}
     </div>
   );
 };

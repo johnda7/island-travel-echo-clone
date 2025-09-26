@@ -5,6 +5,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
+// Telegram Web App интеграция
+import { TelegramProvider } from "@/contexts/TelegramContext";
+import "@/styles/telegram-app.css";
+
 // Существующие страницы
 import Index from "./pages/Index";
 import Tours from "./pages/Tours";
@@ -37,17 +41,18 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <HashRouter>
-          <ScrollToTop />
-          <ErrorBoundary>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/tours" element={<Tours />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/admin" element={<AdminPanel />} />
+        <TelegramProvider>
+          <Toaster />
+          <Sonner />
+          <HashRouter>
+            <ScrollToTop />
+            <ErrorBoundary>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/tours" element={<Tours />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/admin" element={<AdminPanel />} />
               <Route path="/booking" element={<BookingPage />} />
               
               {/* Статические туры */}
@@ -92,6 +97,7 @@ function App() {
             </Routes>
           </ErrorBoundary>
         </HashRouter>
+        </TelegramProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

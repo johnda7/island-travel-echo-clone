@@ -8,11 +8,15 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Gri
 import { kaoLakSafariTourData } from '@/data/kaoLakSafariTour';
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
+import { MobileBookingBar } from "@/components/MobileBookingBar";
+import { useTelegram } from "@/contexts/TelegramContext";
+import { TelegramNav } from "@/components/TelegramNav";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = kaoLakSafariTourData;
 
 const KaoLakSafariTour = () => {
+  const { isWebApp, user, hapticFeedback } = useTelegram();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [showThumbnails, setShowThumbnails] = useState(false);
@@ -110,11 +114,12 @@ const KaoLakSafariTour = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-20 lg:pb-0">
+    <div className={`min-h-screen bg-white overflow-x-hidden ${isWebApp ? 'pb-4' : 'pb-20 lg:pb-0'}`}>
       <Header />
       
-      {/* Breadcrumbs - как в эталоне */}
-      <section className="pt-20 pb-4">
+      {/* Breadcrumbs - как на tisland.travel, только в браузере */}
+      {!isWebApp && (
+        <section className="pt-20 pb-4">
         <div className="container mx-auto px-4">
           <nav className="text-sm text-gray-500">
             <div className="flex items-center space-x-2">
@@ -129,6 +134,7 @@ const KaoLakSafariTour = () => {
           </nav>
         </div>
       </section>
+      )}
 
       {/* Gallery section - сразу после хлебных крошек */}
       <section className="pb-2">
@@ -238,12 +244,12 @@ const KaoLakSafariTour = () => {
       </section>
 
       {/* Title and meta info - после тегов */}
-      <section className="py-6">
+      <section className="py-4">
         <div className="container mx-auto px-4">
           <h1 className="text-2xl md:text-4xl font-bold mb-4 text-gray-900 leading-tight">
             {excursion.title}
           </h1>
-          <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+          <p className="text-lg text-gray-600 mb-4 leading-relaxed">
             {excursion.subtitle}
           </p>
           <div className="flex flex-wrap items-center gap-4 mb-4">
@@ -269,7 +275,7 @@ const KaoLakSafariTour = () => {
 
           {/* Mobile CTA Button - сразу на первом экране */}
           <div className="lg:hidden mb-8">
-            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+            <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
               <div className="text-center">
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">Забронировать тур</h3>
                 <div className="text-2xl font-bold text-green-600 mb-4">
@@ -289,17 +295,17 @@ const KaoLakSafariTour = () => {
         </div>
       </section>
 
-      <section className="py-16">
+      <section className="py-8">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-4 gap-12">
+          <div className="grid lg:grid-cols-4 gap-8">
             <div className="lg:col-span-3">
               {/* Описание и highlights одним блоком */}
-              <h2 className="text-3xl font-bold mb-6 text-gray-900">Описание экскурсии</h2>
+              <h2 className="text-3xl font-bold mb-4 text-gray-900">Описание экскурсии</h2>
               <div className="prose prose-lg max-w-none">
-                <p className="text-gray-700 leading-relaxed mb-6 text-lg">
+                <p className="text-gray-700 leading-relaxed mb-4 text-lg">
                   {excursion.description}
                 </p>
-                <ul className="mb-12 space-y-2 text-gray-700">
+                <ul className="mb-8 space-y-2 text-gray-700">
                   {excursion.highlights.map((highlight, index) => (
                     <li key={index} className="flex items-start gap-3">
                       <span className="text-green-600 font-bold">•</span>
@@ -310,7 +316,7 @@ const KaoLakSafariTour = () => {
               </div>
 
               {/* Что включено / не включено */}
-              <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <div className="grid md:grid-cols-2 gap-4 mb-8">
                 {excursion.included && excursion.included.length > 0 && (
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">Включено в стоимость</h3>
@@ -350,8 +356,8 @@ const KaoLakSafariTour = () => {
               <div className="sticky top-8">
                 <Card className="shadow-lg">
                   <CardContent className="p-0">
-                    <div className="p-6">
-                      <div className="mb-6 space-y-3 text-sm text-gray-600">
+                    <div className="p-4">
+                      <div className="mb-4 space-y-2 text-sm text-gray-600">
                         <div className="flex items-center gap-3">
                           <Star className="w-4 h-4 text-yellow-400 fill-current" />
                           <span>{excursion.rating} ({excursion.reviewsCount} отзывов)</span>
@@ -370,14 +376,14 @@ const KaoLakSafariTour = () => {
                         </div>
                       </div>
                       
-                      <div className="text-center mb-6">
+                      <div className="text-center mb-4">
                         <div className="text-2xl font-bold text-green-600">
                           от {excursion.priceAdult.toLocaleString()} {excursion.currency}
                         </div>
                         <div className="text-sm text-gray-500">за взрослого</div>
                       </div>
                       
-                      <div className="space-y-3">
+                      <div className="space-y-2">
                         <Button 
                           onClick={() => setShowBookingModal(true)}
                           className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
@@ -520,7 +526,21 @@ const KaoLakSafariTour = () => {
         />
       </ModalPortal>
 
-      <Footer />
+      {/* Мобильная панель бронирования - показываем только в браузерном режиме */}
+      {!isWebApp && (
+        <MobileBookingBar
+          priceAdult={excursion.priceAdult}
+          priceChild={excursion.priceChild}
+          currency={excursion.currency}
+          onBookingClick={() => {
+            hapticFeedback('light');
+            setShowBookingModal(true);
+          }}
+        />
+      )}
+
+      {/* Footer показываем только в браузере */}
+      {!isWebApp && <Footer />}
     </div>
   );
 };

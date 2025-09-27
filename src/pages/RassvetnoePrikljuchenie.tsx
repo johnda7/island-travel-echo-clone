@@ -8,11 +8,15 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Gri
 import { rassvetnoePrikljuchenieTourData } from '@/data/rassvetnoePrikljuchenieTour';
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
+import { MobileBookingBar } from "@/components/MobileBookingBar";
+import { useTelegram } from "@/contexts/TelegramContext";
+import { TelegramNav } from "@/components/TelegramNav";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = rassvetnoePrikljuchenieTourData;
 
 const RassvetnoePrikljuchenie = () => {
+  const { isWebApp, user, hapticFeedback } = useTelegram();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [showThumbnails, setShowThumbnails] = useState(false);
@@ -105,11 +109,12 @@ const RassvetnoePrikljuchenie = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-20 lg:pb-0">
+    <div className={`min-h-screen bg-white overflow-x-hidden ${isWebApp ? 'pb-4' : 'pb-20 lg:pb-0'}`}>
       <Header />
       
-      {/* Breadcrumbs - как на tisland.travel */}
-      <section className="pt-20 pb-4">
+      {/* Breadcrumbs - как на tisland.travel, только в браузере */}
+      {!isWebApp && (
+        <section className="pt-20 pb-4">
         <div className="container mx-auto px-4">
           <nav className="text-sm text-gray-500">
             <div className="flex items-center space-x-2">
@@ -124,6 +129,7 @@ const RassvetnoePrikljuchenie = () => {
           </nav>
         </div>
       </section>
+      )}
 
       {/* Gallery section - сразу после хлебных крошек */}
       <section className="pb-2">
@@ -263,13 +269,13 @@ const RassvetnoePrikljuchenie = () => {
             <div className="hidden lg:block">
               <div className="sticky top-4">
                 <div className="bg-white shadow-lg border-0 rounded-lg">
-                  <div className="p-6">
+                  <div className="p-4">
                     {/* Информация о туре */}
-                    <div className="mb-6">
+                    <div className="mb-4">
                       <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">{excursion.title}</h3>
                       <p className="text-gray-600 text-sm mb-4">{excursion.subtitle}</p>
                       
-                      <div className="space-y-3 mb-6 text-sm text-left">
+                      <div className="space-y-2 mb-4 text-sm text-left">
                         <div className="flex items-center gap-3">
                           <Clock className="w-4 h-4 text-gray-400" />
                           <span>Продолжительность: {excursion.duration}</span>
@@ -288,14 +294,14 @@ const RassvetnoePrikljuchenie = () => {
                         </div>
                       </div>
                       
-                      <div className="text-center mb-6">
+                      <div className="text-center mb-4">
                         <div className="text-2xl font-bold text-green-600">
                           от {excursion.priceAdult.toLocaleString()} {excursion.currency}
                         </div>
                         <div className="text-sm text-gray-500">за взрослого</div>
                       </div>
                       
-                      <div className="space-y-3">
+                      <div className="space-y-2">
                         <button 
                           onClick={() => setShowBookingModal(true)}
                           className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold rounded-md transition-colors"
@@ -326,16 +332,16 @@ const RassvetnoePrikljuchenie = () => {
       </section>
 
       {/* Title and meta info - после тегов */}
-      <section className="py-6">
+      <section className="py-4">
         <div className="container mx-auto px-4">
           <h1 className="text-2xl md:text-4xl font-bold mb-4 text-gray-900 leading-tight">
             {excursion.title}
           </h1>
-          <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+          <p className="text-lg text-gray-600 mb-4 leading-relaxed">
             {excursion.subtitle}
           </p>
           
-          <div className="flex flex-wrap items-center gap-4 mb-6">
+          <div className="flex flex-wrap items-center gap-4 mb-4">
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
               <Star className="w-3 h-3 mr-1 fill-current" />
               {excursion.rating} ({excursion.reviewsCount} отзывов)
@@ -363,7 +369,7 @@ const RassvetnoePrikljuchenie = () => {
             <div className="lg:col-span-2">
 
               {/* Краткое описание */}
-              <div className="bg-gray-50 rounded-lg p-6 mb-8">
+              <div className="bg-gray-50 rounded-lg p-4 mb-8">
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">О туре</h2>
                 <div className="text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: excursion.description }} />
               </div>
@@ -386,7 +392,7 @@ const RassvetnoePrikljuchenie = () => {
               {/* Программа тура */}
               {excursion.itinerary && excursion.itinerary.length > 0 && (
                 <div className="mb-8">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-6">Программа тура</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 mb-4">Программа тура</h2>
                   <div className="space-y-6">
                     {excursion.itinerary.map((item, index) => (
                       <div key={index} className="flex items-start space-x-4">
@@ -404,7 +410,7 @@ const RassvetnoePrikljuchenie = () => {
               )}
 
               {/* Что включено / не включено */}
-              <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <div className="grid md:grid-cols-2 gap-4 mb-8">
                 {excursion.included && excursion.included.length > 0 && (
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">Включено в стоимость</h3>
@@ -440,7 +446,7 @@ const RassvetnoePrikljuchenie = () => {
 
               {/* Важная информация */}
               {excursion.importantInfo && excursion.importantInfo.length > 0 && (
-                <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 mb-8">
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-8">
                   <h3 className="text-lg font-semibold text-amber-800 mb-4">Важная информация</h3>
                   <ul className="space-y-2">
                     {excursion.importantInfo.map((info, index) => (
@@ -474,8 +480,8 @@ const RassvetnoePrikljuchenie = () => {
               <div className="sticky top-24">
                 {/* Карточка с ценой */}
                 <Card className="shadow-lg border-2 border-gray-100">
-                  <CardContent className="p-6">
-                    <div className="text-center mb-6">
+                  <CardContent className="p-4">
+                    <div className="text-center mb-4">
                       <div className="text-2xl font-bold text-green-600">
                         от {excursion.priceAdult.toLocaleString()} {excursion.currency}
                       </div>
@@ -503,7 +509,7 @@ const RassvetnoePrikljuchenie = () => {
                     </Button>
 
                     {/* Дополнительная информация */}
-                    <div className="mt-6 space-y-3 text-sm text-gray-600">
+                    <div className="mt-6 space-y-2 text-sm text-gray-600">
                       <div className="flex items-center space-x-3">
                         <Clock className="w-4 h-4 text-green-500" />
                         <span>Продолжительность: {excursion.duration}</span>
@@ -635,7 +641,21 @@ const RassvetnoePrikljuchenie = () => {
         />
       </ModalPortal>
 
-      <Footer />
+      {/* Мобильная панель бронирования - показываем только в браузерном режиме */}
+      {!isWebApp && (
+        <MobileBookingBar
+          priceAdult={excursion.priceAdult}
+          priceChild={excursion.priceChild}
+          currency={excursion.currency}
+          onBookingClick={() => {
+            hapticFeedback('light');
+            setShowBookingModal(true);
+          }}
+        />
+      )}
+
+      {/* Footer показываем только в браузере */}
+      {!isWebApp && <Footer />}
     </div>
   );
 };

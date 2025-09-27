@@ -16,9 +16,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
+import { MobileBookingBar } from "@/components/MobileBookingBar";
+import { useTelegram } from "@/contexts/TelegramContext";
+import { TelegramNav } from "@/components/TelegramNav";
 import { raftingSpaAtvTourData as excursion } from "@/data/raftingSpaAtvTour";
 
 const RaftingSpaAtvTour = () => {
+  const { isWebApp, user, hapticFeedback } = useTelegram();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [showThumbnails, setShowThumbnails] = useState(false);
@@ -115,8 +119,9 @@ const RaftingSpaAtvTour = () => {
     <div className="min-h-screen bg-white">
       <Header />
 
-      {/* Breadcrumbs - как в эталоне */}
-      <section className="pt-20 pb-4">
+      {/* Breadcrumbs - как на tisland.travel, только в браузере */}
+      {!isWebApp && (
+        <section className="pt-20 pb-4">
         <div className="container mx-auto px-4">
           <nav className="text-sm text-gray-500">
             <div className="flex items-center space-x-2">
@@ -131,13 +136,14 @@ const RaftingSpaAtvTour = () => {
           </nav>
         </div>
       </section>
+      )}
 
       {/* Main Content - Gallery + Booking Section */}
       <section className="py-4">
         <div className="container mx-auto px-4">
           
           {/* Mobile Gallery */}
-          <div className="md:hidden mb-6">
+          <div className="md:hidden mb-4">
             <div className="grid grid-cols-4 gap-2 h-64">
               {/* Главное большое фото */}
               <div 
@@ -318,11 +324,11 @@ const RaftingSpaAtvTour = () => {
             {/* Booking Sidebar - Right Side */}
             <div className="lg:col-span-1">
               <div className="sticky top-4">
-                <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+                <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
                   <h3 className="text-xl font-bold text-gray-800 mb-2">{excursion.title}</h3>
                   <p className="text-gray-600 text-sm mb-4">{excursion.subtitle}</p>
                   
-                  <div className="space-y-3 mb-6 text-sm">
+                  <div className="space-y-2 mb-4 text-sm">
                     <div className="flex items-center gap-3">
                       <Clock className="w-4 h-4 text-gray-400" />
                       <span>Продолжительность: {excursion.duration}</span>
@@ -341,7 +347,7 @@ const RaftingSpaAtvTour = () => {
                     </div>
                   </div>
                   
-                  <div className="text-center mb-6">
+                  <div className="text-center mb-4">
                     <div className="text-2xl font-bold text-green-600">
                       от {excursion.priceAdult.toLocaleString()} {excursion.currency}
                     </div>
@@ -385,11 +391,11 @@ const RaftingSpaAtvTour = () => {
           </div>
 
           {/* Mobile Booking Card */}
-          <div className="md:hidden mt-6 bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+          <div className="md:hidden mt-6 bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
             <h3 className="text-xl font-bold text-gray-800 mb-2">{excursion.title}</h3>
             <p className="text-gray-600 text-sm mb-4">{excursion.subtitle}</p>
             
-            <div className="space-y-3 mb-6 text-sm">
+            <div className="space-y-2 mb-4 text-sm">
               <div className="flex items-center gap-3">
                 <Clock className="w-4 h-4 text-gray-400" />
                 <span>Продолжительность: {excursion.duration}</span>
@@ -408,7 +414,7 @@ const RaftingSpaAtvTour = () => {
               </div>
             </div>
             
-            <div className="text-center mb-6">
+            <div className="text-center mb-4">
               <div className="text-2xl font-bold text-green-600">
                 от {excursion.priceAdult.toLocaleString()} {excursion.currency}
               </div>
@@ -437,12 +443,12 @@ const RaftingSpaAtvTour = () => {
       </section>
 
       {/* Title and Description */}
-      <section className="py-6">
+      <section className="py-4">
         <div className="container mx-auto px-4">
           <h1 className="text-2xl md:text-4xl font-bold mb-4 text-gray-900 leading-tight">
             {excursion.title}
           </h1>
-          <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+          <p className="text-lg text-gray-600 mb-4 leading-relaxed">
             {excursion.subtitle}
           </p>
           <div className="flex flex-wrap items-center gap-4 mb-4">
@@ -514,11 +520,11 @@ const RaftingSpaAtvTour = () => {
       {/* Included/Excluded */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid md:grid-cols-2 gap-8">
             {/* Included */}
             <div>
-              <h3 className="text-xl font-bold mb-6 text-green-600">Включено в стоимость</h3>
-              <ul className="space-y-3">
+              <h3 className="text-xl font-bold mb-4 text-green-600">Включено в стоимость</h3>
+              <ul className="space-y-2">
                 {excursion.included.map((item, index) => (
                   <li key={index} className="flex items-start space-x-3">
                     <div className="w-5 h-5 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -534,8 +540,8 @@ const RaftingSpaAtvTour = () => {
 
             {/* Excluded */}
             <div>
-              <h3 className="text-xl font-bold mb-6 text-red-600">Не включено в стоимость</h3>
-              <ul className="space-y-3">
+              <h3 className="text-xl font-bold mb-4 text-red-600">Не включено в стоимость</h3>
+              <ul className="space-y-2">
                 {excursion.excluded.map((item, index) => (
                   <li key={index} className="flex items-start space-x-3">
                     <div className="w-5 h-5 bg-red-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -724,7 +730,21 @@ const RaftingSpaAtvTour = () => {
         />
       </ModalPortal>
 
-      <Footer />
+      {/* Мобильная панель бронирования - показываем только в браузерном режиме */}
+      {!isWebApp && (
+        <MobileBookingBar
+          priceAdult={excursion.priceAdult}
+          priceChild={excursion.priceChild}
+          currency={excursion.currency}
+          onBookingClick={() => {
+            hapticFeedback('light');
+            setShowBookingModal(true);
+          }}
+        />
+      )}
+
+      {/* Footer показываем только в браузере */}
+      {!isWebApp && <Footer />}
     </div>
   );
 };

@@ -4,9 +4,13 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
+import { MobileBookingBar } from "@/components/MobileBookingBar";
+import { useTelegram } from "@/contexts/TelegramContext";
+import { TelegramNav } from "@/components/TelegramNav";
 import { rachaCoralIslandsTourData as excursion } from "@/data/rachaCoralIslandsTour";
 
 const RachaCoralIslandsTour = () => {
+  const { isWebApp, user, hapticFeedback } = useTelegram();
   const [showBookingModal, setShowBookingModal] = useState(false);
 
   return (
@@ -17,7 +21,7 @@ const RachaCoralIslandsTour = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">{excursion.title}</h1>
-          <p className="text-xl text-gray-600 mb-6">{excursion.subtitle}</p>
+          <p className="text-xl text-gray-600 mb-4">{excursion.subtitle}</p>
           
           {/* Main image */}
           <div className="mb-8">
@@ -29,7 +33,7 @@ const RachaCoralIslandsTour = () => {
           </div>
 
           {/* Price and booking button */}
-          <div className="bg-gray-50 p-6 rounded-lg mb-8">
+          <div className="bg-gray-50 p-4 rounded-lg mb-8">
             <div className="text-3xl font-bold text-green-600 mb-4">
               {excursion.priceAdult} {excursion.currency} / взрослый
             </div>
@@ -45,7 +49,7 @@ const RachaCoralIslandsTour = () => {
           </div>
 
           {/* Basic info */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <div className="text-center">
               <div className="text-2xl font-semibold text-gray-900">{excursion.duration}</div>
               <div className="text-gray-600">Продолжительность</div>
@@ -102,7 +106,21 @@ const RachaCoralIslandsTour = () => {
         />
       </ModalPortal>
 
-      <Footer />
+      {/* Мобильная панель бронирования - показываем только в браузерном режиме */}
+      {!isWebApp && (
+        <MobileBookingBar
+          priceAdult={excursion.priceAdult}
+          priceChild={excursion.priceChild}
+          currency={excursion.currency}
+          onBookingClick={() => {
+            hapticFeedback('light');
+            setShowBookingModal(true);
+          }}
+        />
+      )}
+
+      {/* Footer показываем только в браузере */}
+      {!isWebApp && <Footer />}
     </div>
   );
 };

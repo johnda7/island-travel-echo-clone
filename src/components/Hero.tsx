@@ -38,7 +38,7 @@ export const Hero = () => {
       {/* Main Content */}
       <div className="relative z-10 text-center text-white px-4 max-w-5xl mx-auto">
         {/* Animated Title */}
-        <div className="mb-8 animate-fade-in">
+        <div className="mb-6 animate-fade-in">
           <h1 className="text-6xl md:text-8xl font-extrabold mb-4 leading-tight">
             <span className="block bg-gradient-to-r from-white via-cyan-100 to-blue-100 bg-clip-text text-transparent drop-shadow-2xl">
               ПХУКЕТ
@@ -49,26 +49,8 @@ export const Hero = () => {
           </h1>
         </div>
         
-        {/* Subtitle with Animation */}
-        <div className="mb-12 animate-fade-in delay-300 max-w-4xl mx-auto">
-          <div className="flex flex-wrap justify-center gap-6 mb-6 text-lg md:text-xl">
-            <span className="flex items-center bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300">
-              🏝️ <span className="ml-2 bg-gradient-to-r from-cyan-200 to-blue-200 bg-clip-text text-transparent font-semibold">Кристально чистые воды</span>
-            </span>
-            <span className="flex items-center bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300">
-              🌅 <span className="ml-2 bg-gradient-to-r from-orange-200 to-yellow-200 bg-clip-text text-transparent font-semibold">Закаты мечты</span>
-            </span>
-            <span className="flex items-center bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300">
-              🐠 <span className="ml-2 bg-gradient-to-r from-emerald-200 to-teal-200 bg-clip-text text-transparent font-semibold">Подводный мир</span>
-            </span>
-          </div>
-          <p className="text-xl md:text-2xl text-white/90 leading-relaxed font-light tracking-wide">
-            Откройте для себя <span className="bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent font-semibold">магию тайских островов</span> с нашими эксклюзивными турами
-          </p>
-        </div>
-        
-        {/* Call to Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in delay-500">
+        {/* Call to Action Button - Centered */}
+        <div className="mb-8 animate-fade-in delay-300">
           <Button 
             size="lg" 
             asChild 
@@ -83,6 +65,24 @@ export const Hero = () => {
               <ArrowRight className="w-5 h-5 ml-3" />
             </Link>
           </Button>
+        </div>
+        
+        {/* Subtitle with Animation */}
+        <div className="animate-fade-in delay-500 max-w-4xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-6 mb-6 text-lg md:text-xl">
+            <span className="flex items-center bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300">
+              🏝️ <span className="ml-2 bg-gradient-to-r from-cyan-200 to-blue-200 bg-clip-text text-transparent font-semibold">Кристально чистые воды</span>
+            </span>
+            <span className="flex items-center bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300">
+              🌅 <span className="ml-2 bg-gradient-to-r from-orange-200 to-yellow-200 bg-clip-text text-transparent font-semibold">Закаты мечты</span>
+            </span>
+            <span className="flex items-center bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300">
+              🐠 <span className="ml-2 bg-gradient-to-r from-emerald-200 to-teal-200 bg-clip-text text-transparent font-semibold">Подводный мир</span>
+            </span>
+          </div>
+          <p className="text-xl md:text-2xl text-white/90 leading-relaxed font-light tracking-wide">
+            Откройте для себя <span className="bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent font-semibold">магию тайских островов</span> с нашими эксклюзивными турами
+          </p>
         </div>
       </div>
       

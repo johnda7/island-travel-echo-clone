@@ -360,7 +360,10 @@ const PhiPhi2Days1Night = () => {
                           onClick={() => window.open('https://t.me/Phuketga', '_blank')}
                           className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 font-semibold"
                         >
-                          Написать в Телеграм
+                          <span className="flex flex-col items-center leading-tight">
+                            <span>Написать</span>
+                            <span>в Телеграм</span>
+                          </span>
                         </Button>
                       </div>
                     </div>
@@ -477,36 +480,31 @@ const PhiPhi2Days1Night = () => {
                 </ul>
               </div>
 
-              {/* Программа тура — компактная таблица */}
-              <h2 className="text-3xl font-bold mb-6 text-gray-900">Программа тура</h2>
-              <div className="overflow-x-auto mb-12 bg-white rounded-lg shadow-sm border">
-                <table className="min-w-full">
-                  <thead>
-                    <tr className="bg-gray-50 border-b">
-                      <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">День</th>
-                      <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">Время</th>
-                      <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">Активность</th>
-                      <th className="py-4 px-6 text-left text-sm font-semibold text-gray-700">Описание</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {excursion.schedule.map((item, idx) => (
-                      <tr key={idx} className="border-b last:border-b-0 hover:bg-gray-50 transition-colors">
-                        <td className="py-4 px-6 text-sm font-medium text-gray-600">{item.day}</td>
-                        <td className="py-4 px-6 text-sm text-gray-600">{item.time}</td>
-                        <td className="py-4 px-6 text-sm font-medium text-gray-700">{item.title}</td>
-                        <td className="py-4 px-6 text-sm text-gray-700">{item.description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              {/* Программа по времени как у конкурентов */}
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">Программа:</h3>
+              <div className="bg-gray-50 rounded-lg p-6 mb-6">
+                <div className="space-y-4">
+                  {excursion.schedule.map((item, index) => (
+                    <div key={index} className="flex gap-4 border-l-4 border-green-600 pl-4">
+                      <div className="flex-shrink-0 w-20">
+                        <span className="text-sm font-bold text-green-600">{item.day}</span>
+                        <br />
+                        <span className="text-sm font-bold text-green-600">{item.time}</span>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
+                        <p className="text-gray-600 text-sm">{item.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              {/* Включено / Не включено / Взять с собой / Важно знать — простые списки */}
-              <div className="space-y-12">
-                <div className="grid md:grid-cols-2 gap-12">
+              {/* Включено / Не включено / Важно знать — как у конкурентов */}
+              <div className="space-y-8">
+                <div className="grid md:grid-cols-2 gap-8">
                   <div>
-                    <h3 className="text-2xl font-bold mb-4 text-green-600">Включено в стоимость</h3>
+                    <h3 className="text-2xl font-bold mb-4 text-green-600">В цену включено</h3>
                     <ul className="space-y-2 text-gray-700">
                       {excursion.included.map((item, index) => (
                         <li key={index} className="flex items-start gap-3">
@@ -517,7 +515,7 @@ const PhiPhi2Days1Night = () => {
                     </ul>
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold mb-4 text-red-600">Не включено</h3>
+                    <h3 className="text-2xl font-bold mb-4 text-red-600">Дополнительные расходы</h3>
                     <ul className="space-y-2 text-gray-700">
                       {excursion.notIncluded.map((item, index) => (
                         <li key={index} className="flex items-start gap-3">
@@ -528,13 +526,29 @@ const PhiPhi2Days1Night = () => {
                     </ul>
                   </div>
                 </div>
-                
+
+                {/* Секция "Взять с собой" как у конкурентов tisland.travel */}
+                {excursion.whatToBring && (
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4 text-blue-600">Взять с собой</h3>
+                    <ul className="space-y-2 text-gray-700">
+                      {excursion.whatToBring.map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="text-blue-600 font-bold">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Секция "Важно знать" */}
                 <div>
                   <h3 className="text-2xl font-bold mb-4 text-amber-600">Важно знать</h3>
                   <ul className="space-y-2 text-gray-700">
                     {excursion.importantInfo.map((item, index) => (
                       <li key={index} className="flex items-start gap-3">
-                        <span className="text-amber-600 font-bold">!</span>
+                        <span className="text-amber-600 font-bold">⚠️</span>
                         <span>{item}</span>
                       </li>
                     ))}

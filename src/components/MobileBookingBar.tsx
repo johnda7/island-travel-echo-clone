@@ -32,9 +32,12 @@ export const MobileBookingBar: React.FC<MobileBookingBarProps> = ({
           <div className="flex gap-2 flex-1">
             <Button 
               onClick={handleTelegramClick}
-              className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-3 text-sm font-medium"
+              className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-3 text-xs font-medium"
             >
-              📱 Написать в Телеграм
+              <span className="flex flex-col items-center leading-tight">
+                <span>Написать в</span>
+                <span>Телеграм</span>
+              </span>
             </Button>
             <Button 
               onClick={onBookingClick}

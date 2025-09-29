@@ -118,6 +118,25 @@
     background-attachment: fixed;
   }
 
+  /* КРИТИЧНО: Глобальная защита от горизонтального скролла на мобильных */
+  #root {
+    overflow-x: hidden;
+    max-width: 100vw;
+    min-height: 100vh;
+  }
+
+  /* Защита всех основных контейнеров */
+  .container, .mx-auto, .w-full {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* Специальная защита для галерей и слайдеров */
+  .gallery-container, .slider-container {
+    overflow-x: auto; /* Здесь разрешаем для функциональности */
+    overscroll-behavior-x: contain; /* Но блокируем "bounce" */
+  }
+
   /* Typography */
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold;

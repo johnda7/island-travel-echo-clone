@@ -415,7 +415,7 @@ const DostoprimechatelnostiPhuketa = () => {
                           onClick={() => window.open('https://t.me/Phuketga', '_blank')}
                           className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 font-semibold"
                         >
-                          Написать в Telegram
+                          Написать в Телеграм
                         </Button>
                       </div>
                     </div>

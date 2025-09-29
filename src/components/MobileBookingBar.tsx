@@ -34,7 +34,7 @@ export const MobileBookingBar: React.FC<MobileBookingBarProps> = ({
               onClick={handleTelegramClick}
               className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-3 text-sm font-medium"
             >
-              📱 Telegram
+              📱 Написать в Телеграм
             </Button>
             <Button 
               onClick={onBookingClick}

@@ -356,6 +356,12 @@ const PhiPhi2Days1Night = () => {
                         >
                           Забронировать тур
                         </Button>
+                        <Button 
+                          onClick={() => window.open('https://t.me/Phuketga', '_blank')}
+                          className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 font-semibold"
+                        >
+                          Написать в Телеграм
+                        </Button>
                       </div>
                     </div>
                   </CardContent>
@@ -450,17 +456,22 @@ const PhiPhi2Days1Night = () => {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-4 gap-8">
             <div className="lg:col-span-3">
-              {/* Описание и highlights одним блоком */}
-              <h2 className="text-3xl font-bold mb-4 text-gray-900">Описание экскурсии</h2>
-              <div className="prose prose-lg max-w-none">
-                <p className="text-gray-700 leading-relaxed mb-6 text-lg">
+              {/* Структурированное описание как у tisland.travel */}
+              <h2 className="text-3xl font-bold mb-4 text-gray-900">Описание</h2>
+              <div className="prose prose-lg max-w-none mb-6">
+                <p className="text-gray-700 leading-relaxed text-lg">
                   {excursion.description}
                 </p>
-                <ul className="mb-8 space-y-2 text-gray-700">
+              </div>
+
+              {/* Ключевые особенности */}
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold mb-4 text-gray-900">Особенности тура</h3>
+                <ul className="space-y-2 text-gray-700">
                   {excursion.highlights.map((highlight, index) => (
                     <li key={index} className="flex items-start gap-3">
-                      <span className="text-green-600 font-bold">•</span>
-                      <span>{highlight}</span>
+                      <span className="text-green-600 font-bold text-lg">✓</span>
+                      <span className="leading-relaxed">{highlight}</span>
                     </li>
                   ))}
                 </ul>

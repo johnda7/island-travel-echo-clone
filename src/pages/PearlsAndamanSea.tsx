@@ -317,7 +317,7 @@ const PearlsAndamanSea = () => {
                         </div>
                         <div className="flex items-center gap-3">
                           <Calendar className="w-4 h-4 text-gray-400" />
-                          <span>Ежедневно</span>
+                          <span>Начало: {excursion.itinerary[0].time}</span>
                         </div>
                         <div className="flex items-center gap-3">
                           <MapPin className="w-4 h-4 text-gray-400" />
@@ -407,6 +407,10 @@ const PearlsAndamanSea = () => {
             <div className="flex items-center gap-2 text-gray-500 text-sm">
               <Users className="w-4 h-4" />
               <span>{excursion.groupSize}</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-500 text-sm">
+              <Calendar className="w-4 h-4" />
+              <span>Начало: {excursion.itinerary[0].time}</span>
             </div>
           </div>
           {/* Mobile price */}

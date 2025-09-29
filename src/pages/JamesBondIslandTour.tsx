@@ -9,14 +9,11 @@ import { jamesBondIslandTourData } from '@/data/jamesBondIslandTour';
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
 import { MobileBookingBar } from "@/components/MobileBookingBar";
-import { useTelegram } from "@/contexts/TelegramContext";
-import { TelegramNav } from "@/components/TelegramNav";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = jamesBondIslandTourData;
 
 const JamesBondIslandTour = () => {
-  const { isWebApp, user, hapticFeedback } = useTelegram();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [showThumbnails, setShowThumbnails] = useState(false);
@@ -114,12 +111,11 @@ const JamesBondIslandTour = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-white overflow-x-hidden ${isWebApp ? 'pb-4' : 'pb-20 lg:pb-0'}`}>
+    <div className="min-h-screen bg-white overflow-x-hidden pb-20 lg:pb-0">
       <Header />
       
-      {/* Breadcrumbs - как на tisland.travel, только в браузере */}
-      {!isWebApp && (
-        <section className="pt-20 pb-4">
+      {/* Breadcrumbs */}
+      <section className="pt-20 pb-4">
         <div className="container mx-auto px-4">
           <nav className="text-sm text-gray-500">
             <div className="flex items-center space-x-2">
@@ -134,7 +130,6 @@ const JamesBondIslandTour = () => {
           </nav>
         </div>
       </section>
-      )}
 
       {/* Gallery section - сразу после хлебных крошек */}
       <section className="pb-2">
@@ -526,21 +521,18 @@ const JamesBondIslandTour = () => {
         />
       </ModalPortal>
 
-      {/* Мобильная панель бронирования - показываем только в браузерном режиме */}
-      {!isWebApp && (
-        <MobileBookingBar
-          priceAdult={excursion.priceAdult}
-          priceChild={excursion.priceChild}
-          currency={excursion.currency}
-          onBookingClick={() => {
-            hapticFeedback('light');
-            setShowBookingModal(true);
-          }}
-        />
-      )}
+      {/* Мобильная панель бронирования */}
+      <MobileBookingBar
+        priceAdult={excursion.priceAdult}
+        priceChild={excursion.priceChild}
+        currency={excursion.currency}
+        onBookingClick={() => {
+          setShowBookingModal(true);
+        }}
+      />
 
-      {/* Footer показываем только в браузере */}
-      {!isWebApp && <Footer />}
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

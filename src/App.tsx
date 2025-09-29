@@ -63,8 +63,8 @@ function App() {
               <Route path="/excursion/rassvetnoe-prikljuchenie" element={<RassvetnoePrikljuchenie />} />
               <Route path="/tours/rassvetnoe-prikljuchenie" element={<RassvetnoePrikljuchenie />} />
 
-              <Route path="/excursion/james-bond-island" element={<JamesBondIslandTour />} />
-              <Route path="/tours/james-bond-island" element={<JamesBondIslandTour />} />
+              <Route path="/excursion/james-bond-island-phang-nga" element={<JamesBondIslandTour />} />
+              <Route path="/tours/james-bond-island-phang-nga" element={<JamesBondIslandTour />} />
               
               <Route path="/excursion/eleven-islands-standard" element={<ElevenIslandsStandardTour />} />
               <Route path="/tours/eleven-islands-standard" element={<ElevenIslandsStandardTour />} />

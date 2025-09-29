@@ -257,6 +257,12 @@ const JamesBondIslandTour = () => {
               <Clock className="w-4 h-4" />
               <span>{excursion.duration}</span>
             </div>
+            {excursion.itinerary && excursion.itinerary.length > 0 && (
+              <div className="flex items-center gap-2 text-gray-500 text-sm">
+                <Calendar className="w-4 h-4" />
+                <span>Начало: {excursion.itinerary[0].time}</span>
+              </div>
+            )}
             <div className="flex items-center gap-2 text-gray-500 text-sm">
               <Users className="w-4 h-4" />
               <span>{excursion.groupSize}</span>
@@ -344,6 +350,36 @@ const JamesBondIslandTour = () => {
                   </div>
                 )}
               </div>
+
+              {/* Секция "Взять с собой" */}
+              {excursion.requirements && excursion.requirements.length > 0 && (
+                <div className="mb-8">
+                  <h3 className="text-2xl font-bold mb-4 text-blue-600">Взять с собой</h3>
+                  <ul className="space-y-2 text-gray-700">
+                    {excursion.requirements.map((item, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <span className="text-blue-600 font-bold">•</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Секция "Важно знать" */}
+              {excursion.importantInfo && excursion.importantInfo.length > 0 && (
+                <div className="mb-8">
+                  <h3 className="text-2xl font-bold mb-4 text-amber-600">Важно знать</h3>
+                  <ul className="space-y-2 text-gray-700">
+                    {excursion.importantInfo.map((item, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <span className="text-amber-600 font-bold">⚠️</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
             
             {/* Правая колонка - форма бронирования как в эталоне */}
@@ -361,6 +397,12 @@ const JamesBondIslandTour = () => {
                           <Clock className="w-4 h-4 text-gray-400" />
                           <span>{excursion.duration}</span>
                         </div>
+                        {excursion.itinerary && excursion.itinerary.length > 0 && (
+                          <div className="flex items-center gap-3">
+                            <Calendar className="w-4 h-4 text-gray-400" />
+                            <span>Начало: {excursion.itinerary[0].time}</span>
+                          </div>
+                        )}
                         <div className="flex items-center gap-3">
                           <Users className="w-4 h-4 text-gray-400" />
                           <span>{excursion.groupSize}</span>

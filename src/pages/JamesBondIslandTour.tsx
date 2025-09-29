@@ -101,56 +101,48 @@ const JamesBondIslandTour = () => {
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [selectedImage, handleKeyPress]);
 
-  // SEO meta tags + OpenGraph
+  // SEO meta tags + OpenGraph (обновляем базовые теги из index.html)
   useEffect(() => {
-    const title = "Остров Джеймса Бонда - экскурсия из Пхукета | Island Travel";
+    const title = "Остров Джеймса Бонда - экскурсия из Пхукета | ПхукетGO";
     const description = 'Экскурсия на остров Джеймса Бонда из Пхукета. Залив Пханг Нга, каноэ в пещерах, плавучая деревня. Бронируйте онлайн!';
     const image = excursion.gallery[0];
     const url = window.location.href;
     
+    // Сохраняем оригинальные значения для восстановления
+    const originalTitle = document.title;
+    const originalDescription = document.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+    const originalOgTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content') || '';
+    const originalOgDescription = document.querySelector('meta[property="og:description"]')?.getAttribute('content') || '';
+    const originalOgImage = document.querySelector('meta[property="og:image"]')?.getAttribute('content') || '';
+    const originalOgUrl = document.querySelector('meta[property="og:url"]')?.getAttribute('content') || '';
+    
+    // Обновляем title
     document.title = title;
     
-    // Helper function to create or update meta tag
-    const setMetaTag = (selector: string, content: string, property?: string) => {
-      let tag = document.querySelector(selector) as HTMLMetaElement;
-      if (!tag) {
-        tag = document.createElement('meta');
-        if (property) {
-          tag.setAttribute(property, selector.replace(/meta\[|\]|"/g, '').split('=')[1]);
-        } else {
-          tag.name = selector.replace(/meta\[name="|"\]/g, '');
-        }
-        document.head.appendChild(tag);
+    // Helper function to update existing meta tag
+    const updateMetaTag = (selector: string, content: string) => {
+      const tag = document.querySelector(selector) as HTMLMetaElement;
+      if (tag) {
+        tag.content = content;
       }
-      tag.content = content;
-      return tag;
     };
     
-    // Basic meta tags
-    const metaDescription = setMetaTag('meta[name="description"]', description);
-    const metaKeywords = setMetaTag('meta[name="keywords"]', 'Джеймс Бонд остров, Пханг Нга, экскурсии Пхукет, каноэ, пещеры, плавучая деревня');
-    
-    // OpenGraph tags
-    const ogTitle = setMetaTag('meta[property="og:title"]', title, 'property');
-    const ogDescription = setMetaTag('meta[property="og:description"]', description, 'property');
-    const ogImage = setMetaTag('meta[property="og:image"]', image, 'property');
-    const ogUrl = setMetaTag('meta[property="og:url"]', url, 'property');
-    const ogType = setMetaTag('meta[property="og:type"]', 'website', 'property');
-    const ogSiteName = setMetaTag('meta[property="og:site_name"]', 'Island Travel', 'property');
-    
-    // Additional OpenGraph for better sharing
-    const ogImageWidth = setMetaTag('meta[property="og:image:width"]', '1200', 'property');
-    const ogImageHeight = setMetaTag('meta[property="og:image:height"]', '630', 'property');
-    const ogLocale = setMetaTag('meta[property="og:locale"]', 'ru_RU', 'property');
+    // Обновляем существующие теги
+    updateMetaTag('meta[name="description"]', description);
+    updateMetaTag('meta[name="keywords"]', 'Джеймс Бонд остров, Пханг Нга, экскурсии Пхукет, каноэ, пещеры, плавучая деревня');
+    updateMetaTag('meta[property="og:title"]', title);
+    updateMetaTag('meta[property="og:description"]', description);
+    updateMetaTag('meta[property="og:image"]', image);
+    updateMetaTag('meta[property="og:url"]', url);
     
     return () => {
-      document.title = 'Island Travel - Экскурсии по островам Пхукета';
-      // Remove all added meta tags
-      [metaDescription, metaKeywords, ogTitle, ogDescription, ogImage, ogUrl, ogType, ogSiteName, ogImageWidth, ogImageHeight, ogLocale].forEach(tag => {
-        if (tag && tag.parentNode) {
-          tag.parentNode.removeChild(tag);
-        }
-      });
+      // Восстанавливаем оригинальные значения
+      document.title = originalTitle;
+      updateMetaTag('meta[name="description"]', originalDescription);
+      updateMetaTag('meta[property="og:title"]', originalOgTitle);
+      updateMetaTag('meta[property="og:description"]', originalOgDescription);
+      updateMetaTag('meta[property="og:image"]', originalOgImage);
+      updateMetaTag('meta[property="og:url"]', originalOgUrl);
     };
   }, []);
 

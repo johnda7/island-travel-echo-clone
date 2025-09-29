@@ -9,14 +9,11 @@ import { pearlsAndamanSeaTourData } from "@/data/pearlsTour";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
 import { MobileBookingBar } from "@/components/MobileBookingBar";
-import { useTelegram } from "@/contexts/TelegramContext";
-import { TelegramNav } from "@/components/TelegramNav";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = pearlsAndamanSeaTourData;
 
 const PearlsAndamanSea = () => {
-  const { isWebApp, user, hapticFeedback } = useTelegram();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [showThumbnails, setShowThumbnails] = useState(false);
@@ -114,23 +111,15 @@ const PearlsAndamanSea = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-white overflow-x-hidden ${isWebApp ? 'pb-4' : 'pb-20 lg:pb-0'}`}>
-      {/* Telegram Web App навигация */}
-      {isWebApp && (
-        <TelegramNav 
-          title="4 жемчужины Андаманского моря"
-        />
-      )}
-
-      {/* Обычный Header только в браузере */}
-      {!isWebApp && <Header />}
+    <div className="min-h-screen bg-white overflow-x-hidden pb-20 lg:pb-0">
+      {/* Header всегда видимый */}
+      <Header />
       
-      {/* Breadcrumbs - как на tisland.travel, только в браузере */}
-      {!isWebApp && (
-        <section className="pt-20 pb-4">
-          <div className="container mx-auto px-4">
-            <nav className="text-sm text-gray-500">
-              <div className="flex items-center space-x-2">
+      {/* Breadcrumbs навигация */}
+      <section className="pt-20 pb-4">
+        <div className="container mx-auto px-4">
+          <nav className="text-sm text-gray-500">
+            <div className="flex items-center space-x-2">
                 <Link to="/" className="hover:text-green-600 transition-colors">Главная</Link>
                 <span>›</span>
                 <Link to="/tours" className="hover:text-green-600 transition-colors">Туры</Link>
@@ -142,12 +131,9 @@ const PearlsAndamanSea = () => {
             </nav>
           </div>
         </section>
-      )}
-
-
 
       {/* Gallery section - сразу после хлебных крошек */}
-      <section className={isWebApp ? "pb-2" : "pb-2"}>
+      <section className="pb-2">
         {/* Мобильная карусель - во всю ширину экрана как на tisland.travel */}
         <div className="md:hidden">
           <div className="relative">
@@ -349,7 +335,6 @@ const PearlsAndamanSea = () => {
                       <div className="space-y-2">
                         <Button 
                           onClick={() => {
-                            hapticFeedback('light');
                             window.location.href = `https://t.me/Phuketga?text=${encodeURIComponent(`Здравствуйте! Хочу забронировать тур "${excursion.title}" на ${new Date().toLocaleDateString('ru-RU')}.`)}`;
                           }}
                           className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 font-semibold"
@@ -358,7 +343,6 @@ const PearlsAndamanSea = () => {
                         </Button>
                         <Button 
                           onClick={() => {
-                            hapticFeedback('light');
                             setShowBookingModal(true);
                           }}
                           className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
@@ -551,18 +535,15 @@ const PearlsAndamanSea = () => {
 
 
 
-      {/* Мобильная панель бронирования - показываем только в браузерном режиме */}
-      {!isWebApp && (
-        <MobileBookingBar
-          priceAdult={excursion.priceAdult}
-          priceChild={excursion.priceChild}
-          currency={excursion.currency}
-          onBookingClick={() => {
-            hapticFeedback('light');
-            setShowBookingModal(true);
-          }}
-        />
-      )}
+      {/* Мобильная панель бронирования - всегда показываем */}
+      <MobileBookingBar
+        priceAdult={excursion.priceAdult}
+        priceChild={excursion.priceChild}
+        currency={excursion.currency}
+        onBookingClick={() => {
+          setShowBookingModal(true);
+        }}
+      />
 
       {/* Mobile-first Gallery Modal */}
       {selectedImage && showFullGallery && (
@@ -702,21 +683,8 @@ const PearlsAndamanSea = () => {
         />
       </ModalPortal>
 
-      {/* Мобильная панель бронирования - показываем только в браузерном режиме */}
-      {!isWebApp && (
-        <MobileBookingBar
-          priceAdult={excursion.priceAdult}
-          priceChild={excursion.priceChild}
-          currency={excursion.currency}
-          onBookingClick={() => {
-            hapticFeedback('light');
-            setShowBookingModal(true);
-          }}
-        />
-      )}
-
-      {/* Footer показываем только в браузере */}
-      {!isWebApp && <Footer />}
+      {/* Footer всегда видимый */}
+      <Footer />
     </div>
   );
 };

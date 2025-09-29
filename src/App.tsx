@@ -5,10 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
-// Telegram Web App интеграция
-import { TelegramProvider } from "@/contexts/TelegramContext";
-import "@/styles/telegram-app.css";
-
 // Существующие страницы
 import Index from "./pages/Index";
 import Tours from "./pages/Tours";
@@ -41,12 +37,11 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <TelegramProvider>
-          <Toaster />
-          <Sonner />
-          <HashRouter>
-            <ScrollToTop />
-            <ErrorBoundary>
+        <Toaster />
+        <Sonner />
+        <HashRouter>
+          <ScrollToTop />
+          <ErrorBoundary>
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/tours" element={<Tours />} />
@@ -74,8 +69,8 @@ function App() {
               <Route path="/excursion/eleven-islands-standard" element={<ElevenIslandsStandardTour />} />
               <Route path="/tours/eleven-islands-standard" element={<ElevenIslandsStandardTour />} />
               
-              <Route path="/excursion/racha-coral-islands" element={<RachaCoralIslandsTour />} />
-              <Route path="/tours/racha-coral-islands" element={<RachaCoralIslandsTour />} />
+              <Route path="/excursion/racha-coral-islands-speedboat" element={<RachaCoralIslandsTour />} />
+              <Route path="/tours/racha-coral-islands-speedboat" element={<RachaCoralIslandsTour />} />
               
               <Route path="/excursion/rafting-spa-atv" element={<RaftingSpaAtvTour />} />
               <Route path="/tours/rafting-spa-atv" element={<RaftingSpaAtvTour />} />
@@ -97,7 +92,6 @@ function App() {
             </Routes>
           </ErrorBoundary>
         </HashRouter>
-        </TelegramProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

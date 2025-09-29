@@ -21,6 +21,7 @@ import { elevenIslandsStandardTourData } from '../data/elevenIslandsStandardTour
 import { elevenIslandsMegaTourData } from '../data/elevenIslandsMegaTour.ts';
 import { raftingSpaAtvTourData } from '../data/raftingSpaAtvTour.ts';
 import { kaoLakSafariTourData } from '../data/kaoLakSafariTour.ts';
+import { rachaCoralIslandsTourData } from '../data/rachaCoralIslandsTour.ts';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -174,6 +175,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,    // ✅ показываем на главной
     priority: 11,
     data: () => Promise.resolve(elevenIslandsMegaTourData)
+  },
+
+  // 12. Острова Рача и Корал на спидботе
+  {
+    id: 'racha-coral-islands-speedboat',
+    name: 'Острова Рача и Корал на спидботе',
+    category: 'islands',
+    tags: ['острова', 'рача', 'корал', 'спидбот', 'пляжи', 'снорклинг', 'парасейлинг', 'белый песок', '1 день'],
+    isPopular: true,     // ✅ показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: false,   // ❌ не на главной (пока)
+    priority: 12,
+    data: () => Promise.resolve(rachaCoralIslandsTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

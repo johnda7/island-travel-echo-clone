@@ -101,27 +101,56 @@ const JamesBondIslandTour = () => {
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [selectedImage, handleKeyPress]);
 
-  // SEO meta tags
+  // SEO meta tags + OpenGraph
   useEffect(() => {
-    document.title = "Остров Джеймса Бонда - экскурсия из Пхукета | Island Travel";
+    const title = "Остров Джеймса Бонда - экскурсия из Пхукета | Island Travel";
+    const description = 'Экскурсия на остров Джеймса Бонда из Пхукета. Залив Пханг Нга, каноэ в пещерах, плавучая деревня. Бронируйте онлайн!';
+    const image = excursion.gallery[0];
+    const url = window.location.href;
     
-    // Remove existing meta tags
-    const existingDescription = document.querySelector('meta[name="description"]');
-    if (existingDescription) {
-      existingDescription.remove();
-    }
+    document.title = title;
     
-    // Add new meta description
-    const metaDescription = document.createElement('meta');
-    metaDescription.name = 'description';
-    metaDescription.content = 'Экскурсия на остров Джеймса Бонда из Пхукета. Залив Пханг Нга, каноэ в пещерах, плавучая деревня. Бронируйте онлайн!';
-    document.head.appendChild(metaDescription);
+    // Helper function to create or update meta tag
+    const setMetaTag = (selector: string, content: string, property?: string) => {
+      let tag = document.querySelector(selector) as HTMLMetaElement;
+      if (!tag) {
+        tag = document.createElement('meta');
+        if (property) {
+          tag.setAttribute(property, selector.replace(/meta\[|\]|"/g, '').split('=')[1]);
+        } else {
+          tag.name = selector.replace(/meta\[name="|"\]/g, '');
+        }
+        document.head.appendChild(tag);
+      }
+      tag.content = content;
+      return tag;
+    };
+    
+    // Basic meta tags
+    const metaDescription = setMetaTag('meta[name="description"]', description);
+    const metaKeywords = setMetaTag('meta[name="keywords"]', 'Джеймс Бонд остров, Пханг Нга, экскурсии Пхукет, каноэ, пещеры, плавучая деревня');
+    
+    // OpenGraph tags
+    const ogTitle = setMetaTag('meta[property="og:title"]', title, 'property');
+    const ogDescription = setMetaTag('meta[property="og:description"]', description, 'property');
+    const ogImage = setMetaTag('meta[property="og:image"]', image, 'property');
+    const ogUrl = setMetaTag('meta[property="og:url"]', url, 'property');
+    const ogType = setMetaTag('meta[property="og:type"]', 'website', 'property');
+    const ogSiteName = setMetaTag('meta[property="og:site_name"]', 'Island Travel', 'property');
+    
+    // Additional OpenGraph for better sharing
+    const ogImageWidth = setMetaTag('meta[property="og:image:width"]', '1200', 'property');
+    const ogImageHeight = setMetaTag('meta[property="og:image:height"]', '630', 'property');
+    const ogLocale = setMetaTag('meta[property="og:locale"]', 'ru_RU', 'property');
     
     return () => {
       document.title = 'Island Travel - Экскурсии по островам Пхукета';
-      if (metaDescription.parentNode) {
-        metaDescription.parentNode.removeChild(metaDescription);
-      }
+      // Remove all added meta tags
+      [metaDescription, metaKeywords, ogTitle, ogDescription, ogImage, ogUrl, ogType, ogSiteName, ogImageWidth, ogImageHeight, ogLocale].forEach(tag => {
+        if (tag && tag.parentNode) {
+          tag.parentNode.removeChild(tag);
+        }
+      });
     };
   }, []);
 

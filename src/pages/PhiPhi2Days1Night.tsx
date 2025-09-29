@@ -462,9 +462,43 @@ const PhiPhi2Days1Night = () => {
               {/* Структурированное описание как у tisland.travel */}
               <h2 className="text-3xl font-bold mb-4 text-gray-900">Описание</h2>
               <div className="prose prose-lg max-w-none mb-6">
-                <p className="text-gray-700 leading-relaxed text-lg">
-                  {excursion.description}
-                </p>
+                <div className="text-gray-700 leading-relaxed text-lg">
+                  {excursion.description.split('\n\n').map((paragraph, index) => {
+                    if (paragraph.includes('•')) {
+                      // Обработка списков
+                      const lines = paragraph.split('\n');
+                      const title = lines[0];
+                      const listItems = lines.slice(1).filter(line => line.trim().startsWith('•'));
+                      
+                      return (
+                        <div key={index} className="mb-4">
+                          <p className="font-semibold mb-3">{title}</p>
+                          <ul className="space-y-2 pl-4">
+                            {listItems.map((item, itemIndex) => (
+                              <li key={itemIndex} className="flex items-start">
+                                <span className="text-green-600 mr-2">•</span>
+                                <span>{item.replace('•', '').trim()}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      );
+                    } else {
+                      // Обычные параграфы с поддержкой **жирного** текста
+                      const parts = paragraph.split(/(\*\*[^*]+\*\*)/g);
+                      return (
+                        <p key={index} className="mb-4">
+                          {parts.map((part, partIndex) => {
+                            if (part.startsWith('**') && part.endsWith('**')) {
+                              return <strong key={partIndex}>{part.slice(2, -2)}</strong>;
+                            }
+                            return part;
+                          })}
+                        </p>
+                      );
+                    }
+                  })}
+                </div>
               </div>
 
               {/* Ключевые особенности */}

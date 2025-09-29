@@ -9,16 +9,11 @@ import { dostoprimechatelnostiPhuketaTourData } from "@/data/dostoprimechatelnos
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
 import { MobileBookingBar } from "@/components/MobileBookingBar";
-import { useTelegram } from "@/contexts/TelegramContext";
-import { TelegramNav } from "@/components/TelegramNav";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = dostoprimechatelnostiPhuketaTourData;
 
 const DostoprimechatelnostiPhuketa = () => {
-  // Telegram Web App интеграция
-  const { isWebApp, user, hapticFeedback, showMainButton, hideMainButton } = useTelegram();
-  
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [showThumbnails, setShowThumbnails] = useState(false);
@@ -106,26 +101,6 @@ const DostoprimechatelnostiPhuketa = () => {
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [selectedImage, handleKeyPress]);
 
-  // Telegram Web App initialization
-  useEffect(() => {
-    if (isWebApp) {
-      // Устанавливаем title для Telegram
-      document.title = excursion.title;
-      
-      // Показываем основную кнопку в Telegram для быстрого бронирования
-      showMainButton('Забронировать тур', () => {
-        hapticFeedback('medium');
-        setShowBookingModal(true);
-      });
-    }
-    
-    return () => {
-      if (isWebApp) {
-        hideMainButton();
-      }
-    };
-  }, [isWebApp, showMainButton, hideMainButton, hapticFeedback]);
-
   // Handle mobile gallery scroll
   const handleMobileGalleryScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const container = e.currentTarget;
@@ -136,18 +111,13 @@ const DostoprimechatelnostiPhuketa = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-white overflow-x-hidden ${isWebApp ? 'pb-4' : 'pb-20 lg:pb-0'}`}>
-      {/* Header показываем только в браузере */}
-      {!isWebApp && <Header />}
+    <div className="min-h-screen bg-white overflow-x-hidden pb-20 lg:pb-0">
+      <Header />
       
-      {/* Telegram навигация показываем только в Telegram */}
-      <TelegramNav title="Достопримечательности Пхукета" />
-      
-      {/* Breadcrumbs - только в браузере */}
-      {!isWebApp && (
-        <section className="pt-20 pb-4">
-          <div className="container mx-auto px-4">
-            <nav className="text-sm text-gray-500">
+      {/* Breadcrumbs */}
+      <section className="pt-20 pb-4">
+        <div className="container mx-auto px-4">
+          <nav className="text-sm text-gray-500">
               <div className="flex items-center space-x-2">
                 <Link to="/" className="hover:text-green-600 transition-colors">Главная</Link>
                 <span>›</span>
@@ -160,10 +130,9 @@ const DostoprimechatelnostiPhuketa = () => {
             </nav>
           </div>
         </section>
-      )}
 
-      {/* Gallery section - адаптируется под режим */}
-      <section className={isWebApp ? "pb-2" : "pb-2"}>
+      {/* Gallery section */}
+      <section className="pb-2">
         {/* Мобильная карусель - во всю ширину экрана как на tisland.travel */}
         <div className="md:hidden">
           <div className="relative">
@@ -728,21 +697,18 @@ const DostoprimechatelnostiPhuketa = () => {
         />
       </ModalPortal>
 
-      {/* Мобильная панель бронирования - показываем только в браузерном режиме */}
-      {!isWebApp && (
-        <MobileBookingBar
-          priceAdult={excursion.priceAdult}
-          priceChild={excursion.priceChild}
-          currency={excursion.currency}
-          onBookingClick={() => {
-            hapticFeedback('light');
-            setShowBookingModal(true);
-          }}
-        />
-      )}
+      {/* Мобильная панель бронирования */}
+      <MobileBookingBar
+        priceAdult={excursion.priceAdult}
+        priceChild={excursion.priceChild}
+        currency={excursion.currency}
+        onBookingClick={() => {
+          setShowBookingModal(true);
+        }}
+      />
 
-      {/* Footer показываем только в браузере */}
-      {!isWebApp && <Footer />}
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

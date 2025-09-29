@@ -26,7 +26,7 @@ const ContactPage = () => {
       </section>
 
       {/* Quick Contact Cards */}
-      <section className="py-16 bg-white">
+      <section className="py-8 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             <Card className="text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300">
@@ -80,7 +80,7 @@ const ContactPage = () => {
       <Contact />
 
       {/* Map Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-8 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">Как нас найти</h2>
           <div className="grid lg:grid-cols-3 gap-8 items-start">

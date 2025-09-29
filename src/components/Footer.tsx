@@ -5,7 +5,7 @@ import logoImage from "@/assets/logo.jpg";
 export const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-1 gap-8 justify-center">
           {/* Company Info */}
           <div className="text-center">

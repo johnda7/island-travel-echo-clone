@@ -368,14 +368,14 @@ const RassvetnoePrikljuchenie = () => {
       </section>
 
       {/* Tour info section - информация о туре */}
-      <section className="py-8">
+      <section className="py-4">
         <div className="container mx-auto px-4">
           <div className="lg:grid lg:grid-cols-3 lg:gap-8">
             {/* Левая колонка - основная информация */}
             <div className="lg:col-span-2">
 
               {/* Краткое описание */}
-              <div className="bg-gray-50 rounded-lg p-4 mb-8">
+              <div className="bg-gray-50 rounded-lg p-4 mb-8">/
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">О туре</h2>
                 <div className="text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: excursion.description }} />
               </div>

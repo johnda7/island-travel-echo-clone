@@ -295,7 +295,7 @@ const KaoLakSafariTour = () => {
         </div>
       </section>
 
-      <section className="py-8">
+      <section className="py-4">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-4 gap-8">
             <div className="lg:col-span-3">

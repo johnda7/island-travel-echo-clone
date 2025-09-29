@@ -466,7 +466,7 @@ const RaftingSpaAtvTour = () => {
       </section>
 
       {/* Description */}
-      <section className="py-8">
+      <section className="py-4">
         <div className="container mx-auto px-4">
           <div className="prose prose-lg max-w-none">
             <div className="whitespace-pre-line text-gray-700 leading-relaxed">
@@ -477,7 +477,7 @@ const RaftingSpaAtvTour = () => {
       </section>
 
       {/* Highlights */}
-      <section className="py-8 bg-gray-50">
+      <section className="py-4 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold mb-8 text-center">Основные моменты</h2>
           <div className="grid md:grid-cols-2 gap-4">
@@ -496,7 +496,7 @@ const RaftingSpaAtvTour = () => {
       </section>
 
       {/* Itinerary */}
-      <section className="py-12">
+      <section className="py-6">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold mb-8 text-center">Программа тура</h2>
           <div className="max-w-4xl mx-auto">
@@ -518,7 +518,7 @@ const RaftingSpaAtvTour = () => {
       </section>
 
       {/* Included/Excluded */}
-      <section className="py-12 bg-gray-50">
+      <section className="py-6 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8">
             {/* Included */}
@@ -559,7 +559,7 @@ const RaftingSpaAtvTour = () => {
       </section>
 
       {/* Requirements */}
-      <section className="py-12">
+      <section className="py-6">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold mb-8 text-center">Что взять с собой</h2>
           <div className="max-w-2xl mx-auto">
@@ -580,7 +580,7 @@ const RaftingSpaAtvTour = () => {
       </section>
 
       {/* Important Info */}
-      <section className="py-12 bg-yellow-50">
+      <section className="py-6 bg-yellow-50">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold mb-8 text-center">Важная информация</h2>
           <div className="max-w-4xl mx-auto">
@@ -601,7 +601,7 @@ const RaftingSpaAtvTour = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-12">
+      <section className="py-6">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Готовы к приключению?</h2>
           <p className="text-xl text-gray-600 mb-8">Забронируйте этот незабываемый тур уже сегодня!</p>

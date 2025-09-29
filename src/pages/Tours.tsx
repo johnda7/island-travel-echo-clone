@@ -219,7 +219,7 @@ const Tours = () => {
         
         {/* Компонент с турами */}
         {loading ? (
-          <div className="container mx-auto px-4 py-12">
+          <div className="container mx-auto px-4 py-6">
             <div className="text-center">
               <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-green-600 mx-auto" />
               <p className="mt-4 text-gray-600">Загружаем туры...</p>

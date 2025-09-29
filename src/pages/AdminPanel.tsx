@@ -124,7 +124,7 @@ export const AdminPanel = () => {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">🏠 Админ-панель</h1>
           <p className="text-gray-600">Управление заказами туров</p>

@@ -53,7 +53,7 @@ const About = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-white">
+      <section className="py-8 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -72,7 +72,7 @@ const About = () => {
       </section>
 
       {/* Story Section */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-10 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -109,7 +109,7 @@ const About = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-white">
+      <section className="py-10 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
@@ -143,7 +143,7 @@ const About = () => {
       </section>
 
       {/* Values Section */}
-      <section className="py-20 bg-gradient-to-b from-blue-50 to-cyan-50">
+      <section className="py-10 bg-gradient-to-b from-blue-50 to-cyan-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">

@@ -177,7 +177,7 @@ const RassvetnoePrikljuchenie = () => {
                             ХИТ
                           </span>
                           <span className="px-2 py-1 bg-green-600 text-white text-xs font-medium rounded-md">
-                            Культурный
+                            Приключения
                           </span>
                         </div>
 
@@ -266,7 +266,7 @@ const RassvetnoePrikljuchenie = () => {
                       ХИТ
                     </span>
                     <span className="px-2 py-1 bg-green-600 text-white text-xs font-medium rounded-md">
-                      Культурный тур
+                      Приключения
                     </span>
                     <span className="px-2 py-1 bg-blue-500 text-white text-xs font-medium rounded-md">
                       Семейный

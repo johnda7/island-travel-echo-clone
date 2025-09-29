@@ -429,14 +429,14 @@ const JamesBondIslandTour = () => {
                         </Button>
                         
                         {/* Telegram кнопка - как в эталоне */}
-                        <Button
-                          variant="outline"
-                          asChild
-                          className="w-full py-3 border-gray-300"
+                        <Button 
+                          onClick={() => window.open('https://t.me/Phuketga', '_blank')}
+                          className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 font-semibold"
                         >
-                          <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
-                            📱 Связаться в Telegram
-                          </a>
+                          <span className="flex flex-col items-center leading-tight">
+                            <span>Написать</span>
+                            <span>в Телеграм</span>
+                          </span>
                         </Button>
                       </div>
                     </div>

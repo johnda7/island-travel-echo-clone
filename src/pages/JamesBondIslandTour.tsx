@@ -101,6 +101,30 @@ const JamesBondIslandTour = () => {
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [selectedImage, handleKeyPress]);
 
+  // SEO meta tags
+  useEffect(() => {
+    document.title = "Остров Джеймса Бонда - экскурсия из Пхукета | Island Travel";
+    
+    // Remove existing meta tags
+    const existingDescription = document.querySelector('meta[name="description"]');
+    if (existingDescription) {
+      existingDescription.remove();
+    }
+    
+    // Add new meta description
+    const metaDescription = document.createElement('meta');
+    metaDescription.name = 'description';
+    metaDescription.content = 'Экскурсия на остров Джеймса Бонда из Пхукета. Залив Пханг Нга, каноэ в пещерах, плавучая деревня. Бронируйте онлайн!';
+    document.head.appendChild(metaDescription);
+    
+    return () => {
+      document.title = 'Island Travel - Экскурсии по островам Пхукета';
+      if (metaDescription.parentNode) {
+        metaDescription.parentNode.removeChild(metaDescription);
+      }
+    };
+  }, []);
+
   // Mobile gallery scroll handler
   const handleMobileGalleryScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const container = e.currentTarget;
@@ -138,32 +162,93 @@ const JamesBondIslandTour = () => {
           <div className="relative">
             {/* Карусель с свайпом */}
             <div 
-              className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory"
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
               onScroll={handleMobileGalleryScroll}
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              style={{ scrollBehavior: 'smooth' }}
+              id="mobile-gallery"
             >
-              {excursion.gallery.map((image, index) => (
-                <div key={index} className="flex-shrink-0 w-full snap-start">
-                  <img
-                    src={image}
-                    alt={`${excursion.title} - фото ${index + 1}`}
-                    className="w-full h-[300px] object-cover"
-                    onClick={() => openModal(image, index)}
-                  />
+              {excursion.gallery.slice(0, 6).map((image, index) => (
+                <div 
+                  key={index}
+                  className="flex-shrink-0 w-full snap-center"
+                  onClick={() => openModal(image, index)}
+                >
+                  <div className="aspect-[4/3] relative overflow-hidden">
+                    <img 
+                      src={image} 
+                      alt={`Gallery ${index + 1}`}
+                      className="w-full h-full object-cover object-center"
+                    />
+                    
+                    {/* Бейджи и рейтинг только на первом слайде */}
+                    {index === 0 && (
+                      <>
+                        {/* Бейджи как у конкурентов */}
+                        <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                          <span className="px-2 py-1 bg-red-500 text-white text-xs font-medium rounded-md">
+                            ХИТ
+                          </span>
+                          <span className="px-2 py-1 bg-green-600 text-white text-xs font-medium rounded-md">
+                            Острова
+                          </span>
+                        </div>
+
+                        {/* Рейтинг в правом верхнем углу */}
+                        <div className="absolute top-3 right-3 flex items-center gap-1 bg-white bg-opacity-90 backdrop-blur-sm px-2 py-1 rounded-md">
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <span className="text-sm font-medium text-gray-900">{excursion.rating}</span>
+                        </div>
+                      </>
+                    )}
+                    
+                    {/* Overlay с количеством фото на последнем слайде */}
+                    {index === 5 && excursion.gallery.length > 6 && (
+                      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                        <div className="text-white text-center">
+                          <div className="text-2xl font-bold mb-1">+{excursion.gallery.length - 6}</div>
+                          <div className="text-sm">фото</div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
 
-            {/* Точки навигации */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-              {excursion.gallery.map((_, index) => (
-                <div
+            {/* Точки индикации */}
+            <div className="flex justify-center mt-4 space-x-2">
+              {excursion.gallery.slice(0, 6).map((_, index) => (
+                <button
                   key={index}
-                  className={`w-2 h-2 rounded-full ${
-                    index === mobileGalleryIndex ? 'bg-white' : 'bg-white/50'
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                    index === mobileGalleryIndex ? 'bg-green-600 scale-110' : 'bg-gray-300'
                   }`}
+                  onClick={() => {
+                    setMobileGalleryIndex(index);
+                    // Программный скролл к нужному слайду
+                    const carousel = document.getElementById('mobile-gallery');
+                    if (carousel) {
+                      carousel.scrollTo({
+                        left: index * carousel.clientWidth,
+                        behavior: 'smooth'
+                      });
+                    }
+                  }}
                 />
               ))}
+            </div>
+            
+            {/* Кнопка показать все фото - только для мобильных */}
+            <div className="mt-4 px-4">
+              <button
+                onClick={openGallery}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Показать все {excursion.gallery.length} фото
+              </button>
             </div>
           </div>
         </div>

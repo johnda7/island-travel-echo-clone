@@ -17,12 +17,9 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Gri
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
 import { MobileBookingBar } from "@/components/MobileBookingBar";
-import { useTelegram } from "@/contexts/TelegramContext";
-import { TelegramNav } from "@/components/TelegramNav";
 import { raftingSpaAtvTourData as excursion } from "@/data/raftingSpaAtvTour";
 
 const RaftingSpaAtvTour = () => {
-  const { isWebApp, user, hapticFeedback } = useTelegram();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [showThumbnails, setShowThumbnails] = useState(false);
@@ -120,8 +117,7 @@ const RaftingSpaAtvTour = () => {
       <Header />
 
       {/* Breadcrumbs - как на tisland.travel, только в браузере */}
-      {!isWebApp && (
-        <section className="pt-20 pb-4">
+      <section className="pt-20 pb-4">
         <div className="container mx-auto px-4">
           <nav className="text-sm text-gray-500">
             <div className="flex items-center space-x-2">
@@ -136,7 +132,6 @@ const RaftingSpaAtvTour = () => {
           </nav>
         </div>
       </section>
-      )}
 
       {/* Main Content - Gallery + Booking Section */}
       <section className="py-4">
@@ -339,7 +334,7 @@ const RaftingSpaAtvTour = () => {
                     </div>
                     <div className="flex items-center gap-3">
                       <Calendar className="w-4 h-4 text-gray-400" />
-                      <span>Ежедневно</span>
+                      <span>Начало: {excursion.itinerary[0].time}</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <MapPin className="w-4 h-4 text-gray-400" />
@@ -361,14 +356,13 @@ const RaftingSpaAtvTour = () => {
                     Забронировать тур
                   </Button>
                   
-                  {/* Telegram кнопка - как в эталоне */}
+                  {/* Telegram кнопка - синий цвет согласно критериям */}
                   <Button
-                    variant="outline"
                     asChild
-                    className="w-full py-3 border-gray-300 mt-3"
+                    className="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white mt-3"
                   >
                     <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
-                      📱 Связаться в Telegram
+                      Написать в Телеграм
                     </a>
                   </Button>
                 </div>
@@ -406,7 +400,7 @@ const RaftingSpaAtvTour = () => {
               </div>
               <div className="flex items-center gap-3">
                 <Calendar className="w-4 h-4 text-gray-400" />
-                <span>Ежедневно</span>
+                <span>Начало: {excursion.itinerary[0].time}</span>
               </div>
               <div className="flex items-center gap-3">
                 <MapPin className="w-4 h-4 text-gray-400" />
@@ -430,12 +424,11 @@ const RaftingSpaAtvTour = () => {
             
             {/* Telegram кнопка для мобильной карточки */}
             <Button
-              variant="outline"
               asChild
-              className="w-full py-3 border-gray-300 mt-3"
+              className="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white mt-3"
             >
               <a href="https://t.me/Phuketga" target="_blank" rel="noopener noreferrer">
-                📱 Связаться в Telegram
+                Написать в Телеграм
               </a>
             </Button>
           </div>
@@ -469,9 +462,11 @@ const RaftingSpaAtvTour = () => {
       <section className="py-4">
         <div className="container mx-auto px-4">
           <div className="prose prose-lg max-w-none">
-            <div className="whitespace-pre-line text-gray-700 leading-relaxed">
+          <div className="prose prose-lg max-w-none mb-6">
+            <p className="text-gray-700 leading-relaxed text-lg">
               {excursion.description}
-            </div>
+            </p>
+          </div>
           </div>
         </div>
       </section>
@@ -730,21 +725,18 @@ const RaftingSpaAtvTour = () => {
         />
       </ModalPortal>
 
-      {/* Мобильная панель бронирования - показываем только в браузерном режиме */}
-      {!isWebApp && (
-        <MobileBookingBar
-          priceAdult={excursion.priceAdult}
-          priceChild={excursion.priceChild}
-          currency={excursion.currency}
-          onBookingClick={() => {
-            hapticFeedback('light');
-            setShowBookingModal(true);
-          }}
-        />
-      )}
+      {/* Мобильная панель бронирования */}
+      <MobileBookingBar
+        priceAdult={excursion.priceAdult}
+        priceChild={excursion.priceChild}
+        currency={excursion.currency}
+        onBookingClick={() => {
+          setShowBookingModal(true);
+        }}
+      />
 
-      {/* Footer показываем только в браузере */}
-      {!isWebApp && <Footer />}
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

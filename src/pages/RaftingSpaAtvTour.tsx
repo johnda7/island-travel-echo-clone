@@ -112,6 +112,15 @@ const RaftingSpaAtvTour = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showFullGallery, nextImage, prevImage, closeModal]);
 
+  // Mobile gallery scroll handler
+  const handleMobileGalleryScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    const scrollLeft = container.scrollLeft;
+    const containerWidth = container.clientWidth;
+    const newIndex = Math.round(scrollLeft / containerWidth);
+    setMobileGalleryIndex(newIndex);
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -133,79 +142,91 @@ const RaftingSpaAtvTour = () => {
         </div>
       </section>
 
-      {/* Main Content - Gallery + Booking Section */}
-      <section className="py-4">
-        <div className="container mx-auto px-4">
-          
-          {/* Mobile Gallery */}
-          <div className="md:hidden mb-4">
-            <div className="grid grid-cols-4 gap-2 h-64">
-              {/* Главное большое фото */}
-              <div 
-                className="col-span-2 row-span-2 cursor-pointer group relative overflow-hidden rounded-lg"
-                onClick={() => openModal(excursion.gallery[0], 0)}
-              >
-                <img 
-                  src={excursion.gallery[0]} 
-                  alt={excursion.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
+      {/* Gallery section */}
+      <section className="pb-2">
+        {/* Мобильная карусель - во всю ширину экрана как на tisland.travel */}
+        <div className="md:hidden">
+          <div className="relative">
+            {/* Карусель с свайпом */}
+            <div 
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+              onScroll={handleMobileGalleryScroll}
+              style={{ scrollBehavior: 'smooth' }}
+              id="mobile-gallery"
+            >
+              {excursion.gallery.slice(0, 6).map((image, index) => (
+                <div 
+                  key={index}
+                  className="flex-shrink-0 w-full snap-center"
+                  onClick={() => openModal(image, index)}
+                >
+                  <div className="aspect-[4/3] relative overflow-hidden">
+                    <img 
+                      src={image} 
+                      alt={`Gallery ${index + 1}`}
+                      className="w-full h-full object-cover object-center"
+                    />
+                    
+                    {/* Бейджи и рейтинг только на первом слайде */}
+                    {index === 0 && (
+                      <>
+                        {/* Бейджи как у конкурентов */}
+                        <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                          <span className="px-2 py-1 bg-red-500 text-white text-xs font-medium rounded-md">
+                            ХИТ
+                          </span>
+                          <span className="px-2 py-1 bg-green-600 text-white text-xs font-medium rounded-md">
+                            Активный
+                          </span>
+                        </div>
 
-              {/* Миниатюры справа */}
-              <div 
-                className="cursor-pointer group relative overflow-hidden rounded-lg"
-                onClick={() => openModal(excursion.gallery[1], 1)}
-              >
-                <img 
-                  src={excursion.gallery[1]} 
-                  alt="Gallery 2"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              
-              <div 
-                className="cursor-pointer group relative overflow-hidden rounded-lg"
-                onClick={() => openModal(excursion.gallery[2], 2)}
-              >
-                <img 
-                  src={excursion.gallery[2]} 
-                  alt="Gallery 3"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-
-              <div 
-                className="cursor-pointer group relative overflow-hidden rounded-lg"
-                onClick={() => openModal(excursion.gallery[3], 3)}
-              >
-                <img 
-                  src={excursion.gallery[3]} 
-                  alt="Gallery 4"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              
-              <div 
-                className="cursor-pointer group relative overflow-hidden rounded-lg"
-                onClick={openGallery}
-              >
-                <img 
-                  src={excursion.gallery[4]} 
-                  alt="Gallery 5"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                  <div className="text-white text-center">
-                    <div className="text-lg font-semibold mb-1">+{excursion.gallery.length - 5}</div>
-                    <div className="text-sm">фото</div>
+                        {/* Рейтинг в правом верхнем углу */}
+                        <div className="absolute top-3 right-3 flex items-center gap-1 bg-white bg-opacity-90 backdrop-blur-sm px-2 py-1 rounded-md">
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <span className="text-sm font-medium text-gray-900">{excursion.rating}</span>
+                        </div>
+                      </>
+                    )}
+                    
+                    {/* Overlay с количеством фото на последнем слайде */}
+                    {index === 5 && excursion.gallery.length > 6 && (
+                      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                        <div className="text-white text-center">
+                          <div className="text-2xl font-bold mb-1">+{excursion.gallery.length - 6}</div>
+                          <div className="text-sm">фото</div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
 
-            {/* Mobile Show All Photos Button */}
-            <div className="mt-4">
+            {/* Точки индикации */}
+            <div className="flex justify-center mt-4 space-x-2">
+              {excursion.gallery.slice(0, 6).map((_, index) => (
+                <button
+                  key={index}
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                    index === mobileGalleryIndex ? 'bg-green-600 scale-110' : 'bg-gray-300'
+                  }`}
+                  onClick={() => {
+                    setMobileGalleryIndex(index);
+                    // Программный скролл к нужному слайду
+                    const carousel = document.getElementById('mobile-gallery');
+                    if (carousel) {
+                      carousel.scrollTo({
+                        left: index * carousel.clientWidth,
+                        behavior: 'smooth'
+                      });
+                    }
+                  }}
+                />
+              ))}
+            </div>
+            
+            {/* Кнопка показать все фото - только для мобильных */}
+            <div className="mt-4 px-4">
               <button
                 onClick={openGallery}
                 className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
@@ -217,79 +238,75 @@ const RaftingSpaAtvTour = () => {
               </button>
             </div>
           </div>
-
-          {/* Desktop Layout - Gallery + Booking Sidebar */}
-          <div className="hidden md:grid lg:grid-cols-3 gap-8">
-            
-            {/* Gallery - Left Side */}
+        </div>
+        
+        {/* Десктопная версия */}
+        <div className="container mx-auto px-4 hidden md:block">
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Галерея - левая часть на десктопе */}
             <div className="lg:col-span-2">
-              <div className="grid grid-cols-4 gap-2 h-96">
-                {/* Главное большое фото */}
+              {/* Десктопная галерея как на tisland.travel */}
+              <div className="hidden md:block">
+                <div className="grid grid-cols-4 gap-2 h-96">
+                {/* Большое главное фото с бейджами как на tisland.travel */}
                 <div 
                   className="col-span-2 row-span-2 cursor-pointer group relative overflow-hidden rounded-lg"
                   onClick={() => openModal(excursion.gallery[0], 0)}
                 >
                   <img 
                     src={excursion.gallery[0]} 
-                    alt={excursion.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    alt="Rafting SPA ATV"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
-                </div>
+                  
+                  {/* Бейджи как у конкурентов */}
+                  <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                    <span className="px-2 py-1 bg-red-500 text-white text-xs font-medium rounded-md">
+                      ХИТ
+                    </span>
+                    <span className="px-2 py-1 bg-green-600 text-white text-xs font-medium rounded-md">
+                      Активный
+                    </span>
+                  </div>
 
-                {/* Миниатюры справа */}
-                <div 
-                  className="cursor-pointer group relative overflow-hidden rounded-lg"
-                  onClick={() => openModal(excursion.gallery[1], 1)}
-                >
-                  <img 
-                    src={excursion.gallery[1]} 
-                    alt="Gallery 2"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                
-                <div 
-                  className="cursor-pointer group relative overflow-hidden rounded-lg"
-                  onClick={() => openModal(excursion.gallery[2], 2)}
-                >
-                  <img 
-                    src={excursion.gallery[2]} 
-                    alt="Gallery 3"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                <div 
-                  className="cursor-pointer group relative overflow-hidden rounded-lg"
-                  onClick={() => openModal(excursion.gallery[3], 3)}
-                >
-                  <img 
-                    src={excursion.gallery[3]} 
-                    alt="Gallery 4"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                
-                <div 
-                  className="cursor-pointer group relative overflow-hidden rounded-lg"
-                  onClick={openGallery}
-                >
-                  <img 
-                    src={excursion.gallery[4]} 
-                    alt="Gallery 5"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                    <div className="text-white text-center">
-                      <div className="text-lg font-semibold mb-1">+{excursion.gallery.length - 5}</div>
-                      <div className="text-sm">фото</div>
-                    </div>
+                  {/* Рейтинг в правом верхнем углу */}
+                  <div className="absolute top-3 right-3 flex items-center gap-1 bg-white bg-opacity-90 backdrop-blur-sm px-2 py-1 rounded-md">
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    <span className="text-sm font-medium text-gray-900">{excursion.rating}</span>
                   </div>
                 </div>
+
+                {/* 4 маленьких превью справа */}
+                {excursion.gallery.slice(1, 5).map((image, index) => (
+                  <div 
+                    key={index + 1}
+                    className="cursor-pointer group relative overflow-hidden rounded-lg"
+                    onClick={() => openModal(image, index + 1)}
+                  >
+                    <img 
+                      src={image} 
+                      alt={`Gallery ${index + 2}`}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                    />
+                    
+                    {/* Overlay на последнем фото */}
+                    {index === 3 && excursion.gallery.length > 5 && (
+                      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white">
+                        <div className="text-center">
+                          <Grid3X3 className="w-6 h-6 mx-auto mb-1" />
+                          <div className="text-sm font-medium">
+                            +{excursion.gallery.length - 5}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
               </div>
 
-              {/* Show All Photos Button */}
-              <div className="mt-4">
+              {/* Кнопка "Смотреть все фото" под галереей */}
+              <div className="hidden md:block lg:col-span-2 mt-4">
                 <button
                   onClick={openGallery}
                   className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
@@ -300,9 +317,20 @@ const RaftingSpaAtvTour = () => {
                   Показать все {excursion.gallery.length} фото
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
+      {/* Main Content - Booking Section */}
+      <section className="py-4">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-3 gap-8">
+            
+            {/* Content area */}
+            <div className="lg:col-span-2">
               {/* Tags под галереей */}
-              <div className="mt-6">
+              <div className="mb-6">
                 <div className="flex flex-wrap gap-2">
                   {excursion.tags.map((tag, index) => (
                     <span 

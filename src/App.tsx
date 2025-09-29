@@ -72,6 +72,8 @@ function App() {
               <Route path="/excursion/racha-coral-islands-speedboat" element={<RachaCoralIslandsTour />} />
               <Route path="/tours/racha-coral-islands-speedboat" element={<RachaCoralIslandsTour />} />
               
+              <Route path="/excursion/rafting-spa-atv-1-day" element={<RaftingSpaAtvTour />} />
+              <Route path="/tours/rafting-spa-atv-1-day" element={<RaftingSpaAtvTour />} />
               <Route path="/excursion/rafting-spa-atv" element={<RaftingSpaAtvTour />} />
               <Route path="/tours/rafting-spa-atv" element={<RaftingSpaAtvTour />} />
               

@@ -338,3 +338,4 @@ To connect a domain, navigate to Project > Settings > Domains and click Connect 
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
 # Calculator debug build - Mon Sep 22 14:54:59 UTC 2025
+cache-bust: Mon Sep 29 17:53:48 +07 2025

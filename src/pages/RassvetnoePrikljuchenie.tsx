@@ -62,6 +62,12 @@ const RassvetnoePrikljuchenie = () => {
     });
   }, [excursion.gallery]);
 
+  const selectImage = (index: number) => {
+    setCurrentImageIndex(index);
+    setSelectedImage(excursion.gallery[index]);
+    setShowThumbnails(false);
+  };
+
   // Touch handlers for mobile swipe
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null);
@@ -562,73 +568,97 @@ const RassvetnoePrikljuchenie = () => {
         </div>
       </div>
 
-      {/* Полноэкранная галерея */}
-      {showFullGallery && (
-        <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
-          {/* Кнопка закрытия */}
-          <button
-            onClick={closeModal}
-            className="absolute top-4 right-4 z-60 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors"
-          >
-            <X className="w-6 h-6" />
-          </button>
-
-          {/* Счетчик фото */}
-          <div className="absolute top-4 left-4 z-60 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
-            {currentImageIndex + 1} / {excursion.gallery.length}
+      {/* Mobile-first Gallery Modal */}
+      {selectedImage && showFullGallery && (
+        <div className="fixed inset-0 bg-black z-50 flex flex-col">
+          {/* Mobile-optimized Header */}
+          <div className="flex items-center justify-between p-3 bg-black bg-opacity-90 safe-area-top">
+            <div className="flex items-center space-x-3">
+              <span className="text-white text-sm font-medium">
+                {currentImageIndex + 1} из {excursion.gallery.length}
+              </span>
+              <button
+                onClick={() => setShowThumbnails(!showThumbnails)}
+                className="text-white hover:text-gray-300 p-1.5 rounded-full hover:bg-white hover:bg-opacity-10 transition-colors sm:hidden"
+              >
+                <Grid3X3 className="w-5 h-5" />
+              </button>
+            </div>
+            <button
+              onClick={closeModal}
+              className="text-white hover:text-gray-300 p-1.5 rounded-full hover:bg-white hover:bg-opacity-10 transition-colors"
+            >
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
           </div>
 
-          {/* Главное изображение */}
-          <div className="relative w-full h-full flex items-center justify-center p-4">
+          {/* Mobile-optimized Image Area */}
+          <div 
+            className="flex-1 flex items-center justify-center relative px-2 py-4 gallery-modal"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {/* Desktop Navigation Buttons */}
+            <button
+              onClick={prevImage}
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 p-2 z-10 bg-black bg-opacity-60 rounded-full hidden sm:block transition-all duration-200 hover:bg-opacity-80"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+
+            {/* Main Image - Mobile optimized */}
             <img
-              src={selectedImage || excursion.gallery[0]}
-              alt={`${excursion.title} - фото ${currentImageIndex + 1}`}
-              className="max-w-full max-h-full object-contain"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+              src={selectedImage}
+              alt={`Галерея ${currentImageIndex + 1}`}
+              className="max-w-full gallery-image object-contain rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+              style={{ maxHeight: 'calc(100vh - 200px)' }}
             />
 
-            {/* Кнопки навигации */}
-            {excursion.gallery.length > 1 && (
-              <>
+            <button
+              onClick={nextImage}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 p-2 z-10 bg-black bg-opacity-60 rounded-full hidden sm:block transition-all duration-200 hover:bg-opacity-80"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+
+            {/* Mobile Navigation Dots - только первые несколько для компактности */}
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-1.5 sm:hidden">
+              {excursion.gallery.slice(0, Math.min(8, excursion.gallery.length)).map((_, index) => (
                 <button
-                  onClick={prevImage}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-colors"
-                >
-                  <ChevronLeft className="w-6 h-6" />
-                </button>
-                <button
-                  onClick={nextImage}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-colors"
-                >
-                  <ChevronRight className="w-6 h-6" />
-                </button>
-              </>
-            )}
+                  key={index}
+                  onClick={() => selectImage(index)}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    index === currentImageIndex ? 'bg-white' : 'bg-white bg-opacity-50'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
 
-          {/* Миниатюры внизу */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 max-w-[90vw] overflow-x-auto">
-            {excursion.gallery.map((image, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  setSelectedImage(image);
-                  setCurrentImageIndex(index);
-                }}
-                className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden transition-all ${
-                  index === currentImageIndex ? 'ring-2 ring-white opacity-100' : 'opacity-60 hover:opacity-80'
-                }`}
-              >
-                <img
-                  src={image}
-                  alt={`Миниатюра ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </button>
-            ))}
-          </div>
+          {/* Thumbnail Strip - Desktop/Tablet */}
+          {showThumbnails && (
+            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-90 p-4 hidden sm:block">
+              <div className="flex space-x-2 justify-center overflow-x-auto max-w-full">
+                {excursion.gallery.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => selectImage(index)}
+                    className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden transition-all ${
+                      index === currentImageIndex ? 'ring-2 ring-white opacity-100' : 'opacity-60 hover:opacity-80'
+                    }`}
+                  >
+                    <img
+                      src={image}
+                      alt={`Миниатюра ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 

@@ -9,14 +9,11 @@ import { kaoLakSafariTourData } from '@/data/kaoLakSafariTour';
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
 import { MobileBookingBar } from "@/components/MobileBookingBar";
-import { useTelegram } from "@/contexts/TelegramContext";
-import { TelegramNav } from "@/components/TelegramNav";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = kaoLakSafariTourData;
 
 const KaoLakSafariTour = () => {
-  const { isWebApp, user, hapticFeedback } = useTelegram();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [showThumbnails, setShowThumbnails] = useState(false);
@@ -114,12 +111,11 @@ const KaoLakSafariTour = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-white overflow-x-hidden ${isWebApp ? 'pb-4' : 'pb-20 lg:pb-0'}`}>
+    <div className="min-h-screen bg-white overflow-x-hidden pb-20 lg:pb-0">
       <Header />
       
       {/* Breadcrumbs - как на tisland.travel, только в браузере */}
-      {!isWebApp && (
-        <section className="pt-20 pb-4">
+      <section className="pt-20 pb-4">
         <div className="container mx-auto px-4">
           <nav className="text-sm text-gray-500">
             <div className="flex items-center space-x-2">
@@ -134,84 +130,182 @@ const KaoLakSafariTour = () => {
           </nav>
         </div>
       </section>
-      )}
 
-      {/* Gallery section - сразу после хлебных крошек */}
+      {/* Gallery section */}
       <section className="pb-2">
         {/* Мобильная карусель - во всю ширину экрана как на tisland.travel */}
         <div className="md:hidden">
           <div className="relative">
             {/* Карусель с свайпом */}
             <div 
-              className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory"
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
               onScroll={handleMobileGalleryScroll}
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              style={{ scrollBehavior: 'smooth' }}
+              id="mobile-gallery"
             >
-              {excursion.gallery.map((image, index) => (
-                <div key={index} className="flex-shrink-0 w-full snap-start">
-                  <img
-                    src={image}
-                    alt={`${excursion.title} - фото ${index + 1}`}
-                    className="w-full h-[300px] object-cover"
-                    onClick={() => openModal(image, index)}
-                  />
+              {excursion.gallery.slice(0, 6).map((image, index) => (
+                <div 
+                  key={index}
+                  className="flex-shrink-0 w-full snap-center"
+                  onClick={() => openModal(image, index)}
+                >
+                  <div className="aspect-[4/3] relative overflow-hidden">
+                    <img 
+                      src={image} 
+                      alt={`Gallery ${index + 1}`}
+                      className="w-full h-full object-cover object-center"
+                    />
+                    
+                    {/* Бейджи и рейтинг только на первом слайде */}
+                    {index === 0 && (
+                      <>
+                        {/* Бейджи как у конкурентов */}
+                        <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                          <span className="px-2 py-1 bg-red-500 text-white text-xs font-medium rounded-md">
+                            ХИТ
+                          </span>
+                          <span className="px-2 py-1 bg-green-600 text-white text-xs font-medium rounded-md">
+                            Природа
+                          </span>
+                        </div>
+
+                        {/* Рейтинг в правом верхнем углу */}
+                        <div className="absolute top-3 right-3 flex items-center gap-1 bg-white bg-opacity-90 backdrop-blur-sm px-2 py-1 rounded-md">
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <span className="text-sm font-medium text-gray-900">{excursion.rating}</span>
+                        </div>
+                      </>
+                    )}
+                    
+                    {/* Overlay с количеством фото на последнем слайде */}
+                    {index === 5 && excursion.gallery.length > 6 && (
+                      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                        <div className="text-white text-center">
+                          <div className="text-2xl font-bold mb-1">+{excursion.gallery.length - 6}</div>
+                          <div className="text-sm">фото</div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
 
-            {/* Точки навигации */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-              {excursion.gallery.map((_, index) => (
-                <div
+            {/* Точки индикации */}
+            <div className="flex justify-center mt-4 space-x-2">
+              {excursion.gallery.slice(0, 6).map((_, index) => (
+                <button
                   key={index}
-                  className={`w-2 h-2 rounded-full ${
-                    index === mobileGalleryIndex ? 'bg-white' : 'bg-white/50'
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                    index === mobileGalleryIndex ? 'bg-green-600 scale-110' : 'bg-gray-300'
                   }`}
+                  onClick={() => {
+                    setMobileGalleryIndex(index);
+                    // Программный скролл к нужному слайду
+                    const carousel = document.getElementById('mobile-gallery');
+                    if (carousel) {
+                      carousel.scrollTo({
+                        left: index * carousel.clientWidth,
+                        behavior: 'smooth'
+                      });
+                    }
+                  }}
                 />
               ))}
+            </div>
+            
+            {/* Кнопка показать все фото - только для мобильных */}
+            <div className="mt-4 px-4">
+              <button
+                onClick={openGallery}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Показать все {excursion.gallery.length} фото
+              </button>
             </div>
           </div>
         </div>
-
-        {/* Десктопная галерея - сетка */}
-        <div className="hidden md:block">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-4 gap-2 h-[400px]">
-              {/* Главное большое изображение */}
-              <div className="col-span-2 row-span-2">
-                <img
-                  src={excursion.mainImage}
-                  alt={excursion.title}
-                  className="w-full h-full object-cover rounded-l-lg cursor-pointer hover:brightness-110 transition-all"
-                  onClick={() => openModal(excursion.mainImage, 0)}
-                />
-              </div>
-              
-              {/* 4 маленьких изображения справа */}
-              {excursion.gallery.slice(1, 5).map((image, index) => (
-                <div key={index + 1} className="relative">
-                  <img
-                    src={image}
-                    alt={`${excursion.title} - фото ${index + 2}`}
-                    className={`w-full h-full object-cover cursor-pointer hover:brightness-110 transition-all ${
-                      index === 1 ? 'rounded-tr-lg' : ''
-                    } ${index === 3 ? 'rounded-br-lg' : ''}`}
-                    onClick={() => openModal(image, index + 1)}
+        
+        {/* Десктопная версия */}
+        <div className="container mx-auto px-4 hidden md:block">
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Галерея - левая часть на десктопе */}
+            <div className="lg:col-span-2">
+              {/* Десктопная галерея как на tisland.travel */}
+              <div className="hidden md:block">
+                <div className="grid grid-cols-4 gap-2 h-96">
+                {/* Большое главное фото с бейджами как на tisland.travel */}
+                <div 
+                  className="col-span-2 row-span-2 cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={() => openModal(excursion.gallery[0], 0)}
+                >
+                  <img 
+                    src={excursion.gallery[0]} 
+                    alt="Kao Lak Safari"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
-                  {/* Overlay "показать все фото" на последнем изображении */}
-                  {index === 3 && excursion.gallery.length > 5 && (
-                    <div 
-                      className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-br-lg text-white font-semibold cursor-pointer hover:bg-black/60 transition-colors"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openGallery();
-                      }}
-                    >
-                      +{excursion.gallery.length - 5} фото
-                    </div>
-                  )}
+                  
+                  {/* Бейджи как у конкурентов */}
+                  <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                    <span className="px-2 py-1 bg-red-500 text-white text-xs font-medium rounded-md">
+                      ХИТ
+                    </span>
+                    <span className="px-2 py-1 bg-green-600 text-white text-xs font-medium rounded-md">
+                      Природа
+                    </span>
+                  </div>
+
+                  {/* Рейтинг в правом верхнем углу */}
+                  <div className="absolute top-3 right-3 flex items-center gap-1 bg-white bg-opacity-90 backdrop-blur-sm px-2 py-1 rounded-md">
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    <span className="text-sm font-medium text-gray-900">{excursion.rating}</span>
+                  </div>
                 </div>
-              ))}
+
+                {/* 4 маленьких превью справа */}
+                {excursion.gallery.slice(1, 5).map((image, index) => (
+                  <div 
+                    key={index + 1}
+                    className="cursor-pointer group relative overflow-hidden rounded-lg"
+                    onClick={() => openModal(image, index + 1)}
+                  >
+                    <img 
+                      src={image} 
+                      alt={`Gallery ${index + 2}`}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                    />
+                    
+                    {/* Overlay на последнем фото */}
+                    {index === 3 && excursion.gallery.length > 5 && (
+                      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white">
+                        <div className="text-center">
+                          <Grid3X3 className="w-6 h-6 mx-auto mb-1" />
+                          <div className="text-sm font-medium">
+                            +{excursion.gallery.length - 5}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              </div>
+
+              {/* Кнопка "Смотреть все фото" под галереей */}
+              <div className="hidden md:block lg:col-span-2 mt-4">
+                <button
+                  onClick={openGallery}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Показать все {excursion.gallery.length} фото
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -265,6 +359,10 @@ const KaoLakSafariTour = () => {
             <div className="flex items-center gap-2 text-gray-500 text-sm">
               <Users className="w-4 h-4" />
               <span>{excursion.groupSize}</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-500 text-sm">
+              <Calendar className="w-4 h-4" />
+              <span>Начало: {excursion.itinerary[0].time}</span>
             </div>
           </div>
           
@@ -369,6 +467,10 @@ const KaoLakSafariTour = () => {
                         <div className="flex items-center gap-3">
                           <Users className="w-4 h-4 text-gray-400" />
                           <span>{excursion.groupSize}</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <Calendar className="w-4 h-4 text-gray-400" />
+                          <span>Начало: {excursion.itinerary[0].time}</span>
                         </div>
                         <div className="flex items-center gap-3">
                           <MapPin className="w-4 h-4 text-gray-400" />
@@ -517,6 +619,60 @@ const KaoLakSafariTour = () => {
         </div>
       )}
 
+      {/* Программа тура как у конкурентов */}
+      <section className="py-6">
+        <div className="container mx-auto px-4">
+          <h3 className="text-2xl font-bold mb-4 text-gray-900">Программа:</h3>
+          <div className="bg-gray-50 rounded-lg p-6 mb-6">
+            <div className="space-y-4">
+              {excursion.itinerary.map((item, index) => (
+                <div key={index} className="flex gap-4 border-l-4 border-green-600 pl-4">
+                  <div className="flex-shrink-0 w-24">
+                    <span className="text-xs font-medium text-green-600 block">{item.day}</span>
+                    <span className="text-sm font-bold text-green-600">{item.time}</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-gray-600 text-sm">{item.activity}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Включено / Не включено / Взять с собой / Важно знать — простые списки */}
+      <section className="py-6">
+        <div className="container mx-auto px-4">
+          <div className="space-y-12">
+            <div className="grid md:grid-cols-2 gap-12">
+              <div>
+                <h3 className="text-2xl font-bold mb-4 text-blue-600">Взять с собой</h3>
+                <ul className="space-y-2 text-gray-700">
+                  {excursion.requirements.map((item, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <span className="text-blue-600 font-bold">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold mb-4 text-amber-600">Важно знать</h3>
+                <ul className="space-y-2 text-gray-700">
+                  {excursion.importantInfo.map((item, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <span className="text-amber-600 font-bold">⚠️</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Модальное окно бронирования — ОБЯЗАТЕЛЬНО через портал */}
       <ModalPortal>
         <UniversalBookingModal
@@ -526,21 +682,18 @@ const KaoLakSafariTour = () => {
         />
       </ModalPortal>
 
-      {/* Мобильная панель бронирования - показываем только в браузерном режиме */}
-      {!isWebApp && (
-        <MobileBookingBar
-          priceAdult={excursion.priceAdult}
-          priceChild={excursion.priceChild}
-          currency={excursion.currency}
-          onBookingClick={() => {
-            hapticFeedback('light');
-            setShowBookingModal(true);
-          }}
-        />
-      )}
+      {/* Мобильная панель бронирования */}
+      <MobileBookingBar
+        priceAdult={excursion.priceAdult}
+        priceChild={excursion.priceChild}
+        currency={excursion.currency}
+        onBookingClick={() => {
+          setShowBookingModal(true);
+        }}
+      />
 
-      {/* Footer показываем только в браузере */}
-      {!isWebApp && <Footer />}
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

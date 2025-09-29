@@ -75,8 +75,8 @@ function App() {
               <Route path="/excursion/rafting-spa-atv" element={<RaftingSpaAtvTour />} />
               <Route path="/tours/rafting-spa-atv" element={<RaftingSpaAtvTour />} />
               
-              <Route path="/excursion/kao-lak-safari" element={<KaoLakSafariTour />} />
-              <Route path="/tours/kao-lak-safari" element={<KaoLakSafariTour />} />
+              <Route path="/excursion/kao-lak-safari-1-day" element={<KaoLakSafariTour />} />
+              <Route path="/tours/kao-lak-safari-1-day" element={<KaoLakSafariTour />} />
               
               <Route path="/excursion/avatar-plus-hangdong" element={<AvatarPlusHangdong />} />
               <Route path="/tours/avatar-plus-hangdong" element={<AvatarPlusHangdong />} />

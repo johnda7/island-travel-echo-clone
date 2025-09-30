@@ -1,411 +1,720 @@
-import React, { useState } from 'react';
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Clock, Users, Star, MapPin, Plane, Ship, Camera, Utensils } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { ModalPortal } from "@/components/ModalPortal";
-import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react";
+import { dostoprimechatelnostiPhuketaTourData } from "@/data/dostoprimechatelnostiPhuketaTour";
 import { elevenIslandsMegaTourData } from "@/data/elevenIslandsMegaTour";
+import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import { ModalPortal } from "@/components/ModalPortal";
+import { MobileBookingBar } from "@/components/MobileBookingBar";
 
-export default function ElevenIslandsMegaTour() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+// ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
+const excursion = elevenIslandsMegaTourData;
 
-  const tourData = elevenIslandsMegaTourData;
+const ElevenIslandsMegaTour = () => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const [showThumbnails, setShowThumbnails] = useState(false);
+  const [showFullGallery, setShowFullGallery] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [mobileGalleryIndex, setMobileGalleryIndex] = useState<number>(0);
+  
+  // Состояние для модального окна бронирования
+  const [showBookingModal, setShowBookingModal] = useState(false);
 
-  const handleBookingClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % tourData.gallery.length);
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + tourData.gallery.length) % tourData.gallery.length);
-  };
-
-  const goToImage = (index: number) => {
+  const openModal = (image: string, index: number) => {
+    setSelectedImage(image);
     setCurrentImageIndex(index);
+    setShowFullGallery(true);
+  };
+
+  const openGallery = () => {
+    setShowFullGallery(true);
+    setSelectedImage(excursion.gallery[0]);
+    setCurrentImageIndex(0);
+  };
+
+  const closeModal = useCallback(() => {
+    setSelectedImage(null);
+    setShowThumbnails(false);
+    setShowFullGallery(false);
+  }, []);
+
+  const nextImage = useCallback(() => {
+    setCurrentImageIndex((prev) => {
+      const nextIndex = (prev + 1) % excursion.gallery.length;
+      setSelectedImage(excursion.gallery[nextIndex]);
+      return nextIndex;
+    });
+  }, []);
+
+  const prevImage = useCallback(() => {
+    setCurrentImageIndex((prev) => {
+      const prevIndex = prev === 0 ? excursion.gallery.length - 1 : prev - 1;
+      setSelectedImage(excursion.gallery[prevIndex]);
+      return prevIndex;
+    });
+  }, []);
+
+  const selectImage = (index: number) => {
+    setCurrentImageIndex(index);
+    setSelectedImage(excursion.gallery[index]);
+    setShowThumbnails(false);
+  };
+
+  // Touch handlers for swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) nextImage();
+    if (isRightSwipe) prevImage();
+  };
+
+  // Keyboard navigation
+  const handleKeyPress = useCallback((e: KeyboardEvent) => {
+    if (!selectedImage) return;
+    
+    if (e.key === 'ArrowRight') nextImage();
+    if (e.key === 'ArrowLeft') prevImage();
+    if (e.key === 'Escape') closeModal();
+  }, [selectedImage, nextImage, prevImage, closeModal]);
+
+  // Add keyboard event listener
+  useEffect(() => {
+    if (!selectedImage) return;
+    document.addEventListener('keydown', handleKeyPress);
+    return () => document.removeEventListener('keydown', handleKeyPress);
+  }, [selectedImage, handleKeyPress]);
+
+  // Handle mobile gallery scroll
+  const handleMobileGalleryScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    const scrollLeft = container.scrollLeft;
+    const containerWidth = container.clientWidth;
+    const newIndex = Math.round(scrollLeft / containerWidth);
+    setMobileGalleryIndex(newIndex);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-white overflow-x-hidden pb-20 lg:pb-0">
       <Header />
-
+      
       {/* Breadcrumbs */}
-      <div className="max-w-7xl mx-auto px-4 py-4">
-        <nav className="text-sm text-gray-600">
-          <span>Главная</span>
-          <span className="mx-2">→</span>
-          <span>Острова</span>
-          <span className="mx-2">→</span>
-          <span className="text-blue-600 font-medium">{tourData.title}</span>
-        </nav>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        {/* Header Section */}
-        <div className="mb-8">
-          <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-              Острова
-            </Badge>
-            <Badge variant="secondary" className="bg-green-100 text-green-800">
-              Популярное
-            </Badge>
+      <section className="pt-20 pb-4">
+        <div className="container mx-auto px-4">
+          <nav className="text-sm text-gray-500">
+              <div className="flex items-center space-x-2">
+                <Link to="/" className="hover:text-green-600 transition-colors">Главная</Link>
+                <span>›</span>
+                <Link to="/tours" className="hover:text-green-600 transition-colors">Туры</Link>
+                <span>›</span>
+                <Link to="/tours?category=islands" className="hover:text-green-600 transition-colors">Острова</Link>
+                <span>›</span>
+                <span className="text-gray-700">11 островов Мега-тур</span>
+              </div>
+            </nav>
           </div>
-          
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            {tourData.title}
-          </h1>
-          
-          <p className="text-xl text-gray-600 mb-6 leading-relaxed">
-            {tourData.subtitle}
-          </p>
+        </section>
 
-          <div className="flex flex-wrap gap-6 text-gray-600">
-            <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5" />
-              <span>{tourData.duration}</span>
+      {/* Gallery section */}
+      <section className="pb-2">
+        {/* Мобильная карусель - во всю ширину экрана как на tisland.travel */}
+        <div className="md:hidden">
+          <div className="relative">
+            {/* Карусель с свайпом */}
+            <div 
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+              onScroll={handleMobileGalleryScroll}
+              style={{ scrollBehavior: 'smooth' }}
+              id="mobile-gallery"
+            >
+              {excursion.gallery.slice(0, 6).map((image, index) => (
+                <div 
+                  key={index}
+                  className="flex-shrink-0 w-full snap-center"
+                  onClick={() => openModal(image, index)}
+                >
+                  <div className="aspect-[4/3] relative overflow-hidden">
+                    <img 
+                      src={image} 
+                      alt={`Gallery ${index + 1}`}
+                      className="w-full h-full object-cover object-center"
+                    />
+                    
+                    {/* Бейджи и рейтинг только на первом слайде */}
+                    {index === 0 && (
+                      <>
+                        {/* Бейджи как у конкурентов */}
+                        <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                          <span className="px-2 py-1 bg-red-500 text-white text-xs font-medium rounded-md">
+                            МЕГА-ТУР
+                          </span>
+                          <span className="px-2 py-1 bg-blue-600 text-white text-xs font-medium rounded-md">
+                            Острова
+                          </span>
+                        </div>
+
+                        {/* Рейтинг в правом верхнем углу */}
+                        <div className="absolute top-3 right-3 flex items-center gap-1 bg-white bg-opacity-90 backdrop-blur-sm px-2 py-1 rounded-md">
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <span className="text-sm font-medium text-gray-900">{excursion.rating}</span>
+                        </div>
+                      </>
+                    )}
+                    
+                    {/* Overlay с количеством фото на последнем слайде */}
+                    {index === 5 && excursion.gallery.length > 6 && (
+                      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                        <div className="text-white text-center">
+                          <div className="text-2xl font-bold mb-1">+{excursion.gallery.length - 6}</div>
+                          <div className="text-sm">фото</div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="flex items-center gap-2">
-              <Users className="h-5 w-5" />
-              <span>{tourData.groupSize}</span>
+
+            {/* Точки индикации */}
+            <div className="flex justify-center mt-4 space-x-2">
+              {excursion.gallery.slice(0, 6).map((_, index) => (
+                <button
+                  key={index}
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                    index === mobileGalleryIndex ? 'bg-green-600 scale-110' : 'bg-gray-300'
+                  }`}
+                  onClick={() => {
+                    setMobileGalleryIndex(index);
+                    // Программный скролл к нужному слайду
+                    const carousel = document.getElementById('mobile-gallery');
+                    if (carousel) {
+                      carousel.scrollTo({
+                        left: index * carousel.clientWidth,
+                        behavior: 'smooth'
+                      });
+                    }
+                  }}
+                />
+              ))}
             </div>
-            <div className="flex items-center gap-2">
-              <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-              <span>{tourData.rating} ({tourData.reviewsCount} отзывов)</span>
+            
+            {/* Кнопка показать все фото - только для мобильных */}
+            <div className="mt-4 px-4">
+              <button
+                onClick={openGallery}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Показать все {excursion.gallery.length} фото
+              </button>
             </div>
           </div>
         </div>
-
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Images and Description */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Image Gallery */}
-            <div className="space-y-4">
-              {/* Main Image */}
-              <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-200">
-                <img
-                  src={tourData.gallery[currentImageIndex]}
-                  alt={`${tourData.title} - изображение ${currentImageIndex + 1}`}
-                  className="w-full h-full object-cover"
-                />
-                
-                {/* Navigation Arrows */}
-                <button
-                  onClick={prevImage}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition-colors"
-                  aria-label="Предыдущее изображение"
+        
+        {/* Десктопная версия */}
+        <div className="container mx-auto px-4 hidden md:block">
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Галерея - левая часть на десктопе */}
+            <div className="lg:col-span-2">
+              {/* Десктопная галерея как на tisland.travel */}
+              <div className="hidden md:block">
+                <div className="grid grid-cols-4 gap-2 h-96">
+                {/* Большое главное фото с бейджами как на tisland.travel */}
+                <div 
+                  className="col-span-2 row-span-2 cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={() => openModal(excursion.gallery[0], 0)}
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                
-                <button
-                  onClick={nextImage}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition-colors"
-                  aria-label="Следующее изображение"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
+                  <img 
+                    src={excursion.gallery[0]} 
+                    alt="Big Buddha"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  />
+                  
+                  {/* Бейджи как у конкурентов - в левом верхнем углу */}
+                  <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                    <span className="px-2 py-1 bg-red-500 text-white text-xs font-medium rounded-md">
+                      МЕГА-ТУР
+                    </span>
+                    <span className="px-2 py-1 bg-blue-600 text-white text-xs font-medium rounded-md">
+                      Острова
+                    </span>
+                    <span className="px-2 py-1 bg-green-600 text-white text-xs font-medium rounded-md">
+                      Популярный
+                    </span>
+                  </div>
 
-                {/* Image Counter */}
-                <div className="absolute bottom-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
-                  {currentImageIndex + 1} / {tourData.gallery.length}
+                  {/* Рейтинг в правом верхнем углу */}
+                  <div className="absolute top-3 right-3 flex items-center gap-1 bg-white bg-opacity-90 backdrop-blur-sm px-2 py-1 rounded-md">
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    <span className="text-sm font-medium text-gray-900">{excursion.rating}</span>
+                    <span className="text-xs text-gray-600">({excursion.reviewsCount})</span>
+                  </div>
+                </div>
+
+                {/* Два средних фото справа сверху */}
+                <div 
+                  className="cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={() => openModal(excursion.gallery[1], 1)}
+                >
+                  <img 
+                    src={excursion.gallery[1]} 
+                    alt="Gallery 2"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                
+                <div 
+                  className="cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={() => openModal(excursion.gallery[2], 2)}
+                >
+                  <img 
+                    src={excursion.gallery[2]} 
+                    alt="Gallery 3"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+
+                {/* Два средних фото справа снизу */}
+                <div 
+                  className="cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={() => openModal(excursion.gallery[3], 3)}
+                >
+                  <img 
+                    src={excursion.gallery[3]} 
+                    alt="Gallery 4"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                
+                <div 
+                  className="cursor-pointer group relative overflow-hidden rounded-lg"
+                  onClick={openGallery}
+                >
+                  <img 
+                    src={excursion.gallery[4]} 
+                    alt="Gallery 5"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="text-white text-center">
+                      <div className="text-lg font-semibold mb-1">+{excursion.gallery.length - 5}</div>
+                      <div className="text-sm">фото</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+              {/* Кнопка показать все фото */}
+              <div className="mt-4">
+                <button
+                  onClick={openGallery}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Показать все {excursion.gallery.length} фото
+                </button>
+              </div>
+            </div>
+
+            {/* Desktop Booking Sidebar - справа от фото */}
+            <div className="hidden lg:block">
+              <div className="sticky top-4">
+                <Card className="shadow-lg border-0">
+                  <CardContent className="p-4">
+                    {/* Информация о туре */}
+                    <div className="mb-4">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-3 text-center">{excursion.title}</h3>
+                      <p className="text-gray-600 text-sm mb-3">{excursion.subtitle}</p>
+                      
+                      <div className="space-y-2 mb-4 text-sm text-left">
+                        <div className="flex items-center gap-3">
+                          <Clock className="w-4 h-4 text-gray-400" />
+                          <span>Продолжительность: {excursion.duration}</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <Users className="w-4 h-4 text-gray-400" />
+                          <span>Группа: {excursion.groupSize}</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <Calendar className="w-4 h-4 text-gray-400" />
+                          <span>Ежедневно</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <MapPin className="w-4 h-4 text-gray-400" />
+                          <span>Трансфер включен</span>
+                        </div>
+                      </div>
+                      
+                      <div className="text-center mb-4">
+                        <div className="text-2xl font-bold text-green-600">
+                          от {excursion.priceAdult.toLocaleString()} {excursion.currency}
+                        </div>
+                        <div className="text-sm text-gray-500">за взрослого</div>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Button 
+                          onClick={() => setShowBookingModal(true)}
+                          className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-semibold"
+                        >
+                          Забронировать тур
+                        </Button>
+                        <Button 
+                          onClick={() => window.open('https://t.me/Phuket_life_ru', '_blank')}
+                          className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 font-medium text-sm"
+                        >
+                          Написать в Телеграм
+                        </Button>
+                        <Button 
+                          onClick={() => window.open('https://t.me/IslandTravelPhuket', '_blank')}
+                          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 font-medium text-sm"
+                        >
+                          Island Travel Phuket
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Tags section - компактно под фото как на tisland.travel */}
+      <section className="pb-4">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-wrap gap-2">
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
+              Джеймс Бонд
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
+              Острова Пхи-Пхи
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
+              Остров Хонг
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
+              Мега-тур
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
+              Каякинг
+            </span>
+            <span className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
+              Снорклинг
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* Title and meta info - после тегов */}
+      <section className="py-4">
+        <div className="container mx-auto px-4">
+          <h1 className="text-2xl md:text-4xl font-bold mb-3 text-gray-900 leading-tight">
+            {excursion.title}
+          </h1>
+          <p className="text-lg text-gray-600 mb-4 leading-relaxed">
+            {excursion.subtitle}
+          </p>
+          <div className="flex flex-wrap items-center gap-4 mb-4">
+            <div className="flex items-center gap-2">
+              <Star className="w-4 h-4 text-yellow-400 fill-current" />
+              <span className="font-semibold text-gray-900">{excursion.rating}</span>
+              <span className="text-gray-500 text-sm">({excursion.reviewsCount} отзывов)</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-500 text-sm">
+              <Clock className="w-4 h-4" />
+              <span>{excursion.duration}</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-500 text-sm">
+              <Users className="w-4 h-4" />
+              <span>{excursion.groupSize}</span>
+            </div>
+          </div>
+          {/* Mobile price */}
+          <div className="text-2xl font-bold text-green-600 mb-4 md:hidden">
+            от {excursion.priceAdult} {excursion.currency} <span className="text-base font-normal text-gray-500">за взрослого</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-4">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-4 gap-8">
+            <div className="lg:col-span-3">
+              {/* Структурированное описание как у tisland.travel */}
+              <h2 className="text-3xl font-bold mb-4 text-gray-900">Описание</h2>
+              <div className="prose prose-lg max-w-none mb-6">
+                <p className="text-gray-700 leading-relaxed text-lg">
+                  {excursion.description}
+                </p>
+              </div>
+
+              {/* Программа по времени как у конкурентов */}
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">Программа:</h3>
+              <div className="bg-gray-50 rounded-lg p-6 mb-6">
+                <div className="space-y-4">
+                  {excursion.schedule.map((item, index) => (
+                    <div key={index} className="flex gap-4 border-l-4 border-green-600 pl-4">
+                      <div className="flex-shrink-0 w-16">
+                        <span className="text-sm font-bold text-green-600">{item.time}</span>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
+                        <p className="text-gray-600 text-sm">{item.description}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* Thumbnail Gallery */}
-              <div className="grid grid-cols-4 md:grid-cols-6 gap-2">
-                {tourData.gallery.map((image, index) => (
+              {/* Ключевые особенности */}
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold mb-4 text-gray-900">Особенности тура</h3>
+                <ul className="space-y-2 text-gray-700">
+                  {excursion.highlights.map((highlight, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <span className="text-green-600 font-bold">•</span>
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Включено / Не включено / Важно знать — как у конкурентов */}
+              <div className="space-y-8">
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4 text-green-600">В цену включено</h3>
+                    <ul className="space-y-2 text-gray-700">
+                      {excursion.included.map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="text-green-600 font-bold">✓</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4 text-red-600">Дополнительные расходы</h3>
+                    <ul className="space-y-2 text-gray-700">
+                      {excursion.notIncluded.map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="text-red-600 font-bold">✗</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Секция "Взять с собой" как у конкурентов tisland.travel */}
+                {excursion.whatToBring && (
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4 text-blue-600">Взять с собой</h3>
+                    <ul className="space-y-2 text-gray-700">
+                      {excursion.whatToBring.map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="text-blue-600 font-bold">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Секция "Важно знать" */}
+                <div>
+                  <h3 className="text-2xl font-bold mb-4 text-amber-600">Важно знать</h3>
+                  <ul className="space-y-2 text-gray-700">
+                    {excursion.importantInfo.map((item, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <span className="text-amber-600 font-bold">⚠️</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mobile-first Gallery Modal */}
+      {selectedImage && showFullGallery && (
+        <div className="fixed inset-0 bg-black z-50 flex flex-col">
+          {/* Mobile-optimized Header */}
+          <div className="flex items-center justify-between p-3 bg-black bg-opacity-90 safe-area-top">
+            <div className="flex items-center space-x-3">
+              <span className="text-white text-sm font-medium">
+                {currentImageIndex + 1} из {excursion.gallery.length}
+              </span>
+              <button
+                onClick={() => setShowThumbnails(!showThumbnails)}
+                className="text-white hover:text-gray-300 p-1.5 rounded-full hover:bg-white hover:bg-opacity-10 transition-colors sm:hidden"
+              >
+                <Grid3X3 className="w-5 h-5" />
+              </button>
+            </div>
+            <button
+              onClick={closeModal}
+              className="text-white hover:text-gray-300 p-1.5 rounded-full hover:bg-white hover:bg-opacity-10 transition-colors"
+            >
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+          </div>
+
+          {/* Mobile-optimized Image Area */}
+          <div 
+            className="flex-1 flex items-center justify-center relative px-2 py-4 gallery-modal"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {/* Desktop Navigation Buttons */}
+            <button
+              onClick={prevImage}
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 p-2 z-10 bg-black bg-opacity-60 rounded-full hidden sm:block transition-all duration-200 hover:bg-opacity-80"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+
+            {/* Main Image - Mobile optimized */}
+            <img
+              src={selectedImage}
+              alt={`Галерея ${currentImageIndex + 1}`}
+              className="max-w-full gallery-image object-contain rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+              style={{ maxHeight: 'calc(100vh - 200px)' }}
+            />
+
+            <button
+              onClick={nextImage}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 p-2 z-10 bg-black bg-opacity-60 rounded-full hidden sm:block transition-all duration-200 hover:bg-opacity-80"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+
+            {/* Mobile Navigation Dots - только первые несколько для компактности */}
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-1.5 sm:hidden">
+              {excursion.gallery.slice(0, Math.min(8, excursion.gallery.length)).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => selectImage(index)}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    index === currentImageIndex ? 'bg-white scale-125' : 'bg-white bg-opacity-40'
+                  }`}
+                />
+              ))}
+              {excursion.gallery.length > 8 && (
+                <span className="text-white text-xs opacity-60 ml-2">
+                  +{excursion.gallery.length - 8}
+                </span>
+              )}
+            </div>
+
+            {/* Touch hint for mobile - показывается только первые несколько секунд */}
+            <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 text-white text-xs opacity-50 sm:hidden animate-pulse">
+              ← Свайп для навигации →
+            </div>
+          </div>
+
+          {/* Thumbnails */}
+          {showThumbnails && (
+            <div className="bg-black bg-opacity-90 p-4 max-h-32 overflow-hidden">
+              <div className="flex space-x-2 overflow-x-auto scrollbar-hide">
+                {excursion.gallery.map((image, index) => (
                   <button
                     key={index}
-                    onClick={() => goToImage(index)}
-                    className={`relative aspect-video rounded overflow-hidden ${
-                      index === currentImageIndex ? 'ring-2 ring-blue-500' : ''
+                    onClick={() => selectImage(index)}
+                    className={`flex-shrink-0 w-20 h-20 rounded overflow-hidden border-2 ${
+                      index === currentImageIndex ? 'border-white' : 'border-transparent'
                     }`}
                   >
                     <img
                       src={image}
                       alt={`Миниатюра ${index + 1}`}
-                      className="w-full h-full object-cover hover:opacity-80 transition-opacity"
+                      className="w-full h-full object-cover object-center"
                     />
                   </button>
                 ))}
               </div>
-
-              {/* Mobile Gallery Controls */}
-              <div className="md:hidden">
-                <div className="flex justify-center space-x-2">
-                  {tourData.gallery.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => goToImage(index)}
-                      className={`w-2 h-2 rounded-full ${
-                        index === currentImageIndex ? 'bg-blue-600' : 'bg-gray-300'
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
             </div>
+          )}
 
-            {/* Description */}
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-4">Описание тура</h2>
-                <div className="prose prose-lg max-w-none text-gray-700">
-                  {tourData.description.split('\n').map((paragraph, index) => (
-                    <p key={index} className="mb-4 leading-relaxed">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Highlights */}
-            {tourData.highlights && tourData.highlights.length > 0 && (
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                    <Camera className="h-5 w-5" />
-                    Основные моменты
-                  </h3>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {tourData.highlights.map((highlight, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-gray-700">{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Itinerary */}
-            {tourData.itinerary && tourData.itinerary.length > 0 && (
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                    <MapPin className="h-5 w-5" />
-                    Программа тура
-                  </h3>
-                  <div className="space-y-3">
-                    {tourData.itinerary.map((item, index) => (
-                      <div key={index} className="flex gap-4 p-3 bg-gray-50 rounded-lg">
-                        <div className="flex-shrink-0">
-                          <span className="inline-block w-16 px-2 py-1 bg-blue-600 text-white text-sm font-medium rounded text-center">
-                            {item.time}
-                          </span>
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-gray-800 font-medium">{item.activity}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* What's Included/Excluded */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {tourData.included && tourData.included.length > 0 && (
-                <Card>
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-bold mb-4 text-green-700 flex items-center gap-2">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                      Включено в стоимость
-                    </h3>
-                    <ul className="space-y-2">
-                      {tourData.included.map((item, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span className="text-gray-700 text-sm">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
-
-              {tourData.excluded && tourData.excluded.length > 0 && (
-                <Card>
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-bold mb-4 text-red-700 flex items-center gap-2">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                      </svg>
-                      Дополнительно оплачивается
-                    </h3>
-                    <ul className="space-y-2">
-                      {tourData.excluded.map((item, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span className="text-gray-700 text-sm">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
+          {/* Mobile Navigation Bottom Bar */}
+          <div className="flex justify-between items-center p-3 bg-black bg-opacity-90 sm:hidden safe-area-bottom">
+            <button
+              onClick={prevImage}
+              className="flex-1 flex items-center justify-center p-3 text-white hover:bg-white hover:bg-opacity-10 rounded-lg transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5 mr-1" />
+              <span className="text-sm">Назад</span>
+            </button>
+            
+            <div className="flex-1 text-center">
+              <span className="text-white text-sm font-medium">
+                {currentImageIndex + 1} из {excursion.gallery.length}
+              </span>
             </div>
-
-            {/* Requirements & Important Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {tourData.requirements && tourData.requirements.length > 0 && (
-                <Card>
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-bold mb-4 text-blue-700 flex items-center gap-2">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                      </svg>
-                      Что взять с собой
-                    </h3>
-                    <ul className="space-y-2">
-                      {tourData.requirements.map((item, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span className="text-gray-700 text-sm">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
-
-              {tourData.importantInfo && tourData.importantInfo.length > 0 && (
-                <Card>
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-bold mb-4 text-yellow-700 flex items-center gap-2">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                      </svg>
-                      Важная информация
-                    </h3>
-                    <ul className="space-y-2">
-                      {tourData.importantInfo.map((item, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span className="text-gray-700 text-sm">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-          </div>
-
-          {/* Right Column - Booking Card */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-4">
-              <Card className="shadow-lg">
-                <CardContent className="p-6">
-                  <div className="text-center mb-6">
-                    <div className="text-3xl font-bold text-green-600 mb-2">
-                      {tourData.priceAdult.toLocaleString()} {tourData.currency}
-                    </div>
-                    <div className="text-gray-600">за взрослого</div>
-                    {tourData.priceChild && (
-                      <div className="text-lg text-gray-500 mt-1">
-                        {tourData.priceChild.toLocaleString()} {tourData.currency} за ребенка
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="space-y-4 mb-6">
-                    <div className="flex items-center gap-3 text-gray-600">
-                      <Clock className="h-5 w-5 flex-shrink-0" />
-                      <span className="text-sm">{tourData.duration}</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-gray-600">
-                      <Users className="h-5 w-5 flex-shrink-0" />
-                      <span className="text-sm">{tourData.groupSize}</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-gray-600">
-                      <Plane className="h-5 w-5 flex-shrink-0" />
-                      <span className="text-sm">Трансфер включен</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-gray-600">
-                      <Utensils className="h-5 w-5 flex-shrink-0" />
-                      <span className="text-sm">Питание включено</span>
-                    </div>
-                  </div>
-
-                  <Button 
-                    onClick={handleBookingClick}
-                    className="w-full bg-green-600 hover:bg-green-700 text-white py-3 text-lg font-semibold mb-4"
-                  >
-                    Забронировать тур
-                  </Button>
-
-                  {/* Telegram Buttons */}
-                  <div className="space-y-2">
-                    <a
-                      href="https://t.me/Phuket_life_ru"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md text-center font-medium transition-colors flex items-center justify-center gap-2"
-                    >
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 0C5.374 0 0 5.373 0 12s5.374 12 12 12 12-5.373 12-12S18.626 0 12 0zm5.568 8.16c-.169 1.858-.896 6.728-.896 6.728-.377 2.548-1.406 2.997-2.913 1.857l-2.036-1.503-1.089.837c-.129.098-.238.182-.486.182-.317 0-.264-.15-.371-.531L9.916 13.5l-2.362-.756c-.51-.159-.522-.511.113-.764l9.374-3.614c.426-.19.8.096.663.794z"/>
-                      </svg>
-                      Написать в Telegram
-                    </a>
-                    
-                    <a
-                      href="https://t.me/IslandTravelPhuket"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md text-center font-medium transition-colors flex items-center justify-center gap-2"
-                    >
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 0C5.374 0 0 5.373 0 12s5.374 12 12 12 12-5.373 12-12S18.626 0 12 0zm5.568 8.16c-.169 1.858-.896 6.728-.896 6.728-.377 2.548-1.406 2.997-2.913 1.857l-2.036-1.503-1.089.837c-.129.098-.238.182-.486.182-.317 0-.264-.15-.371-.531L9.916 13.5l-2.362-.756c-.51-.159-.522-.511.113-.764l9.374-3.614c.426-.19.8.096.663.794z"/>
-                      </svg>
-                      Island Travel Phuket
-                    </a>
-                  </div>
-
-                  <div className="mt-6 text-center">
-                    <div className="flex items-center justify-center gap-1 text-yellow-500 mb-2">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-4 w-4 fill-current" />
-                      ))}
-                    </div>
-                    <p className="text-sm text-gray-600">
-                      {tourData.rating} из 5 • {tourData.reviewsCount} отзывов
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+            
+            <button
+              onClick={nextImage}
+              className="flex-1 flex items-center justify-center p-3 text-white hover:bg-white hover:bg-opacity-10 rounded-lg transition-colors"
+            >
+              <span className="text-sm">Далее</span>
+              <ChevronRight className="w-5 h-5 ml-1" />
+            </button>
           </div>
         </div>
-      </div>
+      )}
 
-      <Footer />
-
-      {/* Booking Modal */}
+      {/* Модальное окно бронирования */}
       <ModalPortal>
         <UniversalBookingModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          tourData={tourData}
+          isOpen={showBookingModal}
+          onClose={() => setShowBookingModal(false)}
+          tourData={excursion}
         />
       </ModalPortal>
+
+      {/* Мобильная панель бронирования */}
+      <MobileBookingBar
+        priceAdult={excursion.priceAdult}
+        priceChild={excursion.priceChild}
+        currency={excursion.currency}
+        onBookingClick={() => {
+          setShowBookingModal(true);
+        }}
+      />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
-}
+};
+
+export default ElevenIslandsMegaTour;

@@ -476,14 +476,13 @@ const ElevenIslandsMegaTour = () => {
               <h3 className="text-2xl font-bold mb-4 text-gray-900">Программа:</h3>
               <div className="bg-gray-50 rounded-lg p-6 mb-6">
                 <div className="space-y-4">
-                  {excursion.schedule.map((item, index) => (
+                  {excursion.itinerary && excursion.itinerary.map((item, index) => (
                     <div key={index} className="flex gap-4 border-l-4 border-green-600 pl-4">
                       <div className="flex-shrink-0 w-16">
                         <span className="text-sm font-bold text-green-600">{item.time}</span>
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
-                        <p className="text-gray-600 text-sm">{item.description}</p>
+                        <p className="text-gray-600 text-sm">{item.activity}</p>
                       </div>
                     </div>
                   ))}
@@ -494,7 +493,7 @@ const ElevenIslandsMegaTour = () => {
               <div className="mb-8">
                 <h3 className="text-2xl font-bold mb-4 text-gray-900">Особенности тура</h3>
                 <ul className="space-y-2 text-gray-700">
-                  {excursion.highlights.map((highlight, index) => (
+                      {excursion.highlights && excursion.highlights.map((highlight, index) => (
                     <li key={index} className="flex items-start gap-3">
                       <span className="text-green-600 font-bold">•</span>
                       <span>{highlight}</span>
@@ -509,7 +508,7 @@ const ElevenIslandsMegaTour = () => {
                   <div>
                     <h3 className="text-2xl font-bold mb-4 text-green-600">В цену включено</h3>
                     <ul className="space-y-2 text-gray-700">
-                      {excursion.included.map((item, index) => (
+                      {excursion.included && excursion.included.map((item, index) => (
                         <li key={index} className="flex items-start gap-3">
                           <span className="text-green-600 font-bold">✓</span>
                           <span>{item}</span>
@@ -520,7 +519,7 @@ const ElevenIslandsMegaTour = () => {
                   <div>
                     <h3 className="text-2xl font-bold mb-4 text-red-600">Дополнительные расходы</h3>
                     <ul className="space-y-2 text-gray-700">
-                      {excursion.notIncluded.map((item, index) => (
+                      {excursion.excluded && excursion.excluded.map((item, index) => (
                         <li key={index} className="flex items-start gap-3">
                           <span className="text-red-600 font-bold">✗</span>
                           <span>{item}</span>
@@ -535,7 +534,7 @@ const ElevenIslandsMegaTour = () => {
                   <div>
                     <h3 className="text-2xl font-bold mb-4 text-blue-600">Взять с собой</h3>
                     <ul className="space-y-2 text-gray-700">
-                      {excursion.whatToBring.map((item, index) => (
+                      {excursion.requirements && excursion.requirements.map((item, index) => (
                         <li key={index} className="flex items-start gap-3">
                           <span className="text-blue-600 font-bold">•</span>
                           <span>{item}</span>
@@ -549,7 +548,7 @@ const ElevenIslandsMegaTour = () => {
                 <div>
                   <h3 className="text-2xl font-bold mb-4 text-amber-600">Важно знать</h3>
                   <ul className="space-y-2 text-gray-700">
-                    {excursion.importantInfo.map((item, index) => (
+                    {excursion.importantInfo && excursion.importantInfo.map((item, index) => (
                       <li key={index} className="flex items-start gap-3">
                         <span className="text-amber-600 font-bold">⚠️</span>
                         <span>{item}</span>

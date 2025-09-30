@@ -82,6 +82,8 @@ function App() {
               
               <Route path="/excursion/avatar-plus-hangdong" element={<AvatarPlusHangdong />} />
               <Route path="/tours/avatar-plus-hangdong" element={<AvatarPlusHangdong />} />
+              {/* Редирект для старого URL */}
+              <Route path="/tours/avatar-plus-hangdong-adventure" element={<AvatarPlusHangdong />} />
               
               <Route path="/excursion/eleven-islands-mega" element={<ElevenIslandsMegaTour />} />
               <Route path="/tours/eleven-islands-mega" element={<ElevenIslandsMegaTour />} />

@@ -140,7 +140,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
 
   // 9. Аватар Плюс + Хангдонг
   {
-    id: 'avatar-plus-hangdong-adventure',
+    id: 'avatar-plus-hangdong',
     name: 'Аватар Плюс + Хангдонг',
     category: 'adventure',
     tags: ['аватар', 'зиплайн', 'слоны', 'каноэ', 'горы', 'хангдонг', 'приключения', '1 день'],

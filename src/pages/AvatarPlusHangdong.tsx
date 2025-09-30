@@ -344,6 +344,15 @@ const AvatarPlusHangdong = () => {
                         >
                           Забронировать тур
                         </Button>
+                        <Button 
+                          onClick={() => window.open('https://t.me/Phuketga', '_blank')}
+                          className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 font-semibold"
+                        >
+                          <span className="flex flex-col items-center leading-tight">
+                            <span>Написать</span>
+                            <span>в Телеграм</span>
+                          </span>
+                        </Button>
                       </div>
                     </div>
                   </CardContent>

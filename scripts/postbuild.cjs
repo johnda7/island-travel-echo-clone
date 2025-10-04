@@ -22,20 +22,43 @@ function run() {
   const buildMark = `<!-- build:${ts} -->\n`;
   html += buildMark;
   
-  // Создаем 404.html для HashRouter - БЕЗ sessionStorage (не нужен для hash routing)
+  // Создаем 404.html для HashRouter с сохранением путей (умный редирект)
   const spa404Html = `<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="0;url=/island-travel-echo-clone/#/">
-  <title>ПхукетGO</title>
+  <title>ПхукетGO - Загрузка...</title>
   <script>
-    // Мгновенный редирект на главную страницу с hash routing
-    window.location.replace('/island-travel-echo-clone/#/');
+    // Умный редирект для HashRouter с сохранением пути
+    (function() {
+      var l = window.location;
+      var basePath = '/island-travel-echo-clone';
+      
+      // Получаем путь после базового пути
+      var pathAfterBase = l.pathname.replace(basePath, '').replace(/^\\//, '');
+      
+      // Если есть путь после базового, добавляем его к hash
+      var redirectPath = basePath + '/#/' + pathAfterBase;
+      
+      // Сохраняем query параметры
+      if (l.search) {
+        redirectPath += l.search;
+      }
+      
+      // Мгновенный редирект
+      l.replace(redirectPath);
+    })();
   </script>
+  <!-- Fallback для браузеров без JS -->
+  <meta http-equiv="refresh" content="0;url=/island-travel-echo-clone/#/">
 </head>
-<body></body>
+<body>
+  <div style="text-align:center;padding:50px;font-family:Arial,sans-serif;">
+    <p>Загрузка...</p>
+    <p><a href="/island-travel-echo-clone/#/">Если страница не загрузилась, нажмите здесь</a></p>
+  </div>
+</body>
 </html>`;
   
   // Сохраняем файлы

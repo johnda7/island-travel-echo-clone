@@ -22,23 +22,20 @@ function run() {
   const buildMark = `<!-- build:${ts} -->\n`;
   html += buildMark;
   
-  // Создаем 404.html - ТОЧНАЯ КОПИЯ из phuketgo-react
+  // Создаем 404.html для HashRouter - БЕЗ sessionStorage (не нужен для hash routing)
   const spa404Html = `<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PhuketGo - Redirect</title>
+  <meta http-equiv="refresh" content="0;url=/island-travel-echo-clone/#/">
+  <title>ПхукетGO</title>
   <script>
-    // GitHub Pages SPA redirect hack
-    // Сохраняем путь и перенаправляем на index.html
-    sessionStorage.setItem('redirect', location.pathname + location.search + location.hash);
-    location.replace(location.origin + '/island-travel-echo-clone/');
+    // Мгновенный редирект на главную страницу с hash routing
+    window.location.replace('/island-travel-echo-clone/#/');
   </script>
 </head>
-<body>
-  <p>Redirecting...</p>
-</body>
+<body></body>
 </html>`;
   
   // Сохраняем файлы

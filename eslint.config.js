@@ -27,6 +27,15 @@ export default tseslint.config(
       // See error: Cannot read properties of undefined (reading 'allowShortCircuit')
       "@typescript-eslint/no-unused-expressions": "off",
       "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-unused-expressions": [
+        "error",
+        {
+          allowShortCircuit: false,
+          allowTernary: false,
+          allowTaggedTemplates: false,
+          enforceForJSX: false,
+        },
+      ],
     },
   }
 );

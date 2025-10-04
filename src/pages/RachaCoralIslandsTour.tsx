@@ -478,8 +478,7 @@ const RachaCoralIslandsTour = () => {
                         <span className="text-sm font-bold text-green-600">{item.time}</span>
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
-                        <p className="text-gray-600 text-sm">{item.description}</p>
+                        <p className="text-gray-600 text-sm">{item.activity}</p>
                       </div>
                     </div>
                   ))}

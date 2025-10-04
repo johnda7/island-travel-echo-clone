@@ -4,10 +4,26 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/island-travel-echo-clone/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Island Travel - Phuket Tours & Excursions</title>
-    <meta name="description" content="Discover the best Phuket tours and island excursions. Visit Phi Phi Islands, Maya Bay, and pristine beaches with professional guides." />
-    <script type="module" crossorigin src="/island-travel-echo-clone/assets/index-NaGHhu2x.js"></script>
-    <link rel="stylesheet" crossorigin href="/island-travel-echo-clone/assets/index-DevbNCi0.css">
+    <title>ПхукетGO - Туры и экскурсии на Пхукете</title>
+    <meta name="description" content="Откройте для себя лучшие туры и островные экскурсии на Пхукете. Посетите острова Пхи-Пхи, бухту Майя и нетронутые пляжи с профессиональными гидами." />
+    
+    <!-- SPA Redirect for 404 pages -->
+    <script type="text/javascript">
+      // Telegram Mini App support - instant redirect to index.html with preserved path
+      (function() {
+        var pathSegmentsToKeep = 1;
+        var l = window.location;
+        
+        // Redirect to index.html with path stored in query param
+        l.replace(
+          l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+          l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + 
+          '/?/' + l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+          (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+          l.hash
+        );
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -35,8 +35,8 @@ export const dostoprimechatelnostiPhuketaTourData: TourData = {
   route: '/excursion/dostoprimechatelnosti-phuketa',
 
   // Ценообразование (данные из WordPress)
-  priceAdult: 1900,
-  priceChild: 1400,
+  priceAdult: 1000,
+  priceChild: 900,
   currency: '฿',
 
   // Характеристики тура

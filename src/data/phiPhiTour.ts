@@ -26,8 +26,8 @@ export const phiPhiTourData: TourData = {
   title: "Пхи-Пхи 2 дня / 1 ночь",
   subtitle: "Экскурсия с ночёвкой на островах Пхи-Пхи",
   description: "Незабываемое путешествие с ночевкой на острове. Бухта Майя, огненное шоу, снорклинг и множество приключений!",
-  priceAdult: 4000,
-  priceChild: 3500,
+  priceAdult: 4500,
+  priceChild: 3950,
   priceInfant: 0, // Младенцы бесплатно
   currency: "฿",
   duration: "2 дня / 1 ночь",

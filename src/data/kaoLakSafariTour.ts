@@ -31,7 +31,7 @@ export const kaoLakSafariTourData: TourData = {
   route: '/excursion/kao-lak-safari-1-day',
   
   // 💰 ЦЕНООБРАЗОВАНИЕ (из оригинала: Взрослые 1700 бат, Дети 1300 бат)
-  priceAdult: 1700,
+  priceAdult: 1500,
   priceChild: 1300,
   currency: '฿',
   

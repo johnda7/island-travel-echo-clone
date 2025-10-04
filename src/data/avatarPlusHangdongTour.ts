@@ -20,7 +20,7 @@ export const avatarPlusHangdongTour: TourData = {
   title: 'Аватар Плюс +',
   subtitle: 'Приключения в джунглях Хангдонга',
   description: 'Окунитесь в мир фантастических приключений с нашим туром "Аватар плюс"! Исследуйте джунгли, посетите водопады, встретьтесь со слонами и насладитесь горячими источниками.',
-  priceAdult: 3500,
+  priceAdult: 2900,
   priceChild: 2600,
   priceInfant: 0,
   currency: "฿",

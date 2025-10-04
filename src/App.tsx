@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import { TelegramProvider } from "@/contexts/TelegramContext";
 
 // Существующие страницы
 import Index from "./pages/Index";
@@ -36,12 +37,13 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <HashRouter>
-          <ScrollToTop />
-          <ErrorBoundary>
+      <TelegramProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <HashRouter>
+            <ScrollToTop />
+            <ErrorBoundary>
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/tours" element={<Tours />} />
@@ -97,6 +99,7 @@ function App() {
           </ErrorBoundary>
         </HashRouter>
       </TooltipProvider>
+    </TelegramProvider>
     </QueryClientProvider>
   );
 }

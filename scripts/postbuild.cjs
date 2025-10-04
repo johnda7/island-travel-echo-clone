@@ -22,20 +22,20 @@ function run() {
   const buildMark = `<!-- build:${ts} -->\n`;
   html += buildMark;
   
-  // Создаем 404.html для HashRouter - АБСОЛЮТНО невидимый мгновенный редирект
+  // Создаем 404.html для HashRouter - АБСОЛЮТНО невидимый МГНОВЕННЫЙ редирект
   const spa404Html = `<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="0; url=/island-travel-echo-clone/#/">
   <title>ПхукетGO</title>
-  <style>html,body{margin:0;background:#fff;display:none!important;visibility:hidden;}</style>
+  <style>*{display:none!important;visibility:hidden!important;opacity:0!important;}</style>
   <script>
-    // МГНОВЕННЫЙ редирект - выполняется ДО рендера
-    (function(){var l=window.location,b='/island-travel-echo-clone',p=l.pathname.replace(b,'').replace(/^\\/+/,'');l.replace(b+'/#/'+p+(l.search||''))})();
+    (function(){var l=window.location,b='/island-travel-echo-clone',p=l.pathname.replace(b,'').replace(/^\\/+/,'');if(p)l.replace(b+'/#/'+p+(l.search||''));else l.replace(b+'/#/')})();
   </script>
 </head>
-<body></body>
+<body style="display:none!important"></body>
 </html>`;
   
   // Сохраняем файлы

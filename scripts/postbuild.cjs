@@ -28,6 +28,7 @@ function run() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="0;url=/island-travel-echo-clone/#/">
   <title>ПхукетGO</title>
   <style>html,body{margin:0;background:#fff;display:none!important;visibility:hidden;}</style>
   <script>

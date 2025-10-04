@@ -22,23 +22,22 @@ function run() {
   const buildMark = `<!-- build:${ts} -->\n`;
   html += buildMark;
   
-  // Создаем специальный 404.html для GitHub Pages SPA routing + Telegram Mini App
-  // ВАЖНО: используем meta refresh для надежного редиректа в Telegram
-  const spa404Html = `<!doctype html>
+  // Создаем 404.html для GitHub Pages SPA routing (проверенное решение из phuketgo-react)
+  const spa404Html = `<!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="0; url=/island-travel-echo-clone/" />
-    <title>ПхукетGO - Загрузка...</title>
-    <script type="text/javascript">
-      // Telegram Mini App - instant redirect
-      window.location.replace('/island-travel-echo-clone/' + window.location.search + window.location.hash);
-    </script>
-  </head>
-  <body>
-    <p style="text-align:center;padding:50px;">Загрузка...</p>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ПхукетGO - Redirect</title>
+  <script>
+    // GitHub Pages SPA redirect - сохраняем путь и перенаправляем на index.html
+    sessionStorage.setItem('redirect', location.pathname + location.search + location.hash);
+    location.replace(location.origin + '/island-travel-echo-clone/');
+  </script>
+</head>
+<body>
+  <p style="text-align:center;padding:50px;">Перенаправление...</p>
+</body>
 </html>`;
   
   // Сохраняем файлы

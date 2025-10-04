@@ -17,7 +17,16 @@
     <meta property="og:locale" content="ru_RU" />
     <!-- GitHub Pages SPA routing support -->
     <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
+      // Восстанавливаем путь после редиректа с 404.html (проверенное решение из phuketgo-react)
+      (function() {
+        var redirect = sessionStorage.getItem('redirect');
+        if (redirect) {
+          sessionStorage.removeItem('redirect');
+          history.replaceState(null, null, redirect);
+        }
+      })();
+      
+      // Single Page Apps for GitHub Pages (старый механизм для совместимости)
       (function(l) {
         if (l.search[1] === '/' ) {
           var decoded = l.search.slice(1).split('&').map(function(s) { 

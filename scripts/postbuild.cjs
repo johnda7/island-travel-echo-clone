@@ -22,23 +22,17 @@ function run() {
   const buildMark = `<!-- build:${ts} -->\n`;
   html += buildMark;
   
-  // Создаем 404.html для HashRouter - МГНОВЕННЫЙ невидимый редирект
+  // Создаем 404.html для HashRouter - ПОЛНОСТЬЮ невидимый мгновенный редирект
   const spa404Html = `<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ПхукетGO</title>
-  <style>body{margin:0;background:#fff;}</style>
+  <style>body{margin:0;background:#fff;visibility:hidden;}</style>
   <script>
-    // МГНОВЕННЫЙ редирект для Telegram Web App - выполняется ДО рендера страницы
-    (function() {
-      var l = window.location;
-      var basePath = '/island-travel-echo-clone';
-      var pathAfterBase = l.pathname.replace(basePath, '').replace(/^\\//, '');
-      var redirectPath = basePath + '/#/' + pathAfterBase + (l.search || '');
-      l.replace(redirectPath);
-    })();
+    // МГНОВЕННЫЙ редирект - выполняется ДО рендера
+    (function(){var l=window.location,b='/island-travel-echo-clone',p=l.pathname.replace(b,'').replace(/^\\/+/,'');l.replace(b+'/#/'+p+(l.search||''))})();
   </script>
 </head>
 <body></body>

@@ -22,27 +22,33 @@ function run() {
   const buildMark = `<!-- build:${ts} -->\n`;
   html += buildMark;
   
-  // Создаем специальный 404.html для GitHub Pages SPA routing
-  const spa404Html = `<!DOCTYPE html>
-<html>
+  // Создаем специальный 404.html для GitHub Pages SPA routing + Telegram Mini App
+  const spa404Html = `<!doctype html>
+<html lang="ru">
   <head>
-    <meta charset="utf-8">
-    <title>Island Travel</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ПхукетGO - Туры и экскурсии на Пхукете</title>
     <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // https://github.com/rafgraph/spa-github-pages
-      var pathSegmentsToKeep = 1;
-      var l = window.location;
-      l.replace(
-        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + 
-        '/#' + l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/') + 
-        (l.search ? '&' + l.search.slice(1) : '') +
-        l.hash
-      );
+      // SPA Redirect for GitHub Pages + Telegram Mini App support
+      // Instant redirect to index.html with preserved path
+      (function() {
+        var pathSegmentsToKeep = 1;
+        var l = window.location;
+        
+        // Redirect to index.html with path stored in query param
+        l.replace(
+          l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+          l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + 
+          '/?/' + l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+          (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+          l.hash
+        );
+      })();
     </script>
   </head>
   <body>
+    <div id="root"></div>
   </body>
 </html>`;
   

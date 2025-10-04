@@ -23,32 +23,21 @@ function run() {
   html += buildMark;
   
   // Создаем специальный 404.html для GitHub Pages SPA routing + Telegram Mini App
+  // ВАЖНО: используем meta refresh для надежного редиректа в Telegram
   const spa404Html = `<!doctype html>
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ПхукетGO - Туры и экскурсии на Пхукете</title>
+    <meta http-equiv="refresh" content="0; url=/island-travel-echo-clone/" />
+    <title>ПхукетGO - Загрузка...</title>
     <script type="text/javascript">
-      // SPA Redirect for GitHub Pages + Telegram Mini App support
-      // Instant redirect to index.html with preserved path
-      (function() {
-        var pathSegmentsToKeep = 1;
-        var l = window.location;
-        
-        // Redirect to index.html with path stored in query param
-        l.replace(
-          l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-          l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + 
-          '/?/' + l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
-          (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-          l.hash
-        );
-      })();
+      // Telegram Mini App - instant redirect
+      window.location.replace('/island-travel-echo-clone/' + window.location.search + window.location.hash);
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <p style="text-align:center;padding:50px;">Загрузка...</p>
   </body>
 </html>`;
   

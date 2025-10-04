@@ -22,14 +22,14 @@ function run() {
   const buildMark = `<!-- build:${ts} -->\n`;
   html += buildMark;
   
-  // Создаем 404.html для HashRouter - ПОЛНОСТЬЮ невидимый мгновенный редирект
+  // Создаем 404.html для HashRouter - АБСОЛЮТНО невидимый мгновенный редирект
   const spa404Html = `<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ПхукетGO</title>
-  <style>body{margin:0;background:#fff;visibility:hidden;}</style>
+  <style>html,body{margin:0;background:#fff;display:none!important;visibility:hidden;}</style>
   <script>
     // МГНОВЕННЫЙ редирект - выполняется ДО рендера
     (function(){var l=window.location,b='/island-travel-echo-clone',p=l.pathname.replace(b,'').replace(/^\\/+/,'');l.replace(b+'/#/'+p+(l.search||''))})();

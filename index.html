@@ -20,14 +20,22 @@
       // Проверка на Telegram Web App и редирект на hash если нужно
       (function() {
         var l = window.location;
-        // Если нет hash в URL, добавляем его (для Telegram)
-        if (!l.hash && l.pathname !== '/island-travel-echo-clone/' && l.pathname !== '/island-travel-echo-clone') {
-          // Сохраняем текущий путь и делаем редирект на hash
-          var path = l.pathname.replace('/island-travel-echo-clone', '') || '/';
-          l.replace('/island-travel-echo-clone/#' + path + l.search);
-        } else if (!l.hash) {
-          // Если просто открыли базовый URL без hash
-          l.replace('/island-travel-echo-clone/#/');
+        var isCustomDomain = l.hostname !== 'johnda7.github.io';
+        var basePath = isCustomDomain ? '' : '/island-travel-echo-clone';
+        
+        // Если нет hash в URL, добавляем его
+        if (!l.hash) {
+          if (isCustomDomain && l.pathname !== '/') {
+            // Custom domain: любой путь кроме / → добавляем hash
+            l.replace(basePath + '/#' + l.pathname + l.search);
+          } else if (!isCustomDomain && l.pathname !== basePath + '/' && l.pathname !== basePath) {
+            // GitHub Pages: любой путь кроме базового → добавляем hash
+            var path = l.pathname.replace(basePath, '') || '/';
+            l.replace(basePath + '/#' + path + l.search);
+          } else {
+            // Просто открыли базовый URL без hash
+            l.replace(basePath + '/#/');
+          }
         }
       })();
     </script>

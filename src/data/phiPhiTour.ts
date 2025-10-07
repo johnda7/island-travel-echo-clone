@@ -35,7 +35,7 @@ export const phiPhiTourData: TourData = {
   rating: 4.8,
   reviewsCount: 53,
   route: "/phi-phi-2days",
-  mainImage: mayaBay1,
+  mainImage: pilehLagoon,
   gallery: [
     mayaBay1,
     mayaBay2,

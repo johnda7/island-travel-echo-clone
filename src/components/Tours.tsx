@@ -61,20 +61,8 @@ export const Tours = ({ filteredTours }: ToursProps) => {
   }
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="pt-4 pb-4 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">
-            {filteredTours ? 'Результаты поиска' : 'Популярные туры'}
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            {filteredTours 
-              ? `Найдено туров: ${toursToShow.length}`
-              : 'Выберите лучшее приключение для незабываемого отдыха в Таиланде'
-            }
-          </p>
-        </div>
-        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {toursToShow.map((tour) => (
             <Card key={tour.id} className="overflow-hidden hover:shadow-lg transition-shadow">

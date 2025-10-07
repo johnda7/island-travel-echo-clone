@@ -18,7 +18,7 @@ export const Hero = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('${getAssetPath("maya-bay-sunrise.jpg")}')`
+            backgroundImage: `url('${getAssetPath("phi-phi-lagoon.jpg")}')`
           }}
         />
         
@@ -35,55 +35,34 @@ export const Hero = () => {
         </div>
       </div>
       
-      {/* Main Content */}
-      <div className="relative z-10 text-center text-white px-4 max-w-5xl mx-auto">
-        {/* Animated Title */}
-        <div className="mb-6 animate-fade-in">
-          <h1 className="text-6xl md:text-8xl font-extrabold mb-4 leading-tight">
-            <span className="block bg-gradient-to-r from-white via-cyan-100 to-blue-100 bg-clip-text text-transparent drop-shadow-2xl">
-              ПХУКЕТ
-            </span>
-            <span className="block text-3xl md:text-5xl font-light mt-2 text-cyan-100 drop-shadow-lg">
-              Тропический рай ждёт вас
-            </span>
-          </h1>
-        </div>
+      {/* Hero Title - Top */}
+      <div className="absolute top-20 left-0 right-0 z-20 text-center animate-fade-in px-4">
+        <h1 className="text-5xl md:text-7xl font-extrabold mb-3">
+          <span className="block bg-gradient-to-r from-white via-cyan-50 to-blue-50 bg-clip-text text-transparent drop-shadow-2xl">
+            ПХУКЕТ
+          </span>
+        </h1>
+        <p className="text-xl md:text-2xl text-cyan-50 font-light drop-shadow-lg">
+          Тропический рай ждёт вас
+        </p>
+      </div>
+      
+      {/* Main Content - Center */}
+      <div className="relative z-10 text-center text-white px-4 w-full h-full flex flex-col justify-center items-center pt-20">
         
-        {/* Call to Action Button - Centered */}
-        <div className="mb-8 animate-fade-in delay-300">
+        {/* Call to Action Button - Elegant & Centered */}
+        <div className="animate-fade-in delay-300">
           <Button 
             size="lg" 
             asChild 
-            className="group relative overflow-hidden bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 hover:from-cyan-400 hover:via-blue-400 hover:to-indigo-500 text-white px-12 py-5 text-xl font-bold rounded-2xl shadow-2xl transition-colors duration-300 border border-white/30 backdrop-blur-md before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
+            className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white px-12 py-4 text-xl md:text-2xl font-semibold rounded-full shadow-[0_8px_32px_rgba(255,255,255,0.15)] hover:shadow-[0_12px_40px_rgba(255,255,255,0.25)] transition-all duration-300 border-2 border-white/30 hover:border-white/50 transform hover:scale-105"
           >
-            <Link to="/tours" className="flex items-center relative z-10">
-              <Waves className="w-6 h-6 mr-3 group-hover:animate-pulse transition-all duration-300" />
-              <span className="relative">
-                Выбрать тур
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white/60 group-hover:w-full transition-all duration-500"></span>
-              </span>
-              <ArrowRight className="w-5 h-5 ml-3" />
+            <Link to="/tours">
+              Выбрать тур
             </Link>
           </Button>
         </div>
         
-        {/* Subtitle with Animation */}
-        <div className="animate-fade-in delay-500 max-w-4xl mx-auto">
-          <div className="flex flex-wrap justify-center gap-6 mb-6 text-lg md:text-xl">
-            <span className="flex items-center bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300">
-              🏝️ <span className="ml-2 bg-gradient-to-r from-cyan-200 to-blue-200 bg-clip-text text-transparent font-semibold">Кристально чистые воды</span>
-            </span>
-            <span className="flex items-center bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300">
-              🌅 <span className="ml-2 bg-gradient-to-r from-orange-200 to-yellow-200 bg-clip-text text-transparent font-semibold">Закаты мечты</span>
-            </span>
-            <span className="flex items-center bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300">
-              🐠 <span className="ml-2 bg-gradient-to-r from-emerald-200 to-teal-200 bg-clip-text text-transparent font-semibold">Подводный мир</span>
-            </span>
-          </div>
-          <p className="text-xl md:text-2xl text-white/90 leading-relaxed font-light tracking-wide">
-            Откройте для себя <span className="bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent font-semibold">магию тайских островов</span> с нашими эксклюзивными турами
-          </p>
-        </div>
       </div>
       
       {/* Decorative Elements */}

@@ -50,7 +50,7 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/admin" element={<AdminPanel />} />
-              <Route path="/booking" element={<BookingPage />} />
+                <Route path="/booking" element={<BookingPage />} />
               
               {/* Статические туры */}
               <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />

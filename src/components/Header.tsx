@@ -12,9 +12,11 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const [searchDropdownLeft, setSearchDropdownLeft] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
+  const desktopSearchRef = useRef<HTMLDivElement>(null);
   const desktopListboxId = "search-results-desktop";
   
   // Используем централизованную систему туров
@@ -74,13 +76,22 @@ export const Header = () => {
 
   // Debug logging removed in production
 
+  // Calculate desktop search dropdown position
+  useEffect(() => {
+    if (showSearchResults && desktopSearchRef.current) {
+      const rect = desktopSearchRef.current.getBoundingClientRect();
+      setSearchDropdownLeft(rect.left);
+    }
+  }, [showSearchResults]);
+
   // Close search results when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
       
-      // Close search
-      if (searchRef.current && !searchRef.current.contains(target)) {
+      // Close search - check both desktop and mobile search refs
+      if (desktopSearchRef.current && !desktopSearchRef.current.contains(target) &&
+          searchRef.current && !searchRef.current.contains(target)) {
         setShowSearchResults(false);
       }
     };
@@ -138,7 +149,7 @@ export const Header = () => {
           {/* Search */}
           <div className="flex items-center space-x-4">
             {/* Desktop Search */}
-            <div className="hidden md:block relative" ref={searchRef}>
+            <div className="hidden md:block relative" ref={desktopSearchRef}>
               <input
                 type="text"
                 placeholder="Поиск туров..."
@@ -158,7 +169,12 @@ export const Header = () => {
               
               {/* Search Results Dropdown - УЛУЧШЕННЫЙ ДИЗАЙН */}
               {showSearchResults && searchQuery.length > 0 && (
-                <div className="absolute top-full mt-1 w-96 bg-white border border-gray-200 rounded-lg shadow-xl z-[60] max-h-96 overflow-y-auto" role="listbox" id={desktopListboxId}>
+                <div 
+                  className="fixed top-[4.5rem] w-96 bg-white border border-gray-200 rounded-lg shadow-xl z-[9999] max-h-[calc(100vh-5rem)] overflow-y-auto" 
+                  style={{ left: `${searchDropdownLeft}px` }}
+                  role="listbox" 
+                  id={desktopListboxId}
+                >
                   {/* Stats Header */}
                   <div className="px-4 py-2 border-b border-gray-100 bg-gray-50">
                     <span className="text-sm text-gray-600">
@@ -180,9 +196,11 @@ export const Header = () => {
                         <Link
                           key={tour.id}
                           to={getTourDetailPath(tour.id)}
-                          className="block p-4 hover:bg-gray-50 transition-colors"
+                          className="block p-4 hover:bg-gray-50 transition-colors cursor-pointer"
                           onClick={(e) => {
+                            e.preventDefault();
                             e.stopPropagation();
+                            navigate(getTourDetailPath(tour.id));
                             setSearchQuery('');
                             setShowSearchResults(false);
                           }}
@@ -260,7 +278,7 @@ export const Header = () => {
               
               {/* Mobile Search Results Dropdown - Centered & Responsive */}
               {showSearchResults && searchQuery.length > 0 && (
-                <div className="absolute top-full mt-1 w-72 max-w-[calc(100vw-2rem)] bg-white border border-gray-200 rounded-lg shadow-xl z-[60] max-h-80 overflow-y-auto left-1/2 -translate-x-1/2" role="listbox" id="mobile-search-results">
+                <div className="fixed top-[4.5rem] left-1/2 -translate-x-1/2 w-72 max-w-[calc(100vw-2rem)] bg-white border border-gray-200 rounded-lg shadow-xl z-[9999] max-h-[calc(100vh-5rem)] overflow-y-auto" role="listbox" id="mobile-search-results">
                   {/* Stats Header */}
                   <div className="px-4 py-2 border-b border-gray-100 bg-gray-50">
                     <span className="text-sm text-gray-600">
@@ -282,9 +300,11 @@ export const Header = () => {
                         <Link
                           key={tour.id}
                           to={getTourDetailPath(tour.id)}
-                          className="block p-4 hover:bg-gray-50 transition-colors"
+                          className="block p-4 hover:bg-gray-50 transition-colors cursor-pointer"
                           onClick={(e) => {
+                            e.preventDefault();
                             e.stopPropagation();
+                            navigate(getTourDetailPath(tour.id));
                             setSearchQuery('');
                             setShowSearchResults(false);
                           }}

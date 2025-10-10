@@ -10,7 +10,7 @@
 // убедитесь, что поля корректны. Не удаляйте существующие ID без миграции ссылок.
 // 🎯 ПРИНЦИП: "ДОБАВИЛ СЮДА - ПОЯВИЛОСЬ ВЕЗДЕ АВТОМАТИЧЕСКИ!"
 
-import { phiPhiTourData } from '../data/phiPhiTour.ts';
+import { phiPhi2DaysTourData } from '../data/phiPhi2DaysTour.ts';
 import { pearlsAndamanSeaTourData } from '../data/pearlsTour.ts';
 import { dostoprimechatelnostiPhuketaTourData } from '../data/dostoprimechatelnostiPhuketaTour.ts';
 import { rassvetnoePrikljuchenieTourData } from '../data/rassvetnoePrikljuchenieTour.ts';
@@ -54,7 +54,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,      // ✅ будет в поиске и меню
     isFeatured: true,    // ✅ будет на главной
     priority: 1,         // 🥇 первый в списке
-    data: () => Promise.resolve(phiPhiTourData)
+    data: () => Promise.resolve(phiPhi2DaysTourData)
   },
 
   // 🧪 НОВЫЙ ТУР - ТЕПЕРЬ АКТИВЕН!

@@ -31,7 +31,7 @@ export const phiPhi2DaysTourData: TourData = {
   groupSize: "до 30 человек",
   rating: 4.8,
   reviewsCount: 53,
-  mainImage: mayaBay1,
+  mainImage: pilehLagoon,
   gallery: [
     mayaBay1,
     mayaBay2,

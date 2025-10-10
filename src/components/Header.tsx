@@ -135,11 +135,12 @@ export const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 rounded-full overflow-hidden shadow-md bg-white">
+            <div className="w-10 h-10 rounded-full overflow-hidden shadow-md bg-white flex items-center justify-center">
               <img 
                 src={logoImage} 
                 alt="Phuket Go Logo" 
-                className="w-full h-full object-cover object-center rounded-full"
+                className="w-full h-full object-cover object-center scale-110"
+                style={{ clipPath: 'circle(50% at 50% 50%)' }}
               />
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">

@@ -65,29 +65,34 @@ export const Tours = ({ filteredTours }: ToursProps) => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {toursToShow.map((tour) => (
-            <Card key={tour.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              {/* ✅ РЕАЛЬНОЕ ФОТО ИЗ ДАННЫХ ТУРА */}
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={tour.data?.mainImage || tour.data?.gallery?.[0] || fallbackImage} 
-                  alt={tour.data?.title || tour.name}
-                  className="w-full h-full object-cover object-center transition-opacity duration-300"
-                  loading="lazy"
-                  onError={(e) => {
-                    e.currentTarget.src = fallbackImage;
-                  }}
-                />
-                {tour.isPopular && (
-                  <Badge className="absolute top-4 right-4 bg-orange-500 hover:bg-orange-600">
-                    🔥 Популярно
-                  </Badge>
-                )}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                  <h3 className="text-white text-xl font-bold">
-                    {tour.data?.title || tour.name}
-                  </h3>
+            <Link 
+              key={tour.id} 
+              to={getDetailPath(tour)}
+              className="block"
+            >
+              <Card className="overflow-hidden hover:shadow-lg transition-all hover:scale-[1.02] cursor-pointer">
+                {/* ✅ РЕАЛЬНОЕ ФОТО ИЗ ДАННЫХ ТУРА */}
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={tour.data?.mainImage || tour.data?.gallery?.[0] || fallbackImage} 
+                    alt={tour.data?.title || tour.name}
+                    className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-110"
+                    loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.src = fallbackImage;
+                    }}
+                  />
+                  {tour.isPopular && (
+                    <Badge className="absolute top-4 right-4 bg-orange-500 hover:bg-orange-600">
+                      🔥 Популярно
+                    </Badge>
+                  )}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                    <h3 className="text-white text-xl font-bold">
+                      {tour.data?.title || tour.name}
+                    </h3>
+                  </div>
                 </div>
-              </div>
               
               <CardContent className="p-6">
                 <div className="space-y-4">
@@ -156,13 +161,18 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                   
                   {/* ✅ КНОПКИ ДЕЙСТВИЙ */}
                   <div className="space-y-2">
-                    <Link to={getDetailPath(tour)} className="block">
-                      <Button variant="outline" className="w-full">
-                        📖 Подробнее о туре
-                      </Button>
-                    </Link>
                     <Button 
-                      onClick={() => handleBookingClick(tour)}
+                      variant="outline" 
+                      className="w-full pointer-events-none"
+                    >
+                      📖 Подробнее о туре
+                    </Button>
+                    <Button 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleBookingClick(tour);
+                      }}
                       className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3"
                     >
                       🏝️ Забронировать тур
@@ -171,6 +181,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                 </div>
               </CardContent>
             </Card>
+            </Link>
           ))}
         </div>
 

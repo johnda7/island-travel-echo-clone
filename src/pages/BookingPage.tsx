@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { phiPhiTourData } from '@/data/phiPhiTour';
+import { phiPhi2DaysTourData as phiPhiTourData } from '@/data/tours/phi-phi-2days';
 import { ChevronLeft, Calendar, Users, Phone, Mail, User, MapPin } from 'lucide-react';
 
 export const BookingPageNew: React.FC = () => {

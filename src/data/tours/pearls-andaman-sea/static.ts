@@ -5,13 +5,13 @@
 import { TourData } from "@/types/Tour";
 
 // 📸 ОРИГИНАЛЬНЫЕ ФОТОГРАФИИ С САЙТА
-import railayMain from "../assets/pearls-andaman-sea/gallery-01-railay-main.jpg";
-import railayBeach from "../assets/pearls-andaman-sea/gallery-02-railay-beach.jpg";
-import railayVertical from "../assets/pearls-andaman-sea/gallery-03-railay-vertical.jpg";
-import railayBoats from "../assets/pearls-andaman-sea/gallery-04-railay-boats.jpg";
-import railayCliffs from "../assets/pearls-andaman-sea/gallery-05-railay-cliffs.jpg";
-import hongIsland from "../assets/pearls-andaman-sea/gallery-06-hong-island.jpg";
-import bambooIsland from "../assets/pearls-andaman-sea/gallery-07-bamboo-island.webp";
+import railayMain from "@/assets/pearls-andaman-sea/gallery-01-railay-main.jpg";
+import railayBeach from "@/assets/pearls-andaman-sea/gallery-02-railay-beach.jpg";
+import railayVertical from "@/assets/pearls-andaman-sea/gallery-03-railay-vertical.jpg";
+import railayBoats from "@/assets/pearls-andaman-sea/gallery-04-railay-boats.jpg";
+import railayCliffs from "@/assets/pearls-andaman-sea/gallery-05-railay-cliffs.jpg";
+import hongIsland from "@/assets/pearls-andaman-sea/gallery-06-hong-island.jpg";
+import bambooIsland from "@/assets/pearls-andaman-sea/gallery-07-bamboo-island.webp";
 
 // ЕДИНСТВЕННЫЙ ИСТОЧНИК ДАННЫХ - как в PhiPhi CMS
 export const pearlsAndamanSeaTourData: TourData = {

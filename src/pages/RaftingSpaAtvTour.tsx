@@ -17,7 +17,7 @@ import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Gri
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
 import { MobileBookingBar } from "@/components/MobileBookingBar";
-import { raftingSpaAtvTourData as excursion } from "@/data/raftingSpaAtvTour";
+import { raftingSpaAtvTourData as excursion } from "@/data/tours/rafting-spa-atv";
 
 const RaftingSpaAtvTour = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);

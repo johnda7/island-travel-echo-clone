@@ -1,19 +1,19 @@
 import { TourData } from '@/types/Tour';
 // Реальные изображения тура Аватар с phuketgo.aaddaa.com
-import avatarMain from "../assets/avatar-plus-hangdong/6798780e8ebf0-17645-1200-800.jpg";
-import benyaranMuseum1 from "../assets/avatar-plus-hangdong/benyaran-museum-1.jpg";
-import benyaranMuseum2 from "../assets/avatar-plus-hangdong/benyaran-museum-2.jpg";
-import benyaranMuseum4 from "../assets/avatar-plus-hangdong/benyaran-museum-4.jpg";
-import benyaranWaterfall from "../assets/avatar-plus-hangdong/benyaran-waterfall.jpg";
-import elephantShow from "../assets/avatar-plus-hangdong/elephant-show-scaled.jpg";
-import elephantSpa from "../assets/avatar-plus-hangdong/elephant-spa-scaled.jpg";
-import jeepSafari from "../assets/avatar-plus-hangdong/jeep.jpg";
-import maDoobuaCafe from "../assets/avatar-plus-hangdong/ma-doo-bua-cafe-1-1.jpg";
-import hotspringSpa1 from "../assets/avatar-plus-hangdong/the-hotspring-beach-resort-spa-1.jpeg";
-import hotspringSpa2 from "../assets/avatar-plus-hangdong/the-hotspring-beach-resort-spa2.jpg";
-import coldPool from "../assets/avatar-plus-hangdong/the-hotspring-beach-resort-spa-cold-iced-pool.jpg";
-import watThaSai from "../assets/avatar-plus-hangdong/wat-tha-sai-temple.jpg";
-import nataiBeach from "../assets/avatar-plus-hangdong/sunset-at-natai-beach.jpg";
+import avatarMain from "@/assets/avatar-plus-hangdong/6798780e8ebf0-17645-1200-800.jpg";
+import benyaranMuseum1 from "@/assets/avatar-plus-hangdong/benyaran-museum-1.jpg";
+import benyaranMuseum2 from "@/assets/avatar-plus-hangdong/benyaran-museum-2.jpg";
+import benyaranMuseum4 from "@/assets/avatar-plus-hangdong/benyaran-museum-4.jpg";
+import benyaranWaterfall from "@/assets/avatar-plus-hangdong/benyaran-waterfall.jpg";
+import elephantShow from "@/assets/avatar-plus-hangdong/elephant-show-scaled.jpg";
+import elephantSpa from "@/assets/avatar-plus-hangdong/elephant-spa-scaled.jpg";
+import jeepSafari from "@/assets/avatar-plus-hangdong/jeep.jpg";
+import maDoobuaCafe from "@/assets/avatar-plus-hangdong/ma-doo-bua-cafe-1-1.jpg";
+import hotspringSpa1 from "@/assets/avatar-plus-hangdong/the-hotspring-beach-resort-spa-1.jpeg";
+import hotspringSpa2 from "@/assets/avatar-plus-hangdong/the-hotspring-beach-resort-spa2.jpg";
+import coldPool from "@/assets/avatar-plus-hangdong/the-hotspring-beach-resort-spa-cold-iced-pool.jpg";
+import watThaSai from "@/assets/avatar-plus-hangdong/wat-tha-sai-temple.jpg";
+import nataiBeach from "@/assets/avatar-plus-hangdong/sunset-at-natai-beach.jpg";
 
 export const avatarPlusHangdongTour: TourData = {
   id: 'avatar-plus-hangdong',

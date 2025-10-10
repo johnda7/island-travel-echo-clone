@@ -10,18 +10,18 @@
 // убедитесь, что поля корректны. Не удаляйте существующие ID без миграции ссылок.
 // 🎯 ПРИНЦИП: "ДОБАВИЛ СЮДА - ПОЯВИЛОСЬ ВЕЗДЕ АВТОМАТИЧЕСКИ!"
 
-import { phiPhi2DaysTourData } from '../data/phiPhi2DaysTour.ts';
-import { pearlsAndamanSeaTourData } from '../data/pearlsTour.ts';
-import { dostoprimechatelnostiPhuketaTourData } from '../data/dostoprimechatelnostiPhuketaTour.ts';
-import { rassvetnoePrikljuchenieTourData } from '../data/rassvetnoePrikljuchenieTour.ts';
+import { phiPhi2DaysTourData } from './tours/phi-phi-2days';
+import { pearlsAndamanSeaTourData } from './tours/pearls-andaman-sea';
+import { dostoprimechatelnostiPhuketaTourData } from './tours/dostoprimechatelnosti-phuketa';
+import { rassvetnoePrikljuchenieTourData } from './tours/rassvetnoe-prikljuchenie';
 // НОВЫЕ 6 ТУРОВ
 
-import { jamesBondIslandTourData } from '../data/jamesBondIslandTour.ts';
-import { elevenIslandsStandardTourData } from '../data/elevenIslandsStandardTour.ts';
-import { elevenIslandsMegaTourData } from '../data/elevenIslandsMegaTour.ts';
-import { raftingSpaAtvTourData } from '../data/raftingSpaAtvTour.ts';
-import { kaoLakSafariTourData } from '../data/kaoLakSafariTour.ts';
-import { rachaCoralIslandsTourData } from '../data/rachaCoralIslandsTour.ts';
+import { jamesBondIslandTourData } from './tours/james-bond-island';
+import { elevenIslandsStandardTourData } from './tours/eleven-islands-standard';
+import { elevenIslandsMegaTourData } from './tours/eleven-islands-mega';
+import { raftingSpaAtvTourData } from './tours/rafting-spa-atv';
+import { kaoLakSafariTourData } from './tours/kao-lak-safari';
+import { rachaCoralIslandsTourData } from './tours/racha-coral-islands';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -148,7 +148,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: false,   // ❌ не на главной (пока)
     priority: 9,
-    data: () => import('./avatarPlusHangdongTour').then(m => m.avatarPlusHangdongTour)
+    data: () => import('./tours/avatar-plus-hangdong').then(m => m.avatarPlusHangdongTour)
   },
 
   // 10. 11 островов Стандарт на спидботе

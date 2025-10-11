@@ -20,8 +20,8 @@ export const MobileBookingBar: React.FC<MobileBookingBarProps> = ({
 
   return (
     <>
-      {/* Mobile booking bar - фиксированная панель внизу */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50">
+      {/* Mobile booking bar - фиксированная панель внизу с размытием фона */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 p-4 z-50 shadow-lg">
         <div className="flex items-center gap-3">
           <div className="text-left flex-shrink-0">
             <div className="text-sm font-bold text-green-600">

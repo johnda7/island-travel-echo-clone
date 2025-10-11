@@ -126,19 +126,23 @@ const CheoLanLake = () => {
         </div>
       </div>
       
-      {/* Breadcrumbs - Desktop and Mobile */}
-      <section className="pt-20 md:pt-20 pb-3 px-4 md:px-0">
+      {/* Breadcrumbs - 4 уровня как в эталоне */}
+      <section className="pt-20 md:pt-20 pb-4 px-4 md:px-0">
         <div className="container mx-auto max-w-7xl">
-          <nav className="flex items-center space-x-2 text-[13px]">
-            <Link to="/" className="text-[#007AFF] hover:opacity-70 active:opacity-50 transition-opacity">
+          <nav className="flex items-center space-x-2 text-sm text-gray-500">
+            <Link to="/" className="hover:text-green-600 transition-colors">
               Главная
             </Link>
-            <span className="text-gray-400">/</span>
-            <Link to="/excursions" className="text-[#007AFF] hover:opacity-70 active:opacity-50 transition-opacity">
-              Экскурсии
+            <span>›</span>
+            <Link to="/tours" className="hover:text-green-600 transition-colors">
+              Туры
             </Link>
-            <span className="text-gray-400">/</span>
-            <span className="text-gray-600 font-medium">{excursion.title}</span>
+            <span>›</span>
+            <Link to="/tours?category=adventure" className="hover:text-green-600 transition-colors">
+              Приключения
+            </Link>
+            <span>›</span>
+            <span className="text-gray-700 font-medium">{excursion.title}</span>
           </nav>
         </div>
       </section>
@@ -156,44 +160,34 @@ const CheoLanLake = () => {
               className="w-full h-full object-cover object-center"
             />
             
-            {/* Badges - iOS style */}
-            <div className="absolute top-3 left-3 flex gap-1.5">
-              <span className="px-2.5 py-1 text-white text-[11px] font-semibold tracking-wide rounded-md backdrop-blur-2xl" style={{
-                background: 'rgba(255, 59, 48, 0.88)',
-                textShadow: '0 1px 2px rgba(0,0,0,0.2)'
+            {/* Badges - iOS 26 compact style */}
+            <div className="absolute top-2.5 left-2.5 flex gap-1.5">
+              <span className="px-2 py-0.5 text-white text-[10px] font-bold tracking-wider rounded-md backdrop-blur-xl" style={{
+                background: 'rgba(255, 59, 48, 0.92)',
+                textShadow: '0 1px 2px rgba(0,0,0,0.25)',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.15)'
               }}>
                 ХИТ
               </span>
-              <span className="px-2.5 py-1 text-white text-[11px] font-semibold tracking-wide rounded-md backdrop-blur-2xl" style={{
-                background: 'rgba(52, 199, 89, 0.88)',
-                textShadow: '0 1px 2px rgba(0,0,0,0.2)'
+              <span className="px-2 py-0.5 text-white text-[10px] font-bold tracking-wider rounded-md backdrop-blur-xl" style={{
+                background: 'rgba(52, 199, 89, 0.92)',
+                textShadow: '0 1px 2px rgba(0,0,0,0.25)',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.15)'
               }}>
                 ПРИРОДА
               </span>
             </div>
 
-            {/* Rating - iOS style */}
-            <div className="absolute top-3 right-3 flex items-center gap-1 backdrop-blur-2xl px-2 py-1 rounded-lg" style={{
-              background: 'rgba(255, 255, 255, 0.88)',
+            {/* Rating - iOS 26 compact */}
+            <div className="absolute top-2.5 right-2.5 flex items-center gap-0.5 backdrop-blur-xl px-1.5 py-0.5 rounded-md" style={{
+              background: 'rgba(255, 255, 255, 0.92)',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.15)'
             }}>
-              <Star className="w-3.5 h-3.5 fill-[#FFCC00] text-[#FFCC00]" />
-              <span className="text-xs font-semibold text-gray-900" style={{ letterSpacing: '-0.01em' }}>{excursion.rating}</span>
+              <Star className="w-3 h-3 fill-[#FFCC00] text-[#FFCC00]" />
+              <span className="text-[11px] font-bold text-gray-900" style={{ letterSpacing: '-0.02em' }}>{excursion.rating}</span>
             </div>
 
-            {/* Nav buttons - iOS style */}
-            <button onClick={prevMobileImage} className="absolute left-2.5 top-1/2 -translate-y-1/2 backdrop-blur-2xl p-2 rounded-full active:scale-90 transition-transform" style={{
-              background: 'rgba(255, 255, 255, 0.75)',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)'
-            }}>
-              <ChevronLeft className="w-5 h-5 text-gray-900" strokeWidth={2.5} />
-            </button>
-            
-            <button onClick={nextMobileImage} className="absolute right-2.5 top-1/2 -translate-y-1/2 backdrop-blur-2xl p-2 rounded-full active:scale-90 transition-transform" style={{
-              background: 'rgba(255, 255, 255, 0.75)',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)'
-            }}>
-              <ChevronRight className="w-5 h-5 text-gray-900" strokeWidth={2.5} />
-            </button>
+            {/* Nav buttons removed - iOS 26 uses swipe gestures */}
           </div>
 
           {/* Page indicators - iOS style */}
@@ -207,14 +201,30 @@ const CheoLanLake = () => {
             ))}
           </div>
           
-          {/* Show all button - iOS 26 Glassmorphism */}
+          {/* Show all button - Telegram/iOS жидкое стекло */}
           <div className="mt-3 px-4 pb-4">
-            <button onClick={openGallery} className="w-full flex items-center justify-center gap-2 py-3 text-[15px] font-semibold text-[#007AFF] rounded-2xl active:scale-[0.98] transition-all" style={{
+            <button onClick={openGallery} className="w-full flex items-center justify-center gap-2 py-3 text-[15px] font-semibold rounded-2xl transition-all duration-150" style={{
+              color: '#007AFF',
               background: 'rgba(0, 122, 255, 0.12)',
               backdropFilter: 'blur(20px) saturate(180%)',
               WebkitBackdropFilter: 'blur(20px) saturate(180%)',
               boxShadow: '0 4px 16px rgba(0, 122, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
               border: '1px solid rgba(0, 122, 255, 0.2)'
+            }} onMouseDown={(e) => {
+              e.currentTarget.style.filter = 'brightness(0.85)';
+              e.currentTarget.style.transform = 'scale(0.98)';
+            }} onMouseUp={(e) => {
+              e.currentTarget.style.filter = 'brightness(1)';
+              e.currentTarget.style.transform = 'scale(1)';
+            }} onMouseLeave={(e) => {
+              e.currentTarget.style.filter = 'brightness(1)';
+              e.currentTarget.style.transform = 'scale(1)';
+            }} onTouchStart={(e) => {
+              e.currentTarget.style.filter = 'brightness(0.85)';
+              e.currentTarget.style.transform = 'scale(0.98)';
+            }} onTouchEnd={(e) => {
+              e.currentTarget.style.filter = 'brightness(1)';
+              e.currentTarget.style.transform = 'scale(1)';
             }}>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -222,15 +232,30 @@ const CheoLanLake = () => {
               Посмотреть все {excursion.gallery.length} фото
             </button>
             
-            {/* Photo Tags - iOS 26 Glassmorphism */}
+            {/* Photo Tags - Telegram/iOS жидкое стекло */}
             <div className="flex flex-wrap gap-2 justify-center mt-3">
               {['озеро', 'чео лан', 'природа', 'смотровая', 'самет нангше', 'джунгли', 'храм', 'банг тонг'].map((tag) => (
-                <span key={tag} className="px-3 py-1.5 text-xs font-medium text-gray-700 rounded-full" style={{
+                <span key={tag} className="px-3 py-1.5 text-xs font-medium text-gray-700 rounded-full transition-all duration-150 cursor-pointer select-none" style={{
                   background: 'rgba(142, 142, 147, 0.12)',
                   backdropFilter: 'blur(20px) saturate(180%)',
                   WebkitBackdropFilter: 'blur(20px) saturate(180%)',
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
                   border: '1px solid rgba(255, 255, 255, 0.18)'
+                }} onMouseDown={(e) => {
+                  e.currentTarget.style.filter = 'brightness(0.85)';
+                  e.currentTarget.style.transform = 'scale(0.98)';
+                }} onMouseUp={(e) => {
+                  e.currentTarget.style.filter = 'brightness(1)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }} onMouseLeave={(e) => {
+                  e.currentTarget.style.filter = 'brightness(1)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }} onTouchStart={(e) => {
+                  e.currentTarget.style.filter = 'brightness(0.85)';
+                  e.currentTarget.style.transform = 'scale(0.98)';
+                }} onTouchEnd={(e) => {
+                  e.currentTarget.style.filter = 'brightness(1)';
+                  e.currentTarget.style.transform = 'scale(1)';
                 }}>
                   {tag}
                 </span>
@@ -248,34 +273,38 @@ const CheoLanLake = () => {
                 }}>
                   <img src={excursion.gallery[0]} alt="Main" className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105" />
                   
-                  <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                    <span className="px-3 py-1.5 text-white text-xs font-semibold rounded-full" style={{
-                      background: 'rgba(239, 68, 68, 0.85)',
+                  {/* Badges - iOS 26 compact desktop */}
+                  <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                    <span className="px-2.5 py-1 text-white text-[11px] font-bold tracking-wider rounded-lg" style={{
+                      background: 'rgba(255, 59, 48, 0.92)',
                       backdropFilter: 'blur(20px) saturate(180%)',
                       WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-                      boxShadow: '0 4px 16px rgba(239, 68, 68, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)'
+                      boxShadow: '0 2px 8px rgba(255, 59, 48, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                      border: '1px solid rgba(255, 255, 255, 0.15)',
+                      textShadow: '0 1px 2px rgba(0,0,0,0.25)'
                     }}>
                       ХИТ
                     </span>
-                    <span className="px-3 py-1.5 text-white text-xs font-semibold rounded-full" style={{
-                      background: 'rgba(16, 185, 129, 0.85)',
+                    <span className="px-2.5 py-1 text-white text-[11px] font-bold tracking-wider rounded-lg" style={{
+                      background: 'rgba(52, 199, 89, 0.92)',
                       backdropFilter: 'blur(20px) saturate(180%)',
                       WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-                      boxShadow: '0 4px 16px rgba(16, 185, 129, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)'
+                      boxShadow: '0 2px 8px rgba(52, 199, 89, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                      border: '1px solid rgba(255, 255, 255, 0.15)',
+                      textShadow: '0 1px 2px rgba(0,0,0,0.25)'
                     }}>
-                      Природа
+                      ПРИРОДА
                     </span>
                   </div>
 
-                  <div className="absolute top-4 right-4 flex items-center gap-2 backdrop-blur-2xl px-3 py-2 rounded-full" style={{
+                  {/* Rating - iOS 26 compact desktop */}
+                  <div className="absolute top-3 right-3 flex items-center gap-1 backdrop-blur-xl px-2 py-1 rounded-lg" style={{
                     background: 'rgba(255, 255, 255, 0.92)',
-                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)'
                   }}>
-                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    <span className="text-sm font-semibold text-gray-900">{excursion.rating}</span>
-                    <span className="text-xs font-medium text-gray-500">({excursion.reviewsCount})</span>
+                    <Star className="w-3.5 h-3.5 fill-[#FFCC00] text-[#FFCC00]" />
+                    <span className="text-xs font-bold text-gray-900">{excursion.rating}</span>
+                    <span className="text-[10px] font-medium text-gray-500">({excursion.reviewsCount})</span>
                   </div>
                 </div>
 
@@ -332,25 +361,13 @@ const CheoLanLake = () => {
                       <div className="space-y-2">
                         <Button 
                           onClick={() => setShowBookingModal(true)} 
-                          className="w-full text-white py-3 font-semibold active:scale-95 transition-all" 
-                          style={{ 
-                            background: 'rgba(0, 122, 255, 0.85)',
-                            backdropFilter: 'blur(20px)',
-                            WebkitBackdropFilter: 'blur(20px)',
-                            boxShadow: '0 8px 32px rgba(0, 122, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
-                          }}
+                          className="btn-booking w-full"
                         >
                           Забронировать тур
                         </Button>
                         <Button 
                           onClick={() => window.open('https://t.me/Phuketga', '_blank')} 
-                          className="w-full text-white py-3 font-semibold active:scale-95 transition-all" 
-                          style={{ 
-                            background: 'rgba(0, 136, 204, 0.85)',
-                            backdropFilter: 'blur(20px)',
-                            WebkitBackdropFilter: 'blur(20px)',
-                            boxShadow: '0 8px 32px rgba(0, 136, 204, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
-                          }}
+                          className="btn-telegram w-full"
                         >
                           <span className="flex flex-col items-center leading-tight">
                             <span>Написать</span>
@@ -367,31 +384,11 @@ const CheoLanLake = () => {
         </div>
       </section>
 
-      {/* Tags - iOS 26 style */}
-      <section className="py-4">
+      {/* Title and meta - iOS 26 compact */}
+      <section className="py-3 pt-14 md:pt-3">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap gap-2">
-            {excursion.tags?.slice(0, 8).map((tag, index) => (
-              <span 
-                key={index} 
-                className="px-3 py-1.5 text-xs font-medium text-gray-700 rounded-lg active:scale-95 transition-transform"
-                style={{
-                  background: 'rgba(120, 120, 128, 0.12)',
-                  letterSpacing: '-0.01em'
-                }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Title and meta - iOS 26 style */}
-      <section className="py-4 pt-16 md:pt-4">
-        <div className="container mx-auto px-4">
-          <h1 className="text-[28px] md:text-4xl font-bold mb-2 text-gray-900 leading-tight tracking-tight">{excursion.title}</h1>
-          <p className="text-[15px] text-gray-600 mb-4 leading-snug">{excursion.subtitle}</p>
+          <h1 className="text-[22px] md:text-3xl font-bold mb-1.5 text-gray-900 leading-tight tracking-tight">{excursion.title}</h1>
+          <p className="text-sm text-gray-600 mb-3 leading-snug">{excursion.subtitle}</p>
           
           {/* Meta info - iOS 26 Glassmorphism Tags */}
           <div className="flex flex-wrap gap-2 mb-4">
@@ -441,14 +438,7 @@ const CheoLanLake = () => {
             </div>
             <button 
               onClick={() => setShowBookingModal(true)} 
-              className="px-6 py-2.5 text-[15px] font-semibold rounded-full active:scale-95 transition-all" 
-              style={{
-                background: 'rgba(255, 255, 255, 0.95)',
-                color: '#007AFF',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
-              }}
+              className="btn-booking"
             >
               Забронировать
             </button>
@@ -463,8 +453,12 @@ const CheoLanLake = () => {
             <div className="lg:col-span-3 space-y-4">
               
               {/* Description card */}
-              <div className="rounded-2xl p-5" style={{ background: 'white', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)' }}>
-                <h2 className="text-[22px] font-bold mb-3 text-gray-900 tracking-tight flex items-center gap-2">
+              <div className="rounded-2xl p-6" style={{ 
+                background: 'white', 
+                boxShadow: '0 2px 16px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06)',
+                border: '1px solid rgba(0, 0, 0, 0.04)'
+              }}>
+                <h2 className="text-[22px] font-bold mb-4 text-gray-900 tracking-tight flex items-center gap-2.5">
                   <svg className="w-6 h-6 text-[#007AFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
@@ -475,8 +469,12 @@ const CheoLanLake = () => {
 
               {/* Schedule card */}
               {excursion.itinerary && excursion.itinerary.length > 0 && (
-                <div className="rounded-2xl p-5" style={{ background: 'white', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)' }}>
-                  <h3 className="text-[22px] font-bold mb-4 text-gray-900 tracking-tight flex items-center gap-2">
+                <div className="rounded-2xl p-6" style={{ 
+                  background: 'white', 
+                  boxShadow: '0 2px 16px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06)',
+                  border: '1px solid rgba(0, 0, 0, 0.04)'
+                }}>
+                  <h3 className="text-[22px] font-bold mb-5 text-gray-900 tracking-tight flex items-center gap-2.5">
                     <svg className="w-6 h-6 text-[#007AFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
@@ -499,8 +497,12 @@ const CheoLanLake = () => {
 
               {/* Highlights card */}
               {excursion.highlights && excursion.highlights.length > 0 && (
-                <div className="rounded-2xl p-5" style={{ background: 'white', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)' }}>
-                  <h3 className="text-[22px] font-bold mb-4 text-gray-900 tracking-tight flex items-center gap-2">
+                <div className="rounded-2xl p-6" style={{ 
+                  background: 'white', 
+                  boxShadow: '0 2px 16px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06)',
+                  border: '1px solid rgba(0, 0, 0, 0.04)'
+                }}>
+                  <h3 className="text-[22px] font-bold mb-5 text-gray-900 tracking-tight flex items-center gap-2.5">
                     <svg className="w-6 h-6 text-[#007AFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                     </svg>
@@ -509,8 +511,8 @@ const CheoLanLake = () => {
                   <ul className="space-y-2.5">
                     {excursion.highlights.map((highlight, index) => (
                       <li key={index} className="flex items-start gap-3">
-                        <span className="flex-shrink-0 w-5 h-5 flex items-center justify-center mt-0.5 rounded-full" style={{ background: 'rgba(52, 199, 89, 0.15)' }}>
-                          <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+                        <span className="flex-shrink-0 w-5 h-5 flex items-center justify-center mt-0.5 rounded-full" style={{ background: 'rgba(0, 122, 255, 0.12)' }}>
+                          <svg className="w-3 h-3" style={{ color: '#007AFF' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                           </svg>
                         </span>
@@ -524,9 +526,13 @@ const CheoLanLake = () => {
               {/* Included/Excluded - iOS cards */}
               <div className="grid md:grid-cols-2 gap-4">
                 {excursion.included && excursion.included.length > 0 && (
-                  <div className="rounded-2xl p-5" style={{ background: 'white', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)' }}>
-                    <h3 className="text-[17px] font-bold mb-3 text-gray-900 flex items-center gap-2">
-                      <svg className="w-5 h-5" style={{ color: '#34C759' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                  <div className="rounded-2xl p-6" style={{ 
+                    background: 'white', 
+                    boxShadow: '0 2px 16px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06)',
+                    border: '1px solid rgba(0, 0, 0, 0.04)'
+                  }}>
+                    <h3 className="text-[17px] font-bold mb-4 text-gray-900 flex items-center gap-2">
+                      <svg className="w-5 h-5" style={{ color: '#007AFF' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       Включено в цену
@@ -534,8 +540,8 @@ const CheoLanLake = () => {
                     <ul className="space-y-2">
                       {excursion.included.map((item, index) => (
                         <li key={index} className="flex items-start gap-2.5">
-                          <span className="flex-shrink-0 w-4 h-4 flex items-center justify-center mt-0.5 rounded-full" style={{ background: 'rgba(52, 199, 89, 0.15)' }}>
-                            <svg className="w-2.5 h-2.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3.5}>
+                          <span className="flex-shrink-0 w-4 h-4 flex items-center justify-center mt-0.5 rounded-full" style={{ background: 'rgba(0, 122, 255, 0.12)' }}>
+                            <svg className="w-2.5 h-2.5" style={{ color: '#007AFF' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3.5}>
                               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                             </svg>
                           </span>
@@ -546,19 +552,23 @@ const CheoLanLake = () => {
                   </div>
                 )}
                 {excursion.excluded && excursion.excluded.length > 0 && (
-                  <div className="rounded-2xl p-5" style={{ background: 'white', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)' }}>
-                    <h3 className="text-[17px] font-bold mb-3 text-gray-900 flex items-center gap-2">
+                  <div className="rounded-2xl p-6" style={{ 
+                    background: 'white', 
+                    boxShadow: '0 2px 16px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06)',
+                    border: '1px solid rgba(0, 0, 0, 0.04)'
+                  }}>
+                    <h3 className="text-[17px] font-bold mb-4 text-gray-900 flex items-center gap-2">
                       <svg className="w-5 h-5" style={{ color: '#FF9500' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                       </svg>
                       Оплачивается отдельно
                     </h3>
                     <ul className="space-y-2">
                       {excursion.excluded.map((item, index) => (
                         <li key={index} className="flex items-start gap-2.5">
-                          <span className="flex-shrink-0 w-4 h-4 flex items-center justify-center mt-0.5 rounded-full" style={{ background: 'rgba(255, 149, 0, 0.15)' }}>
-                            <svg className="w-2.5 h-2.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3.5}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                          <span className="flex-shrink-0 w-4 h-4 flex items-center justify-center mt-0.5 rounded-full" style={{ background: 'rgba(255, 149, 0, 0.12)' }}>
+                            <svg className="w-2.5 h-2.5" style={{ color: '#FF9500' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3.5}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                             </svg>
                           </span>
                           <span className="text-[14px] text-gray-800 leading-snug">{item}</span>
@@ -571,8 +581,12 @@ const CheoLanLake = () => {
 
               {/* Requirements */}
               {excursion.requirements && excursion.requirements.length > 0 && (
-                <div className="rounded-2xl p-5" style={{ background: 'white', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)' }}>
-                  <h3 className="text-[17px] font-bold mb-3 text-gray-900 flex items-center gap-2">
+                <div className="rounded-2xl p-6" style={{ 
+                  background: 'white', 
+                  boxShadow: '0 2px 16px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06)',
+                  border: '1px solid rgba(0, 0, 0, 0.04)'
+                }}>
+                  <h3 className="text-[17px] font-bold mb-4 text-gray-900 flex items-center gap-2">
                     <svg className="w-5 h-5" style={{ color: '#007AFF' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                     </svg>
@@ -591,17 +605,23 @@ const CheoLanLake = () => {
 
               {/* Important info */}
               {excursion.importantInfo && excursion.importantInfo.length > 0 && (
-                <div className="rounded-2xl p-5" style={{ background: 'rgba(255, 204, 0, 0.08)', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)' }}>
-                  <h3 className="text-[17px] font-bold mb-3 text-amber-700 flex items-center gap-2">
+                <div className="rounded-2xl p-5 md:p-6" style={{ 
+                  background: 'rgba(255, 149, 0, 0.08)', 
+                  border: '1px solid rgba(255, 149, 0, 0.15)',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)' 
+                }}>
+                  <h3 className="text-[17px] font-bold mb-4 flex items-center gap-2" style={{ color: '#FF9500' }}>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     Важная информация
                   </h3>
                   <ul className="space-y-2">
                     {excursion.importantInfo.map((item, index) => (
                       <li key={index} className="flex items-start gap-2.5">
-                        <span className="text-amber-600 text-base mt-0.5">•</span>
+                        <span className="flex-shrink-0 w-4 h-4 flex items-center justify-center mt-0.5 rounded-full" style={{ background: 'rgba(255, 149, 0, 0.15)' }}>
+                          <span style={{ color: '#FF9500', fontSize: '10px', fontWeight: 'bold' }}>!</span>
+                        </span>
                         <span className="text-[14px] text-gray-800 leading-snug">{item}</span>
                       </li>
                     ))}
@@ -609,19 +629,22 @@ const CheoLanLake = () => {
                 </div>
               )}
               
-              {/* Trust & Guarantee - iOS 26 style (SIMPLIFIED) */}
-              <div className="rounded-2xl overflow-hidden" style={{ background: 'white', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)' }}>
-                <div className="p-5 pb-4">
-                  <h3 className="text-[22px] font-bold mb-4 text-gray-900 tracking-tight flex items-center gap-2">
-                    <svg className="w-6 h-6 text-[#007AFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+              {/* Trust & Guarantee */}
+              <div className="rounded-2xl p-6 md:p-7" style={{ 
+                background: 'white', 
+                boxShadow: '0 2px 16px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06)',
+                border: '1px solid rgba(0, 0, 0, 0.04)'
+              }}>
+                  <h3 className="text-[22px] font-bold mb-5 text-gray-900 tracking-tight flex items-center gap-2.5">
+                    <svg className="w-6 h-6" style={{ color: '#007AFF' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                     Гарантии
                   </h3>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
-                      <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'rgba(52, 199, 89, 0.12)' }}>
-                        <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                      <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'rgba(0, 122, 255, 0.12)' }}>
+                        <svg className="w-5 h-5" style={{ color: '#007AFF' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
@@ -642,182 +665,6 @@ const CheoLanLake = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              
-              {/* Related Tours - iOS 26 App Store style */}
-              <div className="-mx-4 md:mx-0">
-                <div className="px-4 md:px-5 mb-3">
-                  <h3 className="text-[22px] font-bold text-gray-900 tracking-tight flex items-center gap-2">
-                    <svg className="w-6 h-6 text-[#007AFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                    </svg>
-                    Похожие туры
-                  </h3>
-                </div>
-                
-                {/* App Store horizontal scroll */}
-                <div className="overflow-x-scroll scrollbar-hide snap-x snap-mandatory">
-                  <div className="flex gap-3 px-4 pb-3" style={{ width: 'max-content' }}>
-                    {/* Рассветное приключение */}
-                    <a href="#/excursion/rassvetnoe-prikljuchenie" className="snap-start flex-shrink-0 w-[280px] active:scale-[0.98] transition-transform duration-150">
-                      <div className="rounded-3xl overflow-hidden" style={{ background: 'white', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' }}>
-                        <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 to-indigo-100 relative overflow-hidden flex items-center justify-center">
-                          <svg className="w-20 h-20 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                          </svg>
-                          <div className="absolute top-3 right-3">
-                            <div className="px-2.5 py-1 text-[11px] font-bold tracking-wide" style={{ background: '#FF3B30', color: 'white', borderRadius: '8px', boxShadow: '0 2px 8px rgba(255, 59, 48, 0.3)' }}>
-                              ХИТ
-                            </div>
-                          </div>
-                        </div>
-                        <div className="p-4">
-                          <h4 className="text-[17px] font-semibold text-gray-900 mb-2 line-clamp-2 leading-tight">Рассветное приключение</h4>
-                          <div className="flex items-center gap-1.5 mb-3">
-                            <div className="flex">
-                              {[...Array(5)].map((_, i) => (
-                                <svg key={i} className="w-3.5 h-3.5" fill="#FFCC00" viewBox="0 0 20 20">
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                              ))}
-                            </div>
-                            <span className="text-[13px] font-medium text-gray-700">4.9</span>
-                            <span className="text-[13px] text-gray-500">(120)</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="text-[11px] text-gray-500 uppercase tracking-wide font-medium mb-0.5">От</div>
-                              <div className="flex items-baseline gap-1">
-                                <span className="text-[20px] font-bold text-gray-900">2 800</span>
-                                <span className="text-[15px] text-gray-600">฿</span>
-                              </div>
-                            </div>
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} style={{ color: '#007AFF' }}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-
-                    {/* Рафтинг + SPA + ATV */}
-                    <a href="#/excursion/rafting-spa-atv-1-day" className="snap-start flex-shrink-0 w-[280px] active:scale-[0.98] transition-transform duration-150">
-                      <div className="rounded-3xl overflow-hidden" style={{ background: 'white', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' }}>
-                        <div className="aspect-[4/3] bg-gradient-to-br from-green-50 to-emerald-100 relative overflow-hidden flex items-center justify-center">
-                          <svg className="w-20 h-20 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                          </svg>
-                        </div>
-                        <div className="p-4">
-                          <h4 className="text-[17px] font-semibold text-gray-900 mb-2 line-clamp-2 leading-tight">Рафтинг + Слоновье SPA + ATV</h4>
-                          <div className="flex items-center gap-1.5 mb-3">
-                            <div className="flex">
-                              {[...Array(5)].map((_, i) => (
-                                <svg key={i} className="w-3.5 h-3.5" fill="#FFCC00" viewBox="0 0 20 20">
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                              ))}
-                            </div>
-                            <span className="text-[13px] font-medium text-gray-700">4.8</span>
-                            <span className="text-[13px] text-gray-500">(85)</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="text-[11px] text-gray-500 uppercase tracking-wide font-medium mb-0.5">От</div>
-                              <div className="flex items-baseline gap-1">
-                                <span className="text-[20px] font-bold text-gray-900">2 200</span>
-                                <span className="text-[15px] text-gray-600">฿</span>
-                              </div>
-                            </div>
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} style={{ color: '#007AFF' }}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-
-                    {/* Као Лак Сафари */}
-                    <a href="#/excursion/kao-lak-safari-1-day" className="snap-start flex-shrink-0 w-[280px] active:scale-[0.98] transition-transform duration-150">
-                      <div className="rounded-3xl overflow-hidden" style={{ background: 'white', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' }}>
-                        <div className="aspect-[4/3] bg-gradient-to-br from-amber-50 to-orange-100 relative overflow-hidden flex items-center justify-center">
-                          <svg className="w-20 h-20 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                          </svg>
-                        </div>
-                        <div className="p-4">
-                          <h4 className="text-[17px] font-semibold text-gray-900 mb-2 line-clamp-2 leading-tight">Као Лак Сафари</h4>
-                          <div className="flex items-center gap-1.5 mb-3">
-                            <div className="flex">
-                              {[...Array(5)].map((_, i) => (
-                                <svg key={i} className="w-3.5 h-3.5" fill="#FFCC00" viewBox="0 0 20 20">
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                              ))}
-                            </div>
-                            <span className="text-[13px] font-medium text-gray-700">4.7</span>
-                            <span className="text-[13px] text-gray-500">(92)</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="text-[11px] text-gray-500 uppercase tracking-wide font-medium mb-0.5">От</div>
-                              <div className="flex items-baseline gap-1">
-                                <span className="text-[20px] font-bold text-gray-900">1 900</span>
-                                <span className="text-[15px] text-gray-600">฿</span>
-                              </div>
-                            </div>
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} style={{ color: '#007AFF' }}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-
-                    {/* Пхангнга + Стеклянный мост */}
-                    <a href="#/excursion/phang-nga-skywalk" className="snap-start flex-shrink-0 w-[280px] active:scale-[0.98] transition-transform duration-150">
-                      <div className="rounded-3xl overflow-hidden" style={{ background: 'white', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' }}>
-                        <div className="aspect-[4/3] bg-gradient-to-br from-purple-50 to-pink-100 relative overflow-hidden flex items-center justify-center">
-                          <svg className="w-20 h-20 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                          </svg>
-                          <div className="absolute top-3 right-3">
-                            <div className="px-2.5 py-1 text-[11px] font-bold tracking-wide" style={{ background: '#34C759', color: 'white', borderRadius: '8px', boxShadow: '0 2px 8px rgba(52, 199, 89, 0.3)' }}>
-                              НОВОЕ
-                            </div>
-                          </div>
-                        </div>
-                        <div className="p-4">
-                          <h4 className="text-[17px] font-semibold text-gray-900 mb-2 line-clamp-2 leading-tight">Пхангнга + Стеклянный мост</h4>
-                          <div className="flex items-center gap-1.5 mb-3">
-                            <div className="flex">
-                              {[...Array(5)].map((_, i) => (
-                                <svg key={i} className="w-3.5 h-3.5" fill="#FFCC00" viewBox="0 0 20 20">
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                              ))}
-                            </div>
-                            <span className="text-[13px] font-medium text-gray-700">4.9</span>
-                            <span className="text-[13px] text-gray-500">(68)</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="text-[11px] text-gray-500 uppercase tracking-wide font-medium mb-0.5">От</div>
-                              <div className="flex items-baseline gap-1">
-                                <span className="text-[20px] font-bold text-gray-900">2 400</span>
-                                <span className="text-[15px] text-gray-600">฿</span>
-                              </div>
-                            </div>
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} style={{ color: '#007AFF' }}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

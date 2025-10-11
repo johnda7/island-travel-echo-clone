@@ -133,16 +133,41 @@ export const Header = () => {
     <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo - ЦВЕТНОЙ с градиентом */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center font-black text-lg" style={{
-              background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 50%, #FF2D55 80%, #FF9500 100%)',
-              boxShadow: '0 2px 8px rgba(0, 122, 255, 0.3)'
-            }}>
+          {/* Logo - iOS 26 Liquid Glass */}
+          <Link to="/" className="flex items-center space-x-2 group">
+            <div 
+              className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center font-black text-lg transition-all duration-150"
+              style={{
+                background: 'linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%)',
+                backdropFilter: 'blur(20px) saturate(180%)',
+                boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                border: '1px solid rgba(255, 255, 255, 0.18)'
+              }}
+              onMouseDown={(e) => {
+                e.currentTarget.style.filter = 'brightness(0.85)';
+                e.currentTarget.style.transform = 'scale(0.98)';
+              }}
+              onMouseUp={(e) => {
+                e.currentTarget.style.filter = 'brightness(1)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.filter = 'brightness(1)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+              onTouchStart={(e) => {
+                e.currentTarget.style.filter = 'brightness(0.85)';
+                e.currentTarget.style.transform = 'scale(0.98)';
+              }}
+              onTouchEnd={(e) => {
+                e.currentTarget.style.filter = 'brightness(1)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
               <span className="text-white">GO</span>
             </div>
-            <span className="text-xl md:text-2xl font-bold whitespace-nowrap" style={{ 
-              background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 50%, #FF2D55 80%, #FF9500 100%)',
+            <span className="text-xl md:text-2xl font-bold whitespace-nowrap transition-all duration-150" style={{ 
+              background: 'linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'

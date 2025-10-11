@@ -23,6 +23,7 @@ import { raftingSpaAtvTourData } from './tours/rafting-spa-atv';
 import { kaoLakSafariTourData } from './tours/kao-lak-safari';
 import { rachaCoralIslandsTourData } from './tours/racha-coral-islands';
 import { phangNgaSkywalkTourData } from './tours/phang-nga-skywalk';
+import { cheoLanLakeTourData } from './tours/cheow-lan-lake';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -202,6 +203,18 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,    // ✅ показываем на главной (уникальный тур!)
     priority: 13,
     data: () => Promise.resolve(phangNgaSkywalkTourData)
+  },
+  
+  {
+    id: 'cheow-lan-lake',
+    name: 'Чео Лан + Самет Нангше',
+    category: 'adventure',
+    tags: ['озеро', 'чео лан', 'природа', 'смотровая', 'самет нангше', 'джунгли', 'храм', 'банг тонг', '1 день', 'сафари', 'као сок', 'гуйлинь', 'национальный парк'],
+    isPopular: true,     // ✅ показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: true,    // ✅ показываем на главной (уникальное озеро!)
+    priority: 14,
+    data: () => Promise.resolve(cheoLanLakeTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

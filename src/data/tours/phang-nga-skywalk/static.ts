@@ -15,6 +15,9 @@ export const phangNgaSkywalkTourData: TourData = {
   id: "phang-nga-skywalk",
   title: "УДИВИТЕЛЬНАЯ ПХАНГНГА + СТЕКЛЯННЫЙ МОСТ",
   subtitle: "Samet Nangshe Skywalk Bridge • Природа • Слоновье СПА • 1 день",
+  
+  // YouTube видео временно отключено (Shorts блокирует встраивание)
+  // videoId: "Ocdcwb1Kxrc",
   description: `Пханг Нга — живописная провинция Таиланда с богатой природой, уникальными достопримечательностями и самобытной культурой местных жителей.
 
 ЭТОТ ТУР ДЛЯ ТЕХ КТО:

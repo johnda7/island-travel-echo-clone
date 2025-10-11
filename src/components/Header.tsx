@@ -139,10 +139,15 @@ export const Header = () => {
               <img 
                 src={logoImage} 
                 alt="Phuket Go Logo" 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover mix-blend-overlay opacity-40"
               />
             </div>
-            <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent whitespace-nowrap">
+            <span className="text-xl md:text-2xl font-bold whitespace-nowrap" style={{ 
+              background: 'linear-gradient(135deg, #8E8E93 0%, #636366 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>
               Пхукет Go
             </span>
           </Link>
@@ -157,7 +162,7 @@ export const Header = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setShowSearchResults(true)}
                 onKeyDown={handleSearchKeyDown}
-                className="w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 role="combobox"
                 aria-expanded={showSearchResults && searchQuery.length > 0}
                 aria-controls={desktopListboxId}
@@ -187,7 +192,7 @@ export const Header = () => {
                   </span>
                   {loading ? (
                     <div className="p-6 text-center">
-                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green-500 mx-auto mb-3"></div>
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500 mx-auto mb-3"></div>
                       <div className="text-gray-500 text-sm">Поиск туров...</div>
                     </div>
                   ) : filteredTours.length > 0 ? (
@@ -208,8 +213,8 @@ export const Header = () => {
                         >
                           <div className="flex items-start space-x-3">
                             {/* Tour Icon */}
-                            <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                              <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="flex-shrink-0 w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
+                              <svg className="w-4 h-4 text-[#007AFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                               </svg>
@@ -235,7 +240,7 @@ export const Header = () => {
                             {/* Price */}
                             {tour.data?.priceAdult && (
                               <div className="flex-shrink-0 text-right">
-                                <div className="text-xs font-semibold text-green-600">от {tour.data.priceAdult} ฿</div>
+                                <div className="text-xs font-semibold text-[#007AFF]">от {tour.data.priceAdult} ฿</div>
                               </div>
                             )}
                           </div>
@@ -266,7 +271,7 @@ export const Header = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setShowSearchResults(true)}
                 onKeyDown={handleSearchKeyDown}
-                className="w-full pl-8 pr-4 py-2 text-sm border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full pl-8 pr-4 py-2 text-sm border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 role="combobox"
                 aria-expanded={showSearchResults && searchQuery.length > 0}
                 aria-controls={desktopListboxId}
@@ -291,7 +296,7 @@ export const Header = () => {
                   </span>
                   {loading ? (
                     <div className="p-6 text-center">
-                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green-500 mx-auto mb-3"></div>
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500 mx-auto mb-3"></div>
                       <div className="text-gray-500 text-sm">Поиск туров...</div>
                     </div>
                   ) : filteredTours.length > 0 ? (
@@ -312,8 +317,8 @@ export const Header = () => {
                         >
                           <div className="flex items-start space-x-3">
                             {/* Tour Icon */}
-                            <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                              <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="flex-shrink-0 w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
+                              <svg className="w-4 h-4 text-[#007AFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                               </svg>
@@ -339,7 +344,7 @@ export const Header = () => {
                             {/* Price */}
                             {tour.data?.priceAdult && (
                               <div className="flex-shrink-0 text-right">
-                                <div className="text-xs font-semibold text-green-600">от {tour.data.priceAdult} ฿</div>
+                                <div className="text-xs font-semibold text-[#007AFF]">от {tour.data.priceAdult} ฿</div>
                               </div>
                             )}
                           </div>
@@ -381,7 +386,7 @@ export const Header = () => {
                 <div key={item.name}>
                   <Link
                     to={item.href}
-                    className="block text-gray-700 hover:text-green-600 transition-colors duration-300 py-1 font-medium"
+                    className="block text-gray-700 hover:text-[#007AFF] transition-colors duration-300 py-1 font-medium"
                     onClick={() => setIsOpen(false)}
                   >
                     {item.name}
@@ -392,7 +397,7 @@ export const Header = () => {
                         <Link
                           key={subItem.name}
                           to={subItem.href}
-                          className="block text-gray-600 hover:text-green-600 transition-colors duration-300 py-0.5 text-sm"
+                          className="block text-gray-600 hover:text-[#007AFF] transition-colors duration-300 py-0.5 text-sm"
                           onClick={() => setIsOpen(false)}
                         >
                           {subItem.name}

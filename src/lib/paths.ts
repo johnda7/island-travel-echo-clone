@@ -27,6 +27,7 @@ export const getTourDetailPath = (tourId: string): string => {
     'kao-lak-safari-1-day': '/excursion/kao-lak-safari',
     'avatar-plus-hangdong': '/excursion/avatar-plus-hangdong',
     'phang-nga-skywalk': '/excursion/phang-nga-skywalk',
+    'cheow-lan-lake': '/excursion/cheow-lan-lake',
   };
 
   // Если тур защищен - возвращаем SEO-путь
@@ -59,6 +60,7 @@ export const getTourIdFromPath = (path: string): string | null => {
     '/excursion/kao-lak-safari': 'kao-lak-safari-1-day',
     '/excursion/avatar-plus-hangdong': 'avatar-plus-hangdong',
     '/excursion/phang-nga-skywalk': 'phang-nga-skywalk',
+    '/excursion/cheow-lan-lake': 'cheow-lan-lake',
   };
   
   if (pathToId[cleanPath]) {

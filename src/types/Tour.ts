@@ -23,6 +23,7 @@ export interface TourData {
   // Медиа контент
   mainImage: string;
   gallery: string[];
+  videoId?: string; // YouTube video ID для галереи (опционально)
 
   // Описание тура
   highlights: string[];

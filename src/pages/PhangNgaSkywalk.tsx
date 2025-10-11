@@ -9,6 +9,8 @@ import { phangNgaSkywalkTourData } from "@/data/tours/phang-nga-skywalk";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
 import { MobileBookingBar } from "@/components/MobileBookingBar";
+import { YouTubeVideoCard } from "@/components/YouTubeVideoCard";
+import { YouTubeModal } from "@/components/YouTubeModal";
 
 // ИСПОЛЬЗУЕМ ЕДИНЫЙ ИСТОЧНИК ДАННЫХ
 const excursion = phangNgaSkywalkTourData;
@@ -24,6 +26,9 @@ const PhangNgaSkywalk = () => {
   
   // Состояние для модального окна бронирования
   const [showBookingModal, setShowBookingModal] = useState(false);
+  
+  // Состояние для YouTube видео модалки
+  const [showVideoModal, setShowVideoModal] = useState(false);
 
   const openModal = (image: string, index: number) => {
     setSelectedImage(image);
@@ -143,42 +148,67 @@ const PhangNgaSkywalk = () => {
               style={{ scrollBehavior: 'smooth' }}
               id="mobile-gallery"
             >
-              {excursion.gallery.slice(0, 6).map((image, index) => (
+              {/* Главное фото */}
+              <div 
+                className="flex-shrink-0 w-full snap-center"
+                onClick={() => openModal(excursion.gallery[0], 0)}
+              >
+                <div className="aspect-[4/3] relative overflow-hidden">
+                  <img 
+                    src={excursion.gallery[0]} 
+                    alt="Главное фото"
+                    className="w-full h-full object-cover object-center"
+                  />
+                  
+                  {/* Бейджи */}
+                  <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                    <span className="px-2 py-1 bg-red-500 text-white text-xs font-medium rounded-md">
+                      ХИТ
+                    </span>
+                    <span className="px-2 py-1 bg-green-600 text-white text-xs font-medium rounded-md">
+                      Приключения
+                    </span>
+                  </div>
+
+                  {/* Рейтинг */}
+                  <div className="absolute top-3 right-3 flex items-center gap-1 bg-white bg-opacity-90 backdrop-blur-sm px-2 py-1 rounded-md">
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    <span className="text-sm font-medium text-gray-900">{excursion.rating}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* ВИДЕО - 2-я позиция (как у GetYourGuide) */}
+              {excursion.videoId && (
+                <div className="flex-shrink-0 w-full snap-center">
+                  <div className="aspect-[4/3]">
+                    <YouTubeVideoCard
+                      videoId={excursion.videoId}
+                      thumbnail={excursion.mainImage}
+                      title={excursion.title}
+                      onClick={() => setShowVideoModal(true)}
+                      className="w-full h-full"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Остальные фото (начиная со 2-го) */}
+              {excursion.gallery.slice(1, 6).map((image, index) => (
                 <div 
-                  key={index}
+                  key={index + 1}
                   className="flex-shrink-0 w-full snap-center"
-                  onClick={() => openModal(image, index)}
+                  onClick={() => openModal(image, index + 1)}
                 >
                   <div className="aspect-[4/3] relative overflow-hidden">
                     <img 
                       src={image} 
-                      alt={`Gallery ${index + 1}`}
+                      alt={`Gallery ${index + 2}`}
                       className="w-full h-full object-cover object-center"
                     />
                     
-                    {/* Бейджи и рейтинг только на первом слайде */}
-                    {index === 0 && (
-                      <>
-                        {/* Бейджи как у конкурентов */}
-                        <div className="absolute top-3 left-3 flex flex-wrap gap-2">
-                          <span className="px-2 py-1 bg-red-500 text-white text-xs font-medium rounded-md">
-                            ХИТ
-                          </span>
-                          <span className="px-2 py-1 bg-green-600 text-white text-xs font-medium rounded-md">
-                            Культурный
-                          </span>
-                        </div>
-
-                        {/* Рейтинг в правом верхнем углу */}
-                        <div className="absolute top-3 right-3 flex items-center gap-1 bg-white bg-opacity-90 backdrop-blur-sm px-2 py-1 rounded-md">
-                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                          <span className="text-sm font-medium text-gray-900">{excursion.rating}</span>
-                        </div>
-                      </>
-                    )}
-                    
                     {/* Overlay с количеством фото на последнем слайде */}
-                    {index === 5 && excursion.gallery.length > 6 && (
+                    {index === 4 && excursion.gallery.length > 6 && (
                       <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                         <div className="text-white text-center">
                           <div className="text-2xl font-bold mb-1">+{excursion.gallery.length - 6}</div>
@@ -193,22 +223,38 @@ const PhangNgaSkywalk = () => {
 
             {/* Точки индикации */}
             <div className="flex justify-center mt-4 space-x-2">
-              {excursion.gallery.slice(0, 6).map((_, index) => (
+              {/* Точка для главного фото */}
+              <button
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                  mobileGalleryIndex === 0 ? 'bg-green-600 scale-110' : 'bg-gray-300'
+                }`}
+                onClick={() => {
+                  document.getElementById('mobile-gallery')?.scrollTo({ left: 0, behavior: 'smooth' });
+                }}
+              />
+              {/* Точка для видео */}
+              {excursion.videoId && (
                 <button
-                  key={index}
                   className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                    index === mobileGalleryIndex ? 'bg-green-600 scale-110' : 'bg-gray-300'
+                    mobileGalleryIndex === 1 ? 'bg-red-600 scale-110' : 'bg-gray-300'
                   }`}
                   onClick={() => {
-                    setMobileGalleryIndex(index);
-                    // Программный скролл к нужному слайду
-                    const carousel = document.getElementById('mobile-gallery');
-                    if (carousel) {
-                      carousel.scrollTo({
-                        left: index * carousel.clientWidth,
-                        behavior: 'smooth'
-                      });
-                    }
+                    const gallery = document.getElementById('mobile-gallery');
+                    gallery?.scrollTo({ left: gallery.clientWidth, behavior: 'smooth' });
+                  }}
+                />
+              )}
+              {/* Точки для остальных фото */}
+              {excursion.gallery.slice(1, 6).map((_, index) => (
+                <button
+                  key={index + 1}
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                    mobileGalleryIndex === (excursion.videoId ? index + 2 : index + 1) ? 'bg-green-600 scale-110' : 'bg-gray-300'
+                  }`}
+                  onClick={() => {
+                    const gallery = document.getElementById('mobile-gallery');
+                    const offset = excursion.videoId ? index + 2 : index + 1;
+                    gallery?.scrollTo({ left: gallery.clientWidth * offset, behavior: 'smooth' });
                   }}
                 />
               ))}
@@ -696,6 +742,16 @@ const PhangNgaSkywalk = () => {
           tourData={excursion}
         />
       </ModalPortal>
+
+      {/* YouTube видео модалка */}
+      {excursion.videoId && (
+        <YouTubeModal
+          isOpen={showVideoModal}
+          onClose={() => setShowVideoModal(false)}
+          videoId={excursion.videoId}
+          title={excursion.title}
+        />
+      )}
 
       {/* Мобильная панель бронирования */}
       <MobileBookingBar

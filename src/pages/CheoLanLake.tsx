@@ -662,13 +662,10 @@ const CheoLanLake = () => {
                     {/* Рассветное приключение */}
                     <a href="#/excursion/rassvetnoe-prikljuchenie" className="snap-start flex-shrink-0 w-[280px] active:scale-[0.98] transition-transform duration-150">
                       <div className="rounded-3xl overflow-hidden" style={{ background: 'white', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' }}>
-                        <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
-                          <img 
-                            src="src/assets/james-bond-island/james-1.jpg" 
-                            alt="Рассветное приключение"
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
+                        <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 to-indigo-100 relative overflow-hidden flex items-center justify-center">
+                          <svg className="w-20 h-20 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                          </svg>
                           <div className="absolute top-3 right-3">
                             <div className="px-2.5 py-1 text-[11px] font-bold tracking-wide" style={{ background: '#FF3B30', color: 'white', borderRadius: '8px', boxShadow: '0 2px 8px rgba(255, 59, 48, 0.3)' }}>
                               ХИТ
@@ -707,13 +704,10 @@ const CheoLanLake = () => {
                     {/* Рафтинг + SPA + ATV */}
                     <a href="#/excursion/rafting-spa-atv-1-day" className="snap-start flex-shrink-0 w-[280px] active:scale-[0.98] transition-transform duration-150">
                       <div className="rounded-3xl overflow-hidden" style={{ background: 'white', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' }}>
-                        <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
-                          <img 
-                            src="src/assets/james-bond-island/james-2.jpg" 
-                            alt="Рафтинг + SPA + ATV"
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
+                        <div className="aspect-[4/3] bg-gradient-to-br from-green-50 to-emerald-100 relative overflow-hidden flex items-center justify-center">
+                          <svg className="w-20 h-20 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                          </svg>
                         </div>
                         <div className="p-4">
                           <h4 className="text-[17px] font-semibold text-gray-900 mb-2 line-clamp-2 leading-tight">Рафтинг + Слоновье SPA + ATV</h4>
@@ -747,13 +741,10 @@ const CheoLanLake = () => {
                     {/* Као Лак Сафари */}
                     <a href="#/excursion/kao-lak-safari-1-day" className="snap-start flex-shrink-0 w-[280px] active:scale-[0.98] transition-transform duration-150">
                       <div className="rounded-3xl overflow-hidden" style={{ background: 'white', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' }}>
-                        <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
-                          <img 
-                            src="src/assets/james-bond-island/james-3.webp" 
-                            alt="Као Лак Сафари"
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
+                        <div className="aspect-[4/3] bg-gradient-to-br from-amber-50 to-orange-100 relative overflow-hidden flex items-center justify-center">
+                          <svg className="w-20 h-20 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                          </svg>
                         </div>
                         <div className="p-4">
                           <h4 className="text-[17px] font-semibold text-gray-900 mb-2 line-clamp-2 leading-tight">Као Лак Сафари</h4>
@@ -787,13 +778,10 @@ const CheoLanLake = () => {
                     {/* Пхангнга + Стеклянный мост */}
                     <a href="#/excursion/phang-nga-skywalk" className="snap-start flex-shrink-0 w-[280px] active:scale-[0.98] transition-transform duration-150">
                       <div className="rounded-3xl overflow-hidden" style={{ background: 'white', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' }}>
-                        <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
-                          <img 
-                            src="src/assets/james-bond-island/james-4.webp" 
-                            alt="Пхангнга + Стеклянный мост"
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
+                        <div className="aspect-[4/3] bg-gradient-to-br from-purple-50 to-pink-100 relative overflow-hidden flex items-center justify-center">
+                          <svg className="w-20 h-20 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                          </svg>
                           <div className="absolute top-3 right-3">
                             <div className="px-2.5 py-1 text-[11px] font-bold tracking-wide" style={{ background: '#34C759', color: 'white', borderRadius: '8px', boxShadow: '0 2px 8px rgba(52, 199, 89, 0.3)' }}>
                               НОВОЕ

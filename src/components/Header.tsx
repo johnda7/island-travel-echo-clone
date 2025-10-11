@@ -133,17 +133,16 @@ export const Header = () => {
     <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+          {/* Logo - ЦВЕТНОЙ с градиентом */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 rounded-full overflow-hidden shadow-md">
-              <img 
-                src={logoImage} 
-                alt="Phuket Go Logo" 
-                className="w-full h-full object-cover mix-blend-overlay opacity-40"
-              />
+            <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center font-black text-lg" style={{
+              background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 50%, #FF2D55 80%, #FF9500 100%)',
+              boxShadow: '0 2px 8px rgba(0, 122, 255, 0.3)'
+            }}>
+              <span className="text-white">GO</span>
             </div>
             <span className="text-xl md:text-2xl font-bold whitespace-nowrap" style={{ 
-              background: 'linear-gradient(135deg, #8E8E93 0%, #636366 100%)',
+              background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 50%, #FF2D55 80%, #FF9500 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'

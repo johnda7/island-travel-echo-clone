@@ -22,6 +22,7 @@ import { elevenIslandsMegaTourData } from './tours/eleven-islands-mega';
 import { raftingSpaAtvTourData } from './tours/rafting-spa-atv';
 import { kaoLakSafariTourData } from './tours/kao-lak-safari';
 import { rachaCoralIslandsTourData } from './tours/racha-coral-islands';
+import { phangNgaSkywalkTourData } from './tours/phang-nga-skywalk';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -188,6 +189,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: false,   // ❌ не на главной (пока)
     priority: 12,
     data: () => Promise.resolve(rachaCoralIslandsTourData)
+  },
+
+  // 13. Удивительная Пхангнга + Стеклянный мост (НОВЫЙ!)
+  {
+    id: 'phang-nga-skywalk',
+    name: 'УДИВИТЕЛЬНАЯ ПХАНГНГА + СТЕКЛЯННЫЙ МОСТ',
+    category: 'adventure',
+    tags: ['пхангнга', 'стеклянный мост', 'природа', 'храмы', 'слоны', 'spa', 'морские цыгане', 'водопад', 'активный', 'культурный', 'комбо', 'skywalk', '1 день'],
+    isPopular: true,     // ✅ показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: true,    // ✅ показываем на главной (уникальный тур!)
+    priority: 13,
+    data: () => Promise.resolve(phangNgaSkywalkTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

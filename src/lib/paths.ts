@@ -26,6 +26,7 @@ export const getTourDetailPath = (tourId: string): string => {
     'rafting-spa-atv-1-day': '/excursion/rafting-spa-atv',
     'kao-lak-safari-1-day': '/excursion/kao-lak-safari',
     'avatar-plus-hangdong': '/excursion/avatar-plus-hangdong',
+    'phang-nga-skywalk': '/excursion/phang-nga-skywalk',
   };
 
   // Если тур защищен - возвращаем SEO-путь
@@ -57,6 +58,7 @@ export const getTourIdFromPath = (path: string): string | null => {
     '/excursion/rafting-spa-atv': 'rafting-spa-atv-1-day',
     '/excursion/kao-lak-safari': 'kao-lak-safari-1-day',
     '/excursion/avatar-plus-hangdong': 'avatar-plus-hangdong',
+    '/excursion/phang-nga-skywalk': 'phang-nga-skywalk',
   };
   
   if (pathToId[cleanPath]) {

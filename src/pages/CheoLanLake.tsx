@@ -87,11 +87,31 @@ const CheoLanLake = () => {
     if (e.key === 'Escape') closeModal();
   }, [selectedImage, nextImage, prevImage, closeModal]);
 
+  const handleWheel = useCallback((e: WheelEvent) => {
+    if (!selectedImage) return;
+    e.preventDefault();
+    
+    // Определяем направление прокрутки
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      // Горизонтальная прокрутка (свайп на тачпаде влево/вправо)
+      if (e.deltaX > 30) nextImage();
+      if (e.deltaX < -30) prevImage();
+    } else {
+      // Вертикальная прокрутка тоже работает
+      if (e.deltaY > 30) nextImage();
+      if (e.deltaY < -30) prevImage();
+    }
+  }, [selectedImage, nextImage, prevImage]);
+
   useEffect(() => {
     if (!selectedImage) return;
     document.addEventListener('keydown', handleKeyPress);
-    return () => document.removeEventListener('keydown', handleKeyPress);
-  }, [selectedImage, handleKeyPress]);
+    document.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+      document.removeEventListener('wheel', handleWheel);
+    };
+  }, [selectedImage, handleKeyPress, handleWheel]);
 
   const nextMobileImage = () => {
     const newIndex = (mobileGalleryIndex + 1) % excursion.gallery.length;
@@ -150,14 +170,39 @@ const CheoLanLake = () => {
       {/* Gallery section - iOS 26 Mobile */}
       <section className="pb-0">
         <div className="md:hidden">
-          <div className="relative aspect-[16/10] overflow-hidden mx-4" style={{
-            borderRadius: '20px',
-            boxShadow: '0 2px 16px rgba(0, 0, 0, 0.12)'
-          }}>
+          <div 
+            className="relative aspect-[16/10] overflow-hidden mx-4 select-none" 
+            style={{
+              borderRadius: '20px',
+              boxShadow: '0 2px 16px rgba(0, 0, 0, 0.12)'
+            }}
+            onTouchStart={(e) => {
+              setTouchEnd(null);
+              setTouchStart(e.targetTouches[0].clientX);
+            }}
+            onTouchMove={(e) => {
+              setTouchEnd(e.targetTouches[0].clientX);
+            }}
+            onTouchEnd={() => {
+              if (!touchStart || !touchEnd) return;
+              const distance = touchStart - touchEnd;
+              const isLeftSwipe = distance > 50;
+              const isRightSwipe = distance < -50;
+              if (isLeftSwipe) {
+                const newIndex = (mobileGalleryIndex + 1) % excursion.gallery.length;
+                setMobileGalleryIndex(newIndex);
+              }
+              if (isRightSwipe) {
+                const newIndex = mobileGalleryIndex === 0 ? excursion.gallery.length - 1 : mobileGalleryIndex - 1;
+                setMobileGalleryIndex(newIndex);
+              }
+            }}
+          >
             <img 
               src={excursion.gallery[mobileGalleryIndex]} 
               alt={`Gallery ${mobileGalleryIndex + 1}`}
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-cover object-center transition-transform duration-300"
+              draggable="false"
             />
             
             {/* Badges - iOS 26 compact style */}
@@ -190,13 +235,18 @@ const CheoLanLake = () => {
             {/* Nav buttons removed - iOS 26 uses swipe gestures */}
           </div>
 
-          {/* Page indicators - iOS style */}
+          {/* Page indicators - iOS 26 style with smooth animations */}
           <div className="flex justify-center mt-3 gap-1.5 px-4">
             {excursion.gallery.map((_, index) => (
               <button 
                 key={index} 
-                className={`h-1.5 rounded-full transition-all duration-200 ${index === mobileGalleryIndex ? 'w-5 bg-gray-900' : 'w-1.5 bg-gray-300'}`} 
-                onClick={() => setMobileGalleryIndex(index)} 
+                className={`h-1.5 rounded-full transition-all duration-300 ease-out active:scale-90 ${
+                  index === mobileGalleryIndex 
+                    ? 'w-6 bg-gray-900 shadow-sm' 
+                    : 'w-1.5 bg-gray-300 hover:bg-gray-400'
+                }`} 
+                onClick={() => setMobileGalleryIndex(index)}
+                aria-label={`Go to image ${index + 1}`}
               />
             ))}
           </div>
@@ -671,41 +721,147 @@ const CheoLanLake = () => {
         </div>
       </section>
 
-      {/* Gallery Modal */}
+      {/* Gallery Modal - iOS 26 Style */}
       {selectedImage && showFullGallery && (
-        <div className="fixed inset-0 bg-black z-50 flex flex-col">
-          <div className="flex items-center justify-between p-3 bg-black bg-opacity-90">
-            <div className="flex items-center space-x-3">
-              <span className="text-white text-sm font-medium">{currentImageIndex + 1} из {excursion.gallery.length}</span>
-              <button onClick={() => setShowThumbnails(!showThumbnails)} className="text-white hover:text-gray-300 p-1.5 rounded-full hover:bg-white hover:bg-opacity-10 transition-colors sm:hidden">
+        <div 
+          className="fixed inset-0 z-50 flex flex-col animate-in fade-in duration-300"
+          style={{
+            background: 'rgba(0, 0, 0, 0.94)',
+            backdropFilter: 'blur(40px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(40px) saturate(180%)'
+          }}
+        >
+          {/* iOS Toolbar - Top */}
+          <div 
+            className="flex items-center justify-between px-4 py-3 animate-in slide-in-from-top duration-300"
+            style={{
+              background: 'rgba(28, 28, 30, 0.7)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              borderBottom: '0.5px solid rgba(255, 255, 255, 0.1)'
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-white text-[15px] font-semibold tracking-tight">
+                {currentImageIndex + 1} из {excursion.gallery.length}
+              </span>
+              <button 
+                onClick={() => setShowThumbnails(!showThumbnails)} 
+                className="text-white hover:text-gray-300 p-2 rounded-full hover:bg-white hover:bg-opacity-10 transition-all active:scale-90 md:hidden"
+              >
                 <Grid3X3 className="w-5 h-5" />
               </button>
             </div>
-            <button onClick={closeModal} className="text-white hover:text-gray-300 p-1.5 rounded-full hover:bg-white hover:bg-opacity-10 transition-colors">
-              <X className="w-5 h-5 sm:w-6 sm:h-6" />
+            <button 
+              onClick={closeModal} 
+              className="text-white hover:text-gray-300 p-2 rounded-full hover:bg-white hover:bg-opacity-10 transition-all active:scale-90"
+            >
+              <X className="w-6 h-6" strokeWidth={2.5} />
             </button>
           </div>
 
-          <div className="flex-1 flex items-center justify-center relative px-2 py-4" onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
-            <button onClick={prevImage} className="absolute left-2 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 p-2 z-10 bg-black bg-opacity-60 rounded-full hidden sm:block transition-all duration-200 hover:bg-opacity-80">
-              <ChevronLeft className="w-6 h-6" />
+          {/* Image Container with Swipe */}
+          <div 
+            className="flex-1 flex items-center justify-center relative overflow-hidden"
+            onTouchStart={handleTouchStart} 
+            onTouchMove={handleTouchMove} 
+            onTouchEnd={handleTouchEnd}
+          >
+            {/* Desktop Navigation Buttons */}
+            <button 
+              onClick={prevImage} 
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-12 h-12 rounded-full text-white transition-all active:scale-90"
+              style={{
+                background: 'rgba(28, 28, 30, 0.6)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.3)'
+              }}
+            >
+              <ChevronLeft className="w-7 h-7" strokeWidth={2.5} />
             </button>
 
-            <img src={selectedImage} alt={`Gallery ${currentImageIndex + 1}`} className="max-w-full object-contain rounded-lg" style={{ maxHeight: 'calc(100vh - 200px)' }} />
+            {/* Main Image */}
+            <img 
+              src={selectedImage} 
+              alt={`Gallery ${currentImageIndex + 1}`} 
+              className="max-w-[95%] max-h-[85vh] object-contain animate-in zoom-in-95 fade-in duration-200 select-none"
+              draggable="false"
+              style={{
+                filter: 'drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5))'
+              }}
+            />
 
-            <button onClick={nextImage} className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 p-2 z-10 bg-black bg-opacity-60 rounded-full hidden sm:block transition-all duration-200 hover:bg-opacity-80">
-              <ChevronRight className="w-6 h-6" />
+            <button 
+              onClick={nextImage} 
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-12 h-12 rounded-full text-white transition-all active:scale-90"
+              style={{
+                background: 'rgba(28, 28, 30, 0.6)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.3)'
+              }}
+            >
+              <ChevronRight className="w-7 h-7" strokeWidth={2.5} />
             </button>
           </div>
 
+          {/* iOS Page Indicators - Bottom */}
+          <div 
+            className="flex justify-center items-center gap-2 py-4 px-4 animate-in slide-in-from-bottom duration-300"
+            style={{
+              background: 'rgba(28, 28, 30, 0.5)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              borderTop: '0.5px solid rgba(255, 255, 255, 0.1)'
+            }}
+          >
+            {excursion.gallery.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => selectImage(index)}
+                className={`transition-all duration-300 rounded-full ${
+                  index === currentImageIndex 
+                    ? 'w-8 h-2 bg-white' 
+                    : 'w-2 h-2 bg-gray-500 hover:bg-gray-400'
+                }`}
+                aria-label={`Go to image ${index + 1}`}
+              />
+            ))}
+          </div>
+
+          {/* Thumbnails Grid - Optional Mobile View */}
           {showThumbnails && (
-            <div className="bg-black bg-opacity-90 p-4 max-h-32 overflow-hidden">
-              <div className="flex space-x-2 overflow-x-auto scrollbar-hide">
-                {excursion.gallery.map((image, index) => (
-                  <button key={index} onClick={() => selectImage(index)} className={`flex-shrink-0 w-20 h-20 rounded overflow-hidden border-2 ${index === currentImageIndex ? 'border-white' : 'border-transparent'}`}>
-                    <img src={image} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover object-center" />
-                  </button>
-                ))}
+            <div 
+              className="absolute inset-x-0 bottom-0 animate-in slide-in-from-bottom duration-300 md:hidden"
+              style={{
+                background: 'rgba(28, 28, 30, 0.95)',
+                backdropFilter: 'blur(40px)',
+                WebkitBackdropFilter: 'blur(40px)',
+                maxHeight: '40vh',
+                borderTop: '0.5px solid rgba(255, 255, 255, 0.1)'
+              }}
+            >
+              <div className="p-4 overflow-y-auto">
+                <div className="grid grid-cols-3 gap-2">
+                  {excursion.gallery.map((image, index) => (
+                    <button 
+                      key={index} 
+                      onClick={() => selectImage(index)} 
+                      className={`aspect-square rounded-xl overflow-hidden transition-all ${
+                        index === currentImageIndex 
+                          ? 'ring-2 ring-white ring-offset-2 ring-offset-gray-900 scale-95' 
+                          : 'opacity-70 hover:opacity-100'
+                      }`}
+                    >
+                      <img 
+                        src={image} 
+                        alt={`Thumbnail ${index + 1}`} 
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           )}

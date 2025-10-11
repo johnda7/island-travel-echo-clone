@@ -1,6 +1,6 @@
 import { TourData } from "@/types/Tour";
 
-// Import images from phuketgo
+// Import images from phuketgo - Updated 11.10.2025
 import mayaBay1 from "@/assets/phi-phi-2days/maya-bay-1.jpg";
 import mayaBay2 from "@/assets/phi-phi-2days/maya-bay-2.jpg";
 import mayaBay3 from "@/assets/phi-phi-2days/maya-bay-3.jpg";

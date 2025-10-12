@@ -168,7 +168,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
 
   // 11. 11 островов МЕГА-ТУР (премиум версия)
   {
-    id: 'eleven-islands-mega',
+    id: 'eleven-islands-mega-speedboat',
     name: '11 ОСТРОВОВ МЕГА-ТУР',
     category: 'islands',
     tags: ['море', 'морские', 'острова', 'снорклинг', 'мега-тур', '11 островов', 'джеймс бонд', 'пхи-пхи', 'хонг', 'премиум', 'комфорт+', '1 день'],

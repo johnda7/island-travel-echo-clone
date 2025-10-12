@@ -254,19 +254,15 @@ git push origin main
 - 11 × `index.ts` (экспорты)
 - 11 × `static.ts` (данные туров)
 
-**Обновлены файлы (13 шт):**
+**✅ ВСЕ СТРАНИЦЫ ТУРОВ МИГРИРОВАНЫ (12.10.2025):**
+- Все 13 туров используют TourPageTemplate.tsx
+- Каждая страница тура: 14 строк (было 700+)
+- Централизованная архитектура
+- См. AI_DOCS/MIGRATION_COMPLETE_2025.md
+
+**Обновлены файлы:**
 - `src/data/toursRegistry.ts` - все импорты обновлены
-- `src/pages/PhiPhi2Days1Night.tsx`
-- `src/pages/PearlsAndamanSea.tsx`
-- `src/pages/RaftingSpaAtvTour.tsx`
-- `src/pages/JamesBondIslandTour.tsx`
-- `src/pages/RachaCoralIslandsTour.tsx`
-- `src/pages/KaoLakSafariTour.tsx`
-- `src/pages/ElevenIslandsStandardTour.tsx`
-- `src/pages/AvatarPlusHangdong.tsx`
-- `src/pages/RassvetnoePrikljuchenie.tsx`
-- `src/pages/ElevenIslandsMegaTour.tsx`
-- `src/pages/DostoprimechatelnostiPhuketa.tsx`
+- `src/components/TourPageTemplate.tsx` - единый компонент для всех туров
 - `src/pages/BookingPage.tsx`
 
 **Удалены файлы:**

@@ -177,20 +177,34 @@ src/data/tours/
 
 ```typescript
 ✅ PhiPhi2Days1Night.tsx → @/data/tours/phi-phi-2days
-✅ PearlsAndamanSea.tsx → @/data/tours/pearls-andaman-sea
-✅ DostoprimechatelnostiPhuketa.tsx → @/data/tours/dostoprimechatelnosti-phuketa
-✅ RassvetnoePrikljuchenie.tsx → @/data/tours/rassvetnoe-prikljuchenie
-✅ JamesBondIslandTour.tsx → @/data/tours/james-bond-island
-✅ ElevenIslandsStandardTour.tsx → @/data/tours/eleven-islands-standard
-✅ ElevenIslandsMegaTour.tsx → @/data/tours/eleven-islands-mega
-✅ RachaCoralIslandsTour.tsx → @/data/tours/racha-coral-islands
-✅ RaftingSpaAtvTour.tsx → @/data/tours/rafting-spa-atv
-✅ KaoLakSafariTour.tsx → @/data/tours/kao-lak-safari
-✅ AvatarPlusHangdong.tsx → @/data/tours/avatar-plus-hangdong
-✅ BookingPage.tsx → @/data/tours/phi-phi-2days (с alias)
+✅ ВСЕ ТУРЫ МИГРИРОВАНЫ НА TourPageTemplate (12.10.2025)
+
+**Старая структура (удалена):**
+- Отдельные файлы туров по 700+ строк каждый
+
+**Новая структура (текущая):**
+✅ PhiPhi2Days1NightNew.tsx → TourPageTemplate (14 строк)
+✅ PearlsAndamanSeaNew.tsx → TourPageTemplate (14 строк)
+✅ DostoprimechatelnostiPhuketaNew.tsx → TourPageTemplate (14 строк)
+✅ RassvetnoePrikljuchenieNew.tsx → TourPageTemplate (14 строк)
+✅ JamesBondIslandTourNew.tsx → TourPageTemplate (15 строк)
+✅ ElevenIslandsStandardTourNew.tsx → TourPageTemplate (14 строк)
+✅ ElevenIslandsMegaTourNew.tsx → TourPageTemplate (14 строк)
+✅ RachaCoralIslandsTourNew.tsx → TourPageTemplate (14 строк)
+✅ RaftingSpaAtvTourNew.tsx → TourPageTemplate (14 строк)
+✅ KaoLakSafariTourNew.tsx → TourPageTemplate (14 строк)
+✅ AvatarPlusHangdongNew.tsx → TourPageTemplate (14 строк)
+✅ PhangNgaSkywalkNew.tsx → TourPageTemplate (14 строк)
+✅ CheoLanLakeNew.tsx → TourPageTemplate (14 строк)
+✅ BookingPage.tsx → отдельная функциональность
+
+**Данные туров:**
+- Все туры → @/data/tours/[tour-name]/
+- GPS маршруты → @/data/routes/[tour-name]-route.ts
 ```
 
-**Результат:** ✅ **Все 12 файлов используют правильные пути**
+**Результат:** ✅ **13 туров централизованы, ~9,100 строк удалено**
+**См. подробности:** AI_DOCS/MIGRATION_COMPLETE_2025.md
 
 ---
 

@@ -50,20 +50,55 @@ const Tours = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #F5F7FA 0%, #E8ECF1 100%)' }}>
       <Header />
       <main className="pt-20 pb-4">
         <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6">Все туры</h1>
+          <h1 
+            className="text-4xl font-bold mb-6"
+            style={{
+              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+              letterSpacing: '-0.03em',
+              background: 'linear-gradient(135deg, #1C1C1E 0%, #3C3C43 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}
+          >
+            Все туры
+          </h1>
           
-          {/* 🎨 СОВРЕМЕННЫЕ ФИЛЬТРЫ */}
+          {/* 🎨 iOS 26 ФИЛЬТРЫ */}
           <div className="mb-8">
-            <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50 overflow-hidden">
+            <div 
+              className="overflow-hidden"
+              style={{
+                background: 'rgba(255, 255, 255, 0.85)',
+                backdropFilter: 'blur(40px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+                borderRadius: '20px',
+                border: '1px solid rgba(0, 0, 0, 0.08)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5)'
+              }}
+            >
               {/* Заголовок фильтров */}
-              <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 border-b border-gray-200">
-                <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z" />
+              <div 
+                className="p-4 border-b"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.05) 0%, rgba(88, 86, 214, 0.05) 100%)',
+                  borderColor: 'rgba(0, 0, 0, 0.06)'
+                }}
+              >
+                <h3 
+                  className="text-lg font-bold flex items-center gap-2"
+                  style={{
+                    color: '#1C1C1E',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+                    letterSpacing: '-0.02em'
+                  }}
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="#007AFF" viewBox="0 0 24 24" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z" />
                   </svg>
                   Фильтры туров
                 </h3>
@@ -71,14 +106,41 @@ const Tours = () => {
               
               {/* Активный фильтр */}
               {activeTag && (
-                <div className="mx-4 mt-4 p-3 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-xl">
+                <div 
+                  className="mx-4 mt-4 p-3 rounded-xl"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.08) 0%, rgba(88, 86, 214, 0.08) 100%)',
+                    border: '1px solid rgba(0, 122, 255, 0.2)'
+                  }}
+                >
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-700 font-medium">
-                      Показаны туры: <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-white ml-2">{activeTag}</span>
+                    <span 
+                      className="text-sm font-medium"
+                      style={{
+                        color: '#1C1C1E',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                      }}
+                    >
+                      Показаны туры: 
+                      <span 
+                        className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ml-2"
+                        style={{
+                          background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+                          color: 'white',
+                          boxShadow: '0 2px 8px rgba(0, 122, 255, 0.3)'
+                        }}
+                      >
+                        {activeTag}
+                      </span>
                     </span>
                     <button
                       onClick={clearFilter}
-                      className="px-3 py-1.5 text-sm font-medium text-white bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 rounded-lg transition-all duration-300"
+                      className="px-3 py-1.5 text-sm font-semibold text-white rounded-lg transition-all duration-150"
+                      style={{
+                        background: 'linear-gradient(135deg, #FF3B30 0%, #FF2D55 100%)',
+                        boxShadow: '0 2px 8px rgba(255, 59, 48, 0.3)',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                      }}
                     >
                       ✕ Сбросить
                     </button>
@@ -125,7 +187,15 @@ const Tours = () => {
                         <button
                           key={tag}
                           onClick={() => handleTagClick(tag)}
-                          className={`px-4 py-2 text-sm font-semibold rounded-xl whitespace-nowrap transition-all duration-300 transform hover:scale-105 active:scale-95 ${colorClasses}`}
+                          className={`px-4 py-2 text-sm font-semibold rounded-xl whitespace-nowrap transition-all duration-150 ${colorClasses}`}
+                          style={{
+                            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                            letterSpacing: '-0.01em',
+                            ...(isActive && {
+                              transform: 'scale(1.05)',
+                              boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)'
+                            })
+                          }}
                         >
                           {tag}
                         </button>

@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Clock, Users, Calendar, Star, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
@@ -8,7 +6,6 @@ import { ModalPortal } from "@/components/ModalPortal";
 import { useTours, TourWithMeta } from "@/hooks/useTours";
 import type { TourData } from "@/types/Tour";
 import fallbackImage from "@/assets/maya-bay-sunrise.jpg";
-import { Badge } from "@/components/ui/badge";
 
 interface ToursProps {
   filteredTours?: TourWithMeta[];
@@ -61,59 +58,116 @@ export const Tours = ({ filteredTours }: ToursProps) => {
   }
 
   return (
-    <section className="pt-4 pb-4 bg-gray-50">
+    <section className="pt-4 pb-4" style={{ background: 'transparent' }}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {toursToShow.map((tour) => (
+          {toursToShow.map((tour, index) => (
             <Link 
               key={tour.id} 
               to={getDetailPath(tour)}
               className="block"
+              style={{
+                animation: `fadeInUp 0.4s ease-out ${index * 0.1}s both`
+              }}
             >
-              <Card className="overflow-hidden hover:shadow-lg transition-all hover:scale-[1.02] cursor-pointer">
+              <div 
+                className="overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer group"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.90)',
+                  backdropFilter: 'blur(30px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+                  borderRadius: '20px',
+                  border: '1px solid rgba(0, 0, 0, 0.08)',
+                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5)',
+                  transform: 'translateY(0)',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-8px)';
+                  e.currentTarget.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5)';
+                }}
+              >
                 {/* ✅ РЕАЛЬНОЕ ФОТО ИЗ ДАННЫХ ТУРА */}
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-48 overflow-hidden" style={{ borderRadius: '20px 20px 0 0' }}>
                   <img 
                     src={tour.data?.mainImage || tour.data?.gallery?.[0] || fallbackImage} 
                     alt={tour.data?.title || tour.name}
-                    className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-110"
+                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
                     loading="lazy"
                     onError={(e) => {
                       e.currentTarget.src = fallbackImage;
                     }}
                   />
                   {tour.isPopular && (
-                    <Badge className="absolute top-4 right-4 bg-orange-500 hover:bg-orange-600">
+                    <div 
+                      className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold"
+                      style={{
+                        background: 'rgba(255, 149, 0, 0.95)',
+                        backdropFilter: 'blur(10px)',
+                        color: 'white',
+                        boxShadow: '0 2px 8px rgba(255, 149, 0, 0.4)',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                      }}
+                    >
                       🔥 Популярно
-                    </Badge>
+                    </div>
                   )}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                    <h3 className="text-white text-xl font-bold">
+                  <div 
+                    className="absolute bottom-0 left-0 right-0 p-4"
+                    style={{
+                      background: 'linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%)'
+                    }}
+                  >
+                    <h3 
+                      className="text-white text-xl font-bold"
+                      style={{
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+                        letterSpacing: '-0.02em',
+                        textShadow: '0 2px 8px rgba(0, 0, 0, 0.3)'
+                      }}
+                    >
                       {tour.data?.title || tour.name}
                     </h3>
                   </div>
                 </div>
               
-              <CardContent className="p-6">
+              <div className="p-6">
                 <div className="space-y-4">
                   {/* ✅ РЕАЛЬНОЕ ОПИСАНИЕ ИЗ ДАННЫХ */}
-                  <p className="text-gray-600 text-sm line-clamp-2">
+                  <p 
+                    className="text-sm line-clamp-2"
+                    style={{
+                      color: '#3C3C43',
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                      lineHeight: '1.4'
+                    }}
+                  >
                     {tour.data?.description || tour.data?.subtitle || 'Удивительный тур для незабываемых впечатлений'}
                   </p>
                   
                   {/* ✅ РЕАЛЬНЫЕ ХАРАКТЕРИСТИКИ ИЗ ДАННЫХ */}
-                  <div className="flex items-center space-x-4 text-sm text-gray-500">
+                  <div className="flex items-center space-x-4 text-sm" style={{ color: '#8E8E93' }}>
                     <div className="flex items-center space-x-1">
                       <Clock className="w-4 h-4" />
-                      <span>{tour.data?.duration || '2 дня'}</span>
+                      <span style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}>
+                        {tour.data?.duration || '2 дня'}
+                      </span>
                     </div>
                     <div className="flex items-center space-x-1">
                       <Users className="w-4 h-4" />
-                      <span>{tour.data?.groupSize || 'До 15 чел'}</span>
+                      <span style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}>
+                        {tour.data?.groupSize || 'До 15 чел'}
+                      </span>
                     </div>
                     <div className="flex items-center space-x-1">
                       <Calendar className="w-4 h-4" />
-                      <span>Ежедневно</span>
+                      <span style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}>
+                        Ежедневно
+                      </span>
                     </div>
                   </div>
                   
@@ -129,31 +183,83 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                         />
                       ))}
                     </div>
-                    <span className="text-sm text-gray-600">({tour.data?.rating || 5.0})</span>
+                    <span 
+                      className="text-sm"
+                      style={{
+                        color: '#3C3C43',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                        fontWeight: 600
+                      }}
+                    >
+                      ({tour.data?.rating || 5.0})
+                    </span>
                     {tour.data?.reviewsCount && (
-                      <span className="text-xs text-gray-400">({tour.data.reviewsCount} отзывов)</span>
+                      <span 
+                        className="text-xs"
+                        style={{
+                          color: '#8E8E93',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                        }}
+                      >
+                        ({tour.data.reviewsCount} отзывов)
+                      </span>
                     )}
                   </div>
                   
                   {/* ✅ ЦЕНТРАЛИЗОВАННЫЕ ТЕГИ ИЗ ДАННЫХ */}
                   <div className="flex flex-wrap gap-1 mb-4">
                     {tour.tags?.slice(0, 3).map((tag: string, index: number) => (
-                      <Badge key={index} variant="secondary" className="text-xs">
+                      <span 
+                        key={index} 
+                        className="text-xs px-2 py-1 rounded-md"
+                        style={{
+                          background: 'rgba(0, 122, 255, 0.08)',
+                          color: '#007AFF',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                          fontWeight: 600
+                        }}
+                      >
                         #{tag}
-                      </Badge>
+                      </span>
                     ))}
                   </div>
                   
                   {/* ✅ РЕАЛЬНЫЕ ЦЕНЫ ИЗ ДАННЫХ */}
-                  <div className="flex items-center justify-between pt-4 border-t mb-4">
+                  <div 
+                    className="flex items-center justify-between pt-4 mb-4"
+                    style={{
+                      borderTop: '1px solid rgba(0, 0, 0, 0.08)'
+                    }}
+                  >
                     <div>
-                      <span className="text-2xl font-bold text-green-600">
+                      <span 
+                        className="text-2xl font-bold"
+                        style={{
+                          color: '#34C759',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+                          letterSpacing: '-0.02em'
+                        }}
+                      >
                         от {tour.data?.currency || '₿'}{tour.data?.priceAdult?.toLocaleString() || '4,500'}
                       </span>
-                      <span className="text-sm text-gray-500 ml-1">/ чел</span>
+                      <span 
+                        className="text-sm ml-1"
+                        style={{
+                          color: '#8E8E93',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                        }}
+                      >
+                        / чел
+                      </span>
                     </div>
                     <div className="text-right">
-                      <div className="text-xs text-gray-400">
+                      <div 
+                        className="text-xs"
+                        style={{
+                          color: '#8E8E93',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                        }}
+                      >
                         {tour.data?.priceChild && `Дети: ${tour.data.currency}${tour.data.priceChild.toLocaleString()}`}
                       </div>
                     </div>
@@ -161,26 +267,46 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                   
                   {/* ✅ КНОПКИ ДЕЙСТВИЙ */}
                   <div className="space-y-2">
-                    <Button 
-                      variant="outline" 
-                      className="w-full pointer-events-none"
+                    <button 
+                      className="w-full px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-150"
+                      style={{
+                        background: 'rgba(0, 122, 255, 0.08)',
+                        color: '#007AFF',
+                        border: '1px solid rgba(0, 122, 255, 0.2)',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                        pointerEvents: 'none'
+                      }}
                     >
                       📖 Подробнее о туре
-                    </Button>
-                    <Button 
+                    </button>
+                    <button 
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
                         handleBookingClick(tour);
                       }}
-                      className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3"
+                      className="w-full px-4 py-3 rounded-xl font-bold text-white text-sm transition-all duration-150"
+                      style={{
+                        background: 'linear-gradient(135deg, #34C759 0%, #30D158 100%)',
+                        boxShadow: '0 4px 12px rgba(52, 199, 89, 0.3)',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                        letterSpacing: '-0.01em'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.02)';
+                        e.currentTarget.style.boxShadow = '0 6px 16px rgba(52, 199, 89, 0.4)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(52, 199, 89, 0.3)';
+                      }}
                     >
                       🏝️ Забронировать тур
-                    </Button>
+                    </button>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
             </Link>
           ))}
         </div>

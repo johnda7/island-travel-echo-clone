@@ -374,6 +374,17 @@ html {
   }
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* iOS 26 Button Styles - Centralized */
 .btn-telegram {
   background: linear-gradient(135deg, #0088cc 0%, #0077b5 100%) !important;

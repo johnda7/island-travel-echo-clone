@@ -16,7 +16,7 @@ import BookingPage from "./pages/BookingPage";
 import NotFound from "./pages/NotFound";
 
 // Существующие туры
-import PearlsAndamanSea from "./pages/PearlsAndamanSea";
+import PearlsAndamanSeaNew from "./pages/PearlsAndamanSeaNew";
 import DostoprimechatelnostiPhuketa from "./pages/DostoprimechatelnostiPhuketa";
 import RassvetnoePrikljuchenie from "./pages/RassvetnoePrikljuchenie";
 import JamesBondIslandTourNew from "./pages/JamesBondIslandTourNew";
@@ -59,8 +59,8 @@ function App() {
               <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1NightNew />} />
               <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1NightNew />} />
               
-              <Route path="/excursion/pearls-andaman-sea" element={<PearlsAndamanSea />} />
-              <Route path="/tours/pearls-andaman-sea" element={<PearlsAndamanSea />} />
+              <Route path="/excursion/pearls-andaman-sea" element={<PearlsAndamanSeaNew />} />
+              <Route path="/tours/pearls-andaman-sea" element={<PearlsAndamanSeaNew />} />
               
               <Route path="/excursion/dostoprimechatelnosti-phuketa" element={<DostoprimechatelnostiPhuketa />} />
               <Route path="/tours/dostoprimechatelnosti-phuketa" element={<DostoprimechatelnostiPhuketa />} />

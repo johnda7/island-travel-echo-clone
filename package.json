@@ -9,7 +9,11 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "serve:dist": "npx serve -s dist -l 8081"
+    "serve:dist": "npx serve -s dist -l 8081",
+    "backup-template": "mkdir -p backups/tour-template && cp src/components/TourPageTemplate.tsx backups/tour-template/TourPageTemplate-$(date +%Y%m%d-%H%M%S).tsx && echo '✅ Backup created in backups/tour-template/'",
+    "restore-template": "cp backups/tour-template/TourPageTemplate-GOLDEN-$(date +%Y%m%d).tsx src/components/TourPageTemplate.tsx && echo '✅ Template restored from GOLDEN backup'",
+    "save-golden": "cp src/components/TourPageTemplate.tsx backups/tour-template/TourPageTemplate-GOLDEN-$(date +%Y%m%d).tsx && echo '✅ GOLDEN version saved'",
+    "list-backups": "ls -lht backups/tour-template/ | head -15"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

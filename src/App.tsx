@@ -21,13 +21,12 @@ import DostoprimechatelnostiPhuketaNew from "./pages/DostoprimechatelnostiPhuket
 import RassvetnoePrikljuchenieNew from "./pages/RassvetnoePrikljuchenieNew";
 import JamesBondIslandTourNew from "./pages/JamesBondIslandTourNew";
 import ElevenIslandsStandardTour from "./pages/ElevenIslandsStandardTour";
-import RachaCoralIslandsTour from "./pages/RachaCoralIslandsTour";
-import RaftingSpaAtvTour from "./pages/RaftingSpaAtvTour";
-import KaoLakSafariTour from "./pages/KaoLakSafariTour";
-import AvatarPlusHangdong from "./pages/AvatarPlusHangdong";
+import RachaCoralIslandsTourNew from "./pages/RachaCoralIslandsTourNew";
+import RaftingSpaAtvTourNew from "./pages/RaftingSpaAtvTourNew";
+import KaoLakSafariTourNew from "./pages/KaoLakSafariTourNew";
+import AvatarPlusHangdongNew from "./pages/AvatarPlusHangdongNew";
 import ElevenIslandsMegaTour from "./pages/ElevenIslandsMegaTour";
 import PhangNgaSkywalk from "./pages/PhangNgaSkywalk";
-import CheoLanLake from "./pages/CheoLanLake";
 import CheoLanLakeNew from "./pages/CheoLanLakeNew";
 import PhiPhi2Days1NightNew from "./pages/PhiPhi2Days1NightNew";
 
@@ -74,21 +73,21 @@ function App() {
               <Route path="/excursion/eleven-islands-standard" element={<ElevenIslandsStandardTour />} />
               <Route path="/tours/eleven-islands-standard" element={<ElevenIslandsStandardTour />} />
               
-              <Route path="/excursion/racha-coral-islands-speedboat" element={<RachaCoralIslandsTour />} />
-              <Route path="/tours/racha-coral-islands-speedboat" element={<RachaCoralIslandsTour />} />
+              <Route path="/excursion/racha-coral-islands-speedboat" element={<RachaCoralIslandsTourNew />} />
+              <Route path="/tours/racha-coral-islands-speedboat" element={<RachaCoralIslandsTourNew />} />
               
-              <Route path="/excursion/rafting-spa-atv-1-day" element={<RaftingSpaAtvTour />} />
-              <Route path="/tours/rafting-spa-atv-1-day" element={<RaftingSpaAtvTour />} />
-              <Route path="/excursion/rafting-spa-atv" element={<RaftingSpaAtvTour />} />
-              <Route path="/tours/rafting-spa-atv" element={<RaftingSpaAtvTour />} />
+              <Route path="/excursion/rafting-spa-atv-1-day" element={<RaftingSpaAtvTourNew />} />
+              <Route path="/tours/rafting-spa-atv-1-day" element={<RaftingSpaAtvTourNew />} />
+              <Route path="/excursion/rafting-spa-atv" element={<RaftingSpaAtvTourNew />} />
+              <Route path="/tours/rafting-spa-atv" element={<RaftingSpaAtvTourNew />} />
               
-              <Route path="/excursion/kao-lak-safari-1-day" element={<KaoLakSafariTour />} />
-              <Route path="/tours/kao-lak-safari-1-day" element={<KaoLakSafariTour />} />
+              <Route path="/excursion/kao-lak-safari-1-day" element={<KaoLakSafariTourNew />} />
+              <Route path="/tours/kao-lak-safari-1-day" element={<KaoLakSafariTourNew />} />
               
-              <Route path="/excursion/avatar-plus-hangdong" element={<AvatarPlusHangdong />} />
-              <Route path="/tours/avatar-plus-hangdong" element={<AvatarPlusHangdong />} />
+              <Route path="/excursion/avatar-plus-hangdong" element={<AvatarPlusHangdongNew />} />
+              <Route path="/tours/avatar-plus-hangdong" element={<AvatarPlusHangdongNew />} />
               {/* Редирект для старого URL - ВЫШЕ динамического роута */}
-              <Route path="/tours/avatar-plus-hangdong-adventure" element={<AvatarPlusHangdong />} />
+              <Route path="/tours/avatar-plus-hangdong-adventure" element={<AvatarPlusHangdongNew />} />
               
               <Route path="/excursion/eleven-islands-mega" element={<ElevenIslandsMegaTour />} />
               <Route path="/tours/eleven-islands-mega" element={<ElevenIslandsMegaTour />} />
@@ -96,8 +95,8 @@ function App() {
               <Route path="/excursion/phang-nga-skywalk" element={<PhangNgaSkywalk />} />
               <Route path="/tours/phang-nga-skywalk" element={<PhangNgaSkywalk />} />
               
-              <Route path="/excursion/cheow-lan-lake" element={<CheoLanLake />} />
-              <Route path="/tours/cheow-lan-lake" element={<CheoLanLake />} />
+              <Route path="/excursion/cheow-lan-lake" element={<CheoLanLakeNew />} />
+              <Route path="/tours/cheow-lan-lake" element={<CheoLanLakeNew />} />
               
               {/* ТЕСТОВЫЕ новые версии на template */}
               <Route path="/tours/cheow-lan-lake-new" element={<CheoLanLakeNew />} />

@@ -1,6 +1,6 @@
 
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
-import { Menu, X, Search } from "lucide-react";
+import { Menu, X, Search, Home, Ship, Palmtree, Info, Phone, Send } from "lucide-react";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTours } from "@/hooks/useTours";
@@ -8,11 +8,33 @@ import { useAutoMenu } from "@/hooks/useAutoMenu";
 import { getTourDetailPath } from "@/lib/paths";
 import logoImage from "@/assets/logo.jpg";
 
+// iOS 26 Menu Icons - Lucide React Icons
+const getMenuIcon = (menuName: string): JSX.Element => {
+  const iconProps = { 
+    className: "w-5 h-5",
+    strokeWidth: 2.5,
+    style: { 
+      color: '#007AFF',
+      filter: 'drop-shadow(0 0 8px rgba(0, 122, 255, 0.3))'
+    }
+  };
+  
+  const icons: Record<string, JSX.Element> = {
+    'Главная': <Home {...iconProps} />,
+    'Туры и экскурсии': <Ship {...iconProps} />,
+    'Острова': <Palmtree {...iconProps} />,
+    'О нас': <Info {...iconProps} />,
+    'Контакты': <Phone {...iconProps} />
+  };
+  return icons[menuName] || <Home {...iconProps} />;
+};
+
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [searchDropdownLeft, setSearchDropdownLeft] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
@@ -22,6 +44,16 @@ export const Header = () => {
   // Используем централизованную систему туров
   const { allTours, loading } = useTours();
   const { mainMenuItems, categories } = useAutoMenu();
+
+  // Scroll effect for Liquid Glass header
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Debounce for mobile performance
   const [debouncedQuery, setDebouncedQuery] = useState('');
@@ -130,7 +162,7 @@ export const Header = () => {
 
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg z-50">
+    <header className={`fixed top-0 left-0 right-0 liquid-glass-header z-50 ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo - iOS 26 Liquid Glass */}
@@ -395,35 +427,77 @@ export const Header = () => {
 
           {/* Menu button for all devices */}
           <button
-            className="p-2 ml-4"
+            className="p-2 ml-4 hover:bg-gray-100 rounded-full transition-all duration-150"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
+            style={{
+              color: '#007AFF'
+            }}
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isOpen ? (
+              <X className="w-6 h-6" style={{ color: '#007AFF' }} />
+            ) : (
+              <Menu className="w-6 h-6" style={{ color: '#007AFF' }} />
+            )}
           </button>
         </div>
 
-        {/* Navigation Menu */}
+        {/* Navigation Menu - iOS 26 Style (под header) */}
         {isOpen && (
-          <div className="absolute top-16 left-0 right-0 bg-white border-t shadow-lg max-h-[80vh] overflow-y-auto">
-            <nav className="px-4 py-2 space-y-1">
-              {mainMenuItems.map((item) => (
-                <div key={item.name}>
+          <div 
+            className="absolute top-16 left-0 right-0 z-40"
+            style={{
+              background: 'rgba(255, 255, 255, 0.98)',
+              backdropFilter: 'blur(40px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+              borderTop: '1px solid rgba(0, 0, 0, 0.08)',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5)',
+              maxHeight: '80vh',
+              overflowY: 'auto',
+              animation: 'slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+            }}
+          >
+            <nav className="px-6 py-5 space-y-5">
+              {mainMenuItems.map((item, index) => (
+                <div 
+                  key={item.name}
+                  style={{
+                    animation: `fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.05}s both`
+                  }}
+                >
                   <Link
                     to={item.href}
-                    className="block text-gray-700 hover:text-[#007AFF] transition-colors duration-300 py-1 font-medium"
+                    className="block font-bold text-[18px] mb-3 hover:text-blue-600 transition-colors duration-150"
+                    style={{
+                      color: '#000',
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+                      letterSpacing: '-0.02em',
+                      paddingBottom: '10px',
+                      borderBottom: '2px solid rgba(0, 122, 255, 0.15)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px'
+                    }}
                     onClick={() => setIsOpen(false)}
                   >
+                    {getMenuIcon(item.name)}
                     {item.name}
                   </Link>
                   {item.subItems && (
-                    <div className="ml-2 space-y-0.5">
-                      {item.subItems.map((subItem) => (
+                    <div className="space-y-1 mt-3 ml-1">
+                      {item.subItems.map((subItem, subIndex) => (
                         <Link
                           key={subItem.name}
                           to={subItem.href}
-                          className="block text-gray-600 hover:text-[#007AFF] transition-colors duration-300 py-0.5 text-sm"
+                          className="block py-2.5 px-4 rounded-xl text-[15px] font-medium hover:bg-blue-50 hover:text-blue-600 transition-all duration-150"
+                          style={{
+                            color: '#1C1C1E',
+                            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                            animation: `fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) ${(index * 0.05) + (subIndex * 0.03)}s both`
+                          }}
                           onClick={() => setIsOpen(false)}
                         >
+                          <span style={{ marginRight: '8px', opacity: 0.7 }}>•</span>
                           {subItem.name}
                         </Link>
                       ))}
@@ -431,6 +505,28 @@ export const Header = () => {
                   )}
                 </div>
               ))}
+              
+              {/* CTA Button */}
+              <div style={{
+                animation: `fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) ${mainMenuItems.length * 0.05 + 0.1}s both`
+              }}>
+                <a 
+                  href="https://t.me/Phuketga" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="btn-telegram block text-center mt-6 hover:transform hover:scale-105 active:scale-95"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    transition: 'all 0.15s cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                >
+                  <Send className="w-5 h-5" style={{ transform: 'rotate(-35deg)' }} />
+                  Написать в Telegram
+                </a>
+              </div>
             </nav>
           </div>
         )}

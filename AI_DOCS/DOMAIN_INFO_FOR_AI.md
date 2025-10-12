@@ -47,7 +47,11 @@
 
 **Репозиторий:** `johnda7/island-travel-echo-clone`  
 **Основной URL:** https://phukeo.com  
-**Старый URL (НЕ ИСПОЛЬЗОВАТЬ):** ~~https://johnda7.github.io/island-travel-echo-clone/~~  
+**Альтернативный URL:** https://johnda7.github.io/island-travel-echo-clone/ (для проверки)
+**Deploy метод:** GitHub Actions (автоматически на push в main)
+**Workflow файл:** `.github/workflows/deploy.yml`
+**Время деплоя:** 2-3 минуты после push
+**Build команда:** `npm run build` (Vite + postbuild script)  
 **CNAME файл:** `public/CNAME` содержит `phukeo.com`  
 **HTTPS:** ✅ Включён (Enforce HTTPS)  
 **SSL Сертификат:** Let's Encrypt (GitHub автоматически)

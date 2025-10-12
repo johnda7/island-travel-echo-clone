@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Backups (keep GOLDEN, ignore timestamped)
+backups/tour-template/*
+!backups/tour-template/TourPageTemplate-GOLDEN*.tsx

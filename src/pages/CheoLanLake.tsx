@@ -726,16 +726,18 @@ const CheoLanLake = () => {
         <div 
           className="fixed inset-0 z-50 flex flex-col animate-in fade-in duration-300"
           style={{
-            background: 'rgba(0, 0, 0, 0.94)',
+            background: 'rgba(0, 0, 0, 0.98)',
             backdropFilter: 'blur(40px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(40px) saturate(180%)'
+            WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+            paddingTop: 'env(safe-area-inset-top)',
+            paddingBottom: 'env(safe-area-inset-bottom)'
           }}
         >
           {/* iOS Toolbar - Top */}
           <div 
             className="flex items-center justify-between px-4 py-3 animate-in slide-in-from-top duration-300"
             style={{
-              background: 'rgba(28, 28, 30, 0.7)',
+              background: 'rgba(28, 28, 30, 0.8)',
               backdropFilter: 'blur(20px)',
               WebkitBackdropFilter: 'blur(20px)',
               borderBottom: '0.5px solid rgba(255, 255, 255, 0.1)'
@@ -745,12 +747,6 @@ const CheoLanLake = () => {
               <span className="text-white text-[15px] font-semibold tracking-tight">
                 {currentImageIndex + 1} из {excursion.gallery.length}
               </span>
-              <button 
-                onClick={() => setShowThumbnails(!showThumbnails)} 
-                className="text-white hover:text-gray-300 p-2 rounded-full hover:bg-white hover:bg-opacity-10 transition-all active:scale-90 md:hidden"
-              >
-                <Grid3X3 className="w-5 h-5" />
-              </button>
             </div>
             <button 
               onClick={closeModal} 
@@ -829,42 +825,6 @@ const CheoLanLake = () => {
               />
             ))}
           </div>
-
-          {/* Thumbnails Grid - Optional Mobile View */}
-          {showThumbnails && (
-            <div 
-              className="absolute inset-x-0 bottom-0 animate-in slide-in-from-bottom duration-300 md:hidden"
-              style={{
-                background: 'rgba(28, 28, 30, 0.95)',
-                backdropFilter: 'blur(40px)',
-                WebkitBackdropFilter: 'blur(40px)',
-                maxHeight: '40vh',
-                borderTop: '0.5px solid rgba(255, 255, 255, 0.1)'
-              }}
-            >
-              <div className="p-4 overflow-y-auto">
-                <div className="grid grid-cols-3 gap-2">
-                  {excursion.gallery.map((image, index) => (
-                    <button 
-                      key={index} 
-                      onClick={() => selectImage(index)} 
-                      className={`aspect-square rounded-xl overflow-hidden transition-all ${
-                        index === currentImageIndex 
-                          ? 'ring-2 ring-white ring-offset-2 ring-offset-gray-900 scale-95' 
-                          : 'opacity-70 hover:opacity-100'
-                      }`}
-                    >
-                      <img 
-                        src={image} 
-                        alt={`Thumbnail ${index + 1}`} 
-                        className="w-full h-full object-cover"
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       )}
 

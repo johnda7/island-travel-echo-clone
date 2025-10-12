@@ -6,10 +6,10 @@ export const Footer = () => {
   return (
     <footer 
       style={{ 
-        background: 'rgb(242, 242, 247)',
-        borderTop: '1px solid rgba(0, 0, 0, 0.08)'
+        background: '#1C1C1E',
+        borderTop: '1px solid rgba(255, 255, 255, 0.08)'
       }} 
-      className="text-gray-900"
+      className="text-white"
     >
       <div className="container mx-auto px-4 py-4">
         <div className="grid md:grid-cols-1 gap-3 justify-center">
@@ -56,7 +56,7 @@ export const Footer = () => {
                 Пхукет Go
               </span>
             </Link>
-            <p className="text-gray-600 mb-0 leading-snug max-w-lg mx-auto text-xs">
+            <p className="text-gray-400 mb-0 leading-snug max-w-lg mx-auto text-xs">
               Создаем незабываемые путешествия к самым красивым местам Пхукета и Таиланда. 
               Ваша мечта о райском отдыхе станет реальностью с нами.
             </p>

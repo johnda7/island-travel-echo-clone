@@ -73,7 +73,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
               <div 
                 className="overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer group"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.90)',
+                  background: 'rgba(255, 255, 255, 0.95)',
                   backdropFilter: 'blur(30px) saturate(180%)',
                   WebkitBackdropFilter: 'blur(30px) saturate(180%)',
                   borderRadius: '20px',

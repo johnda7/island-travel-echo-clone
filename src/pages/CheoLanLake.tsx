@@ -915,6 +915,15 @@ const CheoLanLake = () => {
 
       <MobileBookingBar priceAdult={excursion.priceAdult} priceChild={excursion.priceChild} currency={excursion.currency} onBookingClick={() => setShowBookingModal(true)} />
 
+      {/* iOS 26 Gradient Divider before Footer */}
+      <div className="relative h-16" style={{ 
+        background: 'linear-gradient(180deg, rgba(242, 242, 247, 0) 0%, rgba(242, 242, 247, 0.3) 30%, rgba(242, 242, 247, 0.6) 60%, rgba(242, 242, 247, 1) 100%)'
+      }}>
+        <div className="absolute inset-x-0 top-0 h-px" style={{
+          background: 'linear-gradient(90deg, transparent 0%, rgba(0, 122, 255, 0.15) 20%, rgba(0, 122, 255, 0.3) 50%, rgba(0, 122, 255, 0.15) 80%, transparent 100%)'
+        }} />
+      </div>
+
       <Footer />
     </div>
   );

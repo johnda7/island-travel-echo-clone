@@ -29,9 +29,10 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
       attributionControl: false,
     }).setView([8.0, 98.5], 9);
 
-    // Добавляем кастомные iOS 26 стиль тайлы
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
+    // Добавляем Google Maps (спутник + дороги, без надписей)
+    L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+      maxZoom: 20,
+      attribution: '© Google Maps',
     }).addTo(map);
 
     // Кастомные иконки для точек маршрута

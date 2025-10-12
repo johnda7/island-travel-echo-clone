@@ -16,11 +16,10 @@ import BookingPage from "./pages/BookingPage";
 import NotFound from "./pages/NotFound";
 
 // Существующие туры
-import PhiPhi2Days1Night from "./pages/PhiPhi2Days1Night";
 import PearlsAndamanSea from "./pages/PearlsAndamanSea";
 import DostoprimechatelnostiPhuketa from "./pages/DostoprimechatelnostiPhuketa";
 import RassvetnoePrikljuchenie from "./pages/RassvetnoePrikljuchenie";
-import JamesBondIslandTour from "./pages/JamesBondIslandTour";
+import JamesBondIslandTourNew from "./pages/JamesBondIslandTourNew";
 import ElevenIslandsStandardTour from "./pages/ElevenIslandsStandardTour";
 import RachaCoralIslandsTour from "./pages/RachaCoralIslandsTour";
 import RaftingSpaAtvTour from "./pages/RaftingSpaAtvTour";
@@ -30,6 +29,7 @@ import ElevenIslandsMegaTour from "./pages/ElevenIslandsMegaTour";
 import PhangNgaSkywalk from "./pages/PhangNgaSkywalk";
 import CheoLanLake from "./pages/CheoLanLake";
 import CheoLanLakeNew from "./pages/CheoLanLakeNew";
+import PhiPhi2Days1NightNew from "./pages/PhiPhi2Days1NightNew";
 
 // Динамический компонент для CMS туров
 import DynamicTourPage from "./components/DynamicTourPage";
@@ -56,8 +56,8 @@ function App() {
                 <Route path="/booking" element={<BookingPage />} />
               
               {/* Статические туры */}
-              <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
-              <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1Night />} />
+              <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1NightNew />} />
+              <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1NightNew />} />
               
               <Route path="/excursion/pearls-andaman-sea" element={<PearlsAndamanSea />} />
               <Route path="/tours/pearls-andaman-sea" element={<PearlsAndamanSea />} />
@@ -68,8 +68,8 @@ function App() {
               <Route path="/excursion/rassvetnoe-prikljuchenie" element={<RassvetnoePrikljuchenie />} />
               <Route path="/tours/rassvetnoe-prikljuchenie" element={<RassvetnoePrikljuchenie />} />
 
-              <Route path="/excursion/james-bond-island-phang-nga" element={<JamesBondIslandTour />} />
-              <Route path="/tours/james-bond-island-phang-nga" element={<JamesBondIslandTour />} />
+              <Route path="/excursion/james-bond-island-phang-nga" element={<JamesBondIslandTourNew />} />
+              <Route path="/tours/james-bond-island-phang-nga" element={<JamesBondIslandTourNew />} />
               
               <Route path="/excursion/eleven-islands-standard" element={<ElevenIslandsStandardTour />} />
               <Route path="/tours/eleven-islands-standard" element={<ElevenIslandsStandardTour />} />
@@ -99,7 +99,7 @@ function App() {
               <Route path="/excursion/cheow-lan-lake" element={<CheoLanLake />} />
               <Route path="/tours/cheow-lan-lake" element={<CheoLanLake />} />
               
-              {/* ТЕСТОВАЯ новая версия на template */}
+              {/* ТЕСТОВЫЕ новые версии на template */}
               <Route path="/tours/cheow-lan-lake-new" element={<CheoLanLakeNew />} />
               
               {/* Динамические туры из CMS - ПОСЛЕДНИЕ */}

@@ -282,7 +282,6 @@ export const TourPageTemplate = ({
                   }}>
                     <Star className="w-3.5 h-3.5 fill-[#FFCC00] text-[#FFCC00]" />
                     <span className="text-xs font-bold text-gray-900">{tourData.rating}</span>
-                    <span className="text-[10px] font-medium text-gray-500">({tourData.reviewsCount})</span>
                   </div>
                 </div>
 
@@ -391,7 +390,6 @@ export const TourPageTemplate = ({
               }}>
                 <Star className="w-3.5 h-3.5 text-[#FFCC00] fill-[#FFCC00]" strokeWidth={2} />
                 <span className="font-semibold text-[13px] text-gray-900">{tourData.rating}</span>
-                <span className="text-[12px] text-gray-600">({tourData.reviewsCount})</span>
               </div>
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full whitespace-nowrap" style={{ 
                 background: 'rgba(142, 142, 147, 0.12)',
@@ -434,23 +432,129 @@ export const TourPageTemplate = ({
         </div>
       </section>
 
-      {/* Rest of content from tourData - highlights, itinerary, etc */}
+      {/* Rest of content from tourData - description, highlights, itinerary, etc */}
       <section className="py-4 bg-white">
         <div className="container mx-auto px-4 max-w-7xl">
-          {/* Add highlights, included, requirements, etc based on tourData */}
-          <Card className="mb-6">
-            <CardContent className="p-6">
-              <h2 className="text-2xl font-bold mb-4">Что входит в тур</h2>
-              <div className="grid md:grid-cols-2 gap-4">
-                {tourData.highlights.map((highlight, index) => (
-                  <div key={index} className="flex items-start gap-2">
-                    <span className="text-green-500 mt-1">✓</span>
-                    <span className="text-gray-700">{highlight}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+          {/* Описание тура */}
+          {tourData.description && (
+            <Card className="mb-6">
+              <CardContent className="p-6">
+                <h2 className="text-2xl font-bold mb-4">Описание</h2>
+                <p className="text-gray-700 leading-relaxed">{tourData.description}</p>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Highlights */}
+          {tourData.highlights && tourData.highlights.length > 0 && (
+            <Card className="mb-6">
+              <CardContent className="p-6">
+                <h2 className="text-2xl font-bold mb-4">Что входит в тур</h2>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {tourData.highlights.map((highlight, index) => (
+                    <div key={index} className="flex items-start gap-2">
+                      <span className="text-green-500 mt-1">✓</span>
+                      <span className="text-gray-700">{highlight}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Расписание */}
+          {tourData.schedule && tourData.schedule.length > 0 && (
+            <Card className="mb-6">
+              <CardContent className="p-6">
+                <h2 className="text-2xl font-bold mb-4">Программа тура</h2>
+                <div className="space-y-4">
+                  {tourData.schedule.map((item, index) => (
+                    <div key={index} className="flex gap-4 border-l-2 border-blue-500 pl-4">
+                      <div className="flex-shrink-0">
+                        <div className="text-sm font-semibold text-blue-600">{item.time}</div>
+                        {item.day && <div className="text-xs text-gray-500">{item.day}</div>}
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-gray-900">{item.title}</h3>
+                        <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Что включено / не включено */}
+          {(tourData.included || tourData.notIncluded) && (
+            <Card className="mb-6">
+              <CardContent className="p-6">
+                <h2 className="text-2xl font-bold mb-4">Включено в стоимость</h2>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {tourData.included && tourData.included.length > 0 && (
+                    <div>
+                      <h3 className="font-semibold text-green-600 mb-3">Включено</h3>
+                      <ul className="space-y-2">
+                        {tourData.included.map((item, index) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <span className="text-green-500 mt-1">✓</span>
+                            <span className="text-gray-700">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {tourData.notIncluded && tourData.notIncluded.length > 0 && (
+                    <div>
+                      <h3 className="font-semibold text-red-600 mb-3">Не включено</h3>
+                      <ul className="space-y-2">
+                        {tourData.notIncluded.map((item, index) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <span className="text-red-500 mt-1">✗</span>
+                            <span className="text-gray-700">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Что взять с собой */}
+          {tourData.whatToBring && tourData.whatToBring.length > 0 && (
+            <Card className="mb-6">
+              <CardContent className="p-6">
+                <h2 className="text-2xl font-bold mb-4">Что взять с собой</h2>
+                <ul className="grid md:grid-cols-2 gap-2">
+                  {tourData.whatToBring.map((item, index) => (
+                    <li key={index} className="flex items-center gap-2">
+                      <span className="text-blue-500">•</span>
+                      <span className="text-gray-700">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Важная информация */}
+          {tourData.importantInfo && tourData.importantInfo.length > 0 && (
+            <Card className="mb-6">
+              <CardContent className="p-6">
+                <h2 className="text-2xl font-bold mb-4">Важная информация</h2>
+                <ul className="space-y-2">
+                  {tourData.importantInfo.map((info, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <span className="text-orange-500 mt-1">⚠</span>
+                      <span className="text-gray-700">{info}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </section>
 

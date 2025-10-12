@@ -18,7 +18,7 @@ import NotFound from "./pages/NotFound";
 // Существующие туры
 import PearlsAndamanSeaNew from "./pages/PearlsAndamanSeaNew";
 import DostoprimechatelnostiPhuketaNew from "./pages/DostoprimechatelnostiPhuketaNew";
-import RassvetnoePrikljuchenie from "./pages/RassvetnoePrikljuchenie";
+import RassvetnoePrikljuchenieNew from "./pages/RassvetnoePrikljuchenieNew";
 import JamesBondIslandTourNew from "./pages/JamesBondIslandTourNew";
 import ElevenIslandsStandardTour from "./pages/ElevenIslandsStandardTour";
 import RachaCoralIslandsTour from "./pages/RachaCoralIslandsTour";
@@ -65,8 +65,8 @@ function App() {
               <Route path="/excursion/dostoprimechatelnosti-phuketa" element={<DostoprimechatelnostiPhuketaNew />} />
               <Route path="/tours/dostoprimechatelnosti-phuketa" element={<DostoprimechatelnostiPhuketaNew />} />
               
-              <Route path="/excursion/rassvetnoe-prikljuchenie" element={<RassvetnoePrikljuchenie />} />
-              <Route path="/tours/rassvetnoe-prikljuchenie" element={<RassvetnoePrikljuchenie />} />
+              <Route path="/excursion/rassvetnoe-prikljuchenie" element={<RassvetnoePrikljuchenieNew />} />
+              <Route path="/tours/rassvetnoe-prikljuchenie" element={<RassvetnoePrikljuchenieNew />} />
 
               <Route path="/excursion/james-bond-island-phang-nga" element={<JamesBondIslandTourNew />} />
               <Route path="/tours/james-bond-island-phang-nga" element={<JamesBondIslandTourNew />} />

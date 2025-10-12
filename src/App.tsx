@@ -20,13 +20,13 @@ import PearlsAndamanSeaNew from "./pages/PearlsAndamanSeaNew";
 import DostoprimechatelnostiPhuketaNew from "./pages/DostoprimechatelnostiPhuketaNew";
 import RassvetnoePrikljuchenieNew from "./pages/RassvetnoePrikljuchenieNew";
 import JamesBondIslandTourNew from "./pages/JamesBondIslandTourNew";
-import ElevenIslandsStandardTour from "./pages/ElevenIslandsStandardTour";
+import ElevenIslandsStandardTourNew from "./pages/ElevenIslandsStandardTourNew";
 import RachaCoralIslandsTourNew from "./pages/RachaCoralIslandsTourNew";
 import RaftingSpaAtvTourNew from "./pages/RaftingSpaAtvTourNew";
 import KaoLakSafariTourNew from "./pages/KaoLakSafariTourNew";
 import AvatarPlusHangdongNew from "./pages/AvatarPlusHangdongNew";
-import ElevenIslandsMegaTour from "./pages/ElevenIslandsMegaTour";
-import PhangNgaSkywalk from "./pages/PhangNgaSkywalk";
+import ElevenIslandsMegaTourNew from "./pages/ElevenIslandsMegaTourNew";
+import PhangNgaSkywalkNew from "./pages/PhangNgaSkywalkNew";
 import CheoLanLakeNew from "./pages/CheoLanLakeNew";
 import PhiPhi2Days1NightNew from "./pages/PhiPhi2Days1NightNew";
 
@@ -70,8 +70,8 @@ function App() {
               <Route path="/excursion/james-bond-island-phang-nga" element={<JamesBondIslandTourNew />} />
               <Route path="/tours/james-bond-island-phang-nga" element={<JamesBondIslandTourNew />} />
               
-              <Route path="/excursion/eleven-islands-standard" element={<ElevenIslandsStandardTour />} />
-              <Route path="/tours/eleven-islands-standard" element={<ElevenIslandsStandardTour />} />
+              <Route path="/excursion/eleven-islands-standard" element={<ElevenIslandsStandardTourNew />} />
+              <Route path="/tours/eleven-islands-standard" element={<ElevenIslandsStandardTourNew />} />
               
               <Route path="/excursion/racha-coral-islands-speedboat" element={<RachaCoralIslandsTourNew />} />
               <Route path="/tours/racha-coral-islands-speedboat" element={<RachaCoralIslandsTourNew />} />
@@ -89,11 +89,11 @@ function App() {
               {/* Редирект для старого URL - ВЫШЕ динамического роута */}
               <Route path="/tours/avatar-plus-hangdong-adventure" element={<AvatarPlusHangdongNew />} />
               
-              <Route path="/excursion/eleven-islands-mega" element={<ElevenIslandsMegaTour />} />
-              <Route path="/tours/eleven-islands-mega" element={<ElevenIslandsMegaTour />} />
+              <Route path="/excursion/eleven-islands-mega" element={<ElevenIslandsMegaTourNew />} />
+              <Route path="/tours/eleven-islands-mega" element={<ElevenIslandsMegaTourNew />} />
               
-              <Route path="/excursion/phang-nga-skywalk" element={<PhangNgaSkywalk />} />
-              <Route path="/tours/phang-nga-skywalk" element={<PhangNgaSkywalk />} />
+              <Route path="/excursion/phang-nga-skywalk" element={<PhangNgaSkywalkNew />} />
+              <Route path="/tours/phang-nga-skywalk" element={<PhangNgaSkywalkNew />} />
               
               <Route path="/excursion/cheow-lan-lake" element={<CheoLanLakeNew />} />
               <Route path="/tours/cheow-lan-lake" element={<CheoLanLakeNew />} />

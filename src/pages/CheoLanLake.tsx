@@ -9,6 +9,7 @@ import { cheoLanLakeTourData } from "@/data/tours/cheow-lan-lake";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
 import { MobileBookingBar } from "@/components/MobileBookingBar";
+import { TourRouteMap } from "@/components/TourRouteMap";
 
 const excursion = cheoLanLakeTourData;
 
@@ -146,23 +147,23 @@ const CheoLanLake = () => {
         </div>
       </div>
       
-      {/* Breadcrumbs - 4 уровня как в эталоне */}
-      <section className="pt-20 md:pt-20 pb-4 px-4 md:px-0">
+      {/* Breadcrumbs - iOS 26 compact */}
+      <section className="pt-16 md:pt-20 pb-2 px-4 md:px-0">
         <div className="container mx-auto max-w-7xl">
-          <nav className="flex items-center space-x-2 text-sm text-gray-500">
-            <Link to="/" className="hover:text-green-600 transition-colors">
+          <nav className="flex items-center space-x-1.5 text-[13px] text-gray-500">
+            <Link to="/" className="hover:text-[#007AFF] transition-colors">
               Главная
             </Link>
-            <span>›</span>
-            <Link to="/tours" className="hover:text-green-600 transition-colors">
+            <span className="text-gray-400">›</span>
+            <Link to="/tours" className="hover:text-[#007AFF] transition-colors">
               Туры
             </Link>
-            <span>›</span>
-            <Link to="/tours?category=adventure" className="hover:text-green-600 transition-colors">
+            <span className="text-gray-400">›</span>
+            <Link to="/tours?category=adventure" className="hover:text-[#007AFF] transition-colors">
               Приключения
             </Link>
-            <span>›</span>
-            <span className="text-gray-700 font-medium">{excursion.title}</span>
+            <span className="text-gray-400">›</span>
+            <span className="text-gray-900 font-medium line-clamp-1">{excursion.title}</span>
           </nav>
         </div>
       </section>
@@ -434,44 +435,61 @@ const CheoLanLake = () => {
         </div>
       </section>
 
-      {/* Title and meta - iOS 26 compact */}
-      <section className="py-3 pt-14 md:pt-3">
-        <div className="container mx-auto px-4">
-          <h1 className="text-[22px] md:text-3xl font-bold mb-1.5 text-gray-900 leading-tight tracking-tight">{excursion.title}</h1>
-          <p className="text-sm text-gray-600 mb-3 leading-snug">{excursion.subtitle}</p>
+      {/* Title and meta - iOS 26 App Store style */}
+      <section className="py-2 pt-4 md:pt-3">
+        <div className="container mx-auto px-4 max-w-7xl">
+          {/* Title - iOS 26 large, bold, tight leading */}
+          <h1 className="text-[28px] md:text-4xl font-bold mb-1.5 text-gray-900 leading-[1.1] tracking-tight" style={{
+            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+            letterSpacing: '-0.02em'
+          }}>
+            {excursion.title}
+          </h1>
           
-          {/* Meta info - iOS 26 Glassmorphism Tags */}
-          <div className="flex flex-wrap gap-2 mb-4">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl" style={{ 
-              background: 'rgba(255, 204, 0, 0.2)',
-              backdropFilter: 'blur(20px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-              boxShadow: '0 4px 16px rgba(255, 204, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
-              border: '1px solid rgba(255, 204, 0, 0.3)'
-            }}>
-              <Star className="w-4 h-4 text-[#FFCC00] fill-[#FFCC00] drop-shadow-sm" />
-              <span className="font-semibold text-sm text-gray-900">{excursion.rating}</span>
-              <span className="text-xs text-gray-600">({excursion.reviewsCount})</span>
-            </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl" style={{ 
-              background: 'rgba(142, 142, 147, 0.12)',
-              backdropFilter: 'blur(20px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
-              border: '1px solid rgba(255, 255, 255, 0.18)'
-            }}>
-              <Clock className="w-4 h-4 text-gray-700" strokeWidth={2} />
-              <span className="text-sm font-medium text-gray-900">{excursion.duration}</span>
-            </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl" style={{ 
-              background: 'rgba(142, 142, 147, 0.12)',
-              backdropFilter: 'blur(20px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
-              border: '1px solid rgba(255, 255, 255, 0.18)'
-            }}>
-              <Users className="w-4 h-4 text-gray-700" strokeWidth={2} />
-              <span className="text-sm font-medium text-gray-900">{excursion.groupSize}</span>
+          {/* Subtitle with location icon - Apple Maps style */}
+          <div className="flex items-start gap-1.5 mb-3">
+            <MapPin className="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0" strokeWidth={2} />
+            <p className="text-[15px] text-gray-600 leading-snug">{excursion.subtitle}</p>
+          </div>
+          
+          {/* Meta info - iOS 26 horizontal scroll tags (Safari/Photos style) */}
+          <div className="overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide" style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            WebkitOverflowScrolling: 'touch'
+          }}>
+            <div className="flex gap-2 min-w-max">
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full whitespace-nowrap" style={{ 
+                background: 'rgba(255, 204, 0, 0.15)',
+                backdropFilter: 'blur(20px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                boxShadow: '0 2px 8px rgba(255, 204, 0, 0.15), inset 0 0.5px 0 rgba(255, 255, 255, 0.3)',
+                border: '0.5px solid rgba(255, 204, 0, 0.25)'
+              }}>
+                <Star className="w-3.5 h-3.5 text-[#FFCC00] fill-[#FFCC00]" strokeWidth={2} />
+                <span className="font-semibold text-[13px] text-gray-900">{excursion.rating}</span>
+                <span className="text-[12px] text-gray-600">({excursion.reviewsCount})</span>
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full whitespace-nowrap" style={{ 
+                background: 'rgba(142, 142, 147, 0.12)',
+                backdropFilter: 'blur(20px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04), inset 0 0.5px 0 rgba(255, 255, 255, 0.2)',
+                border: '0.5px solid rgba(255, 255, 255, 0.18)'
+              }}>
+                <Clock className="w-3.5 h-3.5 text-gray-700" strokeWidth={2} />
+                <span className="text-[13px] font-medium text-gray-900">{excursion.duration}</span>
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full whitespace-nowrap" style={{ 
+                background: 'rgba(142, 142, 147, 0.12)',
+                backdropFilter: 'blur(20px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04), inset 0 0.5px 0 rgba(255, 255, 255, 0.2)',
+                border: '0.5px solid rgba(255, 255, 255, 0.18)'
+              }}>
+                <Users className="w-3.5 h-3.5 text-gray-700" strokeWidth={2} />
+                <span className="text-[13px] font-medium text-gray-900">{excursion.groupSize}</span>
+              </div>
             </div>
           </div>
           
@@ -874,6 +892,41 @@ const CheoLanLake = () => {
       </div>
 
       <MobileBookingBar priceAdult={excursion.priceAdult} priceChild={excursion.priceChild} currency={excursion.currency} onBookingClick={() => setShowBookingModal(true)} />
+
+      {/* Карта маршрута - iOS 26 style */}
+      <TourRouteMap 
+        tourTitle={excursion.title}
+        routePoints={[
+          {
+            name: 'Пхукет',
+            coordinates: [7.8804, 98.3923],
+            type: 'start',
+            time: '06:00',
+            description: 'Трансфер из отеля'
+          },
+          {
+            name: 'Самет Нангше',
+            coordinates: [8.2847, 98.6094],
+            type: 'stop',
+            time: '08:00',
+            description: 'Смотровая площадка с видом на залив'
+          },
+          {
+            name: 'Озеро Чео Лан',
+            coordinates: [8.9167, 98.8333],
+            type: 'stop',
+            time: '11:20',
+            description: 'Сафари на лодке, рыбалка, обед'
+          },
+          {
+            name: 'Храм Банг Тонг',
+            coordinates: [8.7500, 98.7000],
+            type: 'destination',
+            time: '16:20',
+            description: 'Храм с монахом-художником'
+          }
+        ]}
+      />
 
       {/* iOS 26 Gradient Divider before Footer */}
       <div className="relative h-16" style={{ 

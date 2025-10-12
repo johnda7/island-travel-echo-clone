@@ -17,7 +17,7 @@ import NotFound from "./pages/NotFound";
 
 // Существующие туры
 import PearlsAndamanSeaNew from "./pages/PearlsAndamanSeaNew";
-import DostoprimechatelnostiPhuketa from "./pages/DostoprimechatelnostiPhuketa";
+import DostoprimechatelnostiPhuketaNew from "./pages/DostoprimechatelnostiPhuketaNew";
 import RassvetnoePrikljuchenie from "./pages/RassvetnoePrikljuchenie";
 import JamesBondIslandTourNew from "./pages/JamesBondIslandTourNew";
 import ElevenIslandsStandardTour from "./pages/ElevenIslandsStandardTour";
@@ -62,8 +62,8 @@ function App() {
               <Route path="/excursion/pearls-andaman-sea" element={<PearlsAndamanSeaNew />} />
               <Route path="/tours/pearls-andaman-sea" element={<PearlsAndamanSeaNew />} />
               
-              <Route path="/excursion/dostoprimechatelnosti-phuketa" element={<DostoprimechatelnostiPhuketa />} />
-              <Route path="/tours/dostoprimechatelnosti-phuketa" element={<DostoprimechatelnostiPhuketa />} />
+              <Route path="/excursion/dostoprimechatelnosti-phuketa" element={<DostoprimechatelnostiPhuketaNew />} />
+              <Route path="/tours/dostoprimechatelnosti-phuketa" element={<DostoprimechatelnostiPhuketaNew />} />
               
               <Route path="/excursion/rassvetnoe-prikljuchenie" element={<RassvetnoePrikljuchenie />} />
               <Route path="/tours/rassvetnoe-prikljuchenie" element={<RassvetnoePrikljuchenie />} />

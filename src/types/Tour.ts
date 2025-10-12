@@ -92,3 +92,12 @@ export interface PriceCalculation {
   totalPrice: number;
   currency: string;
 }
+
+// Интерфейс для точек маршрута (карта)
+export interface RoutePoint {
+  name: string;
+  coordinates: [number, number];
+  type: 'start' | 'stop' | 'destination';
+  time?: string;
+  description?: string;
+}

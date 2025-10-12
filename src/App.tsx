@@ -29,6 +29,7 @@ import AvatarPlusHangdong from "./pages/AvatarPlusHangdong";
 import ElevenIslandsMegaTour from "./pages/ElevenIslandsMegaTour";
 import PhangNgaSkywalk from "./pages/PhangNgaSkywalk";
 import CheoLanLake from "./pages/CheoLanLake";
+import CheoLanLakeNew from "./pages/CheoLanLakeNew";
 
 // Динамический компонент для CMS туров
 import DynamicTourPage from "./components/DynamicTourPage";
@@ -97,6 +98,9 @@ function App() {
               
               <Route path="/excursion/cheow-lan-lake" element={<CheoLanLake />} />
               <Route path="/tours/cheow-lan-lake" element={<CheoLanLake />} />
+              
+              {/* ТЕСТОВАЯ новая версия на template */}
+              <Route path="/tours/cheow-lan-lake-new" element={<CheoLanLakeNew />} />
               
               {/* Динамические туры из CMS - ПОСЛЕДНИЕ */}
               <Route path="/tours/:slug" element={<DynamicTourPage />} />

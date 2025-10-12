@@ -37,12 +37,12 @@ export const Hero = () => {
       
       {/* Hero Title - Top */}
       <div className="absolute top-20 left-0 right-0 z-20 text-center animate-fade-in px-4">
-        <h1 className="text-5xl md:text-7xl font-extrabold mb-3">
+        <h1 className="text-5xl md:text-7xl font-extrabold mb-3" style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}>
           <span className="block bg-gradient-to-r from-white via-cyan-50 to-blue-50 bg-clip-text text-transparent drop-shadow-2xl">
             ПХУКЕТ
           </span>
         </h1>
-        <p className="text-xl md:text-2xl text-cyan-50 font-light drop-shadow-lg">
+        <p className="text-xl md:text-2xl text-cyan-50 font-light drop-shadow-lg" style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}>
           Тропический рай ждёт вас
         </p>
       </div>
@@ -55,7 +55,8 @@ export const Hero = () => {
           <Button 
             size="lg" 
             asChild 
-            className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white px-12 py-4 text-xl md:text-2xl font-semibold rounded-full shadow-[0_8px_32px_rgba(255,255,255,0.15)] hover:shadow-[0_12px_40px_rgba(255,255,255,0.25)] transition-all duration-300 border-2 border-white/30 hover:border-white/50 transform hover:scale-105"
+            className="bg-[#007AFF] hover:bg-[#0051D5] text-white px-12 py-4 text-xl md:text-2xl font-semibold rounded-full shadow-[0_8px_32px_rgba(0,122,255,0.35),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_12px_40px_rgba(0,122,255,0.5),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-all duration-300 border-none transform hover:scale-105 backdrop-blur-xl"
+            style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}
           >
             <Link to="/tours">
               Выбрать тур

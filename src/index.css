@@ -385,6 +385,19 @@ html {
   }
 }
 
+/* Animation Classes */
+.animate-slideDown {
+  animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
 /* iOS 26 Button Styles - Centralized */
 .btn-telegram {
   background: linear-gradient(135deg, #0088cc 0%, #0077b5 100%) !important;

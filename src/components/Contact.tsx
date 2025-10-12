@@ -42,10 +42,10 @@ export const Contact = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent" style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}>
             Свяжитесь с нами
           </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto" style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}>
             Готовы начать свое приключение? Мы поможем спланировать идеальное путешествие
           </p>
         </div>
@@ -96,7 +96,8 @@ export const Contact = () => {
             <Button 
               type="submit" 
               size="lg" 
-              className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+              className="w-full bg-[#007AFF] hover:bg-[#0051D5] text-white py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-[0_4px_16px_rgba(0,122,255,0.35),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_6px_20px_rgba(0,122,255,0.5),inset_0_1px_1px_rgba(255,255,255,0.4)]"
+              style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}
             >
               <Send className="w-5 h-5 mr-2" />
               Отправить сообщение

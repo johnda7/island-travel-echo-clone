@@ -61,12 +61,12 @@ export const Gallery = () => {
         <div className="text-center mb-20 animate-fade-in">
           <div className="flex items-center justify-center mb-6">
             <Camera className="w-8 h-8 text-purple-400 mr-3 animate-pulse" />
-            <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent" style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}>
               Галерея
             </h2>
             <Eye className="w-8 h-8 text-cyan-400 ml-3 animate-pulse delay-500" />
           </div>
-          <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto font-light leading-relaxed">
+          <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto font-light leading-relaxed" style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}>
             Взгляните на <span className="bg-gradient-to-r from-purple-300 to-cyan-300 bg-clip-text text-transparent font-semibold">красоту мест</span>, которые вы можете посетить
           </p>
         </div>
@@ -93,10 +93,10 @@ export const Gallery = () => {
               {/* Content Overlay */}
               <div className="absolute inset-0 flex flex-col justify-end p-6 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                 <div className="backdrop-blur-md bg-white/10 rounded-xl p-4 border border-white/20">
-                  <h3 className="font-bold text-lg mb-2 bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
+                  <h3 className="font-bold text-lg mb-2 bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent" style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}>
                     {image.title}
                   </h3>
-                  <div className="flex items-center text-white/80 text-sm group-hover:text-white transition-colors duration-300">
+                  <div className="flex items-center text-white/80 text-sm group-hover:text-white transition-colors duration-300" style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}>
                     <span className="mr-2">Перейти к туру</span>
                     <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
                   </div>

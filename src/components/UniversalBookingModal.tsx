@@ -207,19 +207,19 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ 
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4" style={{ 
       background: 'rgba(0, 0, 0, 0.5)',
       backdropFilter: 'blur(10px)',
       WebkitBackdropFilter: 'blur(10px)'
     }}>
-      <div className="bg-white rounded-2xl max-w-md w-full max-h-[92vh] overflow-y-auto" style={{ 
-        boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+      <div className="bg-white rounded-t-2xl sm:rounded-2xl max-w-md w-full max-h-[95vh] overflow-y-auto" style={{ 
+        boxShadow: '0 -10px 40px rgba(0, 0, 0, 0.2), 0 20px 60px rgba(0, 0, 0, 0.3)',
         border: '1px solid rgba(0, 0, 0, 0.1)'
       }}>
-        <div className="p-4" style={{ background: 'rgb(242, 242, 247)' }}>
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-[19px] font-bold text-gray-900 tracking-tight flex items-center gap-2">
-              🏝️ Бронирование тура
+        <div className="p-3 sm:p-4" style={{ background: 'rgb(242, 242, 247)' }}>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-[17px] sm:text-[19px] font-bold text-gray-900 tracking-tight flex items-center gap-2">
+              🏝️ Бронирование
             </h3>
             <Button
               variant="ghost"
@@ -231,108 +231,108 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
             </Button>
           </div>
 
-          <div className="mb-4 p-3 bg-white rounded-xl" style={{ 
+          <div className="mb-3 p-2.5 sm:p-3 bg-white rounded-xl" style={{ 
             border: '1px solid rgba(0, 0, 0, 0.08)',
             boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)'
           }}>
-            <h4 className="font-semibold text-[15px] text-gray-900">{tourData.title}</h4>
-            <p className="text-[13px] text-gray-600 mt-0.5">{tourData.subtitle}</p>
+            <h4 className="font-semibold text-[14px] sm:text-[15px] text-gray-900">{tourData.title}</h4>
+            <p className="text-[12px] sm:text-[13px] text-gray-600 mt-0.5 line-clamp-1">{tourData.subtitle}</p>
           </div>
 
           {/* Калькулятор */}
-          <div className="mb-4 space-y-3">
-            <h5 className="font-semibold text-[15px] text-gray-900">Количество гостей:</h5>
+          <div className="mb-3 space-y-2">
+            <h5 className="font-semibold text-[14px] sm:text-[15px] text-gray-900">Количество гостей:</h5>
             
-            <div className="flex items-center justify-between p-3 bg-white rounded-xl" style={{ 
+            <div className="flex items-center justify-between p-2.5 sm:p-3 bg-white rounded-xl" style={{ 
               border: '1px solid rgba(0, 0, 0, 0.08)',
               boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)'
             }}>
-              <div>
-                <div className="font-semibold text-[14px] text-gray-900">Взрослые</div>
-                <div className="text-[12px] text-gray-600">{priceCalc.adultPrice.toLocaleString()} {priceCalc.currency} за человека</div>
+              <div className="flex-1 min-w-0">
+                <div className="font-semibold text-[13px] sm:text-[14px] text-gray-900">Взрослые</div>
+                <div className="text-[11px] sm:text-[12px] text-gray-600">{priceCalc.adultPrice.toLocaleString()} {priceCalc.currency}</div>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => adjustGuests('adults', 'minus')}
                   disabled={formData.adults <= 1}
-                  className="h-8 w-8 p-0 rounded-full transition-all duration-150"
+                  className="h-7 w-7 sm:h-8 sm:w-8 p-0 rounded-full transition-all duration-150"
                   style={{ 
                     borderColor: '#007AFF',
                     color: formData.adults <= 1 ? '#C7C7CC' : '#007AFF'
                   }}
                 >
-                  <Minus className="w-4 h-4" />
+                  <Minus className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
-                <span className="font-bold w-8 text-center text-[17px]" style={{ color: '#007AFF' }}>{formData.adults}</span>
+                <span className="font-bold w-6 sm:w-8 text-center text-[15px] sm:text-[17px]" style={{ color: '#007AFF' }}>{formData.adults}</span>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => adjustGuests('adults', 'plus')}
-                  className="h-8 w-8 p-0 rounded-full transition-all duration-150"
+                  className="h-7 w-7 sm:h-8 sm:w-8 p-0 rounded-full transition-all duration-150"
                   style={{ 
                     borderColor: '#007AFF',
                     color: '#007AFF'
                   }}
                 >
-                  <Plus className="w-4 h-4" />
+                  <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
               </div>
             </div>
 
-            <div className="flex items-center justify-between p-3 bg-white rounded-xl" style={{ 
+            <div className="flex items-center justify-between p-2.5 sm:p-3 bg-white rounded-xl" style={{ 
               border: '1px solid rgba(0, 0, 0, 0.08)',
               boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)'
             }}>
-              <div>
-                <div className="font-semibold text-[14px] text-gray-900">Дети (4-11 лет)</div>
-                <div className="text-[12px] text-gray-600">{priceCalc.childPrice.toLocaleString()} {priceCalc.currency} за ребенка</div>
+              <div className="flex-1 min-w-0">
+                <div className="font-semibold text-[13px] sm:text-[14px] text-gray-900">Дети (4-11 лет)</div>
+                <div className="text-[11px] sm:text-[12px] text-gray-600">{priceCalc.childPrice.toLocaleString()} {priceCalc.currency}</div>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => adjustGuests('children', 'minus')}
                   disabled={formData.children <= 0}
-                  className="h-8 w-8 p-0 rounded-full transition-all duration-150"
+                  className="h-7 w-7 sm:h-8 sm:w-8 p-0 rounded-full transition-all duration-150"
                   style={{ 
                     borderColor: '#007AFF',
                     color: formData.children <= 0 ? '#C7C7CC' : '#007AFF'
                   }}
                 >
-                  <Minus className="w-4 h-4" />
+                  <Minus className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
-                <span className="font-bold w-8 text-center text-[17px]" style={{ color: '#007AFF' }}>{formData.children}</span>
+                <span className="font-bold w-6 sm:w-8 text-center text-[15px] sm:text-[17px]" style={{ color: '#007AFF' }}>{formData.children}</span>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => adjustGuests('children', 'plus')}
-                  className="h-8 w-8 p-0 rounded-full transition-all duration-150"
+                  className="h-7 w-7 sm:h-8 sm:w-8 p-0 rounded-full transition-all duration-150"
                   style={{ 
                     borderColor: '#007AFF',
                     color: '#007AFF'
                   }}
                 >
-                  <Plus className="w-4 h-4" />
+                  <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
               </div>
             </div>
 
             {/* Информация о младенцах */}
-            <div className="text-center py-1.5">
-              <span className="text-[12px] text-gray-600 px-2.5 py-1 rounded-full" style={{ background: 'rgba(0, 0, 0, 0.05)' }}>
+            <div className="text-center py-1">
+              <span className="text-[11px] sm:text-[12px] text-gray-600 px-2 py-0.5 rounded-full" style={{ background: 'rgba(0, 0, 0, 0.05)' }}>
                 👶 Младенцы до 3 лет - бесплатно
               </span>
             </div>
 
-            <div className="border-t pt-3 p-3 rounded-xl" style={{ 
+            <div className="border-t pt-2 p-2.5 sm:p-3 rounded-xl" style={{ 
               background: 'rgba(0, 122, 255, 0.08)',
               border: '1px solid rgba(0, 122, 255, 0.15)'
             }}>
               <div className="flex justify-between items-center">
-                <span className="text-[15px] font-semibold text-gray-900">Итого:</span>
-                <span className="text-[20px] font-bold" style={{ color: '#007AFF' }}>
+                <span className="text-[14px] sm:text-[15px] font-semibold text-gray-900">Итого:</span>
+                <span className="text-[18px] sm:text-[20px] font-bold" style={{ color: '#007AFF' }}>
                   {priceCalc.totalPrice.toLocaleString()} {priceCalc.currency}
                 </span>
               </div>
@@ -340,12 +340,12 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
           </div>
 
           {/* Форма */}
-          <div className="space-y-3 mb-4">
+          <div className="space-y-2.5 sm:space-y-3 mb-3">
             <div>
-              <label className="block text-[14px] font-semibold mb-1.5 text-gray-900">Ваше имя *</label>
+              <label className="block text-[13px] sm:text-[14px] font-semibold mb-1 text-gray-900">Ваше имя *</label>
               <input
                 type="text"
-                className="w-full px-3 py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[15px]"
+                className="w-full px-3 py-2 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[14px] sm:text-[15px]"
                 style={{ 
                   borderColor: 'rgba(0, 0, 0, 0.15)'
                 }}
@@ -356,10 +356,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
             </div>
             
             <div>
-              <label className="block text-[14px] font-semibold mb-1.5 text-gray-900">Телефон *</label>
+              <label className="block text-[13px] sm:text-[14px] font-semibold mb-1 text-gray-900">Телефон *</label>
               <input
                 type="tel"
-                className="w-full px-3 py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[15px]"
+                className="w-full px-3 py-2 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[14px] sm:text-[15px]"
                 style={{ 
                   borderColor: 'rgba(0, 0, 0, 0.15)'
                 }}
@@ -371,10 +371,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
             </div>
             
             <div>
-              <label className="block text-[14px] font-semibold mb-1.5 text-gray-900">Email (необязательно)</label>
+              <label className="block text-[13px] sm:text-[14px] font-semibold mb-1 text-gray-900">Email</label>
               <input
                 type="email"
-                className="w-full px-3 py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[15px]"
+                className="w-full px-3 py-2 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[14px] sm:text-[15px]"
                 style={{ 
                   borderColor: 'rgba(0, 0, 0, 0.15)'
                 }}
@@ -384,10 +384,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
             </div>
             
             <div>
-              <label className="block text-[14px] font-semibold mb-1.5 text-gray-900">Дата поездки *</label>
+              <label className="block text-[13px] sm:text-[14px] font-semibold mb-1 text-gray-900">Дата поездки *</label>
               <input
                 type="date"
-                className="w-full px-3 py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[15px]"
+                className="w-full px-3 py-2 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[14px] sm:text-[15px]"
                 style={{ 
                   borderColor: 'rgba(0, 0, 0, 0.15)'
                 }}
@@ -401,12 +401,12 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
           <Button 
             onClick={handleBooking}
             disabled={!formData.name.trim() || !formData.phone.trim() || !formData.date}
-            className="btn-booking w-full py-2.5"
+            className="btn-booking w-full py-2.5 sm:py-3"
           >
             <Calendar className="w-4 h-4 mr-2" />
             {(!formData.name.trim() || !formData.phone.trim() || !formData.date) 
               ? 'Заполните все поля' 
-              : '🏝️ ЗАБРОНИРОВАТЬ ТУР'
+              : '🏝️ ЗАБРОНИРОВАТЬ'
             }
           </Button>
         </div>

@@ -434,12 +434,24 @@ export const TourPageTemplate = ({
               <div className="text-white text-[24px] font-bold tracking-tight">{tourData.priceAdult.toLocaleString()} ฿</div>
             </div>
             <button 
-              onClick={() => setShowBookingModal(true)} 
-              className="btn-booking"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowBookingModal(true);
+              }}
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowBookingModal(true);
+              }}
+              className="btn-booking active:scale-95"
             >
               Забронировать
             </button>
           </div>
+          
+          {/* Отступ для нижней панели на мобильных */}
+          <div className="h-24 md:hidden"></div>
         </div>
       </section>
 

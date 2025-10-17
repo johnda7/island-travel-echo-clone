@@ -21,8 +21,8 @@ export const MobileBookingBar: React.FC<MobileBookingBarProps> = ({
   return (
     <>
       {/* Mobile booking bar - фиксированная панель внизу с размытием фона */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 p-4 z-50 shadow-lg">
-        <div className="flex items-center gap-3">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 p-3 z-50 shadow-lg">
+        <div className="flex items-center gap-2 max-w-7xl mx-auto">
           <div className="text-left flex-shrink-0">
             <div className="text-sm font-bold" style={{ color: '#007AFF' }}>
               от {priceAdult.toLocaleString()} {currency}
@@ -31,8 +31,17 @@ export const MobileBookingBar: React.FC<MobileBookingBarProps> = ({
           </div>
           <div className="flex gap-2 flex-1">
             <Button 
-              onClick={handleTelegramClick}
-              className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-3 text-xs font-medium"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleTelegramClick();
+              }}
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleTelegramClick();
+              }}
+              className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2.5 text-xs font-medium active:scale-95"
             >
               <span className="flex flex-col items-center leading-tight">
                 <span>Написать в</span>
@@ -40,8 +49,17 @@ export const MobileBookingBar: React.FC<MobileBookingBarProps> = ({
               </span>
             </Button>
             <Button 
-              onClick={onBookingClick}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 text-sm font-medium"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onBookingClick();
+              }}
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onBookingClick();
+              }}
+              className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2.5 text-sm font-medium active:scale-95"
             >
               Забронировать
             </Button>
@@ -49,8 +67,8 @@ export const MobileBookingBar: React.FC<MobileBookingBarProps> = ({
         </div>
       </div>
 
-      {/* Отступ снизу для панели */}
-      <div className="h-20 lg:hidden" />
+      {/* Отступ снизу для панели - уменьшен */}
+      <div className="h-[72px] lg:hidden" />
     </>
   );
 };

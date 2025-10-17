@@ -119,25 +119,6 @@
     background-attachment: fixed;
   }
 
-  /* iOS 26 Scrollbar Styling */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.15);
-    border-radius: 3px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.25);
-  }
-
   /* КРИТИЧНО: Глобальная защита от горизонтального скролла на мобильных */
   #root {
     overflow-x: hidden;
@@ -391,30 +372,6 @@ html {
     opacity: 1;
     transform: translateX(0);
   }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Animation Classes */
-.animate-slideDown {
-  animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
-}
-
-.animate-fadeInUp {
-  animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 /* iOS 26 Button Styles - Centralized */

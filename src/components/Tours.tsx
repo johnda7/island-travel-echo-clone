@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
 import { useTours, TourWithMeta } from "@/hooks/useTours";
+import { TOURS_REGISTRY } from "@/data/toursRegistry";
 import type { TourData } from "@/types/Tour";
 import fallbackImage from "@/assets/maya-bay-sunrise.jpg";
 
@@ -39,10 +40,28 @@ export const Tours = ({ filteredTours }: ToursProps) => {
     }
   };
 
-  const handleBookingClick = (tour: TourWithMeta) => {
+  const handleBookingClick = async (tour: TourWithMeta) => {
+    // Если данные уже есть, открываем сразу
     if (tour.data) {
       setSelectedTour(tour.data);
       setShowBookingModal(true);
+      return;
+    }
+    
+    // Если данных нет, принудительно загружаем их из реестра
+    console.log('🔄 Загружаем данные тура:', tour.id);
+    try {
+      const tourRegistry = TOURS_REGISTRY.find(t => t.id === tour.id);
+      if (tourRegistry) {
+        const tourData = await tourRegistry.data();
+        setSelectedTour(tourData);
+        setShowBookingModal(true);
+      } else {
+        alert('⚠️ Не удалось загрузить данные тура. Попробуйте ещё раз.');
+      }
+    } catch (error) {
+      console.error('❌ Ошибка загрузки данных тура:', error);
+      alert('⚠️ Не удалось загрузить данные тура. Попробуйте ещё раз.');
     }
   };
 
@@ -266,7 +285,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                   </div>
                   
                   {/* ✅ КНОПКИ ДЕЙСТВИЙ */}
-                  <div className="space-y-2">
+                  <div className="space-y-2" onClick={(e) => e.stopPropagation()}>
                     <button 
                       className="w-full px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-150"
                       style={{
@@ -279,30 +298,51 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                     >
                       📖 Подробнее о туре
                     </button>
-                    <button 
+                    <div 
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        handleBookingClick(tour);
                       }}
-                      className="w-full px-4 py-3 rounded-xl font-bold text-white text-sm transition-all duration-150"
-                      style={{
-                        background: 'linear-gradient(135deg, #34C759 0%, #30D158 100%)',
-                        boxShadow: '0 4px 12px rgba(52, 199, 89, 0.3)',
-                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                        letterSpacing: '-0.01em'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'scale(1.02)';
-                        e.currentTarget.style.boxShadow = '0 6px 16px rgba(52, 199, 89, 0.4)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'scale(1)';
-                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(52, 199, 89, 0.3)';
+                      onTouchStart={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
                       }}
                     >
-                      🏝️ Забронировать тур
-                    </button>
+                      <button 
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          e.nativeEvent.stopImmediatePropagation();
+                          handleBookingClick(tour);
+                          return false;
+                        }}
+                        onTouchEnd={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          e.nativeEvent.stopImmediatePropagation();
+                          handleBookingClick(tour);
+                          return false;
+                        }}
+                        className="w-full px-4 py-3 rounded-xl font-bold text-white text-sm transition-all duration-150 active:scale-95"
+                        style={{
+                          background: 'linear-gradient(135deg, #34C759 0%, #30D158 100%)',
+                          boxShadow: '0 4px 12px rgba(52, 199, 89, 0.3)',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                          letterSpacing: '-0.01em',
+                          touchAction: 'none'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'scale(1.02)';
+                          e.currentTarget.style.boxShadow = '0 6px 16px rgba(52, 199, 89, 0.4)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'scale(1)';
+                          e.currentTarget.style.boxShadow = '0 4px 12px rgba(52, 199, 89, 0.3)';
+                        }}
+                      >
+                        🏝️ Забронировать тур
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

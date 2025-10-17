@@ -38,7 +38,11 @@ export const TourPageTemplate = ({
     setShowFullGallery(true);
   };
 
-  const openGallery = () => {
+  const openGallery = (e?: React.MouseEvent | React.TouchEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     setShowFullGallery(true);
     setSelectedImage(tourData.gallery[0]);
     setCurrentImageIndex(0);
@@ -231,7 +235,14 @@ export const TourPageTemplate = ({
           
           {/* Show all button */}
           <div className="mt-3 px-4 pb-4">
-            <button onClick={openGallery} className="w-full flex items-center justify-center gap-2 py-3 text-[15px] font-semibold rounded-2xl transition-all duration-150" style={{
+            <button 
+              onClick={openGallery} 
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                openGallery(e);
+              }}
+              className="w-full flex items-center justify-center gap-2 py-3 text-[15px] font-semibold rounded-2xl transition-all duration-150 active:scale-95" 
+              style={{
               color: '#007AFF',
               background: 'rgba(0, 122, 255, 0.12)',
               backdropFilter: 'blur(20px) saturate(180%)',
@@ -440,7 +451,9 @@ export const TourPageTemplate = ({
             <Card className="mb-6">
               <CardContent className="p-6">
                 <h2 className="text-2xl font-bold mb-4">Описание</h2>
-                <p className="text-gray-700 leading-relaxed">{tourData.description}</p>
+                <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+                  {tourData.description}
+                </div>
               </CardContent>
             </Card>
           )}

@@ -40,43 +40,21 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
   // Блокируем скролл страницы при открытии модалки
   useEffect(() => {
     if (isOpen) {
-      // Сохраняем текущую позицию скролла
+      // Блокируем скролл простым способом (без position: fixed чтобы не ломать на iOS)
       const scrollY = window.scrollY;
-      
-      // Блокируем скролл через position: fixed (самый надежный способ)
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.left = '0';
-      document.body.style.right = '0';
       document.body.style.overflow = 'hidden';
-      
-      // Также блокируем на html элементе
+      document.body.style.position = 'relative';
+      document.body.style.height = '100vh';
       document.documentElement.style.overflow = 'hidden';
-      document.documentElement.style.height = '100%';
-    } else {
-      // Восстанавливаем позицию скролла
-      const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-      document.documentElement.style.height = '';
       
-      // Возвращаем скролл на место
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      return () => {
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.height = '';
+        document.documentElement.style.overflow = '';
+        window.scrollTo(0, scrollY);
+      };
     }
-    
-    return () => {
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-      document.documentElement.style.height = '';
-    };
   }, [isOpen]);
 
   // Универсальный калькулятор цен
@@ -280,21 +258,22 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       style={{ 
         background: 'rgba(0, 0, 0, 0.6)',
         backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)'
+        WebkitBackdropFilter: 'blur(10px)',
+        touchAction: 'none'
       }}
     >
       <div 
-        className="bg-white rounded-2xl w-full mx-4 overflow-hidden"
+        className="bg-white rounded-2xl w-full mx-4 overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
         style={{ 
           boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
           border: '1px solid rgba(0, 0, 0, 0.1)',
           maxWidth: '448px',
-          maxHeight: '85vh',
-          position: 'relative'
+          height: '80vh',
+          maxHeight: '600px'
         }}
       >
-        <div className="overflow-y-auto h-full" style={{ maxHeight: '85vh' }}>
+        <div className="overflow-y-auto flex-1" style={{ WebkitOverflowScrolling: 'touch' }}>
         <div className="p-2 sm:p-4" style={{ background: 'rgb(242, 242, 247)' }}>
           <div className="flex items-center justify-between mb-1.5">
             <h3 className="text-[15px] sm:text-[19px] font-bold text-gray-900 tracking-tight flex items-center gap-2">
@@ -492,10 +471,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
         </div>
       </div>
 
-      {/* Красивое уведомление вместо alert */}
+      {/* Красивое уведомление вместо alert - ВЫНЕСЕНО НАРУЖУ */}
       {showSuccessMessage && (
         <div 
-          className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 pointer-events-none"
           style={{
             background: 'rgba(0, 0, 0, 0.7)',
             backdropFilter: 'blur(10px)',
@@ -503,7 +482,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
           }}
         >
           <div 
-            className="bg-white rounded-2xl p-6 max-w-sm w-full text-center"
+            className="bg-white rounded-2xl p-6 max-w-sm w-full text-center pointer-events-auto"
             style={{
               boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
               animation: 'slideDown 0.3s ease-out'

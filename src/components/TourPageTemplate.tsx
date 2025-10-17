@@ -31,6 +31,36 @@ export const TourPageTemplate = ({
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [mobileGalleryIndex, setMobileGalleryIndex] = useState<number>(0);
   const [showBookingModal, setShowBookingModal] = useState(false);
+  const [sortedGallery, setSortedGallery] = useState<string[]>(tourData.gallery);
+
+  // 🎯 Сортировка галереи: сначала горизонтальные, потом вертикальные
+  useEffect(() => {
+    const sortGalleryByOrientation = async () => {
+      const images = await Promise.all(
+        tourData.gallery.map((src) => {
+          return new Promise<{ src: string; isLandscape: boolean }>((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+              resolve({ src, isLandscape: img.width >= img.height });
+            };
+            img.onerror = () => {
+              resolve({ src, isLandscape: true }); // default к landscape при ошибке
+            };
+            img.src = src;
+          });
+        })
+      );
+      
+      // Сортируем: сначала горизонтальные (landscape), потом вертикальные (portrait)
+      const sorted = images
+        .sort((a, b) => (b.isLandscape ? 1 : 0) - (a.isLandscape ? 1 : 0))
+        .map((img) => img.src);
+      
+      setSortedGallery(sorted);
+    };
+
+    sortGalleryByOrientation();
+  }, [tourData.gallery]);
 
   const openModal = (image: string, index: number) => {
     setSelectedImage(image);
@@ -44,7 +74,7 @@ export const TourPageTemplate = ({
       e.stopPropagation();
     }
     setShowFullGallery(true);
-    setSelectedImage(tourData.gallery[0]);
+    setSelectedImage(sortedGallery[0]);
     setCurrentImageIndex(0);
   };
 
@@ -55,23 +85,23 @@ export const TourPageTemplate = ({
 
   const nextImage = useCallback(() => {
     setCurrentImageIndex((prev) => {
-      const nextIndex = (prev + 1) % tourData.gallery.length;
-      setSelectedImage(tourData.gallery[nextIndex]);
+      const nextIndex = (prev + 1) % sortedGallery.length;
+      setSelectedImage(sortedGallery[nextIndex]);
       return nextIndex;
     });
-  }, [tourData.gallery]);
+  }, [sortedGallery]);
 
   const prevImage = useCallback(() => {
     setCurrentImageIndex((prev) => {
-      const prevIndex = prev === 0 ? tourData.gallery.length - 1 : prev - 1;
-      setSelectedImage(tourData.gallery[prevIndex]);
+      const prevIndex = prev === 0 ? sortedGallery.length - 1 : prev - 1;
+      setSelectedImage(sortedGallery[prevIndex]);
       return prevIndex;
     });
-  }, [tourData.gallery]);
+  }, [sortedGallery]);
 
   const selectImage = (index: number) => {
     setCurrentImageIndex(index);
-    setSelectedImage(tourData.gallery[index]);
+    setSelectedImage(sortedGallery[index]);
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -182,9 +212,9 @@ export const TourPageTemplate = ({
             }}
           >
             <img 
-              src={tourData.gallery[mobileGalleryIndex]} 
+              src={sortedGallery[mobileGalleryIndex]} 
               alt={tourData.title}
-              className="w-full h-full object-cover object-center" 
+              className="w-full h-full object-contain bg-gradient-to-b from-sky-100 to-blue-50" 
               draggable="false"
               style={{ userSelect: 'none' }}
             />
@@ -219,7 +249,7 @@ export const TourPageTemplate = ({
 
           {/* Page indicators - iOS 26 style */}
           <div className="flex justify-center mt-3 gap-1.5 px-4">
-            {tourData.gallery.map((_, index) => (
+            {sortedGallery.map((_, index) => (
               <button 
                 key={index} 
                 className={`h-1.5 rounded-full transition-all duration-300 ease-out active:scale-90 ${
@@ -263,10 +293,10 @@ export const TourPageTemplate = ({
           <div className="grid lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <div className="grid grid-cols-4 gap-3 h-[480px]">
-                <div className="col-span-2 row-span-2 cursor-pointer group relative overflow-hidden rounded-[28px]" onClick={() => openModal(tourData.gallery[0], 0)} style={{
+                <div className="col-span-2 row-span-2 cursor-pointer group relative overflow-hidden rounded-[28px] bg-gradient-to-b from-sky-100 to-blue-50" onClick={() => openModal(sortedGallery[0], 0)} style={{
                   boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
                 }}>
-                  <img src={tourData.gallery[0]} alt="Main" className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105" />
+                  <img src={sortedGallery[0]} alt="Main" className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105" />
                   
                   {/* Desktop badges */}
                   <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
@@ -296,15 +326,15 @@ export const TourPageTemplate = ({
                   </div>
                 </div>
 
-                {tourData.gallery.slice(1, 5).map((image, index) => (
-                  <div key={index + 1} className="cursor-pointer group relative overflow-hidden rounded-2xl transition-all duration-300" onClick={() => index === 3 ? openGallery() : openModal(image, index + 1)}>
-                    <img src={image} alt={`Gallery ${index + 2}`} className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105" />
-                    {index === 3 && tourData.gallery.length > 5 && (
+                {sortedGallery.slice(1, 5).map((image, index) => (
+                  <div key={index + 1} className="cursor-pointer group relative overflow-hidden rounded-2xl transition-all duration-300 bg-gradient-to-b from-sky-100 to-blue-50" onClick={() => index === 3 ? openGallery() : openModal(image, index + 1)}>
+                    <img src={image} alt={`Gallery ${index + 2}`} className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105" />
+                    {index === 3 && sortedGallery.length > 5 && (
                       <div className="absolute inset-0 flex items-center justify-center backdrop-blur-sm transition-all duration-300" style={{
                         background: 'rgba(0, 0, 0, 0.4)'
                       }}>
                         <div className="text-white text-center">
-                          <div className="text-xl font-semibold">+{tourData.gallery.length - 5}</div>
+                          <div className="text-xl font-semibold">+{sortedGallery.length - 5}</div>
                         </div>
                       </div>
                     )}
@@ -679,7 +709,7 @@ export const TourPageTemplate = ({
               background: 'rgba(28, 28, 30, 0.5)',
               backdropFilter: 'blur(20px)'
             }}>
-              {tourData.gallery.map((_, index) => (
+              {sortedGallery.map((_, index) => (
                 <button
                   key={index}
                   onClick={(e) => { e.stopPropagation(); selectImage(index); }}

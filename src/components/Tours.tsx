@@ -30,10 +30,12 @@ export const Tours = ({ filteredTours }: ToursProps) => {
 
   const handleBookingClick = async (tour: TourWithMeta) => {
     console.log('🎯 handleBookingClick вызван для:', tour.id, 'Данные есть:', !!tour.data);
+    console.log('📦 Объект тура:', tour);
     
     // Если данные уже есть, открываем сразу
     if (tour.data) {
       console.log('✅ Данные тура уже загружены, открываем модал');
+      console.log('📋 Данные тура:', tour.data);
       setSelectedTour(tour.data);
       setShowBookingModal(true);
       return;
@@ -41,16 +43,20 @@ export const Tours = ({ filteredTours }: ToursProps) => {
     
     // Если данных нет, принудительно загружаем их из реестра
     console.log('🔄 Данных нет, загружаем из реестра для:', tour.id);
+    console.log('📚 Весь реестр:', TOURS_REGISTRY);
     try {
       const tourRegistry = TOURS_REGISTRY.find(t => t.id === tour.id);
+      console.log('🔍 Поиск в реестре по id:', tour.id, 'Найдено:', !!tourRegistry);
+      
       if (tourRegistry) {
         console.log('📦 Найден в реестре, загружаем данные...');
         const tourData = await tourRegistry.data();
-        console.log('✅ Данные загружены успешно');
+        console.log('✅ Данные загружены успешно:', tourData);
         setSelectedTour(tourData);
         setShowBookingModal(true);
       } else {
         console.error('❌ Тур не найден в реестре:', tour.id);
+        console.error('📋 Доступные ID в реестре:', TOURS_REGISTRY.map(t => t.id));
         alert('⚠️ Не удалось загрузить данные тура. Попробуйте ещё раз.');
       }
     } catch (error) {
@@ -304,6 +310,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                     >
                       <button 
                         onClick={(e) => {
+                          console.log('🖱️ CLICK на кнопку бронирования для тура:', tour.name, tour.id);
                           e.preventDefault();
                           e.stopPropagation();
                           e.nativeEvent.stopImmediatePropagation();
@@ -311,6 +318,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                           return false;
                         }}
                         onTouchEnd={(e) => {
+                          console.log('👆 TOUCH END на кнопку бронирования для тура:', tour.name, tour.id);
                           e.preventDefault();
                           e.stopPropagation();
                           e.nativeEvent.stopImmediatePropagation();

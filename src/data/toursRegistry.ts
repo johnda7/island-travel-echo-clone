@@ -126,6 +126,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
   },
 
 
+  // 7. 11 ОСТРОВОВ МЕГА-ТУР (Джеймс Бонд + Хонг + Пхи-Пхи)
+  {
+    id: 'eleven-islands-mega',
+    name: '11 ОСТРОВОВ МЕГА-ТУР',
+    category: 'islands',
+    tags: ['море', 'морские', 'острова', 'джеймс бонд', 'пхи-пхи', 'хонг', 'майя бэй', 'снорклинг', 'каякинг', '1 день', 'мега', 'комбо', 'премиум'],
+    isPopular: true,     // ✅ показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: true,    // ✅ показываем на главной (МЕГА ТУР!)
+    priority: 7,
+    data: () => Promise.resolve(elevenIslandsMegaTourData)
+  },
+
   // 8. Остров Джеймса Бонда (залив Пханг Нга)
   {
     id: 'james-bond-island-phang-nga',

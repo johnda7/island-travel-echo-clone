@@ -20,7 +20,6 @@ import PearlsAndamanSeaNew from "./pages/PearlsAndamanSeaNew";
 import DostoprimechatelnostiPhuketaNew from "./pages/DostoprimechatelnostiPhuketaNew";
 import RassvetnoePrikljuchenieNew from "./pages/RassvetnoePrikljuchenieNew";
 import JamesBondIslandTourNew from "./pages/JamesBondIslandTourNew";
-import ElevenIslandsStandardTourNew from "./pages/ElevenIslandsStandardTourNew";
 import RachaCoralIslandsTourNew from "./pages/RachaCoralIslandsTourNew";
 import RaftingSpaAtvTourNew from "./pages/RaftingSpaAtvTourNew";
 import KaoLakSafariTourNew from "./pages/KaoLakSafariTourNew";
@@ -69,9 +68,6 @@ function App() {
 
               <Route path="/excursion/james-bond-island-phang-nga" element={<JamesBondIslandTourNew />} />
               <Route path="/tours/james-bond-island-phang-nga" element={<JamesBondIslandTourNew />} />
-              
-              <Route path="/excursion/eleven-islands-standard" element={<ElevenIslandsStandardTourNew />} />
-              <Route path="/tours/eleven-islands-standard" element={<ElevenIslandsStandardTourNew />} />
               
               <Route path="/excursion/racha-coral-islands-speedboat" element={<RachaCoralIslandsTourNew />} />
               <Route path="/tours/racha-coral-islands-speedboat" element={<RachaCoralIslandsTourNew />} />

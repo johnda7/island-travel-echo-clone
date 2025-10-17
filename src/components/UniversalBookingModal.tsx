@@ -11,7 +11,7 @@
 // ✅ ЗАКАЗЫ КОРРЕКТНО СОХРАНЯЮТСЯ В АДМИНКУ!
 // 🚨 ПРИ ПОПЫТКЕ ИЗМЕНИТЬ - НЕМЕДЛЕННО ОСТАНОВИТЬСЯ И СПРОСИТЬ ПОЛЬЗОВАТЕЛЯ!
 //
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, Users, Phone, Mail, Minus, Plus, X } from "lucide-react";
 import { TourData, BookingFormData, PriceCalculation } from "@/types/Tour";
@@ -23,6 +23,9 @@ interface UniversalBookingModalProps {
 }
 
 export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBookingModalProps) => {
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [successMessageText, setSuccessMessageText] = useState("");
+  
   const [formData, setFormData] = useState<BookingFormData>({
     name: "",
     phone: "",
@@ -33,6 +36,19 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
     specialRequests: "",
     hotelName: ""
   });
+
+  // Блокируем скролл страницы при открытии модалки
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   // Универсальный калькулятор цен
   const calculatePrice = (): PriceCalculation => {
@@ -72,7 +88,9 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
 
   const handleBooking = async () => {
     if (!formData.name.trim() || !formData.phone.trim() || !formData.date) {
-      alert('Пожалуйста, заполните все обязательные поля (Имя, Телефон, Дата)');
+      setSuccessMessageText('⚠️ Пожалуйста, заполните все обязательные поля');
+      setShowSuccessMessage(true);
+      setTimeout(() => setShowSuccessMessage(false), 3000);
       return;
     }
 
@@ -121,9 +139,13 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
 
       // На мобильных устройствах сразу используем прямой редирект в Telegram
       if (isMobile) {
-        const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-        window.location.href = telegramUrl;
-        alert('✅ Заявка подготовлена! Переходим в Telegram для отправки.');
+        setSuccessMessageText('✅ Заявка принята! Откроем Telegram для подтверждения...');
+        setShowSuccessMessage(true);
+        
+        setTimeout(() => {
+          const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
+          window.location.href = telegramUrl;
+        }, 2000);
         
         // Очищаем форму и закрываем модал
         setFormData({
@@ -158,14 +180,24 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       const telegramResult = await telegramResponse.json();
       
       if (telegramResult.ok) {
-        alert('✅ Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
+        setSuccessMessageText('✅ Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
+        setShowSuccessMessage(true);
         console.log('✅ Сообщение отправлено в Telegram');
+        
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+          onClose();
+        }, 3000);
       } else {
         console.error('❌ Ошибка Telegram API:', telegramResult.description);
-        // Fallback - открываем Telegram с готовым сообщением (мобильно-совместимый метод)
-        const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-        window.location.href = telegramUrl;
-        alert('⚠️ Заявка подготовлена! Переходим в Telegram для отправки.');
+        // Fallback - открываем Telegram с готовым сообщением
+        setSuccessMessageText('📱 Заявка сохранена! Откроем Telegram для подтверждения...');
+        setShowSuccessMessage(true);
+        
+        setTimeout(() => {
+          const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
+          window.location.href = telegramUrl;
+        }, 2000);
       }
       
       // Очищаем форму и закрываем модал
@@ -186,10 +218,17 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       
       // Fallback - открываем Telegram с готовым сообщением (мобильно-совместимый метод)
       const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-      window.location.href = telegramUrl;
-      alert('⚠️ Заявка подготовлена! Переходим в Telegram для отправки.');
       
-      // Очищаем форму и закрываем модал даже при ошибке
+      // Показываем уведомление перед переходом
+      setSuccessMessageText('⚠️ Заявка подготовлена! Переходим в Telegram для отправки.');
+      setShowSuccessMessage(true);
+      
+      // Переходим в Telegram через 2 секунды
+      setTimeout(() => {
+        window.location.href = telegramUrl;
+      }, 2000);
+      
+      // Очищаем форму
       setFormData({
         name: "",
         phone: "",
@@ -200,22 +239,29 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
         specialRequests: "",
         hotelName: ""
       });
-      onClose();
     }
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4" style={{ 
-      background: 'rgba(0, 0, 0, 0.5)',
-      backdropFilter: 'blur(10px)',
-      WebkitBackdropFilter: 'blur(10px)'
-    }}>
-      <div className="bg-white rounded-t-2xl sm:rounded-2xl max-w-md w-full max-h-[88vh] overflow-y-auto" style={{ 
-        boxShadow: '0 -10px 40px rgba(0, 0, 0, 0.2), 0 20px 60px rgba(0, 0, 0, 0.3)',
-        border: '1px solid rgba(0, 0, 0, 0.1)'
-      }}>
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4" 
+      onClick={onClose}
+      style={{ 
+        background: 'rgba(0, 0, 0, 0.6)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)'
+      }}
+    >
+      <div 
+        className="bg-white rounded-2xl max-w-md w-full max-h-[88vh] overflow-y-auto" 
+        onClick={(e) => e.stopPropagation()}
+        style={{ 
+          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
+          border: '1px solid rgba(0, 0, 0, 0.1)'
+        }}
+      >
         <div className="p-2 sm:p-4" style={{ background: 'rgb(242, 242, 247)' }}>
           <div className="flex items-center justify-between mb-1.5">
             <h3 className="text-[15px] sm:text-[19px] font-bold text-gray-900 tracking-tight flex items-center gap-2">
@@ -411,6 +457,39 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
           </Button>
         </div>
       </div>
+
+      {/* Красивое уведомление вместо alert */}
+      {showSuccessMessage && (
+        <div 
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+          style={{
+            background: 'rgba(0, 0, 0, 0.7)',
+            backdropFilter: 'blur(10px)',
+            animation: 'fadeIn 0.2s ease-out'
+          }}
+        >
+          <div 
+            className="bg-white rounded-2xl p-6 max-w-sm w-full text-center"
+            style={{
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
+              animation: 'slideDown 0.3s ease-out'
+            }}
+          >
+            <div className="text-4xl mb-4">
+              {successMessageText.includes('✅') ? '✅' : 
+               successMessageText.includes('📱') ? '📱' : '⚠️'}
+            </div>
+            <p className="text-base sm:text-lg font-semibold text-gray-900">
+              {successMessageText.replace(/✅|⚠️|📱/g, '').trim()}
+            </p>
+            {successMessageText.includes('Telegram') && (
+              <div className="mt-4">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto" style={{ borderColor: '#007AFF' }}></div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

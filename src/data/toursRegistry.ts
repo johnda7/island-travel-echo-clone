@@ -17,7 +17,6 @@ import { rassvetnoePrikljuchenieTourData } from './tours/rassvetnoe-prikljucheni
 // НОВЫЕ 6 ТУРОВ
 
 import { jamesBondIslandTourData } from './tours/james-bond-island';
-import { elevenIslandsStandardTourData } from './tours/eleven-islands-standard';
 import { elevenIslandsMegaTourData } from './tours/eleven-islands-mega';
 import { raftingSpaAtvTourData } from './tours/rafting-spa-atv';
 import { kaoLakSafariTourData } from './tours/kao-lak-safari';
@@ -153,20 +152,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     data: () => import('./tours/avatar-plus-hangdong').then(m => m.avatarPlusHangdongTour)
   },
 
-  // 10. 11 островов Стандарт на спидботе
-  {
-    id: 'eleven-islands-standard-speedboat',
-    name: '11 островов Стандарт на спидботе',
-    category: 'islands',
-    tags: ['море', 'морские', 'острова', '11 островов', 'спидбот', 'хоппинг', 'снорклинг', 'пхи-пхи', 'бамбу', 'лагуны', '1 день'],
-    isPopular: false,    // ❌ не в популярных (очень длинный тур)
-    isActive: true,      // ✅ АКТИВИРОВАН
-    isFeatured: false,   // ❌ не на главной
-    priority: 10,
-    data: () => Promise.resolve(elevenIslandsStandardTourData)
-  },
-
-  // 12. Острова Рача и Корал на спидботе
+  // 10. Острова Рача и Корал на спидботе
   {
     id: 'racha-coral-islands-speedboat',
     name: 'Острова Рача и Корал на спидботе',

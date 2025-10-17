@@ -24,39 +24,33 @@ export const Tours = ({ filteredTours }: ToursProps) => {
 
   // Простая функция для определения пути тура
   const getDetailPath = (tour: TourWithMeta) => {
-    // 🔄 ГИБРИДНАЯ МАРШРУТИЗАЦИЯ: Статические туры имеют специальные пути, CMS туры - динамические
-    switch (tour.id) {
-      case 'phi-phi-2days':
-        return '/excursion/phi-phi-2-days-1-night';
-      case 'pearls-andaman-sea':
-        return '/excursion/pearls-andaman-sea';
-      case 'dostoprimechatelnosti-phuketa':
-        return '/excursion/dostoprimechatelnosti-phuketa';
-      case 'rassvetnoe-prikljuchenie':
-        return '/excursion/rassvetnoe-prikljuchenie';
-      default:
-        // ✅ ВСЕ CMS ТУРЫ И НОВЫЕ СТАТИЧЕСКИЕ ТУРЫ используют динамический роутинг
-        return `/tours/${tour.id}`;
-    }
+    // ✅ ВСЕ ТУРЫ используют унифицированный путь /tours/{id}
+    return `/tours/${tour.id}`;
   };
 
   const handleBookingClick = async (tour: TourWithMeta) => {
+    console.log('🎯 handleBookingClick вызван для:', tour.id, 'Данные есть:', !!tour.data);
+    
     // Если данные уже есть, открываем сразу
     if (tour.data) {
+      console.log('✅ Данные тура уже загружены, открываем модал');
       setSelectedTour(tour.data);
       setShowBookingModal(true);
       return;
     }
     
     // Если данных нет, принудительно загружаем их из реестра
-    console.log('🔄 Загружаем данные тура:', tour.id);
+    console.log('🔄 Данных нет, загружаем из реестра для:', tour.id);
     try {
       const tourRegistry = TOURS_REGISTRY.find(t => t.id === tour.id);
       if (tourRegistry) {
+        console.log('📦 Найден в реестре, загружаем данные...');
         const tourData = await tourRegistry.data();
+        console.log('✅ Данные загружены успешно');
         setSelectedTour(tourData);
         setShowBookingModal(true);
       } else {
+        console.error('❌ Тур не найден в реестре:', tour.id);
         alert('⚠️ Не удалось загрузить данные тура. Попробуйте ещё раз.');
       }
     } catch (error) {

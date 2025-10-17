@@ -7,7 +7,6 @@ export const PROTECTED_FILES = [
   'src/pages/PhiPhi2Days1Night.tsx',
   'src/pages/PearlsAndamanSea.tsx', 
   'src/pages/DostoprimechatelnostiPhuketa.tsx',
-  'src/pages/RassvetnoePrikljuchenie.tsx',
   'src/components/UniversalBookingModal.tsx'
 ] as const;
 

@@ -59,9 +59,9 @@ export const useAutoMenu = () => {
         ['dostoprimechatelnosti-phuketa', 'phi-phi-2days', 'pearls-andaman-sea', 'james-bond-island-phang-nga', 'eleven-islands-standard-speedboat', 'kao-lak-safari-1-day', 'avatar-plus-hangdong'].includes(tour.id)
       ),
       
-      // 🏃‍♂️ Активные туры (4 тура - все adventure категории)  
+      // 🏃‍♂️ Активные туры (3 тура - все adventure категории)  
       active: activeTours.filter(tour => 
-        ['rassvetnoe-prikljuchenie', 'rafting-spa-atv-1-day', 'kao-lak-safari-1-day', 'avatar-plus-hangdong'].includes(tour.id)
+        ['rafting-spa-atv-1-day', 'kao-lak-safari-1-day', 'avatar-plus-hangdong'].includes(tour.id)
       ),
       
       // ⭐ Премиум туры (2 тура - повышенный комфорт)
@@ -74,12 +74,7 @@ export const useAutoMenu = () => {
         ['phi-phi-2days', 'pearls-andaman-sea'].includes(tour.id)
       ),
       
-      // 🌅 Уникальные/Рассветные (1 тур - эксклюзивные)
-      unique: activeTours.filter(tour => 
-        tour.id === 'rassvetnoe-prikljuchenie'
-      ),
-      
-      // 🏝️ Морские туры (5 туров - все острова)
+      // ️ Морские туры (5 туров - все острова)
       islands: activeTours.filter(tour => 
         ['phi-phi-2days', 'pearls-andaman-sea', 'james-bond-island-phang-nga', 'eleven-islands-standard-speedboat', 'eleven-islands-mega'].includes(tour.id)
       ),
@@ -151,11 +146,6 @@ export const useAutoMenu = () => {
           name: "Рафтинг + ATV", 
           href: "/tours?tag=рафтинг",
           count: activeTours.filter(t => t.tags.includes('рафтинг')).length 
-        },
-        { 
-          name: "Рассветные туры", 
-          href: "/tours?collection=unique",
-          count: tourCollections.unique.length 
         },
         { 
           name: "Слоны и природа", 

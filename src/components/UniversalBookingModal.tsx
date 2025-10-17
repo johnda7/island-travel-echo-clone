@@ -40,20 +40,42 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
   // Блокируем скролл страницы при открытии модалки
   useEffect(() => {
     if (isOpen) {
-      // Простая блокировка скролла без position: fixed (чтобы не ломать модалку)
+      // Сохраняем текущую позицию скролла
+      const scrollY = window.scrollY;
+      
+      // Блокируем скролл через position: fixed (самый надежный способ)
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
       document.body.style.overflow = 'hidden';
-      document.body.style.touchAction = 'none';
+      
+      // Также блокируем на html элементе
       document.documentElement.style.overflow = 'hidden';
+      document.documentElement.style.height = '100%';
     } else {
+      // Восстанавливаем позицию скролла
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
       document.body.style.overflow = '';
-      document.body.style.touchAction = '';
       document.documentElement.style.overflow = '';
+      document.documentElement.style.height = '';
+      
+      // Возвращаем скролл на место
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
     
     return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
       document.body.style.overflow = '';
-      document.body.style.touchAction = '';
       document.documentElement.style.overflow = '';
+      document.documentElement.style.height = '';
     };
   }, [isOpen]);
 
@@ -253,7 +275,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto" 
+      className="fixed inset-0 z-50 flex items-center justify-center p-0 overflow-hidden" 
       onClick={onClose}
       style={{ 
         background: 'rgba(0, 0, 0, 0.6)',
@@ -262,13 +284,17 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       }}
     >
       <div 
-        className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto" 
+        className="bg-white rounded-2xl w-full mx-4 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
         style={{ 
           boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
-          border: '1px solid rgba(0, 0, 0, 0.1)'
+          border: '1px solid rgba(0, 0, 0, 0.1)',
+          maxWidth: '448px',
+          maxHeight: '85vh',
+          position: 'relative'
         }}
       >
+        <div className="overflow-y-auto h-full" style={{ maxHeight: '85vh' }}>
         <div className="p-2 sm:p-4" style={{ background: 'rgb(242, 242, 247)' }}>
           <div className="flex items-center justify-between mb-1.5">
             <h3 className="text-[15px] sm:text-[19px] font-bold text-gray-900 tracking-tight flex items-center gap-2">
@@ -462,6 +488,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
               : 'ЗАБРОНИРОВАТЬ'
             }
           </Button>
+        </div>
         </div>
       </div>
 

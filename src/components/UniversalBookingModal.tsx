@@ -40,13 +40,20 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
   // Блокируем скролл страницы при открытии модалки
   useEffect(() => {
     if (isOpen) {
+      // Простая блокировка скролла без position: fixed (чтобы не ломать модалку)
       document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+      document.documentElement.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+      document.documentElement.style.overflow = '';
     }
     
     return () => {
       document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+      document.documentElement.style.overflow = '';
     };
   }, [isOpen]);
 
@@ -246,7 +253,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4" 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto" 
       onClick={onClose}
       style={{ 
         background: 'rgba(0, 0, 0, 0.6)',
@@ -255,7 +262,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       }}
     >
       <div 
-        className="bg-white rounded-2xl max-w-md w-full max-h-[88vh] overflow-y-auto" 
+        className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto" 
         onClick={(e) => e.stopPropagation()}
         style={{ 
           boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',

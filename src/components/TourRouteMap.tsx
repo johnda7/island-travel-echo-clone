@@ -23,10 +23,16 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
 
-    // Создаем карту
+    // Создаем карту с отключенным drag и scroll (iOS mobile fix)
     const map = L.map(mapRef.current, {
       zoomControl: false,
       attributionControl: false,
+      dragging: false,           // ❌ Отключаем перетаскивание
+      scrollWheelZoom: false,    // ❌ Отключаем zoom колесиком
+      doubleClickZoom: false,    // ❌ Отключаем zoom двойным кликом
+      touchZoom: false,          // ❌ Отключаем pinch-to-zoom на мобильных
+      boxZoom: false,            // ❌ Отключаем zoom выделением
+      keyboard: false,           // ❌ Отключаем управление клавиатурой
     }).setView([8.0, 98.5], 9);
 
     // Добавляем Google Maps (спутник + дороги, без надписей)
@@ -142,51 +148,90 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
     // Подгоняем карту под маршрут
     map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
 
-    // Добавляем кастомный zoom control в стиле iOS
+    // Добавляем кастомный zoom control в стиле iOS 26 Glassmorphism
     const zoomControl = L.control({ position: 'bottomright' });
     zoomControl.onAdd = () => {
       const div = L.DomUtil.create('div', 'ios26-zoom-control');
       div.innerHTML = `
         <button id="zoom-in" style="
-          width: 44px;
-          height: 44px;
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(20px);
-          border: 0.5px solid rgba(0, 0, 0, 0.08);
-          border-radius: 12px 12px 0 0;
+          width: 48px;
+          height: 48px;
+          background: rgba(255, 255, 255, 0.92);
+          backdrop-filter: blur(20px) saturate(180%);
+          -webkit-backdrop-filter: blur(20px) saturate(180%);
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          border-radius: 14px 14px 0 0;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 20px;
-          font-weight: 300;
+          font-size: 24px;
+          font-weight: 400;
           color: #007AFF;
           cursor: pointer;
-          border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
-          transition: all 0.2s;
+          border-bottom: 0.5px solid rgba(0, 0, 0, 0.12);
+          transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          user-select: none;
+          -webkit-tap-highlight-color: transparent;
         ">+</button>
         <button id="zoom-out" style="
-          width: 44px;
-          height: 44px;
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(20px);
-          border: 0.5px solid rgba(0, 0, 0, 0.08);
-          border-radius: 0 0 12px 12px;
+          width: 48px;
+          height: 48px;
+          background: rgba(255, 255, 255, 0.92);
+          backdrop-filter: blur(20px) saturate(180%);
+          -webkit-backdrop-filter: blur(20px) saturate(180%);
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          border-radius: 0 0 14px 14px;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 20px;
-          font-weight: 300;
+          font-size: 24px;
+          font-weight: 400;
           color: #007AFF;
           cursor: pointer;
-          transition: all 0.2s;
+          transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          user-select: none;
+          -webkit-tap-highlight-color: transparent;
         ">−</button>
       `;
 
-      L.DomEvent.on(div.querySelector('#zoom-in')!, 'click', () => {
+      const zoomInBtn = div.querySelector('#zoom-in') as HTMLButtonElement;
+      const zoomOutBtn = div.querySelector('#zoom-out') as HTMLButtonElement;
+
+      // iOS style press effect
+      const addPressEffect = (btn: HTMLButtonElement) => {
+        btn.addEventListener('mousedown', () => {
+          btn.style.transform = 'scale(0.95)';
+          btn.style.background = 'rgba(255, 255, 255, 0.85)';
+        });
+        btn.addEventListener('mouseup', () => {
+          btn.style.transform = 'scale(1)';
+          btn.style.background = 'rgba(255, 255, 255, 0.92)';
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = 'scale(1)';
+          btn.style.background = 'rgba(255, 255, 255, 0.92)';
+        });
+        // Touch events for mobile
+        btn.addEventListener('touchstart', () => {
+          btn.style.transform = 'scale(0.95)';
+          btn.style.background = 'rgba(255, 255, 255, 0.85)';
+        });
+        btn.addEventListener('touchend', () => {
+          btn.style.transform = 'scale(1)';
+          btn.style.background = 'rgba(255, 255, 255, 0.92)';
+        });
+      };
+
+      addPressEffect(zoomInBtn);
+      addPressEffect(zoomOutBtn);
+
+      L.DomEvent.on(zoomInBtn, 'click', () => {
         map.zoomIn();
       });
 
-      L.DomEvent.on(div.querySelector('#zoom-out')!, 'click', () => {
+      L.DomEvent.on(zoomOutBtn, 'click', () => {
         map.zoomOut();
       });
 

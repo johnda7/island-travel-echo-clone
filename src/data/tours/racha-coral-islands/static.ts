@@ -37,8 +37,8 @@ export const rachaCoralIslandsTourData: TourData = {
     beachRelax
   ],
   
-  priceAdult: 1800,
-  priceChild: 1500,
+  priceAdult: 1300,
+  priceChild: 1300,
   currency: '฿',
   
   duration: '8-9 часов',

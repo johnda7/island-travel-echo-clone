@@ -37,8 +37,8 @@ export const jamesBondIslandTourData: TourData = {
     longtailBoat
   ],
   
-  priceAdult: 2100,
-  priceChild: 1800,
+  priceAdult: 1900,
+  priceChild: 1900,
   currency: '฿',
   
   duration: '8-9 часов',

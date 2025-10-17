@@ -17,7 +17,7 @@ import nataiBeach from "@/assets/avatar-plus-hangdong/sunset-at-natai-beach.jpg"
 
 export const avatarPlusHangdongTour: TourData = {
   id: 'avatar-plus-hangdong',
-  title: 'Аватар Плюс +',
+  title: 'Аватар Плюс',
   subtitle: 'Приключения в джунглях Хангдонга',
   description: 'Окунитесь в мир фантастических приключений с нашим туром "Аватар плюс"! Исследуйте джунгли, посетите водопады, встретьтесь со слонами и насладитесь горячими источниками.',
   priceAdult: 2900,

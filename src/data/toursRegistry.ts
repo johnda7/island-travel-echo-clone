@@ -166,19 +166,6 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     data: () => Promise.resolve(elevenIslandsStandardTourData)
   },
 
-  // 11. 11 островов МЕГА-ТУР (премиум версия)
-  {
-    id: 'eleven-islands-mega-speedboat',
-    name: '11 ОСТРОВОВ МЕГА-ТУР',
-    category: 'islands',
-    tags: ['море', 'морские', 'острова', 'снорклинг', 'мега-тур', '11 островов', 'джеймс бонд', 'пхи-пхи', 'хонг', 'премиум', 'комфорт+', '1 день'],
-    isPopular: true,     // ✅ показываем в популярных (премиум версия!)
-    isActive: true,      // ✅ АКТИВИРОВАН
-    isFeatured: true,    // ✅ показываем на главной
-    priority: 11,
-    data: () => Promise.resolve(elevenIslandsMegaTourData)
-  },
-
   // 12. Острова Рача и Корал на спидботе
   {
     id: 'racha-coral-islands-speedboat',

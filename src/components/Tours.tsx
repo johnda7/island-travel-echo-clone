@@ -285,7 +285,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                   </div>
                   
                   {/* ✅ КНОПКИ ДЕЙСТВИЙ */}
-                  <div className="space-y-2" onClick={(e) => e.stopPropagation()}>
+                  <div className="space-y-2">
                     <button 
                       className="w-full px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-150"
                       style={{
@@ -298,53 +298,31 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                     >
                       📖 Подробнее о туре
                     </button>
-                    <div 
+                    <button 
                       onClick={(e) => {
+                        console.log('🖱️ CLICK на кнопку бронирования для тура:', tour.name, tour.id);
                         e.preventDefault();
                         e.stopPropagation();
+                        handleBookingClick(tour);
                       }}
-                      onTouchStart={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
+                      className="w-full px-4 py-3 rounded-xl font-bold text-white text-sm transition-all duration-150 active:scale-95"
+                      style={{
+                        background: 'linear-gradient(135deg, #34C759 0%, #30D158 100%)',
+                        boxShadow: '0 4px 12px rgba(52, 199, 89, 0.3)',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                        letterSpacing: '-0.01em'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.02)';
+                        e.currentTarget.style.boxShadow = '0 6px 16px rgba(52, 199, 89, 0.4)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(52, 199, 89, 0.3)';
                       }}
                     >
-                      <button 
-                        onClick={(e) => {
-                          console.log('🖱️ CLICK на кнопку бронирования для тура:', tour.name, tour.id);
-                          e.preventDefault();
-                          e.stopPropagation();
-                          e.nativeEvent.stopImmediatePropagation();
-                          handleBookingClick(tour);
-                          return false;
-                        }}
-                        onTouchEnd={(e) => {
-                          console.log('👆 TOUCH END на кнопку бронирования для тура:', tour.name, tour.id);
-                          e.preventDefault();
-                          e.stopPropagation();
-                          e.nativeEvent.stopImmediatePropagation();
-                          handleBookingClick(tour);
-                          return false;
-                        }}
-                        className="w-full px-4 py-3 rounded-xl font-bold text-white text-sm transition-all duration-150 active:scale-95"
-                        style={{
-                          background: 'linear-gradient(135deg, #34C759 0%, #30D158 100%)',
-                          boxShadow: '0 4px 12px rgba(52, 199, 89, 0.3)',
-                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                          letterSpacing: '-0.01em',
-                          touchAction: 'none'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = 'scale(1.02)';
-                          e.currentTarget.style.boxShadow = '0 6px 16px rgba(52, 199, 89, 0.4)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = 'scale(1)';
-                          e.currentTarget.style.boxShadow = '0 4px 12px rgba(52, 199, 89, 0.3)';
-                        }}
-                      >
-                        🏝️ Забронировать тур
-                      </button>
-                    </div>
+                      🏝️ Забронировать тур
+                    </button>
                   </div>
                 </div>
               </div>

@@ -14,6 +14,7 @@ import ContactPage from "./pages/ContactPage";
 import AdminPanel from "./pages/AdminPanel";
 import BookingPage from "./pages/BookingPage";
 import NotFound from "./pages/NotFound";
+import FAQPage from "./pages/FAQPage";
 
 // Существующие туры
 import PearlsAndamanSeaNew from "./pages/PearlsAndamanSeaNew";
@@ -51,6 +52,7 @@ function App() {
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/admin" element={<AdminPanel />} />
                 <Route path="/booking" element={<BookingPage />} />
+                <Route path="/help/faq" element={<FAQPage />} />
               
               {/* Статические туры */}
               <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1NightNew />} />

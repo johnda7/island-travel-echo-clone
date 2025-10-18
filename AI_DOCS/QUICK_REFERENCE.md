@@ -79,11 +79,11 @@ export const newTourData: TourData = {
 
 **3. Добавь в toursRegistry.ts:**
 ```typescript
-import { newTourData } from './tours/new-tour-slug';
+// НЕ НУЖЕН импорт вверху!
 
 {
   id: 'new-tour-slug',
-  tourDataLoader: () => Promise.resolve(newTourData),
+  data: () => import('./tours/new-tour-slug').then(m => m.newTourData),
   tags: ['морские', 'семейные'],
   isActive: true,
   category: 'морские',

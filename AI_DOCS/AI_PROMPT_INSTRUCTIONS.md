@@ -585,7 +585,7 @@ npm run dev
   isActive: true,
   isFeatured: true,
   priority: 13, // Порядковый номер
-  data: () => Promise.resolve(tourData)
+  data: () => import('./tours/tour-slug').then(m => m.tourData)
 }
 
 // 🆕 НОВЫЙ ТУР ДОБАВЛЕН (11.10.2025):
@@ -603,7 +603,7 @@ npm run dev
   isActive: true,
   isFeatured: true,
   priority: 14,
-  data: () => Promise.resolve(cheoLanLakeTourData)
+  data: () => import('./tours/cheow-lan-lake').then(m => m.cheoLanLakeTourData)
 }
 // ⚠️ СТАТУС: Создан, но нужны реальные фото (сейчас placeholder пути)
 // 📸 НУЖНЫ ФОТО: озеро Чео Лан, смотровая Самет Нангше, скалы Гуйлиня,
@@ -2559,7 +2559,7 @@ type TourDataMinimal = {
 
 4) Реестр туров
    - В `src/data/toursRegistry.ts` добавить 6 элементов с уникальными `id = <slug>`.
-   - Убедиться, что `data: () => Promise.resolve(<slug>TourData)` возвращает правильные данные.
+   - Убедиться, что `data: () => import('./tours/<slug>').then(m => m.<slug>TourData)` возвращает правильные данные через динамический импорт.
    - Настроить теги/категории/featured/popular по необходимости.
 
 5) Быстрые тесты
@@ -2762,7 +2762,7 @@ Telegram Bot → Канал @Phuketga →
   isActive: true,     // ← В поиске и каталоге
   isFeatured: true,   // ← На главной в "Рекомендуемые"
   priority: 3,        // ← Порядок в меню (1, 2, 3...)
-  data: () => Promise.resolve(tourDataObject) // ← Ссылка на данные
+  data: () => import('./tours/dostoprimechatelnosti-phuketa').then(m => m.tourDataObject) // ← Динамический импорт
 }
 ```
 
@@ -2946,7 +2946,7 @@ const totalPrice = adults * excursion.priceAdult + children * excursion.priceChi
   isActive: true,                            // ← ОБЯЗАТЕЛЬНО true!
   isFeatured: false,
   priority: 5,                               // ← СЛЕДУЮЩИЙ НОМЕР
-  data: () => Promise.resolve(yourTourData)  // ← ВАШИ ДАННЫЕ
+  data: () => import('./tours/your-new-tour-id').then(m => m.yourTourData)  // ← ДИНАМИЧЕСКИЙ ИМПОРТ
 },
 
 // 2️⃣ ДОБАВИТЬ В src/App.tsx:
@@ -3524,7 +3524,7 @@ export const TourPage: React.FC = () => {
 {
   id: tourData.id,
   title: tourData.title,
-  data: () => Promise.resolve(tourData)
+  data: () => import('./tours/tour-slug').then(m => m.tourData)
 }
 ```
 

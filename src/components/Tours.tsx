@@ -29,36 +29,24 @@ export const Tours = ({ filteredTours }: ToursProps) => {
   };
 
   const handleBookingClick = async (tour: TourWithMeta) => {
-    console.log('🎯 handleBookingClick вызван для:', tour.id, 'Данные есть:', !!tour.data);
-    console.log('📦 Объект тура:', tour);
+    console.log('🎯 handleBookingClick вызван для:', tour.id);
     
-    // Если данные уже есть, открываем сразу
-    if (tour.data) {
-      console.log('✅ Данные тура уже загружены, открываем модал');
-      console.log('📋 Данные тура:', tour.data);
-      setSelectedTour(tour.data);
-      setShowBookingModal(true);
-      return;
-    }
-    
-    // Если данных нет, принудительно загружаем их из реестра
-    console.log('🔄 Данных нет, загружаем из реестра для:', tour.id);
-    console.log('📚 Весь реестр:', TOURS_REGISTRY);
     try {
+      // ВСЕГДА загружаем данные из реестра, даже если tour.data есть
       const tourRegistry = TOURS_REGISTRY.find(t => t.id === tour.id);
-      console.log('🔍 Поиск в реестре по id:', tour.id, 'Найдено:', !!tourRegistry);
       
-      if (tourRegistry) {
-        console.log('📦 Найден в реестре, загружаем данные...');
-        const tourData = await tourRegistry.data();
-        console.log('✅ Данные загружены успешно:', tourData);
-        setSelectedTour(tourData);
-        setShowBookingModal(true);
-      } else {
+      if (!tourRegistry) {
         console.error('❌ Тур не найден в реестре:', tour.id);
-        console.error('📋 Доступные ID в реестре:', TOURS_REGISTRY.map(t => t.id));
-        alert('⚠️ Не удалось загрузить данные тура. Попробуйте ещё раз.');
+        alert('⚠️ Не удалось найти данные тура.');
+        return;
       }
+      
+      console.log('📦 Загружаем данные тура из реестра...');
+      const tourData = await tourRegistry.data();
+      console.log('✅ Данные загружены успешно:', tourData);
+      
+      setSelectedTour(tourData);
+      setShowBookingModal(true);
     } catch (error) {
       console.error('❌ Ошибка загрузки данных тура:', error);
       alert('⚠️ Не удалось загрузить данные тура. Попробуйте ещё раз.');

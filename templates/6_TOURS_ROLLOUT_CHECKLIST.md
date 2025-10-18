@@ -19,7 +19,7 @@
 
 ## 4) Реестр туров
 - [ ] В `src/data/toursRegistry.ts` добавлены 6 элементов с уникальными `id = <slug>`
-- [ ] Поле `data: () => Promise.resolve(<slug>TourData)` корректно возвращает объект
+- [ ] Поле `data: () => import('./tours/<slug>').then(m => m.<slug>TourData)` корректно возвращает объект через динамический импорт
 - [ ] Категории/теги/флаги (`isActive`, `isPopular`, `isFeatured`) выставлены
 
 ## 5) Быстрые тесты

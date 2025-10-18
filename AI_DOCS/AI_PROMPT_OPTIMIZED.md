@@ -727,7 +727,7 @@ npm run dev -- --port $((8080 + RANDOM % 100))
 export const TOURS_REGISTRY: TourRegistryItem[] = [
   {
     id: 'phi-phi-2days',
-    tourDataLoader: () => Promise.resolve(phiPhi2DaysTourData),
+    data: () => import('./tours/phi-phi-2days').then(m => m.phiPhi2DaysTourData),
     tags: ['пхи-пхи', 'ночевка'], // ← ТЕГИ для фильтрации
     isActive: true,
     category: 'морские', // ← КАТЕГОРИЯ для меню
@@ -877,13 +877,12 @@ export default function YourNewTour() {
 
 **ШАГ 5: Регистрация в системе (3 мин)**
 ```typescript
-// 1. В src/data/toursRegistry.ts добавь импорт:
-import { yourTourData } from './tours/your-tour-slug'; // ✅ Через папку!
+// 1. В src/data/toursRegistry.ts НЕ НУЖЕН импорт вверху!
 
 // 2. Добавь в массив TOURS_REGISTRY:
 {
   id: 'your-tour-slug',
-  tourDataLoader: () => Promise.resolve(yourTourData),
+  data: () => import('./tours/your-tour-slug').then(m => m.yourTourData),
   tags: ['морские', 'семейные', 'снорклинг'], // ← Теги для навигации
   isActive: true,
   category: 'морские', // или 'активные', 'культурные'

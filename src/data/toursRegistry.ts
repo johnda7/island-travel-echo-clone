@@ -10,18 +10,6 @@
 // убедитесь, что поля корректны. Не удаляйте существующие ID без миграции ссылок.
 // 🎯 ПРИНЦИП: "ДОБАВИЛ СЮДА - ПОЯВИЛОСЬ ВЕЗДЕ АВТОМАТИЧЕСКИ!"
 
-import { phiPhi2DaysTourData } from './tours/phi-phi-2days';
-import { pearlsAndamanSeaTourData } from './tours/pearls-andaman-sea';
-import { dostoprimechatelnostiPhuketaTourData } from './tours/dostoprimechatelnosti-phuketa';
-// НОВЫЕ 6 ТУРОВ
-
-import { jamesBondIslandTourData } from './tours/james-bond-island';
-import { elevenIslandsMegaTourData } from './tours/eleven-islands-mega';
-import { raftingSpaAtvTourData } from './tours/rafting-spa-atv';
-import { kaoLakSafariTourData } from './tours/kao-lak-safari';
-import { rachaCoralIslandsTourData } from './tours/racha-coral-islands';
-import { phangNgaSkywalkTourData } from './tours/phang-nga-skywalk';
-import { cheoLanLakeTourData } from './tours/cheow-lan-lake';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -50,37 +38,37 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     name: 'Пхи-Пхи 2 дня/1 ночь',
     category: 'islands',
     tags: ['море', 'морские', 'острова', 'снорклинг', 'пляж', '2 дня', 'семейный', 'многодневные', 'пхи-пхи', 'ночевка'],
-    isPopular: true,     // ✅ будет в популярных турах
-    isActive: true,      // ✅ будет в поиске и меню
-    isFeatured: true,    // ✅ будет на главной
-    priority: 1,         // 🥇 первый в списке
-    data: () => Promise.resolve(phiPhi2DaysTourData)
+    isPopular: true,
+    isActive: true,
+    isFeatured: true,
+    priority: 1,
+    data: () => import('./tours/phi-phi-2days').then(m => m.phiPhi2DaysTourData)
   },
 
   // 🧪 НОВЫЙ ТУР - ТЕПЕРЬ АКТИВЕН!
   {
     id: 'pearls-andaman-sea',
-    name: '4 жемчужины Андаманского моря',
+    name: 'Жемчужины Андаманского моря',
     category: 'islands',
-    tags: ['море', 'морские', 'острова', '2 дня', 'многодневные', 'джеймс бонд', 'краби', 'комбо', 'пхи-пхи', 'ночевка', 'премиум'],
-    isPopular: true,     // ✅ показываем в популярных
-    isActive: true,      // ✅ АКТИВИРОВАН - показывается в поиске/меню
-    isFeatured: false,   // ❌ не на главной (пока)
-    priority: 2,         // 🥈 второй приоритет
-    data: () => Promise.resolve(pearlsAndamanSeaTourData)
+    tags: ['море', 'морские', 'острова', 'снорклинг', 'пляж', 'семейный', 'бамбу', 'кай', 'пхи-пхи'],
+    isPopular: true,
+    isActive: true,
+    isFeatured: true,
+    priority: 2,
+    data: () => import('./tours/pearls-andaman-sea').then(m => m.pearlsAndamanSeaTourData)
   },
 
   // 🏛️ ДОСТОПРИМЕЧАТЕЛЬНОСТИ ПХУКЕТА
-  {
+    {
     id: 'dostoprimechatelnosti-phuketa',
     name: 'Достопримечательности Пхукета',
-    category: 'cultural',
-    tags: ['культурные', 'достопримечательности', 'храмы', 'обзорные', '1 день', 'семейный', 'большой будда', 'старый город'],
-    isPopular: true,     // ✅ показываем в популярных
-    isActive: true,      // ✅ АКТИВИРОВАН - показывается в поиске/меню
-    isFeatured: true,    // ✅ показываем на главной
-    priority: 3,         // 🥉 третий приоритет
-    data: () => Promise.resolve(dostoprimechatelnostiPhuketaTourData)
+    category: 'adventure',
+    tags: ['пхукет', 'достопримечательности', 'обзорная', 'биг-будда', 'ват-чалонг', 'панорамная', 'культура', 'храмы', '1 день'],
+    isPopular: false,
+    isActive: true,
+    isFeatured: false,
+    priority: 3,
+    data: () => import('./tours/dostoprimechatelnosti-phuketa').then(m => m.dostoprimechatelnostiPhuketaTourData)
   },
   
   // 🚀 НОВЫЕ 6 ТУРОВ - ПОЛНАЯ КОЛЛЕКЦИЯ!
@@ -88,41 +76,41 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
   // 5. Рафтинг + SPA + ATV (1 день)
   {
     id: 'rafting-spa-atv-1-day',
-    name: 'РАФТИНГ + СЛОНОВЬЕ СПА + ATV 1 день',
+    name: 'Рафтинг + СПА + ATV 1 день',
     category: 'adventure',
-    tags: ['рафтинг', 'слоны', 'spa', 'atv', 'приключения', '1 день', 'активный', 'комбо'],
-    isPopular: true,     // ✅ АКТИВИРОВАН - показываем в популярных
-    isActive: true,      // ✅ АКТИВИРОВАН - показывается в поиске/меню
-    isFeatured: false,   // ❌ не на главной (пока)
-    priority: 5,
-    data: () => Promise.resolve(raftingSpaAtvTourData)
+    tags: ['рафтинг', 'спа', 'atv', 'квадроциклы', 'приключения', 'экстрим', 'природа', 'активный', '1 день'],
+    isPopular: false,
+    isActive: true,
+    isFeatured: false,
+    priority: 4,
+    data: () => import('./tours/rafting-spa-atv').then(m => m.raftingSpaAtvTourData)
   },
 
   // 6. Као Лак Сафари (1 день)
   {
     id: 'kao-lak-safari-1-day',
-    name: 'Као Лак Сафари (1 день)',
+    name: 'Као Лак Сафари 1 день',
     category: 'adventure',
-    tags: ['сафари', 'слоны', 'водопады', 'джунгли', '1 день', 'природа', 'као лак'],
-    isPopular: true,     // ✅ АКТИВИРОВАН - показываем в популярных
-    isActive: true,      // ✅ АКТИВИРОВАН - показывается в поиске/меню
-    isFeatured: false,   // ❌ не на главной (пока)
-    priority: 6,
-    data: () => Promise.resolve(kaoLakSafariTourData)
+    tags: ['као-лак', 'сафари', 'слоны', 'джунгли', 'каноэ', 'черепахи', 'природа', 'приключения', '1 день'],
+    isPopular: false,
+    isActive: true,
+    isFeatured: false,
+    priority: 5,
+    data: () => import('./tours/kao-lak-safari').then(m => m.kaoLakSafariTourData)
   },
 
 
   // 7. 11 ОСТРОВОВ МЕГА-ТУР (Джеймс Бонд + Хонг + Пхи-Пхи)
   {
     id: 'eleven-islands-mega',
-    name: '11 ОСТРОВОВ МЕГА-ТУР',
+    name: '11 островов + МЕГА спидбот',
     category: 'islands',
-    tags: ['море', 'морские', 'острова', 'джеймс бонд', 'пхи-пхи', 'хонг', 'майя бэй', 'снорклинг', 'каякинг', '1 день', 'мега', 'комбо', 'премиум'],
-    isPopular: true,     // ✅ показываем в популярных
-    isActive: true,      // ✅ АКТИВИРОВАН
-    isFeatured: true,    // ✅ показываем на главной (МЕГА ТУР!)
-    priority: 7,
-    data: () => Promise.resolve(elevenIslandsMegaTourData)
+    tags: ['море', 'морские', 'острова', 'спидбот', 'снорклинг', 'пхи-пхи', 'бамбу', 'майя-бей', 'экстрим', '1 день'],
+    isPopular: false,
+    isActive: true,
+    isFeatured: false,
+    priority: 6,
+    data: () => import('./tours/eleven-islands-mega').then(m => m.elevenIslandsMegaTourData)
   },
 
   // 8. Остров Джеймса Бонда (залив Пханг Нга)
@@ -135,7 +123,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: true,    // ✅ показываем на главной (популярный тур!)
     priority: 8,
-    data: () => Promise.resolve(jamesBondIslandTourData)
+    data: () => import('./tours/james-bond-island').then(m => m.jamesBondIslandTourData)
   },
 
   // 9. Аватар Плюс + Хангдонг
@@ -161,7 +149,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: false,   // ❌ не на главной (пока)
     priority: 12,
-    data: () => Promise.resolve(rachaCoralIslandsTourData)
+    data: () => import('./tours/racha-coral-islands').then(m => m.rachaCoralIslandsTourData)
   },
 
   // 13. Удивительная Пхангнга + Стеклянный мост (НОВЫЙ!)
@@ -174,7 +162,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: true,    // ✅ показываем на главной (уникальный тур!)
     priority: 13,
-    data: () => Promise.resolve(phangNgaSkywalkTourData)
+    data: () => import('./tours/phang-nga-skywalk').then(m => m.phangNgaSkywalkTourData)
   },
   
   {
@@ -186,7 +174,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: true,    // ✅ показываем на главной (уникальное озеро!)
     priority: 14,
-    data: () => Promise.resolve(cheoLanLakeTourData)
+    data: () => import('./tours/cheow-lan-lake').then(m => m.cheoLanLakeTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

@@ -161,12 +161,12 @@ export const newTourData: TourData = {
 **ШАГ 4: Зарегистрируй в системе**
 ```typescript
 // В src/data/toursRegistry.ts:
-import { newTourData } from './tours/new-tour-slug';
+// НЕ НУЖЕН импорт вверху!
 
 // Добавь в массив:
 {
   id: 'new-tour-slug',
-  tourDataLoader: () => Promise.resolve(newTourData),
+  data: () => import('./tours/new-tour-slug').then(m => m.newTourData),
   tags: ['тег1', 'тег2'],
   isActive: true,
   category: 'морские',

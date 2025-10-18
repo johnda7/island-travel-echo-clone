@@ -115,13 +115,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
 
 ⏰ Заявка подана: ${new Date().toLocaleString('ru-RU')}`;
 
-    // Определяем, мобильное ли это устройство
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
     try {
       // Сохраняем заказ в localStorage для админки
       const newOrder = {
-        id: Date.now(), // Используем timestamp как ID
+        id: Date.now(),
         tourName: tourData.title,
         customerName: formData.name,
         phone: formData.phone,
@@ -135,117 +132,30 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
         status: 'новый' as const
       };
 
-      // Получаем существующие заказы
       const existingOrders = JSON.parse(localStorage.getItem('bookingOrders') || '[]');
-      
-      // Добавляем новый заказ
       existingOrders.push(newOrder);
-      
-      // Сохраняем обратно
       localStorage.setItem('bookingOrders', JSON.stringify(existingOrders));
 
-      // На мобильных устройствах сразу используем прямой редирект в Telegram
-      if (isMobile) {
-        setSuccessMessageText('✅ Заявка принята! Откроем Telegram для подтверждения...');
-        setShowSuccessMessage(true);
-        
-        setTimeout(() => {
-          const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-          window.location.href = telegramUrl;
-        }, 2000);
-        
-        // Очищаем форму и закрываем модал
-        setFormData({
-          name: "",
-          phone: "",
-          email: "",
-          date: "",
-          adults: 1,
-          children: 0,
-          specialRequests: "",
-          hotelName: ""
-        });
-        onClose();
-        return;
-      }
-
-      // На десктопе пробуем Bot API
-      const BOT_TOKEN = '8445717266:AAHEDA4SJPUL48gpV-Q9qc-V98GSuyPFn08';
+      // ПОКАЗЫВАЕМ СООБЩЕНИЕ И НЕ ЗАКРЫВАЕМ МОДАЛКУ
+      setSuccessMessageText('✅ Заявка принята! Сейчас откроем Telegram для завершения бронирования...');
+      setShowSuccessMessage(true);
       
-      const telegramResponse = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          chat_id: '@Phuketga',
-          text: message,
-          parse_mode: 'HTML'
-        })
-      });
-      
-      const telegramResult = await telegramResponse.json();
-      
-      if (telegramResult.ok) {
-        setSuccessMessageText('✅ Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
-        setShowSuccessMessage(true);
-        console.log('✅ Сообщение отправлено в Telegram');
-        
-        setTimeout(() => {
-          setShowSuccessMessage(false);
-          onClose();
-        }, 3000);
-      } else {
-        console.error('❌ Ошибка Telegram API:', telegramResult.description);
-        // Fallback - открываем Telegram с готовым сообщением
-        setSuccessMessageText('📱 Заявка сохранена! Откроем Telegram для подтверждения...');
-        setShowSuccessMessage(true);
-        
-        setTimeout(() => {
-          const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-          window.location.href = telegramUrl;
-        }, 2000);
-      }
-      
-      // Очищаем форму и закрываем модал
-      setFormData({
-        name: "",
-        phone: "",
-        email: "",
-        date: "",
-        adults: 1,
-        children: 0,
-        specialRequests: "",
-        hotelName: ""
-      });
-      onClose();
+      // Переходим в Telegram через 3 секунды
+      setTimeout(() => {
+        const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
+        window.location.href = telegramUrl;
+      }, 3000);
       
     } catch (error) {
       console.error('❌ Ошибка при отправке:', error);
       
-      // Fallback - открываем Telegram с готовым сообщением (мобильно-совместимый метод)
-      const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-      
-      // Показываем уведомление перед переходом
-      setSuccessMessageText('⚠️ Заявка подготовлена! Переходим в Telegram для отправки.');
+      setSuccessMessageText('✅ Заявка готова! Сейчас откроем Telegram для отправки...');
       setShowSuccessMessage(true);
       
-      // Переходим в Telegram через 2 секунды
       setTimeout(() => {
+        const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
         window.location.href = telegramUrl;
-      }, 2000);
-      
-      // Очищаем форму
-      setFormData({
-        name: "",
-        phone: "",
-        email: "",
-        date: "",
-        adults: 1,
-        children: 0,
-        specialRequests: "",
-        hotelName: ""
-      });
+      }, 3000);
     }
   };
 
@@ -263,18 +173,18 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       }}
     >
       <div 
-        className="absolute bg-white rounded-2xl w-full overflow-hidden flex flex-col"
+        className="absolute bg-white rounded-2xl overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
         style={{ 
           boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
           border: '1px solid rgba(0, 0, 0, 0.1)',
-          maxWidth: '448px',
-          width: 'calc(100% - 32px)',
-          height: '580px',
+          width: 'min(448px, calc(100vw - 32px))',
+          maxHeight: '85vh',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          margin: 0
+          margin: 0,
+          position: 'fixed'
         }}
       >
         <div className="overflow-y-auto flex-1" style={{ WebkitOverflowScrolling: 'touch' }}>

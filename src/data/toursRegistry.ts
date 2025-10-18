@@ -12,6 +12,11 @@
 
 import type { TourData } from '@/types/Tour';
 
+// 🚀 ЦЕНТРАЛИЗОВАННАЯ ФУНКЦИЯ ЗАГРУЗКИ ТУРОВ
+// Используется ВЕЗДЕ для единообразия и легкости поддержки
+const loadTour = (path: string, exportName: string) => 
+  () => import(`./tours/${path}`).then(m => m[exportName]);
+
 export interface TourRegistryItem {
   // 🆔 ОСНОВНАЯ ИНФОРМАЦИЯ
   id: string;
@@ -42,7 +47,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,
     isFeatured: true,
     priority: 1,
-    data: () => import('./tours/phi-phi-2days').then(m => m.phiPhi2DaysTourData)
+    data: loadTour('phi-phi-2days', 'phiPhi2DaysTourData')
   },
 
   // 🧪 НОВЫЙ ТУР - ТЕПЕРЬ АКТИВЕН!
@@ -55,7 +60,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,
     isFeatured: true,
     priority: 2,
-    data: () => import('./tours/pearls-andaman-sea').then(m => m.pearlsAndamanSeaTourData)
+    data: loadTour('pearls-andaman-sea', 'pearlsAndamanSeaTourData')
   },
 
   // 🏛️ ДОСТОПРИМЕЧАТЕЛЬНОСТИ ПХУКЕТА
@@ -68,7 +73,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,
     isFeatured: false,
     priority: 3,
-    data: () => import('./tours/dostoprimechatelnosti-phuketa').then(m => m.dostoprimechatelnostiPhuketaTourData)
+    data: loadTour('dostoprimechatelnosti-phuketa', 'dostoprimechatelnostiPhuketaTourData')
   },
   
   // 🚀 НОВЫЕ 6 ТУРОВ - ПОЛНАЯ КОЛЛЕКЦИЯ!
@@ -83,7 +88,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,
     isFeatured: false,
     priority: 4,
-    data: () => import('./tours/rafting-spa-atv').then(m => m.raftingSpaAtvTourData)
+    data: loadTour('rafting-spa-atv', 'raftingSpaAtvTourData')
   },
 
   // 6. Као Лак Сафари (1 день)
@@ -96,7 +101,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,
     isFeatured: false,
     priority: 5,
-    data: () => import('./tours/kao-lak-safari').then(m => m.kaoLakSafariTourData)
+    data: loadTour('kao-lak-safari', 'kaoLakSafariTourData')
   },
 
 
@@ -110,7 +115,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,
     isFeatured: false,
     priority: 6,
-    data: () => import('./tours/eleven-islands-mega').then(m => m.elevenIslandsMegaTourData)
+    data: loadTour('eleven-islands-mega', 'elevenIslandsMegaTourData')
   },
 
   // 8. Остров Джеймса Бонда (залив Пханг Нга)
@@ -123,7 +128,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: true,    // ✅ показываем на главной (популярный тур!)
     priority: 8,
-    data: () => import('./tours/james-bond-island').then(m => m.jamesBondIslandTourData)
+    data: loadTour('james-bond-island', 'jamesBondIslandTourData')
   },
 
   // 9. Аватар Плюс + Хангдонг
@@ -136,7 +141,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: false,   // ❌ не на главной (пока)
     priority: 9,
-    data: () => import('./tours/avatar-plus-hangdong').then(m => m.avatarPlusHangdongTour)
+    data: loadTour('avatar-plus-hangdong', 'avatarPlusHangdongTour')
   },
 
   // 10. Острова Рача и Корал на спидботе
@@ -149,7 +154,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: false,   // ❌ не на главной (пока)
     priority: 12,
-    data: () => import('./tours/racha-coral-islands').then(m => m.rachaCoralIslandsTourData)
+    data: loadTour('racha-coral-islands', 'rachaCoralIslandsTourData')
   },
 
   // 13. Удивительная Пхангнга + Стеклянный мост (НОВЫЙ!)
@@ -162,7 +167,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: true,    // ✅ показываем на главной (уникальный тур!)
     priority: 13,
-    data: () => import('./tours/phang-nga-skywalk').then(m => m.phangNgaSkywalkTourData)
+    data: loadTour('phang-nga-skywalk', 'phangNgaSkywalkTourData')
   },
   
   {
@@ -174,7 +179,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: true,    // ✅ показываем на главной (уникальное озеро!)
     priority: 14,
-    data: () => import('./tours/cheow-lan-lake').then(m => m.cheoLanLakeTourData)
+    data: loadTour('cheow-lan-lake', 'cheoLanLakeTourData')
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

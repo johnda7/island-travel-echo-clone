@@ -266,11 +266,7 @@ export const TourPageTemplate = ({
           {/* Show all button */}
           <div className="mt-3 px-4 pb-4">
             <button 
-              onClick={openGallery} 
-              onTouchEnd={(e) => {
-                e.preventDefault();
-                openGallery(e);
-              }}
+              onClick={openGallery}
               className="w-full flex items-center justify-center gap-2 py-3 text-[15px] font-semibold rounded-2xl transition-all duration-150 active:scale-95" 
               style={{
               color: '#007AFF',
@@ -278,7 +274,9 @@ export const TourPageTemplate = ({
               backdropFilter: 'blur(20px) saturate(180%)',
               WebkitBackdropFilter: 'blur(20px) saturate(180%)',
               boxShadow: '0 4px 16px rgba(0, 122, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
-              border: '1px solid rgba(0, 122, 255, 0.2)'
+              border: '1px solid rgba(0, 122, 255, 0.2)',
+              position: 'relative',
+              zIndex: 10
             }}>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />

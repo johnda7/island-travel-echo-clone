@@ -13,10 +13,8 @@ import About from "./pages/About";
 import ContactPage from "./pages/ContactPage";
 import AdminPanel from "./pages/AdminPanel";
 import BookingPage from "./pages/BookingPage";
+import ReviewsPage from "./pages/ReviewsPage";
 import NotFound from "./pages/NotFound";
-import FAQPage from "./pages/FAQPage";
-import BookingHelpPage from "./pages/BookingHelpPage";
-import PaymentHelpPage from "./pages/PaymentHelpPage";
 
 // Существующие туры
 import PearlsAndamanSeaNew from "./pages/PearlsAndamanSeaNew";
@@ -54,20 +52,18 @@ function App() {
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/admin" element={<AdminPanel />} />
                 <Route path="/booking" element={<BookingPage />} />
-                <Route path="/help/faq" element={<FAQPage />} />
-                <Route path="/help/booking" element={<BookingHelpPage />} />
-                <Route path="/help/payment" element={<PaymentHelpPage />} />
+                <Route path="/reviews" element={<ReviewsPage />} />
               
               {/* Статические туры */}
               <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1NightNew />} />
               <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1NightNew />} />
-              <Route path="/tours/phi-phi-2days" element={<PhiPhi2Days1NightNew />} />
               
               <Route path="/excursion/pearls-andaman-sea" element={<PearlsAndamanSeaNew />} />
               <Route path="/tours/pearls-andaman-sea" element={<PearlsAndamanSeaNew />} />
               
               <Route path="/excursion/dostoprimechatelnosti-phuketa" element={<DostoprimechatelnostiPhuketaNew />} />
               <Route path="/tours/dostoprimechatelnosti-phuketa" element={<DostoprimechatelnostiPhuketaNew />} />
+              
 
               <Route path="/excursion/james-bond-island-phang-nga" element={<JamesBondIslandTourNew />} />
               <Route path="/tours/james-bond-island-phang-nga" element={<JamesBondIslandTourNew />} />

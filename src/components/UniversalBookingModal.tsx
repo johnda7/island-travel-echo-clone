@@ -37,6 +37,22 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
     hotelName: ""
   });
 
+  // Автоматически скрываем уведомление при возврате на сайт
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden && showSuccessMessage) {
+        // Пользователь вернулся на сайт - скрываем уведомление через 0.5 сек
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+          onClose(); // И закрываем модалку
+        }, 500);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [showSuccessMessage, onClose]);
+
   // Блокируем скролл страницы при открытии модалки
   useEffect(() => {
     if (isOpen) {
@@ -178,8 +194,8 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
         style={{ 
           boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
           border: '1px solid rgba(0, 0, 0, 0.1)',
-          width: 'min(448px, calc(100vw - 32px))',
-          maxHeight: '85vh',
+          width: 'min(380px, calc(100vw - 32px))',
+          maxHeight: '80vh',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
@@ -317,9 +333,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
               <label className="block text-[11px] sm:text-[14px] font-semibold mb-0.5 text-gray-900">Имя *</label>
               <input
                 type="text"
-                className="w-full px-2 py-1 sm:px-3 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[12px] sm:text-[15px]"
+                className="w-full px-2 py-1 sm:px-3 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white"
                 style={{ 
-                  borderColor: 'rgba(0, 0, 0, 0.15)'
+                  borderColor: 'rgba(0, 0, 0, 0.15)',
+                  fontSize: '16px'
                 }}
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -331,9 +348,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
               <label className="block text-[11px] sm:text-[14px] font-semibold mb-0.5 text-gray-900">Телефон *</label>
               <input
                 type="tel"
-                className="w-full px-2 py-1 sm:px-3 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[12px] sm:text-[15px]"
+                className="w-full px-2 py-1 sm:px-3 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white"
                 style={{ 
-                  borderColor: 'rgba(0, 0, 0, 0.15)'
+                  borderColor: 'rgba(0, 0, 0, 0.15)',
+                  fontSize: '16px'
                 }}
                 placeholder="+7 (999) 123-45-67"
                 value={formData.phone}
@@ -346,9 +364,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
               <label className="block text-[11px] sm:text-[14px] font-semibold mb-0.5 text-gray-900">Email</label>
               <input
                 type="email"
-                className="w-full px-2 py-1 sm:px-3 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[12px] sm:text-[15px]"
+                className="w-full px-2 py-1 sm:px-3 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white"
                 style={{ 
-                  borderColor: 'rgba(0, 0, 0, 0.15)'
+                  borderColor: 'rgba(0, 0, 0, 0.15)',
+                  fontSize: '16px'
                 }}
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
@@ -359,9 +378,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
               <label className="block text-[11px] sm:text-[14px] font-semibold mb-0.5 text-gray-900">Дата *</label>
               <input
                 type="date"
-                className="w-full px-2 py-1 sm:px-3 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[12px] sm:text-[15px]"
+                className="w-full px-2 py-1 sm:px-3 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white"
                 style={{ 
-                  borderColor: 'rgba(0, 0, 0, 0.15)'
+                  borderColor: 'rgba(0, 0, 0, 0.15)',
+                  fontSize: '16px'
                 }}
                 value={formData.date}
                 onChange={(e) => setFormData({...formData, date: e.target.value})}
@@ -388,20 +408,31 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       {/* Красивое уведомление вместо alert - ВЫНЕСЕНО НАРУЖУ */}
       {showSuccessMessage && (
         <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 pointer-events-none"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
           style={{
             background: 'rgba(0, 0, 0, 0.7)',
             backdropFilter: 'blur(10px)',
             animation: 'fadeIn 0.2s ease-out'
           }}
+          onClick={() => setShowSuccessMessage(false)}
         >
           <div 
-            className="bg-white rounded-2xl p-6 max-w-sm w-full text-center pointer-events-auto"
+            className="bg-white rounded-2xl p-6 max-w-sm w-full text-center relative"
             style={{
               boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
               animation: 'slideDown 0.3s ease-out'
             }}
+            onClick={(e) => e.stopPropagation()}
           >
+            {/* Крестик закрытия */}
+            <button
+              onClick={() => setShowSuccessMessage(false)}
+              className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-150 hover:bg-gray-100"
+              style={{ color: '#8E8E93' }}
+            >
+              <X className="w-5 h-5" />
+            </button>
+            
             <div className="text-4xl mb-4">
               {successMessageText.includes('✅') ? '✅' : 
                successMessageText.includes('📱') ? '📱' : '⚠️'}

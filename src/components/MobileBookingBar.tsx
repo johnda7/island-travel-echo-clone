@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Button } from '@/components/ui/button';
 
 interface MobileBookingBarProps {
@@ -18,12 +19,17 @@ export const MobileBookingBar: React.FC<MobileBookingBarProps> = ({
     window.location.href = 'https://t.me/Phuketga';
   };
 
-  return (
+  const barContent = (
     <>
       {/* Mobile booking bar - фиксированная панель внизу с размытием фона */}
       <div 
-        className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 p-3 z-50 shadow-lg"
+        className="lg:hidden bg-white/95 backdrop-blur-md border-t border-gray-200 p-3 shadow-lg"
         style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
           paddingBottom: 'calc(12px + env(safe-area-inset-bottom))',
           WebkitBackfaceVisibility: 'hidden',
           backfaceVisibility: 'hidden',
@@ -85,4 +91,9 @@ export const MobileBookingBar: React.FC<MobileBookingBarProps> = ({
       />
     </>
   );
+
+  // Рендерим через портал прямо в body
+  return typeof document !== 'undefined' 
+    ? ReactDOM.createPortal(barContent, document.body)
+    : null;
 };

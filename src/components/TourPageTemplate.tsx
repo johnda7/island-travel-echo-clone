@@ -490,9 +490,9 @@ export const TourPageTemplate = ({
         <div className="container mx-auto px-4 max-w-7xl">
           {/* Описание тура */}
           {tourData.description && (
-            <Card className="mb-6">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-4">Описание</h2>
+            <Card className="mb-4">
+              <CardContent className="p-4">
+                <h2 className="text-xl font-bold mb-3">Описание</h2>
                 <div className="text-gray-700 leading-relaxed whitespace-pre-line">
                   {tourData.description}
                 </div>
@@ -502,9 +502,9 @@ export const TourPageTemplate = ({
 
           {/* Highlights */}
           {tourData.highlights && tourData.highlights.length > 0 && (
-            <Card className="mb-6">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-4">Что входит в тур</h2>
+            <Card className="mb-4">
+              <CardContent className="p-4">
+                <h2 className="text-xl font-bold mb-3">Что входит в тур</h2>
                 <div className="grid md:grid-cols-2 gap-4">
                   {tourData.highlights.map((highlight, index) => (
                     <div key={index} className="flex items-start gap-2">
@@ -519,12 +519,12 @@ export const TourPageTemplate = ({
 
           {/* Расписание */}
           {tourData.schedule && tourData.schedule.length > 0 && (
-            <Card className="mb-6">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-4">Программа тура</h2>
-                <div className="space-y-4">
+            <Card className="mb-4">
+              <CardContent className="p-4">
+                <h2 className="text-xl font-bold mb-3">Программа тура</h2>
+                <div className="space-y-3">
                   {tourData.schedule.map((item, index) => (
-                    <div key={index} className="flex gap-4 border-l-2 border-blue-500 pl-4">
+                    <div key={index} className="flex gap-3 border-l-2 border-blue-500 pl-3">
                       <div className="flex-shrink-0">
                         <div className="text-sm font-semibold text-blue-600">{item.time}</div>
                         {item.day && <div className="text-xs text-gray-500">{item.day}</div>}
@@ -542,10 +542,10 @@ export const TourPageTemplate = ({
 
           {/* Что включено / не включено */}
           {(tourData.included || tourData.notIncluded) && (
-            <Card className="mb-6">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-4">Включено в стоимость</h2>
-                <div className="grid md:grid-cols-2 gap-6">
+            <Card className="mb-4">
+              <CardContent className="p-4">
+                <h2 className="text-xl font-bold mb-3">Включено в стоимость</h2>
+                <div className="grid md:grid-cols-2 gap-4">
                   {tourData.included && tourData.included.length > 0 && (
                     <div>
                       <h3 className="font-semibold text-green-600 mb-3">Включено</h3>
@@ -579,9 +579,9 @@ export const TourPageTemplate = ({
 
           {/* Что взять с собой */}
           {tourData.whatToBring && tourData.whatToBring.length > 0 && (
-            <Card className="mb-6">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-4">Что взять с собой</h2>
+            <Card className="mb-4">
+              <CardContent className="p-4">
+                <h2 className="text-xl font-bold mb-3">Что взять с собой</h2>
                 <ul className="grid md:grid-cols-2 gap-2">
                   {tourData.whatToBring.map((item, index) => (
                     <li key={index} className="flex items-center gap-2">

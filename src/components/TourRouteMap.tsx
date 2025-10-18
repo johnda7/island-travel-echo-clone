@@ -275,11 +275,11 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
         </div>
 
         {/* Легенда маршрута - iOS 26 cards */}
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-2">
           {routePoints.map((point, index) => (
             <div
               key={index}
-              className="p-4 rounded-2xl transition-all duration-200 active:scale-[0.98]"
+              className="p-3 rounded-2xl transition-all duration-200 active:scale-[0.98]"
               style={{
                 background: 'rgba(255, 255, 255, 0.95)',
                 backdropFilter: 'blur(20px)',

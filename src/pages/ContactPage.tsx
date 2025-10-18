@@ -1,136 +1,197 @@
-
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Contact } from "@/components/Contact";
-import { Card, CardContent } from "@/components/ui/card";
-import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
+import { MessageCircle, Clock, Send } from "lucide-react";
 
 const ContactPage = () => {
   return (
-    <div className="min-h-screen">
+    <div 
+      className="min-h-screen"
+      style={{
+        background: "linear-gradient(180deg, #F5F7FA 0%, #E8ECF1 100%)"
+      }}
+    >
       <Header />
       
-      {/* Hero Section */}
-      <section className="pt-24 pb-16 bg-gradient-to-b from-blue-50 to-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-              Контакты
+      {/* Hero Section - iOS 26 */}
+      <section className="pt-24 pb-12">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="text-center">
+            <h1 
+              className="text-4xl md:text-5xl font-bold mb-4"
+              style={{
+                fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+                letterSpacing: "-0.03em",
+                background: "linear-gradient(135deg, #007AFF 0%, #00C6FF 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text"
+              }}
+            >
+              Свяжитесь с нами
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
-              Свяжитесь с нами любым удобным способом. Мы всегда готовы помочь 
-              спланировать ваше идеальное путешествие.
+            <p 
+              className="text-lg text-gray-600 mb-6"
+              style={{ fontFamily: "'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif" }}
+            >
+              Мы на Пхукете и всегда на связи! Ответим на любые вопросы о турах, 
+              ценах и бронировании ⚡
             </p>
           </div>
         </div>
       </section>
 
-      {/* Quick Contact Cards */}
-      <section className="py-8 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            <Card className="text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Phone className="w-8 h-8 text-white" />
+      {/* Telegram Contact Card - iOS 26 Glass */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4 max-w-2xl">
+          <a
+            href="https://t.me/Phuketga"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block group"
+          >
+            <div
+              className="p-8 rounded-3xl transition-all duration-300 hover:scale-105"
+              style={{
+                background: "rgba(255, 255, 255, 0.9)",
+                backdropFilter: "blur(40px) saturate(180%)",
+                WebkitBackdropFilter: "blur(40px) saturate(180%)",
+                boxShadow: "0 8px 32px rgba(0, 122, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.5)",
+                border: "2px solid rgba(0, 122, 255, 0.3)"
+              }}
+            >
+              <div className="flex items-center gap-6">
+                <div
+                  className="w-20 h-20 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
+                  style={{
+                    background: "linear-gradient(135deg, #007AFF 0%, #00C6FF 100%)",
+                    boxShadow: "0 8px 24px rgba(0, 122, 255, 0.4)"
+                  }}
+                >
+                  <MessageCircle className="w-10 h-10 text-white" />
                 </div>
-                <h3 className="font-bold text-gray-800 mb-2">Позвоните нам</h3>
-                <p className="text-blue-600 font-semibold">+7 (495) 123-45-67</p>
-                <p className="text-sm text-gray-500 mt-1">Пн-Пт: 9:00-20:00</p>
-              </CardContent>
-            </Card>
+                <div className="flex-1">
+                  <h2 
+                    className="text-2xl font-bold text-gray-900 mb-2"
+                    style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" }}
+                  >
+                    Telegram (основной контакт)
+                  </h2>
+                  <p 
+                    className="text-3xl font-semibold mb-2"
+                    style={{ 
+                      color: "#007AFF",
+                      fontFamily: "'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif"
+                    }}
+                  >
+                    @Phuketga
+                  </p>
+                  <p 
+                    className="text-base text-gray-600"
+                    style={{ fontFamily: "'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif" }}
+                  >
+                    💬 Быстрое бронирование • Вся информация о турах • Ответы на все вопросы
+                  </p>
+                </div>
+                <Send className="w-6 h-6 text-blue-500 group-hover:translate-x-2 transition-all duration-300" />
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
 
-            <Card className="text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Mail className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="font-bold text-gray-800 mb-2">Напишите нам</h3>
-                <p className="text-blue-600 font-semibold">info@tisland.travel</p>
-                <p className="text-sm text-gray-500 mt-1">Ответим в течение часа</p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <MessageCircle className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="font-bold text-gray-800 mb-2">WhatsApp</h3>
-                <p className="text-blue-600 font-semibold">+7 (968) 123-45-67</p>
-                <p className="text-sm text-gray-500 mt-1">Онлайн круглосуточно</p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <MapPin className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="font-bold text-gray-800 mb-2">Приходите к нам</h3>
-                <p className="text-blue-600 font-semibold">Москва, Тверская 1</p>
-                <p className="text-sm text-gray-500 mt-1">БЦ "Островский", 504</p>
-              </CardContent>
-            </Card>
+      {/* Working Hours - iOS 26 */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4 max-w-2xl">
+          <div
+            className="p-8 rounded-3xl"
+            style={{
+              background: "rgba(255, 255, 255, 0.9)",
+              backdropFilter: "blur(40px) saturate(180%)",
+              WebkitBackdropFilter: "blur(40px) saturate(180%)",
+              boxShadow: "0 4px 24px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.5)",
+              border: "1px solid rgba(0, 0, 0, 0.08)"
+            }}
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center"
+                style={{
+                  background: "linear-gradient(135deg, #007AFF 0%, #00C6FF 100%)",
+                  boxShadow: "0 4px 16px rgba(0, 122, 255, 0.3)"
+                }}
+              >
+                <Clock className="w-6 h-6 text-white" />
+              </div>
+              <h2 
+                className="text-2xl font-bold text-gray-900"
+                style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" }}
+              >
+                Часы работы
+              </h2>
+            </div>
+            <div 
+              className="p-6 rounded-2xl"
+              style={{
+                background: "rgba(0, 122, 255, 0.1)",
+                border: "1px solid rgba(0, 122, 255, 0.2)"
+              }}
+            >
+              <p 
+                className="text-lg text-gray-800 text-center font-semibold"
+                style={{ fontFamily: "'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif" }}
+              >
+                ⚡ Работаем ежедневно с 9:00 до 21:00
+              </p>
+              <p 
+                className="text-sm text-gray-600 text-center mt-2"
+                style={{ fontFamily: "'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif" }}
+              >
+                Пишите в любое время — ответим при первой возможности!
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Main Contact Section */}
-      <Contact />
-
-      {/* Map Section */}
-      <section className="py-8 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">Как нас найти</h2>
-          <div className="grid lg:grid-cols-3 gap-8 items-start">
-            <div className="lg:col-span-2">
-              <div className="bg-gray-300 h-96 rounded-2xl flex items-center justify-center">
-                <p className="text-gray-600">Здесь будет интерактивная карта</p>
-              </div>
-            </div>
-            <div className="space-y-6">
-              <Card className="border-0 shadow-lg">
-                <CardContent className="p-6">
-                  <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-blue-500" />
-                    Наш офис
-                  </h3>
-                  <p className="text-gray-600 mb-2">БЦ "Островский"</p>
-                  <p className="text-gray-600 mb-2">ул. Тверская, дом 1, офис 504</p>
-                  <p className="text-gray-600">Москва, 125009</p>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 shadow-lg">
-                <CardContent className="p-6">
-                  <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-blue-500" />
-                    Часы работы
-                  </h3>
-                  <div className="space-y-2 text-gray-600">
-                    <div className="flex justify-between">
-                      <span>Понедельник - Пятница</span>
-                      <span>9:00 - 20:00</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Суббота - Воскресенье</span>
-                      <span>10:00 - 18:00</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 shadow-lg bg-gradient-to-r from-blue-50 to-cyan-50">
-                <CardContent className="p-6">
-                  <h3 className="font-bold text-gray-800 mb-2">Парковка</h3>
-                  <p className="text-gray-600 text-sm">
-                    Подземная парковка доступна для клиентов. 
-                    Первые 2 часа бесплатно при оформлении тура.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
+      {/* CTA Section */}
+      <section className="pb-20">
+        <div className="container mx-auto px-4 max-w-2xl">
+          <div 
+            className="text-center p-10 rounded-3xl relative overflow-hidden"
+            style={{
+              background: "linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(0, 198, 255, 0.1) 100%)",
+              backdropFilter: "blur(20px) saturate(180%)",
+              WebkitBackdropFilter: "blur(20px) saturate(180%)",
+              boxShadow: "0 8px 32px rgba(0, 122, 255, 0.15)",
+              border: "2px solid rgba(0, 122, 255, 0.2)"
+            }}
+          >
+            <h3 
+              className="text-3xl font-bold text-gray-900 mb-4"
+              style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" }}
+            >
+              Готовы забронировать тур?
+            </h3>
+            <p 
+              className="text-lg text-gray-600 mb-6 max-w-xl mx-auto"
+              style={{ fontFamily: "'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif" }}
+            >
+              Напишите нам в Telegram! Расскажем о турах и поможем с бронированием.
+            </p>
+            <a
+              href="https://t.me/Phuketga"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-8 py-4 rounded-full font-semibold text-white transition-all duration-200 hover:shadow-2xl hover:scale-110 group"
+              style={{
+                background: "linear-gradient(135deg, #007AFF 0%, #00C6FF 100%)",
+                fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+                boxShadow: "0 4px 16px rgba(0, 122, 255, 0.3)"
+              }}
+            >
+              <MessageCircle className="w-5 h-5 mr-2 group-hover:rotate-12 group-hover:scale-125 transition-all duration-300" />
+              Написать в Telegram
+            </a>
           </div>
         </div>
       </section>

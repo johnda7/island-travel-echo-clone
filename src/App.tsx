@@ -9,7 +9,6 @@ import { TelegramProvider } from "@/contexts/TelegramContext";
 // Существующие страницы
 import Index from "./pages/Index";
 import Tours from "./pages/Tours";
-import About from "./pages/About";
 import ContactPage from "./pages/ContactPage";
 import AdminPanel from "./pages/AdminPanel";
 import BookingPage from "./pages/BookingPage";
@@ -48,7 +47,6 @@ function App() {
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/tours" element={<Tours />} />
-                <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/admin" element={<AdminPanel />} />
                 <Route path="/booking" element={<BookingPage />} />

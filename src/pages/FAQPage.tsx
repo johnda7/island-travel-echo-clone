@@ -173,7 +173,7 @@ const FAQPage = () => {
               Напишите нам в Telegram, и мы скоро ответим!
             </p>
             <a
-              href="https://t.me/islandtravelth"
+              href="https://t.me/Phuketga"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-8 py-4 rounded-full font-semibold text-white transition-all duration-200 hover:shadow-lg hover:scale-105"

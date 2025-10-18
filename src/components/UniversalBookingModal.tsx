@@ -253,7 +253,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-0 overflow-hidden" 
+      className="fixed inset-0 z-50 overflow-hidden" 
       onClick={onClose}
       style={{ 
         background: 'rgba(0, 0, 0, 0.6)',
@@ -263,14 +263,18 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       }}
     >
       <div 
-        className="bg-white rounded-2xl w-full mx-4 overflow-hidden flex flex-col"
+        className="absolute bg-white rounded-2xl w-full overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
         style={{ 
           boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
           border: '1px solid rgba(0, 0, 0, 0.1)',
           maxWidth: '448px',
           height: '80vh',
-          maxHeight: '600px'
+          maxHeight: '600px',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          margin: 0
         }}
       >
         <div className="overflow-y-auto flex-1" style={{ WebkitOverflowScrolling: 'touch' }}>

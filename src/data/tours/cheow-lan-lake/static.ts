@@ -52,7 +52,7 @@ export const cheoLanLakeTourData: TourData = {
   ],
   
   priceAdult: 2500,
-  priceChild: 2000,
+  priceChild: 1950,
   currency: "฿",
   
   duration: "1 день (06:00-17:00)",

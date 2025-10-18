@@ -38,7 +38,7 @@ export const jamesBondIslandTourData: TourData = {
   ],
   
   priceAdult: 1900,
-  priceChild: 1900,
+  priceChild: 1600,
   currency: '฿',
   
   duration: '8-9 часов',

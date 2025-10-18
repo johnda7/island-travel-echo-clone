@@ -36,7 +36,7 @@ export const dostoprimechatelnostiPhuketaTourData: TourData = {
 
   // Ценообразование (данные из WordPress)
   priceAdult: 1000,
-  priceChild: 900,
+  priceChild: 800,
   currency: '฿',
 
   // Характеристики тура

@@ -49,9 +49,9 @@ export const useAutoMenu = () => {
   // 🎯 СПЕЦИАЛЬНЫЕ КОЛЛЕКЦИИ НА БАЗЕ РЕАЛЬНЫХ ТУРОВ (все 11 туров включены!)
   const tourCollections = useMemo(() => {
     const collections = {
-      // 🆕 Для новичков на Пхукете (4 тура)
+      // 🆕 Для новичков на Пхукете (3 тура) - легкие и не очень длинные
       beginners: activeTours.filter(tour => 
-        ['dostoprimechatelnosti-phuketa', 'phi-phi-2days', 'james-bond-island-phang-nga', 'eleven-islands-mega'].includes(tour.id)
+        ['dostoprimechatelnosti-phuketa', 'phi-phi-2days', 'james-bond-island-phang-nga'].includes(tour.id)
       ),
       
       // 👨‍👩‍👧‍👦 Семейные туры (безопасные, подходящие детям)

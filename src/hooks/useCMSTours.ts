@@ -64,6 +64,7 @@ export const useCMSTours = () => {
         `)
         .eq('is_active', true)
         .neq('slug', 'avatar-plus-hangdong-adventure')  // 🚫 ИСКЛЮЧАЕМ СТАРУЮ СТРАНИЦУ
+        .neq('slug', 'phi-phi-2days')  // 🚫 ИСКЛЮЧАЕМ - есть статическая версия
         .order('created_at', { ascending: false });
       
       if (error) throw error;
@@ -91,8 +92,8 @@ export const useCMSTours = () => {
 
   const getTourBySlug = async (slug: string): Promise<CMSTour | null> => {
     try {
-      // 🚫 БЛОКИРУЕМ СТАРУЮ СТРАНИЦУ ПОЛНОСТЬЮ
-      if (slug === 'avatar-plus-hangdong-adventure') {
+      // 🚫 БЛОКИРУЕМ СТАРЫЕ СТРАНИЦЫ ПОЛНОСТЬЮ - используем статические версии
+      if (slug === 'avatar-plus-hangdong-adventure' || slug === 'phi-phi-2days') {
         return null;
       }
       

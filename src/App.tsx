@@ -72,6 +72,7 @@ function App() {
               {/* Статические туры */}
               <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1NightNew />} />
               <Route path="/tours/phi-phi-2-days-1-night" element={<PhiPhi2Days1NightNew />} />
+              <Route path="/tours/phi-phi-2days" element={<PhiPhi2Days1NightNew />} /> {/* Альтернативный URL без дефисов */}
               
               <Route path="/excursion/pearls-andaman-sea" element={<PearlsAndamanSeaNew />} />
               <Route path="/tours/pearls-andaman-sea" element={<PearlsAndamanSeaNew />} />

@@ -46,7 +46,7 @@ export const useAutoMenu = () => {
       }));
   }, [activeTours]);
 
-  // 🎯 СПЕЦИАЛЬНЫЕ КОЛЛЕКЦИИ НА БАЗЕ РЕАЛЬНЫХ ТУРОВ (все 10 туров включены!)
+  // 🎯 СПЕЦИАЛЬНЫЕ КОЛЛЕКЦИИ НА БАЗЕ РЕАЛЬНЫХ ТУРОВ (все 11 туров включены!)
   const tourCollections = useMemo(() => {
     const collections = {
       // 🆕 Для новичков на Пхукете (4 тура)
@@ -54,39 +54,39 @@ export const useAutoMenu = () => {
         ['dostoprimechatelnosti-phuketa', 'phi-phi-2days', 'james-bond-island-phang-nga', 'eleven-islands-mega'].includes(tour.id)
       ),
       
-      // 👨‍👩‍👧‍👦 Семейные туры (7 туров - безопасные, подходящие детям)
+      // 👨‍👩‍👧‍👦 Семейные туры (безопасные, подходящие детям)
       family: activeTours.filter(tour => 
-        ['dostoprimechatelnosti-phuketa', 'phi-phi-2days', 'pearls-andaman-sea', 'james-bond-island-phang-nga', 'eleven-islands-standard-speedboat', 'kao-lak-safari-1-day', 'avatar-plus-hangdong'].includes(tour.id)
+        ['dostoprimechatelnosti-phuketa', 'phi-phi-2days', 'pearls-andaman-sea', 'james-bond-island-phang-nga', 'racha-coral-islands-speedboat', 'kao-lak-safari-1-day', 'phang-nga-skywalk'].includes(tour.id)
       ),
       
-      // 🏃‍♂️ Активные туры (3 тура - все adventure категории)  
+      // 🏃‍♂️ Активные туры (все adventure категории)  
       active: activeTours.filter(tour => 
-        ['rafting-spa-atv-1-day', 'kao-lak-safari-1-day', 'avatar-plus-hangdong'].includes(tour.id)
+        ['rafting-spa-atv-1-day', 'kao-lak-safari-1-day', 'avatar-plus-hangdong', 'phang-nga-skywalk', 'cheow-lan-lake'].includes(tour.id)
       ),
       
-      // ⭐ Премиум туры (2 тура - повышенный комфорт)
+      // ⭐ Премиум туры (повышенный комфорт)
       premium: activeTours.filter(tour => 
-        ['eleven-islands-mega', 'pearls-andaman-sea'].includes(tour.id)
+        ['eleven-islands-mega', 'pearls-andaman-sea', 'phang-nga-skywalk'].includes(tour.id)
       ),
       
-      // 🌙 Многодневные туры (2 тура - с ночевкой)
+      // 🌙 Многодневные туры (с ночевкой)
       multiday: activeTours.filter(tour => 
         ['phi-phi-2days', 'pearls-andaman-sea'].includes(tour.id)
       ),
       
-      // ️ Морские туры (5 туров - все острова)
+      // 🏝️ Морские туры (все острова)
       islands: activeTours.filter(tour => 
-        ['phi-phi-2days', 'pearls-andaman-sea', 'james-bond-island-phang-nga', 'eleven-islands-standard-speedboat', 'eleven-islands-mega'].includes(tour.id)
+        tour.category === 'islands'
       ),
       
-      // 🌿 Природа и материк (3 тура - джунгли, водопады, слоны)
+      // 🌿 Природа и приключения (джунгли, водопады, горы)
       nature: activeTours.filter(tour => 
-        ['kao-lak-safari-1-day', 'avatar-plus-hangdong', 'rafting-spa-atv-1-day'].includes(tour.id)
+        tour.category === 'adventure'
       ),
       
-      // 🏛️ Культурные туры (1 тур)
+      // 🏛️ Культурные туры
       cultural: activeTours.filter(tour => 
-        tour.id === 'dostoprimechatelnosti-phuketa'
+        tour.category === 'cultural'
       )
     };
 
@@ -116,9 +116,9 @@ export const useAutoMenu = () => {
           count: activeTours.filter(t => t.tags.includes('джеймс бонд')).length 
         },
         { 
-          name: "11 островов", 
-          href: "/tours?tag=11 островов",
-          count: activeTours.filter(t => t.tags.includes('11 островов')).length 
+          name: "Рача и Корал", 
+          href: "/tours?tag=рача",
+          count: activeTours.filter(t => t.tags.includes('рача')).length 
         },
         { 
           name: "Премиум туры", 
@@ -133,29 +133,39 @@ export const useAutoMenu = () => {
       ]
     },
     {
-      name: "🎯 Активные туры",
+      name: "🎯 Приключения",
       href: "/tours?category=adventure", 
-      description: `${tourCollections.active.length} приключенческих туров`,
+      description: `${tourCollections.nature.length} приключенческих туров`,
       subItems: [
         { 
           name: "Все активные туры", 
           href: "/tours?category=adventure",
-          count: tourCollections.active.length 
+          count: tourCollections.nature.length 
         },
         { 
-          name: "Рафтинг + ATV", 
+          name: "Рафтинг + SPA + ATV", 
           href: "/tours?tag=рафтинг",
           count: activeTours.filter(t => t.tags.includes('рафтинг')).length 
         },
         { 
-          name: "Слоны и природа", 
-          href: "/tours?tag=слоны",
-          count: activeTours.filter(t => t.tags.includes('слоны')).length 
-        },
-        { 
-          name: "Као Лак сафари", 
+          name: "Као Лак Сафари", 
           href: "/tours?tag=сафари",
           count: activeTours.filter(t => t.tags.includes('сафари')).length 
+        },
+        { 
+          name: "Аватар + Хангдонг", 
+          href: "/tours?tag=аватар",
+          count: activeTours.filter(t => t.tags.includes('аватар')).length 
+        },
+        { 
+          name: "Пхангнга + Стеклянный мост", 
+          href: "/tours?tag=стеклянный мост",
+          count: activeTours.filter(t => t.tags.includes('стеклянный мост')).length 
+        },
+        { 
+          name: "Чео Лан озеро", 
+          href: "/tours?tag=чео лан",
+          count: activeTours.filter(t => t.tags.includes('чео лан')).length 
         }
       ]
     },

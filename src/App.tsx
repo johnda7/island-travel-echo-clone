@@ -14,6 +14,10 @@ import AdminPanel from "./pages/AdminPanel";
 import BookingPage from "./pages/BookingPage";
 import ReviewsPage from "./pages/ReviewsPage";
 import NotFound from "./pages/NotFound";
+import FAQPage from "./pages/FAQPage";
+import BookingHelpPage from "./pages/BookingHelpPage";
+import PaymentHelpPage from "./pages/PaymentHelpPage";
+import InfoPage from "./pages/InfoPage";
 
 // Существующие туры
 import PearlsAndamanSeaNew from "./pages/PearlsAndamanSeaNew";
@@ -51,6 +55,19 @@ function App() {
                 <Route path="/admin" element={<AdminPanel />} />
                 <Route path="/booking" element={<BookingPage />} />
                 <Route path="/reviews" element={<ReviewsPage />} />
+                <Route path="/about" element={<ContactPage />} />
+                
+                {/* Info & Help pages */}
+                <Route path="/info" element={<InfoPage />} />
+                <Route path="/help/faq" element={<FAQPage />} />
+                <Route path="/help/booking" element={<BookingHelpPage />} />
+                <Route path="/help/payment" element={<PaymentHelpPage />} />
+                <Route path="/help/contacts" element={<ContactPage />} />
+                
+                {/* Старые URL - редиректы */}
+                <Route path="/faq" element={<FAQPage />} />
+                <Route path="/booking-help" element={<BookingHelpPage />} />
+                <Route path="/payment-help" element={<PaymentHelpPage />} />
               
               {/* Статические туры */}
               <Route path="/excursion/phi-phi-2-days-1-night" element={<PhiPhi2Days1NightNew />} />

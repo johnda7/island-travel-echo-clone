@@ -93,42 +93,48 @@ export const useAutoMenu = () => {
     return collections;
   }, [activeTours]);
 
-  // 🎯 СОЗДАЕМ ГЛАВНОЕ МЕНЮ НА БАЗЕ РЕАЛЬНЫХ ТУРОВ (как tisland.travel)
+  // 🎯 СОЗДАЕМ ГЛАВНОЕ МЕНЮ НА БАЗЕ РЕАЛЬНЫХ ТУРОВ (iOS 26 Design)
   const mainMenuItems = useMemo(() => [
     { 
       name: "🏝️ Морские туры", 
       href: "/tours?category=islands",
-      description: `${tourCollections.islands.length} туров по островам`,
+      description: `${tourCollections.islands.length} туров по островам Андаманского моря`,
       subItems: [
         { 
-          name: "Все морские туры", 
+          name: "🌊 Все морские туры", 
           href: "/tours?category=islands",
-          count: tourCollections.islands.length 
+          count: tourCollections.islands.length,
+          description: "Острова, пляжи, снорклинг"
         },
         { 
-          name: "Пхи-Пхи острова", 
+          name: "🏖️ Пхи-Пхи острова", 
           href: "/tours?tag=пхи-пхи",
-          count: activeTours.filter(t => t.tags.includes('пхи-пхи')).length 
+          count: activeTours.filter(t => t.tags.includes('пхи-пхи')).length,
+          description: "Легендарные острова из фильмов"
         },
         { 
-          name: "Джеймс Бонд", 
+          name: "🎬 Джеймс Бонд", 
           href: "/tours?tag=джеймс бонд",
-          count: activeTours.filter(t => t.tags.includes('джеймс бонд')).length 
+          count: activeTours.filter(t => t.tags.includes('джеймс бонд')).length,
+          description: "Знаменитая скала из фильма 007"
         },
         { 
-          name: "Рача и Корал", 
+          name: "🐠 Рача и Корал", 
           href: "/tours?tag=рача",
-          count: activeTours.filter(t => t.tags.includes('рача')).length 
+          count: activeTours.filter(t => t.tags.includes('рача')).length,
+          description: "Снорклинг и водные развлечения"
         },
         { 
-          name: "Премиум туры", 
+          name: "💎 Премиум туры", 
           href: "/tours?collection=premium",
-          count: tourCollections.premium.length 
+          count: tourCollections.premium.length,
+          description: "Повышенный комфорт и сервис"
         },
         { 
-          name: "Многодневные", 
+          name: "🌙 Многодневные", 
           href: "/tours?collection=multiday",
-          count: tourCollections.multiday.length 
+          count: tourCollections.multiday.length,
+          description: "С ночевкой на островах"
         }
       ]
     },
@@ -138,112 +144,146 @@ export const useAutoMenu = () => {
       description: `${tourCollections.nature.length} приключенческих туров`,
       subItems: [
         { 
-          name: "Все активные туры", 
+          name: "⚡ Все активные туры", 
           href: "/tours?category=adventure",
-          count: tourCollections.nature.length 
+          count: tourCollections.nature.length,
+          description: "Джунгли, горы, водопады"
         },
         { 
-          name: "Рафтинг + SPA + ATV", 
+          name: "🚣 Рафтинг + SPA + ATV", 
           href: "/tours?tag=рафтинг",
-          count: activeTours.filter(t => t.tags.includes('рафтинг')).length 
+          count: activeTours.filter(t => t.tags.includes('рафтинг')).length,
+          description: "Сплав по реке и квадроциклы"
         },
         { 
-          name: "Као Лак Сафари", 
+          name: "🦁 Као Лак Сафари", 
           href: "/tours?tag=сафари",
-          count: activeTours.filter(t => t.tags.includes('сафари')).length 
+          count: activeTours.filter(t => t.tags.includes('сафари')).length,
+          description: "Джунгли, водопады, слоны"
         },
         { 
-          name: "Аватар + Хангдонг", 
+          name: "🌿 Аватар + Хангдонг", 
           href: "/tours?tag=аватар",
-          count: activeTours.filter(t => t.tags.includes('аватар')).length 
+          count: activeTours.filter(t => t.tags.includes('аватар')).length,
+          description: "Зиплайн и горячие источники"
         },
         { 
-          name: "Пхангнга + Стеклянный мост", 
+          name: "🌉 Пхангнга + Стеклянный мост", 
           href: "/tours?tag=стеклянный мост",
-          count: activeTours.filter(t => t.tags.includes('стеклянный мост')).length 
+          count: activeTours.filter(t => t.tags.includes('стеклянный мост')).length,
+          description: "Храмы и смотровая площадка"
         },
         { 
-          name: "Чео Лан озеро", 
+          name: "🏞️ Чео Лан озеро", 
           href: "/tours?tag=чео лан",
-          count: activeTours.filter(t => t.tags.includes('чео лан')).length 
+          count: activeTours.filter(t => t.tags.includes('чео лан')).length,
+          description: "Национальный парк Као Сок"
         }
       ]
     },
     {
       name: "🏛️ Культурные туры", 
       href: "/tours?category=cultural",
-      description: `${activeTours.filter(t => t.category === 'cultural').length} культурный тур`,
+      description: `${activeTours.filter(t => t.category === 'cultural').length} обзорный тур`,
       subItems: [
         { 
-          name: "Достопримечательности Пхукета", 
+          name: "🗺️ Достопримечательности Пхукета", 
           href: "/tours/dostoprimechatelnosti-phuketa",
-          count: 1 
+          count: 1,
+          description: "Обзорная экскурсия без шопинга"
         },
         { 
-          name: "Храмы и обзорные", 
+          name: "🛕 Храмы и святыни", 
           href: "/tours?tag=храмы",
-          count: activeTours.filter(t => t.tags.includes('храмы')).length 
+          count: activeTours.filter(t => t.tags.includes('храмы')).length,
+          description: "Большой Будда, Ват Чалонг"
         },
         { 
-          name: "Большой Будда", 
+          name: "🗿 Большой Будда", 
           href: "/tours?tag=большой будда",
-          count: activeTours.filter(t => t.tags.includes('большой будда')).length 
+          count: activeTours.filter(t => t.tags.includes('большой будда')).length,
+          description: "45-метровая статуя с видом на остров"
         },
         { 
-          name: "Старый город", 
+          name: "🏘️ Старый город", 
           href: "/tours?tag=старый город",
-          count: activeTours.filter(t => t.tags.includes('старый город')).length 
+          count: activeTours.filter(t => t.tags.includes('старый город')).length,
+          description: "Сино-португальская архитектура"
         }
       ]
     },
     {
-      name: "👨‍👩‍👧‍👦 По аудитории",
+      name: "� Подборки",
       href: "/collections",
-      description: "Подборки для разных путешественников",
+      description: "Туры для разных путешественников",
       subItems: [
         { 
-          name: "🆕 Для новичков", 
+          name: "✨ Для новичков", 
           href: "/tours?collection=beginners",
           count: tourCollections.beginners.length,
-          description: "Первый раз на Пхукете"
+          description: "Первый раз на Пхукете?"
         },
         { 
           name: "👨‍👩‍👧‍👦 Семейные туры", 
           href: "/tours?collection=family",
           count: tourCollections.family.length,
-          description: "Подходят детям" 
+          description: "Безопасные и интересные детям" 
         },
         { 
-          name: "🏃‍♂️ Активный отдых", 
+          name: "🏃 Активный отдых", 
           href: "/tours?collection=active",
           count: tourCollections.active.length,
           description: "Для любителей адреналина"
         },
         { 
-          name: "⭐ Премиум класс", 
+          name: "💎 Премиум класс", 
           href: "/tours?collection=premium",
           count: tourCollections.premium.length,
-          description: "Повышенный комфорт"
+          description: "Максимальный комфорт"
         },
         { 
           name: "🌙 Многодневные", 
           href: "/tours?collection=multiday",
           count: tourCollections.multiday.length,
-          description: "С ночевкой"
+          description: "Туры с ночевкой"
         }
       ]
     },
     {
       name: "ℹ️ Информация",
       href: "/info",
-      description: "Полезная информация о турах",
+      description: "Всё о бронировании и оплате",
       subItems: [
-        { name: "❓ Частые вопросы", href: "/help/faq" },
-        { name: "📋 Как забронировать", href: "/help/booking" },
-        { name: "💳 Оплата и возврат", href: "/help/payment" },
-        { name: "⭐ Отзывы", href: "/reviews" },
-        { name: "📞 Контакты", href: "/help/contacts" },
-        { name: "🏢 О компании", href: "/about" }
+        { 
+          name: "💬 Частые вопросы", 
+          href: "/help/faq",
+          description: "Ответы на популярные вопросы"
+        },
+        { 
+          name: "� Как забронировать", 
+          href: "/help/booking",
+          description: "Простая инструкция по бронированию"
+        },
+        { 
+          name: "💳 Оплата и возврат", 
+          href: "/help/payment",
+          description: "Способы оплаты и условия возврата"
+        },
+        { 
+          name: "⭐ Отзывы", 
+          href: "/reviews",
+          description: "Отзывы наших клиентов"
+        },
+        { 
+          name: "📞 Контакты", 
+          href: "/help/contacts",
+          description: "Как с нами связаться"
+        },
+        { 
+          name: "🏢 О компании", 
+          href: "/about",
+          description: "Наша история и команда"
+        }
       ]
     }
   ], [activeTours, tourCollections]);

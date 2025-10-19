@@ -11,27 +11,39 @@ const Tours = () => {
   const [filteredTours, setFilteredTours] = useState<TourWithMeta[]>([]);
   const [availableTags, setAvailableTags] = useState<string[]>([]);
   const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
-  // Получение тега из URL
+  // Получение тега и категории из URL
   useEffect(() => {
     const tagFromUrl = searchParams.get('tag');
+    const categoryFromUrl = searchParams.get('category');
     setActiveTag(tagFromUrl);
+    setActiveCategory(categoryFromUrl);
     // Теги из централизованного хука
     setAvailableTags(tags);
   }, [searchParams, tags]);
 
-  // Централизованная фильтрация: используем уже загруженные туры с данными
+  // Централизованная фильтрация: по тегам И категориям
   useEffect(() => {
     if (loading) {
       setFilteredTours([]);
       return;
     }
-    if (activeTag) {
-      setFilteredTours(allTours.filter(t => t.tags?.some(tag => tag.toLowerCase() === activeTag.toLowerCase())));
-    } else {
-      setFilteredTours(allTours);
+    
+    let filtered = allTours;
+    
+    // Фильтр по категории
+    if (activeCategory) {
+      filtered = filtered.filter(t => t.category === activeCategory);
     }
-  }, [loading, allTours, activeTag]);
+    
+    // Фильтр по тегу
+    if (activeTag) {
+      filtered = filtered.filter(t => t.tags?.some(tag => tag.toLowerCase() === activeTag.toLowerCase()));
+    }
+    
+    setFilteredTours(filtered);
+  }, [loading, allTours, activeTag, activeCategory]);
 
   // Обработка клика по тегу
   const handleTagClick = (tag: string) => {

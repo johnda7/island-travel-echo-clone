@@ -4,26 +4,31 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Tours as ToursComponent } from "@/components/Tours";
 import { useTours, TourWithMeta } from "@/hooks/useTours";
+import { useAutoMenu } from "@/hooks/useAutoMenu";
 
 const Tours = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { allTours, tags, loading } = useTours();
+  const { tourCollections } = useAutoMenu();
   const [filteredTours, setFilteredTours] = useState<TourWithMeta[]>([]);
   const [availableTags, setAvailableTags] = useState<string[]>([]);
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeCollection, setActiveCollection] = useState<string | null>(null);
 
-  // Получение тега и категории из URL
+  // Получение тега, категории и коллекции из URL
   useEffect(() => {
     const tagFromUrl = searchParams.get('tag');
     const categoryFromUrl = searchParams.get('category');
+    const collectionFromUrl = searchParams.get('collection');
     setActiveTag(tagFromUrl);
     setActiveCategory(categoryFromUrl);
+    setActiveCollection(collectionFromUrl);
     // Теги из централизованного хука
     setAvailableTags(tags);
   }, [searchParams, tags]);
 
-  // Централизованная фильтрация: по тегам И категориям
+  // Централизованная фильтрация: по тегам, категориям И коллекциям
   useEffect(() => {
     if (loading) {
       setFilteredTours([]);
@@ -32,18 +37,28 @@ const Tours = () => {
     
     let filtered = allTours;
     
-    // Фильтр по категории
-    if (activeCategory) {
+    // Фильтр по коллекции (приоритет!)
+    if (activeCollection && tourCollections) {
+      const collectionKey = activeCollection as keyof typeof tourCollections;
+      const collectionTours = tourCollections[collectionKey];
+      
+      if (collectionTours && collectionTours.length > 0) {
+        const collectionIds = collectionTours.map(t => t.id);
+        filtered = filtered.filter(t => collectionIds.includes(t.id));
+      }
+    } 
+    // Фильтр по категории (если нет коллекции)
+    else if (activeCategory) {
       filtered = filtered.filter(t => t.category === activeCategory);
     }
     
-    // Фильтр по тегу
+    // Фильтр по тегу (дополнительный фильтр)
     if (activeTag) {
       filtered = filtered.filter(t => t.tags?.some(tag => tag.toLowerCase() === activeTag.toLowerCase()));
     }
     
     setFilteredTours(filtered);
-  }, [loading, allTours, activeTag, activeCategory]);
+  }, [loading, allTours, activeTag, activeCategory, activeCollection, tourCollections]);
 
   // Обработка клика по тегу
   const handleTagClick = (tag: string) => {

@@ -237,17 +237,17 @@ git push origin main
 
 ### **ФАЙЛЫ, КОТОРЫЕ ИЗМЕНИЛИСЬ:**
 
-**Созданы новые папки (11 шт):**
+**Созданы новые папки (10 шт):**
 - `src/data/tours/phi-phi-2days/`
 - `src/data/tours/pearls-andaman-sea/`
 - `src/data/tours/dostoprimechatelnosti-phuketa/`
-- `src/data/tours/rassvetnoe-prikljuchenie/`
 - `src/data/tours/james-bond-island/`
 - `src/data/tours/eleven-islands-standard/`
 - `src/data/tours/eleven-islands-mega/`
 - `src/data/tours/racha-coral-islands/`
 - `src/data/tours/rafting-spa-atv/`
 - `src/data/tours/kao-lak-safari/`
+- `src/data/tours/avatar-plus-hangdong/`
 - `src/data/tours/avatar-plus-hangdong/`
 
 **Созданы новые файлы (22 шт):**

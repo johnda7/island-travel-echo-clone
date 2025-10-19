@@ -15,14 +15,13 @@
 | 3 | PearlsAndamanSea | 695 | 15 | 680 | ✅ |
 | 4 | CheoLanLake | 720 | 14 | 706 | ✅ |
 | 5 | DostoprimechatelnostiPhuketa | 715 | 14 | 701 | ✅ |
-| 6 | RassvetnoePrikljuchenie | 727 | 14 | 713 | ✅ |
-| 7 | AvatarPlusHangdong | 717 | 14 | 703 | ✅ |
-| 8 | RaftingSpaAtv | 771 | 14 | 757 | ✅ |
-| 9 | KaoLakSafari | 693 | 14 | 679 | ✅ |
-| 10 | RachaCoralIslands | 758 | 14 | 744 | ✅ |
-| 11 | PhangNgaSkywalk | 771 | 14 | 757 | ✅ |
-| 12 | ElevenIslandsStandard | 550 | 14 | 536 | ✅ |
-| 13 | ElevenIslandsMega | 718 | 14 | 704 | ✅ |
+| 6 | AvatarPlusHangdong | 717 | 14 | 703 | ✅ |
+| 7 | RaftingSpaAtv | 771 | 14 | 757 | ✅ |
+| 8 | KaoLakSafari | 693 | 14 | 679 | ✅ |
+| 9 | RachaCoralIslands | 758 | 14 | 744 | ✅ |
+| 10 | PhangNgaSkywalk | 771 | 14 | 757 | ✅ |
+| 11 | ElevenIslandsStandard | 550 | 14 | 536 | ✅ |
+| 12 | ElevenIslandsMega | 718 | 14 | 704 | ✅ |
 | **ИТОГО** | **13 туров** | **~9,285** | **183** | **~9,100** | **✅ 100%** |
 
 ---
@@ -63,7 +62,6 @@
 
 **Туры:**
 - DostoprimechatelnostiPhuketa (715 → 14 строк)
-- RassvetnoePrikljuchenie (727 → 14 строк)
 - AvatarPlusHangdong (717 → 14 строк)
 - RaftingSpaAtv (771 → 14 строк)
 - KaoLakSafari (693 → 14 строк)
@@ -111,14 +109,13 @@
 3. **pearls-andaman-sea-route.ts** - 14 GPS точек
 4. **cheow-lan-lake-route.ts** - 6 GPS точек
 5. **dostoprimechatelnosti-phuketa-route.ts** - 11 GPS точек
-6. **rassvetnoe-prikljuchenie-route.ts** - 8 GPS точек
-7. **avatar-plus-hangdong-route.ts** - 9 GPS точек
-8. **rafting-spa-atv-route.ts** - 7 GPS точек
-9. **kao-lak-safari-route.ts** - 8 GPS точек
-10. **racha-coral-islands-route.ts** - 9 GPS точек
-11. **phang-nga-skywalk-route.ts** - 8 GPS точек (Cave Temple, Waterfall, Skywalk 550m, Dragon Mountain)
-12. **eleven-islands-standard-route.ts** - 8 GPS точек (Khai, Racha, Coral, Mai Thon)
-13. **eleven-islands-mega-route.ts** - 10 GPS точек (Khai Noi+Nai, Racha bays, Coral Beach, Mai Thon VIP)
+6. **avatar-plus-hangdong-route.ts** - 9 GPS точек
+7. **rafting-spa-atv-route.ts** - 7 GPS точек
+8. **kao-lak-safari-route.ts** - 8 GPS точек
+9. **racha-coral-islands-route.ts** - 9 GPS точек
+10. **phang-nga-skywalk-route.ts** - 8 GPS точек (Cave Temple, Waterfall, Skywalk 550m, Dragon Mountain)
+11. **eleven-islands-standard-route.ts** - 8 GPS точек (Khai, Racha, Coral, Mai Thon)
+12. **eleven-islands-mega-route.ts** - 10 GPS точек (Khai Noi+Nai, Racha bays, Coral Beach, Mai Thon VIP)
 
 ### **Формат координат:**
 ```typescript

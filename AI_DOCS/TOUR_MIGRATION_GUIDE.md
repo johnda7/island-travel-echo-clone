@@ -265,7 +265,6 @@ git push origin main
 - RachaCoralIslandsTour
 - ElevenIslandsStandardTour
 - DostoprimechatelnostiPhuketa
-- RassvetnoePrikljuchenie
 - ... (и другие)
 
 ---

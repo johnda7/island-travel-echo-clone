@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- PWA Manifest для Telegram Mini App -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#007AFF" />
+    
+    <!-- Telegram Web App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
     <title>ПхукетGO - Туры и экскурсии на Пхукете</title>
     <meta name="description" content="Откройте для себя лучшие туры и островные экскурсии на Пхукете. Посетите острова Пхи-Пхи, бухту Майя и нетронутые пляжи с профессиональными гидами." />
     
@@ -17,15 +25,23 @@
     <meta property="og:locale" content="ru_RU" />
     <!-- Telegram Web App + HashRouter support -->
     <script type="text/javascript">
-      // Проверка на Telegram Web App и редирект на hash если нужно
+      // МГНОВЕННЫЙ редирект на hash (для Telegram Mini App)
       (function() {
         var l = window.location;
         var isCustomDomain = l.hostname !== 'johnda7.github.io';
         var basePath = isCustomDomain ? '' : '/island-travel-echo-clone';
         
-        // Если нет hash в URL, добавляем его
-        if (!l.hash) {
-          if (isCustomDomain && l.pathname !== '/') {
+        // КРИТИЧНО: Проверяем Telegram Web App
+        var isTelegramApp = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData;
+        
+        // Если нет hash в URL, добавляем его НЕМЕДЛЕННО
+        if (!l.hash || l.hash === '#') {
+          var newUrl = basePath + '/#/';
+          
+          // Для Telegram App используем replace (без истории)
+          if (isTelegramApp || l.search.indexOf('telegram=true') !== -1) {
+            l.replace(newUrl);
+          } else if (isCustomDomain && l.pathname !== '/') {
             // Custom domain: любой путь кроме / → добавляем hash
             l.replace(basePath + '/#' + l.pathname + l.search);
           } else if (!isCustomDomain && l.pathname !== basePath + '/' && l.pathname !== basePath) {
@@ -34,7 +50,7 @@
             l.replace(basePath + '/#' + path + l.search);
           } else {
             // Просто открыли базовый URL без hash
-            l.replace(basePath + '/#/');
+            l.replace(newUrl);
           }
         }
       })();

@@ -21,10 +21,6 @@ src/data/
 │   │   ├── index.ts
 │   │   └── static.ts
 │   │
-│   ├── rassvetnoe-prikljuchenie/    # Рассветное приключение
-│   │   ├── index.ts
-│   │   └── static.ts
-│   │
 │   ├── james-bond-island/           # Остров Джеймса Бонда
 │   │   ├── index.ts
 │   │   └── static.ts

@@ -75,6 +75,8 @@ interface TelegramWebApp {
   ready: () => void;
   expand: () => void;
   close: () => void;
+  setHeaderColor: (color: string) => void;
+  setBackgroundColor: (color: string) => void;
   sendData: (data: string) => void;
   openLink: (url: string) => void;
   openTelegramLink: (url: string) => void;
@@ -158,7 +160,33 @@ export const TelegramProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         
         // Инициализируем Web App
         tgWebApp.ready();
+        
+        // Разворачиваем на весь экран (Main App mode)
         tgWebApp.expand();
+        
+        // Устанавливаем цвета интерфейса Telegram
+        if (tgWebApp.setHeaderColor) {
+          tgWebApp.setHeaderColor('#007AFF');
+        }
+        if (tgWebApp.setBackgroundColor) {
+          tgWebApp.setBackgroundColor('#FFFFFF');
+        }
+        
+        // Применяем тему Telegram к сайту
+        const themeParams = tgWebApp.themeParams;
+        if (themeParams.bg_color) {
+          document.documentElement.style.setProperty('--tg-bg-color', themeParams.bg_color);
+        }
+        if (themeParams.text_color) {
+          document.documentElement.style.setProperty('--tg-text-color', themeParams.text_color);
+        }
+        
+        console.log('✅ Telegram Mini App initialized:', {
+          platform: tgWebApp.platform,
+          version: tgWebApp.version,
+          isExpanded: tgWebApp.isExpanded,
+          user: tgWebApp.initDataUnsafe?.user
+        });
       } else if (isTestMode) {
         // Мок данные для тестирования
         setUser({

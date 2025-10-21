@@ -1,14 +1,41 @@
 import { TourData } from "@/types/Tour";
 
-// Import images for Similan Islands tour
+// Import all images for Similan Islands tour
 import hero1 from "@/assets/similan-islands/hero-1.jpg";
-import hero2 from "@/assets/similan-islands/hero-2.jpg";
-import hero3 from "@/assets/similan-islands/hero-3.jpg";
 import img1 from "@/assets/similan-islands/similan-1.jpg";
 import img2 from "@/assets/similan-islands/similan-2.jpg";
 import img3 from "@/assets/similan-islands/similan-3.jpg";
 import img4 from "@/assets/similan-islands/similan-4.jpg";
 import img5 from "@/assets/similan-islands/similan-5.jpg";
+import img6 from "@/assets/similan-islands/similan-6.jpg";
+import img7 from "@/assets/similan-islands/similan-7.jpg";
+import img8 from "@/assets/similan-islands/similan-8.jpg";
+import img9 from "@/assets/similan-islands/similan-9.jpg";
+import img10 from "@/assets/similan-islands/similan-10.jpg";
+import img11 from "@/assets/similan-islands/similan-11.jpg";
+import img12 from "@/assets/similan-islands/similan-12.jpg";
+import img13 from "@/assets/similan-islands/similan-13.jpg";
+import img14 from "@/assets/similan-islands/similan-14.jpg";
+import img15 from "@/assets/similan-islands/similan-15.jpg";
+import img16 from "@/assets/similan-islands/similan-16.jpg";
+import img17 from "@/assets/similan-islands/similan-17.jpg";
+import img18 from "@/assets/similan-islands/similan-18.jpg";
+import img19 from "@/assets/similan-islands/similan-19.jpg";
+import img20 from "@/assets/similan-islands/similan-20.jpg";
+import img21 from "@/assets/similan-islands/similan-21.jpg";
+import img22 from "@/assets/similan-islands/similan-22.jpg";
+import img23 from "@/assets/similan-islands/similan-23.jpg";
+import img24 from "@/assets/similan-islands/similan-24.jpg";
+import img25 from "@/assets/similan-islands/similan-25.jpg";
+import img26 from "@/assets/similan-islands/similan-26.jpg";
+import img27 from "@/assets/similan-islands/similan-27.jpg";
+import img28 from "@/assets/similan-islands/similan-28.jpg";
+import img29 from "@/assets/similan-islands/similan-29.jpg";
+import img30 from "@/assets/similan-islands/similan-30.jpg";
+import img31 from "@/assets/similan-islands/similan-31.jpg";
+import img32 from "@/assets/similan-islands/similan-32.jpg";
+import img33 from "@/assets/similan-islands/similan-33.jpg";
+import img34 from "@/assets/similan-islands/similan-34.jpg";
 
 export const similanIslandsTourData: TourData = {
   id: "similan-islands",
@@ -26,13 +53,40 @@ export const similanIslandsTourData: TourData = {
   mainImage: hero1,
   gallery: [
     hero1,
-    hero2,
-    hero3,
     img1,
     img2,
     img3,
     img4,
-    img5
+    img5,
+    img6,
+    img7,
+    img8,
+    img9,
+    img10,
+    img11,
+    img12,
+    img13,
+    img14,
+    img15,
+    img16,
+    img17,
+    img18,
+    img19,
+    img20,
+    img21,
+    img22,
+    img23,
+    img24,
+    img25,
+    img26,
+    img27,
+    img28,
+    img29,
+    img30,
+    img31,
+    img32,
+    img33,
+    img34
   ],
   
   description: `Симиланские острова — одно из самых живописных мест Таиланда, настоящий рай для любителей подводного мира и первозданной природы. Этот архипелаг состоит из 9 островов, каждый из которых уникален своей красотой.
@@ -54,49 +108,49 @@ export const similanIslandsTourData: TourData = {
 
   itinerary: [
     {
+      day: "День 1",
       time: "05:30-06:30",
-      title: "Трансфер из отеля",
-      description: "Встреча в отеле и переезд в порт Tablemu (1,5 часа)"
+      activity: "Трансфер из отеля - встреча в отеле и переезд в порт Tablemu (1,5 часа)"
     },
     {
+      day: "День 1",
       time: "07:30",
-      title: "Отправление из порта",
-      description: "Завтрак на лодке, инструктаж по безопасности, отплытие к островам (1,5 часа в пути)"
+      activity: "Отправление из порта - завтрак на лодке, инструктаж по безопасности, отплытие к островам"
     },
     {
+      day: "День 1",
       time: "09:00",
-      title: "Остров №9 - первый снорклинг",
-      description: "Знакомство с подводным миром Симилан, плавание с маской среди коралловых рифов"
+      activity: "Остров №9 - первый снорклинг, знакомство с подводным миром Симилан, плавание с маской среди коралловых рифов"
     },
     {
+      day: "День 1",
       time: "10:00",
-      title: "Остров №8 - смотровая Sail Rock",
-      description: "Подъём на знаменитую смотровую площадку, потрясающие виды на архипелаг"
+      activity: "Остров №8 - смотровая Sail Rock, подъём на знаменитую смотровую площадку, потрясающие виды на архипелаг"
     },
     {
+      day: "День 1",
       time: "11:00",
-      title: "Остров №8 - пляжный отдых",
-      description: "Свободное время на белоснежном пляже, купание в бирюзовой воде"
+      activity: "Остров №8 - пляжный отдых, свободное время на белоснежном пляже, купание в бирюзовой воде"
     },
     {
+      day: "День 1",
       time: "12:30",
-      title: "Обед на лодке",
-      description: "Тайский шведский стол: курица, рыба, овощи, рис, фрукты, вода, кофе"
+      activity: "Обед на лодке - тайский шведский стол: курица, рыба, овощи, рис, фрукты, вода, кофе"
     },
     {
+      day: "День 1",
       time: "13:30",
-      title: "Остров №7 - второй снорклинг",
-      description: "Снорклинг в бухте с богатой морской жизнью, разноцветные рыбы и кораллы"
+      activity: "Остров №7 - второй снорклинг, снорклинг в бухте с богатой морской жизнью, разноцветные рыбы и кораллы"
     },
     {
+      day: "День 1",
       time: "14:30",
-      title: "Остров №4 - пляж и купание",
-      description: "Последний пляж для купания и фотографий, отдых перед возвращением"
+      activity: "Остров №4 - пляж и купание, последний пляж для купания и фотографий, отдых перед возвращением"
     },
     {
+      day: "День 1",
       time: "15:30-18:00",
-      title: "Возвращение",
-      description: "Отплытие в порт, трансфер в отель. Прибытие около 18:00"
+      activity: "Возвращение - отплытие в порт, трансфер в отель. Прибытие около 18:00"
     }
   ],
 
@@ -136,12 +190,5 @@ export const similanIslandsTourData: TourData = {
     "⚠️ На островах нет туалетов и магазинов",
     "⚠️ Погодные условия могут изменить программу тура",
     "⚠️ Время трансфера зависит от расположения отеля"
-  ],
-
-  bookingInfo: {
-    advanceBookingDays: 1,
-    cancellationPolicy: "Бесплатная отмена за 24 часа до начала",
-    paymentMethods: ["Наличные", "Карта", "Переводы"],
-    instantConfirmation: true
-  }
+  ]
 };

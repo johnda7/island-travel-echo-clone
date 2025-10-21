@@ -22,6 +22,7 @@ import { rachaCoralIslandsTourData } from './tours/racha-coral-islands';
 import { phangNgaSkywalkTourData } from './tours/phang-nga-skywalk';
 import { cheoLanLakeTourData } from './tours/cheow-lan-lake';
 import { similanIslandsTourData } from './tours/similan-islands';
+import { similanIslandsEarlyTourData } from './tours/similan-islands-early';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -201,6 +202,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,    // ✅ показываем на главной (мировая достопримечательность!)
     priority: 15,
     data: () => Promise.resolve(similanIslandsTourData)
+  },
+
+  // 16. СИМИЛАНСКИЕ ОСТРОВА РАННИЙ ВЫЕЗД (НОВЫЙ!)
+  {
+    id: 'similan-islands-early',
+    name: 'Симиланские острова Ранний выезд',
+    category: 'islands',
+    tags: ['море', 'морские', 'острова', 'симиланы', 'ранний-выезд', 'снорклинг', 'без-толп', 'комфорт+', 'wi-fi', 'премиум', 'малая группа', 'спидбот', '1 день', 'рассвет'],
+    isPopular: true,     // ✅ показываем в популярных (VIP вариант!)
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: true,    // ✅ показываем на главной (уникальное предложение!)
+    priority: 16,
+    data: () => Promise.resolve(similanIslandsEarlyTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

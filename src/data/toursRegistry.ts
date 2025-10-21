@@ -27,6 +27,7 @@ import { similanIslandsSpeedboatTourData } from './tours/similan-islands-speedbo
 import { fishingSunriseTourData } from './tours/fishing-sunrise';
 import { rachaCoralSunriseTourData } from './tours/racha-coral-sunrise';
 import { rachaCoralRawaiTourData } from './tours/racha-coral-rawai';
+import { phiPhiSunriseTourData } from './tours/phi-phi-sunrise';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -271,6 +272,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,
     priority: 20,
     data: () => Promise.resolve(rachaCoralRawaiTourData)
+  },
+
+  // 21. ПХИ-ПХИ РАССВЕТ: УТРО БЕЗ ТОЛП (НОВЫЙ!)
+  {
+    id: 'phi-phi-sunrise',
+    name: 'Рассветное путешествие на Пхи-Пхи: Утро без толп',
+    category: 'islands',
+    tags: ['море', 'морские', 'острова', 'пхи-пхи', 'майя-бэй', 'рассвет', 'без-толп', 'лагуна-пиле', 'пляж-обезьян', 'остров-бамбу', 'снорклинг', 'премиум', '1 день', 'эксклюзив'],
+    isPopular: true,
+    isActive: true,
+    isFeatured: true,
+    priority: 21,
+    data: () => Promise.resolve(phiPhiSunriseTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

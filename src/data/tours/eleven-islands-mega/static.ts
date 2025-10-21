@@ -16,7 +16,7 @@ export const elevenIslandsMegaTourData: TourData = {
   subtitle: "ОДИН ЭПИЧНЫЙ ДЕНЬ: Джеймс Бонд + Хонг + Пхи-Пхи - максимум впечатлений за минимум времени",
   currency: "฿",
   priceAdult: 4200,
-  priceChild: 3600,
+  priceChild: 4200,
   duration: "1 день (12+ часов)",
   groupSize: "до 24-38 человек",
   rating: 4.9,

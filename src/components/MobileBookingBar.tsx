@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Button } from '@/components/ui/button';
 
 interface MobileBookingBarProps {
@@ -19,24 +18,10 @@ export const MobileBookingBar: React.FC<MobileBookingBarProps> = ({
     window.location.href = 'https://t.me/Phuketga';
   };
 
-  const barContent = (
+  return (
     <>
       {/* Mobile booking bar - фиксированная панель внизу с размытием фона */}
-      <div 
-        className="lg:hidden bg-white/95 backdrop-blur-md border-t border-gray-200 p-3 shadow-lg"
-        style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
-          paddingBottom: 'calc(12px + env(safe-area-inset-bottom))',
-          WebkitBackfaceVisibility: 'hidden',
-          backfaceVisibility: 'hidden',
-          WebkitTransform: 'translate3d(0, 0, 0)',
-          transform: 'translate3d(0, 0, 0)'
-        }}
-      >
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 p-3 z-50 shadow-lg">
         <div className="flex items-center gap-2 max-w-7xl mx-auto">
           <div className="text-left flex-shrink-0">
             <div className="text-sm font-bold" style={{ color: '#007AFF' }}>
@@ -83,17 +68,7 @@ export const MobileBookingBar: React.FC<MobileBookingBarProps> = ({
       </div>
 
       {/* Отступ снизу для панели - уменьшен */}
-      <div 
-        className="h-[72px] lg:hidden" 
-        style={{ 
-          height: 'calc(72px + env(safe-area-inset-bottom))' 
-        }}
-      />
+      <div className="h-[72px] lg:hidden" />
     </>
   );
-
-  // Рендерим через портал прямо в body
-  return typeof document !== 'undefined' 
-    ? ReactDOM.createPortal(barContent, document.body)
-    : null;
 };

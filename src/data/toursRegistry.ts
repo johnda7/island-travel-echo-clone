@@ -21,6 +21,7 @@ import { kaoLakSafariTourData } from './tours/kao-lak-safari';
 import { rachaCoralIslandsTourData } from './tours/racha-coral-islands';
 import { phangNgaSkywalkTourData } from './tours/phang-nga-skywalk';
 import { cheoLanLakeTourData } from './tours/cheow-lan-lake';
+import { similanIslandsTourData } from './tours/similan-islands';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -187,6 +188,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,    // ✅ показываем на главной (уникальное озеро!)
     priority: 14,
     data: () => Promise.resolve(cheoLanLakeTourData)
+  },
+
+  // 15. СИМИЛАНСКИЕ ОСТРОВА (НОВЫЙ!)
+  {
+    id: 'similan-islands',
+    name: 'Симиланские острова',
+    category: 'islands',
+    tags: ['море', 'морские', 'острова', 'симиланы', 'снорклинг', 'пляжи', 'национальный парк', 'подводный мир', 'кораллы', 'белый песок', 'тропики', 'большая лодка', '1 день', 'премиум'],
+    isPopular: true,     // ✅ показываем в популярных (топ направление!)
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: true,    // ✅ показываем на главной (мировая достопримечательность!)
+    priority: 15,
+    data: () => Promise.resolve(similanIslandsTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

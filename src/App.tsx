@@ -31,6 +31,7 @@ import ElevenIslandsMegaTourNew from "./pages/ElevenIslandsMegaTourNew";
 import PhangNgaSkywalkNew from "./pages/PhangNgaSkywalkNew";
 import CheoLanLakeNew from "./pages/CheoLanLakeNew";
 import PhiPhi2Days1NightNew from "./pages/PhiPhi2Days1NightNew";
+import SimilanIslandsNew from "./pages/SimilanIslandsNew";
 
 // Динамический компонент для CMS туров
 import DynamicTourPage from "./components/DynamicTourPage";
@@ -108,6 +109,9 @@ function App() {
               
               <Route path="/excursion/cheow-lan-lake" element={<CheoLanLakeNew />} />
               <Route path="/tours/cheow-lan-lake" element={<CheoLanLakeNew />} />
+              
+              <Route path="/excursion/similan-islands" element={<SimilanIslandsNew />} />
+              <Route path="/tours/similan-islands" element={<SimilanIslandsNew />} />
               
               {/* ТЕСТОВЫЕ новые версии на template */}
               <Route path="/tours/cheow-lan-lake-new" element={<CheoLanLakeNew />} />

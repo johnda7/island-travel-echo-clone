@@ -28,6 +28,7 @@ import { fishingSunriseTourData } from './tours/fishing-sunrise';
 import { rachaCoralSunriseTourData } from './tours/racha-coral-sunrise';
 import { rachaCoralRawaiTourData } from './tours/racha-coral-rawai';
 import { phiPhiSunriseTourData } from './tours/phi-phi-sunrise';
+import { fivePearls2DaysTourData } from './tours/five-pearls-2days';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -285,6 +286,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,
     priority: 21,
     data: () => Promise.resolve(phiPhiSunriseTourData)
+  },
+
+  // 22. 5 ЖЕМЧУЖИН АНДАМАНСКОГО МОРЯ 2 ДНЯ 1 НОЧЬ DELUXE (НОВЫЙ!)
+  {
+    id: 'five-pearls-2days',
+    name: '5 Жемчужин Андаманского моря: 2 дня 1 ночь Deluxe',
+    category: 'islands',
+    tags: ['море', 'морские', 'острова', '2-дня', 'ночевка', 'джеймс-бонд', 'краби', 'пхи-пхи', 'огненное-шоу', 'вечеринки', 'comfort+', 'делюкс', 'премиум', 'снорклинг'],
+    isPopular: true,
+    isActive: true,
+    isFeatured: true,
+    priority: 22,
+    data: () => Promise.resolve(fivePearls2DaysTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

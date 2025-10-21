@@ -1,0 +1,1 @@
+export { phangNgaSametTourData } from './static';

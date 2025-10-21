@@ -29,6 +29,7 @@ import { rachaCoralSunriseTourData } from './tours/racha-coral-sunrise';
 import { rachaCoralRawaiTourData } from './tours/racha-coral-rawai';
 import { phiPhiSunriseTourData } from './tours/phi-phi-sunrise';
 import { fivePearls2DaysTourData } from './tours/five-pearls-2days';
+import { phangNgaSametTourData } from './tours/phang-nga-samet';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -299,6 +300,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,
     priority: 22,
     data: () => Promise.resolve(fivePearls2DaysTourData)
+  },
+
+  // 23. УДИВИТЕЛЬНАЯ ПХАНГНГА + SAMET NANGSHE (НОВЫЙ!)
+  {
+    id: 'phang-nga-samet',
+    name: 'Удивительная Пхангнга + Смотровая Samet Nangshe',
+    category: 'adventure',
+    tags: ['пханг-нга', 'природа', 'слоны', 'храмы', 'культура', 'смотровая', 'морепродукты', 'приключения', '1-день', 'семейный'],
+    isPopular: true,
+    isActive: true,
+    isFeatured: true,
+    priority: 23,
+    data: () => Promise.resolve(phangNgaSametTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

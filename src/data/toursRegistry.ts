@@ -24,6 +24,7 @@ import { cheoLanLakeTourData } from './tours/cheow-lan-lake';
 import { similanIslandsTourData } from './tours/similan-islands';
 import { similanIslandsEarlyTourData } from './tours/similan-islands-early';
 import { similanIslandsSpeedboatTourData } from './tours/similan-islands-speedboat';
+import { fishingSunriseTourData } from './tours/fishing-sunrise';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -229,6 +230,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,    // ✅ показываем на главной
     priority: 17,
     data: () => Promise.resolve(similanIslandsSpeedboatTourData)
+  },
+
+  // 18. МОРСКАЯ РЫБАЛКА НА РАССВЕТЕ (НОВЫЙ!)
+  {
+    id: 'fishing-sunrise',
+    name: 'Морская рыбалка на рассвете',
+    category: 'adventure',
+    tags: ['рыбалка', 'море', 'троллинг', 'крабы', 'подводная-охота', 'рассвет', 'comfort+', 'активный отдых', '1 день', 'снорклинг', 'остров-рача'],
+    isPopular: true,
+    isActive: true,
+    isFeatured: true,
+    priority: 18,
+    data: () => Promise.resolve(fishingSunriseTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

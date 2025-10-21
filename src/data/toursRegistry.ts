@@ -25,6 +25,7 @@ import { similanIslandsTourData } from './tours/similan-islands';
 import { similanIslandsEarlyTourData } from './tours/similan-islands-early';
 import { similanIslandsSpeedboatTourData } from './tours/similan-islands-speedboat';
 import { fishingSunriseTourData } from './tours/fishing-sunrise';
+import { rachaCoralSunriseTourData } from './tours/racha-coral-sunrise';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -243,6 +244,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,
     priority: 18,
     data: () => Promise.resolve(fishingSunriseTourData)
+  },
+
+  // 19. РАЧА ЯЙ + КОРАЛЛОВЫЙ ОСТРОВ НА РАССВЕТЕ (НОВЫЙ!)
+  {
+    id: 'racha-coral-sunrise',
+    name: 'Рача Яй + Коралловый остров на рассвете',
+    category: 'islands',
+    tags: ['море', 'морские', 'острова', 'рача-яй', 'коралловый-остров', 'рассвет', 'рыбалка', 'снорклинг', 'comfort+', 'wi-fi', 'пляж', 'каякинг', 'паддлборд', '1 день', 'спидбот'],
+    isPopular: true,
+    isActive: true,
+    isFeatured: true,
+    priority: 19,
+    data: () => Promise.resolve(rachaCoralSunriseTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

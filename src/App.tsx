@@ -35,6 +35,7 @@ import SimilanIslandsNew from "./pages/SimilanIslandsNew";
 import SimilanIslandsEarlyNew from "./pages/SimilanIslandsEarlyNew";
 import SimilanIslandsSpeedboatNew from "./pages/SimilanIslandsSpeedboatNew";
 import FishingSunriseNew from "./pages/FishingSunriseNew";
+import RachaCoralSunriseNew from "./pages/RachaCoralSunriseNew";
 
 // Динамический компонент для CMS туров
 import DynamicTourPage from "./components/DynamicTourPage";
@@ -124,6 +125,9 @@ function App() {
               
               <Route path="/excursion/fishing-sunrise" element={<FishingSunriseNew />} />
               <Route path="/tours/fishing-sunrise" element={<FishingSunriseNew />} />
+              
+              <Route path="/excursion/racha-coral-sunrise" element={<RachaCoralSunriseNew />} />
+              <Route path="/tours/racha-coral-sunrise" element={<RachaCoralSunriseNew />} />
               
               {/* ТЕСТОВЫЕ новые версии на template */}
               <Route path="/tours/cheow-lan-lake-new" element={<CheoLanLakeNew />} />

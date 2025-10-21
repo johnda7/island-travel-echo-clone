@@ -30,6 +30,7 @@ import { rachaCoralRawaiTourData } from './tours/racha-coral-rawai';
 import { phiPhiSunriseTourData } from './tours/phi-phi-sunrise';
 import { fivePearls2DaysTourData } from './tours/five-pearls-2days';
 import { phangNgaSametTourData } from './tours/phang-nga-samet';
+import { krabiSecretsTourData } from './tours/krabi-secrets';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -313,6 +314,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,
     priority: 23,
     data: () => Promise.resolve(phangNgaSametTourData)
+  },
+
+  // 24. ТАЙНЫ КРАБИ: ИЗУМРУДНОЕ ОЗЕРО + ХРАМ ТИГРА (НОВЫЙ!)
+  {
+    id: 'krabi-secrets',
+    name: 'Тайны Краби: Изумрудное озеро, Храм Тигра и Поющие пещеры',
+    category: 'adventure',
+    tags: ['краби', 'природа', 'храмы', 'пещеры', 'термальные-источники', 'озера', 'слоны', 'приключения', '1-день', 'горячие-источники'],
+    isPopular: true,
+    isActive: true,
+    isFeatured: true,
+    priority: 24,
+    data: () => Promise.resolve(krabiSecretsTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

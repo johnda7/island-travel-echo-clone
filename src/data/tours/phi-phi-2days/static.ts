@@ -30,7 +30,6 @@ export const phiPhi2DaysTourData: TourData = {
   duration: "2 дня / 1 ночь",
   groupSize: "до 30 человек",
   rating: 4.8,
-  reviewsCount: 53,
   mainImage: pilehLagoon,
   gallery: [
     mayaBay1,

@@ -43,7 +43,6 @@ export const dostoprimechatelnostiPhuketaTourData: TourData = {
   duration: '1 день (8 часов)',
   groupSize: 'до 30 человек',
   rating: 4.8,
-  reviewsCount: 243,
 
   // Медиа контент (все РЕАЛЬНЫЕ фото из WordPress)
   mainImage: bigBuddhaMain,

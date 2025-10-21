@@ -48,7 +48,6 @@ export const similanIslandsEarlyTourData: TourData = {
   duration: "1 день (04:00-17:00)",
   groupSize: "36-38 человек",
   rating: 4.9,
-  reviewsCount: 423,
   mainImage: img1,
   gallery: [
     img1,   // hero (горизонтальное 612x405)

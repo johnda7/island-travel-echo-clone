@@ -72,7 +72,6 @@ export const krabiSecretsTourData: TourData = {
   duration: '1 день (05:00-17:40)',
   groupSize: 'До 40 человек',
   rating: 5.0,
-  reviewsCount: 247,
   mainImage: hero1,
   gallery: [
     hero1, krabi1, krabi2, krabi3, krabi4, krabi5, krabi6, krabi7, krabi8, krabi9,

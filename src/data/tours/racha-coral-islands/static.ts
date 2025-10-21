@@ -44,7 +44,6 @@ export const rachaCoralIslandsTourData: TourData = {
   duration: '8-9 часов',
   groupSize: 'До 30 человек',
   rating: 4.6,
-  reviewsCount: 156,
   
   highlights: [
     'Два красивейших острова за один день',

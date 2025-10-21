@@ -20,7 +20,6 @@ export const elevenIslandsMegaTourData: TourData = {
   duration: "1 день (12+ часов)",
   groupSize: "до 24-38 человек",
   rating: 4.9,
-  reviewsCount: 127,
   mainImage,
   gallery: [mainImage, jamesBondImage, mayaBayImage, pilehLagoonImage, vikingCaveImage, kohPanyiImage, canoeingImage, phiPhiDonImage],
   description: `Отправляйтесь в грандиозное островное приключение, объединяющее три самых популярных направления Таиланда в одном эпичном дне!

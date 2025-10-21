@@ -44,7 +44,6 @@ export const jamesBondIslandTourData: TourData = {
   duration: '8-9 часов',
   groupSize: 'До 35 человек',
   rating: 4.8,
-  reviewsCount: 234,
   
   highlights: [
     'Знаменитый остров Джеймса Бонда',

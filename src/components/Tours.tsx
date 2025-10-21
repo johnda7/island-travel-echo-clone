@@ -212,17 +212,6 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                     >
                       ({tour.data?.rating || 5.0})
                     </span>
-                    {tour.data?.reviewsCount && (
-                      <span 
-                        className="text-xs"
-                        style={{
-                          color: '#8E8E93',
-                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                        }}
-                      >
-                        ({tour.data.reviewsCount} отзывов)
-                      </span>
-                    )}
                   </div>
                   
                   {/* ✅ ЦЕНТРАЛИЗОВАННЫЕ ТЕГИ ИЗ ДАННЫХ */}

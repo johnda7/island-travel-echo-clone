@@ -35,7 +35,6 @@ export const avatarPlusHangdongTour: TourData = {
   duration: '1 день',
   groupSize: 'до 12 человек',
   rating: 4.7,
-  reviewsCount: 28,
   route: '/excursion/avatar-plus-hangdong',
   mainImage: avatarMain,
   gallery: [

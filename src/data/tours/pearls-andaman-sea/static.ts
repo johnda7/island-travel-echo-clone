@@ -34,7 +34,6 @@ export const pearlsAndamanSeaTourData: TourData = {
   duration: "2 дня / 1 ночь",
   groupSize: "до 25 человек",
   rating: 4.9,
-  reviewsCount: 156,
   route: "/pearls-andaman-sea",
   mainImage: railayMain,
   gallery: [

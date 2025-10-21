@@ -33,7 +33,6 @@ export const phiPhiSunriseTourData: TourData = {
   duration: "1 день (04:00-15:30)",
   groupSize: "До 35 человек",
   rating: 5.0,
-  reviewsCount: 428,
   mainImage: hero1,
   gallery: [
     hero1, img1, img2, img3, img4, img5, img6, img7, img8, img9, img10,

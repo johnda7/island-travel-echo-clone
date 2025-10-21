@@ -219,6 +219,5 @@ export const kaoLakSafariTourData: TourData = {
   // 📊 МЕТАДАННЫЕ
   mainImage: mainPhoto,
   rating: 4.7,
-  reviewsCount: 143,
   isPopular: true
 };

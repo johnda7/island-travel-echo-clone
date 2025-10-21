@@ -18,7 +18,6 @@ export const fishingSunriseTourData: TourData = {
   duration: "1 день (05:30-15:00)",
   groupSize: "до 20 человек",
   rating: 4.9,
-  reviewsCount: 156,
   mainImage: hero1,
   gallery: [
     hero1,

@@ -62,7 +62,6 @@ export const phangNgaSkywalkTourData: TourData = {
   duration: "1 день (06:30-18:00)",
   groupSize: "до 30 человек",
   rating: 4.9,
-  reviewsCount: 187,
   
   highlights: [
     "🌉 Обзорная площадка Samet Nangshe Skywalk Bridge с потрясающими видами",

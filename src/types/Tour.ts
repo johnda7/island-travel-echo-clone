@@ -18,7 +18,6 @@ export interface TourData {
   duration: string;
   groupSize: string;
   rating: number;
-  reviewsCount: number;
 
   // Медиа контент
   mainImage: string;

@@ -23,7 +23,6 @@ export const similanIslandsSpeedboatTourData: TourData = {
   duration: "10 часов",
   groupSize: "до 25 человек",
   rating: 4.9,
-  reviewsCount: 167,
   mainImage: hero1,
   gallery: [
     hero1,

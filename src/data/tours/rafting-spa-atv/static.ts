@@ -205,6 +205,5 @@ export const raftingSpaAtvTourData: TourData = {
   // 📊 МЕТАДАННЫЕ
   mainImage: mainPhoto,
   rating: 4.9,
-  reviewsCount: 156,
   isPopular: true
 };

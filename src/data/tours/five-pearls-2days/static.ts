@@ -38,7 +38,6 @@ export const fivePearls2DaysTourData: TourData = {
   duration: "2 дня 1 ночь",
   groupSize: "24-38 человек (Comfort+)",
   rating: 5.0,
-  reviewsCount: 156,
   mainImage: hero1,
   gallery: [
     hero1, pearls1, pearls2, pearls3, pearls4, pearls5, pearls6,

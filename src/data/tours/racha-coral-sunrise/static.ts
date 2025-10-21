@@ -57,7 +57,6 @@ export const rachaCoralSunriseTourData: TourData = {
   duration: "1 день (04:30-15:30)",
   groupSize: "24-38 человек",
   rating: 4.9,
-  reviewsCount: 312,
   mainImage: hero1,
   gallery: [
     hero1, img1, img2, img3, img4, img5, img6, img7, img8, img9, img10,

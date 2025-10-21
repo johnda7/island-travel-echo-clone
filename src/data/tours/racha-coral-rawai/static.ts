@@ -49,7 +49,6 @@ export const rachaCoralRawaiTourData: TourData = {
   duration: "1 день (08:30-16:00)",
   groupSize: "До 50 человек",
   rating: 4.8,
-  reviewsCount: 287,
   mainImage: hero1,
   gallery: [
     hero1, img1, img2, img3, img4, img5, img6, img7, img8, img9, img10,

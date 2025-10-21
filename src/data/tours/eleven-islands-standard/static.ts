@@ -44,7 +44,6 @@ export const elevenIslandsStandardTourData: TourData = {
   duration: '10-11 часов',
   groupSize: 'До 25 человек',
   rating: 4.5,
-  reviewsCount: 89,
   
   highlights: [
     '11 различных тропических островов',

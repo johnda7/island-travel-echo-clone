@@ -35,7 +35,6 @@ export const phangNgaSametTourData: TourData = {
   duration: "1 день (06:30-17:30)",
   groupSize: "До 40 человек",
   rating: 4.9,
-  reviewsCount: 312,
   mainImage: hero1,
   gallery: [
     hero1, phangnga1, phangnga2, phangnga3, phangnga4, phangnga5,

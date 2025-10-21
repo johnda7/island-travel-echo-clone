@@ -36,7 +36,6 @@ export const raftingSpa1DayTourData: TourData = {
   duration: '1 день (9+ часов)',
   groupSize: 'до 40 человек',
   rating: 4.9,
-  reviewsCount: 156,
   
   // 📸 ИЗОБРАЖЕНИЯ
   mainImage: heroImage,

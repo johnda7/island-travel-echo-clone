@@ -6,7 +6,6 @@ import { Gallery } from "@/components/Gallery";
 import { Tours } from "@/components/Tours";
 import { Contact } from "@/components/Contact";
 import { Advantages } from "@/components/Advantages";
-import { Reviews } from "@/components/Reviews";
 import { FAQ } from "@/components/FAQ";
 import { Helmet } from "react-helmet";
 
@@ -29,7 +28,6 @@ const Index = () => {
       <Advantages />
       <Gallery />
       <Tours />
-      <Reviews />
       <FAQ />
       <Contact />
       <Footer />

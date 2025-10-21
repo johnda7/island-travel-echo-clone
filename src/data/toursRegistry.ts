@@ -17,6 +17,7 @@ import { dostoprimechatelnostiPhuketaTourData } from './tours/dostoprimechatelno
 import { jamesBondIslandTourData } from './tours/james-bond-island';
 import { elevenIslandsMegaTourData } from './tours/eleven-islands-mega';
 import { raftingSpaAtvTourData } from './tours/rafting-spa-atv';
+import { raftingSpa1DayTourData } from './tours/rafting-spa-1day';
 import { kaoLakSafariTourData } from './tours/kao-lak-safari';
 import { rachaCoralIslandsTourData } from './tours/racha-coral-islands';
 import { phangNgaSkywalkTourData } from './tours/phang-nga-skywalk';
@@ -107,6 +108,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: false,   // ❌ не на главной (пока)
     priority: 5,
     data: () => Promise.resolve(raftingSpaAtvTourData)
+  },
+
+  // 25. Рафтинг + SPA (1 день, без ATV)
+  {
+    id: 'rafting-spa-1day',
+    name: 'РАФТИНГ + СЛОНОВЬЕ СПА 1 день',
+    category: 'adventure',
+    tags: ['рафтинг', 'слоны', 'spa', 'приключения', 'джунгли', 'водопад', 'храм', 'обезьяны', 'zip line', '1 день', 'активный', 'семейный', 'природа'],
+    isPopular: true,     // ✅ популярный
+    isActive: true,      // ✅ активен
+    isFeatured: true,    // ✅ на главной
+    priority: 25,
+    data: () => Promise.resolve(raftingSpa1DayTourData)
   },
 
   // 6. Као Лак Сафари (1 день)

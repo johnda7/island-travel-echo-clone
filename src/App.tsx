@@ -25,6 +25,7 @@ import DostoprimechatelnostiPhuketaNew from "./pages/DostoprimechatelnostiPhuket
 import JamesBondIslandTourNew from "./pages/JamesBondIslandTourNew";
 import RachaCoralIslandsTourNew from "./pages/RachaCoralIslandsTourNew";
 import RaftingSpaAtvTourNew from "./pages/RaftingSpaAtvTourNew";
+import { RaftingSpa1DayNew } from "./pages/RaftingSpa1DayNew";
 import KaoLakSafariTourNew from "./pages/KaoLakSafariTourNew";
 import AvatarPlusHangdongNew from "./pages/AvatarPlusHangdongNew";
 import ElevenIslandsMegaTourNew from "./pages/ElevenIslandsMegaTourNew";
@@ -101,6 +102,9 @@ function App() {
               <Route path="/tours/rafting-spa-atv-1-day" element={<RaftingSpaAtvTourNew />} />
               <Route path="/excursion/rafting-spa-atv" element={<RaftingSpaAtvTourNew />} />
               <Route path="/tours/rafting-spa-atv" element={<RaftingSpaAtvTourNew />} />
+              
+              <Route path="/excursion/rafting-spa-1day" element={<RaftingSpa1DayNew />} />
+              <Route path="/tours/rafting-spa-1day" element={<RaftingSpa1DayNew />} />
               
               <Route path="/excursion/kao-lak-safari-1-day" element={<KaoLakSafariTourNew />} />
               <Route path="/tours/kao-lak-safari-1-day" element={<KaoLakSafariTourNew />} />

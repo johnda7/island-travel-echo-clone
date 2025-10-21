@@ -23,6 +23,7 @@ import { phangNgaSkywalkTourData } from './tours/phang-nga-skywalk';
 import { cheoLanLakeTourData } from './tours/cheow-lan-lake';
 import { similanIslandsTourData } from './tours/similan-islands';
 import { similanIslandsEarlyTourData } from './tours/similan-islands-early';
+import { similanIslandsSpeedboatTourData } from './tours/similan-islands-speedboat';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -215,6 +216,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,    // ✅ показываем на главной (уникальное предложение!)
     priority: 16,
     data: () => Promise.resolve(similanIslandsEarlyTourData)
+  },
+
+  // 17. СИМИЛАНСКИЕ ОСТРОВА НА СПИДБОТЕ (НОВЫЙ!)
+  {
+    id: 'similan-islands-speedboat',
+    name: 'Симиланские острова на спидботе',
+    category: 'islands',
+    tags: ['море', 'морские', 'острова', 'симиланы', 'спидбот', 'снорклинг', 'черепахи', 'sail-rock', 'быстро', 'малая группа', '1 день', 'активный отдых'],
+    isPopular: true,     // ✅ показываем в популярных
+    isActive: true,      // ✅ АКТИВИРОВАН
+    isFeatured: true,    // ✅ показываем на главной
+    priority: 17,
+    data: () => Promise.resolve(similanIslandsSpeedboatTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

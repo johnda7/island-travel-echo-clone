@@ -1,7 +1,7 @@
 import type { TourData } from "@/types/Tour";
 // Импортируем изображения как модули - скачанные с оригинального сайта тура
-import mainImage from "@/assets/eleven-islands-mega/james-bond-island.jpg";
-import hongIslandImage from "@/assets/eleven-islands-mega/hong-island.jpg";
+import mainImage from "@/assets/eleven-islands-mega/hero-1.jpg";
+import jamesBondImage from "@/assets/eleven-islands-mega/eleven-1.jpg";
 import mayaBayImage from "@/assets/eleven-islands-mega/maya-bay1.jpg";
 import pilehLagoonImage from "@/assets/eleven-islands-mega/pileh-lagoon.jpg";
 import vikingCaveImage from "@/assets/eleven-islands-mega/viking-cave.jpg";
@@ -22,7 +22,7 @@ export const elevenIslandsMegaTourData: TourData = {
   rating: 4.9,
   reviewsCount: 127,
   mainImage,
-  gallery: [mainImage, hongIslandImage, mayaBayImage, pilehLagoonImage, vikingCaveImage, kohPanyiImage, canoeingImage, phiPhiDonImage],
+  gallery: [mainImage, jamesBondImage, mayaBayImage, pilehLagoonImage, vikingCaveImage, kohPanyiImage, canoeingImage, phiPhiDonImage],
   description: `Отправляйтесь в грандиозное островное приключение, объединяющее три самых популярных направления Таиланда в одном эпичном дне!
 
 Этот уникальный тур познакомит вас с легендарным островом Джеймса Бонда и его знаменитой скалой Као Пинг Кан, живописным островом Хонг с белоснежным пляжем и смотровой площадкой, а также островами Пхи-Пхи, включая культовый пляж Майя из фильма "Пляж" с Леонардо Ди Каприо.

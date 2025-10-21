@@ -22,7 +22,7 @@ import raftingAction from '@/assets/rafting-spa-atv/rafting21-scaled.jpg';
 import elephantPark from '@/assets/rafting-spa-atv/bangkaew-elephant-park11.jpg';
 import atvRide from '@/assets/rafting-spa-atv/atv-1-scaled.jpg';
 import elevenIslands from '@/assets/eleven-islands-mega/maya-bay1.jpg';
-import hongIsland from '@/assets/eleven-islands-mega/hong-island.jpg';
+import hongIsland from '@/assets/eleven-islands-mega/hero-1.jpg';
 import rachaMain from '@/assets/racha-1-DwZ8WjdT.jpg';
 import rachaSnorkeling from '@/assets/racha-3-CZ_Kbhe2.jpg';
 import kaoLakSafari from '@/assets/kao-lak-safari/snimok-jekrana-2025-09-06-v-20.56.21.png';

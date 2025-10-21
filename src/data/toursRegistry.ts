@@ -26,6 +26,7 @@ import { similanIslandsEarlyTourData } from './tours/similan-islands-early';
 import { similanIslandsSpeedboatTourData } from './tours/similan-islands-speedboat';
 import { fishingSunriseTourData } from './tours/fishing-sunrise';
 import { rachaCoralSunriseTourData } from './tours/racha-coral-sunrise';
+import { rachaCoralRawaiTourData } from './tours/racha-coral-rawai';
 import type { TourData } from '@/types/Tour';
 
 export interface TourRegistryItem {
@@ -257,6 +258,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,
     priority: 19,
     data: () => Promise.resolve(rachaCoralSunriseTourData)
+  },
+
+  // 20. РАЧА + КОРАЛЛОВЫЙ ОСТРОВ С ПИРСА RAWAI (НОВЫЙ!)
+  {
+    id: 'racha-coral-rawai',
+    name: 'Рача + Коралловый остров с пирса Rawai',
+    category: 'islands',
+    tags: ['море', 'морские', 'острова', 'рача', 'коралловый-остров', 'rawai', 'снорклинг', 'обед', 'шведский-стол', 'пляж', '1 день', 'стандарт'],
+    isPopular: true,
+    isActive: true,
+    isFeatured: true,
+    priority: 20,
+    data: () => Promise.resolve(rachaCoralRawaiTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

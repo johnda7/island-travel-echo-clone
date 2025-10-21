@@ -1,0 +1,1 @@
+export { rachaCoralRawaiTourData } from './static';

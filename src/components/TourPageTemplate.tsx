@@ -36,40 +36,54 @@ export const TourPageTemplate = ({
   const [sortedGallery, setSortedGallery] = useState<string[]>(tourData.gallery);
 
   // 📱 Telegram Mini App Share функция
-  const handleShare = () => {
+  const handleShare = async () => {
     const fullUrl = `https://phukeo.com${location.pathname}`;
-    const priceText = tourData.priceChild 
-      ? `💰 ${tourData.priceAdult}฿ взрослый / ${tourData.priceChild}฿ ребенок`
-      : `💰 ${tourData.priceAdult}฿`;
-    const shareText = `${tourData.title}\n\n${tourData.description}\n\n${priceText}\n⭐ ${tourData.rating}\n\n`;
+    
+    console.log('🔍 Share button clicked');
+    console.log('📱 Telegram WebApp available:', !!window.Telegram?.WebApp);
     
     // Проверяем Telegram WebApp
-    if (window.Telegram?.WebApp) {
+    if (window.Telegram?.WebApp && window.Telegram.WebApp.initData) {
       try {
-        // Используем openTelegramLink для шаринга
-        const tgShareUrl = `https://t.me/share/url?url=${encodeURIComponent(fullUrl)}&text=${encodeURIComponent(shareText)}`;
+        console.log('✅ Using Telegram share');
+        // ВАЖНО: отправляем ТОЛЬКО URL без текста - Telegram сам загрузит Open Graph!
+        const tgShareUrl = `https://t.me/share/url?url=${encodeURIComponent(fullUrl)}`;
         window.Telegram.WebApp.openTelegramLink(tgShareUrl);
+        return;
       } catch (error) {
-        console.log('Telegram share failed, falling back to Web Share API', error);
-        fallbackShare(shareText, fullUrl);
+        console.log('❌ Telegram share failed:', error);
       }
-    } else {
-      fallbackShare(shareText, fullUrl);
     }
-  };
-
-  const fallbackShare = (text: string, url: string) => {
+    
+    // Fallback: Web Share API
     if (navigator.share) {
-      navigator.share({
-        title: tourData.title,
-        text: text,
-        url: url,
-      }).catch(err => console.log('Share failed:', err));
-    } else {
-      // Копируем ссылку в буфер обмена
-      navigator.clipboard.writeText(url).then(() => {
-        alert('Ссылка скопирована в буфер обмена!');
-      });
+      try {
+        console.log('✅ Using Web Share API');
+        await navigator.share({
+          title: tourData.title,
+          url: fullUrl,
+        });
+        console.log('✅ Share successful');
+        return;
+      } catch (error) {
+        if ((error as Error).name !== 'AbortError') {
+          console.log('❌ Web Share failed:', error);
+        } else {
+          console.log('ℹ️ User cancelled share');
+          return;
+        }
+      }
+    }
+    
+    // Последний fallback: копирование в буфер
+    try {
+      console.log('✅ Using clipboard copy');
+      await navigator.clipboard.writeText(fullUrl);
+      alert('✅ Ссылка скопирована!\n\nВы можете поделиться ей в любом мессенджере:\n' + fullUrl);
+    } catch (error) {
+      console.log('❌ Clipboard failed:', error);
+      // Показываем ссылку в prompt
+      prompt('Скопируйте ссылку:', fullUrl);
     }
   };
 

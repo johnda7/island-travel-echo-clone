@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight, Share2 } from "lucide-react";
 import { UniversalBookingModal } from "@/components/UniversalBookingModal";
 import { ModalPortal } from "@/components/ModalPortal";
 import { MobileBookingBar } from "@/components/MobileBookingBar";
@@ -24,6 +25,7 @@ export const TourPageTemplate = ({
   breadcrumbCategory = "Туры",
   breadcrumbCategoryLink = "/tours"
 }: TourPageTemplateProps) => {
+  const location = useLocation();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [showFullGallery, setShowFullGallery] = useState(false);
@@ -32,6 +34,44 @@ export const TourPageTemplate = ({
   const [mobileGalleryIndex, setMobileGalleryIndex] = useState<number>(0);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [sortedGallery, setSortedGallery] = useState<string[]>(tourData.gallery);
+
+  // 📱 Telegram Mini App Share функция
+  const handleShare = () => {
+    const fullUrl = `https://phukeo.com${location.pathname}`;
+    const priceText = tourData.priceChild 
+      ? `💰 ${tourData.priceAdult}฿ взрослый / ${tourData.priceChild}฿ ребенок`
+      : `💰 ${tourData.priceAdult}฿`;
+    const shareText = `${tourData.title}\n\n${tourData.description}\n\n${priceText}\n⭐ ${tourData.rating}\n\n`;
+    
+    // Проверяем Telegram WebApp
+    if (window.Telegram?.WebApp) {
+      try {
+        // Используем openTelegramLink для шаринга
+        const tgShareUrl = `https://t.me/share/url?url=${encodeURIComponent(fullUrl)}&text=${encodeURIComponent(shareText)}`;
+        window.Telegram.WebApp.openTelegramLink(tgShareUrl);
+      } catch (error) {
+        console.log('Telegram share failed, falling back to Web Share API', error);
+        fallbackShare(shareText, fullUrl);
+      }
+    } else {
+      fallbackShare(shareText, fullUrl);
+    }
+  };
+
+  const fallbackShare = (text: string, url: string) => {
+    if (navigator.share) {
+      navigator.share({
+        title: tourData.title,
+        text: text,
+        url: url,
+      }).catch(err => console.log('Share failed:', err));
+    } else {
+      // Копируем ссылку в буфер обмена
+      navigator.clipboard.writeText(url).then(() => {
+        alert('Ссылка скопирована в буфер обмена!');
+      });
+    }
+  };
 
   // 🎯 Сортировка галереи: сначала горизонтальные, потом вертикальные
   useEffect(() => {
@@ -157,6 +197,18 @@ export const TourPageTemplate = ({
 
   return (
     <div className="min-h-screen" style={{ background: 'rgb(242, 242, 247)' }}>
+      {/* 🎯 SEO Meta Tags для Telegram и соцсетей */}
+      <SEO 
+        title={`${tourData.title} - ПхукетGO`}
+        description={tourData.description}
+        image={tourData.mainImage}
+        url={`https://phukeo.com${location.pathname}`}
+        type="article"
+        price={`${tourData.priceAdult}฿`}
+        rating={tourData.rating.toString()}
+        tourName={tourData.title}
+      />
+      
       <Header />
       
       {/* Breadcrumbs - iOS 26 compact */}
@@ -412,6 +464,22 @@ export const TourPageTemplate = ({
           <div className="flex items-start gap-1.5 mb-3">
             <MapPin className="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0" strokeWidth={2} />
             <p className="text-[15px] text-gray-600 leading-snug">{tourData.subtitle}</p>
+          </div>
+          
+          {/* 📱 Share Button - iOS 26 Style */}
+          <div className="mb-3">
+            <button
+              onClick={handleShare}
+              className="flex items-center gap-2 px-4 py-2 rounded-full transition-all active:scale-95"
+              style={{
+                background: 'rgba(0, 122, 255, 0.1)',
+                border: '1px solid rgba(0, 122, 255, 0.2)',
+                color: '#007AFF'
+              }}
+            >
+              <Share2 className="w-4 h-4" />
+              <span className="text-[14px] font-semibold">Поделиться туром</span>
+            </button>
           </div>
           
           {/* Meta info - iOS 26 horizontal scroll tags */}

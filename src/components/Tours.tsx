@@ -46,6 +46,10 @@ export const Tours = ({ filteredTours }: ToursProps) => {
     if (tour.data) {
       setSelectedTour(tour.data);
       setShowBookingModal(true);
+    } else {
+      // Если данные тура не загружены, показываем предупреждение
+      console.warn(`Tour data not loaded for ${tour.id}`);
+      alert('Данные тура загружаются. Пожалуйста, попробуйте через несколько секунд или перейдите на страницу тура для бронирования.');
     }
   };
 
@@ -175,9 +179,14 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                     </Link>
                     <Button 
                       onClick={() => handleBookingClick(tour)}
-                      className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3"
+                      className={`w-full font-semibold py-3 ${
+                        tour.data 
+                          ? 'bg-green-600 hover:bg-green-700 text-white' 
+                          : 'bg-gray-400 hover:bg-gray-500 text-white cursor-not-allowed'
+                      }`}
+                      disabled={!tour.data}
                     >
-                      🏝️ Забронировать тур
+                      {tour.data ? '🏝️ Забронировать тур' : '⏳ Загрузка данных...'}
                     </Button>
                   </div>
                 </div>

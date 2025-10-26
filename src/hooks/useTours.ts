@@ -76,6 +76,7 @@ export const useTours = () => {
                 };
               } catch (error) {
                 console.warn(`Failed to load static tour ${tour.id}:`, error);
+                // Возвращаем тур без данных, но с пометкой об ошибке
                 return {
                   id: tour.id,
                   name: tour.name,
@@ -83,7 +84,9 @@ export const useTours = () => {
                   tags: tour.tags,
                   isPopular: tour.isPopular,
                   isFeatured: tour.isFeatured,
-                  priority: tour.priority
+                  priority: tour.priority,
+                  data: undefined, // Явно указываем что данных нет
+                  error: error instanceof Error ? error.message : 'Unknown error'
                 };
               }
             })

@@ -119,6 +119,12 @@
     background-attachment: fixed;
   }
 
+  /* Когда открыта модалка бронирования — жёсткая блокировка фонового скролла */
+  body[data-scroll-lock] {
+    overscroll-behavior: contain;
+    touch-action: none;
+  }
+
   /* КРИТИЧНО: Глобальная защита от горизонтального скролла на мобильных */
   #root {
     overflow-x: hidden;

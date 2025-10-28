@@ -4,7 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Clock, Users, MapPin, Star, Calendar, X, ChevronLeft, ChevronRight } from "lucide-react";
-import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import { UniversalBookingModal } from "@/components/UniversalBookingModalWrapper";
 import { ModalPortal } from "@/components/ModalPortal";
 import { MobileBookingBar } from "@/components/MobileBookingBar";
 import { useCMSTours } from "@/hooks/useCMSTours";

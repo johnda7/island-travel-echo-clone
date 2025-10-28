@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Clock, Users, Calendar, Star, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
-import { UniversalBookingModal } from "@/components/UniversalBookingModal";
+import { UniversalBookingModal } from "@/components/UniversalBookingModalWrapper";
 import { ModalPortal } from "@/components/ModalPortal";
 import { useTours, TourWithMeta } from "@/hooks/useTours";
 import { TOURS_REGISTRY } from "@/data/toursRegistry";

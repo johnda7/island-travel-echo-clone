@@ -3,7 +3,7 @@
 ## ✅ ТЕКУЩЕЕ СОСТОЯНИЕ
 
 ### 🎯 **ГЛАВНОЕ:**
-- **11 активных туров** с единым TourPageTemplate
+- **22 активных тура** с единым TourPageTemplate
 - **iOS 26 Design System** с emoji в меню  
 - **Коллекции туров** - beginners, family, active, premium, multiday
 - **Статические туры** имеют приоритет над CMS версиями
@@ -14,7 +14,7 @@ src/data/tours/
 ├── phi-phi-2days/           (index.ts + static.ts)
 ├── pearls-andaman-sea/      (index.ts + static.ts)
 ├── dostoprimechatelnosti-phuketa/ (index.ts + static.ts)
-└── ... (всего 11 туров)
+└── ... (всего 22 тура)
 ```
 
 ### 🎨 **ВАЖНЫЕ ПРАВИЛА:**

@@ -56,7 +56,7 @@ export const phangNgaSkywalkTourData: TourData = {
   ],
   
   priceAdult: 2600,
-  priceChild: 2600,
+  priceChild: 2200,
   currency: "฿",
   
   duration: "1 день (06:30-18:00)",

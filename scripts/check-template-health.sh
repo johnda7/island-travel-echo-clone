@@ -114,7 +114,7 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 if [ $LINES -ge 650 ] && [ $LINES -le 750 ] && [ "$ALL_OK" = true ]; then
   echo "✅ TourPageTemplate ЗДОРОВ!"
   echo ""
-  echo "Все 13 туров должны работать корректно."
+  echo "Все 22 тура должны работать корректно."
   exit 0
 else
   echo "⚠️  TourPageTemplate ТРЕБУЕТ ВНИМАНИЯ!"

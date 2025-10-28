@@ -27,8 +27,8 @@ export const raftingSpa1DayTourData: TourData = {
   route: '/excursion/rafting-spa-1day',
   
   // 💰 ЦЕНООБРАЗОВАНИЕ
-  priceAdult: 1900,
-  priceChild: 1600,
+  priceAdult: 1500,
+  priceChild: 1300,
   priceInfant: 0,
   currency: '฿',
   

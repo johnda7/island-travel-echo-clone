@@ -23,7 +23,7 @@ src/data/tours/
 │   ├── index.ts
 │   └── static.ts
 ├── dostoprimechatelnosti-phuketa/
-└── ... (все 11 туров)
+└── ... (все 22 тура)
 ```
 
 #### 2. **Перенесли все туры** 🔄
@@ -255,7 +255,7 @@ git push origin main
 - 11 × `static.ts` (данные туров)
 
 **✅ ВСЕ СТРАНИЦЫ ТУРОВ МИГРИРОВАНЫ (12.10.2025):**
-- Все 13 туров используют TourPageTemplate.tsx
+- Все 22 тура используют TourPageTemplate.tsx
 - Каждая страница тура: 14 строк (было 700+)
 - Централизованная архитектура
 - См. AI_DOCS/MIGRATION_COMPLETE_2025.md

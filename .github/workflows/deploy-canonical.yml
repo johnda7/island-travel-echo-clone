@@ -18,7 +18,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
@@ -38,6 +38,11 @@ jobs:
           node-version: 20
           cache: 'npm'
 
+      - name: Print Node/npm versions
+        run: |
+          node -v
+          npm -v
+
       - name: Install dependencies
         run: |
           if [ -f package-lock.json ]; then
@@ -52,6 +57,8 @@ jobs:
         env:
           NODE_OPTIONS: --max_old_space_size=4096
         run: |
+          echo "Working directory: $(pwd)"
+          echo "Listing repo root:" && ls -la
           npm run build
           # sanity-checks
           if [ -d dist/.git ]; then echo "ERROR: dist/.git detected"; exit 1; fi

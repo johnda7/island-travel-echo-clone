@@ -90,9 +90,10 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
         // Находим белую карточку внутри оверлея и ограничиваем высоту
         const panel = overlay?.querySelector<HTMLElement>("div.bg-white");
         if (panel) {
-          panel.style.maxHeight = "66vh"; // ещё компактнее
-          panel.style.overflowY = "auto";
-          panel.style.webkitOverflowScrolling = "touch" as any; // iOS плавный скролл
+          // Базовые компактные стили
+          panel.style.maxHeight = "100vh"; // разрешим полную высоту
+          panel.style.overflowY = "visible"; // убираем внутренний скролл
+          (panel.style as any).webkitOverflowScrolling = "touch"; // iOS плавный скролл
           panel.style.margin = "0 auto";
           panel.style.width = "100%";
           panel.style.maxWidth = "520px"; // ограничим ширину на десктопе
@@ -106,11 +107,48 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
           if (headerBlock) {
             headerBlock.style.padding = "8px";
           }
+
+          // 👉 Автомасштаб под высоту вьюпорта: панель должна целиком помещаться без скролла
+          const fitToViewport = () => {
+            const viewportH = window.innerHeight;
+            // учтём паддинги оверлея по 10px сверху/снизу
+            const available = viewportH - 20; 
+            // временно сбросим трансформацию, чтобы измерить реальную высоту
+            panel.style.transform = "";
+            panel.style.transformOrigin = "top center";
+            const fullH = panel.scrollHeight;
+            const scale = Math.min(1, Math.max(0.72, available / fullH)); // не меньше 0.72 для читаемости
+            if (scale < 1) {
+              panel.style.transform = `scale(${scale})`;
+            } else {
+              panel.style.transform = "";
+            }
+          };
+
+          fitToViewport();
+          // Пересчёт при изменении размера/ориентации
+          const ro = new ResizeObserver(() => fitToViewport());
+          ro.observe(panel);
+          const onResize = () => fitToViewport();
+          window.addEventListener('resize', onResize);
+          window.addEventListener('orientationchange', onResize);
+          // Сохранить очистку на элементе для коллбэка возврата
+          (panel as any).__fitCleanup = () => {
+            try { ro.disconnect(); } catch {}
+            window.removeEventListener('resize', onResize);
+            window.removeEventListener('orientationchange', onResize);
+          };
         }
       } catch {}
     });
 
-    return () => cancelAnimationFrame(id);
+    return () => {
+      cancelAnimationFrame(id);
+      try {
+        const panel = wrapRef.current?.querySelector<HTMLElement>("div.fixed.inset-0.z-50 div.bg-white");
+        (panel as any)?.__fitCleanup?.();
+      } catch {}
+    };
   }, [isOpen]);
 
   return (

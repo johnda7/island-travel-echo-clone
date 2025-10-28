@@ -79,14 +79,14 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
           overlay.style.backdropFilter = "blur(6px)";
           (overlay.style as any).WebkitBackdropFilter = "blur(6px)";
           overlay.style.alignItems = "center"; // центрируем (вместо items-end)
-          overlay.style.padding = "12px"; // компактнее
+          overlay.style.padding = "10px"; // ещё компактнее
           overlay.style.overscrollBehaviorY = "contain"; // исключаем "ездение"
         }
 
         // Находим белую карточку внутри оверлея и ограничиваем высоту
         const panel = overlay?.querySelector<HTMLElement>("div.bg-white");
         if (panel) {
-          panel.style.maxHeight = "70vh"; // ещё компактнее
+          panel.style.maxHeight = "66vh"; // ещё компактнее
           panel.style.overflowY = "auto";
           panel.style.webkitOverflowScrolling = "touch" as any; // iOS плавный скролл
           panel.style.margin = "0 auto";
@@ -95,12 +95,12 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
           panel.style.borderRadius = "16px";
 
           // Ужимаем базовый размер шрифта внутри панели на ~6%
-          (panel.style as any).fontSize = "0.94rem";
+          (panel.style as any).fontSize = "0.92rem";
 
           // Компенсируем слишком большие внутренние отступы в первом блоке (шапка)
           const headerBlock = panel.querySelector<HTMLElement>("div[style*='rgb(242, 242, 247)']");
           if (headerBlock) {
-            headerBlock.style.padding = "10px";
+            headerBlock.style.padding = "8px";
           }
         }
       } catch {}

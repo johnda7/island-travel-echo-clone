@@ -125,6 +125,30 @@
     touch-action: none;
   }
 
+  /* Telegram Mini‑App компактность для модалки бронирования */
+  [data-booking-wrapper] .btn-booking {
+    min-height: 44px !important; /* iOS 26 минимальный тап‑таргет */
+    padding: 12px 20px !important;
+    font-size: 16px !important;
+    border-radius: 14px !important;
+  }
+
+  [data-booking-wrapper] input[type="text"],
+  [data-booking-wrapper] input[type="tel"],
+  [data-booking-wrapper] input[type="email"],
+  [data-booking-wrapper] input[type="date"],
+  [data-booking-wrapper] select,
+  [data-booking-wrapper] textarea {
+    min-height: 40px; /* компактнее, но читабельно */
+    padding: 10px 12px;
+    font-size: 15px;
+    border-radius: 12px;
+  }
+
+  [data-booking-wrapper] label {
+    font-size: 13px;
+  }
+
   /* КРИТИЧНО: Глобальная защита от горизонтального скролла на мобильных */
   #root {
     overflow-x: hidden;

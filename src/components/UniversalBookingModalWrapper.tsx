@@ -5,7 +5,11 @@ import type { TourData } from "@/types/Tour";
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  tourData: TourData;
+  /**
+   * Может быть временно null в момент первого открытия,
+   * когда данные ещё подгружаются. В этом случае показываем лоадер.
+   */
+  tourData?: TourData | null;
 };
 
 /**
@@ -116,8 +120,28 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
         <div className="fixed inset-0 z-[49] bg-black/80" aria-hidden="true" />
       )}
 
-      {/* Оригинальный защищённый модуль без изменений логики */}
-      <CoreUniversalBookingModal isOpen={isOpen} onClose={onClose} tourData={tourData} />
+      {/* Если данные уже есть — рендерим оригинальную модалку */}
+      {isOpen && tourData ? (
+        <CoreUniversalBookingModal isOpen={isOpen} onClose={onClose} tourData={tourData} />
+      ) : null}
+
+      {/* Если модалка открыта, но данные ещё грузятся — показываем компактный лоадер */}
+      {isOpen && !tourData ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3">
+          <div className="bg-white w-full max-w-[520px] max-h-[66vh] overflow-hidden rounded-2xl shadow-xl">
+            <div className="p-4 flex items-center gap-3" style={{background: 'rgb(242, 242, 247)'}}>
+              <div className="w-5 h-5 rounded-full border-2 border-green-500 border-t-transparent animate-spin" aria-hidden="true" />
+              <div className="text-sm font-semibold" style={{fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'}}>Загружаем тур…</div>
+            </div>
+            <div className="p-4 text-sm text-gray-600" style={{fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'}}>
+              Пожалуйста, подождите пару секунд. Первый запуск подгружает данные тура.
+            </div>
+            <div className="px-4 pb-4">
+              <button onClick={onClose} className="w-full px-4 py-3 rounded-xl font-semibold text-sm" style={{background: 'rgba(0,0,0,0.06)'}}>Отменить</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

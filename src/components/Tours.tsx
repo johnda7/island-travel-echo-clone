@@ -31,13 +31,15 @@ export const Tours = ({ filteredTours }: ToursProps) => {
   const handleBookingClick = async (tour: TourWithMeta) => {
     console.log('🎯 handleBookingClick вызван для:', tour.id, 'Данные есть:', !!tour.data);
     console.log('📦 Объект тура:', tour);
+    // Открываем модалку сразу, даже если данных тура ещё нет — покажем лоадер
+    setShowBookingModal(true);
+    setSelectedTour(tour.data || null);
     
     // Если данные уже есть, открываем сразу
     if (tour.data) {
       console.log('✅ Данные тура уже загружены, открываем модал');
       console.log('📋 Данные тура:', tour.data);
       setSelectedTour(tour.data);
-      setShowBookingModal(true);
       return;
     }
     
@@ -53,7 +55,6 @@ export const Tours = ({ filteredTours }: ToursProps) => {
         const tourData = await tourRegistry.data();
         console.log('✅ Данные загружены успешно:', tourData);
         setSelectedTour(tourData);
-        setShowBookingModal(true);
       } else {
         console.error('❌ Тур не найден в реестре:', tour.id);
         console.error('📋 Доступные ID в реестре:', TOURS_REGISTRY.map(t => t.id));
@@ -87,6 +88,14 @@ export const Tours = ({ filteredTours }: ToursProps) => {
               className="block"
               style={{
                 animation: `fadeInUp 0.4s ease-out ${index * 0.1}s both`
+              }}
+              onClick={(e) => {
+                // Если клик произошёл внутри зоны действий (кнопок), блокируем переход по ссылке
+                const target = e.target as HTMLElement;
+                if (target.closest('[data-stop-link]')) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
               }}
             >
               <div 
@@ -276,23 +285,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                   {/* ✅ КНОПКИ ДЕЙСТВИЙ */}
                   <div 
                     className="space-y-2"
-                    onClick={(e) => {
-                      // Блокируем переход по Link на захвате и всплытии
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
-                    onClickCapture={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
-                    onMouseDownCapture={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
-                    onTouchStartCapture={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
+                    data-stop-link
                   >
                     <button 
                       className="w-full px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-150"
@@ -306,42 +299,27 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                     >
                       📖 Подробнее о туре
                     </button>
-                    <div 
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                      }}
-                      onTouchStart={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                      }}
-                    >
+                    <div>
                       <button 
                         type="button"
                         onClick={(e) => {
                           console.log('🖱️ CLICK на кнопку бронирования для тура:', tour.name, tour.id);
+                          // Блокируем Link выше и открываем модалку
                           e.preventDefault();
                           e.stopPropagation();
-                          e.nativeEvent.stopImmediatePropagation();
+                          if ('stopImmediatePropagation' in e.nativeEvent) {
+                            (e.nativeEvent as any).stopImmediatePropagation?.();
+                          }
                           handleBookingClick(tour);
-                          return false;
                         }}
                         onTouchEnd={(e) => {
                           console.log('👆 TOUCH END на кнопку бронирования для тура:', tour.name, tour.id);
                           e.preventDefault();
                           e.stopPropagation();
-                          e.nativeEvent.stopImmediatePropagation();
+                          if ('stopImmediatePropagation' in e.nativeEvent) {
+                            (e.nativeEvent as any).stopImmediatePropagation?.();
+                          }
                           handleBookingClick(tour);
-                          return false;
-                        }}
-                        onClickCapture={(e) => {
-                          // Гарантированно останавливаем Link на стадии capture
-                          e.preventDefault();
-                          e.stopPropagation();
-                        }}
-                        onTouchStartCapture={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
                         }}
                         className="w-full px-4 py-3 rounded-xl font-bold text-white text-sm transition-all duration-150 active:scale-95"
                         style={{

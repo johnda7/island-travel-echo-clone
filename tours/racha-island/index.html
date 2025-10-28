@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- PWA Manifest для Telegram Mini App -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#007AFF" />
+    
+    <!-- Telegram Web App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <title>🏖️ Остров Рача - Белоснежные пляжи | ПхукетGO</title>
+    <meta name="description" content="💰 2400฿ взрослый • 2150฿ ребенок | ⭐ 4.8 (312 отзывов) | 🏖️ Белый песок • 🐠 Снорклинг • 🍱 Обед включен" />
+    
+    <!-- OpenGraph расширенные теги для Telegram и соцсетей -->
+    <meta property="og:title" content="🏖️ Остров Рача - Белоснежные пляжи" />
+    <meta property="og:description" content="💰 2400฿ взрослый • 2150฿ ребенок | ⭐ 4.8 (312 отзывов) | 🏖️ Белый песок • 🐠 Снорклинг • 🍱 Обед включен" />
+    <meta property="og:image" content="https://phukeo.com/assets/racha-1-CHe2qVmV.jpg" />
+    <meta property="og:image:secure_url" content="https://phukeo.com/assets/racha-1-CHe2qVmV.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Острова Пхи-Пхи и бухта Майя - лучшие экскурсии на Пхукете" />
+    <meta property="og:url" content="https://phukeo.com/tours/racha-island" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ПхукетGO" />
+    <meta property="og:locale" content="ru_RU" />
+    
+    <!-- Twitter Card теги (Telegram тоже их читает) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="🏖️ Остров Рача - Белоснежные пляжи" />
+    <meta name="twitter:description" content="💰 2400฿ взрослый • 2150฿ ребенок | ⭐ 4.8 (312 отзывов) | 🏖️ Белый песок • 🐠 Снорклинг • 🍱 Обед включен" />
+    <meta name="twitter:image" content="https://phukeo.com/assets/racha-1-CHe2qVmV.jpg" />
+    <meta name="twitter:image:alt" content="Острова Пхи-Пхи и бухта Майя - лучшие экскурсии на Пхукете" />
+    
+    <!-- Telegram-специфичные теги -->
+    <meta property="telegram:channel" content="@phuketgo" />
+    <!-- Telegram Web App + HashRouter support -->
+    <script type="text/javascript">
+      // МГНОВЕННЫЙ редирект на hash (для Telegram Mini App)
+      (function() {
+        var l = window.location;
+        var isCustomDomain = l.hostname !== 'johnda7.github.io';
+        var basePath = isCustomDomain ? '' : '/island-travel-echo-clone';
+        
+        // КРИТИЧНО: Проверяем Telegram Web App
+        var isTelegramApp = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData;
+        
+        // Если нет hash в URL, добавляем его НЕМЕДЛЕННО
+        if (!l.hash || l.hash === '#') {
+          var newUrl = basePath + '/#/';
+          
+          // Для Telegram App используем replace (без истории)
+          if (isTelegramApp || l.search.indexOf('telegram=true') !== -1) {
+            l.replace(newUrl);
+          } else if (isCustomDomain && l.pathname !== '/') {
+            // Custom domain: любой путь кроме / → добавляем hash
+            l.replace(basePath + '/#' + l.pathname + l.search);
+          } else if (!isCustomDomain && l.pathname !== basePath + '/' && l.pathname !== basePath) {
+            // GitHub Pages: любой путь кроме базового → добавляем hash
+            var path = l.pathname.replace(basePath, '') || '/';
+            l.replace(basePath + '/#' + path + l.search);
+          } else {
+            // Просто открыли базовый URL без hash
+            l.replace(newUrl);
+          }
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-BCxZedGd.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BSGRnuVj.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html><!-- build:2025-10-27T23:20:49.368Z -->

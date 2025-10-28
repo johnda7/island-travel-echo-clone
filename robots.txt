@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://johnda7.github.io/island-travel-echo-clone/sitemap.xml
+Sitemap: https://phukeo.com/sitemap.xml

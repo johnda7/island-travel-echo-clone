@@ -47,10 +47,10 @@
 
 **Репозиторий:** `johnda7/island-travel-echo-clone`  
 **Основной URL:** https://phukeo.com  
-**Альтернативный URL:** https://johnda7.github.io/island-travel-echo-clone/ (для проверки)
-**Deploy метод:** GitHub Actions (автоматически на push в main)
-**Workflow файл:** `.github/workflows/deploy.yml`
-**Время деплоя:** 2-3 минуты после push
+**Альтернативный URL:** https://johnda7.github.io/island-travel-echo-clone/ (только как резервная проверка)
+**Deploy метод:** GitHub Actions (канонический `deploy-canonical`: теги `v*` или ручной ref)
+**Workflow файл:** `.github/workflows/deploy-canonical.yml`
+**Время деплоя:** 2-3 минуты после тега/ручного запуска
 **Build команда:** `npm run build` (Vite + postbuild script)  
 **CNAME файл:** `public/CNAME` содержит `phukeo.com`  
 **HTTPS:** ✅ Включён (Enforce HTTPS)  
@@ -135,14 +135,13 @@ www.phukeo.com       →     DNS возвращает 185.199.108.153
 johnda7.github.io/... →    НЕ ИСПОЛЬЗУЕТСЯ (работает, но не надо)
 ```
 
-### Деплой workflow:
+### Деплой workflow (канонический):
 
-1. `git push origin main`
-2. GitHub Actions собирает проект
-3. Создаёт `dist/` папку
-4. Копирует `public/CNAME` в `dist/CNAME`
-5. Деплоит в gh-pages ветку
-6. GitHub Pages отдаёт контент на phukeo.com
+1. Триггер: `git tag vX.Y.Z && git push origin vX.Y.Z` ИЛИ ручной запуск с `ref`
+2. GitHub Actions собирает проект (Vite + postbuild), добавляет `dist/__build.txt`
+3. Копирует `public/CNAME` в `dist/CNAME`, проверяет размеры/артефакты
+4. Публикует в ветку `gh-pages`
+5. Верифицирует прод по `https://phukeo.com/__build.txt`
 
 ### Файл vite.config.ts:
 

@@ -16,7 +16,7 @@
   - A: 185.199.109.153
   - A: 185.199.110.153
   - A: 185.199.111.153
-  - CNAME: www → johnda7.github.io
+  - A (www): 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153
 - ✅ CNAME файл в репо: `public/CNAME` содержит `phukeo.com`
 - ✅ GitHub Pages настроен на custom domain
 - ✅ Support ticket отвечен: DNS propagation занимает до 72 часов (обычно 4-6 часов)
@@ -45,19 +45,19 @@ dig @1.1.1.1 phukeo.com A +short
 # Результат: (пусто) ❌
 ```
 
-### Проверка GitHub Pages:
+### Проверка Production (GitHub Pages с кастомным доменом):
 ```bash
-# CNAME файл:
-curl -s https://johnda7.github.io/island-travel-echo-clone/CNAME
+# CNAME файл на продакшене:
+curl -s https://phukeo.com/CNAME
 # Результат: phukeo.com ✅
 
-# Редирект работает (301 → phukeo.com):
-curl -I https://johnda7.github.io/island-travel-echo-clone/
-# Результат: HTTP/2 301 ✅
+# Домен отвечает:
+curl -I https://phukeo.com/
+# Результат: HTTP/2 200 ✅
 
-# Домен не резолвится:
-curl -I https://phukeo.com
-# Результат: Could not resolve host ❌
+# Проверка доступности главной страницы:
+curl -sSf https://phukeo.com/ >/dev/null && echo "OK" || echo "FAIL"
+# Результат: OK ✅
 ```
 
 ---

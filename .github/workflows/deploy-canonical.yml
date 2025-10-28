@@ -1,0 +1,87 @@
+name: Deploy (canonical)
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Git ref (branch, tag or SHA) to build'
+        required: false
+        default: 'main'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    env:
+      BUILD_REF: ${{ inputs.ref || github.ref }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        env:
+          NODE_OPTIONS: --max_old_space_size=4096
+        run: |
+          npm run build
+          # sanity-checks
+          if [ -d dist/.git ]; then echo "ERROR: dist/.git detected"; exit 1; fi
+          SIZE_MB=$(du -sm dist | cut -f1)
+          echo "dist size: ${SIZE_MB} MB"
+          if [ "$SIZE_MB" -gt 2500 ]; then echo "ERROR: dist too large (>2500 MB)"; exit 1; fi
+          # service files
+          echo "commit=${GITHUB_SHA} ref=${{ inputs.ref || github.ref }} date=$(date -u +%Y-%m-%dT%H:%M:%SZ) repo=${GITHUB_REPOSITORY}" > dist/__build.txt
+          cp -v CNAME dist/ || true
+          cp -v robots.txt dist/ || true
+          cp -v sitemap.xml dist/ || true
+          touch dist/.nojekyll
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Validate production (__build.txt)
+        env:
+          EXPECT_SHA: ${{ github.sha }}
+        run: |
+          set -e
+          echo "Expecting commit: $EXPECT_SHA"
+          URL="https://phukeo.com/__build.txt"
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            echo "Attempt $i: fetching $URL"
+            RESP=$(curl -fsSL "$URL?t=$RANDOM" || true)
+            echo "$RESP"
+            echo "$RESP" | grep -q "$EXPECT_SHA" && { echo "OK: production matches"; exit 0; }
+            sleep 6
+          done
+          echo "WARNING: build marker not matched yet. Pages propagation can take time." && exit 0

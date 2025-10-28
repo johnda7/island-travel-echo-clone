@@ -1,7 +1,7 @@
 # 🏝️ Island Travel Echo Clone - Обновленная система бронирования
 
-**Живой сайт**: https://johnda7.github.io/island-travel-echo-clone/  
-**Lovable проект**: https://lovable.dev/projects/3875c40a-aaeb-47ea-bedc-679166dacdea
+**Живой сайт**: https://phukeo.com  
+**Примечание по деплою**: Публикация ТОЛЬКО через GitHub Actions `deploy-canonical` (теги v* или ручной ref)
 
 ## 🚀 ОБНОВЛЕНИЯ (20.09.2025)
 - ✅ Добавлен динамический маршрут шаблона туров: `/tour/:tourId` (универсальный шаблон TourTemplate)
@@ -22,7 +22,7 @@
 # 📋 Полная инструкция по переносу туров с WordPress на React-сайт
 
 ## 🎯 Цель инструкции
-Создание системы переноса туров с оригинального WordPress сайта https://phuketgo.aaddaa.com на наш React-клон https://johnda7.github.io/island-travel-echo-clone с сохранением всех фотографий, данных и функциональности.
+Создание системы переноса туров с оригинального WordPress сайта https://phuketgo.aaddaa.com на наш коммерческий сайт https://phukeo.com с сохранением всех фотографий, данных и функциональности.
 
 ---
 
@@ -56,9 +56,9 @@
 ## 🚀 Примеры успешных переносов
 
 ### ✅ Готовые туры (100% с WordPress):
-1. **Рача-Корал** - 12 фото, https://johnda7.github.io/island-travel-echo-clone/tours/racha-coral
-2. **4 Жемчужины Андаманского моря** - 8 фото, https://johnda7.github.io/island-travel-echo-clone/tours/four-pearls-andaman
-3. **Пхи-Пхи 2 дня** - 17 фото, https://johnda7.github.io/island-travel-echo-clone/tours/phi-phi-2-days-1-night
+1. **Рача-Корал** - 12 фото, https://phukeo.com/tours/racha-coral
+2. **4 Жемчужины Андаманского моря** - 8 фото, https://phukeo.com/tours/four-pearls-andaman
+3. **Пхи-Пхи 2 дня** - 17 фото, https://phukeo.com/tours/phi-phi-2-days-1-night
 
 **Итого: 37 фото (~35MB) - все с оригинального WordPress сайта**
 
@@ -121,9 +121,16 @@ import JamesBondIsland from './pages/JamesBondIsland'
 
 ### 7. ✅ Тестирование и деплой (10 минут)
 ```bash
-npm run build  # Проверка на ошибки
+npm run build  # Проверка на ошибки локально
 git add -A && git commit -m "✨ Add James Bond Island from WordPress"
-git push       # Автоматический деплой на GitHub Pages
+
+# Продакшн-деплой ТОЛЬКО через GitHub Actions (канонический workflow)
+# Вариант A (рекомендуется): тэг-релиз
+git tag vX.Y.Z -m "Release X.Y.Z"
+git push origin vX.Y.Z
+
+# Вариант B: вручную запустить workflow deploy-canonical с ref=HEAD
+# После деплоя проверьте маркер версии: https://phukeo.com/__build.txt
 ```
 
 **⏰ Общее время: ~80 минут на полный перенос**
@@ -152,7 +159,7 @@ src/
 
 ## 🎨 Дизайн-стандарт
 
-**ЭТАЛОН:** https://johnda7.github.io/island-travel-echo-clone/excursion/phi-phi-2-days-1-night
+**ЭТАЛОН:** https://phukeo.com/excursion/phi-phi-2-days-1-night
 
 **ВСЕ туры должны выглядеть единообразно!**
 
@@ -203,9 +210,11 @@ src/
 - Номер: +66934740231
 - Интеграция во всех турах
 
-### GitHub Pages деплой:
-- Автоматический при push в main
-- URL: https://johnda7.github.io/island-travel-echo-clone/
+### GitHub Pages деплой (канонический):
+- Используйте workflow `.github/workflows/deploy-canonical.yml`
+- Триггеры: тег `v*` или ручной запуск с `ref` (ветка/тег/SHA)
+- Проверка после деплоя: `https://phukeo.com/__build.txt`
+- Прод-URL: https://phukeo.com
 
 ---
 
@@ -273,61 +282,35 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/3875c40a-aaeb-47ea-bedc-679166dacdea) and click on Share -> Publish.
+Production deploy is handled ONLY via GitHub Actions canonical workflow (`.github/workflows/deploy-canonical.yml`). Use one of:
 
-### Step-by-step on Lovable
+- Tag-based release (recommended): create tag `vX.Y.Z` and push it. The workflow builds, runs sanity checks, publishes to `gh-pages`, and verifies `https://phukeo.com/__build.txt`.
+- Manual run: in GitHub → Actions → deploy-canonical → Run workflow with `ref` (branch/tag/SHA). Useful for hotfixes to a specific commit.
 
-1) Open your project: https://lovable.dev/projects/3875c40a-aaeb-47ea-bedc-679166dacdea
-2) Click Share → Publish
-3) Build settings:
-	- Build command: `npm run build`
-	- Output directory: `dist`
-	- Install command (optional): `npm ci` or `npm i`
-4) SPA routing: already handled (we copy `index.html` to `404.html` in `postbuild`). No extra config needed.
-5) Preview/Dev server:
-	- Local dev: `npm run dev` (Vite)
-	- Fixed port used for local preview of built assets: `npm run serve:dist` serves `dist` on `http://localhost:8081`
-6) Enable Auto Publish (optional): Project → Settings → Publish → Auto publish on push to `main`.
+Notes:
+- Do not deploy production from arbitrary branch pushes. Legacy workflows are disabled.
+- Keep HashRouter and SPA fallback as-is. CNAME/robots/sitemap are included automatically.
 
-If the publish fails, open the Build Logs in Lovable and ensure Node/npm versions are compatible. This project uses Vite 5 and Node 18+.
+### Lovable (preview only)
 
-### Deploy via GitHub Pages (no Lovable)
+You can still use Lovable to preview builds, but do NOT use it for production publishing. Production is Actions-only.
 
-1) In GitHub repo: Settings → Pages → Build and deployment → Source: GitHub Actions.
-2) Commit is already configured to trigger `.github/workflows/deploy.yml` on push to `main`.
-3) If you publish as Project Page (i.e. `https://<user>.github.io/<repo>/`), set env `BASE_PATH=/island-travel-echo-clone/` in the build step or in repo secrets. For User/Org Page (`https://<user>.github.io/`), `BASE_PATH` can be omitted.
-4) After first successful deploy, you’ll see the public URL in the Actions logs and in Settings → Pages.
+1) Open the project: https://lovable.dev/projects/3875c40a-aaeb-47ea-bedc-679166dacdea
+2) Build settings: `npm run build` → output `dist/`
+3) Local dev: `npm run dev`, preview built assets: `npm run serve:dist`
+4) Disable any “Auto publish to main” for production; it must not affect prod.
 
-### Quick guide: enable GitHub Pages + permissions (required)
+### GitHub Pages setup and permissions (one-time)
 
-If your Actions deployment fails with errors like "Get Pages site failed" or "Resource not accessible by integration", you must enable Pages and grant write permissions to workflows.
+If Actions deployment fails (e.g., Pages disabled or lacking permissions):
 
 1) Enable Pages source:
-	- Open Settings → Pages: `https://github.com/<user>/island-travel-echo-clone/settings/pages`
-	- In "Build and deployment" set Source = "GitHub Actions"
-	- Click Save
+	- Settings → Pages → Source = GitHub Actions
+2) Grant workflow write permissions:
+	- Settings → Actions → General → Workflow permissions = Read and write permissions
+3) Re-run deploy-canonical in Actions.
 
-2) Grant workflow write permissions (once per repo):
-	- Open Settings → Actions → General: `https://github.com/<user>/island-travel-echo-clone/settings/actions`
-	- Scroll to "Workflow permissions"
-	- Select "Read and write permissions" and Save
-
-3) Re-run deployment:
-	- Go to Actions, open the latest failed run, click "Re-run all jobs"
-	- Or push any commit to main to trigger a new deployment
-
-URL will be: `https://<user>.github.io/island-travel-echo-clone/`
-
-### Alternatives: Vercel / Netlify (optional)
-
-This is a static SPA built with Vite/React. You can deploy on Vercel or Netlify in minutes:
-
-- Vercel
-  - Import repo in Vercel dashboard → Framework: Vite → Build: `npm run build` → Output: `dist/`
-- Netlify
-  - New site from Git → Build command: `npm run build` → Publish directory: `dist`
-
-No extra routing config needed (SPA fallback is provided by copying `index.html` to `404.html` during postbuild).
+Production URL: https://phukeo.com
 
 
 ## Can I connect a custom domain to my Lovable project?

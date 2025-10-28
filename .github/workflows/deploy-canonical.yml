@@ -45,12 +45,15 @@ jobs:
 
       - name: Install dependencies
         run: |
+          npm config set fund false
+          npm config set audit false
+          npm config set legacy-peer-deps true
           if [ -f package-lock.json ]; then
-            echo "Using npm ci (lockfile found)"
-            npm ci
+            echo "Using npm ci (lockfile found) with legacy-peer-deps"
+            npm ci --legacy-peer-deps
           else
-            echo "No package-lock.json found, falling back to npm install"
-            npm install --no-fund --no-audit
+            echo "No package-lock.json found, falling back to npm install (legacy-peer-deps)"
+            npm install --no-fund --no-audit --legacy-peer-deps
           fi
 
       - name: Build

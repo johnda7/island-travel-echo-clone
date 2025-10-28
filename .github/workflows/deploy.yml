@@ -1,4 +1,4 @@
-name: DISABLED: Legacy deploy (use deploy-canonical)
+name: "DISABLED: Legacy deploy (use deploy-canonical)"
 
 on:
   workflow_dispatch:
@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   notice:
+    if: ${{ false }}
     name: This workflow is disabled
     runs-on: ubuntu-latest
     steps:

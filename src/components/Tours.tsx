@@ -274,7 +274,26 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                   </div>
                   
                   {/* ✅ КНОПКИ ДЕЙСТВИЙ */}
-                  <div className="space-y-2" onClick={(e) => e.stopPropagation()}>
+                  <div 
+                    className="space-y-2"
+                    onClick={(e) => {
+                      // Блокируем переход по Link на захвате и всплытии
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                    onClickCapture={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                    onMouseDownCapture={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                    onTouchStartCapture={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                  >
                     <button 
                       className="w-full px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-150"
                       style={{
@@ -298,6 +317,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                       }}
                     >
                       <button 
+                        type="button"
                         onClick={(e) => {
                           console.log('🖱️ CLICK на кнопку бронирования для тура:', tour.name, tour.id);
                           e.preventDefault();
@@ -313,6 +333,15 @@ export const Tours = ({ filteredTours }: ToursProps) => {
                           e.nativeEvent.stopImmediatePropagation();
                           handleBookingClick(tour);
                           return false;
+                        }}
+                        onClickCapture={(e) => {
+                          // Гарантированно останавливаем Link на стадии capture
+                          e.preventDefault();
+                          e.stopPropagation();
+                        }}
+                        onTouchStartCapture={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
                         }}
                         className="w-full px-4 py-3 rounded-xl font-bold text-white text-sm transition-all duration-150 active:scale-95"
                         style={{

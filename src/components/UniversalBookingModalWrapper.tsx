@@ -75,20 +75,33 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
         // Находим оверлей модалки (он имеет классы fixed inset-0 z-50 ...)
         const overlay = root.querySelector<HTMLElement>("div.fixed.inset-0.z-50");
         if (overlay) {
-          overlay.style.background = "rgba(0,0,0,0.85)"; // затемняем фон сильнее
+          overlay.style.background = "rgba(0,0,0,0.88)"; // ещё темнее
           overlay.style.backdropFilter = "blur(6px)";
           (overlay.style as any).WebkitBackdropFilter = "blur(6px)";
           overlay.style.alignItems = "center"; // центрируем (вместо items-end)
-          overlay.style.padding = "16px"; // небольшой внутренний отступ
+          overlay.style.padding = "12px"; // компактнее
           overlay.style.overscrollBehaviorY = "contain"; // исключаем "ездение"
         }
 
         // Находим белую карточку внутри оверлея и ограничиваем высоту
         const panel = overlay?.querySelector<HTMLElement>("div.bg-white");
         if (panel) {
-          panel.style.maxHeight = "80vh"; // было 95vh в исходнике
+          panel.style.maxHeight = "70vh"; // ещё компактнее
           panel.style.overflowY = "auto";
           panel.style.webkitOverflowScrolling = "touch" as any; // iOS плавный скролл
+          panel.style.margin = "0 auto";
+          panel.style.width = "100%";
+          panel.style.maxWidth = "520px"; // ограничим ширину на десктопе
+          panel.style.borderRadius = "16px";
+
+          // Ужимаем базовый размер шрифта внутри панели на ~6%
+          (panel.style as any).fontSize = "0.94rem";
+
+          // Компенсируем слишком большие внутренние отступы в первом блоке (шапка)
+          const headerBlock = panel.querySelector<HTMLElement>("div[style*='rgb(242, 242, 247)']");
+          if (headerBlock) {
+            headerBlock.style.padding = "10px";
+          }
         }
       } catch {}
     });

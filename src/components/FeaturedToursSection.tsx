@@ -42,7 +42,7 @@ export const FeaturedToursSection = () => {
               priceFrom={tour.data?.priceAdult || 0}
               rating={tour.data?.rating || 4.8}
               image={tour.data?.mainImage || tour.data?.gallery?.[0] || ''}
-              detailPath={\`/tours/\${tour.id}\`}
+              detailPath={`/tours/${tour.id}`}
             />
           ))}
         </div>

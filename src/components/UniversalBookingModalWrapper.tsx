@@ -83,7 +83,7 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
           overlay.style.backdropFilter = "blur(6px)";
           (overlay.style as any).WebkitBackdropFilter = "blur(6px)";
           overlay.style.alignItems = "center"; // центрируем (вместо items-end)
-          overlay.style.padding = "10px"; // ещё компактнее
+          overlay.style.padding = "6px"; // ещё компактнее
           overlay.style.overscrollBehaviorY = "contain"; // исключаем "ездение"
         }
 
@@ -112,12 +112,12 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
           const fitToViewport = () => {
             const viewportH = window.innerHeight;
             // учтём паддинги оверлея по 10px сверху/снизу
-            const available = viewportH - 20; 
+            const available = viewportH - 12; 
             // временно сбросим трансформацию, чтобы измерить реальную высоту
             panel.style.transform = "";
             panel.style.transformOrigin = "top center";
             const fullH = panel.scrollHeight;
-            const scale = Math.min(1, Math.max(0.72, available / fullH)); // не меньше 0.72 для читаемости
+            const scale = Math.min(1, Math.max(0.62, available / fullH)); // не меньше 0.62, чтобы точно помещалось
             if (scale < 1) {
               panel.style.transform = `scale(${scale})`;
             } else {

@@ -268,6 +268,13 @@ function TourCard({
               <div>
                 <button
                   type="button"
+                  onPointerDown={(e) => {
+                    // iOS-first tap reliability: react to pointerdown
+                    e.preventDefault();
+                    e.stopPropagation();
+                    (e.nativeEvent as any).stopImmediatePropagation?.();
+                    onBook();
+                  }}
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();

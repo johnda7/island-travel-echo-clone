@@ -26,7 +26,7 @@ export const CircleTourCard = ({
       <div className="relative w-[100px] h-[100px] mb-2">
         <div 
           className="absolute inset-0 rounded-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
-          style={{ backgroundImage: \`url('\${image}')\` }}
+          style={{ backgroundImage: `url('${image}')` }}
         />
         <div 
           className="absolute inset-0 rounded-full transition-opacity duration-300 group-hover:opacity-70"

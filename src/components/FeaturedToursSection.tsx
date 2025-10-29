@@ -54,7 +54,7 @@ export const FeaturedToursSection = () => {
           </div>
         </div>
       </div>
-      <style>{\`.scrollbar-hide::-webkit-scrollbar { display: none; }\`}</style>
+      <style>{".scrollbar-hide::-webkit-scrollbar { display: none; }"}</style>
     </section>
   );
 };

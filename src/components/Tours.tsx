@@ -30,22 +30,17 @@ export const Tours = ({ filteredTours }: ToursProps) => {
 
   const handleBookingClick = async (tour: TourWithMeta) => {
     console.log('🎯 handleBookingClick вызван для:', tour.id, 'Данные есть:', !!tour.data);
-    console.log('📦 Объект тура:', tour);
-    // Открываем модалку сразу, даже если данных тура ещё нет — покажем лоадер
-    setShowBookingModal(true);
-    setSelectedTour(tour.data || null);
     
-    // Если данные уже есть, открываем сразу
+    // ✅ ИСПРАВЛЕНИЕ: Если данные уже есть, открываем СРАЗУ
     if (tour.data) {
       console.log('✅ Данные тура уже загружены, открываем модал');
-      console.log('📋 Данные тура:', tour.data);
       setSelectedTour(tour.data);
+      setShowBookingModal(true);
       return;
     }
     
-    // Если данных нет, принудительно загружаем их из реестра
+    // ✅ ИСПРАВЛЕНИЕ: Сначала загружаем данные, ПОТОМ открываем модалку
     console.log('🔄 Данных нет, загружаем из реестра для:', tour.id);
-    console.log('📚 Весь реестр:', TOURS_REGISTRY);
     try {
       const tourRegistry = TOURS_REGISTRY.find(t => t.id === tour.id);
       console.log('🔍 Поиск в реестре по id:', tour.id, 'Найдено:', !!tourRegistry);
@@ -54,7 +49,10 @@ export const Tours = ({ filteredTours }: ToursProps) => {
         console.log('📦 Найден в реестре, загружаем данные...');
         const tourData = await tourRegistry.data();
         console.log('✅ Данные загружены успешно:', tourData);
+        
+        // ✅ КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: Устанавливаем данные И открываем модалку ВМЕСТЕ
         setSelectedTour(tourData);
+        setShowBookingModal(true);
       } else {
         console.error('❌ Тур не найден в реестре:', tour.id);
         console.error('📋 Доступные ID в реестре:', TOURS_REGISTRY.map(t => t.id));

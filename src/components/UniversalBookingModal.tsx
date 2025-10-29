@@ -207,22 +207,22 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center" style={{ 
+    <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ 
       background: 'rgba(0, 0, 0, 0.5)',
       backdropFilter: 'blur(10px)',
       WebkitBackdropFilter: 'blur(10px)'
     }}>
-      {/* ✅ MOBILE OPTIMIZATION: max-h-[90vh] → max-h-[85vh] для еще большей компактности */}
-      <div className="bg-white rounded-t-2xl sm:rounded-2xl max-w-md w-full max-h-[85vh] overflow-y-auto" style={{ 
+      {/* ✅ MOBILE ULTRA: max-h-[80vh] → max-h-[75vh] (-5%) */}
+      <div className="bg-white rounded-2xl max-w-md w-full max-h-[75vh] overflow-y-auto mx-4" style={{ 
         boxShadow: '0 -10px 40px rgba(0, 0, 0, 0.2), 0 20px 60px rgba(0, 0, 0, 0.3)',
         border: '1px solid rgba(0, 0, 0, 0.1)'
       }}>
-        {/* ✅ MOBILE EXTREME: p-2 → p-1.5 (-25%) */}
-        <div className="p-1.5 sm:p-4" style={{ background: 'rgb(242, 242, 247)' }}>
-          {/* ✅ MOBILE: уменьшили mb-1 → mb-0.5 */}
-          <div className="flex items-center justify-between mb-0.5">
-            {/* ✅ MOBILE EXTREME: text-[15px] → text-[14px] (-10%) */}
-            <h3 className="text-[14px] sm:text-[19px] font-bold text-gray-900 tracking-tight flex items-center gap-2">
+        {/* ✅ MOBILE ULTRA: p-1 остается минимальным */}
+        <div className="p-0.5 sm:p-4" style={{ background: 'rgb(242, 242, 247)' }}>
+          {/* ✅ MOBILE ULTRA: убираем mb полностью */}
+          <div className="flex items-center justify-between">
+            {/* ✅ MOBILE ULTRA: text-[13px] для минимального заголовка */}
+            <h3 className="text-[13px] sm:text-[19px] font-bold text-gray-900 tracking-tight flex items-center gap-2">
               🏝️ Бронирование
             </h3>
             <Button
@@ -235,126 +235,114 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
             </Button>
           </div>
 
-          {/* ✅ MOBILE EXTREME: mb-1 → mb-0.5, p-1.5 → p-1 */}
-          <div className="mb-0.5 p-1 sm:p-3 bg-white rounded-xl" style={{ 
-            border: '1px solid rgba(0, 0, 0, 0.08)',
-            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)'
-          }}>
-            <h4 className="font-semibold text-[11px] sm:text-[15px] text-gray-900">{tourData.title}</h4>
-            <p className="text-[9px] sm:text-[13px] text-gray-600 mt-0.5 line-clamp-1">{tourData.subtitle}</p>
-          </div>
-
-          {/* Калькулятор - ✅ MOBILE EXTREME: mb-1.5 → mb-1, space-y-1 → space-y-0.5 */}
-          <div className="mb-1 space-y-0.5">
-            <h5 className="font-semibold text-[11px] sm:text-[15px] text-gray-900">Количество гостей:</h5>
+          {/* ✅ MOBILE ULTRA: убрали блок с названием тура - экономия места */}
+          
+          {/* Калькулятор - ✅ MOBILE ULTRA: убрали mb, space-y-0.5 → минимум */}
+          <div className="space-y-0.5">
+            <h5 className="font-semibold text-[10px] sm:text-[15px] text-gray-900">Количество гостей:</h5>
             
-            {/* ✅ MOBILE EXTREME: p-1.5 → p-1 */}
-            <div className="flex items-center justify-between p-1 sm:p-3 bg-white rounded-xl" style={{ 
+            {/* ✅ MOBILE ULTRA: p-1 → p-0.5 для минимальных карточек */}
+            <div className="flex items-center justify-between p-0.5 sm:p-3 bg-white rounded-xl" style={{ 
               border: '1px solid rgba(0, 0, 0, 0.08)',
               boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)'
             }}>
               <div className="flex-1 min-w-0">
-                <div className="font-semibold text-[10px] sm:text-[14px] text-gray-900">Взрослые</div>
+                <div className="font-semibold text-[9px] sm:text-[14px] text-gray-900">Взрослые</div>
                 <div className="text-[8px] sm:text-[12px] text-gray-600">{priceCalc.adultPrice.toLocaleString()} {priceCalc.currency}</div>
               </div>
-              <div className="flex items-center gap-1.5 sm:gap-2">
+              <div className="flex items-center gap-1 sm:gap-2">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => adjustGuests('adults', 'minus')}
                   disabled={formData.adults <= 1}
-                  className="h-7 w-7 sm:h-8 sm:w-8 p-0 rounded-full transition-all duration-150"
+                  className="h-6 w-6 sm:h-8 sm:w-8 p-0 rounded-full transition-all duration-150"
                   style={{ 
                     borderColor: '#007AFF',
                     color: formData.adults <= 1 ? '#C7C7CC' : '#007AFF'
                   }}
                 >
-                  <Minus className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <Minus className="w-2.5 h-2.5 sm:w-4 sm:h-4" />
                 </Button>
-                <span className="font-bold w-5 sm:w-8 text-center text-[14px] sm:text-[17px]" style={{ color: '#007AFF' }}>{formData.adults}</span>
+                <span className="font-bold w-4 sm:w-8 text-center text-[13px] sm:text-[17px]" style={{ color: '#007AFF' }}>{formData.adults}</span>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => adjustGuests('adults', 'plus')}
-                  className="h-7 w-7 sm:h-8 sm:w-8 p-0 rounded-full transition-all duration-150"
+                  className="h-6 w-6 sm:h-8 sm:w-8 p-0 rounded-full transition-all duration-150"
                   style={{ 
                     borderColor: '#007AFF',
                     color: '#007AFF'
                   }}
                 >
-                  <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <Plus className="w-2.5 h-2.5 sm:w-4 sm:h-4" />
                 </Button>
               </div>
             </div>
 
-            {/* ✅ MOBILE EXTREME: p-1.5 → p-1 */}
-            <div className="flex items-center justify-between p-1 sm:p-3 bg-white rounded-xl" style={{ 
+            {/* ✅ MOBILE ULTRA: p-1 → p-0.5 */}
+            <div className="flex items-center justify-between p-0.5 sm:p-3 bg-white rounded-xl" style={{ 
               border: '1px solid rgba(0, 0, 0, 0.08)',
               boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)'
             }}>
               <div className="flex-1 min-w-0">
-                <div className="font-semibold text-[10px] sm:text-[14px] text-gray-900">Дети (4-11 лет)</div>
+                <div className="font-semibold text-[9px] sm:text-[14px] text-gray-900">Дети (4-11 лет)</div>
                 <div className="text-[8px] sm:text-[12px] text-gray-600">{priceCalc.childPrice.toLocaleString()} {priceCalc.currency}</div>
               </div>
-              <div className="flex items-center gap-1.5 sm:gap-2">
+              <div className="flex items-center gap-1 sm:gap-2">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => adjustGuests('children', 'minus')}
                   disabled={formData.children <= 0}
-                  className="h-7 w-7 sm:h-8 sm:w-8 p-0 rounded-full transition-all duration-150"
+                  className="h-6 w-6 sm:h-8 sm:w-8 p-0 rounded-full transition-all duration-150"
                   style={{ 
                     borderColor: '#007AFF',
                     color: formData.children <= 0 ? '#C7C7CC' : '#007AFF'
                   }}
                 >
-                  <Minus className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <Minus className="w-2.5 h-2.5 sm:w-4 sm:h-4" />
                 </Button>
-                <span className="font-bold w-6 sm:w-8 text-center text-[15px] sm:text-[17px]" style={{ color: '#007AFF' }}>{formData.children}</span>
+                <span className="font-bold w-5 sm:w-8 text-center text-[13px] sm:text-[17px]" style={{ color: '#007AFF' }}>{formData.children}</span>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => adjustGuests('children', 'plus')}
-                  className="h-7 w-7 sm:h-8 sm:w-8 p-0 rounded-full transition-all duration-150"
+                  className="h-6 w-6 sm:h-8 sm:w-8 p-0 rounded-full transition-all duration-150"
                   style={{ 
                     borderColor: '#007AFF',
                     color: '#007AFF'
                   }}
                 >
-                  <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <Plus className="w-2.5 h-2.5 sm:w-4 sm:h-4" />
                 </Button>
               </div>
             </div>
 
-            {/* Информация о младенцах - ✅ УБРАЛИ py-1 для экономии места */}
-            <div className="text-center">
-              <span className="text-[10px] sm:text-[12px] text-gray-600 px-2 py-0.5 rounded-full" style={{ background: 'rgba(0, 0, 0, 0.05)' }}>
-                👶 Младенцы до 3 лет - бесплатно
-              </span>
-            </div>
+            {/* ✅ MOBILE ULTRA: убрали "Младенцы" блок - экономия места */}
 
-            {/* ✅ MOBILE EXTREME: p-1.5 → p-1 */}
-            <div className="p-1 sm:p-3 rounded-xl" style={{ 
+            {/* ✅ MOBILE ULTRA: p-1 → p-0.5 для минимального итого */}
+            <div className="p-0.5 sm:p-3 rounded-xl" style={{ 
               background: 'rgba(0, 122, 255, 0.08)',
               border: '1px solid rgba(0, 122, 255, 0.15)'
             }}>
               <div className="flex justify-between items-center">
-                <span className="text-[11px] sm:text-[15px] font-semibold text-gray-900">Итого:</span>
-                <span className="text-[14px] sm:text-[20px] font-bold" style={{ color: '#007AFF' }}>
+                <span className="text-[9px] sm:text-[15px] font-semibold text-gray-900">Итого:</span>
+                <span className="text-[12px] sm:text-[20px] font-bold" style={{ color: '#007AFF' }}>
                   {priceCalc.totalPrice.toLocaleString()} {priceCalc.currency}
                 </span>
               </div>
             </div>
           </div>
 
-          {/* ✅ MOBILE EXTREME: space-y-0.5, mb-1 → mb-0.5 */}
-          <div className="space-y-0.5 sm:space-y-2.5 mb-0.5 sm:mb-3">
+          {/* ✅ MOBILE ULTRA: space-y-0.5 минимальные отступы между полями */}
+          <div className="space-y-0.5 sm:space-y-2.5">
             <div>
-              <label className="block text-[11px] sm:text-[14px] font-semibold mb-0 sm:mb-1 text-gray-900">Ваше имя *</label>
-              {/* ✅ MOBILE EXTREME: py-1.5 → py-1, px-2.5 → px-2 */}
+              <label className="block text-[10px] sm:text-[14px] font-semibold mb-0 sm:mb-1 text-gray-900">Ваше имя *</label>
+              {/* ✅ MOBILE ULTRA: py-1 → py-0.5, px-2 → px-1.5 */}
               <input
                 type="text"
-                className="w-full px-2 sm:px-3 py-1 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[12px] sm:text-[15px]"
+                className="w-full px-1.5 sm:px-3 py-0.5 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[11px] sm:text-[15px]"
                 style={{ 
                   borderColor: 'rgba(0, 0, 0, 0.15)'
                 }}
@@ -365,10 +353,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
             </div>
             
             <div>
-              <label className="block text-[11px] sm:text-[14px] font-semibold mb-0 sm:mb-1 text-gray-900">Телефон *</label>
+              <label className="block text-[10px] sm:text-[14px] font-semibold mb-0 sm:mb-1 text-gray-900">Телефон *</label>
               <input
                 type="tel"
-                className="w-full px-2 sm:px-3 py-1 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[12px] sm:text-[15px]"
+                className="w-full px-1.5 sm:px-3 py-0.5 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[11px] sm:text-[15px]"
                 style={{ 
                   borderColor: 'rgba(0, 0, 0, 0.15)'
                 }}
@@ -380,10 +368,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
             </div>
             
             <div>
-              <label className="block text-[11px] sm:text-[14px] font-semibold mb-0 sm:mb-1 text-gray-900">Email</label>
+              <label className="block text-[10px] sm:text-[14px] font-semibold mb-0 sm:mb-1 text-gray-900">Email</label>
               <input
                 type="email"
-                className="w-full px-2 sm:px-3 py-1 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[12px] sm:text-[15px]"
+                className="w-full px-1.5 sm:px-3 py-0.5 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[11px] sm:text-[15px]"
                 style={{ 
                   borderColor: 'rgba(0, 0, 0, 0.15)'
                 }}
@@ -393,10 +381,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
             </div>
             
             <div>
-              <label className="block text-[11px] sm:text-[14px] font-semibold mb-0 sm:mb-1 text-gray-900">Дата поездки *</label>
+              <label className="block text-[10px] sm:text-[14px] font-semibold mb-0 sm:mb-1 text-gray-900">Дата поездки *</label>
               <input
                 type="date"
-                className="w-full px-2 sm:px-3 py-1 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[12px] sm:text-[15px]"
+                className="w-full px-1.5 sm:px-3 py-0.5 sm:py-2.5 border rounded-xl focus:outline-none transition-all duration-150 bg-white text-[11px] sm:text-[15px]"
                 style={{ 
                   borderColor: 'rgba(0, 0, 0, 0.15)'
                 }}
@@ -407,13 +395,13 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
             </div>
           </div>
 
-          {/* ✅ MOBILE: еще меньше! py-1.5 → py-1 для максимальной компактности */}
+          {/* ✅ MOBILE ULTRA: button py-1 → py-0.5, text-[11px] */}
           <Button 
             onClick={handleBooking}
             disabled={!formData.name.trim() || !formData.phone.trim() || !formData.date}
-            className="btn-booking w-full py-1 sm:py-3 text-[12px] sm:text-[15px]"
+            className="btn-booking w-full py-0.5 sm:py-3 text-[11px] sm:text-[15px]"
           >
-            <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+            <Calendar className="w-2.5 h-2.5 sm:w-4 sm:h-4 mr-0.5 sm:mr-2" />
             {(!formData.name.trim() || !formData.phone.trim() || !formData.date) 
               ? 'Заполните все поля' 
               : '🏝️ ЗАБРОНИРОВАТЬ'

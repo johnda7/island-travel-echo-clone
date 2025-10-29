@@ -119,6 +119,17 @@
     background-attachment: fixed;
   }
 
+  /* Telegram Mini App / in-app browser: безопасная зона сверху
+     - Смещаем наш фиксированный хедер ниже системной панели
+     - Добавляем небольшой паддинг к body, чтобы контент не прятался под overlay */
+  body.telegram-app {
+    padding-top: max(env(safe-area-inset-top, 0px), 40px);
+  }
+
+  .telegram-app .liquid-glass-header {
+    top: calc(env(safe-area-inset-top, 0px));
+  }
+
   /* Когда открыта модалка бронирования — жёсткая блокировка фонового скролла */
   body[data-scroll-lock] {
     overscroll-behavior: contain;

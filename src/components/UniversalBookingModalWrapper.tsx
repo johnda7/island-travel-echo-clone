@@ -105,7 +105,27 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
           // Компенсируем слишком большие внутренние отступы в первом блоке (шапка)
           const headerBlock = panel.querySelector<HTMLElement>("div[style*='rgb(242, 242, 247)']");
           if (headerBlock) {
-            headerBlock.style.padding = "8px";
+            headerBlock.style.padding = "6px"; // ещё компактнее шапка
+          }
+
+          // Титульная карточка (сразу после шапки): ужмём отступы и межблочные расстояния
+          const titleCard = headerBlock?.nextElementSibling as HTMLElement | null;
+          if (titleCard) {
+            titleCard.style.padding = "8px 10px";
+            titleCard.style.marginBottom = "8px";
+          }
+
+          // Урежем слишком большие нижние отступы между секциями
+          panel.querySelectorAll<HTMLElement>("[class*='mb-3']").forEach(el => {
+            el.style.marginBottom = "8px";
+          });
+
+          // Кнопка внизу: делаем чуть ниже по высоте, но сохраняем удобство нажатия
+          const bookingBtn = panel.querySelector<HTMLButtonElement>(".btn-booking");
+          if (bookingBtn) {
+            bookingBtn.style.padding = "10px 14px";
+            bookingBtn.style.minHeight = "44px"; // iOS tap target
+            bookingBtn.style.borderRadius = "12px";
           }
 
           // 👉 Автомасштаб под высоту вьюпорта: панель должна целиком помещаться без скролла

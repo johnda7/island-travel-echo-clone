@@ -6,6 +6,7 @@ import { Gallery } from "@/components/Gallery";
 import { Tours } from "@/components/Tours";
 import { Contact } from "@/components/Contact";
 import { FAQ } from "@/components/FAQ";
+import { FeaturedToursSection } from "@/components/FeaturedToursSection";
 import { Helmet } from "react-helmet";
 
 const Index = () => {
@@ -24,6 +25,7 @@ const Index = () => {
       </Helmet>
       <Header />
       <Hero />
+      <FeaturedToursSection />
       <Gallery />
       <Tours />
       <FAQ />

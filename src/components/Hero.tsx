@@ -11,7 +11,7 @@ const getAssetPath = (path: string) => {
 
 export const Hero = () => {
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative h-[35vh] md:h-[40vh] flex items-center justify-center overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
         {/* Main Background Image */}

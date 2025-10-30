@@ -43,7 +43,7 @@ const galleryImages = [
 
 export const Gallery = () => {
   return (
-    <section id="gallery" className="relative py-24 bg-gradient-to-b from-slate-50 via-blue-50/30 to-white overflow-hidden">
+    <section id="gallery" className="relative py-6 bg-gradient-to-b from-slate-50 via-blue-50/30 to-white overflow-hidden">
       {/* iOS 26 Style Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-white"></div>
@@ -51,21 +51,21 @@ export const Gallery = () => {
 
       <div className="relative z-10 container mx-auto px-4">
         {/* Header - iOS 26 Style */}
-        <div className="text-center mb-20 animate-fade-in">
-          <div className="flex items-center justify-center mb-6">
-            <Camera className="w-8 h-8 text-blue-600 mr-3" />
-            <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent" style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}>
+        <div className="text-center mb-4 animate-fade-in">
+          <div className="flex items-center justify-center mb-2">
+            <Camera className="w-5 h-5 text-blue-600 mr-2" />
+            <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent" style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}>
               Галерея
             </h2>
-            <Eye className="w-8 h-8 text-cyan-600 ml-3" />
+            <Eye className="w-5 h-5 text-cyan-600 ml-2" />
           </div>
-          <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto font-light leading-relaxed" style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}>
+          <p className="text-sm md:text-base text-gray-600 max-w-3xl mx-auto font-light leading-relaxed" style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}>
             Взгляните на <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent font-semibold">красоту мест</span>, которые вы можете посетить
           </p>
         </div>
         
         {/* Gallery Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
           {galleryImages.map((image, index) => (
             <Link 
               key={index} 

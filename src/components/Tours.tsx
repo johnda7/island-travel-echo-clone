@@ -78,6 +78,13 @@ export const Tours = ({ filteredTours }: ToursProps) => {
   return (
     <section className="pt-4 pb-4" style={{ background: 'transparent' }}>
       <div className="container mx-auto px-4">
+        {/* Заголовок секции */}
+        <div className="mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900" style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}>
+            Популярные туры
+          </h2>
+        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {toursToShow.map((tour, index) => (
             <TourCard 

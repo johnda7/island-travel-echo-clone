@@ -32,7 +32,7 @@ export const Contact = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-900 to-black text-white relative overflow-hidden">
+    <section className="py-12 bg-gradient-to-b from-gray-900 to-black text-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-0 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl"></div>
@@ -41,18 +41,18 @@ export const Contact = () => {
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent" style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}>
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent" style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}>
             Свяжитесь с нами
           </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto" style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}>
+          <p className="text-base md:text-lg text-gray-300 max-w-2xl mx-auto" style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}>
             Готовы начать свое приключение? Мы поможем спланировать идеальное путешествие
           </p>
         </div>
         
         <div className="max-w-2xl mx-auto">
           {/* Contact Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid sm:grid-cols-2 gap-4">
               <Input
                 type="text"

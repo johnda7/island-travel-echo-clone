@@ -25,11 +25,11 @@ export const CircleTourCard = ({
     >
       <div className="relative w-[100px] h-[100px] mb-2">
         <div 
-          className="absolute inset-0 rounded-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+          className="absolute inset-0 rounded-2xl bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
           style={{ backgroundImage: `url('${image}')` }}
         />
         <div 
-          className="absolute inset-0 rounded-full transition-opacity duration-300 group-hover:opacity-70"
+          className="absolute inset-0 rounded-2xl transition-opacity duration-300 group-hover:opacity-70"
           style={{ background: 'linear-gradient(180deg, rgba(0, 122, 255, 0.15) 0%, rgba(0, 122, 255, 0.35) 100%)' }}
         />
         <div 
@@ -40,7 +40,7 @@ export const CircleTourCard = ({
           <span className="text-white">{rating}</span>
         </div>
         <div 
-          className="absolute inset-0 rounded-full"
+          className="absolute inset-0 rounded-2xl"
           style={{ border: '2px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 4px 16px rgba(0, 122, 255, 0.2)' }}
         />
       </div>

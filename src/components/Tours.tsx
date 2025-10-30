@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Clock, Users, Calendar, Star, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { UniversalBookingModal } from "@/components/UniversalBookingModalWrapper";
@@ -21,6 +21,36 @@ export const Tours = ({ filteredTours }: ToursProps) => {
   // Состояние для модального окна бронирования
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [selectedTour, setSelectedTour] = useState<TourData | null>(null);
+  const [isLoadingTour, setIsLoadingTour] = useState(false);
+  const [preloadedTours, setPreloadedTours] = useState<Map<string, TourData>>(new Map());
+
+  // ✅ РЕШЕНИЕ: Предзагружаем ВСЕ туры при монтировании компонента
+  useEffect(() => {
+    const preloadAllTours = async () => {
+      console.log('🚀 Начинаем предзагрузку всех туров');
+      const loaded = new Map<string, TourData>();
+      
+      for (const tour of toursToShow) {
+        try {
+          const tourRegistry = TOURS_REGISTRY.find(t => t.id === tour.id);
+          if (tourRegistry) {
+            const tourData = await tourRegistry.data();
+            loaded.set(tour.id, tourData);
+            console.log('✅ Предзагружен тур:', tour.id);
+          }
+        } catch (error) {
+          console.error('❌ Ошибка предзагрузки тура:', tour.id, error);
+        }
+      }
+      
+      setPreloadedTours(loaded);
+      console.log('🎉 Все туры предзагружены:', loaded.size);
+    };
+
+    if (toursToShow.length > 0) {
+      preloadAllTours();
+    }
+  }, [toursToShow]);
 
   // Простая функция для определения пути тура
   const getDetailPath = (tour: TourWithMeta) => {
@@ -28,41 +58,68 @@ export const Tours = ({ filteredTours }: ToursProps) => {
     return `/tours/${tour.id}`;
   };
 
-  const handleBookingClick = async (tour: TourWithMeta) => {
-    console.log('🎯 handleBookingClick вызван для:', tour.id, 'Данные есть:', !!tour.data);
+  const handleBookingClick = useCallback(async (tour: TourWithMeta) => {
+    console.log('🎯 handleBookingClick вызван для:', tour.id);
     
-    // ✅ ИСПРАВЛЕНИЕ: Если данные уже есть, открываем СРАЗУ
-    if (tour.data) {
-      console.log('✅ Данные тура уже загружены, открываем модал');
-      setSelectedTour(tour.data);
-      setShowBookingModal(true);
+    // ✅ РЕШЕНИЕ: Проверяем сначала предзагруженные данные
+    const preloadedData = preloadedTours.get(tour.id);
+    if (preloadedData) {
+      console.log('✅ Используем предзагруженные данные');
+      // Используем requestAnimationFrame для гарантированного обновления
+      requestAnimationFrame(() => {
+        setSelectedTour(preloadedData);
+        requestAnimationFrame(() => {
+          setShowBookingModal(true);
+        });
+      });
       return;
     }
     
-    // ✅ ИСПРАВЛЕНИЕ: Сначала загружаем данные, ПОТОМ открываем модалку
-    console.log('🔄 Данных нет, загружаем из реестра для:', tour.id);
+    // Если данные уже есть в tour.data
+    if (tour.data) {
+      console.log('✅ Данные тура уже загружены');
+      requestAnimationFrame(() => {
+        setSelectedTour(tour.data);
+        requestAnimationFrame(() => {
+          setShowBookingModal(true);
+        });
+      });
+      return;
+    }
+    
+    // Крайний случай - загружаем данные прямо сейчас
+    if (isLoadingTour) {
+      console.log('⏳ Уже загружаем тур, пропускаем клик');
+      return;
+    }
+    
+    console.log('🔄 Загружаем данные тура прямо сейчас');
+    setIsLoadingTour(true);
+    
     try {
       const tourRegistry = TOURS_REGISTRY.find(t => t.id === tour.id);
-      console.log('🔍 Поиск в реестре по id:', tour.id, 'Найдено:', !!tourRegistry);
       
       if (tourRegistry) {
-        console.log('📦 Найден в реестре, загружаем данные...');
         const tourData = await tourRegistry.data();
-        console.log('✅ Данные загружены успешно:', tourData);
-        
-        // ✅ КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: Устанавливаем данные И открываем модалку ВМЕСТЕ
-        setSelectedTour(tourData);
-        setShowBookingModal(true);
+        console.log('✅ Данные загружены успешно');
+        requestAnimationFrame(() => {
+          setSelectedTour(tourData);
+          requestAnimationFrame(() => {
+            setShowBookingModal(true);
+            setIsLoadingTour(false);
+          });
+        });
       } else {
         console.error('❌ Тур не найден в реестре:', tour.id);
-        console.error('📋 Доступные ID в реестре:', TOURS_REGISTRY.map(t => t.id));
         alert('⚠️ Не удалось загрузить данные тура. Попробуйте ещё раз.');
+        setIsLoadingTour(false);
       }
     } catch (error) {
       console.error('❌ Ошибка загрузки данных тура:', error);
       alert('⚠️ Не удалось загрузить данные тура. Попробуйте ещё раз.');
+      setIsLoadingTour(false);
     }
-  };
+  }, [preloadedTours, isLoadingTour]);
 
   if (loading) {
     return (
@@ -93,6 +150,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
               index={index}
               getDetailPath={getDetailPath}
               onBook={() => handleBookingClick(tour)}
+              isLoading={isLoadingTour}
             />
           ))}
         </div>
@@ -130,11 +188,13 @@ function TourCard({
   index,
   getDetailPath,
   onBook,
+  isLoading,
 }: {
   tour: TourWithMeta;
   index: number;
   getDetailPath: (t: TourWithMeta) => string;
   onBook: () => void;
+  isLoading: boolean;
 }) {
   return (
     <div
@@ -267,12 +327,22 @@ function TourCard({
             </div>
 
             <div className="space-y-2">
-              <button className="w-full px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-150" style={{ background: 'rgba(0, 122, 255, 0.08)', color: '#007AFF', border: '1px solid rgba(0, 122, 255, 0.2)', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif', pointerEvents: 'none' }}>
+              <Link 
+                to={getDetailPath(tour)}
+                className="w-full px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-150 block text-center hover:bg-opacity-80" 
+                style={{ 
+                  background: 'rgba(0, 122, 255, 0.08)', 
+                  color: '#007AFF', 
+                  border: '1px solid rgba(0, 122, 255, 0.2)', 
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' 
+                }}
+              >
                 📖 Подробнее о туре
-              </button>
+              </Link>
               <div>
                 <button
                   type="button"
+                  disabled={isLoading}
                   onPointerDown={(e) => {
                     // iOS-first tap reliability: react to pointerdown
                     e.preventDefault();
@@ -292,9 +362,9 @@ function TourCard({
                     (e.nativeEvent as any).stopImmediatePropagation?.();
                     onBook();
                   }}
-                  className="w-full px-4 py-3 rounded-xl font-bold text-white text-sm transition-all duration-150 active:scale-95"
+                  className="w-full px-4 py-3 rounded-xl font-bold text-white text-sm transition-all duration-150 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
-                    background: 'linear-gradient(135deg, #34C759 0%, #30D158 100%)',
+                    background: isLoading ? '#8E8E93' : 'linear-gradient(135deg, #34C759 0%, #30D158 100%)',
                     boxShadow: '0 4px 12px rgba(52, 199, 89, 0.3)',
                     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
                     letterSpacing: '-0.01em',
@@ -309,7 +379,7 @@ function TourCard({
                     e.currentTarget.style.boxShadow = '0 4px 12px rgba(52, 199, 89, 0.3)';
                   }}
                 >
-                  🏝️ Забронировать тур
+                  {isLoading ? '⏳ Загрузка...' : '🏝️ Забронировать тур'}
                 </button>
               </div>
             </div>

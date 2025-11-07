@@ -1,19 +1,37 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    
+    <!-- DNS Prefetch и Preconnect для ускорения загрузки -->
+    <link rel="dns-prefetch" href="https://telegram.org" />
+    <link rel="preconnect" href="https://telegram.org" crossorigin />
+    
+    <!-- Preload критичных ресурсов -->
+    <link rel="preload" href="/src/main.tsx" as="script" />
+    <link rel="preload" href="https://telegram.org/js/telegram-web-app.js" as="script" />
     
     <!-- PWA Manifest для Telegram Mini App -->
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#007AFF" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="mobile-web-app-capable" content="yes" />
     
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
-    <title>ПхукетGO - Туры и экскурсии на Пхукете</title>
-    <meta name="description" content="Откройте для себя лучшие туры и островные экскурсии на Пхукете. Посетите острова Пхи-Пхи, бухту Майя и нетронутые пляжи с профессиональными гидами." />
+    <title>ПхукетGO - Туры и экскурсии на Пхукете | Острова Пхи-Пхи, бухта Майя</title>
+    <meta name="description" content="⭐ Лучшие туры на Пхукете 2025! Острова Пхи-Пхи, бухта Майя, Джеймс Бонд от 1900฿. 🏝️ Русскоязычные гиды 🚤 Трансфер включен ✅ Рейтинг 4.9/5" />
+    <meta name="keywords" content="туры пхукет, экскурсии пхукет, пхи пхи майя бей, джеймс бонд пхукет, симиланские острова, рача яй, пхукет гид, экскурсии на пхукете, острова пхукет, пхукет что посмотреть" />
+    <meta name="author" content="ПхукетGO - Туристическое агентство" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="bingbot" content="index, follow" />
+    <meta name="yandex" content="index, follow" />
+    <link rel="canonical" href="https://phukeo.com/" />
     
     <!-- OpenGraph расширенные теги для Telegram и соцсетей -->
     <meta property="og:title" content="ПхукетGO - Туры и экскурсии на Пхукете" />
@@ -69,6 +87,70 @@
           }
         }
       })();
+    </script>
+    
+    <!-- JSON-LD Структурированные данные для Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TravelAgency",
+      "name": "ПхукетGO",
+      "description": "Туристическое агентство на Пхукете - организация туров и экскурсий",
+      "url": "https://phukeo.com",
+      "logo": "https://phukeo.com/assets/phi-phi-maya-bay-LeJ2QhJv.jpg",
+      "image": "https://phukeo.com/assets/phi-phi-maya-bay-LeJ2QhJv.jpg",
+      "telephone": "+66-XX-XXX-XXXX",
+      "priceRange": "฿฿",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "TH",
+        "addressRegion": "Phuket"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "7.8804",
+        "longitude": "98.3923"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "287",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "sameAs": [
+        "https://t.me/phuketgo"
+      ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ПхукетGO",
+      "url": "https://phukeo.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://phukeo.com/#/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Главная",
+          "item": "https://phukeo.com"
+        }
+      ]
+    }
     </script>
   </head>
   <body>

@@ -30,6 +30,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       const user = tg.initDataUnsafe?.user;
       
       if (user) {
+        console.log('🔍 Telegram User Data:', user); // Для отладки
         return {
           telegramUsername: user.username ? `@${user.username}` : '',
           telegramFirstName: user.first_name || '',
@@ -38,13 +39,14 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
         };
       }
     }
+    console.log('⚠️ Telegram WebApp не доступен или нет данных пользователя');
     return { telegramUsername: '', telegramFirstName: '', telegramLastName: '', telegramId: '' };
   };
 
-  const telegramData = getTelegramUserData();
+  const initialTgData = getTelegramUserData();
 
   const [formData, setFormData] = useState<BookingFormData>({
-    name: telegramData.telegramFirstName || "",
+    name: initialTgData.telegramFirstName || "",
     phone: "",
     email: "",
     date: "",
@@ -95,6 +97,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       alert('Пожалуйста, заполните все обязательные поля (Имя, Телефон, Дата)');
       return;
     }
+
+    // ✅ Получаем актуальные Telegram данные прямо перед отправкой
+    const telegramData = getTelegramUserData();
+    console.log('📤 Отправка заказа с Telegram данными:', telegramData);
 
     const message = `🏝️ Новая бронь тура!
 

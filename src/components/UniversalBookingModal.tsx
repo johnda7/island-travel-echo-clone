@@ -113,7 +113,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
 
       // ✅ АВТОМАТИЧЕСКАЯ ОТПРАВКА В TELEGRAM
       // Отправляем заказ напрямую в ваш Telegram через Bot API
-      const BOT_TOKEN = '8445717266:AAHEDA4SJPUL48gpV-Q9qc-V98GSuyPFn08';
+      const BOT_TOKEN = '8475227105:AAE7bu_y4nd8EpIpyQqBZg88F76yFyflWww'; // @phuketgos_bot
       const YOUR_TELEGRAM_ID = '1217592929'; // Ваш личный Telegram ID
       
       const telegramResponse = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {

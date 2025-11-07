@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест Telegram Web App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .info {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 12px 0;
+        }
+        .label {
+            color: #888;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #007AFF;
+        }
+        .success {
+            color: #34C759;
+        }
+        .error {
+            color: #FF3B30;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Тест Telegram Web App</h1>
+    
+    <div class="info">
+        <div class="label">Статус Telegram WebApp</div>
+        <div class="value" id="status">Проверяем...</div>
+    </div>
+
+    <div class="info">
+        <div class="label">Username (@username)</div>
+        <div class="value" id="username">-</div>
+    </div>
+
+    <div class="info">
+        <div class="label">Имя (First Name)</div>
+        <div class="value" id="firstName">-</div>
+    </div>
+
+    <div class="info">
+        <div class="label">Фамилия (Last Name)</div>
+        <div class="value" id="lastName">-</div>
+    </div>
+
+    <div class="info">
+        <div class="label">Telegram ID</div>
+        <div class="value" id="userId">-</div>
+    </div>
+
+    <div class="info">
+        <div class="label">Язык</div>
+        <div class="value" id="language">-</div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const statusEl = document.getElementById('status');
+            const usernameEl = document.getElementById('username');
+            const firstNameEl = document.getElementById('firstName');
+            const lastNameEl = document.getElementById('lastName');
+            const userIdEl = document.getElementById('userId');
+            const languageEl = document.getElementById('language');
+
+            // Проверяем доступность Telegram WebApp
+            if (window.Telegram && window.Telegram.WebApp) {
+                const tg = window.Telegram.WebApp;
+                tg.expand(); // Разворачиваем на весь экран
+
+                statusEl.textContent = '✅ Telegram WebApp доступен';
+                statusEl.classList.add('success');
+
+                // Получаем данные пользователя
+                const user = tg.initDataUnsafe?.user;
+
+                if (user) {
+                    usernameEl.textContent = user.username ? `@${user.username}` : '❌ Не установлен в профиле';
+                    usernameEl.classList.add(user.username ? 'success' : 'error');
+
+                    firstNameEl.textContent = user.first_name || '-';
+                    lastNameEl.textContent = user.last_name || '-';
+                    userIdEl.textContent = user.id || '-';
+                    languageEl.textContent = user.language_code || '-';
+                } else {
+                    statusEl.textContent = '⚠️ Telegram WebApp доступен, но данные пользователя не переданы';
+                    statusEl.classList.remove('success');
+                    statusEl.classList.add('error');
+                }
+            } else {
+                statusEl.textContent = '❌ Telegram WebApp НЕ доступен (откройте через Telegram!)';
+                statusEl.classList.add('error');
+            }
+        });
+    </script>
+</body>
+</html>

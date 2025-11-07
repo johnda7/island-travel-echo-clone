@@ -23,8 +23,28 @@ interface UniversalBookingModalProps {
 }
 
 export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBookingModalProps) => {
+  // 🔍 Автоматическое определение Telegram username при открытии из Telegram
+  const getTelegramUserData = () => {
+    if (typeof window !== 'undefined' && (window as any).Telegram?.WebApp) {
+      const tg = (window as any).Telegram.WebApp;
+      const user = tg.initDataUnsafe?.user;
+      
+      if (user) {
+        return {
+          telegramUsername: user.username ? `@${user.username}` : '',
+          telegramFirstName: user.first_name || '',
+          telegramLastName: user.last_name || '',
+          telegramId: user.id || ''
+        };
+      }
+    }
+    return { telegramUsername: '', telegramFirstName: '', telegramLastName: '', telegramId: '' };
+  };
+
+  const telegramData = getTelegramUserData();
+
   const [formData, setFormData] = useState<BookingFormData>({
-    name: "",
+    name: telegramData.telegramFirstName || "",
     phone: "",
     email: "",
     date: "",
@@ -86,7 +106,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
 👤 Контактная информация:
 • Имя: ${formData.name}
 • Телефон: ${formData.phone}
-• Email: ${formData.email || 'не указан'}
+• Email: ${formData.email || 'не указан'}${telegramData.telegramUsername ? `\n• Telegram: ${telegramData.telegramUsername}` : ''}
 
 ⏰ Заявка подана: ${new Date().toLocaleString('ru-RU')}`;
 

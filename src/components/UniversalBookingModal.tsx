@@ -90,13 +90,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
 
 ⏰ Заявка подана: ${new Date().toLocaleString('ru-RU')}`;
 
-    // Определяем, мобильное ли это устройство
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
     try {
-      // Сохраняем заказ в localStorage для админки
+      // Сохраняем заказ в localStorage для истории
       const newOrder = {
-        id: Date.now(), // Используем timestamp как ID
+        id: Date.now(),
         tourName: tourData.title,
         customerName: formData.name,
         phone: formData.phone,
@@ -110,38 +107,14 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
         status: 'новый' as const
       };
 
-      // Получаем существующие заказы
       const existingOrders = JSON.parse(localStorage.getItem('bookingOrders') || '[]');
-      
-      // Добавляем новый заказ
       existingOrders.push(newOrder);
-      
-      // Сохраняем обратно
       localStorage.setItem('bookingOrders', JSON.stringify(existingOrders));
 
-      // На мобильных устройствах сразу используем прямой редирект в Telegram
-      if (isMobile) {
-        const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-        window.location.href = telegramUrl;
-        alert('✅ Заявка подготовлена! Переходим в Telegram для отправки.');
-        
-        // Очищаем форму и закрываем модал
-        setFormData({
-          name: "",
-          phone: "",
-          email: "",
-          date: "",
-          adults: 1,
-          children: 0,
-          specialRequests: "",
-          hotelName: ""
-        });
-        onClose();
-        return;
-      }
-
-      // На десктопе пробуем Bot API
+      // ✅ АВТОМАТИЧЕСКАЯ ОТПРАВКА В TELEGRAM
+      // Отправляем заказ напрямую в ваш Telegram через Bot API
       const BOT_TOKEN = '8445717266:AAHEDA4SJPUL48gpV-Q9qc-V98GSuyPFn08';
+      const YOUR_TELEGRAM_ID = '1217592929'; // Ваш личный Telegram ID
       
       const telegramResponse = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST',
@@ -149,7 +122,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          chat_id: '@Phuketga',
+          chat_id: YOUR_TELEGRAM_ID,
           text: message,
           parse_mode: 'HTML'
         })
@@ -158,11 +131,11 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       const telegramResult = await telegramResponse.json();
       
       if (telegramResult.ok) {
-        alert('✅ Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
+        alert('✅ Заявка успешно отправлена!\n\nМы получили ваш заказ и свяжемся с вами в ближайшее время.');
         console.log('✅ Сообщение отправлено в Telegram');
       } else {
         console.error('❌ Ошибка Telegram API:', telegramResult.description);
-        // Fallback - открываем Telegram с готовым сообщением (мобильно-совместимый метод)
+        // Fallback - открываем Telegram как запасной вариант
         const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
         window.location.href = telegramUrl;
         alert('⚠️ Заявка подготовлена! Переходим в Telegram для отправки.');
@@ -183,8 +156,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       
     } catch (error) {
       console.error('❌ Ошибка при отправке:', error);
-      
-      // Fallback - открываем Telegram с готовым сообщением (мобильно-совместимый метод)
+      // Fallback - открываем Telegram как запасной вариант
       const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
       window.location.href = telegramUrl;
       alert('⚠️ Заявка подготовлена! Переходим в Telegram для отправки.');

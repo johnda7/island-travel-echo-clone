@@ -326,6 +326,34 @@ bot.launch().then(() => {
   console.log('   /stats - посмотреть статистику');
 });
 
+// 🏥 Health check сервер для Koyeb
+const http = require('http');
+const healthServer = http.createServer((req, res) => {
+  if (req.url === '/health' || req.url === '/') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ 
+      status: 'ok', 
+      bot: 'running',
+      uptime: process.uptime(),
+      timestamp: new Date().toISOString()
+    }));
+  } else {
+    res.writeHead(404);
+    res.end('Not Found');
+  }
+});
+
+const PORT = process.env.PORT || 8000;
+healthServer.listen(PORT, () => {
+  console.log(`🏥 Health check server running on port ${PORT}`);
+});
+
 // Graceful shutdown
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
+process.once('SIGINT', () => {
+  healthServer.close();
+  bot.stop('SIGINT');
+});
+process.once('SIGTERM', () => {
+  healthServer.close();
+  bot.stop('SIGTERM');
+});

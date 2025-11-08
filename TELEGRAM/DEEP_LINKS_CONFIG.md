@@ -19,7 +19,8 @@ https://t.me/phuketgos_bot?start=<tour_id>
 | 6 | `kaolak` | Као Лак Сафари | `t.me/phuketgos_bot?start=kaolak` |
 | 7 | `11islands` | 11 островов мега-тур | `t.me/phuketgos_bot?start=11islands` |
 | 8 | `jamesbond` | Джеймс Бонд + Пханг Нга | `t.me/phuketgos_bot?start=jamesbond` |
-| 9 | `avatar` | Озеро Чео Лан (Аватар) | `t.me/phuketgos_bot?start=avatar` |
+| 9 | `avatar` / `cheolan` | Озеро Чео Лан (Аватар) | `t.me/phuketgos_bot?start=avatar` |
+| 9.5 | `avatarplus` / `hangdong` | Озеро Чео Лан + Хангдонг | `t.me/phuketgos_bot?start=avatarplus` |
 | 10 | `racha` | Рача + Корал острова | `t.me/phuketgos_bot?start=racha` |
 | 11 | `skywalk` | Пханг Нга Скайвок | `t.me/phuketgos_bot?start=skywalk` |
 | 12 | `cheolan` | Озеро Чео Лан | `t.me/phuketgos_bot?start=cheolan` |
@@ -52,4 +53,4 @@ https://t.me/phuketgos_bot?start=<tour_id>
 ---
 
 **Создано:** 9 ноября 2025  
-**Статус:** В разработке (1/22 реализовано)
+**Статус:** ✅ ГОТОВО! 22/22 реализовано

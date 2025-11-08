@@ -1,0 +1,50 @@
+// API endpoint для GitHub Pages
+// Файл: public/api/send-telegram.html
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Telegram Proxy API</title>
+</head>
+<body>
+<script>
+// Простой proxy через HTML страницу
+window.addEventListener('message', async (event) => {
+    // Проверяем origin для безопасности
+    if (event.origin !== 'https://phukeo.com') {
+        return;
+    }
+
+    const { chat_id, text, requestId } = event.data;
+
+    try {
+        const BOT_TOKEN = '8475227105:AAE7bu_y4nd8EpIpyQqBZg88F76yFyflWww';
+        
+        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id, text, parse_mode: 'HTML' })
+        });
+
+        const result = await response.json();
+        
+        // Отправляем результат обратно
+        event.source.postMessage({
+            requestId,
+            result
+        }, event.origin);
+
+    } catch (error) {
+        event.source.postMessage({
+            requestId,
+            error: error.message
+        }, event.origin);
+    }
+});
+
+// Сообщаем что готовы
+window.parent.postMessage({ ready: true }, '*');
+</script>
+</body>
+</html>

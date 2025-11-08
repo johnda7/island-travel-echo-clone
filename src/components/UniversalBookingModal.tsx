@@ -137,34 +137,62 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       existingOrders.push(newOrder);
       localStorage.setItem('bookingOrders', JSON.stringify(existingOrders));
 
-      // ✅ АВТОМАТИЧЕСКАЯ ОТПРАВКА В TELEGRAM
-      // Отправляем заказ напрямую в ваш Telegram через Bot API
-      const BOT_TOKEN = '8475227105:AAE7bu_y4nd8EpIpyQqBZg88F76yFyflWww'; // @phuketgos_bot
-      const YOUR_TELEGRAM_ID = '1217592929'; // Ваш личный Telegram ID
+      // ✅ АВТОМАТИЧЕСКАЯ ОТПРАВКА В TELEGRAM через iframe proxy
+      const YOUR_TELEGRAM_ID = '1217592929';
       
-      const telegramResponse = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          chat_id: YOUR_TELEGRAM_ID,
-          text: message,
-          parse_mode: 'HTML'
-        })
-      });
-      
-      const telegramResult = await telegramResponse.json();
-      
-      if (telegramResult.ok) {
+      // Создаём невидимый iframe с нашим proxy
+      const sendToTelegram = (): Promise<any> => {
+        return new Promise((resolve, reject) => {
+          const iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.src = '/api/send-telegram.html';
+          document.body.appendChild(iframe);
+
+          const requestId = Date.now().toString();
+          let timeoutId: NodeJS.Timeout;
+
+          const messageHandler = (event: MessageEvent) => {
+            if (event.data.ready) {
+              // Proxy готов, отправляем запрос
+              iframe.contentWindow?.postMessage({
+                chat_id: YOUR_TELEGRAM_ID,
+                text: message,
+                requestId
+              }, '*');
+
+              // Таймаут 10 секунд
+              timeoutId = setTimeout(() => {
+                window.removeEventListener('message', messageHandler);
+                document.body.removeChild(iframe);
+                reject(new Error('Timeout'));
+              }, 10000);
+            } else if (event.data.requestId === requestId) {
+              clearTimeout(timeoutId);
+              window.removeEventListener('message', messageHandler);
+              document.body.removeChild(iframe);
+
+              if (event.data.result?.ok) {
+                resolve(event.data.result);
+              } else {
+                reject(new Error(event.data.error || 'Failed'));
+              }
+            }
+          };
+
+          window.addEventListener('message', messageHandler);
+        });
+      };
+
+      try {
+        const result = await sendToTelegram();
         alert('✅ Заявка успешно отправлена!\n\nМы получили ваш заказ и свяжемся с вами в ближайшее время.');
-        console.log('✅ Сообщение отправлено в Telegram');
-      } else {
-        console.error('❌ Ошибка Telegram API:', telegramResult.description);
+        console.log('✅ Сообщение отправлено в Telegram:', result);
+      } catch (error) {
+        console.error('❌ Ошибка отправки через proxy:', error);
         // Fallback - открываем Telegram как запасной вариант
         const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
         window.location.href = telegramUrl;
-        alert('⚠️ Заявка подготовлена! Переходим в Telegram для отправки.');
+        return; // Не закрываем модал, т.к. переходим в Telegram
       }
       
       // Очищаем форму и закрываем модал
@@ -179,26 +207,9 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
         hotelName: ""
       });
       onClose();
-      
     } catch (error) {
-      console.error('❌ Ошибка при отправке:', error);
-      // Fallback - открываем Telegram как запасной вариант
-      const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-      window.location.href = telegramUrl;
-      alert('⚠️ Заявка подготовлена! Переходим в Telegram для отправки.');
-      
-      // Очищаем форму и закрываем модал даже при ошибке
-      setFormData({
-        name: "",
-        phone: "",
-        email: "",
-        date: "",
-        adults: 1,
-        children: 0,
-        specialRequests: "",
-        hotelName: ""
-      });
-      onClose();
+      console.error('❌ Критическая ошибка:', error);
+      alert('❌ Произошла ошибка. Попробуйте ещё раз или свяжитесь с нами напрямую.');
     }
   };
 

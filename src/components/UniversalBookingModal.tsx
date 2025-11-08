@@ -56,6 +56,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
     hotelName: ""
   });
 
+  // ✅ STATE для показа сообщения ВНУТРИ модалки (как было раньше)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [successMessageText, setSuccessMessageText] = useState('');
+
   // Универсальный калькулятор цен
   const calculatePrice = (): PriceCalculation => {
     const adultPrice = tourData.priceAdult || 0;
@@ -93,8 +97,24 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
   };
 
   const handleBooking = async () => {
+    // ✅ ВАЛИДАЦИЯ ПОЛЕЙ
     if (!formData.name.trim() || !formData.phone.trim() || !formData.date) {
       alert('Пожалуйста, заполните все обязательные поля (Имя, Телефон, Дата)');
+      return;
+    }
+
+    // ✅ ВАЛИДАЦИЯ ИМЕНИ (минимум 2 символа, только буквы)
+    if (formData.name.trim().length < 2) {
+      alert('❌ Имя должно содержать минимум 2 символа');
+      return;
+    }
+
+    // ✅ ВАЛИДАЦИЯ ТЕЛЕФОНА (международный формат)
+    const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,5}[-\s\.]?[0-9]{1,5}$/;
+    const cleanPhone = formData.phone.replace(/\s/g, ''); // Убираем пробелы для проверки
+    
+    if (!phoneRegex.test(cleanPhone) || cleanPhone.length < 10) {
+      alert('❌ Неправильный формат телефона\n\nПримеры правильных форматов:\n• +7 999 123 4567\n• +66 81 234 5678\n• 8 999 123 4567\n\nМинимум 10 цифр');
       return;
     }
 
@@ -185,14 +205,30 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
 
       try {
         const result = await sendToTelegram();
-        alert('✅ Заявка успешно отправлена!\n\nМы получили ваш заказ и свяжемся с вами в ближайшее время.');
+        
+        // ✅ УСПЕШНО ОТПРАВЛЕНО - показываем сообщение ВНУТРИ модалки и редиректим
+        setSuccessMessageText('✅ Заявка принята! Сейчас откроем Telegram для завершения бронирования...');
+        setShowSuccessMessage(true);
         console.log('✅ Сообщение отправлено в Telegram:', result);
+        
+        // ✅ РЕДИРЕКТ В TELEGRAM с готовым сообщением (как было раньше - 3 секунды)
+        setTimeout(() => {
+          const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
+          window.location.href = telegramUrl;
+        }, 3000); // 3 секунды как было раньше
+        
+        return; // Не закрываем модал, т.к. переходим в Telegram
       } catch (error) {
         console.error('❌ Ошибка отправки через proxy:', error);
+        
         // Fallback - открываем Telegram как запасной вариант
-        const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-        window.location.href = telegramUrl;
-        return; // Не закрываем модал, т.к. переходим в Telegram
+        setSuccessMessageText('✅ Заявка готова! Сейчас откроем Telegram для отправки...');
+        setShowSuccessMessage(true);
+        
+        setTimeout(() => {
+          const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
+          window.location.href = telegramUrl;
+        }, 3000);
       }
       
       // Очищаем форму и закрываем модал
@@ -418,6 +454,39 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
           </Button>
         </div>
       </div>
+
+      {/* ✅ СООБЩЕНИЕ ОБ УСПЕХЕ (как было раньше) */}
+      {showSuccessMessage && (
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 pointer-events-none"
+          style={{
+            background: 'rgba(0, 0, 0, 0.7)',
+            backdropFilter: 'blur(10px)',
+            animation: 'fadeIn 0.2s ease-out'
+          }}
+        >
+          <div 
+            className="bg-white rounded-2xl p-6 max-w-sm w-full text-center pointer-events-auto"
+            style={{
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
+              animation: 'slideDown 0.3s ease-out'
+            }}
+          >
+            <div className="text-4xl mb-4">
+              {successMessageText.includes('✅') ? '✅' : 
+               successMessageText.includes('📱') ? '📱' : '⚠️'}
+            </div>
+            <p className="text-base sm:text-lg font-semibold text-gray-900">
+              {successMessageText.replace(/✅|⚠️|📱/g, '').trim()}
+            </p>
+            {successMessageText.includes('Telegram') && (
+              <div className="mt-4">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto" style={{ borderColor: '#007AFF' }}></div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

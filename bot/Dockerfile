@@ -4,14 +4,14 @@ FROM node:20-alpine
 # Рабочая директория
 WORKDIR /app
 
-# Копируем package.json и package-lock.json
-COPY package*.json ./
+# Копируем package.json из папки bot/
+COPY bot/package*.json ./
 
 # Устанавливаем зависимости
 RUN npm install --production
 
-# Копируем весь код
-COPY . .
+# Копируем код бота
+COPY bot/ ./
 
 # Порт (если понадобится для health check)
 EXPOSE 3000

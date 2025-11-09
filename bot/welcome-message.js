@@ -1050,6 +1050,8 @@ Object.keys(tours).forEach(tourId => {
       );
     }
   });
+}); // ← ЗАКРЫВАЕМ forEach для tour cards!
+
 // 📋 СИСТЕМА БРОНИРОВАНИЯ (НОВАЯ)
 const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID || '1217592929';
 
@@ -1231,8 +1233,10 @@ bot.action('adults_5plus', async (ctx) => {
 // Кнопки для выбора количества детей
 for (let i = 0; i <= 3; i++) {
   bot.action(`children_${i}`, async (ctx) => {
+    console.log(`🔔 Callback children_${i} received from user ${ctx.from.id}`);
     await ctx.answerCbQuery();
     const userId = ctx.from.id;
+    console.log(`📊 Session exists: ${!!sessions[userId]}, step: ${sessions[userId]?.step}`);
     if (!sessions[userId]) return;
     
     sessions[userId].children = i;

@@ -1231,27 +1231,59 @@ bot.action('adults_5plus', async (ctx) => {
 });
 
 // Кнопки для выбора количества детей
-for (let i = 0; i <= 3; i++) {
-  bot.action(`children_${i}`, async (ctx) => {
-    await ctx.answerCbQuery();
-    const userId = ctx.from.id;
-    if (!sessions[userId]) return;
-    
-    sessions[userId].children = i;
-    sessions[userId].step = 'waiting_contact';
-    
-    const childrenText = i === 0 ? 'без детей' : `${i} ${i === 1 ? 'ребёнок' : 'детей'}`;
-    
-    await ctx.reply(
-      `✅ ${childrenText}\n\n` +
-      `📱 Шаг 5/5: Как с вами связаться?\n\n` +
-      `Отправьте ваш телефон или Telegram username:`,
-      Markup.inlineKeyboard([
-        [Markup.button.contactRequest('📞 Поделиться контактом')]
-      ])
-    );
-  });
-}
+bot.action('children_0', async (ctx) => {
+  await ctx.answerCbQuery();
+  const userId = ctx.from.id;
+  if (!sessions[userId]) return;
+  
+  sessions[userId].children = 0;
+  sessions[userId].step = 'waiting_contact';
+  
+  await ctx.reply(
+    `✅ без детей\n\n` +
+    `📱 Шаг 5/5: Как с вами связаться?\n\n` +
+    `Отправьте ваш телефон или Telegram username:`,
+    Markup.inlineKeyboard([
+      [Markup.button.contactRequest('📞 Поделиться контактом')]
+    ])
+  );
+});
+
+bot.action('children_1', async (ctx) => {
+  await ctx.answerCbQuery();
+  const userId = ctx.from.id;
+  if (!sessions[userId]) return;
+  
+  sessions[userId].children = 1;
+  sessions[userId].step = 'waiting_contact';
+  
+  await ctx.reply(
+    `✅ 1 ребёнок\n\n` +
+    `📱 Шаг 5/5: Как с вами связаться?\n\n` +
+    `Отправьте ваш телефон или Telegram username:`,
+    Markup.inlineKeyboard([
+      [Markup.button.contactRequest('📞 Поделиться контактом')]
+    ])
+  );
+});
+
+bot.action('children_2', async (ctx) => {
+  await ctx.answerCbQuery();
+  const userId = ctx.from.id;
+  if (!sessions[userId]) return;
+  
+  sessions[userId].children = 2;
+  sessions[userId].step = 'waiting_contact';
+  
+  await ctx.reply(
+    `✅ 2 детей\n\n` +
+    `📱 Шаг 5/5: Как с вами связаться?\n\n` +
+    `Отправьте ваш телефон или Telegram username:`,
+    Markup.inlineKeyboard([
+      [Markup.button.contactRequest('📞 Поделиться контактом')]
+    ])
+  );
+});
 
 bot.action('children_3plus', async (ctx) => {
   await ctx.answerCbQuery();
@@ -1405,8 +1437,9 @@ const PORT = process.env.PORT || 8000;
 const WEBHOOK_DOMAIN = process.env.WEBHOOK_DOMAIN || 'small-robinia-phukeo-8b5e1e16.koyeb.app';
 const WEBHOOK_PATH = '/telegram-webhook';
 
-// Middleware для парсинга JSON
+// ⚠️ КРИТИЧЕСКИ ВАЖНО: Middleware для парсинга JSON (БЕЗ НЕГО КНОПКИ НЕ РАБОТАЮТ!)
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // 🏥 Health check endpoints
 app.get('/', (req, res) => {

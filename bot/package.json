@@ -1,14 +1,16 @@
 {
   "name": "bot",
-  "version": "1.0.0",
-  "description": "## 📋 **Быстрый старт (5 минут)**",
-  "main": "welcome-message.js",
+  "version": "2.0.0",
+  "description": "Smart AI Booking Bot with GPT integration",
+  "main": "smart-ai-bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node welcome-message.js"
+    "start": "node welcome-message.js",
+    "start:ai": "node smart-ai-bot.js",
+    "test:ai": "node test-ai-bot.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["telegram", "bot", "ai", "gpt", "booking"],
+  "author": "Phuket Tours",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^17.2.3",

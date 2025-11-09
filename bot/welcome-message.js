@@ -3,8 +3,12 @@
 
 const { Telegraf, Markup } = require('telegraf');
 require('dotenv').config();
+const { tours, categories } = require('./tours-data');
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
+
+// 💾 ХРАНИЛИЩЕ СЕССИЙ (для диалога бронирования)
+const sessions = {};
 
 // 📊 АНАЛИТИКА ГРУППЫ
 const groupStats = {
@@ -315,6 +319,36 @@ bot.start(async (ctx) => {
         reply_markup: {
           inline_keyboard: [
             [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/cheow-lan-lake' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 9️⃣.5️⃣ ОЗЕРО ЧЕО ЛАН + ХАНГДОНГ (АВАТАР ПЛЮС)
+  if (startParam === 'avatarplus' || startParam === 'hangdong') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/avatar-hangdong.jpg',
+      {
+        caption: 
+          `🏞️ Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Озеро Чео Лан + Хангдонг\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Озеро Чео Лан (Аватар)\n` +
+          `• Пещера Хангдонг\n` +
+          `• Каякинг\n` +
+          `• Плавучие бунгало\n` +
+          `• Питание + трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 3200฿\n` +
+          `• Ребёнок (4-11 лет): 2500฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/avatar-plus-hangdong' } }],
             [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
             [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
           ]
@@ -673,38 +707,17 @@ bot.start(async (ctx) => {
     return;
   }
   
-  // Обычное приветствие (если без параметра)
-  const welcomeText = `🌴 Привет, ${firstName}!
-
-Тропический рай Пхукета ждёт тебя!
-
-🏝️ Острова с белоснежными пляжами
-🌊 Бирюзовые лагуны и коралловые рифы
-🎬 Легендарные места из кино
-🐘 Дикая природа и настоящие джунгли
-
-✨ Каждая экскурсия — это незабываемое приключение!
-
-📱 Открой каталог и выбери свой идеальный день ⬇️`;
-
-  //  В группах - простые URL кнопки (webApp не работает в группах)
-  if (chatType === 'group' || chatType === 'supergroup') {
-    await ctx.replyWithMarkdown(welcomeText, 
-      Markup.inlineKeyboard([
-        [Markup.button.url('🗺️ Открыть каталог туров', 'https://t.me/phuketgos_bot/app')],
-        [Markup.button.url('💬 Написать боту', 'https://t.me/phuketgos_bot')]
-      ])
-    );
-  } else {
-    // В личке - полная клавиатура с webApp
-    await ctx.replyWithMarkdown(welcomeText, 
-      Markup.inlineKeyboard([
-        [Markup.button.webApp('🗺️ Открыть каталог туров', 'https://phukeo.com/#/')],
-        [Markup.button.url('📱 Открыть в полном экране', 'https://t.me/phuketgos_bot/app')],
-        [Markup.button.callback('ℹ️ О нас', 'about'), Markup.button.callback('☎️ Контакты', 'contacts')]
-      ])
-    );
-  }
+  // Обычное приветствие (если без параметра) - показываем главное меню
+  await ctx.reply(
+    `👋 Привет, ${firstName}!\n\n` +
+    `Я помогу выбрать идеальный тур на Пхукете! 🏝️\n\n` +
+    `Выберите действие:`,
+    Markup.inlineKeyboard([
+      [Markup.button.callback('🗺️ Смотреть туры', 'show_catalog')],
+      [Markup.button.callback('� Задать вопрос', 'ask_question')],
+      [Markup.button.url('☎️ Связаться с менеджером', 'https://t.me/Phuketga')]
+    ])
+  );
 });
 
 // 📚 КОМАНДА /help
@@ -816,7 +829,481 @@ bot.command('resetstats', (ctx) => {
   ctx.reply('✅ Статистика сброшена!');
 });
 
-// 🔔 CALLBACK КНОПКИ
+// 🔔 CALLBACK КНОПКИ ДЛЯ ГЛАВНОГО МЕНЮ
+
+// 🗺️ КНОПКА "Смотреть туры" - Показать категории
+bot.action('show_catalog', async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.reply(
+    `🗺️ Выберите категорию туров:\n\n` +
+    `🏝️ Острова - самые популярные туры на острова\n` +
+    `🏔️ Приключения - активный отдых и экстрим\n` +
+    `🛕 Культурные - храмы, достопримечательности\n` +
+    `🤿 Дайвинг - подводный мир и снорклинг\n` +
+    `🎣 Рыбалка - морская рыбалка на рассвете`,
+    Markup.inlineKeyboard([
+      [Markup.button.callback(`🏝️ Острова (${categories.islands.tours.length})`, 'cat_islands')],
+      [Markup.button.callback(`🏔️ Приключения (${categories.adventure.tours.length})`, 'cat_adventure')],
+      [Markup.button.callback(`🛕 Культурные (${categories.cultural.tours.length})`, 'cat_cultural')],
+      [Markup.button.callback(`🤿 Дайвинг (${categories.diving.tours.length})`, 'cat_diving')],
+      [Markup.button.callback(`🎣 Рыбалка (${categories.fishing.tours.length})`, 'cat_fishing')],
+      [Markup.button.callback('« Назад в меню', 'back_to_menu')]
+    ])
+  );
+});
+
+// 💬 КНОПКА "Задать вопрос" (placeholder для будущего ChatGPT)
+bot.action('ask_question', async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.reply(
+    `💬 Вы можете задать любой вопрос о турах!\n\n` +
+    `Например:\n` +
+    `• "Какой тур лучше для детей?"\n` +
+    `• "Сколько стоит поездка на Пхи-Пхи?"\n` +
+    `• "Что взять с собой на экскурсию?"\n\n` +
+    `🤖 Скоро здесь появится AI-помощник!\n` +
+    `А пока вы можете связаться с менеджером:`,
+    Markup.inlineKeyboard([
+      [Markup.button.url('☎️ Написать менеджеру', 'https://t.me/Phuketga')],
+      [Markup.button.callback('« Назад в меню', 'back_to_menu')]
+    ])
+  );
+});
+
+// ↩️ КНОПКА "Назад в меню"
+bot.action('back_to_menu', async (ctx) => {
+  await ctx.answerCbQuery();
+  const firstName = ctx.from.first_name || 'друг';
+  await ctx.reply(
+    `👋 Привет, ${firstName}!\n\n` +
+    `Я помогу выбрать идеальный тур на Пхукете! 🏝️\n\n` +
+    `Выберите действие:`,
+    Markup.inlineKeyboard([
+      [Markup.button.callback('🗺️ Смотреть туры', 'show_catalog')],
+      [Markup.button.callback('💬 Задать вопрос', 'ask_question')],
+      [Markup.button.url('☎️ Связаться с менеджером', 'https://t.me/Phuketga')]
+    ])
+  );
+});
+
+// � ОБРАБОТЧИКИ КАТЕГОРИЙ
+
+// 🏝️ Категория "Острова"
+bot.action('cat_islands', async (ctx) => {
+  await ctx.answerCbQuery();
+  const categoryData = categories.islands;
+  const buttons = categoryData.tours.map(tourId => {
+    const tour = tours[tourId];
+    return [Markup.button.callback(
+      `${tour.name} - от ${tour.priceAdult}฿`,
+      `tour_${tourId}`
+    )];
+  });
+  buttons.push([Markup.button.callback('« Назад к категориям', 'show_catalog')]);
+  
+  await ctx.reply(
+    `${categoryData.emoji} ${categoryData.name}\n\n` +
+    `Выберите тур для подробностей:`,
+    Markup.inlineKeyboard(buttons)
+  );
+});
+
+// 🏔️ Категория "Приключения"
+bot.action('cat_adventure', async (ctx) => {
+  await ctx.answerCbQuery();
+  const categoryData = categories.adventure;
+  const buttons = categoryData.tours.map(tourId => {
+    const tour = tours[tourId];
+    return [Markup.button.callback(
+      `${tour.name} - от ${tour.priceAdult}฿`,
+      `tour_${tourId}`
+    )];
+  });
+  buttons.push([Markup.button.callback('« Назад к категориям', 'show_catalog')]);
+  
+  await ctx.reply(
+    `${categoryData.emoji} ${categoryData.name}\n\n` +
+    `Выберите тур для подробностей:`,
+    Markup.inlineKeyboard(buttons)
+  );
+});
+
+// 🛕 Категория "Культурные"
+bot.action('cat_cultural', async (ctx) => {
+  await ctx.answerCbQuery();
+  const categoryData = categories.cultural;
+  const buttons = categoryData.tours.map(tourId => {
+    const tour = tours[tourId];
+    return [Markup.button.callback(
+      `${tour.name} - от ${tour.priceAdult}฿`,
+      `tour_${tourId}`
+    )];
+  });
+  buttons.push([Markup.button.callback('« Назад к категориям', 'show_catalog')]);
+  
+  await ctx.reply(
+    `${categoryData.emoji} ${categoryData.name}\n\n` +
+    `Выберите тур для подробностей:`,
+    Markup.inlineKeyboard(buttons)
+  );
+});
+
+// 🤿 Категория "Дайвинг"
+bot.action('cat_diving', async (ctx) => {
+  await ctx.answerCbQuery();
+  const categoryData = categories.diving;
+  const buttons = categoryData.tours.map(tourId => {
+    const tour = tours[tourId];
+    return [Markup.button.callback(
+      `${tour.name} - от ${tour.priceAdult}฿`,
+      `tour_${tourId}`
+    )];
+  });
+  buttons.push([Markup.button.callback('« Назад к категориям', 'show_catalog')]);
+  
+  await ctx.reply(
+    `${categoryData.emoji} ${categoryData.name}\n\n` +
+    `Выберите тур для подробностей:`,
+    Markup.inlineKeyboard(buttons)
+  );
+});
+
+// 🎣 Категория "Рыбалка"
+bot.action('cat_fishing', async (ctx) => {
+  await ctx.answerCbQuery();
+  const categoryData = categories.fishing;
+  const buttons = categoryData.tours.map(tourId => {
+    const tour = tours[tourId];
+    return [Markup.button.callback(
+      `${tour.name} - от ${tour.priceAdult}฿`,
+      `tour_${tourId}`
+    )];
+  });
+  buttons.push([Markup.button.callback('« Назад к категориям', 'show_catalog')]);
+  
+  await ctx.reply(
+    `${categoryData.emoji} ${categoryData.name}\n\n` +
+    `Выберите тур для подробностей:`,
+    Markup.inlineKeyboard(buttons)
+  );
+});
+// 🎴 УНИВЕРСАЛЬНЫЙ ОБРАБОТЧИК КАРТОЧЕК ТУРОВ
+// Создаём обработчики для всех 22 туров
+Object.keys(tours).forEach(tourId => {
+  bot.action(`tour_${tourId}`, async (ctx) => {
+    await ctx.answerCbQuery();
+    const tour = tours[tourId];
+    
+    // Формируем текст карточки
+    const cardText = 
+      `${tour.name}\n\n` +
+      `${tour.description}\n\n` +
+      `⏱ Длительность: ${tour.duration}\n` +
+      `💰 Цена: ${tour.priceAdult}฿ взрослый / ${tour.priceChild}฿ ребёнок\n\n` +
+      `✨ Что включено:\n` +
+      tour.highlights.map(h => `• ${h}`).join('\n');
+    
+    // Если есть фото - отправляем с фото
+    if (tour.image) {
+      try {
+        await ctx.replyWithPhoto(tour.image, {
+          caption: cardText,
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: '🎫 Хочу забронировать!', callback_data: `book_new_${tourId}` }],
+              [{ text: '« Назад к турам', callback_data: `cat_${tour.category}` }]
+            ]
+          }
+        });
+      } catch (error) {
+        // Если фото не загрузилось - отправляем только текст
+        await ctx.reply(cardText, 
+          Markup.inlineKeyboard([
+            [Markup.button.callback('🎫 Хочу забронировать!', `book_new_${tourId}`)],
+            [Markup.button.callback('« Назад к турам', `cat_${tour.category}`)]
+          ])
+        );
+      }
+    } else {
+      // Если фото нет - только текст
+      await ctx.reply(cardText, 
+        Markup.inlineKeyboard([
+          [Markup.button.callback('🎫 Хочу забронировать!', `book_new_${tourId}`)],
+          [Markup.button.callback('« Назад к турам', `cat_${tour.category}`)]
+        ])
+      );
+    }
+  });
+// 📋 СИСТЕМА БРОНИРОВАНИЯ (НОВАЯ)
+const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID || '1217592929';
+
+// Универсальные обработчики для всех туров
+Object.keys(tours).forEach(tourId => {
+  // Старт бронирования
+  bot.action(`book_new_${tourId}`, async (ctx) => {
+    await ctx.answerCbQuery();
+    const userId = ctx.from.id;
+    const tour = tours[tourId];
+    
+    // Инициализируем сессию
+    sessions[userId] = {
+      tour: tourId,
+      tourName: tour.name,
+      step: 'waiting_name',
+      name: null,
+      date: null,
+      adults: null,
+      children: null,
+      contact: null
+    };
+    
+    await ctx.reply(
+      `🎫 Бронирование тура: ${tour.name}\n\n` +
+      `Давайте оформим вашу заявку!\n\n` +
+      `👤 Шаг 1/5: Как вас зовут?\n` +
+      `Напишите ваше имя:`
+    );
+  });
+});
+
+// Обработка текстовых сообщений (диалог бронирования)
+bot.on('text', async (ctx) => {
+  const userId = ctx.from.id;
+  const text = ctx.message.text;
+  
+  // Проверяем, есть ли активная сессия бронирования
+  if (!sessions[userId]) {
+    return; // Пропускаем, это не часть диалога бронирования
+  }
+  
+  const session = sessions[userId];
+  
+  // ШАГ 1: Получили имя
+  if (session.step === 'waiting_name') {
+    session.name = text;
+    session.step = 'waiting_date';
+    
+    await ctx.reply(
+      `Приятно познакомиться, ${session.name}! 👋\n\n` +
+      `📅 Шаг 2/5: На какую дату планируете тур?\n` +
+      `Напишите дату (например: 25 декабря или 25.12.2025):`
+    );
+    return;
+  }
+  
+  // ШАГ 2: Получили дату
+  if (session.step === 'waiting_date') {
+    session.date = text;
+    session.step = 'waiting_adults';
+    
+    await ctx.reply(
+      `📅 Отлично! Запланируем на ${session.date}\n\n` +
+      `👥 Шаг 3/5: Сколько взрослых поедет? (от 18 лет)\n` +
+      `Выберите:`,
+      Markup.inlineKeyboard([
+        [
+          Markup.button.callback('1 👤', 'adults_1'),
+          Markup.button.callback('2 👥', 'adults_2'),
+          Markup.button.callback('3 👥', 'adults_3')
+        ],
+        [
+          Markup.button.callback('4 👥', 'adults_4'),
+          Markup.button.callback('5+ 👥', 'adults_5plus')
+        ]
+      ])
+    );
+    return;
+  }
+  
+  // ШАГ 5: Получили контакт (если отправили текстом, а не через кнопку)
+  if (session.step === 'waiting_contact') {
+    session.contact = text;
+    
+    // Отправка заявки менеджеру
+    const tour = tours[session.tour];
+    const totalPrice = (tour.priceAdult * session.adults) + (tour.priceChild * session.children);
+    
+    const adminMessage = 
+      `🔔 *НОВАЯ БРОНЬ ТУРА!*\n\n` +
+      `🏝️ *Тур:* ${session.tourName}\n` +
+      `👤 *Имя:* ${session.name}\n` +
+      `📅 *Дата:* ${session.date}\n` +
+      `👥 *Людей:* ${session.adults} взрослых${session.children > 0 ? `, ${session.children} детей` : ''}\n` +
+      `📱 *Контакт:* ${session.contact}\n\n` +
+      `💰 *Примерная цена:* ${totalPrice}฿\n` +
+      `(${tour.priceAdult}฿ × ${session.adults} взр${session.children > 0 ? ` + ${tour.priceChild}฿ × ${session.children} дет` : ''})\n\n` +
+      `⏰ Заявка от: ${new Date().toLocaleString('ru-RU', { timeZone: 'Asia/Bangkok' })}`;
+    
+    try {
+      await bot.telegram.sendMessage(ADMIN_CHAT_ID, adminMessage, { parse_mode: 'Markdown' });
+    } catch (error) {
+      console.error('Ошибка отправки админу:', error);
+    }
+    
+    // Подтверждение клиенту
+    await ctx.reply(
+      `✅ *Заявка отправлена!*\n\n` +
+      `📋 Ваша бронь:\n` +
+      `🏝️ Тур: ${session.tourName}\n` +
+      `📅 Дата: ${session.date}\n` +
+      `👥 Людей: ${session.adults} взрослых${session.children > 0 ? `, ${session.children} детей` : ''}\n` +
+      `💰 Примерная цена: ${totalPrice}฿\n\n` +
+      `☎️ Менеджер свяжется с вами в течение 30 минут для подтверждения наличия мест!\n\n` +
+      `Спасибо что выбрали Пхукет Go! 🌴`,
+      { parse_mode: 'Markdown' }
+    );
+    
+    // Очищаем сессию
+    delete sessions[userId];
+    return;
+  }
+});
+
+// Кнопки для выбора количества взрослых
+for (let i = 1; i <= 5; i++) {
+  bot.action(`adults_${i}`, async (ctx) => {
+    await ctx.answerCbQuery();
+    const userId = ctx.from.id;
+    if (!sessions[userId]) return;
+    
+    sessions[userId].adults = i;
+    sessions[userId].step = 'waiting_children';
+    
+    await ctx.reply(
+      `✅ ${i} ${i === 1 ? 'взрослый' : 'взрослых'}\n\n` +
+      `👶 Шаг 4/5: Сколько детей? (до 12 лет)\n` +
+      `Выберите:`,
+      Markup.inlineKeyboard([
+        [
+          Markup.button.callback('Нет детей', 'children_0'),
+          Markup.button.callback('1 👶', 'children_1')
+        ],
+        [
+          Markup.button.callback('2 👶', 'children_2'),
+          Markup.button.callback('3+ 👶', 'children_3plus')
+        ]
+      ])
+    );
+  });
+}
+
+bot.action('adults_5plus', async (ctx) => {
+  await ctx.answerCbQuery();
+  const userId = ctx.from.id;
+  if (!sessions[userId]) return;
+  
+  sessions[userId].adults = 5;
+  sessions[userId].step = 'waiting_children';
+  
+  await ctx.reply(
+    `✅ 5+ взрослых\n\n` +
+    `👶 Шаг 4/5: Сколько детей? (до 12 лет)\n` +
+    `Выберите:`,
+    Markup.inlineKeyboard([
+      [
+        Markup.button.callback('Нет детей', 'children_0'),
+        Markup.button.callback('1 👶', 'children_1')
+      ],
+      [
+        Markup.button.callback('2 👶', 'children_2'),
+        Markup.button.callback('3+ 👶', 'children_3plus')
+      ]
+    ])
+  );
+});
+
+// Кнопки для выбора количества детей
+for (let i = 0; i <= 3; i++) {
+  bot.action(`children_${i}`, async (ctx) => {
+    await ctx.answerCbQuery();
+    const userId = ctx.from.id;
+    if (!sessions[userId]) return;
+    
+    sessions[userId].children = i;
+    sessions[userId].step = 'waiting_contact';
+    
+    const childrenText = i === 0 ? 'без детей' : `${i} ${i === 1 ? 'ребёнок' : 'детей'}`;
+    
+    await ctx.reply(
+      `✅ ${childrenText}\n\n` +
+      `📱 Шаг 5/5: Как с вами связаться?\n\n` +
+      `Отправьте ваш телефон или Telegram username:`,
+      Markup.inlineKeyboard([
+        [Markup.button.contactRequest('📞 Поделиться контактом')]
+      ])
+    );
+  });
+}
+
+bot.action('children_3plus', async (ctx) => {
+  await ctx.answerCbQuery();
+  const userId = ctx.from.id;
+  if (!sessions[userId]) return;
+  
+  sessions[userId].children = 3;
+  sessions[userId].step = 'waiting_contact';
+  
+  await ctx.reply(
+    `✅ 3+ детей\n\n` +
+    `📱 Шаг 5/5: Как с вами связаться?\n\n` +
+    `Отправьте ваш телефон или Telegram username:`,
+    Markup.inlineKeyboard([
+      [Markup.button.contactRequest('📞 Поделиться контактом')]
+    ])
+  );
+});
+
+// Обработка контакта (кнопка "Поделиться контактом")
+bot.on('contact', async (ctx) => {
+  const userId = ctx.from.id;
+  if (!sessions[userId] || sessions[userId].step !== 'waiting_contact') return;
+  
+  const contact = ctx.message.contact;
+  const session = sessions[userId];
+  session.contact = contact.phone_number;
+  
+  // Отправка заявки менеджеру
+  const tour = tours[session.tour];
+  const totalPrice = (tour.priceAdult * session.adults) + (tour.priceChild * session.children);
+  
+  const adminMessage = 
+    `🔔 *НОВАЯ БРОНЬ ТУРА!*\n\n` +
+    `🏝️ *Тур:* ${session.tourName}\n` +
+    `👤 *Имя:* ${session.name}\n` +
+    `📅 *Дата:* ${session.date}\n` +
+    `👥 *Людей:* ${session.adults} взрослых${session.children > 0 ? `, ${session.children} детей` : ''}\n` +
+    `📱 *Телефон:* +${session.contact}\n\n` +
+    `💰 *Примерная цена:* ${totalPrice}฿\n` +
+    `(${tour.priceAdult}฿ × ${session.adults} взр${session.children > 0 ? ` + ${tour.priceChild}฿ × ${session.children} дет` : ''})\n\n` +
+    `⏰ Заявка от: ${new Date().toLocaleString('ru-RU', { timeZone: 'Asia/Bangkok' })}`;
+  
+  try {
+    await bot.telegram.sendMessage(ADMIN_CHAT_ID, adminMessage, { parse_mode: 'Markdown' });
+  } catch (error) {
+    console.error('Ошибка отправки админу:', error);
+  }
+  
+  // Подтверждение клиенту
+  await ctx.reply(
+    `✅ *Заявка отправлена!*\n\n` +
+    `📋 Ваша бронь:\n` +
+    `🏝️ Тур: ${session.tourName}\n` +
+    `📅 Дата: ${session.date}\n` +
+    `👥 Людей: ${session.adults} взрослых${session.children > 0 ? `, ${session.children} детей` : ''}\n` +
+    `💰 Примерная цена: ${totalPrice}฿\n\n` +
+    `☎️ Менеджер свяжется с вами в течение 30 минут для подтверждения наличия мест!\n\n` +
+    `Спасибо что выбрали Пхукет Go! 🌴`,
+    { parse_mode: 'Markdown' }
+  );
+  
+  // Очищаем сессию
+  delete sessions[userId];
+});
+
+});
+
+
+// �🔔 CALLBACK КНОПКИ (старые)
 bot.action('about', (ctx) => {
   ctx.answerCbQuery();
   ctx.replyWithMarkdown(`🌴 **О компании Пхукет Go**
@@ -843,12 +1330,354 @@ bot.action('contacts', (ctx) => {
 💬 Ответим в течение 30 минут!`);
 });
 
+// 🎯 СИСТЕМА БРОНИРОВАНИЙ
+// Хранилище активных бронирований (в памяти)
+const bookingSessions = new Map();
+
+// Данные туров для бронирования
+const toursData = {
+  'rafting': { name: 'Рафтинг + СПА + ATV', priceAdult: 2500, priceChild: 1800 },
+  'phiphi2days': { name: 'Пхи-Пхи 2 дня/1 ночь', priceAdult: 6500, priceChild: 5500 },
+  'pearls': { name: '4 Жемчужины Андаманского моря', priceAdult: 8500, priceChild: 7000 },
+  'sightseeing': { name: 'Достопримечательности Пхукета', priceAdult: 1800, priceChild: 1200 },
+  'raftingspa': { name: 'Рафтинг + СПА', priceAdult: 2200, priceChild: 1600 },
+  'kaolak': { name: 'Као Лак Сафари', priceAdult: 2600, priceChild: 2000 },
+  '11islands': { name: '11 островов МЕГА-ТУР', priceAdult: 4500, priceChild: 3500 },
+  'jamesbond': { name: 'Остров Джеймса Бонда', priceAdult: 2400, priceChild: 1800 },
+  'avatarplus': { name: 'Аватар Плюс + Хангдонг', priceAdult: 2800, priceChild: 2200 },
+  'racha': { name: 'Рача + Корал', priceAdult: 2200, priceChild: 1600 },
+  'skywalk': { name: 'Пханг Нга + Стеклянный мост', priceAdult: 2600, priceChild: 2000 },
+  'cheolan': { name: 'Чео Лан + Самет', priceAdult: 2800, priceChild: 2200 },
+  'similan': { name: 'Симиланы Standard', priceAdult: 3500, priceChild: 2800 },
+  'similanearly': { name: 'Симиланы Early Bird', priceAdult: 4000, priceChild: 3200 },
+  'similanspeed': { name: 'Симиланы Speedboat', priceAdult: 4500, priceChild: 3500 },
+  'fishing': { name: 'Рыбалка на рассвете', priceAdult: 3000, priceChild: 2400 },
+  'rachasunrise': { name: 'Рача + Корал рассвет', priceAdult: 2600, priceChild: 2000 },
+  'racharawai': { name: 'Рача + Корал Rawai', priceAdult: 2200, priceChild: 1600 },
+  'phiphisunrise': { name: 'Пхи-Пхи рассвет', priceAdult: 3200, priceChild: 2600 },
+  '5pearls': { name: '5 Жемчужин 2 дня', priceAdult: 9500, priceChild: 8000 },
+  'phangngasamet': { name: 'Пханг Нга + Самет', priceAdult: 2200, priceChild: 1600 },
+  'krabi': { name: 'Секреты Краби', priceAdult: 2400, priceChild: 1800 }
+};
+
+// Универсальный обработчик бронирования для всех туров
+Object.keys(toursData).forEach(tourId => {
+  bot.action(`book_${tourId}`, async (ctx) => {
+    await ctx.answerCbQuery();
+    
+    const userId = ctx.from.id;
+    const tour = toursData[tourId];
+    
+    // Создаём новую сессию бронирования
+    bookingSessions.set(userId, {
+      tourId: tourId,
+      tourName: tour.name,
+      priceAdult: tour.priceAdult,
+      priceChild: tour.priceChild,
+      step: 'name' // name → date → adults → children → contact → confirm
+    });
+    
+    await ctx.reply(
+      `✅ Отлично! Бронируем тур:\n🏝️ **${tour.name}**\n\n` +
+      `💰 Цена: ${tour.priceAdult}฿ взрослый, ${tour.priceChild}฿ ребёнок\n\n` +
+      `📝 **Шаг 1 из 5: Ваше имя**\n\n` +
+      `Введите ваше имя и фамилию:`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '❌ Отменить бронирование', callback_data: 'cancel_booking' }]
+          ]
+        }
+      }
+    );
+  });
+});
+
+// Отмена бронирования
+bot.action('cancel_booking', async (ctx) => {
+  await ctx.answerCbQuery();
+  const userId = ctx.from.id;
+  bookingSessions.delete(userId);
+  
+  await ctx.reply('❌ Бронирование отменено.\n\n💬 Чем ещё могу помочь?');
+});
+
+// Кнопки быстрого выбора взрослых
+for (let i = 1; i <= 10; i++) {
+  bot.action(`adults_${i}`, async (ctx) => {
+    await ctx.answerCbQuery();
+    const userId = ctx.from.id;
+    const session = bookingSessions.get(userId);
+    
+    if (!session || session.step !== 'adults') return;
+    
+    session.adults = i;
+    session.step = 'children';
+    
+    await ctx.reply(
+      `✅ Взрослых: ${i}\n\n` +
+      `📝 **Шаг 4 из 5: Количество детей**\n\n` +
+      `Введите количество детей (4-11 лет).\n` +
+      `Если детей нет, напишите 0:`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '0', callback_data: 'children_0' }, { text: '1', callback_data: 'children_1' }, { text: '2', callback_data: 'children_2' }],
+            [{ text: '3', callback_data: 'children_3' }, { text: '4', callback_data: 'children_4' }, { text: '5', callback_data: 'children_5' }],
+            [{ text: '❌ Отменить', callback_data: 'cancel_booking' }]
+          ]
+        }
+      }
+    );
+  });
+}
+
+// Кнопки быстрого выбора детей
+for (let i = 0; i <= 10; i++) {
+  bot.action(`children_${i}`, async (ctx) => {
+    await ctx.answerCbQuery();
+    const userId = ctx.from.id;
+    const session = bookingSessions.get(userId);
+    
+    if (!session || session.step !== 'children') return;
+    
+    session.children = i;
+    session.step = 'contact';
+    
+    await ctx.reply(
+      `✅ Детей: ${i}\n\n` +
+      `📝 **Шаг 5 из 5: Контакт для связи**\n\n` +
+      `Введите ваш номер телефона или Telegram:\n` +
+      `Например: +66 12 345 6789 или @username`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '❌ Отменить', callback_data: 'cancel_booking' }]
+          ]
+        }
+      }
+    );
+  });
+}
+
+// Подтверждение бронирования
+bot.action('confirm_booking', async (ctx) => {
+  await ctx.answerCbQuery();
+  const userId = ctx.from.id;
+  const session = bookingSessions.get(userId);
+  
+  if (!session) {
+    await ctx.reply('❌ Сессия истекла. Начните бронирование заново.');
+    return;
+  }
+  
+  // Рассчитываем стоимость
+  const totalAdults = session.adults * session.priceAdult;
+  const totalChildren = session.children * session.priceChild;
+  const totalPrice = totalAdults + totalChildren;
+  
+  // Формируем сообщение для админа
+  const adminMessage = 
+    `🔔 **НОВАЯ БРОНЬ!**\n\n` +
+    `🏝️ **Тур:** ${session.tourName}\n` +
+    `👤 **Имя:** ${session.name}\n` +
+    `📅 **Дата:** ${session.date}\n` +
+    `👥 **Взрослых:** ${session.adults} чел.\n` +
+    `👶 **Детей:** ${session.children} чел.\n` +
+    `📱 **Контакт:** ${session.contact}\n\n` +
+    `💰 **Сумма:** ${totalPrice}฿\n\n` +
+    `🆔 User ID: ${userId}\n` +
+    `👤 Username: @${ctx.from.username || 'нет'}\n` +
+    `📝 Имя в Telegram: ${ctx.from.first_name} ${ctx.from.last_name || ''}`;
+  
+  try {
+    // Отправляем админу
+    const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID || '1217592929';
+    await bot.telegram.sendMessage(ADMIN_CHAT_ID, adminMessage, { parse_mode: 'Markdown' });
+    
+    // Подтверждение клиенту
+    await ctx.reply(
+      `✅ **Бронирование отправлено!**\n\n` +
+      `Ваша заявка получена и передана менеджеру.\n\n` +
+      `📱 Мы свяжемся с вами в течение 30 минут для подтверждения деталей.\n\n` +
+      `Номер брони: #${userId}${Date.now().toString().slice(-4)}\n\n` +
+      `💬 Если есть вопросы, пишите @Phuketga`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '🗺️ Посмотреть другие туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Написать менеджеру', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    
+    // Удаляем сессию
+    bookingSessions.delete(userId);
+    
+  } catch (error) {
+    console.error('Ошибка отправки брони админу:', error);
+    await ctx.reply(
+      `⚠️ Произошла ошибка при отправке.\n\n` +
+      `Пожалуйста, свяжитесь с нами напрямую:\n` +
+      `📱 @Phuketga\n\n` +
+      `Ваши данные:\n` +
+      `🏝️ ${session.tourName}\n` +
+      `📅 ${session.date}\n` +
+      `👥 ${session.adults} взрослых, ${session.children} детей`
+    );
+  }
+});
+
+
 // 💬 ОБРАБОТКА ТЕКСТОВЫХ СООБЩЕНИЙ
 bot.on('message', async (ctx) => {
   if (!ctx.message.text) return;
   
   const chatType = ctx.chat.type;
-  const text = ctx.message.text.toLowerCase();
+  const text = ctx.message.text;
+  const userId = ctx.from.id;
+  
+  // 🎯 ОБРАБОТКА АКТИВНОЙ СЕССИИ БРОНИРОВАНИЯ
+  if (chatType === 'private' && bookingSessions.has(userId)) {
+    const session = bookingSessions.get(userId);
+    
+    // ШАГ 1: Имя
+    if (session.step === 'name') {
+      session.name = text;
+      session.step = 'date';
+      
+      await ctx.reply(
+        `✅ Отлично, ${text}!\n\n` +
+        `📝 **Шаг 2 из 5: Дата тура**\n\n` +
+        `Введите желаемую дату в формате ДД.ММ.ГГГГ\n` +
+        `Например: 15.11.2025`,
+        {
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: '❌ Отменить', callback_data: 'cancel_booking' }]
+            ]
+          }
+        }
+      );
+      return;
+    }
+    
+    // ШАГ 2: Дата
+    if (session.step === 'date') {
+      session.date = text;
+      session.step = 'adults';
+      
+      await ctx.reply(
+        `✅ Дата: ${text}\n\n` +
+        `📝 **Шаг 3 из 5: Количество взрослых**\n\n` +
+        `Введите количество взрослых (от 1 до 10):`,
+        {
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: '1', callback_data: 'adults_1' }, { text: '2', callback_data: 'adults_2' }, { text: '3', callback_data: 'adults_3' }],
+              [{ text: '4', callback_data: 'adults_4' }, { text: '5', callback_data: 'adults_5' }, { text: '6', callback_data: 'adults_6' }],
+              [{ text: '❌ Отменить', callback_data: 'cancel_booking' }]
+            ]
+          }
+        }
+      );
+      return;
+    }
+    
+    // ШАГ 3: Взрослые (если ввели текстом)
+    if (session.step === 'adults') {
+      const adults = parseInt(text);
+      if (isNaN(adults) || adults < 1 || adults > 10) {
+        await ctx.reply('❌ Пожалуйста, введите число от 1 до 10');
+        return;
+      }
+      
+      session.adults = adults;
+      session.step = 'children';
+      
+      await ctx.reply(
+        `✅ Взрослых: ${adults}\n\n` +
+        `📝 **Шаг 4 из 5: Количество детей**\n\n` +
+        `Введите количество детей (4-11 лет).\n` +
+        `Если детей нет, напишите 0:`,
+        {
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: '0', callback_data: 'children_0' }, { text: '1', callback_data: 'children_1' }, { text: '2', callback_data: 'children_2' }],
+              [{ text: '3', callback_data: 'children_3' }, { text: '4', callback_data: 'children_4' }, { text: '5', callback_data: 'children_5' }],
+              [{ text: '❌ Отменить', callback_data: 'cancel_booking' }]
+            ]
+          }
+        }
+      );
+      return;
+    }
+    
+    // ШАГ 4: Дети (если ввели текстом)
+    if (session.step === 'children') {
+      const children = parseInt(text);
+      if (isNaN(children) || children < 0 || children > 10) {
+        await ctx.reply('❌ Пожалуйста, введите число от 0 до 10');
+        return;
+      }
+      
+      session.children = children;
+      session.step = 'contact';
+      
+      await ctx.reply(
+        `✅ Детей: ${children}\n\n` +
+        `📝 **Шаг 5 из 5: Контакт для связи**\n\n` +
+        `Введите ваш номер телефона или Telegram:\n` +
+        `Например: +66 12 345 6789 или @username`,
+        {
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: '📱 Поделиться номером', request_contact: true }],
+              [{ text: '❌ Отменить', callback_data: 'cancel_booking' }]
+            ]
+          }
+        }
+      );
+      return;
+    }
+    
+    // ШАГ 5: Контакт
+    if (session.step === 'contact') {
+      session.contact = text;
+      session.step = 'confirm';
+      
+      // Рассчитываем общую стоимость
+      const totalAdults = session.adults * session.priceAdult;
+      const totalChildren = session.children * session.priceChild;
+      const totalPrice = totalAdults + totalChildren;
+      
+      await ctx.reply(
+        `📋 **Проверьте данные бронирования:**\n\n` +
+        `🏝️ Тур: **${session.tourName}**\n` +
+        `👤 Имя: ${session.name}\n` +
+        `📅 Дата: ${session.date}\n` +
+        `👥 Взрослых: ${session.adults} x ${session.priceAdult}฿ = ${totalAdults}฿\n` +
+        `👶 Детей: ${session.children} x ${session.priceChild}฿ = ${totalChildren}฿\n` +
+        `📱 Контакт: ${session.contact}\n\n` +
+        `💰 **Итого: ${totalPrice}฿**\n\n` +
+        `✅ Всё верно? Подтвердите бронирование:`,
+        {
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: '✅ Подтвердить и отправить', callback_data: 'confirm_booking' }],
+              [{ text: '✏️ Исправить данные', callback_data: 'cancel_booking' }],
+              [{ text: '❌ Отменить', callback_data: 'cancel_booking' }]
+            ]
+          }
+        }
+      );
+      return;
+    }
+  }
+  
+  // Для групп и обычных сообщений - прежняя логика
+  const textLower = text.toLowerCase();
   
   // В группах только собираем статистику (не отвечаем на каждое сообщение)
   if (chatType === 'group' || chatType === 'supergroup') {

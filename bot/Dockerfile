@@ -19,5 +19,5 @@ COPY bot/ ./
 # Порт для Koyeb (webhook + health checks)
 EXPOSE 8000
 
-# Запускаем AI бота (вместо старого welcome-message.js)
+# Запускаем AI бота с GPT-3.5-turbo
 CMD ["node", "smart-ai-bot.js"]

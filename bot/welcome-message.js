@@ -1178,32 +1178,105 @@ bot.on('text', async (ctx) => {
 });
 
 // Кнопки для выбора количества взрослых
-for (let i = 1; i <= 5; i++) {
-  bot.action(`adults_${i}`, async (ctx) => {
-    await ctx.answerCbQuery();
-    const userId = ctx.from.id;
-    if (!sessions[userId]) return;
-    
-    sessions[userId].adults = i;
-    sessions[userId].step = 'waiting_children';
-    
-    await ctx.reply(
-      `✅ ${i} ${i === 1 ? 'взрослый' : 'взрослых'}\n\n` +
-      `👶 Шаг 4/5: Сколько детей? (до 12 лет)\n` +
-      `Выберите:`,
-      Markup.inlineKeyboard([
-        [
-          Markup.button.callback('Нет детей', 'children_0'),
-          Markup.button.callback('1 👶', 'children_1')
-        ],
-        [
-          Markup.button.callback('2 👶', 'children_2'),
-          Markup.button.callback('3+ 👶', 'children_3plus')
-        ]
-      ])
-    );
-  });
-}
+bot.action('adults_1', async (ctx) => {
+  await ctx.answerCbQuery();
+  const userId = ctx.from.id;
+  if (!sessions[userId]) return;
+  
+  sessions[userId].adults = 1;
+  sessions[userId].step = 'waiting_children';
+  
+  await ctx.reply(
+    `✅ 1 взрослый\n\n` +
+    `👶 Шаг 4/5: Сколько детей? (до 12 лет)\n` +
+    `Выберите:`,
+    Markup.inlineKeyboard([
+      [
+        Markup.button.callback('Нет детей', 'children_0'),
+        Markup.button.callback('1 👶', 'children_1')
+      ],
+      [
+        Markup.button.callback('2 👶', 'children_2'),
+        Markup.button.callback('3+ 👶', 'children_3plus')
+      ]
+    ])
+  );
+});
+
+bot.action('adults_2', async (ctx) => {
+  await ctx.answerCbQuery();
+  const userId = ctx.from.id;
+  if (!sessions[userId]) return;
+  
+  sessions[userId].adults = 2;
+  sessions[userId].step = 'waiting_children';
+  
+  await ctx.reply(
+    `✅ 2 взрослых\n\n` +
+    `👶 Шаг 4/5: Сколько детей? (до 12 лет)\n` +
+    `Выберите:`,
+    Markup.inlineKeyboard([
+      [
+        Markup.button.callback('Нет детей', 'children_0'),
+        Markup.button.callback('1 👶', 'children_1')
+      ],
+      [
+        Markup.button.callback('2 👶', 'children_2'),
+        Markup.button.callback('3+ 👶', 'children_3plus')
+      ]
+    ])
+  );
+});
+
+bot.action('adults_3', async (ctx) => {
+  await ctx.answerCbQuery();
+  const userId = ctx.from.id;
+  if (!sessions[userId]) return;
+  
+  sessions[userId].adults = 3;
+  sessions[userId].step = 'waiting_children';
+  
+  await ctx.reply(
+    `✅ 3 взрослых\n\n` +
+    `👶 Шаг 4/5: Сколько детей? (до 12 лет)\n` +
+    `Выберите:`,
+    Markup.inlineKeyboard([
+      [
+        Markup.button.callback('Нет детей', 'children_0'),
+        Markup.button.callback('1 👶', 'children_1')
+      ],
+      [
+        Markup.button.callback('2 👶', 'children_2'),
+        Markup.button.callback('3+ 👶', 'children_3plus')
+      ]
+    ])
+  );
+});
+
+bot.action('adults_4', async (ctx) => {
+  await ctx.answerCbQuery();
+  const userId = ctx.from.id;
+  if (!sessions[userId]) return;
+  
+  sessions[userId].adults = 4;
+  sessions[userId].step = 'waiting_children';
+  
+  await ctx.reply(
+    `✅ 4 взрослых\n\n` +
+    `👶 Шаг 4/5: Сколько детей? (до 12 лет)\n` +
+    `Выберите:`,
+    Markup.inlineKeyboard([
+      [
+        Markup.button.callback('Нет детей', 'children_0'),
+        Markup.button.callback('1 👶', 'children_1')
+      ],
+      [
+        Markup.button.callback('2 👶', 'children_2'),
+        Markup.button.callback('3+ 👶', 'children_3plus')
+      ]
+    ])
+  );
+});
 
 bot.action('adults_5plus', async (ctx) => {
   await ctx.answerCbQuery();

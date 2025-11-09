@@ -1462,8 +1462,21 @@ app.get('/health', (req, res) => {
 });
 
 // 🎯 Telegram Webhook endpoint
-app.post(WEBHOOK_PATH, (req, res) => {
-  bot.handleUpdate(req.body, res);
+app.post(WEBHOOK_PATH, async (req, res) => {
+  // Логируем для отладки
+  if (req.body?.callback_query) {
+    console.log('📞 Callback query:', req.body.callback_query.data);
+  }
+  if (req.body?.message?.text) {
+    console.log('💬 Message:', req.body.message.text);
+  }
+  
+  try {
+    await bot.handleUpdate(req.body, res);
+  } catch (error) {
+    console.error('❌ Ошибка обработки update:', error);
+    res.sendStatus(500);
+  }
 });
 
 // Запускаем Express сервер

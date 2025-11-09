@@ -1316,12 +1316,10 @@ bot.on('contact', async (ctx) => {
   
   // Очищаем сессию
   delete sessions[userId];
+  return;
 });
 
-});
-
-
-// �🔔 CALLBACK КНОПКИ (старые)
+// 🔔 CALLBACK КНОПКИ (старые)
 bot.action('about', (ctx) => {
   ctx.answerCbQuery();
   ctx.replyWithMarkdown(`🌴 **О компании Пхукет Go**
@@ -1399,46 +1397,76 @@ bot.on('message', async (ctx) => {
   }
 });
 
-// 🚀 ЗАПУСК БОТА
-bot.launch().then(() => {
-  console.log('✅ Бот Пхукет Go запущен!');
-  console.log('📱 Тестируй: https://t.me/phuketgos_bot');
-  console.log('🗺️ Mini App: https://t.me/phuketgos_bot/app');
-  console.log('');
-  console.log('📊 Режим аналитики групп активирован');
-  console.log('💡 Команды для групп:');
-  console.log('   /getid - получить ID группы');
-  console.log('   /stats - посмотреть статистику');
-});
-
-// 🏥 Health check сервер для Koyeb
-const http = require('http');
-const healthServer = http.createServer((req, res) => {
-  if (req.url === '/health' || req.url === '/') {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ 
-      status: 'ok', 
-      bot: 'running',
-      uptime: process.uptime(),
-      timestamp: new Date().toISOString()
-    }));
-  } else {
-    res.writeHead(404);
-    res.end('Not Found');
-  }
-});
+// 🚀 ЗАПУСК БОТА С WEBHOOK (для Koyeb/облачных платформ)
+const express = require('express');
+const app = express();
 
 const PORT = process.env.PORT || 8000;
-healthServer.listen(PORT, () => {
-  console.log(`🏥 Health check server running on port ${PORT}`);
+const WEBHOOK_DOMAIN = process.env.WEBHOOK_DOMAIN || 'small-robinia-phukeo-8b5e1e16.koyeb.app';
+const WEBHOOK_PATH = '/telegram-webhook';
+
+// Middleware для парсинга JSON
+app.use(express.json());
+
+// 🏥 Health check endpoints
+app.get('/', (req, res) => {
+  res.send(`
+    <h1>🏝️ Phuket Tours Bot</h1>
+    <p>✅ Status: Running</p>
+    <p>⏱️ Uptime: ${Math.floor(process.uptime())}s</p>
+    <p>📱 Bot: @phuketgos_bot</p>
+    <p>🌐 Website: <a href="https://phukeo.com">phukeo.com</a></p>
+  `);
+});
+
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    bot: 'running',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString()
+  });
+});
+
+// 🎯 Telegram Webhook endpoint
+app.post(WEBHOOK_PATH, (req, res) => {
+  bot.handleUpdate(req.body, res);
+});
+
+// Запускаем Express сервер
+app.listen(PORT, async () => {
+  console.log(`✅ Сервер запущен на порту ${PORT}`);
+  console.log(`🏥 Health check: http://localhost:${PORT}/health`);
+  console.log('📱 Бот: @phuketgos_bot');
+  console.log('🗺️ Сайт: https://phukeo.com');
+  console.log('');
+  
+  // Устанавливаем webhook
+  const webhookUrl = `https://${WEBHOOK_DOMAIN}${WEBHOOK_PATH}`;
+  
+  try {
+    await bot.telegram.setWebhook(webhookUrl);
+    console.log(`✅ Webhook установлен: ${webhookUrl}`);
+    console.log('📊 Режим аналитики групп активирован');
+    console.log('💡 Команды для групп:');
+    console.log('   /getid - получить ID группы');
+    console.log('   /stats - посмотреть статистику');
+  } catch (error) {
+    console.error('❌ Ошибка установки webhook:', error.message);
+    console.log('💡 Проверьте WEBHOOK_DOMAIN в переменных окружения');
+    console.log('📝 Пример: WEBHOOK_DOMAIN=your-app.koyeb.app');
+  }
 });
 
 // Graceful shutdown
 process.once('SIGINT', () => {
-  healthServer.close();
+  console.log('⏸️ Получен SIGINT, останавливаем бот...');
   bot.stop('SIGINT');
+  process.exit(0);
 });
+
 process.once('SIGTERM', () => {
-  healthServer.close();
+  console.log('⏸️ Получен SIGTERM, останавливаем бот...');
   bot.stop('SIGTERM');
+  process.exit(0);
 });

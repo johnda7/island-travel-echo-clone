@@ -325,6 +325,22 @@ async function showMainMenu(ctx) {
     'Что вас интересует?',
     {
       reply_markup: {
+        keyboard: [
+          [{ text: '⭐ Популярные' }, { text: '🗺️ Все туры' }],
+          [{ text: '🏝️ Острова' }, { text: '🚣 Приключения' }, { text: '🏞️ Природа' }],
+          [{ text: '💬 AI помощь' }, { text: '📞 Менеджер' }]
+        ],
+        resize_keyboard: true,
+        one_time_keyboard: false
+      }
+    }
+  );
+  
+  // Дополнительно inline кнопки для быстрого доступа
+  await ctx.reply(
+    'Или выберите из категорий:',
+    {
+      reply_markup: {
         inline_keyboard: [
           [{ text: '💬 Расскажите что ищу', callback_data: 'start_ai' }],
           [
@@ -736,6 +752,187 @@ async function handleBookingComplete(ctx, session) {
   session.waitingManager = true;
 }
 
+// ====== ОБРАБОТКА ТЕКСТОВЫХ КНОПОК (REPLY KEYBOARD) ======
+bot.hears('⭐ Популярные', async (ctx) => {
+  await ctx.answerCbQuery?.() || Promise.resolve();
+  await bot.handleUpdate({
+    update_id: Date.now(),
+    callback_query: {
+      id: String(Date.now()),
+      from: ctx.from,
+      message: ctx.message,
+      data: 'popular_tours'
+    }
+  });
+});
+
+bot.hears('🗺️ Все туры', async (ctx) => {
+  await ctx.reply(
+    '🗺️ ВСЕ ТУРЫ (22):\n\n' +
+    'Выберите категорию:',
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '🏝️ Острова (13)', callback_data: 'cat_islands' }],
+          [{ text: '🚣 Приключения (4)', callback_data: 'cat_adventure' }],
+          [{ text: '🏞️ Природа (5)', callback_data: 'cat_nature' }],
+          [{ text: '⭐ Популярные', callback_data: 'popular_tours' }]
+        ]
+      }
+    }
+  );
+});
+
+bot.hears('🏝️ Острова', async (ctx) => {
+  // Вызываем существующий handler
+  const fakeUpdate = {
+    callback_query: {
+      id: String(Date.now()),
+      from: ctx.from,
+      message: ctx.message,
+      data: 'cat_islands'
+    }
+  };
+  await bot.handleUpdate(fakeUpdate);
+});
+
+bot.hears('🚣 Приключения', async (ctx) => {
+  const fakeUpdate = {
+    callback_query: {
+      id: String(Date.now()),
+      from: ctx.from,
+      message: ctx.message,
+      data: 'cat_adventure'
+    }
+  };
+  await bot.handleUpdate(fakeUpdate);
+});
+
+bot.hears('🏞️ Природа', async (ctx) => {
+  const fakeUpdate = {
+    callback_query: {
+      id: String(Date.now()),
+      from: ctx.from,
+      message: ctx.message,
+      data: 'cat_nature'
+    }
+  };
+  await bot.handleUpdate(fakeUpdate);
+});
+
+bot.hears('💬 AI помощь', async (ctx) => {
+  const fakeUpdate = {
+    callback_query: {
+      id: String(Date.now()),
+      from: ctx.from,
+      message: ctx.message,
+      data: 'start_ai'
+    }
+  };
+  await bot.handleUpdate(fakeUpdate);
+});
+
+bot.hears('📞 Менеджер', async (ctx) => {
+  await ctx.reply(
+    '📞 Напишите напрямую менеджеру:\n\n' +
+    '👤 @Phuketga\n\n' +
+    'Он ответит в течение 5-10 минут! 💬',
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '📞 Написать @Phuketga', url: 'https://t.me/Phuketga' }]
+        ]
+      }
+    }
+  );
+});
+
+// ====== КОМАНДЫ ДЛЯ MENU BUTTON ======
+bot.command('tours', async (ctx) => {
+  await ctx.reply(
+    '🗺️ ВСЕ ТУРЫ (22):\n\n' +
+    'Выберите категорию:',
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '🏝️ Острова (13)', callback_data: 'cat_islands' }],
+          [{ text: '🚣 Приключения (4)', callback_data: 'cat_adventure' }],
+          [{ text: '🏞️ Природа (5)', callback_data: 'cat_nature' }]
+        ]
+      }
+    }
+  );
+});
+
+bot.command('popular', async (ctx) => {
+  const fakeUpdate = {
+    callback_query: {
+      id: String(Date.now()),
+      from: ctx.from,
+      message: ctx.message,
+      data: 'popular_tours'
+    }
+  };
+  await bot.handleUpdate(fakeUpdate);
+});
+
+bot.command('islands', async (ctx) => {
+  const fakeUpdate = {
+    callback_query: {
+      id: String(Date.now()),
+      from: ctx.from,
+      message: ctx.message,
+      data: 'cat_islands'
+    }
+  };
+  await bot.handleUpdate(fakeUpdate);
+});
+
+bot.command('adventure', async (ctx) => {
+  const fakeUpdate = {
+    callback_query: {
+      id: String(Date.now()),
+      from: ctx.from,
+      message: ctx.message,
+      data: 'cat_adventure'
+    }
+  };
+  await bot.handleUpdate(fakeUpdate);
+});
+
+bot.command('nature', async (ctx) => {
+  const fakeUpdate = {
+    callback_query: {
+      id: String(Date.now()),
+      from: ctx.from,
+      message: ctx.message,
+      data: 'cat_nature'
+    }
+  };
+  await bot.handleUpdate(fakeUpdate);
+});
+
+bot.command('help', async (ctx) => {
+  await ctx.reply(
+    '❓ **ПОМОЩЬ**\n\n' +
+    '**Команды:**\n' +
+    '/start - Главное меню\n' +
+    '/tours - Все 22 тура\n' +
+    '/popular - Популярные туры\n' +
+    '/islands - Острова (13)\n' +
+    '/adventure - Приключения (4)\n' +
+    '/nature - Природа (5)\n\n' +
+    '**Кнопки меню:**\n' +
+    'Используйте кнопки внизу экрана для быстрого доступа!\n\n' +
+    '**AI помощь:**\n' +
+    'Нажмите "💬 AI помощь" и опишите что ищете - ' +
+    'умный ассистент подберёт идеальный тур!\n\n' +
+    '**Менеджер:**\n' +
+    'Нажмите "📞 Менеджер" для прямой связи с @Phuketga',
+    { parse_mode: 'Markdown' }
+  );
+});
+
 // ====== КОМАНДА /REPLY ДЛЯ МЕНЕДЖЕРА ======
 bot.command('reply', async (ctx) => {
   // Проверяем, что это менеджер
@@ -914,13 +1111,34 @@ app.listen(PORT, async () => {
     await bot.telegram.setWebhook(WEBHOOK_URL);
     console.log(`✅ Webhook установлен: ${WEBHOOK_URL}`);
     
+    // Устанавливаем Menu Button (кнопка рядом с полем ввода)
+    await bot.telegram.setChatMenuButton({
+      menu_button: {
+        type: 'commands'
+      }
+    });
+    console.log('✅ Menu Button установлен');
+    
+    // Устанавливаем команды для Menu
+    await bot.telegram.setMyCommands([
+      { command: 'start', description: '🏠 Главное меню' },
+      { command: 'tours', description: '🗺️ Все туры (22)' },
+      { command: 'popular', description: '⭐ Популярные туры' },
+      { command: 'islands', description: '🏝️ Острова (13)' },
+      { command: 'adventure', description: '🚣 Приключения (4)' },
+      { command: 'nature', description: '🏞️ Природа (5)' },
+      { command: 'help', description: '❓ Помощь' }
+    ]);
+    console.log('✅ Команды установлены');
+    
     // Уведомляем менеджера о запуске
     await bot.telegram.sendMessage(MANAGER_CHAT_ID,
       '🚀 **AI Бот запущен и готов к работе!**\n\n' +
       '🧠 Функции:\n' +
       '• AI консультант с GPT-3.5\n' +
       '• Deep links из Telegram канала\n' +
-      '• Полный контроль менеджера\n\n' +
+      '• Полный контроль менеджера\n' +
+      '• Menu Button + Reply Keyboard\n\n' +
       '⌨️ **Команды**:\n' +
       '`/reply CHAT_ID текст` - ответить клиенту\n' +
       '`/stats` - статистика\n\n' +

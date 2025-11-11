@@ -1112,25 +1112,33 @@ app.listen(PORT, async () => {
     console.log(`✅ Webhook установлен: ${WEBHOOK_URL}`);
     
     // Устанавливаем Menu Button (кнопка рядом с полем ввода)
-    await bot.telegram.setChatMenuButton({
-      menu_button: {
-        type: 'commands'
-      }
+    
+    // Устанавливаем команды ТОЛЬКО для приватных чатов
+    await bot.telegram.setMyCommands(
+      [
+        { command: 'start', description: '🏠 Главное меню' },
+        { command: 'tours', description: '🗺️ Все туры (22)' },
+        { command: 'popular', description: '⭐ Популярные туры' },
+        { command: 'islands', description: '🏝️ Острова (13)' },
+        { command: 'adventure', description: '🚣 Приключения (4)' },
+        { command: 'nature', description: '🏞️ Природа (5)' },
+        { command: 'help', description: '❓ Помощь' }
+      ],
+      { scope: { type: 'all_private_chats' } }
+    );
+    
+    // Для групп убираем команды
+    await bot.telegram.setMyCommands([], {
+      scope: { type: 'all_group_chats' }
     });
-    console.log('✅ Menu Button установлен');
     
-    // Устанавливаем команды для Menu
-    await bot.telegram.setMyCommands([
-      { command: 'start', description: '🏠 Главное меню' },
-      { command: 'tours', description: '🗺️ Все туры (22)' },
-      { command: 'popular', description: '⭐ Популярные туры' },
-      { command: 'islands', description: '🏝️ Острова (13)' },
-      { command: 'adventure', description: '🚣 Приключения (4)' },
-      { command: 'nature', description: '🏞️ Природа (5)' },
-      { command: 'help', description: '❓ Помощь' }
-    ]);
-    console.log('✅ Команды установлены');
+    // Menu Button только для приватных чатов
+    await bot.telegram.setChatMenuButton({
+      menu_button: { type: 'commands' }
+    });
     
+    console.log('✅ Команды и меню установлены (только для личных чатов)');
+
     // Уведомляем менеджера о запуске
     await bot.telegram.sendMessage(MANAGER_CHAT_ID,
       '🚀 **AI Бот запущен и готов к работе!**\n\n' +

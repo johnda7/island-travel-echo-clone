@@ -181,4 +181,159 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
+  
+  <!-- ⭐ TOURS - ВСЕ 22 ТУРА (Обновлено 15.11.2025) -->
+  
+  <!-- Топ-3 популярных тура - максимальный приоритет -->
+  <url>
+    <loc>https://phukeo.com/#/tours/phi-phi-2days</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/pearls-andaman-sea</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/dostoprimechatelnosti-phuketa</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  
+  <!-- Популярные островные туры -->
+  <url>
+    <loc>https://phukeo.com/#/tours/similan-islands</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/similan-islands-early</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/similan-islands-speedboat</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/james-bond-island</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/racha-coral-islands</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/racha-coral-sunrise</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/racha-coral-rawai</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  
+  <!-- Приключенческие туры -->
+  <url>
+    <loc>https://phukeo.com/#/tours/eleven-islands-mega</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/rafting-spa-atv</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/rafting-spa-1day</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/kao-lak-safari</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/avatar-plus-hangdong</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Природа и культура -->
+  <url>
+    <loc>https://phukeo.com/#/tours/phang-nga-skywalk</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/cheow-lan-lake</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/phang-nga-samet</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/krabi-secrets</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Рыбалка -->
+  <url>
+    <loc>https://phukeo.com/#/tours/fishing-sunrise</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  
+  <!-- Многодневные туры -->
+  <url>
+    <loc>https://phukeo.com/#/tours/phi-phi-sunrise</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/#/tours/five-pearls-2days</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Главная страница туров -->
+  <url>
+    <loc>https://phukeo.com/#/tours</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  
 </urlset>

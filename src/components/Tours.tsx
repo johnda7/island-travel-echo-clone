@@ -5,6 +5,7 @@ import { UniversalBookingModal } from "@/components/UniversalBookingModalWrapper
 import { ModalPortal } from "@/components/ModalPortal";
 import { useTours, TourWithMeta } from "@/hooks/useTours";
 import { TOURS_REGISTRY } from "@/data/toursRegistry";
+import { TourFilters, TourFilterOptions } from "@/components/TourFilters";
 import type { TourData } from "@/types/Tour";
 import fallbackImage from "@/assets/maya-bay-sunrise.jpg";
 
@@ -13,10 +14,30 @@ interface ToursProps {
 }
 
 export const Tours = ({ filteredTours }: ToursProps) => {
-  const { popularTours, loading } = useTours();
+  const { popularTours, allTours, loading } = useTours();
   
-  // Использовать переданные туры или популярные по умолчанию
-  const toursToShow = filteredTours || popularTours;
+  // Фильтрация туров
+  const [filters, setFilters] = useState<TourFilterOptions>({
+    priceRange: [0, 10000],
+    duration: [],
+    categories: []
+  });
+
+  // Применяем фильтры
+  const applyFilters = (tours: TourWithMeta[]) => {
+    return tours.filter(tour => {
+      // Фильтр по категориям
+      if (filters.categories.length > 0) {
+        if (!filters.categories.includes(tour.category)) return false;
+      }
+      
+      return true;
+    });
+  };
+  
+  // Используем переданные туры или популярные + фильтруем
+  const baseToursToShow = filteredTours || popularTours;
+  const toursToShow = applyFilters(baseToursToShow);
   
   // Состояние для модального окна бронирования
   const [showBookingModal, setShowBookingModal] = useState(false);
@@ -30,7 +51,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
       console.log('🚀 Начинаем предзагрузку всех туров');
       const loaded = new Map<string, TourData>();
       
-      for (const tour of toursToShow) {
+      for (const tour of baseToursToShow) {
         try {
           const tourRegistry = TOURS_REGISTRY.find(t => t.id === tour.id);
           if (tourRegistry) {
@@ -47,7 +68,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
       console.log('🎉 Все туры предзагружены:', loaded.size);
     };
 
-    if (toursToShow.length > 0) {
+    if (baseToursToShow.length > 0) {
       preloadAllTours();
     }
   }, [toursToShow]);
@@ -126,15 +147,40 @@ export const Tours = ({ filteredTours }: ToursProps) => {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Загружаем туры...</p>
+          <p className="mt-4 text-gray-600">Загрузка туров...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <section className="pt-4 pb-4" style={{ background: 'transparent' }}>
+    <section id="tours" className="py-16 bg-gradient-to-b from-white via-blue-50/30 to-white">
       <div className="container mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+            {filteredTours ? 'Результаты поиска' : 'Популярные туры'}
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            {filteredTours 
+              ? `Найдено ${toursToShow.length} туров` 
+              : 'Откройте для себя самые популярные направления Пхукета'
+            }
+          </p>
+        </div>
+
+        {/* Filters */}
+        {!filteredTours && (
+          <div className="mb-8">
+            <TourFilters 
+              onFilterChange={setFilters}
+              tourCount={toursToShow.length}
+            />
+          </div>
+        )}
+
+        {/* Tours Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Заголовок секции */}
         <div className="mb-6">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900" style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}>

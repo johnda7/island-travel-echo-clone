@@ -77,6 +77,7 @@ export const Gallery = () => {
               <img 
                 src={image.src} 
                 alt={image.title}
+                loading={index < 2 ? "eager" : "lazy"}
                 className="w-full h-full object-cover object-center transition-opacity duration-300"
               />
               

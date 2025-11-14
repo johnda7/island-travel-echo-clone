@@ -280,6 +280,7 @@ export const TourPageTemplate = ({
             <img 
               src={sortedGallery[mobileGalleryIndex]} 
               alt={tourData.title}
+              loading="eager"
               className="w-full h-full object-contain bg-gradient-to-b from-sky-100 to-blue-50" 
               draggable="false"
               style={{ userSelect: 'none' }}
@@ -360,7 +361,7 @@ export const TourPageTemplate = ({
                 <div className="col-span-2 row-span-2 cursor-pointer group relative overflow-hidden rounded-[28px] bg-gradient-to-b from-sky-100 to-blue-50" onClick={() => openModal(sortedGallery[0], 0)} style={{
                   boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
                 }}>
-                  <img src={sortedGallery[0]} alt="Main" className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105" />
+                  <img src={sortedGallery[0]} alt="Main" loading="eager" className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105" />
                   
                   {/* Desktop badges */}
                   <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
@@ -392,7 +393,7 @@ export const TourPageTemplate = ({
 
                 {sortedGallery.slice(1, 5).map((image, index) => (
                   <div key={index + 1} className="cursor-pointer group relative overflow-hidden rounded-2xl transition-all duration-300 bg-gradient-to-b from-sky-100 to-blue-50" onClick={() => index === 3 ? openGallery() : openModal(image, index + 1)}>
-                    <img src={image} alt={`Gallery ${index + 2}`} className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105" />
+                    <img src={image} alt={`Gallery ${index + 2}`} loading="lazy" className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105" />
                     {index === 3 && sortedGallery.length > 5 && (
                       <div className="absolute inset-0 flex items-center justify-center backdrop-blur-sm transition-all duration-300" style={{
                         background: 'rgba(0, 0, 0, 0.4)'
@@ -757,6 +758,7 @@ export const TourPageTemplate = ({
               <img 
                 src={selectedImage} 
                 alt="Gallery" 
+                loading="lazy"
                 className="max-w-[95%] max-h-[85vh] object-contain"
                 draggable="false"
               />

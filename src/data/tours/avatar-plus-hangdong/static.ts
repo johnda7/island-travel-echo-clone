@@ -1,6 +1,6 @@
 import { TourData } from '@/types/Tour';
 // Реальные изображения тура Аватар с phuketgo.aaddaa.com
-import avatarMain from "@/assets/avatar-plus-hangdong/6798780e8ebf0-17645-1200-800.jpg";
+import avatarMain from "@/assets/avatar-plus-hangdong/avatar-main-new.jpg";
 import benyaranMuseum1 from "@/assets/avatar-plus-hangdong/benyaran-museum-1.jpg";
 import benyaranMuseum2 from "@/assets/avatar-plus-hangdong/benyaran-museum-2.jpg";
 import benyaranMuseum4 from "@/assets/avatar-plus-hangdong/benyaran-museum-4.jpg";

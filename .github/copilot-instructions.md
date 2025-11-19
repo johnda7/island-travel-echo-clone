@@ -1,46 +1,132 @@
-# 🏝️ Phuket Tours Platform - AI Agent Instructions
+# 🏝️ Платформа Туров Пхукета - Инструкции для AI Агентов# 🏝️ Phuket Tours Platform - AI Agent Instructions# 🏝️ Phuket Tours Platform - AI Agent Instructions
 
-## Project Overview
 
-This is a **React + TypeScript tour booking platform** for Phuket excursions, built with Vite, styled with Tailwind CSS and shadcn/ui, implementing an iOS 26-inspired design system. The platform operates as a **WordPress-like CMS** where tours are centrally managed through a registry pattern.
 
-**Live Site**: https://phukeo.com  
-**Tech Stack**: React 18, TypeScript, Vite, Tailwind, React Router, Leaflet maps, Telegram Bot integration
+## 🧠 Контекст Проекта
 
----
+**Стек**: React 18, TypeScript, Vite, Tailwind CSS, shadcn/ui, Leaflet.
 
-## 🎯 Core Architecture Principles
+**Дизайн**: iOS 26 Native Feel (Глассморфизм, SF Pro, взаимодействия #007AFF).## 🧠 Project Context## Project Overview
 
-### 1. Centralized Tour Template System
+**Ядро**: Централизованный реестр в стиле "WordPress" с универсальным шаблоном тура.
 
-**All 22 tours** use the `TourPageTemplate` component - a single source of truth for tour pages:
+**Stack**: React 18, TypeScript, Vite, Tailwind CSS, shadcn/ui, Leaflet.
 
-```typescript
-// Every tour page follows this pattern (14 lines max):
-import { TourPageTemplate } from '@/components/TourPageTemplate';
-import { tourData, routePoints } from '@/data/tours/tour-slug';
+## 🏗️ Архитектура и Поток Данных
 
-export default () => <TourPageTemplate tourData={tourData} routePoints={routePoints} />;
-```
+- **Реестр** (`src/data/toursRegistry.ts`): Единый источник истины.**Design**: iOS 26 Native Feel (Glassmorphism, SF Pro, #007AFF interactions).This is a **React + TypeScript tour booking platform** for Phuket excursions, built with Vite, styled with Tailwind CSS and shadcn/ui, implementing an iOS 26-inspired design system. The platform operates as a **WordPress-like CMS** where tours are centrally managed through a registry pattern.
 
-**Critical**: Changes to `src/components/TourPageTemplate.tsx` affect ALL tours simultaneously. This file is **PROTECTED** - always ask before modifying.
+  - *Правило*: Добавлять новые туры в конец. НИКОГДА не менять существующие ID.
 
-### 2. WordPress-Style Tour Registry
+- **Шаблон** (`src/components/TourPageTemplate.tsx`): Рендерит ВСЕ туры.**Core**: Centralized "WordPress-style" registry with a universal tour template.
 
-Tours are registered in `src/data/toursRegistry.ts` which acts as the central database:
+  - *Правило*: **ЗАЩИЩЕНО**. Изменения здесь влияют на 22+ страницы. Используйте `npm run backup-template` перед редактированием.
 
-```typescript
-{
+- **Данные Тура**: Расположены в `src/data/tours/<slug>/`.**Live Site**: https://phukeo.com  
+
+  - Должны экспортировать `tourData` и `routePoints`.
+
+  - *Паттерн*: `export default () => <TourPageTemplate tourData={tourData} routePoints={routePoints} />;`## 🏗️ Architecture & Data Flow**Tech Stack**: React 18, TypeScript, Vite, Tailwind, React Router, Leaflet maps, Telegram Bot integration
+
+
+
+## 🚨 Критические Ограничения- **Registry** (`src/data/toursRegistry.ts`): The single source of truth.
+
+1.  **GPS Маршруты**: `RoutePoint` ОБЯЗАН иметь валидные `coordinates: [lat, lng]`. Никаких заглушек `[0,0]`.
+
+2.  **Изображения**: ВСЕГДА используйте алиас `@/assets/...`. НИКАКИХ относительных путей.  - *Rule*: Append new tours to the end. NEVER change existing IDs.---
+
+3.  **Защищенные Компоненты**: Спросить перед изменением:
+
+    - `TourPageTemplate.tsx` (Макет)- **Template** (`src/components/TourPageTemplate.tsx`): Renders ALL tours.
+
+    - `UniversalBookingModal.tsx` (Логика/Цены)
+
+    - `toursRegistry.ts` (База данных)  - *Rule*: **PROTECTED**. Changes here affect 22+ pages. Use `npm run backup-template` before editing.## 🎯 Core Architecture Principles
+
+4.  **Деплой**: Только вручную через GitHub Actions (теги `v*`). Нет авто-деплоя при пуше.
+
+- **Tour Data**: Located in `src/data/tours/<slug>/`.
+
+## 🛠️ Основные Рабочие Процессы
+
+- **Запуск Dev**: `npm run dev`  - Must export `tourData` and `routePoints`.### 1. Centralized Tour Template System
+
+- **Сборка**: `npm run build` (Запускает пост-билд скрипты для SEO/OG тегов).
+
+- **Добавить Тур**:  - *Pattern*: `export default () => <TourPageTemplate tourData={tourData} routePoints={routePoints} />;`
+
+    1. Создать `src/data/tours/<slug>/` с `static.ts` (данные) и `index.ts` (компонент).
+
+    2. Добавить реальные GPS координаты в `routePoints`.**All 22 tours** use the `TourPageTemplate` component - a single source of truth for tour pages:
+
+    3. Зарегистрировать в `toursRegistry.ts`.
+
+- **Исправление Ошибки GPS**: Если `Cannot read properties of undefined (reading 'lat')`, проверьте структуру `routePoints`.## 🚨 Critical Constraints
+
+
+
+## 📱 Telegram и Интеграции1.  **GPS Routes**: `RoutePoint` MUST have valid `coordinates: [lat, lng]`. No `[0,0]` placeholders.```typescript
+
+- **Бот**: `@Phuketga` (Node.js сервис в `bot/`).
+
+- **Шеринг**: Использует Telegram WebApp API или фоллбек `t.me/share`.2.  **Images**: ALWAYS use `@/assets/...` alias. NEVER relative paths.// Every tour page follows this pattern (14 lines max):
+
+- **Бронирование**: Форматированный текст отправляется в Telegram; нет бэкенд базы данных для заказов (только localStorage).
+
+3.  **Protected Components**: Ask before modifying:import { TourPageTemplate } from '@/components/TourPageTemplate';
+
+## 📂 Ключевые Пути
+
+- `AI_DOCS/` - Подробные гайды (Начать с `QUICK_REFERENCE.md`).    - `TourPageTemplate.tsx` (Layout)import { tourData, routePoints } from '@/data/tours/tour-slug';
+
+- `src/types/Tour.ts` - Определения типов (`TourData`, `RoutePoint`).
+
+- `src/assets/` - Изображения туров (организованы по слагу).    - `UniversalBookingModal.tsx` (Logic/Pricing)
+
+
+    - `toursRegistry.ts` (Database)export default () => <TourPageTemplate tourData={tourData} routePoints={routePoints} />;
+
+4.  **Deployment**: Manual only via GitHub Actions (tags `v*`). No auto-deploy on push.```
+
+
+
+## 🛠️ Common Workflows**Critical**: Changes to `src/components/TourPageTemplate.tsx` affect ALL tours simultaneously. This file is **PROTECTED** - always ask before modifying.
+
+- **Start Dev**: `npm run dev`
+
+- **Build**: `npm run build` (Runs postbuild scripts for SEO/OG tags).### 2. WordPress-Style Tour Registry
+
+- **Add Tour**:
+
+    1. Create `src/data/tours/<slug>/` with `static.ts` (data) and `index.ts` (component).Tours are registered in `src/data/toursRegistry.ts` which acts as the central database:
+
+    2. Add real GPS coordinates to `routePoints`.
+
+    3. Register in `toursRegistry.ts`.```typescript
+
+- **Fix GPS Error**: If `Cannot read properties of undefined (reading 'lat')`, check `routePoints` structure.{
+
   id: 'phi-phi-2days',
-  name: 'Пхи-Пхи 2 дня/1 ночь',
-  category: 'islands',
-  tags: ['море', 'острова', 'снорклинг', 'многодневные'],
-  isPopular: true,
+
+## 📱 Telegram & Integrations  name: 'Пхи-Пхи 2 дня/1 ночь',
+
+- **Bot**: `@Phuketga` (Node.js service in `bot/`).  category: 'islands',
+
+- **Sharing**: Uses Telegram WebApp API or `t.me/share` fallback.  tags: ['море', 'острова', 'снорклинг', 'многодневные'],
+
+- **Booking**: Formatted text sent to Telegram; no backend database for orders (localStorage only).  isPopular: true,
+
   isActive: true,
-  priority: 1,
-  data: () => Promise.resolve(phiPhi2DaysTourData)
-}
-```
+
+## 📂 Key Paths  priority: 1,
+
+- `AI_DOCS/` - Detailed guides (Start with `QUICK_REFERENCE.md`).  data: () => Promise.resolve(phiPhi2DaysTourData)
+
+- `src/types/Tour.ts` - Type definitions (`TourData`, `RoutePoint`).}
+
+- `src/assets/` - Tour images (organized by slug).```
+
 
 **Adding a tour**: Create folder in `src/data/tours/`, add to registry → tour appears everywhere automatically (search, menu, cards).
 

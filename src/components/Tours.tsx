@@ -154,7 +154,10 @@ export const Tours = ({ filteredTours }: ToursProps) => {
   }
 
   return (
-    <section id="tours" className="py-16 bg-gradient-to-b from-white via-blue-50/30 to-white">
+    <section 
+      id="tours" 
+      className="py-16 bg-gradient-to-b from-white via-blue-50/30 to-white"
+    >
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
@@ -224,6 +227,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
           />
         </ModalPortal>
       )}
+      </div>
     </section>
   );
 };

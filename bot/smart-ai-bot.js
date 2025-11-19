@@ -337,7 +337,6 @@ async function handleTourDeepLink(ctx, tourSlug) {
         }
       }
     );
-  });
 }
 
 // ====== ГЛАВНОЕ МЕНЮ (без deep link) ======

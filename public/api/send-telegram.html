@@ -10,15 +10,40 @@
 <body>
 <script>
 // Простой proxy через HTML страницу
+console.log('📡 Telegram Proxy loaded');
+
 window.addEventListener('message', async (event) => {
-    // Проверяем origin для безопасности (разрешаем prod и localhost для dev)
-    const allowedOrigins = ['https://phukeo.com', 'http://localhost:8080', 'http://localhost:3000'];
-    if (!allowedOrigins.includes(event.origin)) {
+    console.log('📨 Received message from:', event.origin, event.data);
+    
+    // Проверяем origin для безопасности (разрешаем prod, www и localhost для dev)
+    const allowedOrigins = [
+        'https://phukeo.com', 
+        'https://www.phukeo.com',
+        'http://localhost:8080', 
+        'http://localhost:3000',
+        'http://localhost:5173'
+    ];
+    
+    // Также разрешаем если origin пустой (тот же домен) или null
+    const isAllowed = allowedOrigins.includes(event.origin) || 
+                      event.origin === '' || 
+                      event.origin === 'null' ||
+                      event.origin === null;
+    
+    if (!isAllowed) {
         console.log('❌ Origin not allowed:', event.origin);
         return;
     }
 
     const { chat_id, text, requestId } = event.data;
+    
+    // Пропускаем если нет chat_id или text (это может быть ready сообщение)
+    if (!chat_id || !text) {
+        console.log('⏭️ Skipping - no chat_id or text');
+        return;
+    }
+    
+    console.log('📤 Sending to Telegram, chat_id:', chat_id);
 
     try {
         // ✅ НОВЫЙ ТОКЕН (старый отозван 24.11.2025 после взлома)
@@ -31,22 +56,29 @@ window.addEventListener('message', async (event) => {
         });
 
         const result = await response.json();
+        console.log('✅ Telegram API response:', result);
         
         // Отправляем результат обратно
-        event.source.postMessage({
-            requestId,
-            result
-        }, event.origin);
+        if (event.source) {
+            event.source.postMessage({
+                requestId,
+                result
+            }, event.origin || '*');
+        }
 
     } catch (error) {
-        event.source.postMessage({
-            requestId,
-            error: error.message
-        }, event.origin);
+        console.error('❌ Telegram API error:', error);
+        if (event.source) {
+            event.source.postMessage({
+                requestId,
+                error: error.message
+            }, event.origin || '*');
+        }
     }
 });
 
 // Сообщаем что готовы
+console.log('📡 Sending ready signal to parent');
 window.parent.postMessage({ ready: true }, '*');
 </script>
 </body>

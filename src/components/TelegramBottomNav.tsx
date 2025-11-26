@@ -2,10 +2,11 @@
 // iOS 26 Liquid Glass style - показывается только в Telegram
 // Паттерн Ex24: Чат посередине (крупная кнопка)
 
-import { Home, Ship, Search, MessageCircle, Menu, MapPin } from "lucide-react";
+import { Home, Ship, Search, MessageCircle, Menu, MapPin, X, Palmtree, Mountain, Compass, ChevronRight } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState, useMemo } from "react";
 import { useTours } from "@/hooks/useTours";
+import { useAutoMenu } from "@/hooks/useAutoMenu";
 import { getTourDetailPath } from "@/lib/paths";
 
 interface NavItem {
@@ -29,11 +30,13 @@ export const TelegramBottomNav = () => {
   const navigate = useNavigate();
   const [isTelegram, setIsTelegram] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   
-  // Используем туры для поиска
+  // Используем туры для поиска и меню
   const { allTours, loading } = useTours();
+  const { categories } = useAutoMenu();
   
   useEffect(() => {
     // Проверяем, открыто ли в Telegram
@@ -118,7 +121,7 @@ export const TelegramBottomNav = () => {
     {
       icon: <Menu className="w-6 h-6" />,
       label: "Меню",
-      path: "/contact"
+      path: "#menu"
     }
   ];
   
@@ -131,18 +134,20 @@ export const TelegramBottomNav = () => {
   const handleNavClick = (item: NavItem, e: React.MouseEvent) => {
     if (item.path === "#chat") {
       e.preventDefault();
-      // Открываем чат с ботом в Telegram
+      // Открываем чат с АККАУНТОМ Phuketga (не бот!)
       const tg = (window as any).Telegram?.WebApp;
       if (tg) {
-        // Используем openTelegramLink для перехода в чат с ботом
-        tg.openTelegramLink('https://t.me/PhuketgaBot');
+        // Переход в чат с аккаунтом @Phuketga
+        tg.openTelegramLink('https://t.me/Phuketga');
       } else {
-        // Fallback для обычного браузера
-        window.open('https://t.me/PhuketgaBot', '_blank');
+        window.open('https://t.me/Phuketga', '_blank');
       }
     } else if (item.path === "#search") {
       e.preventDefault();
       setShowSearch(true);
+    } else if (item.path === "#menu") {
+      e.preventDefault();
+      setShowMenu(true);
     }
   };
 
@@ -167,6 +172,155 @@ export const TelegramBottomNav = () => {
 
   return (
     <>
+      {/* Модальное меню с категориями */}
+      {showMenu && (
+        <div 
+          className="fixed inset-0 z-[60] flex flex-col justify-end"
+          onClick={() => setShowMenu(false)}
+        >
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+          
+          {/* Меню панель снизу */}
+          <div 
+            className="relative w-full max-h-[80vh] overflow-y-auto rounded-t-3xl"
+            style={{
+              background: 'rgba(255, 255, 255, 0.98)',
+              backdropFilter: 'blur(20px) saturate(180%)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Индикатор свайпа */}
+            <div className="flex justify-center pt-3 pb-2">
+              <div className="w-10 h-1 bg-gray-300 rounded-full"></div>
+            </div>
+            
+            {/* Заголовок */}
+            <div className="flex items-center justify-between px-5 pb-3 border-b border-gray-100">
+              <h2 
+                className="text-lg font-bold"
+                style={{ 
+                  color: '#1C1C1E',
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif' 
+                }}
+              >
+                Меню
+              </h2>
+              <button
+                onClick={() => setShowMenu(false)}
+                className="w-8 h-8 flex items-center justify-center rounded-full"
+                style={{ background: 'rgba(0, 0, 0, 0.05)' }}
+              >
+                <X className="w-4 h-4 text-gray-500" />
+              </button>
+            </div>
+            
+            {/* Основные разделы */}
+            <div className="p-4 space-y-2">
+              <Link
+                to="/"
+                onClick={() => setShowMenu(false)}
+                className="flex items-center gap-3 p-3 rounded-xl active:bg-gray-100"
+                style={{ background: 'rgba(0, 0, 0, 0.03)' }}
+              >
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(0, 122, 255, 0.1)' }}>
+                  <Home className="w-5 h-5" style={{ color: '#007AFF' }} />
+                </div>
+                <span className="font-medium" style={{ color: '#1C1C1E' }}>Главная</span>
+                <ChevronRight className="w-4 h-4 text-gray-400 ml-auto" />
+              </Link>
+              
+              <Link
+                to="/tours"
+                onClick={() => setShowMenu(false)}
+                className="flex items-center gap-3 p-3 rounded-xl active:bg-gray-100"
+                style={{ background: 'rgba(0, 0, 0, 0.03)' }}
+              >
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(52, 199, 89, 0.1)' }}>
+                  <Ship className="w-5 h-5" style={{ color: '#34C759' }} />
+                </div>
+                <span className="font-medium" style={{ color: '#1C1C1E' }}>Все туры</span>
+                <ChevronRight className="w-4 h-4 text-gray-400 ml-auto" />
+              </Link>
+            </div>
+            
+            {/* Категории туров */}
+            <div className="px-4 pb-2">
+              <div 
+                className="text-xs font-semibold uppercase tracking-wide mb-2 px-1"
+                style={{ color: '#8E8E93' }}
+              >
+                Категории
+              </div>
+              
+              <div className="space-y-2">
+                {categories.slice(0, 5).map((cat, idx) => (
+                  <Link
+                    key={cat.slug}
+                    to={cat.href}
+                    onClick={() => setShowMenu(false)}
+                    className="flex items-center gap-3 p-3 rounded-xl active:bg-gray-100"
+                    style={{ background: 'rgba(0, 0, 0, 0.03)' }}
+                  >
+                    <div 
+                      className="w-10 h-10 rounded-xl flex items-center justify-center"
+                      style={{ 
+                        background: idx === 0 ? 'rgba(0, 122, 255, 0.1)' : 
+                                   idx === 1 ? 'rgba(255, 149, 0, 0.1)' :
+                                   idx === 2 ? 'rgba(175, 82, 222, 0.1)' :
+                                   idx === 3 ? 'rgba(255, 59, 48, 0.1)' :
+                                   'rgba(90, 200, 250, 0.1)'
+                      }}
+                    >
+                      {idx === 0 ? <Palmtree className="w-5 h-5" style={{ color: '#007AFF' }} /> :
+                       idx === 1 ? <Mountain className="w-5 h-5" style={{ color: '#FF9500' }} /> :
+                       idx === 2 ? <Compass className="w-5 h-5" style={{ color: '#AF52DE' }} /> :
+                       <Ship className="w-5 h-5" style={{ color: '#FF3B30' }} />}
+                    </div>
+                    <div className="flex-1">
+                      <span className="font-medium" style={{ color: '#1C1C1E' }}>{cat.name}</span>
+                      <span className="text-xs text-gray-400 ml-2">({cat.count})</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-gray-400" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+            
+            {/* Контакты */}
+            <div className="px-4 pt-2 pb-6 border-t border-gray-100 mt-2">
+              <div 
+                className="text-xs font-semibold uppercase tracking-wide mb-2 px-1"
+                style={{ color: '#8E8E93' }}
+              >
+                Связаться
+              </div>
+              
+              <button
+                onClick={() => {
+                  const tg = (window as any).Telegram?.WebApp;
+                  if (tg) {
+                    tg.openTelegramLink('https://t.me/Phuketga');
+                  } else {
+                    window.open('https://t.me/Phuketga', '_blank');
+                  }
+                  setShowMenu(false);
+                }}
+                className="w-full flex items-center gap-3 p-3 rounded-xl active:bg-gray-100"
+                style={{ background: 'rgba(0, 122, 255, 0.08)' }}
+              >
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(0, 122, 255, 0.15)' }}>
+                  <MessageCircle className="w-5 h-5" style={{ color: '#007AFF' }} />
+                </div>
+                <div className="flex-1 text-left">
+                  <span className="font-medium" style={{ color: '#007AFF' }}>Написать менеджеру</span>
+                  <div className="text-xs text-gray-500">@Phuketga</div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Поиск - модальное окно с живыми подсказками */}
       {showSearch && (
         <div 
@@ -175,11 +329,11 @@ export const TelegramBottomNav = () => {
         >
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
           
-          {/* Поисковая панель - с отступом для Telegram UI (примерно 60px сверху) */}
+          {/* Поисковая панель - с отступом для Telegram UI (примерно 90px сверху) */}
           <div 
             className="relative w-full p-4"
             style={{
-              paddingTop: '70px', // Отступ для Telegram UI (кнопка закрыть и т.д.)
+              paddingTop: '90px', // Увеличенный отступ для Telegram UI
               background: 'rgba(255, 255, 255, 0.98)',
               backdropFilter: 'blur(20px) saturate(180%)',
             }}
@@ -190,7 +344,7 @@ export const TelegramBottomNav = () => {
               onClick={() => setShowSearch(false)}
               className="absolute right-4 text-gray-500 text-sm font-medium"
               style={{ 
-                top: '70px', // Ниже Telegram UI
+                top: '90px', // Ниже Telegram UI
                 fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' 
               }}
             >
@@ -311,7 +465,7 @@ export const TelegramBottomNav = () => {
         </div>
       )}
 
-      {/* Bottom Navigation */}
+      {/* Bottom Navigation - увеличенная высота для кнопки Чат */}
       <nav 
         className="fixed bottom-0 left-0 right-0 z-50 pb-safe"
         style={{
@@ -323,7 +477,7 @@ export const TelegramBottomNav = () => {
           boxShadow: '0 -1px 20px rgba(0, 0, 0, 0.05)'
         }}
       >
-        <div className="flex justify-around items-center h-16 max-w-lg mx-auto px-2">
+        <div className="flex justify-around items-end h-20 max-w-lg mx-auto px-2 pb-1">
           {navItems.map((item) => {
             const active = isActive(item.path);
             

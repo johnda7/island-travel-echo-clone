@@ -35,9 +35,9 @@ export const Contact = () => {
     });
   };
 
-  // Только Telegram - телефон и email не используем
+  // Telegram бот - @phuketgos_bot
   const openTelegramBot = () => {
-    window.open('https://t.me/PhuketgaBot', '_blank');
+    window.open('https://t.me/phuketgos_bot', '_blank');
   };
 
   return (
@@ -96,7 +96,7 @@ export const Contact = () => {
                 className="text-[13px]"
                 style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif", color: '#8E8E93' }}
               >
-                Phuket Go Bot — ответим быстро!
+                @phuketgos_bot — ответим быстро!
               </div>
             </div>
           </button>

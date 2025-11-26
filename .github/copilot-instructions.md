@@ -1,4 +1,18 @@
-# 🏝️ Phuket Tours Platform — AI Working Notes (concise)
+# 🏝️ Phuket Tours Plat## Deployment (curren## iOS 26 design constraints
+- Use only `#007AFF` for interactive elements; glassmorphism backdrop blur(20px)/saturate(180%); SF Pro stack; footer `#1C1C1E`; rating format "⭐ 4.9". Use `CheoLanLake` as visual reference.nonical)
+- Auto‑deploy on push to `main` via `.github/workflows/deploy-canonical.yml`.
+- CDN cache takes 1-5 minutes to update after deploy.
+- GitHub Pages must be set to "GitHub Actions".
+- **Troubleshooting**: If deploy succeeds but site unchanged → just wait or clear browser cache.
+- **NEVER append to index.html** with echo/cat commands — this breaks HTML parsing.
+
+## Telegram Mini App
+- Site works as Telegram Mini App when opened from @PhuketgaBot.
+- **In Telegram**: Header is hidden (`src/components/Header.tsx` returns null), bottom nav shows (`src/components/TelegramBottomNav.tsx`).
+- Detection: `window.Telegram?.WebApp?.initData` exists.
+- Bottom nav: Главная, Туры, Чат (center button → closes app), Поиск, Профиль.
+- Bot token: stored in Koyeb env vars, never commit to repo.
+- Manager Telegram ID: `1217592929`. — AI Working Notes (concise)
 
 React 18 + TypeScript + Vite. WordPress‑style CMS on React: one universal template renders all tours; a central registry is the “DB”. Design: iOS 26 (glass, SF Pro, single blue #007AFF). Live: https://phukeo.com
 
@@ -38,8 +52,9 @@ React 18 + TypeScript + Vite. WordPress‑style CMS on React: one universal temp
 ## Common fixes
 - Tour missing in UI: check registry `isActive`, tags.
 - All tours broken after edit → likely `TourPageTemplate.tsx`; restore from backup.
+- Deploy failed → check index.html for malformed HTML, ensure clean `</html>` ending.
 
 ## Key refs
-`src/components/TourPageTemplate.tsx` • `src/components/UniversalBookingModal.tsx` • `src/data/toursRegistry.ts` • `src/types/Tour.ts` • `AI_DOCS/` (quick refs and deep dives)
+`src/components/TourPageTemplate.tsx` • `src/components/UniversalBookingModal.tsx` • `src/data/toursRegistry.ts` • `src/types/Tour.ts` • `src/components/TelegramBottomNav.tsx` • `AI_DOCS/` (quick refs and deep dives)
 
 When editing, keep consistency with existing patterns; verify changes by reading the file after edits.

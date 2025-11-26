@@ -170,14 +170,19 @@ export const Header = () => {
   };
 
 
+  // В Telegram Mini App полностью скрываем Header - у Telegram свой UI сверху
+  if (isTelegramMiniApp) {
+    return null;
+  }
+
   return (
     <header className={`fixed top-0 left-0 right-0 liquid-glass-header z-50 ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container mx-auto px-4">
-        <div className={`flex items-center justify-between ${isTelegramMiniApp ? 'h-12' : 'h-16'}`}>
+        <div className="flex items-center justify-between h-16">
           {/* Logo - iOS 26 Liquid Glass */}
           <Link to="/" className="flex items-center space-x-2 group">
             <div 
-              className={`${isTelegramMiniApp ? 'w-8 h-8' : 'w-10 h-10'} rounded-full overflow-hidden flex items-center justify-center font-black text-lg transition-all duration-150`}
+              className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center font-black text-lg transition-all duration-150"
               style={{
                 background: 'linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%)',
                 backdropFilter: 'blur(20px) saturate(180%)',

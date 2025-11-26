@@ -89,18 +89,9 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Validate production (__build.txt)
-        env:
-          EXPECT_SHA: ${{ github.sha }}
+      - name: Post-deploy info
         run: |
-          set -e
-          echo "Expecting commit: $EXPECT_SHA"
-          URL="https://phukeo.com/__build.txt"
-          for i in 1 2 3 4 5 6 7 8 9 10; do
-            echo "Attempt $i: fetching $URL"
-            RESP=$(curl -fsSL "$URL?t=$RANDOM" || true)
-            echo "$RESP"
-            echo "$RESP" | grep -q "$EXPECT_SHA" && { echo "OK: production matches"; exit 0; }
-            sleep 6
-          done
-          echo "WARNING: build marker not matched yet. Pages propagation can take time." && exit 0
+          echo "✅ Deploy completed!"
+          echo "Site: https://phukeo.com"
+          echo "Commit: ${{ github.sha }}"
+          echo "Note: CDN cache may take 1-5 minutes to update"

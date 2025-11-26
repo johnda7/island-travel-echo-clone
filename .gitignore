@@ -26,3 +26,12 @@ dist-ssr
 # Backups (keep GOLDEN, ignore timestamped)
 backups/tour-template/*
 !backups/tour-template/TourPageTemplate-GOLDEN*.tsx
+
+# 🔒 СЕКРЕТНЫЕ КЛЮЧИ - НИКОГДА НЕ КОММИТИТЬ!
+.env
+.env.local
+.env.*.local
+bot/.env
+bot/.env.local
+**/.env
+**/.env.local

@@ -293,9 +293,7 @@ async function handleTourDeepLink(ctx, tourSlug) {
       reply_markup: {
         inline_keyboard: [
           [{ text: '💬 Обсудить с AI консультантом', callback_data: 'start_ai' }],
-          [{ text: '⚡ Быстрая форма', callback_data: 'quick_book' }],
-          [{ text: '📞 Связаться с менеджером', callback_data: 'contact_manager' }],
-          [{ text: '🗺️ Посмотреть другие туры', callback_data: 'show_tours' }]
+          [{ text: '📞 Связаться с менеджером', callback_data: 'contact_manager' }]
         ]
       }
     }
@@ -313,30 +311,12 @@ async function handleTourDeepLink(ctx, tourSlug) {
         reply_markup: {
           inline_keyboard: [
             [{ text: '💬 Обсудить с AI консультантом', callback_data: 'start_ai' }],
-            [{ text: '⚡ Быстрая форма', callback_data: 'quick_book' }],
-            [{ text: '📞 Связаться с менеджером', callback_data: 'contact_manager' }],
-            [{ text: '🗺️ Посмотреть другие туры', callback_data: 'show_tours' }]
+            [{ text: '📞 Связаться с менеджером', callback_data: 'contact_manager' }]
           ]
         }
       }
     );
-  // });
-    // Fallback если нет фото
-    ctx.reply(
-      `Отличный выбор! ${tour.name}\n\n` +
-      `📍 ${tour.description}\n` +
-      `⏱ ${tour.duration}\n` +
-      `💰 ${tour.price}\n\n` +
-      `Как вам удобнее?`,
-      {
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: '💬 AI консультант', callback_data: 'start_ai' }],
-            [{ text: '📞 Менеджер', callback_data: 'contact_manager' }]
-          ]
-        }
-      }
-    );
+  // End of handleTourDeepLink
 }
 
 // ====== ГЛАВНОЕ МЕНЮ (без deep link) ======
@@ -753,17 +733,16 @@ async function handleBookingComplete(ctx, session) {
   // Отправляем клиенту подтверждение
   await ctx.reply(
     '✅ Отлично! Я передал вашу заявку менеджеру.\n\n' +
-    '🔍 **Что происходит сейчас:**\n' +
+    '🔍 Что происходит сейчас:\n' +
     '• Проверяет наличие мест на вашу дату\n' +
     '• Уточняет финальную стоимость\n' +
     '• Готовит специальное предложение\n\n' +
-    '⏱ **Ответит здесь в течение 10-15 минут!**\n\n' +
+    '⏱ Менеджер ответит вам тут же в боте в ближайшее время!\n\n' +
     'А пока можете посмотреть отзывы:',
     {
       reply_markup: {
         inline_keyboard: [
           [{ text: '⭐ Отзывы о турах', url: 'https://phukeo.com/#/reviews' }],
-          [{ text: '📸 Фото с туров', url: 'https://phukeo.com/#/gallery' }],
           [{ text: '❓ Частые вопросы', url: 'https://phukeo.com/#/faq' }]
         ]
       }
@@ -1231,4 +1210,3 @@ bot.action('contact_manager', async (ctx) => {
     }
   );
 });
-// Force redeploy Wed Nov 19 23:43:09 +07 2025

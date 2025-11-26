@@ -13,7 +13,9 @@
     "backup-template": "mkdir -p backups/tour-template && cp src/components/TourPageTemplate.tsx backups/tour-template/TourPageTemplate-$(date +%Y%m%d-%H%M%S).tsx && echo '✅ Backup created in backups/tour-template/'",
     "restore-template": "cp backups/tour-template/TourPageTemplate-GOLDEN-$(date +%Y%m%d).tsx src/components/TourPageTemplate.tsx && echo '✅ Template restored from GOLDEN backup'",
     "save-golden": "cp src/components/TourPageTemplate.tsx backups/tour-template/TourPageTemplate-GOLDEN-$(date +%Y%m%d).tsx && echo '✅ GOLDEN version saved'",
-    "list-backups": "ls -lht backups/tour-template/ | head -15"
+    "list-backups": "ls -lht backups/tour-template/ | head -15",
+    "deploy:trigger": "git commit --allow-empty -m 'trigger deploy' && git push origin main",
+    "deploy:tag": "LAST=$(git describe --tags --abbrev=0 2>/dev/null || echo v0.0.0); V=${LAST#v}; IFS='.' read -r MA MI PA <<< \"$V\"; NEW=v${MA}.${MI}.$((PA+1)); git tag $NEW && git push origin $NEW && echo '✅ Tag created: '$NEW' (deploy workflow запущен)'"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

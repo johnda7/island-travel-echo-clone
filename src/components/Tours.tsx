@@ -25,14 +25,19 @@ export const Tours = ({ filteredTours }: ToursProps) => {
 
   // Применяем фильтры
   const applyFilters = (tours: TourWithMeta[]) => {
+    console.log('🎯 applyFilters called with', tours.length, 'tours');
+    console.log('🎯 Current filters:', filters);
+    
     return tours.filter(tour => {
       // Фильтр по категориям
       if (filters.categories.length > 0) {
+        console.log('Checking category:', tour.category, 'against', filters.categories);
         if (!filters.categories.includes(tour.category)) return false;
       }
       
       // Фильтр по длительности (проверяем теги)
       if (filters.duration.length > 0) {
+        console.log('Checking duration tags:', tour.tags, 'against', filters.duration);
         const hasDuration = filters.duration.some(dur => {
           if (dur === '1 день') {
             return tour.tags.some(tag => tag.includes('1 день') || tag.includes('1 day'));
@@ -53,8 +58,8 @@ export const Tours = ({ filteredTours }: ToursProps) => {
         if (!hasDuration) return false;
       }
       
-      // Фильтр по цене
-      if (tour.data?.priceAdult) {
+      // Фильтр по цене - только если данные загружены
+      if (tour.data?.priceAdult && (filters.priceRange[0] > 0 || filters.priceRange[1] < 10000)) {
         if (tour.data.priceAdult < filters.priceRange[0] || tour.data.priceAdult > filters.priceRange[1]) {
           return false;
         }
@@ -212,14 +217,6 @@ export const Tours = ({ filteredTours }: ToursProps) => {
         )}
 
         {/* Tours Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Заголовок секции */}
-        <div className="mb-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900" style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}>
-            Популярные туры
-          </h2>
-        </div>
-        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {toursToShow.map((tour, index) => (
             <TourCard 
@@ -244,18 +241,17 @@ export const Tours = ({ filteredTours }: ToursProps) => {
             </p>
           </div>
         )}
-      </div>
       
-      {/* Модальное окно бронирования */}
-      {selectedTour && (
-        <ModalPortal>
-          <UniversalBookingModal
-            isOpen={showBookingModal}
-            onClose={() => setShowBookingModal(false)}
-            tourData={selectedTour}
-          />
-        </ModalPortal>
-      )}
+        {/* Модальное окно бронирования */}
+        {selectedTour && (
+          <ModalPortal>
+            <UniversalBookingModal
+              isOpen={showBookingModal}
+              onClose={() => setShowBookingModal(false)}
+              tourData={selectedTour}
+            />
+          </ModalPortal>
+        )}
       </div>
     </section>
   );

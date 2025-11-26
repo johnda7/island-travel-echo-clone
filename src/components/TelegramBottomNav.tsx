@@ -2,7 +2,7 @@
 // iOS 26 Liquid Glass style - показывается только в Telegram
 // Паттерн Ex24: Чат посередине (крупная кнопка)
 
-import { Home, Ship, Search, MessageCircle, User, MapPin } from "lucide-react";
+import { Home, Ship, Search, MessageCircle, Menu, MapPin } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState, useMemo } from "react";
 import { useTours } from "@/hooks/useTours";
@@ -116,8 +116,8 @@ export const TelegramBottomNav = () => {
       path: "#search"
     },
     {
-      icon: <User className="w-6 h-6" />,
-      label: "Профиль",
+      icon: <Menu className="w-6 h-6" />,
+      label: "Меню",
       path: "/contact"
     }
   ];
@@ -134,8 +134,11 @@ export const TelegramBottomNav = () => {
       // Открываем чат с ботом в Telegram
       const tg = (window as any).Telegram?.WebApp;
       if (tg) {
-        // Закрываем Mini App и переходим в чат с ботом
-        tg.close();
+        // Используем openTelegramLink для перехода в чат с ботом
+        tg.openTelegramLink('https://t.me/PhuketgaBot');
+      } else {
+        // Fallback для обычного браузера
+        window.open('https://t.me/PhuketgaBot', '_blank');
       }
     } else if (item.path === "#search") {
       e.preventDefault();

@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, MessageCircle, Phone, Mail } from "lucide-react";
+import { Send, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
@@ -35,26 +35,10 @@ export const Contact = () => {
     });
   };
 
-  const contactMethods = [
-    {
-      icon: <MessageCircle className="w-5 h-5" />,
-      label: "Telegram",
-      value: "@PhuketgaBot",
-      color: "#007AFF"
-    },
-    {
-      icon: <Phone className="w-5 h-5" />,
-      label: "Телефон",
-      value: "+66 XX XXX XXXX",
-      color: "#34C759"
-    },
-    {
-      icon: <Mail className="w-5 h-5" />,
-      label: "Email",
-      value: "info@phukeo.com",
-      color: "#FF9500"
-    }
-  ];
+  // Только Telegram - телефон и email не используем
+  const openTelegramBot = () => {
+    window.open('https://t.me/PhuketgaBot', '_blank');
+  };
 
   return (
     <section className="py-10 relative overflow-hidden" style={{ background: '#1C1C1E' }}>
@@ -81,41 +65,41 @@ export const Contact = () => {
           </h2>
         </div>
         
-        {/* Contact Methods - Liquid Glass Cards */}
+        {/* Telegram Button - единственный способ связи */}
         <div 
           ref={cardsRef}
-          className={`grid grid-cols-3 gap-3 mb-6 scroll-reveal-stagger ${cardsVisible ? 'is-visible' : ''}`}
+          className={`mb-6 scroll-reveal ${cardsVisible ? 'is-visible' : ''}`}
         >
-          {contactMethods.map((method, idx) => (
+          <button
+            onClick={openTelegramBot}
+            className="w-full p-4 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 active:scale-[0.98]"
+            style={{
+              background: 'rgba(0, 122, 255, 0.15)',
+              backdropFilter: 'blur(20px) saturate(180%)',
+              border: '1px solid rgba(0, 122, 255, 0.3)'
+            }}
+          >
             <div 
-              key={idx}
-              className="p-3 rounded-2xl text-center"
-              style={{
-                background: 'rgba(255, 255, 255, 0.08)',
-                backdropFilter: 'blur(20px) saturate(180%)',
-                border: '1px solid rgba(255, 255, 255, 0.1)'
-              }}
+              className="w-12 h-12 rounded-xl flex items-center justify-center"
+              style={{ background: 'rgba(0, 122, 255, 0.2)' }}
             >
+              <MessageCircle className="w-6 h-6" style={{ color: '#007AFF' }} />
+            </div>
+            <div className="text-left">
               <div 
-                className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-2"
-                style={{ background: `${method.color}20`, color: method.color }}
-              >
-                {method.icon}
-              </div>
-              <div 
-                className="text-[11px] text-gray-400 mb-0.5"
+                className="text-[15px] font-semibold text-white"
                 style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}
               >
-                {method.label}
+                Написать в Telegram
               </div>
               <div 
-                className="text-[12px] text-white font-medium truncate"
-                style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}
+                className="text-[13px]"
+                style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif", color: '#8E8E93' }}
               >
-                {method.value}
+                Phuket Go Bot — ответим быстро!
               </div>
             </div>
-          ))}
+          </button>
         </div>
         
         {/* Contact Form - Liquid Glass */}

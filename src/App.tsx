@@ -10,7 +10,7 @@ import { TelegramProvider } from "@/contexts/TelegramContext";
 import Index from "./pages/Index";
 import Tours from "./pages/Tours";
 import ContactPage from "./pages/ContactPage";
-import AdminPanel from "./pages/AdminPanel";
+import AdminPanelNew from "./pages/AdminPanelNew"; // Новая улучшенная админка
 import BookingPage from "./pages/BookingPage";
 import ReviewsPage from "./pages/ReviewsPage";
 import NotFound from "./pages/NotFound";
@@ -46,6 +46,7 @@ import KrabiSecretsNew from "./pages/KrabiSecretsNew";
 // Динамический компонент для CMS туров
 import DynamicTourPage from "./components/DynamicTourPage";
 import ScrollToTop from "./components/ScrollToTop";
+import { TelegramBottomNav } from "./components/TelegramBottomNav";
 
 const queryClient = new QueryClient();
 
@@ -63,7 +64,7 @@ function App() {
                 <Route path="/" element={<Index />} />
                 <Route path="/tours" element={<Tours />} />
                 <Route path="/contact" element={<ContactPage />} />
-                <Route path="/admin" element={<AdminPanel />} />
+                <Route path="/admin" element={<AdminPanelNew />} />
                 <Route path="/booking" element={<BookingPage />} />
                 <Route path="/reviews" element={<ReviewsPage />} />
                 <Route path="/about" element={<ContactPage />} />
@@ -162,6 +163,9 @@ function App() {
               {/* 404 страница */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            
+            {/* Нижняя навигация для Telegram Mini App */}
+            <TelegramBottomNav />
           </ErrorBoundary>
         </HashRouter>
       </TooltipProvider>

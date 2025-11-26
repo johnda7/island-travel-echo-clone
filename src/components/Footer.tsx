@@ -1,13 +1,25 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Facebook, Instagram, Youtube } from "lucide-react";
 import logoImage from "@/assets/logo.jpg";
+import { useEffect, useState } from "react";
 
 export const Footer = () => {
+  const [isTelegramMiniApp, setIsTelegramMiniApp] = useState(false);
+  
+  useEffect(() => {
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg && tg.initData) {
+      setIsTelegramMiniApp(true);
+    }
+  }, []);
+  
   return (
     <footer 
       style={{ 
         background: '#1C1C1E',
-        borderTop: '1px solid rgba(255, 255, 255, 0.08)'
+        borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+        // Добавляем отступ снизу для Telegram Mini App нижней навигации
+        paddingBottom: isTelegramMiniApp ? '80px' : '0'
       }} 
       className="text-white"
     >

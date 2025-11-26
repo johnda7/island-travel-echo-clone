@@ -35,6 +35,7 @@ export const Header = () => {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [searchDropdownLeft, setSearchDropdownLeft] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isTelegramMiniApp, setIsTelegramMiniApp] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
@@ -44,6 +45,14 @@ export const Header = () => {
   // Используем централизованную систему туров
   const { allTours, loading } = useTours();
   const { mainMenuItems, categories } = useAutoMenu();
+
+  // Проверяем, открыто ли в Telegram Mini App
+  useEffect(() => {
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg && tg.initData) {
+      setIsTelegramMiniApp(true);
+    }
+  }, []);
 
   // Scroll effect for Liquid Glass header
   useEffect(() => {
@@ -164,11 +173,11 @@ export const Header = () => {
   return (
     <header className={`fixed top-0 left-0 right-0 liquid-glass-header z-50 ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className={`flex items-center justify-between ${isTelegramMiniApp ? 'h-12' : 'h-16'}`}>
           {/* Logo - iOS 26 Liquid Glass */}
           <Link to="/" className="flex items-center space-x-2 group">
             <div 
-              className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center font-black text-lg transition-all duration-150"
+              className={`${isTelegramMiniApp ? 'w-8 h-8' : 'w-10 h-10'} rounded-full overflow-hidden flex items-center justify-center font-black text-lg transition-all duration-150`}
               style={{
                 background: 'linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%)',
                 backdropFilter: 'blur(20px) saturate(180%)',

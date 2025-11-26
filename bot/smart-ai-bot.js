@@ -553,10 +553,12 @@ bot.action('start_ai', async (ctx) => {
 ТВОИ ЗАДАЧИ (СТРОГО ПО ОДНОМУ ВОПРОСУ ЗА РАЗ!):
 1. Если тур НЕ выбран: Узнай какой тур интересует.
 2. Если тур выбран: Узнай КОГДА хотят поехать (дата).
-3. Узнай КОЛИЧЕСТВО взрослых и детей.
-4. ЕСЛИ есть дети: Уточни возраст детей. (ВАЖНО: НЕ спрашивай имя ребенка! Только возраст).
-5. Узнай ИМЯ клиента для обращения (взрослого).
-6. После сбора ВСЕХ данных - передай менеджеру.
+3. Узнай КОЛИЧЕСТВО взрослых и детей (одним вопросом!).
+4. ЕСЛИ есть дети: Уточни возраст (до 12 лет - детская цена).
+5. После сбора данных - СРАЗУ передай менеджеру!
+
+⚠️ НЕ СПРАШИВАЙ ИМЯ! Имя уже известно из Telegram профиля.
+⚠️ Максимум 3 вопроса до передачи менеджеру!
 
 СОВЕТЫ ПО ВЫБОРУ:
 - Для семей с детьми: Рача+Корал, Пхи-Пхи, Достопримечательности (спокойные)
@@ -582,26 +584,58 @@ bot.action('start_ai', async (ctx) => {
 - Хамство → "Я здесь чтобы помочь с выбором тура. Если вопросы - обращайтесь к менеджеру"
 
 ВАЖНО - ФИНАЛЬНОЕ СООБЩЕНИЕ:
-После сбора ВСЕХ данных (дата, люди, имя) скажи:
-"Отлично, [Имя]! 📋 Передаю вашу заявку менеджеру:
+После сбора данных (дата + количество людей) сразу скажи:
+"Отлично! 📋 Передаю заявку менеджеру:
 
-Тур: [название]
-Дата: [дата]
-Человек: [взрослых + детей]
+🏝️ Тур: [название]
+📅 Дата: [дата]
+👥 Гостей: [взрослых] взр. + [детей] дет.
 
-Менеджер проверит наличие мест и свяжется с вами для подтверждения 📱✨"
+⏱ Менеджер проверит места и напишет вам здесь!"
 
 ПОМНИ: Ты ТОЛЬКО консультант по турам, НЕ универсальный помощник!`
     }
   ];
 
   await ctx.answerCbQuery();
-  await ctx.reply(
-    '💬 Отлично! Я помогу подобрать идеальный тур.\n\n' +
-    (session?.tour ? 
-      `Вы выбрали ${session.tour.name}. Когда планируете поездку?` : 
-      'Расскажите, что вы ищете? Море, приключения, культура?')
-  );
+  
+  // Если тур уже выбран - показываем кнопки для быстрого выбора даты
+  if (session?.tour) {
+    // Функция для форматирования даты
+    const formatDate = (daysFromNow) => {
+      const date = new Date();
+      date.setDate(date.getDate() + daysFromNow);
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      return `${day}.${month}`;
+    };
+    
+    await ctx.reply(
+      `🏝️ Отличный выбор: ${session.tour.name}\n` +
+      `💰 Цена: ${session.tour.price}\n\n` +
+      `📅 Когда планируете поездку?`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: `📅 Завтра (${formatDate(1)})`, callback_data: 'date_tomorrow' },
+              { text: `📅 Послезавтра (${formatDate(2)})`, callback_data: 'date_day_after' }
+            ],
+            [
+              { text: `📅 Через 3 дня (${formatDate(3)})`, callback_data: 'date_3days' },
+              { text: `📅 Через неделю`, callback_data: 'date_week' }
+            ],
+            [{ text: '✏️ Другая дата (напишу)', callback_data: 'date_custom' }]
+          ]
+        }
+      }
+    );
+  } else {
+    await ctx.reply(
+      '💬 Отлично! Я помогу подобрать идеальный тур.\n\n' +
+      'Расскажите, что вы ищете? Море, приключения, культура?'
+    );
+  }
   
   // Уведомляем менеджера
   try {
@@ -615,6 +649,156 @@ bot.action('start_ai', async (ctx) => {
   }
 });
 
+// ====== ОБРАБОТКА КНОПОК ВЫБОРА ДАТЫ ======
+bot.action(/date_(.+)/, async (ctx) => {
+  const userId = ctx.from.id;
+  const session = userSessions[userId];
+  const dateType = ctx.match[1];
+  
+  await ctx.answerCbQuery();
+  
+  // Вычисляем дату
+  const getDateString = (daysFromNow) => {
+    const date = new Date();
+    date.setDate(date.getDate() + daysFromNow);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+  };
+  
+  let selectedDate;
+  switch (dateType) {
+    case 'tomorrow': selectedDate = getDateString(1); break;
+    case 'day_after': selectedDate = getDateString(2); break;
+    case '3days': selectedDate = getDateString(3); break;
+    case 'week': selectedDate = getDateString(7); break;
+    case 'custom':
+      await ctx.reply('✏️ Напишите желаемую дату (например: 15.12 или 20 декабря)');
+      if (session) session.stage = 'waiting_date';
+      return;
+  }
+  
+  // Сохраняем дату в сессию
+  if (session) {
+    session.bookingData = session.bookingData || {};
+    session.bookingData.date = selectedDate;
+    session.stage = 'waiting_guests';
+  }
+  
+  // Спрашиваем количество гостей
+  await ctx.reply(
+    `📅 Дата: ${selectedDate}\n\n` +
+    `👥 Сколько человек поедет?`,
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: '1 взрослый', callback_data: 'guests_1_0' },
+            { text: '2 взрослых', callback_data: 'guests_2_0' }
+          ],
+          [
+            { text: '2 взр + 1 реб', callback_data: 'guests_2_1' },
+            { text: '2 взр + 2 реб', callback_data: 'guests_2_2' }
+          ],
+          [
+            { text: '3 взрослых', callback_data: 'guests_3_0' },
+            { text: '4 взрослых', callback_data: 'guests_4_0' }
+          ],
+          [{ text: '✏️ Другое количество', callback_data: 'guests_custom' }]
+        ]
+      }
+    }
+  );
+});
+
+// ====== ОБРАБОТКА КНОПОК ВЫБОРА ГОСТЕЙ ======
+bot.action(/guests_(\d+)_(\d+)/, async (ctx) => {
+  const userId = ctx.from.id;
+  const session = userSessions[userId];
+  const adults = parseInt(ctx.match[1]);
+  const children = parseInt(ctx.match[2]);
+  
+  await ctx.answerCbQuery();
+  
+  if (session) {
+    session.bookingData = session.bookingData || {};
+    session.bookingData.adults = adults;
+    session.bookingData.children = children;
+  }
+  
+  // Если есть дети - спрашиваем возраст
+  if (children > 0) {
+    session.stage = 'waiting_children_age';
+    await ctx.reply(
+      `👶 Укажите возраст ${children > 1 ? 'детей' : 'ребёнка'} (до 12 лет - детская цена)`
+    );
+    return;
+  }
+  
+  // Если детей нет - сразу завершаем бронирование
+  await completeQuickBooking(ctx, session);
+});
+
+bot.action('guests_custom', async (ctx) => {
+  const userId = ctx.from.id;
+  const session = userSessions[userId];
+  
+  await ctx.answerCbQuery();
+  if (session) session.stage = 'waiting_guests_text';
+  
+  await ctx.reply('✏️ Напишите сколько взрослых и детей (например: 2 взрослых и 1 ребёнок 8 лет)');
+});
+
+// ====== БЫСТРОЕ ЗАВЕРШЕНИЕ БРОНИРОВАНИЯ ======
+async function completeQuickBooking(ctx, session) {
+  const userId = ctx.from.id;
+  const booking = session?.bookingData || {};
+  const tour = session?.tour;
+  
+  // Формируем сообщение для менеджера
+  const managerMessage = 
+    `🎯 **НОВАЯ ЗАЯВКА!**\n\n` +
+    `👤 **Клиент**: ${session?.userName || ctx.from.first_name}\n` +
+    `📱 **Username**: @${session?.username || ctx.from.username || 'нет'}\n` +
+    `💬 **Chat ID**: \`${ctx.chat.id}\`\n\n` +
+    `🏝️ **Тур**: ${tour?.name || 'не выбран'}\n` +
+    `📅 **Дата**: ${booking.date || 'не указана'}\n` +
+    `👥 **Взрослых**: ${booking.adults || 0}\n` +
+    `👶 **Детей**: ${booking.children || 0}${booking.childrenAge ? ` (${booking.childrenAge})` : ''}\n\n` +
+    `⚡ Ответьте клиенту: \`/reply ${ctx.chat.id} текст\``;
+
+  try {
+    await bot.telegram.sendMessage(MANAGER_CHAT_ID, managerMessage, {
+      parse_mode: 'Markdown'
+    });
+  } catch (error) {
+    console.error('Error sending to manager:', error.message);
+  }
+
+  // Подтверждение клиенту
+  await ctx.reply(
+    `✅ Отлично! Заявка отправлена менеджеру:\n\n` +
+    `🏝️ ${tour?.name || 'Тур'}\n` +
+    `📅 ${booking.date}\n` +
+    `👥 ${booking.adults} взр.${booking.children > 0 ? ` + ${booking.children} дет.` : ''}\n\n` +
+    `⏱ Менеджер проверит наличие мест и напишет вам здесь в ближайшее время!`,
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '📋 Посмотреть другие туры', callback_data: 'popular_tours' }]
+        ]
+      }
+    }
+  );
+  
+  // Сбрасываем состояние
+  if (session) {
+    session.stage = 'completed';
+    session.aiMode = false;
+  }
+}
+
 // ====== ОБРАБОТКА ТЕКСТОВЫХ СООБЩЕНИЙ (AI РЕЖИМ) ======
 bot.on('text', async (ctx) => {
   const userId = ctx.from.id;
@@ -622,6 +806,66 @@ bot.on('text', async (ctx) => {
   
   // Игнорируем команды
   if (ctx.message.text.startsWith('/')) return;
+  
+  // Обработка ввода даты вручную
+  if (session?.stage === 'waiting_date') {
+    session.bookingData = session.bookingData || {};
+    session.bookingData.date = ctx.message.text;
+    session.stage = 'waiting_guests';
+    
+    await ctx.reply(
+      `📅 Дата: ${ctx.message.text}\n\n👥 Сколько человек поедет?`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: '1 взрослый', callback_data: 'guests_1_0' },
+              { text: '2 взрослых', callback_data: 'guests_2_0' }
+            ],
+            [
+              { text: '2 взр + 1 реб', callback_data: 'guests_2_1' },
+              { text: '2 взр + 2 реб', callback_data: 'guests_2_2' }
+            ],
+            [{ text: '✏️ Другое количество', callback_data: 'guests_custom' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // Обработка ввода возраста детей
+  if (session?.stage === 'waiting_children_age') {
+    session.bookingData.childrenAge = ctx.message.text;
+    await completeQuickBooking(ctx, session);
+    return;
+  }
+  
+  // Обработка ручного ввода гостей
+  if (session?.stage === 'waiting_guests_text') {
+    // Парсим текст для извлечения взрослых/детей
+    const text = ctx.message.text.toLowerCase();
+    const adultsMatch = text.match(/(\d+)\s*(взросл|чел)/);
+    const childrenMatch = text.match(/(\d+)\s*(реб|дет)/);
+    
+    session.bookingData.adults = adultsMatch ? parseInt(adultsMatch[1]) : 1;
+    session.bookingData.children = childrenMatch ? parseInt(childrenMatch[1]) : 0;
+    
+    if (session.bookingData.children > 0 && !text.includes('лет') && !text.includes('год')) {
+      session.stage = 'waiting_children_age';
+      await ctx.reply(`👶 Укажите возраст ${session.bookingData.children > 1 ? 'детей' : 'ребёнка'}`);
+      return;
+    }
+    
+    // Если возраст уже указан в тексте
+    if (session.bookingData.children > 0) {
+      const ageMatch = text.match(/(\d+)\s*(лет|год)/);
+      if (ageMatch) session.bookingData.childrenAge = ageMatch[1] + ' лет';
+    }
+    
+    await completeQuickBooking(ctx, session);
+    return;
+  }
   
   // Проверяем что включен AI режим
   if (!session?.aiMode) {

@@ -230,12 +230,20 @@ bot.use(session());
 // ====== ХРАНИЛИЩЕ СЕССИЙ ======
 const userSessions = {};
 
+// ====== ГЕНЕРАТОР НОМЕРА ЗАЯВКИ ======
+const generateOrderNumber = () => {
+  return Math.floor(1000000 + Math.random() * 9000000);
+};
+
 // ====== ОБРАБОТКА /START с DEEP LINKS ======
 bot.start(async (ctx) => {
   const userId = ctx.from.id;
   const tourSlug = ctx.payload; // Параметр из ссылки: t.me/bot?start=rafting
   
   console.log(`📝 START: User ${userId}, Tour: ${tourSlug || 'none'}`);
+  
+  // Генерируем номер заявки
+  const orderNumber = generateOrderNumber();
   
   // Инициализация сессии пользователя
   userSessions[userId] = {
@@ -247,19 +255,18 @@ bot.start(async (ctx) => {
     messages: [],
     stage: 'initial',
     aiMode: false,
-    bookingData: {}
+    bookingData: {},
+    orderNumber: orderNumber
   };
 
   // Уведомляем менеджера о новом клиенте
   try {
     await bot.telegram.sendMessage(MANAGER_CHAT_ID, 
-      `🆕 Новый клиент в боте!\n\n` +
-      `👤 Имя: ${ctx.from.first_name}\n` +
-      `🏷️ Username: @${ctx.from.username || 'нет'}\n` +
-      `🎯 Интересует тур: ${tourSlug ? TOURS_DB[tourSlug]?.name : 'не выбран'}\n` +
-      `💬 Chat ID: ${ctx.chat.id}\n` +
-      `📱 User ID: ${userId}\n\n` +
-      `📊 Наблюдайте за диалогом здесь.`
+      `🆕 Новый клиент #${orderNumber}\n\n` +
+      `👤 ${ctx.from.first_name} (@${ctx.from.username || 'нет username'})\n` +
+      `🎯 Тур: ${tourSlug ? TOURS_DB[tourSlug]?.name : 'выбирает'}\n` +
+      `💬 Chat ID: ${ctx.chat.id}\n\n` +
+      `Ответить: /reply ${ctx.chat.id} текст`
     );
   } catch (error) {
     console.error('Error notifying manager:', error.message);
@@ -270,7 +277,7 @@ bot.start(async (ctx) => {
     await handleTourDeepLink(ctx, tourSlug);
   } else {
     // Обычный старт без параметров
-    await showMainMenu(ctx);
+    await showMainMenu(ctx, orderNumber);
   }
 });
 
@@ -320,42 +327,159 @@ async function handleTourDeepLink(ctx, tourSlug) {
 }
 
 // ====== ГЛАВНОЕ МЕНЮ (без deep link) ======
-async function showMainMenu(ctx) {
+async function showMainMenu(ctx, orderNumber) {
+  // Первое сообщение - приветствие с номером заявки (как у Ex24)
   await ctx.reply(
-    '🌴 Добро пожаловать в Phuket Da Tours!\n\n' +
-    'Я умный AI-ассистент. Помогу выбрать идеальный тур.\n\n' +
-    'Что вас интересует?',
+    `✅ Добро пожаловать! Заявка #${orderNumber || generateOrderNumber()}\n\n` +
+    `👨‍💼 Менеджер уже подключается к чату\n\n` +
+    `➡️ Дополнительно: https://phukeo.com`,
     {
       reply_markup: {
-        keyboard: [
-          [{ text: '⭐ Популярные' }, { text: '🗺️ Все туры' }],
-          [{ text: '🏝️ Острова' }, { text: '🚣 Приключения' }, { text: '🏞️ Природа' }],
-          [{ text: '💬 AI помощь' }, { text: '📞 Менеджер' }]
-        ],
-        resize_keyboard: true,
-        one_time_keyboard: false
+        inline_keyboard: [
+          [
+            { text: '🏝️ Острова', callback_data: 'cat_islands' },
+            { text: '🚣 Приключения', callback_data: 'cat_adventure' }
+          ],
+          [
+            { text: '🏞️ Природа', callback_data: 'cat_nature' },
+            { text: '⭐ Популярные', callback_data: 'popular_tours' }
+          ],
+          [{ text: '🌐 Рус / Eng', callback_data: 'change_lang' }]
+        ]
       }
     }
   );
   
-  // Дополнительно inline кнопки для быстрого доступа
+  // Второе сообщение - описание и Mini App
   await ctx.reply(
-    'Или выберите из категорий:',
+    `🏝️ Phuket Tours — экскурсии на Пхукете\n\n` +
+    `У нас 22 тура на любой вкус:\n` +
+    `• Острова: Пхи-Пхи, Симиланы, Джеймс Бонд\n` +
+    `• Приключения: Рафтинг, Сафари, Рыбалка\n` +
+    `• Природа: Чео Лан, Краби, Храмы\n\n` +
+    `💰 Цены от 1800 бат\n` +
+    `� Трансфер включён\n\n` +
+    `Выберите категорию выше или откройте каталог 👇`,
     {
       reply_markup: {
         inline_keyboard: [
-          [{ text: '💬 Расскажите, что вы ищете', callback_data: 'start_ai' }],
-          [
-            { text: '🏝️ Острова', callback_data: 'cat_islands' },
-            { text: '🎢 Приключения', callback_data: 'cat_adventure' }
-          ],
-          [{ text: '⭐ Популярные туры', callback_data: 'popular_tours' }],
-          [{ text: '📞 Связаться напрямую', url: 'https://t.me/Phuketga' }]
+          [{ 
+            text: '📱 ОТКРЫТЬ КАТАЛОГ', 
+            web_app: { url: 'https://phukeo.com' }
+          }],
+          [{ text: '💬 Написать менеджеру', url: 'https://t.me/Phuketga' }]
         ]
       }
     }
   );
 }
+
+// ====== ОБРАБОТКА ДАННЫХ ИЗ MINI APP ======
+bot.on('web_app_data', async (ctx) => {
+  const userId = ctx.from.id;
+  const data = JSON.parse(ctx.webAppData.data);
+  
+  console.log('📱 WebApp data received:', data);
+  
+  // Данные бронирования из Mini App
+  if (data.type === 'booking') {
+    const booking = data.booking;
+    
+    // Сохраняем в сессию
+    if (!userSessions[userId]) {
+      userSessions[userId] = { 
+        chatId: ctx.chat.id, 
+        userName: ctx.from.first_name,
+        username: ctx.from.username
+      };
+    }
+    userSessions[userId].bookingData = booking;
+    
+    // Формируем сообщение для менеджера
+    const managerMessage = 
+      `🎯 **ЗАЯВКА ИЗ MINI APP!**\n\n` +
+      `👤 **Клиент**: ${ctx.from.first_name}\n` +
+      `📱 **Username**: @${ctx.from.username || 'нет'}\n` +
+      `💬 **Chat ID**: \`${ctx.chat.id}\`\n\n` +
+      `🏝️ **Тур**: ${booking.tourName}\n` +
+      `📅 **Дата**: ${booking.date}\n` +
+      `👥 **Взрослых**: ${booking.adults}\n` +
+      `👶 **Детей**: ${booking.children || 0}\n` +
+      `💰 **Сумма**: ${booking.totalPrice} ${booking.currency}\n\n` +
+      `📞 **Телефон**: ${booking.phone || 'не указан'}\n\n` +
+      `⚡ Ответьте: \`/reply ${ctx.chat.id} текст\``;
+
+    try {
+      await bot.telegram.sendMessage(MANAGER_CHAT_ID, managerMessage, {
+        parse_mode: 'Markdown'
+      });
+    } catch (error) {
+      console.error('Error sending to manager:', error.message);
+    }
+
+    // Подтверждение клиенту
+    await ctx.reply(
+      `✅ Заявка принята!\n\n` +
+      `🏝️ ${booking.tourName}\n` +
+      `📅 ${booking.date}\n` +
+      `👥 ${booking.adults} взр.${booking.children > 0 ? ` + ${booking.children} дет.` : ''}\n` +
+      `💰 ${booking.totalPrice} ${booking.currency}\n\n` +
+      `⏱ Менеджер проверит наличие мест и напишет вам здесь!`
+    );
+  }
+});
+
+// ====== СМЕНА ЯЗЫКА ======
+bot.action('change_lang', async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.reply(
+    '🌐 Choose language / Выберите язык:',
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: '🇷🇺 Русский', callback_data: 'lang_ru' },
+            { text: '🇬🇧 English', callback_data: 'lang_en' }
+          ]
+        ]
+      }
+    }
+  );
+});
+
+bot.action('lang_ru', async (ctx) => {
+  await ctx.answerCbQuery('✅ Русский язык выбран');
+  // Сохраняем в сессию
+  const userId = ctx.from.id;
+  if (userSessions[userId]) userSessions[userId].lang = 'ru';
+});
+
+bot.action('lang_en', async (ctx) => {
+  await ctx.answerCbQuery('✅ English selected');
+  const userId = ctx.from.id;
+  if (userSessions[userId]) userSessions[userId].lang = 'en';
+  
+  await ctx.reply(
+    `🏝️ Welcome to Phuket Tours!\n\n` +
+    `We have 22 tours:\n` +
+    `• Islands: Phi-Phi, Similan, James Bond\n` +
+    `• Adventure: Rafting, Safari, Fishing\n` +
+    `• Nature: Cheow Lan, Krabi, Temples\n\n` +
+    `💰 Prices from 1800 THB\n` +
+    `🚐 Transfer included`,
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [{ 
+            text: '📱 OPEN CATALOG', 
+            web_app: { url: 'https://phukeo.com' }
+          }],
+          [{ text: '💬 Contact manager', url: 'https://t.me/Phuketga' }]
+        ]
+      }
+    }
+  );
+});
 
 // ====== ПОКАЗАТЬ ПОПУЛЯРНЫЕ ТУРЫ ======
 bot.action('popular_tours', async (ctx) => {

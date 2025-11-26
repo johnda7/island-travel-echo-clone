@@ -11,15 +11,18 @@
 <script>
 // Простой proxy через HTML страницу
 window.addEventListener('message', async (event) => {
-    // Проверяем origin для безопасности
-    if (event.origin !== 'https://phukeo.com') {
+    // Проверяем origin для безопасности (разрешаем prod и localhost для dev)
+    const allowedOrigins = ['https://phukeo.com', 'http://localhost:8080', 'http://localhost:3000'];
+    if (!allowedOrigins.includes(event.origin)) {
+        console.log('❌ Origin not allowed:', event.origin);
         return;
     }
 
     const { chat_id, text, requestId } = event.data;
 
     try {
-        const BOT_TOKEN = '8475227105:AAE7bu_y4nd8EpIpyQqBZg88F76yFyflWww';
+        // ✅ НОВЫЙ ТОКЕН (старый отозван 24.11.2025 после взлома)
+        const BOT_TOKEN = '8475227105:AAFWvuOuD-2vB0Ka7n9GowGbcjsWzqeL1N8';
         
         const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
             method: 'POST',

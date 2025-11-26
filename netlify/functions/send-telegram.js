@@ -25,7 +25,8 @@ exports.handler = async (event) => {
   try {
     const { chat_id, text } = JSON.parse(event.body);
 
-    const BOT_TOKEN = '8475227105:AAE7bu_y4nd8EpIpyQqBZg88F76yFyflWww';
+    // ✅ НОВЫЙ ТОКЕН (старый отозван 24.11.2025 после взлома)
+    const BOT_TOKEN = '8475227105:AAFWvuOuD-2vB0Ka7n9GowGbcjsWzqeL1N8';
 
     const response = await fetch(
       `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,

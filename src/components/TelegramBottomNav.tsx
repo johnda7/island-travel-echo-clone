@@ -172,10 +172,11 @@ export const TelegramBottomNav = () => {
         >
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
           
-          {/* Поисковая панель сверху */}
+          {/* Поисковая панель - с отступом для Telegram UI (примерно 60px сверху) */}
           <div 
-            className="relative w-full p-4 pt-12"
+            className="relative w-full p-4"
             style={{
+              paddingTop: '70px', // Отступ для Telegram UI (кнопка закрыть и т.д.)
               background: 'rgba(255, 255, 255, 0.98)',
               backdropFilter: 'blur(20px) saturate(180%)',
             }}
@@ -184,8 +185,11 @@ export const TelegramBottomNav = () => {
             {/* Кнопка закрыть */}
             <button
               onClick={() => setShowSearch(false)}
-              className="absolute top-3 right-4 text-gray-500 text-sm font-medium"
-              style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}
+              className="absolute right-4 text-gray-500 text-sm font-medium"
+              style={{ 
+                top: '70px', // Ниже Telegram UI
+                fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' 
+              }}
             >
               Отмена
             </button>
@@ -277,7 +281,7 @@ export const TelegramBottomNav = () => {
                             {highlightMatches(tour.data.subtitle, debouncedQuery)}
                           </div>
                         )}
-                        {tour.data?.price && (
+                        {tour.data?.priceAdult && (
                           <div 
                             className="text-[13px] mt-1 font-medium"
                             style={{ 
@@ -285,7 +289,7 @@ export const TelegramBottomNav = () => {
                               fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' 
                             }}
                           >
-                            от {tour.data.price}
+                            от ฿{tour.data.priceAdult.toLocaleString()}
                           </div>
                         )}
                       </div>

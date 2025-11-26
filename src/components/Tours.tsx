@@ -31,6 +31,35 @@ export const Tours = ({ filteredTours }: ToursProps) => {
         if (!filters.categories.includes(tour.category)) return false;
       }
       
+      // Фильтр по длительности (проверяем теги)
+      if (filters.duration.length > 0) {
+        const hasDuration = filters.duration.some(dur => {
+          if (dur === '1 день') {
+            return tour.tags.some(tag => tag.includes('1 день') || tag.includes('1 day'));
+          }
+          if (dur === '2 дня') {
+            return tour.tags.some(tag => tag.includes('2 дня') || tag.includes('2 дн') || tag.includes('2 days'));
+          }
+          if (dur === '3+ дня') {
+            return tour.tags.some(tag => 
+              tag.includes('многодневные') || 
+              tag.includes('3 дня') || 
+              tag.includes('3+ дня') ||
+              tag.includes('ночевка')
+            );
+          }
+          return false;
+        });
+        if (!hasDuration) return false;
+      }
+      
+      // Фильтр по цене
+      if (tour.data?.priceAdult) {
+        if (tour.data.priceAdult < filters.priceRange[0] || tour.data.priceAdult > filters.priceRange[1]) {
+          return false;
+        }
+      }
+      
       return true;
     });
   };

@@ -2,9 +2,11 @@
 // iOS 26 Liquid Glass style - показывается только в Telegram
 // Паттерн Ex24: Чат посередине (крупная кнопка)
 
-import { Home, Ship, Search, MessageCircle, User } from "lucide-react";
+import { Home, Ship, Search, MessageCircle, User, MapPin } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { useTours } from "@/hooks/useTours";
+import { getTourDetailPath } from "@/lib/paths";
 
 interface NavItem {
   icon: React.ReactNode;
@@ -13,12 +15,25 @@ interface NavItem {
   isCenter?: boolean;
 }
 
+// Популярные запросы для быстрого поиска
+const POPULAR_SEARCHES = [
+  "Острова Пхи-Пхи",
+  "Джеймс Бонд",
+  "Симиланы",
+  "Морские туры",
+  "Као Лак"
+];
+
 export const TelegramBottomNav = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isTelegram, setIsTelegram] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+  
+  // Используем туры для поиска
+  const { allTours, loading } = useTours();
   
   useEffect(() => {
     // Проверяем, открыто ли в Telegram
@@ -28,6 +43,52 @@ export const TelegramBottomNav = () => {
       console.log('📱 Telegram Mini App detected - showing bottom nav');
     }
   }, []);
+  
+  // Debounce для поиска
+  useEffect(() => {
+    const id = setTimeout(() => setDebouncedQuery(searchQuery.trim()), 150);
+    return () => clearTimeout(id);
+  }, [searchQuery]);
+  
+  // Фильтрация туров
+  const filteredTours = useMemo(() => {
+    const q = (debouncedQuery || '').toLowerCase();
+    if (!q) return [];
+    
+    return allTours.filter(tour => {
+      const nameMatch = tour.name.toLowerCase().includes(q);
+      const tagsMatch = tour.tags.some(tag => tag.toLowerCase().includes(q));
+      
+      let dataMatch = false;
+      if (tour.data) {
+        dataMatch = 
+          tour.data.title?.toLowerCase().includes(q) ||
+          tour.data.subtitle?.toLowerCase().includes(q) ||
+          tour.data.description?.toLowerCase().includes(q) ||
+          false;
+      }
+      
+      return nameMatch || tagsMatch || dataMatch;
+    }).slice(0, 5); // Максимум 5 результатов
+  }, [allTours, debouncedQuery]);
+  
+  // Подсветка совпадений
+  const highlightMatches = (text: string | undefined, q: string) => {
+    if (!text) return null;
+    if (!q) return text;
+    const idx = text.toLowerCase().indexOf(q.toLowerCase());
+    if (idx === -1) return text;
+    const before = text.slice(0, idx);
+    const match = text.slice(idx, idx + q.length);
+    const after = text.slice(idx + q.length);
+    return (
+      <>
+        {before}
+        <mark className="bg-yellow-200/60 text-inherit rounded px-0.5">{match}</mark>
+        {after}
+      </>
+    );
+  };
   
   // Не показываем в обычном браузере
   if (!isTelegram) return null;
@@ -90,52 +151,156 @@ export const TelegramBottomNav = () => {
       setSearchQuery('');
     }
   };
+  
+  const handleSelectTour = (tourId: string) => {
+    navigate(getTourDetailPath(tourId));
+    setShowSearch(false);
+    setSearchQuery('');
+  };
+  
+  const handleQuickSearch = (query: string) => {
+    setSearchQuery(query);
+  };
 
   return (
     <>
-      {/* Поиск - модальное окно */}
+      {/* Поиск - модальное окно с живыми подсказками */}
       {showSearch && (
         <div 
-          className="fixed inset-0 z-[60] flex items-end justify-center"
+          className="fixed inset-0 z-[60] flex flex-col"
           onClick={() => setShowSearch(false)}
         >
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+          
+          {/* Поисковая панель сверху */}
           <div 
-            className="absolute inset-0 bg-black/30 backdrop-blur-sm"
-          />
-          <div 
-            className="relative w-full max-w-lg mx-4 mb-20 p-4 rounded-2xl"
+            className="relative w-full p-4 pt-12"
             style={{
-              background: 'rgba(255, 255, 255, 0.95)',
+              background: 'rgba(255, 255, 255, 0.98)',
               backdropFilter: 'blur(20px) saturate(180%)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)'
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <form onSubmit={handleSearch} className="flex gap-2">
+            {/* Кнопка закрыть */}
+            <button
+              onClick={() => setShowSearch(false)}
+              className="absolute top-3 right-4 text-gray-500 text-sm font-medium"
+              style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}
+            >
+              Отмена
+            </button>
+            
+            {/* Поле ввода */}
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="text"
-                placeholder="Найти тур..."
+                placeholder="Поиск туров..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 autoFocus
-                className="flex-1 px-4 py-3 rounded-xl border-0 outline-none text-lg"
+                className="w-full pl-12 pr-4 py-3.5 rounded-xl border-0 outline-none text-[17px]"
                 style={{
-                  background: 'rgba(0, 0, 0, 0.05)',
+                  background: 'rgba(0, 0, 0, 0.06)',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
                 }}
               />
-              <button
-                type="submit"
-                className="px-6 py-3 rounded-xl text-white font-medium"
-                style={{
-                  background: '#007AFF',
-                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                }}
-              >
-                Найти
-              </button>
-            </form>
+            </div>
+            
+            {/* Быстрые запросы - показываем когда нет ввода */}
+            {!searchQuery && (
+              <div className="mt-4">
+                <div className="text-xs text-gray-500 mb-2 font-medium">Популярные запросы</div>
+                <div className="flex flex-wrap gap-2">
+                  {POPULAR_SEARCHES.map((query) => (
+                    <button
+                      key={query}
+                      onClick={() => handleQuickSearch(query)}
+                      className="px-3 py-1.5 rounded-full text-sm"
+                      style={{
+                        background: 'rgba(0, 122, 255, 0.1)',
+                        color: '#007AFF',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                      }}
+                    >
+                      {query}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
+          
+          {/* Результаты поиска */}
+          {searchQuery && (
+            <div 
+              className="relative flex-1 overflow-y-auto"
+              style={{
+                background: 'rgba(255, 255, 255, 0.98)',
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {loading ? (
+                <div className="p-6 text-center">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500 mx-auto mb-3"></div>
+                  <div className="text-gray-500 text-sm">Поиск туров...</div>
+                </div>
+              ) : filteredTours.length > 0 ? (
+                <div className="divide-y divide-gray-100">
+                  {filteredTours.map((tour) => (
+                    <button
+                      key={tour.id}
+                      onClick={() => handleSelectTour(tour.id)}
+                      className="w-full p-4 flex items-start gap-3 text-left hover:bg-gray-50 active:bg-gray-100 transition-colors"
+                    >
+                      {/* Иконка тура */}
+                      <div 
+                        className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+                        style={{ background: 'rgba(0, 122, 255, 0.1)' }}
+                      >
+                        <MapPin className="w-5 h-5" style={{ color: '#007AFF' }} />
+                      </div>
+                      
+                      {/* Информация о туре */}
+                      <div className="flex-1 min-w-0">
+                        <div 
+                          className="font-medium text-gray-900 text-[15px] leading-5"
+                          style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}
+                        >
+                          {highlightMatches(tour.data?.title || tour.name, debouncedQuery)}
+                        </div>
+                        {tour.data?.subtitle && (
+                          <div 
+                            className="text-[13px] text-gray-500 mt-0.5 line-clamp-1"
+                            style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}
+                          >
+                            {highlightMatches(tour.data.subtitle, debouncedQuery)}
+                          </div>
+                        )}
+                        {tour.data?.price && (
+                          <div 
+                            className="text-[13px] mt-1 font-medium"
+                            style={{ 
+                              color: '#007AFF',
+                              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' 
+                            }}
+                          >
+                            от {tour.data.price}
+                          </div>
+                        )}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              ) : debouncedQuery.length > 0 ? (
+                <div className="p-6 text-center">
+                  <div className="text-gray-400 text-4xl mb-3">🔍</div>
+                  <div className="text-gray-600 font-medium">Ничего не найдено</div>
+                  <div className="text-gray-400 text-sm mt-1">Попробуйте другой запрос</div>
+                </div>
+              ) : null}
+            </div>
+          )}
         </div>
       )}
 

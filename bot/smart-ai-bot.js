@@ -343,8 +343,7 @@ async function showMainMenu(ctx, orderNumber) {
           [
             { text: '🏞️ Природа', callback_data: 'cat_nature' },
             { text: '⭐ Популярные', callback_data: 'popular_tours' }
-          ],
-          [{ text: '🌐 Рус / Eng', callback_data: 'change_lang' }]
+          ]
         ]
       }
     }
@@ -427,58 +426,6 @@ bot.on('web_app_data', async (ctx) => {
       `⏱ Менеджер проверит наличие мест и напишет вам здесь!`
     );
   }
-});
-
-// ====== СМЕНА ЯЗЫКА ======
-bot.action('change_lang', async (ctx) => {
-  await ctx.answerCbQuery();
-  await ctx.reply(
-    '🌐 Choose language / Выберите язык:',
-    {
-      reply_markup: {
-        inline_keyboard: [
-          [
-            { text: '🇷🇺 Русский', callback_data: 'lang_ru' },
-            { text: '🇬🇧 English', callback_data: 'lang_en' }
-          ]
-        ]
-      }
-    }
-  );
-});
-
-bot.action('lang_ru', async (ctx) => {
-  await ctx.answerCbQuery('✅ Русский язык выбран');
-  // Сохраняем в сессию
-  const userId = ctx.from.id;
-  if (userSessions[userId]) userSessions[userId].lang = 'ru';
-});
-
-bot.action('lang_en', async (ctx) => {
-  await ctx.answerCbQuery('✅ English selected');
-  const userId = ctx.from.id;
-  if (userSessions[userId]) userSessions[userId].lang = 'en';
-  
-  await ctx.reply(
-    `🏝️ Welcome to Phuket Tours!\n\n` +
-    `We have 22 tours:\n` +
-    `• Islands: Phi-Phi, Similan, James Bond\n` +
-    `• Adventure: Rafting, Safari, Fishing\n` +
-    `• Nature: Cheow Lan, Krabi, Temples\n\n` +
-    `💰 Prices from 1800 THB\n` +
-    `🚐 Transfer included`,
-    {
-      reply_markup: {
-        inline_keyboard: [
-          [{ 
-            text: '📱 OPEN CATALOG', 
-            web_app: { url: 'https://phukeo.com' }
-          }],
-          [{ text: '💬 Contact manager', url: 'https://t.me/Phuketga' }]
-        ]
-      }
-    }
-  );
 });
 
 // ====== ПОКАЗАТЬ ПОПУЛЯРНЫЕ ТУРЫ ======

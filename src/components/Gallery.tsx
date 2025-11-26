@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Camera, Eye, ArrowRight } from "lucide-react";
+import { Camera, ChevronRight, MapPin } from "lucide-react";
 
 // Get the base path for proper asset loading
 const getAssetPath = (path: string) => {
@@ -43,59 +43,88 @@ const galleryImages = [
 
 export const Gallery = () => {
   return (
-    <section id="gallery" className="relative py-6 bg-gradient-to-b from-slate-50 via-blue-50/30 to-white overflow-hidden">
-      {/* iOS 26 Style Background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-white"></div>
-      </div>
+    <section id="gallery" className="py-8 relative overflow-hidden">
+      {/* iOS 26 Subtle Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50/50 to-white"></div>
 
       <div className="relative z-10 container mx-auto px-4">
         {/* Header - iOS 26 Style */}
-        <div className="text-center mb-4 animate-fade-in">
-          <div className="flex items-center justify-center mb-2">
-            <Camera className="w-5 h-5 text-blue-600 mr-2" />
-            <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent" style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}>
+        <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center gap-2">
+            <div 
+              className="w-8 h-8 rounded-xl flex items-center justify-center"
+              style={{
+                background: 'linear-gradient(135deg, #5856D6 0%, #AF52DE 100%)',
+                boxShadow: '0 4px 12px rgba(88, 86, 214, 0.35)'
+              }}
+            >
+              <Camera className="w-4 h-4 text-white" />
+            </div>
+            <h2 
+              className="text-xl md:text-2xl font-bold"
+              style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif", color: '#1C1C1E' }}
+            >
               Галерея
             </h2>
-            <Eye className="w-5 h-5 text-cyan-600 ml-2" />
           </div>
-          <p className="text-sm md:text-base text-gray-600 max-w-3xl mx-auto font-light leading-relaxed" style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}>
-            Взгляните на <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent font-semibold">красоту мест</span>, которые вы можете посетить
-          </p>
+          <span 
+            className="text-sm text-gray-500"
+            style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}
+          >
+            {galleryImages.length} мест
+          </span>
         </div>
         
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+        {/* Gallery Grid - iOS 26 Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {galleryImages.map((image, index) => (
             <Link 
               key={index} 
               to={image.tour}
-              className={`group relative overflow-hidden rounded-2xl aspect-square cursor-pointer transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/20 animate-fade-in bg-white border border-gray-200 hover:scale-[1.02]`}
-              style={{ animationDelay: `${index * 100}ms` }}
+              className="group relative overflow-hidden rounded-[20px] aspect-square cursor-pointer transition-all duration-300 active:scale-[0.98]"
             >
               {/* Image */}
               <img 
                 src={image.src} 
                 alt={image.title}
                 loading={index < 2 ? "eager" : "lazy"}
-                className="w-full h-full object-cover object-center transition-opacity duration-300"
+                className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
               />
               
-              {/* iOS 26 Style Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              {/* Permanent Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
               
-              {/* Content Overlay - iOS 26 Style */}
-              <div className="absolute inset-0 flex flex-col justify-end p-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="backdrop-blur-xl bg-white/20 rounded-xl p-4 border border-white/30 shadow-lg">
-                  <h3 className="font-semibold text-lg mb-2 text-white" style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}>
+              {/* Content - Always Visible */}
+              <div className="absolute inset-x-0 bottom-0 p-3">
+                {/* Liquid Glass Label */}
+                <div 
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    backdropFilter: 'blur(20px) saturate(180%)',
+                    WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                    border: '1px solid rgba(255, 255, 255, 0.25)'
+                  }}
+                >
+                  <MapPin className="w-3 h-3 text-white" />
+                  <span 
+                    className="text-[12px] font-semibold text-white"
+                    style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}
+                  >
                     {image.title}
-                  </h3>
-                  <div className="flex items-center text-white/90 text-sm transition-colors duration-300" style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}>
-                    <span className="mr-2">Перейти к туру</span>
-                    <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
-                  </div>
+                  </span>
+                  <ChevronRight className="w-3 h-3 text-white/70 transition-transform duration-300 group-hover:translate-x-0.5" />
                 </div>
               </div>
+              
+              {/* Subtle Border */}
+              <div 
+                className="absolute inset-0 rounded-[20px] pointer-events-none"
+                style={{ 
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)'
+                }}
+              />
             </Link>
           ))}
         </div>

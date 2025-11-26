@@ -1,7 +1,8 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Waves, ArrowRight } from "lucide-react";
+import { ArrowDown, Waves, ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 // Get the base path for proper asset loading
 const getAssetPath = (path: string) => {
@@ -10,52 +11,119 @@ const getAssetPath = (path: string) => {
 };
 
 export const Hero = () => {
+  const [isTelegram, setIsTelegram] = useState(false);
+  
+  useEffect(() => {
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg && tg.initData) {
+      setIsTelegram(true);
+    }
+  }, []);
+  
   return (
-    <section className="relative h-[55vh] md:h-[60vh] flex items-center justify-center overflow-hidden">
+    <section className={`relative ${isTelegram ? 'h-[50vh]' : 'h-[55vh] md:h-[60vh]'} flex items-center justify-center overflow-hidden`}>
       {/* Animated Background */}
       <div className="absolute inset-0">
         {/* Main Background Image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
           style={{
             backgroundImage: `url('${getAssetPath("phi-phi-lagoon.jpg")}')`
           }}
         />
         
-        {/* iOS 26 Subtle Gradient Overlays - Clean & Minimal */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/60"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20"></div>
-      </div>
-      
-      {/* Hero Title - Top */}
-      <div className="absolute top-20 md:top-24 left-0 right-0 z-20 text-center animate-fade-in px-4">
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-2" style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}>
-          <span className="block text-white drop-shadow-[0_6px_16px_rgba(0,0,0,0.9)] [text-shadow:_0_2px_8px_rgb(0_0_0_/_80%)]">
-            ПХУКЕТ
-          </span>
-        </h1>
-        <p className="text-base md:text-lg text-white font-medium drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]" style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}>
-          Тропический рай ждёт вас
-        </p>
-      </div>
-      
-      {/* Main Content - Center */}
-      <div className="relative z-10 text-center text-white px-4 w-full h-full flex flex-col justify-end items-center pb-8">
+        {/* iOS 26 Cinematic Gradient Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/70"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
         
-        {/* Call to Action Button - Elegant & Centered */}
-        <div className="animate-fade-in delay-300">
+        {/* Subtle blue tint for iOS feel */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-cyan-900/20"></div>
+      </div>
+      
+      {/* Floating Liquid Glass Card - Main Content */}
+      <div className="relative z-10 w-full px-4 flex flex-col items-center justify-center h-full">
+        
+        {/* Hero Card - iOS 26 Liquid Glass */}
+        <div 
+          className="text-center px-8 py-10 rounded-[32px] max-w-md mx-auto animate-fade-in"
+          style={{
+            background: 'rgba(255, 255, 255, 0.12)',
+            backdropFilter: 'blur(40px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+            border: '1px solid rgba(255, 255, 255, 0.25)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+          }}
+        >
+          {/* Badge */}
+          <div 
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full mb-4"
+            style={{
+              background: 'rgba(0, 122, 255, 0.25)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(0, 122, 255, 0.3)'
+            }}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
+            <span 
+              className="text-[11px] font-semibold text-white/90"
+              style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}
+            >
+              Лучшие туры Пхукета
+            </span>
+          </div>
+          
+          {/* Title */}
+          <h1 
+            className="text-5xl md:text-6xl font-black mb-3 tracking-tight"
+            style={{ 
+              fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif",
+              background: 'linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.8) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              textShadow: '0 4px 24px rgba(0,0,0,0.3)'
+            }}
+          >
+            ПХУКЕТ
+          </h1>
+          
+          {/* Subtitle */}
+          <p 
+            className="text-white/80 text-base md:text-lg font-medium mb-6"
+            style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}
+          >
+            Тропический рай ждёт вас
+          </p>
+          
+          {/* CTA Button - iOS 26 Style */}
           <Button 
             size="lg" 
             asChild 
-            className="bg-[#007AFF] hover:bg-[#0051D5] text-white px-12 py-4 text-xl md:text-2xl font-semibold rounded-full shadow-[0_8px_32px_rgba(0,122,255,0.35),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_12px_40px_rgba(0,122,255,0.5),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-all duration-300 border-none transform hover:scale-105 backdrop-blur-xl"
-            style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}
+            className="w-full bg-[#007AFF] hover:bg-[#0051D5] text-white px-8 py-6 text-lg font-semibold rounded-2xl transition-all duration-300 border-none transform hover:scale-[1.02] active:scale-[0.98]"
+            style={{ 
+              fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif",
+              boxShadow: '0 4px 20px rgba(0, 122, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+            }}
           >
-            <Link to="/tours">
-              Выбрать тур
+            <Link to="/tours" className="flex items-center justify-center gap-2">
+              <span>Выбрать тур</span>
+              <ArrowRight className="w-5 h-5" />
             </Link>
           </Button>
         </div>
         
+        {/* Scroll indicator */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce">
+          <div 
+            className="w-8 h-8 rounded-full flex items-center justify-center"
+            style={{
+              background: 'rgba(255, 255, 255, 0.15)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255, 255, 255, 0.2)'
+            }}
+          >
+            <ArrowDown className="w-4 h-4 text-white/70" />
+          </div>
+        </div>
       </div>
     </section>
   );

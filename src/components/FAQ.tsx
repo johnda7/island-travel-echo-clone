@@ -1,5 +1,6 @@
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, HelpCircle } from "lucide-react";
 import { useState } from "react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const faqs = [
   {
@@ -22,33 +23,107 @@ const faqs = [
 
 export const FAQ = () => {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
+  const { ref: listRef, isVisible: listVisible } = useScrollReveal();
+  
   return (
-    <section className="relative py-12 bg-white overflow-hidden">
+    <section className="py-10 relative overflow-hidden">
+      {/* iOS 26 Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-white to-gray-50"></div>
+      
       <div className="relative z-10 container mx-auto px-4">
-        <div className="text-center mb-8 animate-fade-in">
-          <h2 className="text-3xl md:text-4xl font-bold mb-3 text-[#007AFF]" style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}>
-            Часто задаваемые вопросы
+        {/* Header - iOS 26 Style */}
+        <div 
+          ref={headerRef}
+          className={`flex items-center gap-2 mb-6 scroll-reveal ${headerVisible ? 'is-visible' : ''}`}
+        >
+          <div 
+            className="w-8 h-8 rounded-xl flex items-center justify-center"
+            style={{
+              background: 'linear-gradient(135deg, #34C759 0%, #30D158 100%)',
+              boxShadow: '0 4px 12px rgba(52, 199, 89, 0.35)'
+            }}
+          >
+            <HelpCircle className="w-4 h-4 text-white" />
+          </div>
+          <h2 
+            className="text-xl md:text-2xl font-bold"
+            style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif", color: '#1C1C1E' }}
+          >
+            Частые вопросы
           </h2>
-          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}>
-            Ответы на самые популярные вопросы о наших турах и экскурсиях на Пхукете
-          </p>
         </div>
-        <div className="max-w-2xl mx-auto">
+        
+        {/* FAQ Items - Liquid Glass Cards */}
+        <div 
+          ref={listRef}
+          className={`max-w-2xl mx-auto space-y-3 scroll-reveal-stagger ${listVisible ? 'is-visible' : ''}`}
+        >
           {faqs.map((faq, idx) => (
-            <div key={idx} className="mb-3 animate-fade-in" style={{ animationDelay: `${idx * 100}ms` }}>
+            <div 
+              key={idx} 
+              className="rounded-2xl overflow-hidden transition-all duration-300"
+              style={{
+                background: openIdx === idx 
+                  ? 'rgba(0, 122, 255, 0.08)'
+                  : 'rgba(255, 255, 255, 0.8)',
+                backdropFilter: 'blur(20px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                border: openIdx === idx 
+                  ? '1px solid rgba(0, 122, 255, 0.2)'
+                  : '1px solid rgba(0, 0, 0, 0.06)',
+                boxShadow: openIdx === idx 
+                  ? '0 4px 20px rgba(0, 122, 255, 0.15)'
+                  : '0 2px 8px rgba(0, 0, 0, 0.04)'
+              }}
+            >
               <button
-                className={`w-full flex justify-between items-center ${openIdx === idx ? 'bg-[#007AFF]' : 'bg-white'} rounded-2xl shadow-md px-5 py-4 text-left font-semibold ${openIdx === idx ? 'text-white' : 'text-gray-900'} hover:shadow-lg transition-all duration-300 border ${openIdx === idx ? 'border-[#007AFF]' : 'border-gray-200'}`}
+                className="w-full flex justify-between items-center px-5 py-4 text-left"
                 onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
-                style={{ fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif" }}
               >
-                {faq.question}
-                <ChevronDown className={`w-5 h-5 ml-2 transition-transform duration-300 ${openIdx === idx ? 'rotate-180' : ''}`} />
-              </button>
-              {openIdx === idx && (
-                <div className="px-5 py-4 text-gray-700 bg-[#007AFF] text-white rounded-b-2xl animate-slideDown" style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}>
-                  {faq.answer}
+                <span 
+                  className="font-semibold text-[15px] pr-4"
+                  style={{ 
+                    fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif",
+                    color: openIdx === idx ? '#007AFF' : '#1C1C1E'
+                  }}
+                >
+                  {faq.question}
+                </span>
+                <div 
+                  className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300"
+                  style={{
+                    background: openIdx === idx 
+                      ? 'rgba(0, 122, 255, 0.15)'
+                      : 'rgba(0, 0, 0, 0.05)',
+                    transform: openIdx === idx ? 'rotate(180deg)' : 'rotate(0deg)'
+                  }}
+                >
+                  <ChevronDown 
+                    className="w-4 h-4" 
+                    style={{ color: openIdx === idx ? '#007AFF' : '#8E8E93' }}
+                  />
                 </div>
-              )}
+              </button>
+              
+              {/* Answer - Smooth expand */}
+              <div 
+                className="overflow-hidden transition-all duration-300"
+                style={{
+                  maxHeight: openIdx === idx ? '200px' : '0',
+                  opacity: openIdx === idx ? 1 : 0
+                }}
+              >
+                <p 
+                  className="px-5 pb-4 text-[14px] leading-relaxed"
+                  style={{ 
+                    fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif",
+                    color: '#636366'
+                  }}
+                >
+                  {faq.answer}
+                </p>
+              </div>
             </div>
           ))}
         </div>

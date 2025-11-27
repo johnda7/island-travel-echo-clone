@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
@@ -11,6 +11,16 @@ import { ModalPortal } from "@/components/ModalPortal";
 import { MobileBookingBar } from "@/components/MobileBookingBar";
 import { TourRouteMap } from "@/components/TourRouteMap";
 import type { TourData, RoutePoint } from "@/types/Tour";
+
+// Haptic Feedback helper
+const haptic = (style: 'light' | 'medium' | 'heavy' = 'light') => {
+  try {
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg?.HapticFeedback) {
+      tg.HapticFeedback.impactOccurred(style);
+    }
+  } catch (e) {}
+};
 
 interface TourPageTemplateProps {
   tourData: TourData;
@@ -26,6 +36,7 @@ export const TourPageTemplate = ({
   breadcrumbCategoryLink = "/tours"
 }: TourPageTemplateProps) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [showFullGallery, setShowFullGallery] = useState(false);
@@ -34,9 +45,55 @@ export const TourPageTemplate = ({
   const [mobileGalleryIndex, setMobileGalleryIndex] = useState<number>(0);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [sortedGallery, setSortedGallery] = useState<string[]>(tourData.gallery);
+  const [isTelegram, setIsTelegram] = useState(false);
+
+  // 📱 Telegram Mini App: Back Button и Main Button
+  useEffect(() => {
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg && tg.initData) {
+      setIsTelegram(true);
+      
+      // === BACK BUTTON ===
+      // Показываем кнопку "Назад" на страницах туров
+      tg.BackButton.show();
+      
+      const handleBack = () => {
+        haptic('light');
+        navigate(-1);
+      };
+      
+      tg.BackButton.onClick(handleBack);
+      
+      // === MAIN BUTTON (Забронировать) ===
+      tg.MainButton.setParams({
+        text: `Забронировать • ฿${tourData.priceAdult.toLocaleString()}`,
+        color: '#007AFF',
+        text_color: '#FFFFFF',
+        is_active: true,
+        is_visible: true
+      });
+      tg.MainButton.show();
+      
+      const handleMainButton = () => {
+        haptic('medium');
+        setShowBookingModal(true);
+      };
+      
+      tg.MainButton.onClick(handleMainButton);
+      
+      // Cleanup
+      return () => {
+        tg.BackButton.offClick(handleBack);
+        tg.BackButton.hide();
+        tg.MainButton.offClick(handleMainButton);
+        tg.MainButton.hide();
+      };
+    }
+  }, [navigate, tourData.priceAdult]);
 
   // 📱 Telegram Mini App Share функция
   const handleShare = async () => {
+    haptic('light'); // Haptic feedback при share
     const fullUrl = `https://phukeo.com${location.pathname}`;
     
     console.log('🔍 Share button clicked');

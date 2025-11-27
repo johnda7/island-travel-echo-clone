@@ -1,13 +1,24 @@
 // 📱 Telegram Mini App Bottom Navigation
 // iOS 26 Liquid Glass style - показывается только в Telegram
 // Паттерн Ex24: Чат посередине (крупная кнопка)
+// + Haptic Feedback для кнопок
 
 import { Home, Ship, Search, MessageCircle, Menu, MapPin, X, Palmtree, Mountain, Compass, ChevronRight } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useTours } from "@/hooks/useTours";
 import { useAutoMenu } from "@/hooks/useAutoMenu";
 import { getTourDetailPath } from "@/lib/paths";
+
+// Haptic Feedback helper
+const haptic = (style: 'light' | 'medium' | 'heavy' = 'light') => {
+  try {
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg?.HapticFeedback) {
+      tg.HapticFeedback.impactOccurred(style);
+    }
+  } catch (e) {}
+};
 
 interface NavItem {
   icon: React.ReactNode;
@@ -132,6 +143,8 @@ export const TelegramBottomNav = () => {
   };
 
   const handleNavClick = (item: NavItem, e: React.MouseEvent) => {
+    haptic('light'); // Haptic feedback при нажатии
+    
     if (item.path === "#chat") {
       e.preventDefault();
       // Открываем чат с АККАУНТОМ Phuketga (не бот!)
@@ -161,12 +174,14 @@ export const TelegramBottomNav = () => {
   };
   
   const handleSelectTour = (tourId: string) => {
+    haptic('medium'); // Чуть сильнее при выборе тура
     navigate(getTourDetailPath(tourId));
     setShowSearch(false);
     setSearchQuery('');
   };
   
   const handleQuickSearch = (query: string) => {
+    haptic('light');
     setSearchQuery(query);
   };
 
@@ -218,7 +233,7 @@ export const TelegramBottomNav = () => {
             <div className="p-4 space-y-2">
               <Link
                 to="/"
-                onClick={() => setShowMenu(false)}
+                onClick={() => { haptic('light'); setShowMenu(false); }}
                 className="flex items-center gap-3 p-3 rounded-xl active:bg-gray-100"
                 style={{ background: 'rgba(0, 0, 0, 0.03)' }}
               >
@@ -231,7 +246,7 @@ export const TelegramBottomNav = () => {
               
               <Link
                 to="/tours"
-                onClick={() => setShowMenu(false)}
+                onClick={() => { haptic('light'); setShowMenu(false); }}
                 className="flex items-center gap-3 p-3 rounded-xl active:bg-gray-100"
                 style={{ background: 'rgba(0, 0, 0, 0.03)' }}
               >
@@ -257,7 +272,7 @@ export const TelegramBottomNav = () => {
                   <Link
                     key={cat.slug}
                     to={cat.href}
-                    onClick={() => setShowMenu(false)}
+                    onClick={() => { haptic('light'); setShowMenu(false); }}
                     className="flex items-center gap-3 p-3 rounded-xl active:bg-gray-100"
                     style={{ background: 'rgba(0, 0, 0, 0.03)' }}
                   >
@@ -297,6 +312,7 @@ export const TelegramBottomNav = () => {
               
               <button
                 onClick={() => {
+                  haptic('medium'); // Важное действие - средний haptic
                   const tg = (window as any).Telegram?.WebApp;
                   if (tg) {
                     tg.openTelegramLink('https://t.me/Phuketga');

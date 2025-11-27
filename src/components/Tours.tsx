@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Clock, Users, Calendar, Star, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { UniversalBookingModal } from "@/components/UniversalBookingModalWrapper";
@@ -23,27 +23,46 @@ export const Tours = ({ filteredTours }: ToursProps) => {
     categories: []
   });
 
-  // Применяем фильтры
-  const applyFilters = (tours: TourWithMeta[]) => {
-    console.log('🎯 applyFilters called with', tours.length, 'tours');
-    console.log('🎯 Current filters:', filters);
+  // Базовые туры для отображения
+  const baseTours = filteredTours || popularTours;
+
+  // Применяем фильтры с useMemo для оптимизации
+  const toursToShow = useMemo(() => {
+    // Если нет активных фильтров - возвращаем все базовые туры
+    const hasActiveFilters = 
+      filters.categories.length > 0 || 
+      filters.duration.length > 0 || 
+      filters.priceRange[0] > 0 || 
+      filters.priceRange[1] < 10000;
     
-    return tours.filter(tour => {
+    if (!hasActiveFilters) {
+      return baseTours;
+    }
+    
+    return baseTours.filter(tour => {
       // Фильтр по категориям
       if (filters.categories.length > 0) {
-        console.log('Checking category:', tour.category, 'against', filters.categories);
-        if (!filters.categories.includes(tour.category)) return false;
+        if (!filters.categories.includes(tour.category)) {
+          return false;
+        }
       }
       
       // Фильтр по длительности (проверяем теги)
       if (filters.duration.length > 0) {
-        console.log('Checking duration tags:', tour.tags, 'against', filters.duration);
         const hasDuration = filters.duration.some(dur => {
           if (dur === '1 день') {
-            return tour.tags.some(tag => tag.includes('1 день') || tag.includes('1 day'));
+            return tour.tags.some(tag => 
+              tag.includes('1 день') || 
+              tag.includes('1 day') ||
+              tag.includes('однодневн')
+            );
           }
           if (dur === '2 дня') {
-            return tour.tags.some(tag => tag.includes('2 дня') || tag.includes('2 дн') || tag.includes('2 days'));
+            return tour.tags.some(tag => 
+              tag.includes('2 дня') || 
+              tag.includes('2 дн') || 
+              tag.includes('2 days')
+            );
           }
           if (dur === '3+ дня') {
             return tour.tags.some(tag => 
@@ -58,20 +77,19 @@ export const Tours = ({ filteredTours }: ToursProps) => {
         if (!hasDuration) return false;
       }
       
-      // Фильтр по цене - только если данные загружены
-      if (tour.data?.priceAdult && (filters.priceRange[0] > 0 || filters.priceRange[1] < 10000)) {
-        if (tour.data.priceAdult < filters.priceRange[0] || tour.data.priceAdult > filters.priceRange[1]) {
+      // Фильтр по цене
+      if (tour.data?.priceAdult) {
+        if (filters.priceRange[0] > 0 && tour.data.priceAdult < filters.priceRange[0]) {
+          return false;
+        }
+        if (filters.priceRange[1] < 10000 && tour.data.priceAdult > filters.priceRange[1]) {
           return false;
         }
       }
       
       return true;
     });
-  };
-  
-  // Используем переданные туры или популярные + фильтруем
-  const baseToursToShow = filteredTours || popularTours;
-  const toursToShow = applyFilters(baseToursToShow);
+  }, [baseTours, filters]);
   
   // Состояние для модального окна бронирования
   const [showBookingModal, setShowBookingModal] = useState(false);
@@ -85,13 +103,12 @@ export const Tours = ({ filteredTours }: ToursProps) => {
       console.log('🚀 Начинаем предзагрузку всех туров');
       const loaded = new Map<string, TourData>();
       
-      for (const tour of baseToursToShow) {
+      for (const tour of baseTours) {
         try {
           const tourRegistry = TOURS_REGISTRY.find(t => t.id === tour.id);
           if (tourRegistry) {
             const tourData = await tourRegistry.data();
             loaded.set(tour.id, tourData);
-            console.log('✅ Предзагружен тур:', tour.id);
           }
         } catch (error) {
           console.error('❌ Ошибка предзагрузки тура:', tour.id, error);
@@ -102,10 +119,10 @@ export const Tours = ({ filteredTours }: ToursProps) => {
       console.log('🎉 Все туры предзагружены:', loaded.size);
     };
 
-    if (baseToursToShow.length > 0) {
+    if (baseTours.length > 0) {
       preloadAllTours();
     }
-  }, [toursToShow]);
+  }, [baseTours]);
 
   // Простая функция для определения пути тура
   const getDetailPath = (tour: TourWithMeta) => {

@@ -19,12 +19,11 @@ export const TourFilters = ({ onFilterChange, tourCount }: TourFiltersProps) => 
   const [selectedDurations, setSelectedDurations] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  const durations = ['1 день', '2 дня', '3+ дня'];
+  const durations = ['1 день', '2 дня'];
   const categories = [
     { id: 'islands', label: '🏝️ Острова' },
-    { id: 'mainland', label: '🗻 Материк' },
-    { id: 'adventure', label: '⚡ Приключения' },
-    { id: 'cultural', label: '🏛️ Культура' },
+    { id: 'adventure', label: '🌿 Природа' },
+    { id: 'cultural', label: '🏛️ Обзорные' },
     { id: 'diving', label: '🤿 Дайвинг' },
     { id: 'fishing', label: '🎣 Рыбалка' }
   ];

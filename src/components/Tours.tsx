@@ -51,24 +51,18 @@ export const Tours = ({ filteredTours }: ToursProps) => {
       if (filters.duration.length > 0) {
         const hasDuration = filters.duration.some(dur => {
           if (dur === '1 день') {
-            return tour.tags.some(tag => 
-              tag.includes('1 день') || 
-              tag.includes('1 day') ||
-              tag.includes('однодневн')
+            // Все однодневные туры (НЕ содержат 2 дня/ночевка/многодневные)
+            const isMultiDay = tour.tags.some(tag => 
+              tag.includes('2 дня') || 
+              tag.includes('многодневные') ||
+              tag.includes('ночевка')
             );
+            return !isMultiDay;
           }
           if (dur === '2 дня') {
             return tour.tags.some(tag => 
               tag.includes('2 дня') || 
-              tag.includes('2 дн') || 
-              tag.includes('2 days')
-            );
-          }
-          if (dur === '3+ дня') {
-            return tour.tags.some(tag => 
-              tag.includes('многодневные') || 
-              tag.includes('3 дня') || 
-              tag.includes('3+ дня') ||
+              tag.includes('многодневные') ||
               tag.includes('ночевка')
             );
           }

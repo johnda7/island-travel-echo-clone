@@ -524,11 +524,19 @@ export const Header = () => {
               <div style={{
                 animation: `fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) ${mainMenuItems.length * 0.05 + 0.1}s both`
               }}>
-                <a 
-                  href="https://t.me/Phuketga" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="btn-telegram block text-center mt-6 hover:transform hover:scale-105 active:scale-95"
+                <button 
+                  onClick={() => {
+                    const tg = (window as any).Telegram?.WebApp;
+                    if (tg?.HapticFeedback) {
+                      tg.HapticFeedback.impactOccurred('medium');
+                    }
+                    if (tg) {
+                      tg.openTelegramLink('https://t.me/Phuketga');
+                    } else {
+                      window.open('https://t.me/Phuketga', '_blank');
+                    }
+                  }}
+                  className="btn-telegram block text-center mt-6 hover:transform hover:scale-105 active:scale-95 w-full"
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -538,8 +546,8 @@ export const Header = () => {
                   }}
                 >
                   <Send className="w-5 h-5" style={{ transform: 'rotate(-35deg)' }} />
-                  Написать в Telegram
-                </a>
+                  Написать менеджеру
+                </button>
               </div>
             </nav>
           </div>

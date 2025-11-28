@@ -199,9 +199,24 @@ const Tours = () => {
         {/* Компонент с турами */}
         {loading ? (
           <div className="container mx-auto px-4 py-6">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-green-600 mx-auto" />
-              <p className="mt-4 text-gray-600">Загружаем туры...</p>
+            {/* Skeleton loader - пульсирующие карточки */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-sm animate-pulse">
+                  {/* Изображение */}
+                  <div className="h-48 bg-gray-200" />
+                  {/* Контент */}
+                  <div className="p-4 space-y-3">
+                    <div className="h-5 bg-gray-200 rounded w-3/4" />
+                    <div className="h-4 bg-gray-200 rounded w-full" />
+                    <div className="h-4 bg-gray-200 rounded w-2/3" />
+                    <div className="flex justify-between items-center pt-2">
+                      <div className="h-6 bg-gray-200 rounded w-24" />
+                      <div className="h-8 bg-gray-200 rounded w-28" />
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         ) : (

@@ -505,12 +505,22 @@ export const TourPageTemplate = ({
                           Забронировать тур
                         </Button>
                         <Button 
-                          onClick={() => window.open('https://t.me/Phuketga', '_blank')} 
+                          onClick={() => {
+                            const tg = (window as any).Telegram?.WebApp;
+                            if (tg?.HapticFeedback) {
+                              tg.HapticFeedback.impactOccurred('medium');
+                            }
+                            if (tg) {
+                              tg.openTelegramLink('https://t.me/Phuketga');
+                            } else {
+                              window.open('https://t.me/Phuketga', '_blank');
+                            }
+                          }} 
                           className="btn-telegram w-full"
                         >
                           <span className="flex flex-col items-center leading-tight">
                             <span>Написать</span>
-                            <span>в Телеграм</span>
+                            <span>менеджеру</span>
                           </span>
                         </Button>
                       </div>

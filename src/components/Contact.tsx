@@ -37,7 +37,15 @@ export const Contact = () => {
 
   // Telegram бот - @phuketgos_bot
   const openTelegramBot = () => {
-    window.open('https://t.me/phuketgos_bot', '_blank');
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg?.HapticFeedback) {
+      tg.HapticFeedback.impactOccurred('medium');
+    }
+    if (tg) {
+      tg.openTelegramLink('https://t.me/phuketgos_bot');
+    } else {
+      window.open('https://t.me/phuketgos_bot', '_blank');
+    }
   };
 
   return (
@@ -90,7 +98,7 @@ export const Contact = () => {
                 className="text-[15px] font-semibold text-white"
                 style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif" }}
               >
-                Написать в Telegram
+                Написать менеджеру
               </div>
               <div 
                 className="text-[13px]"

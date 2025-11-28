@@ -14,8 +14,24 @@ export const MobileBookingBar: React.FC<MobileBookingBarProps> = ({
   currency,
   onBookingClick
 }) => {
+  // Haptic feedback для кнопок
+  const haptic = (style: 'light' | 'medium' | 'heavy' = 'light') => {
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg?.HapticFeedback) {
+      tg.HapticFeedback.impactOccurred(style);
+    }
+  };
+
   const handleTelegramClick = () => {
-    window.location.href = 'https://t.me/Phuketga';
+    haptic('medium');
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg) {
+      // В Telegram Mini App - открываем чат плавно
+      tg.openTelegramLink('https://t.me/Phuketga');
+    } else {
+      // В браузере - обычный переход
+      window.open('https://t.me/Phuketga', '_blank');
+    }
   };
 
   return (
@@ -36,27 +52,18 @@ export const MobileBookingBar: React.FC<MobileBookingBarProps> = ({
                 e.stopPropagation();
                 handleTelegramClick();
               }}
-              onTouchEnd={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleTelegramClick();
-              }}
               className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2.5 text-xs font-medium active:scale-95"
             >
               <span className="flex flex-col items-center leading-tight">
-                <span>Написать в</span>
-                <span>Телеграм</span>
+                <span>Написать</span>
+                <span>менеджеру</span>
               </span>
             </Button>
             <Button 
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                onBookingClick();
-              }}
-              onTouchEnd={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
+                haptic('light');
                 onBookingClick();
               }}
               className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2.5 text-sm font-medium active:scale-95"

@@ -171,7 +171,7 @@ bot.start(async (ctx) => {
           `📅 Выберите дату и количество человек! ⬇️`,
         reply_markup: {
           inline_keyboard: [
-            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/rafting-spa-atv' } }],
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/rafting-spa-atv-1-day' } }],
             [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
             [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
           ]
@@ -229,7 +229,7 @@ bot.start(async (ctx) => {
           `📅 Выберите дату! ⬇️`,
         reply_markup: {
           inline_keyboard: [
-            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/kao-lak-safari' } }],
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/kao-lak-safari-1-day' } }],
             [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
             [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
           ]
@@ -288,7 +288,7 @@ bot.start(async (ctx) => {
           `📅 Выберите дату! ⬇️`,
         reply_markup: {
           inline_keyboard: [
-            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/james-bond-island' } }],
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/james-bond-island-phang-nga' } }],
             [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
             [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
           ]
@@ -377,7 +377,7 @@ bot.start(async (ctx) => {
           `📅 Выберите дату! ⬇️`,
         reply_markup: {
           inline_keyboard: [
-            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/racha-coral-islands' } }],
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/racha-coral-islands-speedboat' } }],
             [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
             [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
           ]
@@ -709,7 +709,7 @@ bot.start(async (ctx) => {
   
   // Обычное приветствие (если без параметра) - показываем главное меню
   await ctx.reply(
-    `👋 Добро пожаловать в Phuket Da Tours!\n\n` +
+    `🌴 Пхукет Go — экскурсии на Пхукете!\n\n` +
     `Я помогу выбрать идеальный тур на Пхукете! 🏝️\n\n` +
     `Выберите действие:`,
     Markup.inlineKeyboard([
@@ -1527,7 +1527,7 @@ app.use(express.urlencoded({ extended: true }));
 // 🏥 Health check endpoints
 app.get('/', (req, res) => {
   res.send(`
-    <h1>🏝️ Phuket Tours Bot</h1>
+    <h1>🏝️ Пхукет Go Bot</h1>
     <p>✅ Status: Running</p>
     <p>⏱️ Uptime: ${Math.floor(process.uptime())}s</p>
     <p>📱 Bot: @phuketgos_bot</p>

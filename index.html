@@ -26,7 +26,8 @@
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
-    <!-- Google Analytics 4 -->
+    <!-- Google Analytics 4 - TODO: заменить G-XXXXXXXXXX на реальный ID -->
+    <!--
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -36,26 +37,17 @@
         'send_page_view': true,
         'anonymize_ip': true
       });
-      
-      // Отслеживание событий бронирования
-      window.trackBooking = function(tourName, price) {
-        gtag('event', 'begin_checkout', {
-          'event_category': 'Booking',
-          'event_label': tourName,
-          'value': price
-        });
-      };
-      
-      // Отслеживание кликов по турам
-      window.trackTourView = function(tourName) {
-        gtag('event', 'view_item', {
-          'event_category': 'Tour',
-          'event_label': tourName
-        });
-      };
+    </script>
+    -->
+    <script>
+      // Заглушки для функций аналитики
+      window.dataLayer = window.dataLayer || [];
+      window.trackBooking = function(tourName, price) { console.log('Track booking:', tourName, price); };
+      window.trackTourView = function(tourName) { console.log('Track tour view:', tourName); };
     </script>
     
-    <!-- Yandex Metrika -->
+    <!-- Yandex Metrika - TODO: заменить XXXXXXXXX на реальный ID счётчика -->
+    <!-- 
     <script type="text/javascript" >
        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
        m[i].l=1*new Date();
@@ -63,7 +55,7 @@
        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
     
-       ym(XXXXXXXXX, "init", {
+       ym(YOUR_COUNTER_ID, "init", {
             clickmap:true,
             trackLinks:true,
             accurateTrackBounce:true,
@@ -71,6 +63,7 @@
             ecommerce:"dataLayer"
        });
     </script>
+    -->
     
     <title>ПхукетGO - Туры и экскурсии на Пхукете | Острова Пхи-Пхи, бухта Майя</title>
     <meta name="description" content="⭐ Лучшие туры на Пхукете 2025! Острова Пхи-Пхи, бухта Майя, Джеймс Бонд от 1900฿. 🏝️ Русскоязычные гиды 🚤 Трансфер включен ✅ Рейтинг 4.9/5" />
@@ -207,7 +200,7 @@
     </script>
   </head>
   <body>
-    <noscript><div><img src="https://mc.yandex.ru/watch/XXXXXXXXX" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- <noscript><div><img src="https://mc.yandex.ru/watch/YOUR_COUNTER_ID" style="position:absolute; left:-9999px;" alt="" /></div></noscript> -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

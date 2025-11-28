@@ -669,24 +669,95 @@ export const TourPageTemplate = ({
             </Card>
           )}
 
-          {/* Расписание */}
+          {/* Программа тура - iOS 26 Collapsible Timeline */}
           {tourData.schedule && tourData.schedule.length > 0 && (
-            <Card className="mb-4">
-              <CardContent className="p-4">
-                <h2 className="text-xl font-bold mb-3">Программа тура</h2>
-                <div className="space-y-3">
-                  {tourData.schedule.map((item, index) => (
-                    <div key={index} className="flex gap-3 border-l-2 border-blue-500 pl-3">
-                      <div className="flex-shrink-0">
-                        <div className="text-sm font-semibold text-blue-600">{item.time}</div>
-                        {item.day && <div className="text-xs text-gray-500">{item.day}</div>}
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900">{item.title}</h3>
-                        <p className="text-sm text-gray-600 mt-1">{item.description}</p>
-                      </div>
+            <Card className="mb-4 overflow-hidden" style={{
+              background: 'white',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06)'
+            }}>
+              <CardContent className="p-0">
+                {/* Header with gradient */}
+                <div className="p-4 flex items-center justify-between" style={{
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                }}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center text-xl">
+                      📅
                     </div>
-                  ))}
+                    <div>
+                      <h2 className="text-lg font-bold text-white">Программа тура</h2>
+                      <p className="text-white/80 text-xs">{tourData.schedule.length} остановок</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Timeline - показываем первые 5, остальные скрыты */}
+                <div className="p-4">
+                  <div className="space-y-0">
+                    {tourData.schedule.slice(0, 5).map((item, index) => (
+                      <div key={index} className="flex gap-4 pb-4 last:pb-0 relative">
+                        {/* Timeline line */}
+                        {index < Math.min(tourData.schedule.length, 5) - 1 && (
+                          <div className="absolute left-[19px] top-10 w-0.5 h-[calc(100%-24px)]" 
+                            style={{ background: 'linear-gradient(180deg, #667eea 0%, #764ba2 100%)' }} />
+                        )}
+                        
+                        {/* Time bubble */}
+                        <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-white text-xs font-bold"
+                          style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
+                          {index + 1}
+                        </div>
+                        
+                        {/* Content */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-xs font-semibold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">
+                              {item.time}
+                            </span>
+                            {item.day && (
+                              <span className="text-xs text-gray-500">{item.day}</span>
+                            )}
+                          </div>
+                          <h3 className="font-semibold text-gray-900 text-sm">{item.title}</h3>
+                          <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{item.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* Show more button */}
+                  {tourData.schedule.length > 5 && (
+                    <details className="mt-2">
+                      <summary className="cursor-pointer text-center py-3 text-purple-600 font-medium text-sm hover:text-purple-700 flex items-center justify-center gap-2">
+                        <span>Показать всю программу ({tourData.schedule.length - 5} ещё)</span>
+                        <span className="text-xs">▼</span>
+                      </summary>
+                      <div className="space-y-0 pt-4 border-t mt-2">
+                        {tourData.schedule.slice(5).map((item, index) => (
+                          <div key={index + 5} className="flex gap-4 pb-4 last:pb-0 relative animate-slide-up">
+                            {index < tourData.schedule.length - 6 && (
+                              <div className="absolute left-[19px] top-10 w-0.5 h-[calc(100%-24px)]" 
+                                style={{ background: 'linear-gradient(180deg, #667eea 0%, #764ba2 100%)' }} />
+                            )}
+                            <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-white text-xs font-bold"
+                              style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
+                              {index + 6}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="text-xs font-semibold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">
+                                  {item.time}
+                                </span>
+                                {item.day && <span className="text-xs text-gray-500">{item.day}</span>}
+                              </div>
+                              <h3 className="font-semibold text-gray-900 text-sm">{item.title}</h3>
+                              <p className="text-xs text-gray-500 mt-0.5">{item.description}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </details>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -729,36 +800,73 @@ export const TourPageTemplate = ({
             </Card>
           )}
 
-          {/* Что взять с собой */}
+          {/* Что взять с собой - iOS 26 Style */}
           {tourData.whatToBring && tourData.whatToBring.length > 0 && (
-            <Card className="mb-4">
-              <CardContent className="p-4">
-                <h2 className="text-xl font-bold mb-3">Что взять с собой</h2>
-                <ul className="grid md:grid-cols-2 gap-2">
-                  {tourData.whatToBring.map((item, index) => (
-                    <li key={index} className="flex items-center gap-2">
-                      <span className="text-blue-500">•</span>
-                      <span className="text-gray-700">{item}</span>
-                    </li>
-                  ))}
-                </ul>
+            <Card className="mb-4 overflow-hidden" style={{ 
+              background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
+              border: 'none',
+              boxShadow: '0 4px 16px rgba(0, 122, 255, 0.08)'
+            }}>
+              <CardContent className="p-5">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl" style={{
+                    background: 'linear-gradient(135deg, #3b82f6 0%, #0ea5e9 100%)',
+                    boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)'
+                  }}>
+                    🎒
+                  </div>
+                  <h2 className="text-xl font-bold text-gray-900">Что взять с собой</h2>
+                </div>
+                <div className="grid md:grid-cols-2 gap-3 animate-stagger">
+                  {tourData.whatToBring.map((item, index) => {
+                    const icons: Record<string, string> = {
+                      'купальн': '👙', 'солнцезащит': '🧴', 'крем': '🧴', 'головн': '🧢', 
+                      'тапоч': '🩴', 'деньг': '💵', 'полотенц': '🏖️', 'фотоаппарат': '📸',
+                      'очки': '🕶️', 'вода': '💧', 'медикамент': '💊', 'одежд': '👕'
+                    };
+                    const icon = Object.entries(icons).find(([key]) => 
+                      item.toLowerCase().includes(key)
+                    )?.[1] || '✨';
+                    
+                    return (
+                      <div key={index} className="flex items-center gap-3 p-3 rounded-xl bg-white/80 backdrop-blur-sm"
+                        style={{ boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)' }}>
+                        <span className="text-lg">{icon}</span>
+                        <span className="text-gray-700 text-sm font-medium">{item}</span>
+                      </div>
+                    );
+                  })}
+                </div>
               </CardContent>
             </Card>
           )}
 
-          {/* Важная информация */}
+          {/* Важная информация - iOS 26 Alert Style */}
           {tourData.importantInfo && tourData.importantInfo.length > 0 && (
-            <Card className="mb-6">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-4">Важная информация</h2>
-                <ul className="space-y-2">
+            <Card className="mb-6 overflow-hidden" style={{ 
+              background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
+              border: 'none',
+              boxShadow: '0 4px 16px rgba(245, 158, 11, 0.15)'
+            }}>
+              <CardContent className="p-5">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl" style={{
+                    background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                    boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)'
+                  }}>
+                    ⚡
+                  </div>
+                  <h2 className="text-xl font-bold text-amber-900">Важно знать</h2>
+                </div>
+                <div className="space-y-3 animate-stagger">
                   {tourData.importantInfo.map((info, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <span className="text-orange-500 mt-1">⚠</span>
-                      <span className="text-gray-700">{info}</span>
-                    </li>
+                    <div key={index} className="flex items-start gap-3 p-3 rounded-xl bg-white/70 backdrop-blur-sm"
+                      style={{ boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)' }}>
+                      <span className="text-amber-600 text-lg mt-0.5">💡</span>
+                      <span className="text-amber-900/90 text-sm leading-relaxed">{info}</span>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </CardContent>
             </Card>
           )}
@@ -791,36 +899,37 @@ export const TourPageTemplate = ({
 
       <Footer />
 
-      {/* Full Screen Gallery Modal - iOS 26 */}
+      {/* Full Screen Gallery Modal - iOS 26 Light Blur */}
       {showFullGallery && selectedImage && (
         <ModalPortal>
           <div 
-            className="fixed inset-0 z-50 flex flex-col"
+            className="fixed inset-0 z-50 flex flex-col animate-fade-in"
             style={{
-              background: 'rgba(0, 0, 0, 0.98)',
-              backdropFilter: 'blur(40px) saturate(180%)',
+              background: 'linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(242,242,247,0.98) 100%)',
+              backdropFilter: 'blur(60px) saturate(200%)',
               paddingTop: 'env(safe-area-inset-top)',
               paddingBottom: 'env(safe-area-inset-bottom)'
             }}
             onClick={closeModal}
           >
-            {/* Toolbar */}
+            {/* Toolbar - iOS 26 Glass */}
             <div className="flex items-center justify-between px-4 py-3" style={{
-              background: 'rgba(28, 28, 30, 0.8)',
+              background: 'rgba(255, 255, 255, 0.8)',
               backdropFilter: 'blur(20px)',
-              borderBottom: '0.5px solid rgba(255, 255, 255, 0.1)'
+              borderBottom: '0.5px solid rgba(0, 0, 0, 0.08)'
             }}>
               <div className="flex items-center gap-3">
-                <span className="text-white text-sm font-medium">{currentImageIndex + 1} из {tourData.gallery.length}</span>
+                <span className="text-gray-900 text-sm font-semibold">{currentImageIndex + 1} из {tourData.gallery.length}</span>
+                <span className="text-gray-500 text-xs">📸 {tourData.title}</span>
               </div>
-              <button onClick={closeModal} className="text-white p-2">
+              <button onClick={closeModal} className="text-gray-700 p-2 hover:bg-gray-100 rounded-full transition-colors">
                 <X className="w-6 h-6" />
               </button>
             </div>
 
-            {/* Main Image */}
+            {/* Main Image with Shadow */}
             <div 
-              className="flex-1 flex items-center justify-center relative"
+              className="flex-1 flex items-center justify-center relative px-4"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
@@ -830,49 +939,60 @@ export const TourPageTemplate = ({
                 src={selectedImage} 
                 alt="Gallery" 
                 loading="lazy"
-                className="max-w-[95%] max-h-[85vh] object-contain"
+                className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl animate-scale-in"
+                style={{
+                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05)'
+                }}
                 draggable="false"
               />
               
-              {/* Navigation Arrows - Desktop */}
+              {/* Navigation Arrows - iOS Glass Style */}
               <button 
                 onClick={(e) => { e.stopPropagation(); prevImage(); }}
-                className="hidden md:block absolute left-4 p-3 rounded-full backdrop-blur-xl"
+                className="hidden md:flex absolute left-6 p-3 rounded-full items-center justify-center transition-all hover:scale-110"
                 style={{
-                  background: 'rgba(28, 28, 30, 0.6)',
-                  border: '0.5px solid rgba(255, 255, 255, 0.1)'
+                  background: 'rgba(255, 255, 255, 0.9)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                  border: '0.5px solid rgba(0, 0, 0, 0.05)'
                 }}
               >
-                <ChevronLeft className="w-6 h-6 text-white" />
+                <ChevronLeft className="w-6 h-6 text-gray-800" />
               </button>
               <button 
                 onClick={(e) => { e.stopPropagation(); nextImage(); }}
-                className="hidden md:block absolute right-4 p-3 rounded-full backdrop-blur-xl"
+                className="hidden md:flex absolute right-6 p-3 rounded-full items-center justify-center transition-all hover:scale-110"
                 style={{
-                  background: 'rgba(28, 28, 30, 0.6)',
-                  border: '0.5px solid rgba(255, 255, 255, 0.1)'
+                  background: 'rgba(255, 255, 255, 0.9)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                  border: '0.5px solid rgba(0, 0, 0, 0.05)'
                 }}
               >
-                <ChevronRight className="w-6 h-6 text-white" />
+                <ChevronRight className="w-6 h-6 text-gray-800" />
               </button>
             </div>
 
-            {/* Page Indicators */}
-            <div className="flex justify-center items-center gap-1.5 py-4 px-4" style={{
-              background: 'rgba(28, 28, 30, 0.5)',
-              backdropFilter: 'blur(20px)'
+            {/* Thumbnails - iOS 26 Style */}
+            <div className="flex justify-center items-center gap-1.5 py-4 px-4 overflow-x-auto" style={{
+              background: 'rgba(255, 255, 255, 0.95)',
+              backdropFilter: 'blur(20px)',
+              borderTop: '0.5px solid rgba(0, 0, 0, 0.05)'
             }}>
-              {sortedGallery.map((_, index) => (
+              {sortedGallery.slice(0, 12).map((img, index) => (
                 <button
                   key={index}
                   onClick={(e) => { e.stopPropagation(); selectImage(index); }}
-                  className={`h-2 rounded-full transition-all duration-300 ${
+                  className={`w-12 h-12 rounded-lg overflow-hidden transition-all duration-200 flex-shrink-0 ${
                     index === currentImageIndex 
-                      ? 'w-8 bg-white' 
-                      : 'w-2 bg-white/40 hover:bg-white/60'
+                      ? 'ring-2 ring-blue-500 ring-offset-2 scale-110' 
+                      : 'opacity-60 hover:opacity-100'
                   }`}
-                />
+                >
+                  <img src={img} alt="" className="w-full h-full object-cover" />
+                </button>
               ))}
+              {sortedGallery.length > 12 && (
+                <span className="text-xs text-gray-500 ml-2">+{sortedGallery.length - 12}</span>
+              )}
             </div>
           </div>
         </ModalPortal>

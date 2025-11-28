@@ -566,30 +566,55 @@ html {
     inset 0 1px 2px rgba(0, 0, 0, 0.1) !important;
 }
 
+/* 🎯 PREMIUM BOOKING BUTTON - Маркетинговый дизайн */
 .btn-booking {
-  background: #007AFF !important;
+  background: linear-gradient(135deg, #FF6B35 0%, #FF4444 100%) !important;
   color: white !important;
-  font-size: 17px !important;
-  font-weight: 600 !important;
-  padding: 16px 32px !important;
-  border-radius: 14px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  padding: 14px 28px !important;
+  border-radius: 12px !important;
   border: none !important;
-  box-shadow: 0 4px 16px rgba(0, 122, 255, 0.35) !important;
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 
+    0 4px 16px rgba(255, 68, 68, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1) !important;
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif !important;
-  letter-spacing: -0.01em !important;
-  min-height: 50px !important;
+  letter-spacing: 0.02em !important;
+  min-height: 48px !important;
+  text-transform: uppercase !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Блик на кнопке */
+.btn-booking::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: -100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent) !important;
+  animation: btn-shimmer 2.5s infinite !important;
+}
+
+@keyframes btn-shimmer {
+  0% { left: -100%; }
+  50%, 100% { left: 100%; }
 }
 
 .btn-booking:hover {
-  box-shadow: 0 6px 20px rgba(0, 122, 255, 0.45) !important;
-  transform: translateY(-2px) !important;
-  background: #0077ED !important;
+  box-shadow: 
+    0 8px 24px rgba(255, 68, 68, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  background: linear-gradient(135deg, #FF7744 0%, #FF5555 100%) !important;
 }
 
 .btn-booking:active {
   transform: scale(0.97) !important;
-  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.35) !important;
+  box-shadow: 0 2px 8px rgba(255, 68, 68, 0.4) !important;
 }
 
 /* iOS 26 Typography - Centralized */

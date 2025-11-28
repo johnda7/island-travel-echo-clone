@@ -601,25 +601,29 @@ export const TourPageTemplate = ({
             </div>
           </div>
 
-          {/* Price Mobile - iOS style CTA */}
+          {/* Price Mobile - Premium CTA Card */}
           <div className="flex items-center justify-between p-4 rounded-2xl mb-3 md:hidden" style={{ 
-            background: 'rgba(0, 122, 255, 0.9)',
-            backdropFilter: 'blur(20px)',
-            boxShadow: '0 8px 32px rgba(0, 122, 255, 0.4)'
+            background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.1)'
           }}>
             <div>
-              <div className="text-white text-opacity-90 text-xs font-medium mb-0.5">От</div>
-              <div className="text-white text-[24px] font-bold tracking-tight">{tourData.priceAdult.toLocaleString()} ฿</div>
+              <div className="text-gray-400 text-xs font-medium mb-0.5">Цена от</div>
+              <div className="text-white text-[26px] font-bold tracking-tight flex items-baseline gap-1">
+                {tourData.priceAdult.toLocaleString()}
+                <span className="text-[16px] text-gray-400">฿</span>
+              </div>
             </div>
             <button 
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                haptic('medium');
                 setShowBookingModal(true);
               }}
               onTouchEnd={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                haptic('medium');
                 setShowBookingModal(true);
               }}
               className="btn-booking active:scale-95"

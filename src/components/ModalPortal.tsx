@@ -13,40 +13,41 @@
 // </ModalPortal>
 //
 // Любые правки согласовывать, иначе возможны регрессии (модал не кликается/не виден).
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 interface ModalPortalProps {
   children: ReactNode;
 }
 
+const MODAL_ROOT_ID = 'app-modal-root';
+
+// Создаём контейнер один раз при загрузке модуля
+const getOrCreateModalRoot = () => {
+  if (typeof document === 'undefined') return null;
+  
+  let root = document.getElementById(MODAL_ROOT_ID);
+  if (!root) {
+    root = document.createElement('div');
+    root.id = MODAL_ROOT_ID;
+    root.style.position = 'fixed';
+    root.style.inset = '0';
+    root.style.zIndex = '9999';
+    root.style.pointerEvents = 'none';
+    document.body.appendChild(root);
+  }
+  return root;
+};
+
 // Простая обертка для модальных окон, чтобы гарантировать рендер вне потока и поверх всего
 export const ModalPortal = ({ children }: ModalPortalProps) => {
-  const modalRootId = 'app-modal-root';
+  const [container, setContainer] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    let root = document.getElementById(modalRootId);
-    if (!root) {
-      root = document.createElement('div');
-      root.id = modalRootId;
-      root.style.position = 'fixed';
-      root.style.inset = '0';
-      root.style.zIndex = '9999';
-      root.style.pointerEvents = 'none'; // по умолчанию не блокируем клики по сайту
-      document.body.appendChild(root);
-    } else {
-      // Нормализуем стили на случай старых значений из предыдущих версий
-      root.style.position = 'fixed';
-      root.style.inset = '0';
-      root.style.zIndex = '9999';
-      root.style.pointerEvents = 'none';
-    }
-    return () => {
-      // Не удаляем корень, чтобы переиспользовать между страницами
-    };
+    const root = getOrCreateModalRoot();
+    setContainer(root);
   }, []);
 
-  const container = typeof document !== 'undefined' ? document.getElementById(modalRootId) : null;
   if (!container) return null;
 
   return createPortal(

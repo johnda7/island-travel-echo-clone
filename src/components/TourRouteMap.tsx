@@ -41,12 +41,12 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
       attribution: '© Google Maps',
     }).addTo(map);
 
-    // Кастомные иконки для точек маршрута
+    // Кастомные иконки для точек маршрута - Тропическая палитра
     const createCustomIcon = (type: string, number?: number) => {
       const colors = {
-        start: '#34C759', // Зеленый - старт
-        stop: '#007AFF',  // Синий - остановки
-        destination: '#FF3B30' // Красный - финиш
+        start: '#10B981', // Изумрудный - старт
+        stop: '#0EA5E9',  // Небесный - остановки
+        destination: '#F97316' // Закатный - финиш
       };
 
       return L.divIcon({
@@ -126,13 +126,13 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
       coordinates.push(point.coordinates);
     });
 
-    // Рисуем линию маршрута
+    // Рисуем линию маршрута - Изумрудная
     const routeLine = L.polyline(coordinates, {
-      color: '#007AFF',
+      color: '#10B981',
       weight: 4,
-      opacity: 0.8,
+      opacity: 0.9,
       smoothFactor: 1,
-      dashArray: '10, 5',
+      dashArray: '8, 4',
     }).addTo(map);
 
     // Добавляем анимацию к линии
@@ -166,7 +166,7 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
           justify-content: center;
           font-size: 24px;
           font-weight: 400;
-          color: #007AFF;
+          color: #10B981;
           cursor: pointer;
           border-bottom: 0.5px solid rgba(0, 0, 0, 0.12);
           transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
@@ -187,7 +187,7 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
           justify-content: center;
           font-size: 24px;
           font-weight: 400;
-          color: #007AFF;
+          color: #10B981;
           cursor: pointer;
           transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -253,7 +253,7 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
         {/* Заголовок секции - iOS 26 style */}
         <div className="mb-4">
           <div className="flex items-center gap-2 mb-2">
-            <Navigation className="w-5 h-5 text-[#007AFF]" strokeWidth={2} />
+            <Navigation className="w-5 h-5 text-emerald-500" strokeWidth={2} />
             <h2 className="text-[22px] font-bold text-gray-900" style={{
               fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
               letterSpacing: '-0.01em'
@@ -289,7 +289,7 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
             >
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white" style={{
-                  background: point.type === 'start' ? '#34C759' : point.type === 'destination' ? '#FF3B30' : '#007AFF'
+                  background: point.type === 'start' ? '#10B981' : point.type === 'destination' ? '#F97316' : '#0EA5E9'
                 }}>
                   {index + 1}
                 </div>

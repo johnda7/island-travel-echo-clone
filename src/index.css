@@ -566,28 +566,39 @@ html {
     inset 0 1px 2px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* 🎯 PREMIUM BOOKING BUTTON - Маркетинговый дизайн */
+/* 🌴 TROPICAL PREMIUM COLOR PALETTE */
+:root {
+  --emerald: #10B981;
+  --emerald-light: #34D399;
+  --emerald-dark: #059669;
+  --sky: #0EA5E9;
+  --sky-light: #38BDF8;
+  --sunset: #F97316;
+  --coral: #F43F5E;
+  --sand: #FDE68A;
+}
+
+/* 🎯 PREMIUM BOOKING BUTTON - Изумрудный тропический */
 .btn-booking {
-  background: linear-gradient(135deg, #FF6B35 0%, #FF4444 100%) !important;
+  background: linear-gradient(135deg, var(--emerald) 0%, var(--emerald-dark) 100%) !important;
   color: white !important;
-  font-size: 16px !important;
-  font-weight: 700 !important;
-  padding: 14px 28px !important;
-  border-radius: 12px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  padding: 14px 24px !important;
+  border-radius: 14px !important;
   border: none !important;
   box-shadow: 
-    0 4px 16px rgba(255, 68, 68, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
-  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+    0 4px 16px rgba(16, 185, 129, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif !important;
-  letter-spacing: 0.02em !important;
+  letter-spacing: 0.01em !important;
   min-height: 48px !important;
-  text-transform: uppercase !important;
   position: relative !important;
   overflow: hidden !important;
 }
 
-/* Блик на кнопке */
+/* Мягкий блик */
 .btn-booking::before {
   content: '' !important;
   position: absolute !important;
@@ -595,8 +606,21 @@ html {
   left: -100% !important;
   width: 100% !important;
   height: 100% !important;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent) !important;
-  animation: btn-shimmer 2.5s infinite !important;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent) !important;
+  animation: btn-shimmer 3s infinite !important;
+}
+
+.btn-booking:hover {
+  box-shadow: 
+    0 8px 24px rgba(16, 185, 129, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  transform: translateY(-2px) !important;
+  background: linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald) 100%) !important;
+}
+
+.btn-booking:active {
+  transform: scale(0.98) !important;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4) !important;
 }
 
 @keyframes btn-shimmer {

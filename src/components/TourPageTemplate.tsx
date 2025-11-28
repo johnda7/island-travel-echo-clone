@@ -601,16 +601,16 @@ export const TourPageTemplate = ({
             </div>
           </div>
 
-          {/* Price Mobile - Premium CTA Card */}
+          {/* Price Mobile - Premium Glass Card */}
           <div className="flex items-center justify-between p-4 rounded-2xl mb-3 md:hidden" style={{ 
-            background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.1)'
+            background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%)',
+            boxShadow: '0 8px 32px rgba(16, 185, 129, 0.25), inset 0 1px 0 rgba(255,255,255,0.2)'
           }}>
             <div>
-              <div className="text-gray-400 text-xs font-medium mb-0.5">Цена от</div>
+              <div className="text-white/80 text-xs font-medium mb-0.5">Цена от</div>
               <div className="text-white text-[26px] font-bold tracking-tight flex items-baseline gap-1">
                 {tourData.priceAdult.toLocaleString()}
-                <span className="text-[16px] text-gray-400">฿</span>
+                <span className="text-[16px] text-white/70">฿</span>
               </div>
             </div>
             <button 
@@ -676,9 +676,9 @@ export const TourPageTemplate = ({
               boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06)'
             }}>
               <CardContent className="p-0">
-                {/* Header with gradient */}
+                {/* Header with gradient - Изумрудный */}
                 <div className="p-4 flex items-center justify-between" style={{
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                  background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)'
                 }}>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center text-xl">
@@ -699,19 +699,19 @@ export const TourPageTemplate = ({
                         {/* Timeline line */}
                         {index < Math.min(tourData.schedule.length, 5) - 1 && (
                           <div className="absolute left-[19px] top-10 w-0.5 h-[calc(100%-24px)]" 
-                            style={{ background: 'linear-gradient(180deg, #667eea 0%, #764ba2 100%)' }} />
+                            style={{ background: 'linear-gradient(180deg, #10B981 0%, #059669 100%)' }} />
                         )}
                         
                         {/* Time bubble */}
                         <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-white text-xs font-bold"
-                          style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
+                          style={{ background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)' }}>
                           {index + 1}
                         </div>
                         
                         {/* Content */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="text-xs font-semibold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">
+                            <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
                               {item.time}
                             </span>
                             {item.day && (
@@ -728,7 +728,7 @@ export const TourPageTemplate = ({
                   {/* Show more button */}
                   {tourData.schedule.length > 5 && (
                     <details className="mt-2">
-                      <summary className="cursor-pointer text-center py-3 text-purple-600 font-medium text-sm hover:text-purple-700 flex items-center justify-center gap-2">
+                      <summary className="cursor-pointer text-center py-3 text-emerald-600 font-medium text-sm hover:text-purple-700 flex items-center justify-center gap-2">
                         <span>Показать всю программу ({tourData.schedule.length - 5} ещё)</span>
                         <span className="text-xs">▼</span>
                       </summary>
@@ -737,15 +737,15 @@ export const TourPageTemplate = ({
                           <div key={index + 5} className="flex gap-4 pb-4 last:pb-0 relative animate-slide-up">
                             {index < tourData.schedule.length - 6 && (
                               <div className="absolute left-[19px] top-10 w-0.5 h-[calc(100%-24px)]" 
-                                style={{ background: 'linear-gradient(180deg, #667eea 0%, #764ba2 100%)' }} />
+                                style={{ background: 'linear-gradient(180deg, #10B981 0%, #059669 100%)' }} />
                             )}
                             <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-white text-xs font-bold"
-                              style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
+                              style={{ background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)' }}>
                               {index + 6}
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 mb-1">
-                                <span className="text-xs font-semibold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">
+                                <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
                                   {item.time}
                                 </span>
                                 {item.day && <span className="text-xs text-gray-500">{item.day}</span>}

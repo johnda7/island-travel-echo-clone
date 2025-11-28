@@ -97,30 +97,44 @@ export const Tours = ({ filteredTours }: ToursProps) => {
   const [isLoadingTour, setIsLoadingTour] = useState(false);
   const [preloadedTours, setPreloadedTours] = useState<Map<string, TourData>>(new Map());
 
-  // ✅ РЕШЕНИЕ: Предзагружаем ВСЕ туры при монтировании компонента
+  // ✅ Ленивая предзагрузка туров (не блокирует UI)
   useEffect(() => {
-    const preloadAllTours = async () => {
-      console.log('🚀 Начинаем предзагрузку всех туров');
+    let cancelled = false;
+    
+    const preloadToursLazy = async () => {
       const loaded = new Map<string, TourData>();
       
+      // Загружаем по одному с небольшой задержкой чтобы не блокировать UI
       for (const tour of baseTours) {
+        if (cancelled) break;
+        
         try {
           const tourRegistry = TOURS_REGISTRY.find(t => t.id === tour.id);
           if (tourRegistry) {
             const tourData = await tourRegistry.data();
             loaded.set(tour.id, tourData);
+            
+            // Обновляем стейт после каждого тура
+            if (!cancelled) {
+              setPreloadedTours(new Map(loaded));
+            }
           }
         } catch (error) {
-          console.error('❌ Ошибка предзагрузки тура:', tour.id, error);
+          // Тихо игнорируем ошибки предзагрузки
         }
+        
+        // Микро-пауза между турами для отзывчивости UI
+        await new Promise(r => setTimeout(r, 10));
       }
-      
-      setPreloadedTours(loaded);
-      console.log('🎉 Все туры предзагружены:', loaded.size);
     };
 
     if (baseTours.length > 0) {
-      preloadAllTours();
+      // Запускаем предзагрузку с небольшой задержкой после монтирования
+      const timer = setTimeout(preloadToursLazy, 500);
+      return () => {
+        cancelled = true;
+        clearTimeout(timer);
+      };
     }
   }, [baseTours]);
 

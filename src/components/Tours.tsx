@@ -336,11 +336,11 @@ function TourCard({
         }}
       >
         <Link to={getDetailPath(tour)} className="block">
-          <div className="relative h-48 overflow-hidden" style={{ borderRadius: '20px 20px 0 0' }}>
+          <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-b from-sky-50 to-blue-100" style={{ borderRadius: '20px 20px 0 0' }}>
             <img
               src={tour.data?.mainImage || tour.data?.gallery?.[0] || fallbackImage}
               alt={tour.data?.title || tour.name}
-              className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+              className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
               onError={(e) => {
                 e.currentTarget.src = fallbackImage;

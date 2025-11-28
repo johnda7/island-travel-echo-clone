@@ -203,8 +203,8 @@ const Tours = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-sm animate-pulse">
-                  {/* Изображение */}
-                  <div className="h-48 bg-gray-200" />
+                  {/* Изображение - aspect-[16/10] как в карточках */}
+                  <div className="aspect-[16/10] bg-gradient-to-b from-gray-200 to-gray-100" />
                   {/* Контент */}
                   <div className="p-4 space-y-3">
                     <div className="h-5 bg-gray-200 rounded w-3/4" />

@@ -1,8 +1,14 @@
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
+
+User-agent: Yandex
+Allow: /
+Crawl-delay: 2
 
 User-agent: Twitterbot
 Allow: /
@@ -10,7 +16,17 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: TelegramBot
+Allow: /
+
+User-agent: vkShare
+Allow: /
+
 User-agent: *
 Allow: /
 
+# Sitemap
 Sitemap: https://phukeo.com/sitemap.xml
+
+# Host (для Яндекса)
+Host: https://phukeo.com

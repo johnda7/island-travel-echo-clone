@@ -125,18 +125,23 @@ export const Hero = () => {
           </Button>
         </div>
         
-        {/* Scroll indicator - скрываем в Telegram */}
+        {/* Scroll indicator - плавная анимация, по центру */}
         {!isTelegram && (
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce">
+          <div 
+            className="absolute bottom-8 left-0 right-0 flex justify-center"
+            style={{ animation: 'float-smooth 2s ease-in-out infinite' }}
+          >
             <div 
-              className="w-8 h-8 rounded-full flex items-center justify-center"
+              className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer transition-transform hover:scale-110"
               style={{
-                background: 'rgba(255, 255, 255, 0.15)',
+                background: 'rgba(255, 255, 255, 0.2)',
                 backdropFilter: 'blur(20px)',
-                border: '1px solid rgba(255, 255, 255, 0.2)'
+                border: '1px solid rgba(255, 255, 255, 0.3)',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)'
               }}
+              onClick={() => window.scrollTo({ top: window.innerHeight * 0.5, behavior: 'smooth' })}
             >
-              <ArrowDown className="w-4 h-4 text-white/70" />
+              <ArrowDown className="w-5 h-5 text-white" />
             </div>
           </div>
         )}

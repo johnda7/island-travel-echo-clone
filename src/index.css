@@ -566,21 +566,47 @@ html {
     inset 0 1px 2px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* 🌴 TROPICAL PREMIUM COLOR PALETTE */
+/* 🏝️ PHUKETGO BRAND PALETTE - Цвета Андаманского моря */
 :root {
-  --emerald: #10B981;
-  --emerald-light: #34D399;
-  --emerald-dark: #059669;
-  --sky: #0EA5E9;
-  --sky-light: #38BDF8;
-  --sunset: #F97316;
-  --coral: #F43F5E;
-  --sand: #FDE68A;
+  /* 🌊 Primary - Andaman Deep (глубокий бирюзовый) */
+  --andaman: #0D9488;
+  --andaman-light: #14B8A6;
+  --andaman-dark: #0F766E;
+  
+  /* 🌅 Accent - Sunset Coral (коралловый закат) */
+  --coral: #FF6B6B;
+  --coral-light: #FF8787;
+  --coral-dark: #FA5252;
+  
+  /* 🏝️ Secondary - Lagoon (лагуна) */
+  --lagoon: #22D3EE;
+  --lagoon-light: #67E8F9;
+  --lagoon-dark: #06B6D4;
+  
+  /* ✨ Gold - Golden Hour (золотой час) */
+  --golden: #F59E0B;
+  --golden-light: #FBBF24;
+  --golden-dark: #D97706;
+  
+  /* 🌴 Nature - Jungle Green (джунгли) */
+  --jungle: #059669;
+  --jungle-light: #10B981;
+  --jungle-dark: #047857;
+  
+  /* 🏖️ Neutral - Sand (песок) */
+  --sand: #FEF3C7;
+  --sand-dark: #FDE68A;
 }
 
-/* 🎯 PREMIUM BOOKING BUTTON - Изумрудный тропический */
+/* 🎯 Плавная анимация для стрелки */
+@keyframes float-smooth {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+/* 🎯 PREMIUM BOOKING BUTTON - Andaman Deep */
 .btn-booking {
-  background: linear-gradient(135deg, var(--emerald) 0%, var(--emerald-dark) 100%) !important;
+  background: linear-gradient(135deg, var(--andaman) 0%, var(--andaman-dark) 100%) !important;
   color: white !important;
   font-size: 15px !important;
   font-weight: 600 !important;
@@ -588,7 +614,7 @@ html {
   border-radius: 14px !important;
   border: none !important;
   box-shadow: 
-    0 4px 16px rgba(16, 185, 129, 0.35),
+    0 4px 16px rgba(13, 148, 136, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif !important;
@@ -606,21 +632,21 @@ html {
   left: -100% !important;
   width: 100% !important;
   height: 100% !important;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent) !important;
-  animation: btn-shimmer 3s infinite !important;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent) !important;
+  animation: btn-shimmer 2.5s infinite !important;
 }
 
 .btn-booking:hover {
   box-shadow: 
-    0 8px 24px rgba(16, 185, 129, 0.45),
+    0 8px 28px rgba(13, 148, 136, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
   transform: translateY(-2px) !important;
-  background: linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald) 100%) !important;
+  background: linear-gradient(135deg, var(--andaman-light) 0%, var(--andaman) 100%) !important;
 }
 
 .btn-booking:active {
   transform: scale(0.98) !important;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4) !important;
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.4) !important;
 }
 
 @keyframes btn-shimmer {

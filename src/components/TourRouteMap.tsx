@@ -41,12 +41,12 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
       attribution: '© Google Maps',
     }).addTo(map);
 
-    // Кастомные иконки для точек маршрута - Тропическая палитра
+    // Кастомные иконки для точек маршрута - ПхукетGO палитра
     const createCustomIcon = (type: string, number?: number) => {
       const colors = {
-        start: '#10B981', // Изумрудный - старт
-        stop: '#0EA5E9',  // Небесный - остановки
-        destination: '#F97316' // Закатный - финиш
+        start: '#0D9488', // Andaman Deep - старт
+        stop: '#22D3EE',  // Lagoon - остановки
+        destination: '#FF6B6B' // Coral Sunset - финиш
       };
 
       return L.divIcon({
@@ -126,9 +126,9 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
       coordinates.push(point.coordinates);
     });
 
-    // Рисуем линию маршрута - Изумрудная
+    // Рисуем линию маршрута - Andaman
     const routeLine = L.polyline(coordinates, {
-      color: '#10B981',
+      color: '#0D9488',
       weight: 4,
       opacity: 0.9,
       smoothFactor: 1,
@@ -166,7 +166,7 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
           justify-content: center;
           font-size: 24px;
           font-weight: 400;
-          color: #10B981;
+          color: #0D9488;
           cursor: pointer;
           border-bottom: 0.5px solid rgba(0, 0, 0, 0.12);
           transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
@@ -187,7 +187,7 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
           justify-content: center;
           font-size: 24px;
           font-weight: 400;
-          color: #10B981;
+          color: #0D9488;
           cursor: pointer;
           transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -253,7 +253,7 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
         {/* Заголовок секции - iOS 26 style */}
         <div className="mb-4">
           <div className="flex items-center gap-2 mb-2">
-            <Navigation className="w-5 h-5 text-emerald-500" strokeWidth={2} />
+            <Navigation className="w-5 h-5 text-teal-500" strokeWidth={2} />
             <h2 className="text-[22px] font-bold text-gray-900" style={{
               fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
               letterSpacing: '-0.01em'
@@ -289,7 +289,7 @@ export const TourRouteMap = ({ routePoints, tourTitle }: TourRouteMapProps) => {
             >
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white" style={{
-                  background: point.type === 'start' ? '#10B981' : point.type === 'destination' ? '#F97316' : '#0EA5E9'
+                  background: point.type === 'start' ? '#0D9488' : point.type === 'destination' ? '#FF6B6B' : '#22D3EE'
                 }}>
                   {index + 1}
                 </div>

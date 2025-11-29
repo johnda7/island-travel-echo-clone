@@ -829,8 +829,8 @@ export const TourPageTemplate = ({
             </Card>
           )}
 
-          {/* Что взять с собой - iOS 26 Style */}
-          {tourData.whatToBring && tourData.whatToBring.length > 0 && (
+          {/* Что взять с собой - iOS 26 Style (поддержка whatToBring и requirements) */}
+          {((tourData.whatToBring && tourData.whatToBring.length > 0) || (tourData.requirements && tourData.requirements.length > 0)) && (
             <Card className="mb-4 overflow-hidden" style={{ 
               background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
               border: 'none',
@@ -847,11 +847,15 @@ export const TourPageTemplate = ({
                   <h2 className="text-xl font-bold text-gray-900">Что взять с собой</h2>
                 </div>
                 <div className="grid md:grid-cols-2 gap-3 animate-stagger">
-                  {tourData.whatToBring.map((item, index) => {
+                  {(tourData.whatToBring || tourData.requirements || []).map((item, index) => {
                     const icons: Record<string, string> = {
                       'купальн': '👙', 'солнцезащит': '🧴', 'крем': '🧴', 'головн': '🧢', 
                       'тапоч': '🩴', 'деньг': '💵', 'полотенц': '🏖️', 'фотоаппарат': '📸',
-                      'очки': '🕶️', 'вода': '💧', 'медикамент': '💊', 'одежд': '👕'
+                      'очки': '🕶️', 'вода': '💧', 'медикамент': '💊', 'одежд': '👕',
+                      'паспорт': '🛂', 'купальник': '👙', 'чехол': '📱', 'укачив': '💊',
+                      'обув': '👟', 'кроссовк': '👟', 'репеллент': '🦟', 'насеком': '🦟',
+                      'сменн': '👕', 'спортивн': '🏃', 'теплая': '🧥', 'кофт': '🧥',
+                      'шорт': '🩳', 'футболк': '👕', 'удобн': '👟', 'налич': '💵'
                     };
                     const icon = Object.entries(icons).find(([key]) => 
                       item.toLowerCase().includes(key)

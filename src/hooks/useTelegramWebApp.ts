@@ -61,6 +61,23 @@ interface TelegramWebApp {
     setParams: (params: { text?: string; color?: string; text_color?: string; is_active?: boolean; is_visible?: boolean }) => void;
   };
   
+  // Secondary Button (опционально - новая функция Telegram)
+  SecondaryButton?: {
+    text: string;
+    color: string;
+    textColor: string;
+    isVisible: boolean;
+    isActive: boolean;
+    setText: (text: string) => void;
+    show: () => void;
+    hide: () => void;
+    enable: () => void;
+    disable: () => void;
+    onClick: (callback: () => void) => void;
+    offClick: (callback: () => void) => void;
+    setParams: (params: { text?: string; color?: string; text_color?: string; is_active?: boolean; is_visible?: boolean }) => void;
+  };
+  
   // Methods
   ready: () => void;
   expand: () => void;

@@ -60,7 +60,7 @@ export const TourPageTemplate = ({
     }
   }, [tourData.id, tourData.title, tourData.priceAdult, trackTourView]);
 
-  // 📱 Telegram Mini App: Back Button и Main Button
+  // 📱 Telegram Mini App: Back Button, Main Button и Secondary Button
   useEffect(() => {
     const tg = (window as any).Telegram?.WebApp;
     if (tg && tg.initData) {
@@ -80,7 +80,7 @@ export const TourPageTemplate = ({
       // === MAIN BUTTON (Забронировать) ===
       tg.MainButton.setParams({
         text: `Забронировать • ฿${tourData.priceAdult.toLocaleString()}`,
-        color: '#007AFF',
+        color: '#16a34a', // Зелёный градиент начало
         text_color: '#FFFFFF',
         is_active: true,
         is_visible: true
@@ -94,12 +94,35 @@ export const TourPageTemplate = ({
       
       tg.MainButton.onClick(handleMainButton);
       
+      // === SECONDARY BUTTON (Написать менеджеру) ===
+      if (tg.SecondaryButton) {
+        tg.SecondaryButton.setParams({
+          text: '💬 Написать менеджеру',
+          color: '#2563eb', // Синий
+          text_color: '#FFFFFF',
+          is_active: true,
+          is_visible: true
+        });
+        tg.SecondaryButton.show();
+        
+        const handleSecondaryButton = () => {
+          haptic('light');
+          // Открываем чат с менеджером в Telegram
+          tg.openTelegramLink('https://t.me/Phuketga');
+        };
+        
+        tg.SecondaryButton.onClick(handleSecondaryButton);
+      }
+      
       // Cleanup
       return () => {
         tg.BackButton.offClick(handleBack);
         tg.BackButton.hide();
         tg.MainButton.offClick(handleMainButton);
         tg.MainButton.hide();
+        if (tg.SecondaryButton) {
+          tg.SecondaryButton.hide();
+        }
       };
     }
   }, [navigate, tourData.priceAdult]);

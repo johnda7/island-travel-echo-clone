@@ -236,12 +236,11 @@ export const Tours = ({ filteredTours }: ToursProps) => {
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
             {filteredTours ? 'Результаты поиска' : 'Популярные туры'}
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            {filteredTours 
-              ? `Найдено ${toursToShow.length} туров` 
-              : 'Откройте для себя самые популярные направления Пхукета'
-            }
-          </p>
+          {!filteredTours && (
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Откройте для себя самые популярные направления Пхукета
+            </p>
+          )}
         </div>
 
         {/* Filters */}
@@ -348,16 +347,16 @@ function TourCard({
             />
             {tour.isPopular && (
               <div
-                className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold"
+                className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1"
                 style={{
-                  background: 'rgba(255, 149, 0, 0.95)',
+                  background: 'linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%)',
                   backdropFilter: 'blur(10px)',
                   color: 'white',
-                  boxShadow: '0 2px 8px rgba(255, 149, 0, 0.4)',
+                  boxShadow: '0 4px 12px rgba(255, 107, 107, 0.4)',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
                 }}
               >
-                🔥 Популярно
+                <span className="animate-pulse">🔥</span> Популярно
               </div>
             )}
             <div
@@ -425,7 +424,7 @@ function TourCard({
 
             <div className="flex items-center justify-between pt-4 mb-4" style={{ borderTop: '1px solid rgba(0, 0, 0, 0.08)' }}>
               <div>
-                <span className="text-2xl font-bold" style={{ color: '#34C759', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif', letterSpacing: '-0.02em' }}>
+                <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif', letterSpacing: '-0.02em' }}>
                   от {tour.data?.currency || '₿'}{tour.data?.priceAdult?.toLocaleString() || '4,500'}
                 </span>
                 <span className="text-sm ml-1" style={{ color: '#8E8E93', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}>
@@ -477,22 +476,22 @@ function TourCard({
                   }}
                   className="w-full px-4 py-3 rounded-xl font-bold text-white text-sm transition-all duration-150 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
-                    background: isLoading ? '#8E8E93' : 'linear-gradient(135deg, #34C759 0%, #30D158 100%)',
-                    boxShadow: '0 4px 12px rgba(52, 199, 89, 0.3)',
+                    background: isLoading ? '#8E8E93' : 'linear-gradient(135deg, #16a34a 0%, #2563eb 100%)',
+                    boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)',
                     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
                     letterSpacing: '-0.01em',
                     touchAction: 'none'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'scale(1.02)';
-                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(52, 199, 89, 0.4)';
+                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(37, 99, 235, 0.4)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'scale(1)';
-                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(52, 199, 89, 0.3)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(37, 99, 235, 0.3)';
                   }}
                 >
-                  {isLoading ? '⏳ Загрузка...' : '🏝️ Забронировать тур'}
+                  {isLoading ? '⏳ Загрузка...' : '🏝️ Забронировать'}
                 </button>
               </div>
             </div>

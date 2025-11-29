@@ -705,9 +705,9 @@ export const TourPageTemplate = ({
               boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06)'
             }}>
               <CardContent className="p-0">
-                {/* Header with gradient - Andaman Deep */}
+                {/* Header with gradient - как "Результаты поиска" */}
                 <div className="p-4 flex items-center justify-between" style={{
-                  background: 'linear-gradient(135deg, #0D9488 0%, #0F766E 100%)'
+                  background: 'linear-gradient(135deg, #16a34a 0%, #2563eb 100%)'
                 }}>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center text-xl">
@@ -728,19 +728,19 @@ export const TourPageTemplate = ({
                         {/* Timeline line */}
                         {index < Math.min(tourData.schedule.length, 5) - 1 && (
                           <div className="absolute left-[19px] top-10 w-0.5 h-[calc(100%-24px)]" 
-                            style={{ background: 'linear-gradient(180deg, #0D9488 0%, #0F766E 100%)' }} />
+                            style={{ background: 'linear-gradient(180deg, #16a34a 0%, #2563eb 100%)' }} />
                         )}
                         
                         {/* Time bubble */}
                         <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-white text-xs font-bold"
-                          style={{ background: 'linear-gradient(135deg, #0D9488 0%, #0F766E 100%)' }}>
+                          style={{ background: 'linear-gradient(135deg, #16a34a 0%, #2563eb 100%)' }}>
                           {index + 1}
                         </div>
                         
                         {/* Content */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="text-xs font-semibold text-teal-600 bg-teal-50 px-2 py-0.5 rounded-full">
+                            <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">
                               {item.time}
                             </span>
                             {item.day && (

@@ -44,7 +44,7 @@ export const Contact = () => {
     if (tg) {
       tg.openTelegramLink('https://t.me/phuketgos_bot');
     } else {
-      window.open('https://t.me/phuketgos_bot', '_blank');
+    window.open('https://t.me/phuketgos_bot', '_blank');
     }
   };
 

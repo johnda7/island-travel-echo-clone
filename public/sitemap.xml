@@ -4,7 +4,7 @@
   
   <!-- Главная страница -->
   <url>
-    <loc>https://phukeo.com/</loc>
+  <loc>https://phukeo.com/</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -127,7 +127,7 @@
   <!-- ======================== -->
   
   <url>
-    <loc>https://phukeo.com/tours/dostoprimechatelnosti-phuketa</loc>
+  <loc>https://phukeo.com/tours/dostoprimechatelnosti-phuketa</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

@@ -48,6 +48,9 @@ import DynamicTourPage from "./components/DynamicTourPage";
 import ScrollToTop from "./components/ScrollToTop";
 import { TelegramBottomNav } from "./components/TelegramBottomNav";
 
+// Аналитика
+import AnalyticsDashboard from "./pages/AnalyticsDashboard";
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -65,6 +68,7 @@ function App() {
                 <Route path="/tours" element={<Tours />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/admin" element={<AdminPanelNew />} />
+                <Route path="/analytics" element={<AnalyticsDashboard />} />
                 <Route path="/booking" element={<BookingPage />} />
                 <Route path="/reviews" element={<ReviewsPage />} />
                 <Route path="/about" element={<ContactPage />} />

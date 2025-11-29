@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -10,6 +10,7 @@ import { UniversalBookingModal } from "@/components/UniversalBookingModalWrapper
 import { ModalPortal } from "@/components/ModalPortal";
 import { MobileBookingBar } from "@/components/MobileBookingBar";
 import { TourRouteMap } from "@/components/TourRouteMap";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import type { TourData, RoutePoint } from "@/types/Tour";
 
 // Haptic Feedback helper
@@ -46,6 +47,18 @@ export const TourPageTemplate = ({
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [sortedGallery, setSortedGallery] = useState<string[]>(tourData.gallery);
   const [isTelegram, setIsTelegram] = useState(false);
+  
+  // 📊 Аналитика
+  const { trackTourView, trackBookingStart, trackShare, trackGallery } = useAnalytics();
+  const hasTrackedRef = useRef(false);
+  
+  // Track tour view (только один раз)
+  useEffect(() => {
+    if (!hasTrackedRef.current && tourData.id) {
+      trackTourView(tourData.id, tourData.title, tourData.priceAdult);
+      hasTrackedRef.current = true;
+    }
+  }, [tourData.id, tourData.title, tourData.priceAdult, trackTourView]);
 
   // 📱 Telegram Mini App: Back Button и Main Button
   useEffect(() => {
@@ -76,7 +89,7 @@ export const TourPageTemplate = ({
       
       const handleMainButton = () => {
         haptic('medium');
-        setShowBookingModal(true);
+        openBooking();
       };
       
       tg.MainButton.onClick(handleMainButton);
@@ -103,6 +116,8 @@ export const TourPageTemplate = ({
     if (window.Telegram?.WebApp && window.Telegram.WebApp.initData) {
       try {
         console.log('✅ Using Telegram share');
+        // 📊 Track share event
+        trackShare(tourData.id, 'telegram');
         // ВАЖНО: отправляем ТОЛЬКО URL без текста - Telegram сам загрузит Open Graph!
         const tgShareUrl = `https://t.me/share/url?url=${encodeURIComponent(fullUrl)}`;
         window.Telegram.WebApp.openTelegramLink(tgShareUrl);
@@ -116,6 +131,8 @@ export const TourPageTemplate = ({
     if (navigator.share) {
       try {
         console.log('✅ Using Web Share API');
+        // 📊 Track share event
+        trackShare(tourData.id, 'web');
         await navigator.share({
           title: tourData.title,
           url: fullUrl,
@@ -135,6 +152,8 @@ export const TourPageTemplate = ({
     // Последний fallback: копирование в буфер
     try {
       console.log('✅ Using clipboard copy');
+      // 📊 Track share event
+      trackShare(tourData.id, 'clipboard');
       await navigator.clipboard.writeText(fullUrl);
       alert('✅ Ссылка скопирована!\n\nВы можете поделиться ей в любом мессенджере:\n' + fullUrl);
     } catch (error) {
@@ -177,6 +196,8 @@ export const TourPageTemplate = ({
     setSelectedImage(image);
     setCurrentImageIndex(index);
     setShowFullGallery(true);
+    // 📊 Track gallery open
+    trackGallery(tourData.id, index, 'open');
   };
 
   const openGallery = (e?: React.MouseEvent | React.TouchEvent) => {
@@ -187,12 +208,20 @@ export const TourPageTemplate = ({
     setShowFullGallery(true);
     setSelectedImage(sortedGallery[0]);
     setCurrentImageIndex(0);
+    // 📊 Track gallery open
+    trackGallery(tourData.id, 0, 'open');
   };
 
   const closeModal = useCallback(() => {
     setSelectedImage(null);
     setShowFullGallery(false);
   }, []);
+  
+  // 📊 Открытие бронирования с трекингом
+  const openBooking = useCallback(() => {
+    trackBookingStart(tourData.id, tourData.title, tourData.priceAdult);
+    setShowBookingModal(true);
+  }, [tourData.id, tourData.title, tourData.priceAdult, trackBookingStart]);
 
   const nextImage = useCallback(() => {
     setCurrentImageIndex((prev) => {
@@ -499,7 +528,7 @@ export const TourPageTemplate = ({
                       
                       <div className="space-y-2">
                         <Button 
-                          onClick={() => setShowBookingModal(true)} 
+                          onClick={() => openBooking()} 
                           className="btn-booking w-full"
                         >
                           Забронировать тур
@@ -618,13 +647,13 @@ export const TourPageTemplate = ({
                 e.preventDefault();
                 e.stopPropagation();
                 haptic('medium');
-                setShowBookingModal(true);
+                openBooking();
               }}
               onTouchEnd={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 haptic('medium');
-                setShowBookingModal(true);
+                openBooking();
               }}
               className="btn-booking active:scale-95"
             >
@@ -683,7 +712,7 @@ export const TourPageTemplate = ({
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center text-xl">
                       📅
-                    </div>
+                      </div>
                     <div>
                       <h2 className="text-lg font-bold text-white">Программа тура</h2>
                       <p className="text-white/80 text-xs">{tourData.schedule.length} остановок</p>
@@ -720,9 +749,9 @@ export const TourPageTemplate = ({
                           </div>
                           <h3 className="font-semibold text-gray-900 text-sm">{item.title}</h3>
                           <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{item.description}</p>
-                        </div>
                       </div>
-                    ))}
+                    </div>
+                  ))}
                   </div>
                   
                   {/* Show more button */}
@@ -885,7 +914,7 @@ export const TourPageTemplate = ({
         priceAdult={tourData.priceAdult} 
         priceChild={tourData.priceChild} 
         currency={tourData.currency} 
-        onBookingClick={() => setShowBookingModal(true)} 
+        onBookingClick={() => openBooking()} 
       />
 
       {/* iOS 26 Gradient Divider before Footer */}

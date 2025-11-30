@@ -284,46 +284,48 @@ bot.start(async (ctx) => {
 // ====== ОБРАБОТКА DEEP LINK С КОНКРЕТНЫМ ТУРОМ ======
 async function handleTourDeepLink(ctx, tourSlug) {
   const tour = TOURS_DB[tourSlug];
+  const userId = ctx.from.id;
   
-  // ФОТО ОТКЛЮЧЕНЫ ПО ЗАПРОСУ
-  /*
-  await ctx.replyWithPhoto(
-    `https://phukeo.com/assets/${tourSlug}-main.jpg`,
+  // Сохраняем выбранный тур в сессию
+  if (!userSessions[userId]) {
+    userSessions[userId] = { chatId: ctx.chat.id, userName: ctx.from.first_name };
+  }
+  userSessions[userId].selectedTour = tourSlug;
+  userSessions[userId].tourName = tour.name;
+  userSessions[userId].tourPrice = tour.price;
+  
+  // Генерируем даты
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const dayAfter = new Date(today);
+  dayAfter.setDate(dayAfter.getDate() + 2);
+  
+  const formatDate = (d) => `${d.getDate()}.${d.getMonth() + 1}`;
+  const formatDateFull = (d) => `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+  
+  await ctx.reply(
+    `✅ *${tour.name}*\n\n` +
+    `💰 ${tour.price}\n` +
+    `⏱ ${tour.duration}\n\n` +
+    `📅 *Когда планируете поехать?*`,
     {
-      caption:
-        `Отличный выбор! ${tour.name}\n\n` +
-        `📍 ${tour.description}\n` +
-        `⏱ Длительность: ${tour.duration}\n` +
-        `💰 Цена: ${tour.price}\n\n` +
-        `${tour.details}\n\n` +
-        `Как вам удобнее забронировать?`,
+      parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
-          [{ text: '💬 Помощь с выбором тура', callback_data: 'start_ai' }],
-          [{ text: '📱 Открыть каталог', web_app: { url: 'https://phukeo.com' } }]
+          [
+            { text: `📅 Сегодня (${formatDate(today)})`, callback_data: `date_${tourSlug}_${formatDateFull(today)}` },
+            { text: `📅 Завтра (${formatDate(tomorrow)})`, callback_data: `date_${tourSlug}_${formatDateFull(tomorrow)}` }
+          ],
+          [
+            { text: `📅 ${formatDate(dayAfter)}`, callback_data: `date_${tourSlug}_${formatDateFull(dayAfter)}` },
+            { text: '📆 Другая дата', callback_data: `date_other_${tourSlug}` }
+          ],
+          [{ text: '⬅️ Назад к категориям', callback_data: 'back_to_menu' }]
         ]
       }
     }
-  ).catch(() => {
-  */
-    // Fallback (теперь основной вариант)
-    await ctx.reply(
-      `Отличный выбор! ${tour.name}\n\n` +
-      `📍 ${tour.description}\n` +
-      `⏱ Длительность: ${tour.duration}\n` +
-      `💰 Цена: ${tour.price}\n\n` +
-      `${tour.details}\n\n` +
-      `Как вам удобнее забронировать?`,
-      {
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: '💬 Обсудить с AI консультантом', callback_data: 'start_ai' }],
-            [{ text: '📞 Связаться с менеджером', callback_data: 'contact_manager' }]
-          ]
-        }
-      }
-    );
-  // End of handleTourDeepLink
+  );
 }
 
 // ====== ГЛАВНОЕ МЕНЮ (без deep link) ======
@@ -334,20 +336,19 @@ async function showMainMenu(ctx, orderNumber) {
     {
       caption: 
         `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
-        `🤖 Я помогу выбрать и забронировать!\n\n` +
-        `Выберите категорию или напишите что ищете:`,
+        `Что вас интересует?`,
       parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
           [
-            { text: '🏝️ Острова', callback_data: 'cat_islands' },
+            { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
             { text: '🚣 Приключения', callback_data: 'cat_adventure' }
           ],
           [
-            { text: '🏞️ Природа', callback_data: 'cat_nature' },
+            { text: '🏞️ Природа/Культура', callback_data: 'cat_nature' },
             { text: '⭐ ТОП туры', callback_data: 'popular_tours' }
           ],
-          [{ text: '🤖 Помощь с выбором', callback_data: 'start_ai' }]
+          [{ text: '🤖 Не знаю, помогите выбрать', callback_data: 'start_ai' }]
         ]
       }
     }
@@ -355,21 +356,20 @@ async function showMainMenu(ctx, orderNumber) {
     // Fallback без фото
     await ctx.reply(
       `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
-      `🤖 Бот-консультант к вашим услугам!\n\n` +
-      `Выберите категорию:`,
+      `Что вас интересует?`,
       {
         parse_mode: 'Markdown',
         reply_markup: {
           inline_keyboard: [
             [
-              { text: '🏝️ Острова', callback_data: 'cat_islands' },
+              { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
               { text: '🚣 Приключения', callback_data: 'cat_adventure' }
             ],
             [
-              { text: '🏞️ Природа', callback_data: 'cat_nature' },
+              { text: '🏞️ Природа/Культура', callback_data: 'cat_nature' },
               { text: '⭐ ТОП туры', callback_data: 'popular_tours' }
             ],
-            [{ text: '🤖 Помощь с выбором', callback_data: 'start_ai' }]
+            [{ text: '🤖 Не знаю, помогите выбрать', callback_data: 'start_ai' }]
           ]
         }
       }
@@ -483,25 +483,17 @@ bot.action('popular_tours', async (ctx) => {
   await ctx.answerCbQuery();
   
   await ctx.reply(
-    '⭐ ТОП-10 популярных туров:\n\n' +
-    '🏝️ Пхи-Пхи 2 дня/1 ночь - 4500฿\n' +
-    '🌟 11 островов МЕГА-ТУР - 4900฿\n' +
-    '🐠 Симиланы Standard - 3500฿\n' +
-    '🚣 Рафтинг + SPA + ATV - 2900฿\n' +
-    '🏝️ Джеймс Бонд - 2900฿\n' +
-    '🏞️ Чео Лан + Самет Нангше - 2900฿\n' +
-    '🌉 Пхангнга + Стеклянный мост - 2600฿\n' +
-    '💚 Тайны Краби - 3100฿\n' +
-    '🏖️ Рача + Корал - 2200฿\n' +
-    '🎣 Рыбалка на рассвете - 4500฿\n\n' +
-    'Выберите категорию или поговорите с AI:',
+    '⭐ *ТОП-5 популярных туров*\n\nВыберите:',
     {
+      parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
-          [{ text: '🏝️ Морские острова', callback_data: 'cat_islands' }],
-          [{ text: '🚣 Приключения', callback_data: 'cat_adventure' }],
-          [{ text: '🏞️ Природа и культура', callback_data: 'cat_nature' }],
-          [{ text: '💬 AI консультант', callback_data: 'start_ai' }]
+          [{ text: '🏝️ Пхи-Пхи 2дня/1ночь — 4500฿', callback_data: 'select_phi-phi-2days' }],
+          [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
+          [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
+          [{ text: '🚣 Рафтинг + ATV — 2900฿', callback_data: 'select_rafting-atv-zipline' }],
+          [{ text: '🏞️ Чео Лан — 2900฿', callback_data: 'select_cheow-lan-lake' }],
+          [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
       }
     }
@@ -509,34 +501,45 @@ bot.action('popular_tours', async (ctx) => {
 });
 
 // ====== КАТЕГОРИИ ТУРОВ ======
-bot.action('cat_islands', async (ctx) => {
+
+// МОРЕ / ОСТРОВА
+bot.action('cat_sea', async (ctx) => {
   await ctx.answerCbQuery();
   await ctx.reply(
-    '🏝️ МОРСКИЕ ОСТРОВА (13 туров):\n\n' +
-    '🌅 ПХИ-ПХИ:\n' +
-    '• Пхи-Пхи 2 дня/1 ночь - 4500฿\n' +
-    '• Пхи-Пхи на рассвете Comfort+ - 3200฿\n' +
-    '• Пхи-Пхи Standard - 2500฿\n\n' +
-    '🐠 СИМИЛАНЫ:\n' +
-    '• Early Bird Comfort+ - 4200฿\n' +
-    '• Standard - 3500฿\n' +
-    '• Speedboat - 4800฿\n\n' +
-    '🏖️ РАЧА + КОРАЛ:\n' +
-    '• Спидбот - 2200฿\n' +
-    '• На рассвете - 2800฿\n' +
-    '• С Rawai - 2100฿\n\n' +
-    '🌟 МЕГА-ТУРЫ:\n' +
-    '• 11 островов - 4900฿\n' +
-    '• 4 Жемчужины - 7900฿\n' +
-    '• 5 Жемчужин Deluxe - 9900฿\n\n' +
-    'Выберите тур или поговорите с AI:',
+    '🌊 *МОРЕ И ОСТРОВА*\n\nВыберите тур:',
     {
+      parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
-          [{ text: '🏝️ Пхи-Пхи 2 дня', callback_data: 'select_phi-phi-2days' }],
-          [{ text: '🌟 11 островов МЕГА', callback_data: 'select_eleven-islands-mega' }],
-          [{ text: '🐠 Симиланы', callback_data: 'select_similan-islands' }],
-          [{ text: '💬 AI консультант', callback_data: 'start_ai' }]
+          [{ text: '🏝️ Пхи-Пхи 2дня/1ночь — 4500฿', callback_data: 'select_phi-phi-2days' }],
+          [{ text: '🏝️ Пхи-Пхи (1 день) — 2500฿', callback_data: 'select_phi-phi' }],
+          [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
+          [{ text: '🏖️ Рача + Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
+          [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
+          [{ text: '💎 5 Жемчужин Deluxe — 9900฿', callback_data: 'select_pearls-andaman-sea-deluxe' }],
+          [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
+        ]
+      }
+    }
+  );
+});
+
+bot.action('cat_islands', async (ctx) => {
+  await ctx.answerCbQuery();
+  // Перенаправляем на cat_sea
+  await ctx.reply(
+    '🌊 *МОРЕ И ОСТРОВА*\n\nВыберите тур:',
+    {
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '🏝️ Пхи-Пхи 2дня/1ночь — 4500฿', callback_data: 'select_phi-phi-2days' }],
+          [{ text: '🏝️ Пхи-Пхи (1 день) — 2500฿', callback_data: 'select_phi-phi' }],
+          [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
+          [{ text: '🏖️ Рача + Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
+          [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
+          [{ text: '💎 5 Жемчужин Deluxe — 9900฿', callback_data: 'select_pearls-andaman-sea-deluxe' }],
+          [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
       }
     }
@@ -546,42 +549,36 @@ bot.action('cat_islands', async (ctx) => {
 bot.action('cat_adventure', async (ctx) => {
   await ctx.answerCbQuery();
   await ctx.reply(
-    '🚣 ПРИКЛЮЧЕНИЯ И АКТИВНОСТИ:\n\n' +
-    '🚣 Рафтинг + SPA + ATV - 2900฿\n' +
-    '🚣 Рафтинг + SPA - 2400฿\n' +
-    '🐘 Као Лак Сафари - 3200฿\n' +
-    '🎣 Рыбалка на рассвете - 4500฿\n\n' +
-    'Выберите тур:',
+    '🚣 *ПРИКЛЮЧЕНИЯ*\n\nВыберите тур:',
     {
+      parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
-          [{ text: '🚣 Рафтинг + ATV', callback_data: 'select_rafting-spa-atv-1-day' }],
-          [{ text: '� Као Лак', callback_data: 'select_kao-lak-safari-1-day' }],
-          [{ text: '🎣 Рыбалка', callback_data: 'select_fishing-sunrise' }],
-          [{ text: '💬 AI консультант', callback_data: 'start_ai' }]
+          [{ text: '🚣 Рафтинг + SPA + ATV — 2900฿', callback_data: 'select_rafting-atv-zipline' }],
+          [{ text: '🐘 Као Лак Сафари — 3200฿', callback_data: 'select_kao-lak-safari-1-day' }],
+          [{ text: '🏝️ Джеймс Бонд — 2900฿', callback_data: 'select_james-bond-island-phang-nga' }],
+          [{ text: '🎣 Рыбалка на рассвете — 4500฿', callback_data: 'select_fishing-sunrise' }],
+          [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
       }
     }
   );
 });
 
+
 bot.action('cat_nature', async (ctx) => {
   await ctx.answerCbQuery();
   await ctx.reply(
-    '🏞️ ПРИРОДА И КУЛЬТУРА:\n\n' +
-    '🏞️ Чео Лан + Самет Нангше - 2900฿\n' +
-    '🌉 Пхангнга + Стеклянный мост - 2600฿\n' +
-    '📸 Пхангнга + Samet Nangshe - 2800฿\n' +
-    '💚 Тайны Краби - 3100฿\n' +
-    '🛕 Достопримечательности Пхукета - 1800฿\n\n' +
-    'Выберите тур:',
+    '🏞️ *ПРИРОДА И КУЛЬТУРА*\n\nВыберите тур:',
     {
+      parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
-          [{ text: '🏞️ Чео Лан', callback_data: 'select_cheow-lan-lake' }],
-          [{ text: '💚 Тайны Краби', callback_data: 'select_krabi-secrets' }],
-          [{ text: '🛕 Пхукет', callback_data: 'select_dostoprimechatelnosti-phuketa' }],
-          [{ text: '💬 AI консультант', callback_data: 'start_ai' }]
+          [{ text: '🏞️ Чео Лан + Самет Нангше — 2900฿', callback_data: 'select_cheow-lan-lake' }],
+          [{ text: '💚 Тайны Краби — 3100฿', callback_data: 'select_krabi-secrets' }],
+          [{ text: '🌉 Пхангнга + Стеклянный мост — 2600฿', callback_data: 'select_phang-nga-glass-bridge' }],
+          [{ text: '🛕 Достопримечательности — 1800฿', callback_data: 'select_dostoprimechatelnosti-phuketa' }],
+          [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
       }
     }
@@ -602,6 +599,231 @@ bot.action(/select_(.+)/, async (ctx) => {
   
   await ctx.answerCbQuery();
   await handleTourDeepLink(ctx, tourSlug);
+});
+
+// ====== ВЫБОР ДАТЫ ======
+bot.action(/date_(.+)_(\d+\.\d+\.\d+)/, async (ctx) => {
+  const tourSlug = ctx.match[1];
+  const date = ctx.match[2];
+  const userId = ctx.from.id;
+  
+  if (!userSessions[userId]) {
+    userSessions[userId] = { chatId: ctx.chat.id, userName: ctx.from.first_name };
+  }
+  userSessions[userId].selectedDate = date;
+  
+  const tour = TOURS_DB[tourSlug];
+  
+  await ctx.answerCbQuery();
+  await ctx.reply(
+    `📅 *Дата*: ${date}\n` +
+    `🏝️ *Тур*: ${tour?.name || tourSlug}\n\n` +
+    `👥 *Сколько человек поедет?*`,
+    {
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: '1 👤', callback_data: `people_${tourSlug}_${date}_1_0` },
+            { text: '2 👥', callback_data: `people_${tourSlug}_${date}_2_0` },
+            { text: '3 👨‍👩‍👦', callback_data: `people_${tourSlug}_${date}_3_0` }
+          ],
+          [
+            { text: '4 👨‍👩‍👧‍👦', callback_data: `people_${tourSlug}_${date}_4_0` },
+            { text: '5+', callback_data: `people_${tourSlug}_${date}_5_0` }
+          ],
+          [{ text: '👶 С детьми (скидка!)', callback_data: `kids_${tourSlug}_${date}` }],
+          [{ text: '⬅️ Изменить дату', callback_data: `select_${tourSlug}` }]
+        ]
+      }
+    }
+  );
+});
+
+// ====== ДРУГАЯ ДАТА (ввод вручную) ======
+bot.action(/date_other_(.+)/, async (ctx) => {
+  const tourSlug = ctx.match[1];
+  const userId = ctx.from.id;
+  
+  userSessions[userId].awaitingDate = tourSlug;
+  
+  await ctx.answerCbQuery();
+  await ctx.reply(
+    '📆 Напишите желаемую дату (например: 15.12 или 15 декабря):',
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '⬅️ Назад к датам', callback_data: `select_${tourSlug}` }]
+        ]
+      }
+    }
+  );
+});
+
+// ====== С ДЕТЬМИ ======
+bot.action(/kids_(.+)_(.+)/, async (ctx) => {
+  const tourSlug = ctx.match[1];
+  const date = ctx.match[2];
+  
+  await ctx.answerCbQuery();
+  await ctx.reply(
+    `👶 *Сколько детей?* (до 12 лет — скидка 30%)`,
+    {
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: '1 ребёнок', callback_data: `kidcount_${tourSlug}_${date}_1` },
+            { text: '2 ребёнка', callback_data: `kidcount_${tourSlug}_${date}_2` }
+          ],
+          [
+            { text: '3 ребёнка', callback_data: `kidcount_${tourSlug}_${date}_3` }
+          ],
+          [{ text: '⬅️ Без детей', callback_data: `date_${tourSlug}_${date}` }]
+        ]
+      }
+    }
+  );
+});
+
+// ====== КОЛИЧЕСТВО ДЕТЕЙ ======
+bot.action(/kidcount_(.+)_(.+)_(\d+)/, async (ctx) => {
+  const tourSlug = ctx.match[1];
+  const date = ctx.match[2];
+  const kids = ctx.match[3];
+  const tour = TOURS_DB[tourSlug];
+  
+  await ctx.answerCbQuery();
+  await ctx.reply(
+    `👶 Детей: ${kids}\n📅 Дата: ${date}\n🏝️ ${tour?.name || tourSlug}\n\n` +
+    `👥 *А сколько взрослых?*`,
+    {
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: '1', callback_data: `people_${tourSlug}_${date}_1_${kids}` },
+            { text: '2', callback_data: `people_${tourSlug}_${date}_2_${kids}` }
+          ],
+          [
+            { text: '3', callback_data: `people_${tourSlug}_${date}_3_${kids}` },
+            { text: '4', callback_data: `people_${tourSlug}_${date}_4_${kids}` }
+          ],
+          [{ text: '⬅️ Назад', callback_data: `kids_${tourSlug}_${date}` }]
+        ]
+      }
+    }
+  );
+});
+
+// ====== ФИНАЛЬНОЕ ПОДТВЕРЖДЕНИЕ БРОНИРОВАНИЯ ======
+bot.action(/people_(.+)_(.+)_(\d+)_(\d+)/, async (ctx) => {
+  const tourSlug = ctx.match[1];
+  const date = ctx.match[2];
+  const adults = parseInt(ctx.match[3]);
+  const children = parseInt(ctx.match[4]);
+  const userId = ctx.from.id;
+  
+  const tour = TOURS_DB[tourSlug];
+  const priceNum = parseInt(tour?.price?.replace(/\D/g, '') || '2500');
+  const adultTotal = priceNum * adults;
+  const childTotal = Math.round(priceNum * 0.7 * children); // -30% для детей
+  const total = adultTotal + childTotal;
+  
+  // Сохраняем бронирование
+  if (!userSessions[userId]) {
+    userSessions[userId] = { chatId: ctx.chat.id, userName: ctx.from.first_name };
+  }
+  userSessions[userId].booking = {
+    tour: tour?.name || tourSlug,
+    tourSlug,
+    date,
+    adults,
+    children,
+    total
+  };
+  
+  await ctx.answerCbQuery('✅ Проверяем данные...');
+  
+  await ctx.reply(
+    `📋 *ПОДТВЕРДИТЕ БРОНИРОВАНИЕ:*\n\n` +
+    `🏝️ *${tour?.name || tourSlug}*\n` +
+    `📅 Дата: ${date}\n` +
+    `👥 Взрослых: ${adults}${children > 0 ? `\n👶 Детей: ${children}` : ''}\n\n` +
+    `💰 *Итого: ${total.toLocaleString()}฿*\n` +
+    (children > 0 ? `   (дети -30%)\n` : '') +
+    `\nВсё верно?`,
+    {
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '✅ Да, бронирую!', callback_data: `confirm_${tourSlug}_${date}_${adults}_${children}` }],
+          [
+            { text: '👥 Изменить кол-во', callback_data: `date_${tourSlug}_${date}` },
+            { text: '📅 Изменить дату', callback_data: `select_${tourSlug}` }
+          ],
+          [{ text: '🔄 Выбрать другой тур', callback_data: 'back_to_menu' }]
+        ]
+      }
+    }
+  );
+});
+
+// ====== ПОДТВЕРЖДЕНИЕ БРОНИРОВАНИЯ ======
+bot.action(/confirm_(.+)_(.+)_(\d+)_(\d+)/, async (ctx) => {
+  const tourSlug = ctx.match[1];
+  const date = ctx.match[2];
+  const adults = parseInt(ctx.match[3]);
+  const children = parseInt(ctx.match[4]);
+  const userId = ctx.from.id;
+  
+  const tour = TOURS_DB[tourSlug];
+  const priceNum = parseInt(tour?.price?.replace(/\D/g, '') || '2500');
+  const total = (priceNum * adults) + Math.round(priceNum * 0.7 * children);
+  
+  await ctx.answerCbQuery('✅ Бронирование принято!');
+  
+  // Отправляем уведомление менеджеру
+  try {
+    await bot.telegram.sendMessage(MANAGER_CHAT_ID,
+      `🎯 *НОВАЯ ЗАЯВКА!*\n\n` +
+      `👤 ${ctx.from.first_name} (@${ctx.from.username || 'нет'})\n` +
+      `💬 Chat ID: \`${ctx.chat.id}\`\n\n` +
+      `🏝️ *${tour?.name}*\n` +
+      `📅 ${date}\n` +
+      `👥 Взрослых: ${adults}${children > 0 ? `\n👶 Детей: ${children}` : ''}\n` +
+      `💰 ${total.toLocaleString()}฿\n\n` +
+      `Ответить: /reply ${ctx.chat.id} текст`,
+      { parse_mode: 'Markdown' }
+    );
+  } catch (error) {
+    console.error('Manager notify error:', error.message);
+  }
+  
+  await ctx.reply(
+    `🎉 *Отлично! Заявка принята!*\n\n` +
+    `🏝️ ${tour?.name}\n` +
+    `📅 ${date}\n` +
+    `👥 ${adults} взр.${children > 0 ? ` + ${children} дет.` : ''}\n` +
+    `💰 ${total.toLocaleString()}฿\n\n` +
+    `✅ Места зарезервированы!\n` +
+    `⏱ Подтверждение придёт сюда через пару минут.`,
+    {
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '🏝️ Посмотреть другие туры', callback_data: 'back_to_menu' }],
+          [{ text: '📱 Открыть каталог', web_app: { url: `https://phukeo.com/#/tours/${tourSlug}` } }]
+        ]
+      }
+    }
+  );
+});
+
+// ====== НАЗАД В МЕНЮ ======
+bot.action('back_to_menu', async (ctx) => {
+  await ctx.answerCbQuery();
+  await showMainMenu(ctx);
 });
 
 // ====== ЗАПУСК AI ЧАТА ======
@@ -936,7 +1158,43 @@ bot.on('text', async (ctx) => {
   // Игнорируем команды
   if (ctx.message.text.startsWith('/')) return;
   
-  // Обработка ввода даты вручную
+  // Обработка ввода даты вручную (новый flow с кнопками)
+  if (session?.awaitingDate) {
+    const tourSlug = session.awaitingDate;
+    const dateText = ctx.message.text.trim();
+    const tour = TOURS_DB[tourSlug];
+    
+    // Очищаем состояние ожидания
+    delete session.awaitingDate;
+    session.selectedDate = dateText;
+    
+    await ctx.reply(
+      `📅 *Дата*: ${dateText}\n` +
+      `🏝️ *Тур*: ${tour?.name || tourSlug}\n\n` +
+      `👥 *Сколько человек поедет?*`,
+      {
+        parse_mode: 'Markdown',
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: '1 👤', callback_data: `people_${tourSlug}_${dateText}_1_0` },
+              { text: '2 👥', callback_data: `people_${tourSlug}_${dateText}_2_0` },
+              { text: '3 👨‍👩‍👦', callback_data: `people_${tourSlug}_${dateText}_3_0` }
+            ],
+            [
+              { text: '4 👨‍👩‍👧‍👦', callback_data: `people_${tourSlug}_${dateText}_4_0` },
+              { text: '5+', callback_data: `people_${tourSlug}_${dateText}_5_0` }
+            ],
+            [{ text: '👶 С детьми (скидка!)', callback_data: `kids_${tourSlug}_${dateText}` }],
+            [{ text: '⬅️ Изменить дату', callback_data: `select_${tourSlug}` }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // Обработка ввода даты вручную (старый flow)
   if (session?.stage === 'waiting_date') {
     session.bookingData = session.bookingData || {};
     session.bookingData.date = ctx.message.text;

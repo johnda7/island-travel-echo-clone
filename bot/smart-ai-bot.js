@@ -281,7 +281,7 @@ bot.start(async (ctx) => {
   }
 });
 
-// ====== ОБРАБОТКА DEEP LINK С КОНКРЕТНЫМ ТУРОМ ======
+// ====== ОБРАБОТКА DEEP LINK С КОНКРЕТНЫМ ТУРОМ (КАРТОЧКА С ФОТО) ======
 async function handleTourDeepLink(ctx, tourSlug) {
   const tour = TOURS_DB[tourSlug];
   const userId = ctx.from.id;
@@ -304,28 +304,72 @@ async function handleTourDeepLink(ctx, tourSlug) {
   const formatDate = (d) => `${d.getDate()}.${d.getMonth() + 1}`;
   const formatDateFull = (d) => `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
   
-  await ctx.reply(
-    `✅ *${tour.name}*\n\n` +
-    `💰 ${tour.price}\n` +
-    `⏱ ${tour.duration}\n\n` +
-    `📅 *Когда планируете поехать?*`,
-    {
-      parse_mode: 'Markdown',
-      reply_markup: {
-        inline_keyboard: [
-          [
-            { text: `📅 Сегодня (${formatDate(today)})`, callback_data: `date_${tourSlug}_${formatDateFull(today)}` },
-            { text: `📅 Завтра (${formatDate(tomorrow)})`, callback_data: `date_${tourSlug}_${formatDateFull(tomorrow)}` }
-          ],
-          [
-            { text: `📅 ${formatDate(dayAfter)}`, callback_data: `date_${tourSlug}_${formatDateFull(dayAfter)}` },
-            { text: '📆 Другая дата', callback_data: `date_other_${tourSlug}` }
-          ],
-          [{ text: '⬅️ Назад к категориям', callback_data: 'back_to_menu' }]
+  // Фото туров
+  const tourPhotos = {
+    'phi-phi-2days': 'https://phukeo.com/assets/phi-phi-maya-bay-LeJ2QhJv.jpg',
+    'phi-phi': 'https://phukeo.com/assets/phi-phi-maya-bay-LeJ2QhJv.jpg',
+    'similan-islands': 'https://phukeo.com/assets/similan-islands.jpg',
+    'racha-coral-islands-speedboat': 'https://phukeo.com/assets/racha-coral.jpg',
+    'eleven-islands-mega': 'https://phukeo.com/assets/11-islands.jpg',
+    'pearls-andaman-sea-deluxe': 'https://phukeo.com/assets/pearls-andaman.jpg',
+    'james-bond-island-phang-nga': 'https://phukeo.com/assets/james-bond.jpg',
+    'cheow-lan-lake': 'https://phukeo.com/assets/cheow-lan.jpg',
+    'krabi-secrets': 'https://phukeo.com/assets/krabi.jpg',
+    'rafting-atv-zipline': 'https://phukeo.com/assets/rafting.jpg',
+    'kao-lak-safari-1-day': 'https://phukeo.com/assets/kao-lak.jpg',
+    'fishing-sunrise': 'https://phukeo.com/assets/fishing.jpg',
+    'dostoprimechatelnosti-phuketa': 'https://phukeo.com/assets/phuket-sights.jpg',
+    'phang-nga-glass-bridge': 'https://phukeo.com/assets/glass-bridge.jpg'
+  };
+  
+  const photoUrl = tourPhotos[tourSlug] || tour.image || 'https://phukeo.com/assets/hero-phuket.jpg';
+  
+  // Отправляем карточку с фото
+  await ctx.replyWithPhoto(photoUrl, {
+    caption: 
+      `🏝️ *${tour.name}*\n\n` +
+      `${tour.description || ''}\n\n` +
+      `💰 *${tour.price}*\n` +
+      `⏱ ${tour.duration}\n\n` +
+      `📅 Выберите дату:`,
+    parse_mode: 'Markdown',
+    reply_markup: {
+      inline_keyboard: [
+        [
+          { text: `Сегодня`, callback_data: `date_${tourSlug}_${formatDateFull(today)}` },
+          { text: `Завтра`, callback_data: `date_${tourSlug}_${formatDateFull(tomorrow)}` },
+          { text: `${formatDate(dayAfter)}`, callback_data: `date_${tourSlug}_${formatDateFull(dayAfter)}` }
+        ],
+        [
+          { text: '📆 Другая дата', callback_data: `date_other_${tourSlug}` },
+          { text: '⬅️ Назад', callback_data: 'back_to_menu' }
         ]
-      }
+      ]
     }
-  );
+  }).catch(async () => {
+    // Fallback без фото
+    await ctx.reply(
+      `🏝️ *${tour.name}*\n\n` +
+      `💰 *${tour.price}* | ⏱ ${tour.duration}\n\n` +
+      `📅 Выберите дату:`,
+      {
+        parse_mode: 'Markdown',
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: `Сегодня`, callback_data: `date_${tourSlug}_${formatDateFull(today)}` },
+              { text: `Завтра`, callback_data: `date_${tourSlug}_${formatDateFull(tomorrow)}` },
+              { text: `${formatDate(dayAfter)}`, callback_data: `date_${tourSlug}_${formatDateFull(dayAfter)}` }
+            ],
+            [
+              { text: '📆 Другая дата', callback_data: `date_other_${tourSlug}` },
+              { text: '⬅️ Назад', callback_data: 'back_to_menu' }
+            ]
+          ]
+        }
+      }
+    );
+  });
 }
 
 // ====== ГЛАВНОЕ МЕНЮ (без deep link) ======
@@ -422,12 +466,13 @@ bot.on('web_app_data', async (ctx) => {
 
     // Подтверждение клиенту
   await ctx.reply(
-      `✅ Заявка принята!\n\n` +
+      `🎉 *Заявка принята!*\n\n` +
       `🏝️ ${booking.tourName}\n` +
       `📅 ${booking.date}\n` +
       `👥 ${booking.adults} взр.${booking.children > 0 ? ` + ${booking.children} дет.` : ''}\n` +
       `💰 ${booking.totalPrice} ${booking.currency}\n\n` +
-      `⏱ Проверяю наличие мест... Подтверждение придёт сюда!`
+      `📋 Проверяем наличие мест у партнёров.\n` +
+      `⏱ Ответим в течение 15-30 мин (9:00-21:00).`
     );
       }
 });
@@ -716,61 +761,8 @@ bot.action(/kidcount_(.+)_(.+)_(\d+)/, async (ctx) => {
   );
 });
 
-// ====== ФИНАЛЬНОЕ ПОДТВЕРЖДЕНИЕ БРОНИРОВАНИЯ ======
+// ====== СРАЗУ БРОНИРУЕМ ПОСЛЕ ВЫБОРА КОЛИЧЕСТВА ======
 bot.action(/people_(.+)_(.+)_(\d+)_(\d+)/, async (ctx) => {
-  const tourSlug = ctx.match[1];
-  const date = ctx.match[2];
-  const adults = parseInt(ctx.match[3]);
-  const children = parseInt(ctx.match[4]);
-  const userId = ctx.from.id;
-  
-  const tour = TOURS_DB[tourSlug];
-  const priceNum = parseInt(tour?.price?.replace(/\D/g, '') || '2500');
-  const adultTotal = priceNum * adults;
-  const childTotal = Math.round(priceNum * 0.7 * children); // -30% для детей
-  const total = adultTotal + childTotal;
-  
-  // Сохраняем бронирование
-  if (!userSessions[userId]) {
-    userSessions[userId] = { chatId: ctx.chat.id, userName: ctx.from.first_name };
-  }
-  userSessions[userId].booking = {
-    tour: tour?.name || tourSlug,
-    tourSlug,
-    date,
-    adults,
-    children,
-    total
-  };
-  
-  await ctx.answerCbQuery('✅ Проверяем данные...');
-  
-  await ctx.reply(
-    `📋 *ПОДТВЕРДИТЕ БРОНИРОВАНИЕ:*\n\n` +
-    `🏝️ *${tour?.name || tourSlug}*\n` +
-    `📅 Дата: ${date}\n` +
-    `👥 Взрослых: ${adults}${children > 0 ? `\n👶 Детей: ${children}` : ''}\n\n` +
-    `💰 *Итого: ${total.toLocaleString()}฿*\n` +
-    (children > 0 ? `   (дети -30%)\n` : '') +
-    `\nВсё верно?`,
-    {
-      parse_mode: 'Markdown',
-      reply_markup: {
-        inline_keyboard: [
-          [{ text: '✅ Да, бронирую!', callback_data: `confirm_${tourSlug}_${date}_${adults}_${children}` }],
-          [
-            { text: '👥 Изменить кол-во', callback_data: `date_${tourSlug}_${date}` },
-            { text: '📅 Изменить дату', callback_data: `select_${tourSlug}` }
-          ],
-          [{ text: '🔄 Выбрать другой тур', callback_data: 'back_to_menu' }]
-        ]
-      }
-    }
-  );
-});
-
-// ====== ПОДТВЕРЖДЕНИЕ БРОНИРОВАНИЯ ======
-bot.action(/confirm_(.+)_(.+)_(\d+)_(\d+)/, async (ctx) => {
   const tourSlug = ctx.match[1];
   const date = ctx.match[2];
   const adults = parseInt(ctx.match[3]);
@@ -781,7 +773,7 @@ bot.action(/confirm_(.+)_(.+)_(\d+)_(\d+)/, async (ctx) => {
   const priceNum = parseInt(tour?.price?.replace(/\D/g, '') || '2500');
   const total = (priceNum * adults) + Math.round(priceNum * 0.7 * children);
   
-  await ctx.answerCbQuery('✅ Бронирование принято!');
+  await ctx.answerCbQuery('✅ Бронируем!');
   
   // Отправляем уведомление менеджеру
   try {
@@ -792,7 +784,7 @@ bot.action(/confirm_(.+)_(.+)_(\d+)_(\d+)/, async (ctx) => {
       `🏝️ *${tour?.name}*\n` +
       `📅 ${date}\n` +
       `👥 Взрослых: ${adults}${children > 0 ? `\n👶 Детей: ${children}` : ''}\n` +
-      `💰 ${total.toLocaleString()}฿\n\n` +
+      `💰 ~${total.toLocaleString()}฿\n\n` +
       `Ответить: /reply ${ctx.chat.id} текст`,
       { parse_mode: 'Markdown' }
     );
@@ -800,20 +792,23 @@ bot.action(/confirm_(.+)_(.+)_(\d+)_(\d+)/, async (ctx) => {
     console.error('Manager notify error:', error.message);
   }
   
+  // Красивая карточка подтверждения
   await ctx.reply(
-    `🎉 *Отлично! Заявка принята!*\n\n` +
-    `🏝️ ${tour?.name}\n` +
+    `🎉 *Заявка принята!*\n\n` +
+    `🏝️ *${tour?.name}*\n` +
     `📅 ${date}\n` +
     `👥 ${adults} взр.${children > 0 ? ` + ${children} дет.` : ''}\n` +
-    `💰 ${total.toLocaleString()}฿\n\n` +
-    `✅ Места зарезервированы!\n` +
-    `⏱ Подтверждение придёт сюда через пару минут.`,
+    `💰 ~${total.toLocaleString()}฿\n\n` +
+    `━━━━━━━━━━━━━━━\n` +
+    `📋 *Что дальше?*\n` +
+    `Проверяем наличие мест у партнёров и напишем вам сюда.\n\n` +
+    `⏱ *15-30 минут* в рабочее время\n` +
+    `🕘 9:00 - 21:00 (Пхукет)`,
     {
       parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
-          [{ text: '🏝️ Посмотреть другие туры', callback_data: 'back_to_menu' }],
-          [{ text: '📱 Открыть каталог', web_app: { url: `https://phukeo.com/#/tours/${tourSlug}` } }]
+          [{ text: '🏝️ Посмотреть другие туры', callback_data: 'back_to_menu' }]
         ]
       }
     }
@@ -936,13 +931,14 @@ bot.action('start_ai', async (ctx) => {
 
 ВАЖНО - ФИНАЛЬНОЕ СООБЩЕНИЕ:
 После сбора данных (дата + количество людей) сразу скажи:
-"Отлично! ✅ Заявка принята:
+"🎉 Заявка принята!
 
-🏝️ Тур: [название]
-📅 Дата: [дата]
-👥 Гостей: [взрослых] взр. + [детей] дет.
+🏝️ [название тура]
+📅 [дата]
+👥 [количество]
 
-Места зарезервированы! Подтверждение отправлено в этот чат."
+📋 Проверяем наличие мест у партнёров.
+⏱ Ответим в течение 15-30 минут (в рабочее время 9:00-21:00)."
 
 ПОМНИ: Ты ТОЛЬКО консультант по турам, НЕ универсальный помощник!`
     }
@@ -1129,11 +1125,12 @@ async function completeQuickBooking(ctx, session) {
 
   // Подтверждение клиенту
   await ctx.reply(
-    `✅ Отлично! Заявка принята:\n\n` +
+    `🎉 *Заявка принята!*\n\n` +
     `🏝️ ${tour?.name || 'Тур'}\n` +
     `📅 ${booking.date}\n` +
     `👥 ${booking.adults} взр.${booking.children > 0 ? ` + ${booking.children} дет.` : ''}\n\n` +
-    `⏱ Проверяю наличие мест... Подтверждение придёт сюда!`,
+    `📋 Проверяем места у партнёров.\n` +
+    `⏱ Ответим в течение 15-30 мин.`,
     {
       reply_markup: {
         inline_keyboard: [
@@ -1417,12 +1414,10 @@ async function handleBookingComplete(ctx, session) {
 
   // Отправляем клиенту подтверждение
   await ctx.reply(
-    '✅ Отлично! Заявка принята!\n\n' +
-    '🔍 Что происходит:\n' +
-    '• Проверяем наличие мест\n' +
-    '• Рассчитываем стоимость\n' +
-    '• Резервируем для вас\n\n' +
-    '⏱ Подтверждение придёт сюда через пару минут!\n\n' +
+    '🎉 *Заявка принята!*\n\n' +
+    '📋 *Что дальше?*\n' +
+    'Мы проверим наличие мест у наших партнёров и напишем вам сюда.\n\n' +
+    '⏱ Обычно это занимает 15-30 минут в рабочее время (9:00-21:00 по Пхукету).\n\n' +
     'А пока посмотрите отзывы:',
     {
       reply_markup: {

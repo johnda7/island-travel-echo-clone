@@ -326,15 +326,15 @@ async function handleTourDeepLink(ctx, tourSlug) {
   
   // Отправляем карточку с фото
   await ctx.replyWithPhoto(photoUrl, {
-    caption: 
+      caption:
       `🏝️ *${tour.name}*\n\n` +
       `${tour.description || ''}\n\n` +
       `💰 *${tour.price}*\n` +
       `⏱ ${tour.duration}\n\n` +
       `📅 Выберите дату:`,
     parse_mode: 'Markdown',
-    reply_markup: {
-      inline_keyboard: [
+      reply_markup: {
+        inline_keyboard: [
         [
           { text: `Сегодня`, callback_data: `date_${tourSlug}_${formatDateFull(today)}` },
           { text: `Завтра`, callback_data: `date_${tourSlug}_${formatDateFull(tomorrow)}` },
@@ -382,8 +382,8 @@ async function showMainMenu(ctx, orderNumber) {
         `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
         `Что вас интересует?`,
       parse_mode: 'Markdown',
-      reply_markup: {
-        inline_keyboard: [
+        reply_markup: {
+          inline_keyboard: [
           [
             { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
             { text: '🚣 Приключения', callback_data: 'cat_adventure' }
@@ -398,12 +398,12 @@ async function showMainMenu(ctx, orderNumber) {
     }
   ).catch(async () => {
     // Fallback без фото
-    await ctx.reply(
+  await ctx.reply(
       `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
       `Что вас интересует?`,
-      {
+    {
         parse_mode: 'Markdown',
-        reply_markup: {
+      reply_markup: {
           inline_keyboard: [
             [
               { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
@@ -516,10 +516,10 @@ async function showSeaTours(ctx) {
             [{ text: '🏝️ Пхи-Пхи', callback_data: 'select_phi-phi' }],
             [{ text: '🐠 Симиланы', callback_data: 'select_similan-islands' }],
             [{ text: '🏖️ Рача+Корал', callback_data: 'select_racha-coral-islands-speedboat' }]
-          ]
-        }
+        ]
       }
-    );
+    }
+  );
   });
 }
 
@@ -792,6 +792,15 @@ bot.action(/people_(.+)_(.+)_(\d+)_(\d+)/, async (ctx) => {
     console.error('Manager notify error:', error.message);
   }
   
+  // Очищаем сессию после бронирования (чтобы AI не предлагал старый тур)
+  if (userSessions[userId]) {
+    delete userSessions[userId].tour;
+    delete userSessions[userId].tourSlug;
+    delete userSessions[userId].selectedTour;
+    delete userSessions[userId].tourName;
+    userSessions[userId].aiMode = false;
+  }
+  
   // Красивая карточка подтверждения
   await ctx.reply(
     `🎉 *Заявка принята!*\n\n` +
@@ -808,7 +817,7 @@ bot.action(/people_(.+)_(.+)_(\d+)_(\d+)/, async (ctx) => {
       parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
-          [{ text: '🏝️ Посмотреть другие туры', callback_data: 'back_to_menu' }]
+          [{ text: '🏝️ Открыть каталог туров', web_app: { url: 'https://phukeo.com' } }]
         ]
       }
     }
@@ -1265,7 +1274,7 @@ bot.on('text', async (ctx) => {
     if (text.includes('приключен') || text.includes('актив') || text.includes('рафтинг') || text.includes('сафари')) {
       await ctx.answerCbQuery?.();
       // Эмулируем нажатие на категорию
-      await ctx.reply(
+    await ctx.reply(
         '🚣 *ПРИКЛЮЧЕНИЯ* — выберите тур:\n\n' +
         '🚣 Рафтинг + SPA + ATV — *2900฿*\n' +
         '🐘 Као Лак Сафари — *3200฿*\n' +

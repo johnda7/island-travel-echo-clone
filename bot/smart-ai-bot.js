@@ -411,24 +411,50 @@ async function handleTourDeepLink(ctx, tourSlug) {
 
 // ====== ГЛАВНОЕ МЕНЮ (без deep link) ======
 async function showMainMenu(ctx, orderNumber = null) {
-  // Отправляем фото с меню
+  // Отправляем фото с меню + inline кнопки + нижнее меню
   await ctx.replyWithPhoto(
     'https://phukeo.com/assets/hero-phuket.jpg',
     {
       caption: 
         `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
-        `Выберите категорию внизу 👇`,
+        `Куда хотите поехать?`,
       parse_mode: 'Markdown',
-      reply_markup: MAIN_KEYBOARD
+      reply_markup: {
+        ...MAIN_KEYBOARD,
+        inline_keyboard: [
+          [
+            { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
+            { text: '🚣 Приключения', callback_data: 'cat_adventure' }
+          ],
+          [
+            { text: '🏞️ Природа/Культура', callback_data: 'cat_nature' },
+            { text: '⭐ ТОП туры', callback_data: 'popular_tours' }
+          ],
+          [{ text: '❓ Не знаю, помогите выбрать', callback_data: 'start_ai' }]
+        ]
+      }
     }
   ).catch(async () => {
     // Fallback без фото
-  await ctx.reply(
+    await ctx.reply(
       `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
-      `Выберите категорию внизу 👇`,
+      `Куда хотите поехать?`,
       {
         parse_mode: 'Markdown',
-        reply_markup: MAIN_KEYBOARD
+        reply_markup: {
+          ...MAIN_KEYBOARD,
+          inline_keyboard: [
+            [
+              { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
+              { text: '🚣 Приключения', callback_data: 'cat_adventure' }
+            ],
+            [
+              { text: '🏞️ Природа/Культура', callback_data: 'cat_nature' },
+              { text: '⭐ ТОП туры', callback_data: 'popular_tours' }
+            ],
+            [{ text: '❓ Не знаю, помогите выбрать', callback_data: 'start_ai' }]
+          ]
+        }
       }
     );
   });

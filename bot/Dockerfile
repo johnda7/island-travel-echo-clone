@@ -2,22 +2,22 @@
 FROM node:20-alpine
 
 # Smart AI Bot - GPT-4o-mini + улучшенное меню
-ENV BUILD_DATE=2025-12-01T00:35:00
+ENV BUILD_DATE=2025-12-01T00:40:00
 
 # Рабочая директория
 WORKDIR /app
 
-# Копируем package.json из папки bot/
-COPY bot/package*.json ./
+# Копируем package.json (Dockerfile в папке bot/, контекст тоже bot/)
+COPY package*.json ./
 
 # Устанавливаем зависимости
-RUN npm install --production
+RUN npm install --omit=dev
 
 # Копируем код бота
-COPY bot/ ./
+COPY . ./
 
 # Порт для Koyeb (webhook + health checks)
 EXPOSE 8000
 
-# Запускаем AI бота (как было раньше - работает стабильно)
+# Запускаем AI бота
 CMD ["node", "smart-ai-bot.js"]

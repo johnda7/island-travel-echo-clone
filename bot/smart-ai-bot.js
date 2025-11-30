@@ -1153,13 +1153,21 @@ async function completeQuickBooking(ctx, session) {
     `📋 Проверяем места у партнёров.\n` +
     `⏱ Ответим в течение 15-30 мин.`,
     {
+      parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
-          [{ text: '📋 Посмотреть другие туры', callback_data: 'popular_tours' }]
+          [{ text: '🏝️ Открыть каталог туров', web_app: { url: 'https://phukeo.com' } }]
         ]
       }
     }
   );
+  
+  // Очищаем сессию после бронирования
+  if (userSessions[userId]) {
+    delete userSessions[userId].tour;
+    delete userSessions[userId].selectedTour;
+    delete userSessions[userId].tourName;
+  }
   
   // Сбрасываем состояние
   if (session) {

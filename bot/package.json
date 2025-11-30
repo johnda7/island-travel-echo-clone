@@ -1,13 +1,12 @@
 {
-  "name": "phuket-go-bot",
-  "version": "3.0.0",
-  "description": "Пхукет Go - Telegram Bot с каталогом туров",
-  "main": "phuket-go-bot.js",
+  "name": "bot",
+  "version": "2.0.0",
+  "description": "Smart AI Booking Bot with GPT integration",
+  "main": "smart-ai-bot.js",
   "scripts": {
-    "start": "node phuket-go-bot-webhook.js",
-    "dev": "node phuket-go-bot.js",
-    "start:old": "node welcome-message.js",
+    "start": "node welcome-message.js",
     "start:ai": "node smart-ai-bot.js",
+    "start:new": "node phuket-go-bot-webhook.js",
     "test": "echo \"Bot ready for testing\""
   },
   "keywords": ["telegram", "bot", "ai", "gpt", "booking"],

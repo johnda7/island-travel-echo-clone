@@ -1,9 +1,8 @@
 # Node.js
 FROM node:20-alpine
 
-# Пхукет Go Bot v3.0 - FORCE REBUILD
-ENV BUILD_DATE=2025-11-30T23:45:00
-ENV BOT_VERSION=3.0.1
+# Smart AI Bot - обновлено 2025-11-30
+ENV BUILD_DATE=2025-11-30T18:30:00
 
 # Рабочая директория
 WORKDIR /app
@@ -20,5 +19,5 @@ COPY bot/ ./
 # Порт для Koyeb (webhook + health checks)
 EXPOSE 8000
 
-# Запускаем улучшенного бота (webhook режим для Koyeb)
-CMD ["node", "phuket-go-bot-webhook.js"]
+# Запускаем AI бота (как было раньше - работает стабильно)
+CMD ["node", "smart-ai-bot.js"]

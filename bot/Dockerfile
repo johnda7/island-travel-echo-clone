@@ -1,8 +1,9 @@
 # Node.js
 FROM node:20-alpine
 
-# Пхукет Go Bot v3.0 - обновлено 2025-11-30
-ENV BUILD_DATE=2025-11-30T00:00:00
+# Пхукет Go Bot v3.0 - FORCE REBUILD
+ENV BUILD_DATE=2025-11-30T23:45:00
+ENV BOT_VERSION=3.0.1
 
 # Рабочая директория
 WORKDIR /app

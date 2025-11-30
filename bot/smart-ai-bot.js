@@ -374,6 +374,16 @@ async function handleTourDeepLink(ctx, tourSlug) {
 
 // ====== ГЛАВНОЕ МЕНЮ (без deep link) ======
 async function showMainMenu(ctx, orderNumber) {
+  // Устанавливаем нижнюю клавиатуру (ReplyKeyboard) — без AI и Менеджера
+  const replyKeyboard = {
+    keyboard: [
+      [{ text: '⭐ Популярные' }, { text: '🗺️ Все туры' }],
+      [{ text: '🏝️ Острова' }, { text: '🚣 Приключения' }, { text: '🏞️ Природа' }]
+    ],
+    resize_keyboard: true,
+    is_persistent: true
+  };
+  
   // Отправляем фото с меню
   await ctx.replyWithPhoto(
     'https://phukeo.com/assets/hero-phuket.jpg',
@@ -382,8 +392,9 @@ async function showMainMenu(ctx, orderNumber) {
         `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
         `Что вас интересует?`,
       parse_mode: 'Markdown',
-        reply_markup: {
-          inline_keyboard: [
+      reply_markup: {
+        ...replyKeyboard,
+        inline_keyboard: [
           [
             { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
             { text: '🚣 Приключения', callback_data: 'cat_adventure' }
@@ -392,18 +403,19 @@ async function showMainMenu(ctx, orderNumber) {
             { text: '🏞️ Природа/Культура', callback_data: 'cat_nature' },
             { text: '⭐ ТОП туры', callback_data: 'popular_tours' }
           ],
-          [{ text: '🤖 Не знаю, помогите выбрать', callback_data: 'start_ai' }]
+          [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
         ]
       }
     }
   ).catch(async () => {
     // Fallback без фото
-  await ctx.reply(
+    await ctx.reply(
       `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
       `Что вас интересует?`,
-    {
+      {
         parse_mode: 'Markdown',
-      reply_markup: {
+        reply_markup: {
+          ...replyKeyboard,
           inline_keyboard: [
             [
               { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
@@ -413,7 +425,7 @@ async function showMainMenu(ctx, orderNumber) {
               { text: '🏞️ Природа/Культура', callback_data: 'cat_nature' },
               { text: '⭐ ТОП туры', callback_data: 'popular_tours' }
             ],
-            [{ text: '🤖 Не знаю, помогите выбрать', callback_data: 'start_ai' }]
+            [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
           ]
         }
       }
@@ -1459,12 +1471,11 @@ bot.hears('⭐ Популярные', async (ctx) => {
 
 bot.hears('🗺️ Все туры', async (ctx) => {
   await ctx.reply(
-    '🗺️ Каталог туров:',
+    '🗺️ Открываю каталог туров:',
     {
       reply_markup: {
         inline_keyboard: [
-          [{ text: '🗺️ Открыть каталог', url: 'https://phukeo.com/#/tours' }],
-          [{ text: '💬 Подобрать тур', callback_data: 'start_ai' }]
+          [{ text: '🗺️ Открыть каталог', web_app: { url: 'https://phukeo.com' } }]
         ]
       }
     }
@@ -1508,32 +1519,7 @@ bot.hears('🏞️ Природа', async (ctx) => {
   await bot.handleUpdate(fakeUpdate);
 });
 
-bot.hears('💬 AI помощь', async (ctx) => {
-  const fakeUpdate = {
-    callback_query: {
-      id: String(Date.now()),
-      from: ctx.from,
-      message: ctx.message,
-      data: 'start_ai'
-    }
-  };
-  await bot.handleUpdate(fakeUpdate);
-});
-
-bot.hears('📞 Менеджер', async (ctx) => {
-  await ctx.reply(
-    '📞 Напишите напрямую менеджеру:\n\n' +
-    '👤 @Phuketga\n\n' +
-    'Он ответит в течение 5-10 минут! 💬',
-    {
-      reply_markup: {
-        inline_keyboard: [
-          [{ text: '📞 Написать @Phuketga', url: 'https://t.me/Phuketga' }]
-        ]
-      }
-    }
-  );
-});
+// Обработчики AI помощь и Менеджер убраны - всё происходит в боте
 
 // ====== КОМАНДЫ ДЛЯ MENU BUTTON ======
 bot.command('tours', async (ctx) => {

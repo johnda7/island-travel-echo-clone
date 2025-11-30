@@ -1,1 +1,0 @@
-export { krabiSecretsTourData } from './static';

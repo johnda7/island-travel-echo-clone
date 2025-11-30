@@ -1,8 +1,8 @@
 # Node.js
 FROM node:20-alpine
 
-# Smart AI Bot - updated 2025-11-10
-ENV BUILD_DATE=2025-11-10T00:00:00
+# Пхукет Go Bot v3.0 - обновлено 2025-11-30
+ENV BUILD_DATE=2025-11-30T00:00:00
 
 # Рабочая директория
 WORKDIR /app
@@ -19,5 +19,5 @@ COPY bot/ ./
 # Порт для Koyeb (webhook + health checks)
 EXPOSE 8000
 
-# Запускаем AI бота с GPT-3.5-turbo
-CMD ["node", "smart-ai-bot.js"]
+# Запускаем улучшенного бота (webhook режим для Koyeb)
+CMD ["node", "phuket-go-bot-webhook.js"]

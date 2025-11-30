@@ -1077,10 +1077,10 @@ bot.on('text', async (ctx) => {
   // Получаем ответ от GPT
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o-mini",  // Улучшенная модель - умнее чем 3.5
       messages: session.messages,
       temperature: 0.7,
-      max_tokens: 200
+      max_tokens: 300
     });
 
     const aiResponse = completion.choices[0].message.content;

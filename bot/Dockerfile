@@ -1,8 +1,8 @@
 # Node.js
 FROM node:20-alpine
 
-# Smart AI Bot - улучшено меню + картинки
-ENV BUILD_DATE=2025-11-30T20:00:00
+# Smart AI Bot - GPT-4o-mini + улучшенное меню
+ENV BUILD_DATE=2025-11-30T20:15:00
 
 # Рабочая директория
 WORKDIR /app

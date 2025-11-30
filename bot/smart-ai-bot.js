@@ -401,6 +401,9 @@ async function showMainMenu(ctx, orderNumber = null) {
     is_persistent: true
   };
   
+  // Устанавливаем ReplyKeyboard для всех сообщений
+  await ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
+  
   // Отправляем фото с меню
   await ctx.replyWithPhoto(
     'https://phukeo.com/assets/hero-phuket.jpg',
@@ -409,20 +412,7 @@ async function showMainMenu(ctx, orderNumber = null) {
         `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
         `Что вас интересует?`,
       parse_mode: 'Markdown',
-      reply_markup: {
-        ...replyKeyboard,
-        inline_keyboard: [
-          [
-            { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
-            { text: '🚣 Приключения', callback_data: 'cat_adventure' }
-          ],
-          [
-            { text: '🏞️ Природа/Культура', callback_data: 'cat_nature' },
-            { text: '⭐ ТОП туры', callback_data: 'popular_tours' }
-          ],
-          [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
-        ]
-      }
+      reply_markup: replyKeyboard
     }
   ).catch(async () => {
     // Fallback без фото
@@ -431,20 +421,7 @@ async function showMainMenu(ctx, orderNumber = null) {
       `Что вас интересует?`,
       {
         parse_mode: 'Markdown',
-        reply_markup: {
-          ...replyKeyboard,
-          inline_keyboard: [
-            [
-              { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
-              { text: '🚣 Приключения', callback_data: 'cat_adventure' }
-            ],
-            [
-              { text: '🏞️ Природа/Культура', callback_data: 'cat_nature' },
-              { text: '⭐ ТОП туры', callback_data: 'popular_tours' }
-            ],
-            [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
-          ]
-        }
+        reply_markup: replyKeyboard
       }
     );
   });
@@ -527,7 +504,7 @@ async function showSeaTours(ctx) {
           [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
           [{ text: '🏖️ Рача+Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
           [{ text: '🌟 Больше островов...', callback_data: 'cat_islands' }],
-          [{ text: '🤖 Помогите выбрать', callback_data: 'start_ai' }]
+          [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
         ]
       }
     }
@@ -1322,7 +1299,7 @@ bot.on('text', async (ctx) => {
             inline_keyboard: [
               [{ text: '🚣 Рафтинг + ATV', callback_data: 'select_rafting-spa-atv-1-day' }],
               [{ text: '🐘 Као Лак Сафари', callback_data: 'select_kao-lak-safari-1-day' }],
-              [{ text: '🤖 Помогите выбрать', callback_data: 'start_ai' }]
+              [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
             ]
           }
         }
@@ -1342,7 +1319,7 @@ bot.on('text', async (ctx) => {
             inline_keyboard: [
               [{ text: '🏞️ Чео Лан', callback_data: 'select_cheow-lan-lake' }],
               [{ text: '💚 Краби', callback_data: 'select_krabi-secrets' }],
-              [{ text: '🤖 Помогите выбрать', callback_data: 'start_ai' }]
+              [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
             ]
           }
         }
@@ -1350,13 +1327,8 @@ bot.on('text', async (ctx) => {
       return;
     }
     
-    await ctx.reply(
-      'Выберите категорию:\n\n' +
-      '🏝️ /islands — Морские острова\n' +
-      '🚣 /adventure — Приключения\n' +
-      '🏞️ /nature — Природа\n\n' +
-      'Или нажмите /start'
-    );
+    // Показываем главное меню с кнопками
+    await showMainMenu(ctx);
     return;
   }
 
@@ -1482,22 +1454,26 @@ async function handleBookingComplete(ctx, session) {
 
 // ====== ОБРАБОТКА ТЕКСТОВЫХ КНОПОК (REPLY KEYBOARD) ======
 bot.hears('⭐ Популярные', async (ctx) => {
-  await ctx.answerCbQuery?.() || Promise.resolve();
-  await bot.handleUpdate({
-    update_id: Date.now(),
-    callback_query: {
-      id: String(Date.now()),
-      from: ctx.from,
-      message: ctx.message,
-      data: 'popular_tours'
+  await ctx.reply(
+    '⭐ *ТОП-5 популярных туров*\n\nВыберите:',
+    {
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '🏝️ Пхи-Пхи 2дня/1ночь — 4500฿', callback_data: 'select_phi-phi-2days' }],
+          [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
+          [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
+          [{ text: '🚣 Рафтинг + ATV — 2900฿', callback_data: 'select_rafting-spa-atv-1-day' }],
+          [{ text: '🏞️ Чео Лан — 2900฿', callback_data: 'select_cheow-lan-lake' }]
+        ]
+      }
     }
-  });
+  );
 });
 
 bot.hears('🗺️ Все туры', async (ctx) => {
-  // Сразу открываем каталог без лишнего текста
   await ctx.reply(
-    '🗺️',
+    '🗺️ Открываю каталог...',
     {
       reply_markup: {
         inline_keyboard: [
@@ -1508,46 +1484,56 @@ bot.hears('🗺️ Все туры', async (ctx) => {
   );
 });
 
-// Обработчик для кнопки "Меню" (если пользователь напишет "Меню")
-bot.hears(/^[Мм]еню$|^≡ Меню$/, async (ctx) => {
-  await showMainMenu(ctx);
-});
-
 bot.hears('🏝️ Острова', async (ctx) => {
-  // Вызываем существующий handler
-  const fakeUpdate = {
-    callback_query: {
-      id: String(Date.now()),
-      from: ctx.from,
-      message: ctx.message,
-      data: 'cat_islands'
+  await ctx.reply(
+    '🌊 *МОРЕ И ОСТРОВА*\n\nВыберите тур:',
+    {
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '🏝️ Пхи-Пхи 2дня/1ночь — 4500฿', callback_data: 'select_phi-phi-2days' }],
+          [{ text: '🏝️ Пхи-Пхи (1 день) — 2500฿', callback_data: 'select_phi-phi' }],
+          [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
+          [{ text: '🏖️ Рача + Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
+          [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }]
+        ]
+      }
     }
-  };
-  await bot.handleUpdate(fakeUpdate);
+  );
 });
 
 bot.hears('🚣 Приключения', async (ctx) => {
-  const fakeUpdate = {
-    callback_query: {
-      id: String(Date.now()),
-      from: ctx.from,
-      message: ctx.message,
-      data: 'cat_adventure'
+  await ctx.reply(
+    '🚣 *ПРИКЛЮЧЕНИЯ*\n\nВыберите тур:',
+    {
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '🚣 Рафтинг + SPA + ATV — 2900฿', callback_data: 'select_rafting-spa-atv-1-day' }],
+          [{ text: '🐘 Као Лак Сафари — 3200฿', callback_data: 'select_kao-lak-safari-1-day' }],
+          [{ text: '🏝️ Джеймс Бонд — 2900฿', callback_data: 'select_james-bond-island-phang-nga' }],
+          [{ text: '🎣 Рыбалка на рассвете — 4500฿', callback_data: 'select_fishing-sunrise' }]
+        ]
+      }
     }
-  };
-  await bot.handleUpdate(fakeUpdate);
+  );
 });
 
 bot.hears('🏞️ Природа', async (ctx) => {
-  const fakeUpdate = {
-    callback_query: {
-      id: String(Date.now()),
-      from: ctx.from,
-      message: ctx.message,
-      data: 'cat_nature'
+  await ctx.reply(
+    '🏞️ *ПРИРОДА И КУЛЬТУРА*\n\nВыберите тур:',
+    {
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '🏞️ Чео Лан + Смотровая — 2900฿', callback_data: 'select_cheow-lan-lake' }],
+          [{ text: '💚 Тайны Краби — 3100฿', callback_data: 'select_krabi-secrets' }],
+          [{ text: '🌉 Пхангнга + Стеклянный мост — 2600฿', callback_data: 'select_phang-nga-skywalk' }],
+          [{ text: '🛕 Достопримечательности — 1800฿', callback_data: 'select_dostoprimechatelnosti-phuketa' }]
+        ]
+      }
     }
-  };
-  await bot.handleUpdate(fakeUpdate);
+  );
 });
 
 // Обработчики AI помощь и Менеджер убраны - всё происходит в боте
@@ -1798,22 +1784,22 @@ app.listen(PORT, async () => {
     await bot.telegram.setWebhook(WEBHOOK_URL);
     console.log(`✅ Webhook установлен: ${WEBHOOK_URL}`);
     
-    // Menu Button - открывает каталог туров
-    await bot.telegram.setChatMenuButton({
-      menu_button: {
-        type: 'web_app',
-        text: '🗺️ Каталог',
-        web_app: { url: 'https://phukeo.com' }
-      }
-    });
-    
-    // Убираем команды - не нужны пользователям
-    await bot.telegram.setMyCommands([], {
-      scope: { type: 'all_private_chats' }
-    });
+    // Menu Button - показывает команды (но пользователи их не видят, только через кнопку)
+    await bot.telegram.setMyCommands(
+      [
+        { command: 'start', description: '🏠 Главное меню' },
+        { command: 'tours', description: '🗺️ Каталог туров' }
+      ],
+      { scope: { type: 'all_private_chats' } }
+    );
     
     await bot.telegram.setMyCommands([], {
       scope: { type: 'all_group_chats' }
+    });
+    
+    // Menu Button - показывает команды
+    await bot.telegram.setChatMenuButton({
+      menu_button: { type: 'commands' }
     });
     
     console.log('✅ Команды и меню установлены');

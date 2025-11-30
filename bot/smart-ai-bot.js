@@ -16,6 +16,16 @@ const MANAGER_CHAT_ID = 1217592929; // ID менеджера
 const WEBHOOK_DOMAIN = process.env.WEBHOOK_DOMAIN || 'small-robinia-phukeo-8b5e1e16.koyeb.app';
 const PORT = process.env.PORT || 8000;
 
+// ====== НИЖНЕЕ МЕНЮ (ВСЕГДА ВИДНО) ======
+const MAIN_KEYBOARD = {
+  keyboard: [
+    [{ text: '⭐ Популярные' }, { text: '🗺️ Все туры' }],
+    [{ text: '🏝️ Острова' }, { text: '🚣 Приключения' }, { text: '🏞️ Природа' }]
+  ],
+  resize_keyboard: true,
+  is_persistent: true
+};
+
 // ====== БАЗА ДАННЫХ ТУРОВ (22 тура) ======
 const TOURS_DB = {
   // === ПОПУЛЯРНЫЕ МНОГОДНЕВНЫЕ ТУРЫ ===
@@ -292,8 +302,8 @@ async function handleTourDeepLink(ctx, tourSlug) {
     await ctx.reply(
       '😔 Извините, этот тур временно недоступен.\n\nВыберите другой тур:',
       {
-        reply_markup: {
-          inline_keyboard: [
+      reply_markup: {
+        inline_keyboard: [
             [{ text: '⭐ Популярные туры', callback_data: 'popular_tours' }],
             [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }]
           ]
@@ -350,8 +360,8 @@ async function handleTourDeepLink(ctx, tourSlug) {
       `⏱ ${tour.duration}\n\n` +
       `📅 Выберите дату:`,
     parse_mode: 'Markdown',
-      reply_markup: {
-        inline_keyboard: [
+        reply_markup: {
+          inline_keyboard: [
         [
           { text: `Сегодня`, callback_data: `date_${tourSlug}_${formatDateFull(today)}` },
           { text: `Завтра`, callback_data: `date_${tourSlug}_${formatDateFull(tomorrow)}` },
@@ -391,37 +401,24 @@ async function handleTourDeepLink(ctx, tourSlug) {
 
 // ====== ГЛАВНОЕ МЕНЮ (без deep link) ======
 async function showMainMenu(ctx, orderNumber = null) {
-  // Устанавливаем нижнюю клавиатуру (ReplyKeyboard) — без AI и Менеджера
-  const replyKeyboard = {
-    keyboard: [
-      [{ text: '⭐ Популярные' }, { text: '🗺️ Все туры' }],
-      [{ text: '🏝️ Острова' }, { text: '🚣 Приключения' }, { text: '🏞️ Природа' }]
-    ],
-    resize_keyboard: true,
-    is_persistent: true
-  };
-  
-  // Устанавливаем ReplyKeyboard для всех сообщений
-  await ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
-  
   // Отправляем фото с меню
   await ctx.replyWithPhoto(
     'https://phukeo.com/assets/hero-phuket.jpg',
     {
       caption: 
         `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
-        `Что вас интересует?`,
+        `Выберите категорию внизу 👇`,
       parse_mode: 'Markdown',
-      reply_markup: replyKeyboard
+      reply_markup: MAIN_KEYBOARD
     }
   ).catch(async () => {
     // Fallback без фото
     await ctx.reply(
       `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
-      `Что вас интересует?`,
+      `Выберите категорию внизу 👇`,
       {
         parse_mode: 'Markdown',
-        reply_markup: replyKeyboard
+        reply_markup: MAIN_KEYBOARD
       }
     );
   });
@@ -1454,11 +1451,13 @@ async function handleBookingComplete(ctx, session) {
 
 // ====== ОБРАБОТКА ТЕКСТОВЫХ КНОПОК (REPLY KEYBOARD) ======
 bot.hears('⭐ Популярные', async (ctx) => {
-  await ctx.reply(
-    '⭐ *ТОП-5 популярных туров*\n\nВыберите:',
+  await ctx.replyWithPhoto(
+    'https://phukeo.com/assets/hero-phuket.jpg',
     {
+      caption: '⭐ *ТОП-5 популярных туров*\n\nВыберите:',
       parse_mode: 'Markdown',
       reply_markup: {
+        ...MAIN_KEYBOARD,
         inline_keyboard: [
           [{ text: '🏝️ Пхи-Пхи 2дня/1ночь — 4500฿', callback_data: 'select_phi-phi-2days' }],
           [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
@@ -1468,7 +1467,12 @@ bot.hears('⭐ Популярные', async (ctx) => {
         ]
       }
     }
-  );
+  ).catch(async () => {
+    await ctx.reply('⭐ *ТОП-5 популярных туров*', {
+      parse_mode: 'Markdown',
+      reply_markup: MAIN_KEYBOARD
+    });
+  });
 });
 
 bot.hears('🗺️ Все туры', async (ctx) => {
@@ -1476,6 +1480,7 @@ bot.hears('🗺️ Все туры', async (ctx) => {
     '🗺️ Открываю каталог...',
     {
       reply_markup: {
+        ...MAIN_KEYBOARD,
         inline_keyboard: [
           [{ text: '🗺️ Открыть каталог', web_app: { url: 'https://phukeo.com' } }]
         ]
@@ -1485,11 +1490,13 @@ bot.hears('🗺️ Все туры', async (ctx) => {
 });
 
 bot.hears('🏝️ Острова', async (ctx) => {
-  await ctx.reply(
-    '🌊 *МОРЕ И ОСТРОВА*\n\nВыберите тур:',
+  await ctx.replyWithPhoto(
+    'https://phukeo.com/assets/phi-phi-maya-bay-LeJ2QhJv.jpg',
     {
+      caption: '🌊 *МОРЕ И ОСТРОВА*\n\nВыберите тур:',
       parse_mode: 'Markdown',
       reply_markup: {
+        ...MAIN_KEYBOARD,
         inline_keyboard: [
           [{ text: '🏝️ Пхи-Пхи 2дня/1ночь — 4500฿', callback_data: 'select_phi-phi-2days' }],
           [{ text: '🏝️ Пхи-Пхи (1 день) — 2500฿', callback_data: 'select_phi-phi' }],
@@ -1499,15 +1506,22 @@ bot.hears('🏝️ Острова', async (ctx) => {
         ]
       }
     }
-  );
+  ).catch(async () => {
+    await ctx.reply('🌊 *МОРЕ И ОСТРОВА*', {
+      parse_mode: 'Markdown',
+      reply_markup: MAIN_KEYBOARD
+    });
+  });
 });
 
 bot.hears('🚣 Приключения', async (ctx) => {
-  await ctx.reply(
-    '🚣 *ПРИКЛЮЧЕНИЯ*\n\nВыберите тур:',
+  await ctx.replyWithPhoto(
+    'https://phukeo.com/assets/rafting.jpg',
     {
+      caption: '🚣 *ПРИКЛЮЧЕНИЯ*\n\nВыберите тур:',
       parse_mode: 'Markdown',
       reply_markup: {
+        ...MAIN_KEYBOARD,
         inline_keyboard: [
           [{ text: '🚣 Рафтинг + SPA + ATV — 2900฿', callback_data: 'select_rafting-spa-atv-1-day' }],
           [{ text: '🐘 Као Лак Сафари — 3200฿', callback_data: 'select_kao-lak-safari-1-day' }],
@@ -1516,15 +1530,22 @@ bot.hears('🚣 Приключения', async (ctx) => {
         ]
       }
     }
-  );
+  ).catch(async () => {
+    await ctx.reply('🚣 *ПРИКЛЮЧЕНИЯ*', {
+      parse_mode: 'Markdown',
+      reply_markup: MAIN_KEYBOARD
+    });
+  });
 });
 
 bot.hears('🏞️ Природа', async (ctx) => {
-  await ctx.reply(
-    '🏞️ *ПРИРОДА И КУЛЬТУРА*\n\nВыберите тур:',
+  await ctx.replyWithPhoto(
+    'https://phukeo.com/assets/cheow-lan.jpg',
     {
+      caption: '🏞️ *ПРИРОДА И КУЛЬТУРА*\n\nВыберите тур:',
       parse_mode: 'Markdown',
       reply_markup: {
+        ...MAIN_KEYBOARD,
         inline_keyboard: [
           [{ text: '🏞️ Чео Лан + Смотровая — 2900฿', callback_data: 'select_cheow-lan-lake' }],
           [{ text: '💚 Тайны Краби — 3100฿', callback_data: 'select_krabi-secrets' }],
@@ -1533,7 +1554,12 @@ bot.hears('🏞️ Природа', async (ctx) => {
         ]
       }
     }
-  );
+  ).catch(async () => {
+    await ctx.reply('🏞️ *ПРИРОДА И КУЛЬТУРА*', {
+      parse_mode: 'Markdown',
+      reply_markup: MAIN_KEYBOARD
+    });
+  });
 });
 
 // Обработчики AI помощь и Менеджер убраны - всё происходит в боте
@@ -1784,22 +1810,22 @@ app.listen(PORT, async () => {
     await bot.telegram.setWebhook(WEBHOOK_URL);
     console.log(`✅ Webhook установлен: ${WEBHOOK_URL}`);
     
-    // Menu Button - показывает команды (но пользователи их не видят, только через кнопку)
-    await bot.telegram.setMyCommands(
-      [
-        { command: 'start', description: '🏠 Главное меню' },
-        { command: 'tours', description: '🗺️ Каталог туров' }
-      ],
-      { scope: { type: 'all_private_chats' } }
-    );
+    // Убираем команды - пользователям не нужны слэши
+    await bot.telegram.setMyCommands([], {
+      scope: { type: 'all_private_chats' }
+    });
     
     await bot.telegram.setMyCommands([], {
       scope: { type: 'all_group_chats' }
     });
     
-    // Menu Button - показывает команды
+    // Menu Button - открывает каталог туров
     await bot.telegram.setChatMenuButton({
-      menu_button: { type: 'commands' }
+      menu_button: {
+        type: 'web_app',
+        text: '🗺️ Каталог',
+        web_app: { url: 'https://phukeo.com' }
+      }
     });
     
     console.log('✅ Команды и меню установлены');

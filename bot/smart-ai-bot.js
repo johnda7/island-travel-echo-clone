@@ -411,7 +411,7 @@ async function handleTourDeepLink(ctx, tourSlug) {
 
 // ====== ГЛАВНОЕ МЕНЮ (без deep link) ======
 async function showMainMenu(ctx, orderNumber = null) {
-  // Отправляем фото с меню + inline кнопки + нижнее меню
+  // Отправляем фото с inline кнопками
   await ctx.replyWithPhoto(
     'https://phukeo.com/assets/hero-phuket.jpg',
     {
@@ -420,7 +420,6 @@ async function showMainMenu(ctx, orderNumber = null) {
         `Куда хотите поехать?`,
       parse_mode: 'Markdown',
       reply_markup: {
-        ...MAIN_KEYBOARD,
         inline_keyboard: [
           [
             { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
@@ -435,14 +434,11 @@ async function showMainMenu(ctx, orderNumber = null) {
       }
     }
   ).catch(async () => {
-    // Fallback без фото
     await ctx.reply(
-      `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
-      `Куда хотите поехать?`,
+      `🌴 *Пхукет Go* — лучшие экскурсии!\n\nКуда хотите поехать?`,
       {
         parse_mode: 'Markdown',
         reply_markup: {
-          ...MAIN_KEYBOARD,
           inline_keyboard: [
             [
               { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
@@ -458,6 +454,12 @@ async function showMainMenu(ctx, orderNumber = null) {
       }
     );
   });
+  
+  // Устанавливаем нижнее меню отдельным сообщением
+  await ctx.reply(
+    '👇 Или выберите внизу:',
+    { reply_markup: MAIN_KEYBOARD }
+  );
 }
 
 // ====== ОБРАБОТКА ДАННЫХ ИЗ MINI APP ======
@@ -1875,23 +1877,22 @@ app.listen(PORT, async () => {
     await bot.telegram.setWebhook(WEBHOOK_URL);
     console.log(`✅ Webhook установлен: ${WEBHOOK_URL}`);
     
-    // Команды для Menu Button (полезный набор)
-    await bot.telegram.setMyCommands(
-      [
-        { command: 'start', description: '🏠 Главное меню' },
-        { command: 'popular', description: '⭐ ТОП-5 туров' },
-        { command: 'catalog', description: '🗺️ Открыть каталог' }
-      ],
-      { scope: { type: 'all_private_chats' } }
-    );
+    // Убираем ВСЕ команды - клиенту не нужны слэши!
+    await bot.telegram.setMyCommands([], {
+      scope: { type: 'all_private_chats' }
+    });
     
     await bot.telegram.setMyCommands([], {
       scope: { type: 'all_group_chats' }
     });
     
-    // Menu Button - показывает команды
+    // Menu Button - сразу открывает каталог (web_app), БЕЗ слэшей!
     await bot.telegram.setChatMenuButton({
-      menu_button: { type: 'commands' }
+      menu_button: {
+        type: 'web_app',
+        text: '🗺️ Каталог',
+        web_app: { url: 'https://phukeo.com' }
+      }
     });
     
     console.log('✅ Команды и меню установлены');

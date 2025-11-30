@@ -1,0 +1,1447 @@
+// 🤖 Telegram Bot - Welcome Message для Пхукет Go
+// Файл: bot/welcome-message-v2.js
+
+const { Telegraf, Markup } = require('telegraf');
+require('dotenv').config();
+const { tours, categories } = require('./tours-data');
+
+const bot = new Telegraf(process.env.BOT_TOKEN);
+
+// 💾 ХРАНИЛИЩЕ СЕССИЙ (для диалога бронирования)
+const sessions = {};
+
+// 📊 АНАЛИТИКА ГРУППЫ
+const groupStats = {
+  messages: 0,
+  tourMentions: {
+    'Maya Bay': 0,
+    'Phi Phi': 0,
+    'James Bond': 0,
+    'Similan': 0,
+    'Bamboo Island': 0,
+    'Coral Island': 0,
+    'Banana Beach': 0,
+    'Racha Island': 0,
+    'Khai Islands': 0,
+    'Promthep Cape': 0,
+    'Cheow Lan Lake': 0
+  },
+  users: new Set(),
+  questions: 0,
+  lastReset: new Date()
+};
+
+// Ключевые слова для анализа
+const keywords = {
+  questions: ['цена', 'стоимость', 'сколько', 'когда', 'где', 'как забронировать', 'booking'],
+  tours: {
+    'Maya Bay': ['maya', 'майя', 'бухта майя', 'мая бей'],
+    'Phi Phi': ['phi phi', 'пхи пхи', 'фи фи'],
+    'James Bond': ['james', 'джеймс', 'бонд', 'джеймс бонд'],
+    'Similan': ['similan', 'симилан'],
+    'Bamboo Island': ['bamboo', 'бамбук'],
+    'Coral Island': ['coral', 'коралл'],
+    'Banana Beach': ['banana', 'банан'],
+    'Racha Island': ['racha', 'рача'],
+    'Khai Islands': ['khai', 'кхай'],
+    'Promthep Cape': ['promthep', 'промтеп'],
+    'Cheow Lan Lake': ['cheow lan', 'чео лан', 'озеро']
+  }
+};
+
+// 🎯 КОМАНДА /start
+bot.start(async (ctx) => {
+  const firstName = ctx.from.first_name || 'друг';
+  const chatType = ctx.chat.type;
+  
+  // 🔗 DEEP LINK: Получаем параметр из /start [параметр]
+  const startParam = ctx.message.text.split(' ')[1];
+  
+  console.log('📝 START:', ctx.message.text, '| Параметр:', startParam);
+  
+  // 🔗 DEEP LINKS ДЛЯ ВСЕХ ТУРОВ
+  
+  // 1️⃣ ПХИ-ПХИ 2 ДНЯ/1 НОЧЬ
+  if (startParam === 'phiphi2days') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/phiphi-main.jpg',
+      {
+        caption: 
+          `�️ Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Пхи-Пхи 2 дня/1 ночь\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Проживание в отеле на Пхи-Пхи\n` +
+          `• Посещение бухты Майя Бэй\n` +
+          `• Снорклинг в лагунах\n` +
+          `• 2 завтрака + 1 обед + 1 ужин\n` +
+          `• Трансфер от отеля и обратно\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: от 6500฿\n` +
+          `• Ребёнок (4-11 лет): от 5500฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/phi-phi-2days' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 2️⃣ 4 ЖЕМЧУЖИНЫ АНДАМАНСКОГО МОРЯ
+  if (startParam === 'pearls') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/pearls-main.jpg',
+      {
+        caption: 
+          `💎 Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: 4 жемчужины Андаманского моря\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Пхи-Пхи + Джеймс Бонд + Краби + Раяли\n` +
+          `• 2 дня, 1 ночь\n` +
+          `• Комбо-тур по лучшим местам\n` +
+          `• Проживание + все трансферы\n` +
+          `• Питание включено\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: от 8500฿\n` +
+          `• Ребёнок (4-11 лет): от 7000฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/pearls-andaman-sea' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 3️⃣ ДОСТОПРИМЕЧАТЕЛЬНОСТИ ПХУКЕТА
+  if (startParam === 'sightseeing') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/bigbuddha-main.jpg',
+      {
+        caption: 
+          `🛕 Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Достопримечательности Пхукета\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Большой Будда (45 метров!)\n` +
+          `• Храм Ват Чалонг\n` +
+          `• Старый город Пхукета\n` +
+          `• Мыс Промтеп (закат)\n` +
+          `• Смотровые площадки\n` +
+          `• Обед + трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 1800฿\n` +
+          `• Ребёнок (4-11 лет): 1200฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/dostoprimechatelnosti-phuketa' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 4️⃣ РАФТИНГ + СПА + ATV
+  if (startParam === 'rafting') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/rafting-scaled-BRXUzIbt.jpg',
+      {
+        caption: 
+          `🌊 Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Рафтинг + СПА + ATV\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Рафтинг 5 км по горной реке\n` +
+          `• СПА массаж и процедуры\n` +
+          `• ATV квадроциклы (1 час)\n` +
+          `• Обед и трансфер от отеля\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 2500฿\n` +
+          `• Ребёнок (4-11 лет): 1800฿\n\n` +
+          `📅 Выберите дату и количество человек! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/rafting-spa-atv' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 5️⃣ РАФТИНГ + СПА (1 ДЕНЬ)
+  if (startParam === 'raftingspa') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/rafting-spa.jpg',
+      {
+        caption: 
+          `🌊 Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Рафтинг + СПА (1 день)\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Рафтинг 5 км\n` +
+          `• СПА-массаж 1,5 часа\n` +
+          `• Обед и трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 2200฿\n` +
+          `• Ребёнок (4-11 лет): 1600฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/rafting-spa-1day' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 6️⃣ КАО ЛАК САФАРИ
+  if (startParam === 'kaolak') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/kaolak-main.jpg',
+      {
+        caption: 
+          `� Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Као Лак Сафари\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Катание на слонах\n` +
+          `• Бамбуковые плоты\n` +
+          `• Водопады\n` +
+          `• Джунгли\n` +
+          `• Обед + трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 2400฿\n` +
+          `• Ребёнок (4-11 лет): 1700฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/kao-lak-safari' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 7️⃣ 11 ОСТРОВОВ МЕГА-ТУР
+  if (startParam === '11islands') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/11islands-main.jpg',
+      {
+        caption: 
+          `🏝️ Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: 11 островов за 1 день!\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• 11 островов на скоростной лодке\n` +
+          `• Снорклинг в лучших местах\n` +
+          `• Обед на пляже\n` +
+          `• Полный день приключений\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 3500฿\n` +
+          `• Ребёнок (4-11 лет): 2800฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/eleven-islands-mega' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 8️⃣ ДЖЕЙМС БОНД + ПХАНГ НГА
+  if (startParam === 'jamesbond') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/jamesbond-main.jpg',
+      {
+        caption: 
+          `🎬 Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Джеймс Бонд + Пханг Нга\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Остров Джеймса Бонда (из фильма!)\n` +
+          `• Пещеры Пханг Нга\n` +
+          `• Каноэ по мангровым лесам\n` +
+          `• Мусульманская деревня\n` +
+          `• Обед + трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 2300฿\n` +
+          `• Ребёнок (4-11 лет): 1600฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/james-bond-island' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 9️⃣ ОЗЕРО ЧЕО ЛАН (АВАТАР)
+  if (startParam === 'cheolan' || startParam === 'avatar') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/cheolan-main.jpg',
+      {
+        caption: 
+          `🏞️ Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Озеро Чео Лан (Аватар)\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Плавучие бунгало на озере\n` +
+          `• Каякинг между скалами\n` +
+          `• Джунгли и водопады\n` +
+          `• Плот по озеру\n` +
+          `• Питание + трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 2900฿\n` +
+          `• Ребёнок (4-11 лет): 2200฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/cheow-lan-lake' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 9️⃣.5️⃣ ОЗЕРО ЧЕО ЛАН + ХАНГДОНГ (АВАТАР ПЛЮС)
+  if (startParam === 'avatarplus' || startParam === 'hangdong') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/avatar-hangdong.jpg',
+      {
+        caption: 
+          `🏞️ Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Озеро Чео Лан + Хангдонг\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Озеро Чео Лан (Аватар)\n` +
+          `• Пещера Хангдонг\n` +
+          `• Каякинг\n` +
+          `• Плавучие бунгало\n` +
+          `• Питание + трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 3200฿\n` +
+          `• Ребёнок (4-11 лет): 2500฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/avatar-plus-hangdong' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 🔟 РАЧА + КОРАЛ ОСТРОВА
+  if (startParam === 'racha') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/racha-main.jpg',
+      {
+        caption: 
+          `🏝️ Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Рача + Корал острова\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Остров Рача (белый песок!)\n` +
+          `• Остров Корал (снорклинг)\n` +
+          `• Обед на пляже\n` +
+          `• Скоростная лодка\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 2100฿\n` +
+          `• Ребёнок (4-11 лет): 1500฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/racha-coral-islands' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 1️⃣1️⃣ ПХАНГ НГА СКАЙВОК
+  if (startParam === 'skywalk') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/skywalk-main.jpg',
+      {
+        caption: 
+          `🌉 Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Пханг Нга Скайвок\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Стеклянный мост над джунглями\n` +
+          `• Смотровые площадки\n` +
+          `• Водопады\n` +
+          `• Обед + трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 1900฿\n` +
+          `• Ребёнок (4-11 лет): 1400฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/phang-nga-skywalk' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 1️⃣2️⃣ ОСТРОВА СИМИЛАН
+  if (startParam === 'similan') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/similan-main.jpg',
+      {
+        caption: 
+          `🐠 Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Острова Симилан\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Лучший снорклинг в Таиланде!\n` +
+          `• Белоснежные пляжи\n` +
+          `• Черепахи и тропические рыбы\n` +
+          `• Обед + трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 2800฿\n` +
+          `• Ребёнок (4-11 лет): 2200฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/similan-islands' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 1️⃣3️⃣ СИМИЛАН РАННИЙ ВЫЕЗД
+  if (startParam === 'similanearly') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/similan-early.jpg',
+      {
+        caption: 
+          `🌅 Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Симилан ранний выезд\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Выезд в 4:00 - первые на островах!\n` +
+          `• Больше времени на снорклинг\n` +
+          `• Меньше туристов\n` +
+          `• Обед + трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 3000฿\n` +
+          `• Ребёнок (4-11 лет): 2400฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/similan-islands-early' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 1️⃣4️⃣ СИМИЛАН СПИДБОТ
+  if (startParam === 'similanspeed') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/similan-speed.jpg',
+      {
+        caption: 
+          `⚡ Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Симилан на спидботе\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Скоростная лодка (быстрее!)\n` +
+          `• Меньше группа = больше комфорта\n` +
+          `• Все острова за день\n` +
+          `• Обед + трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 3200฿\n` +
+          `• Ребёнок (4-11 лет): 2600฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/similan-islands-speedboat' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 1️⃣5️⃣ РЫБАЛКА НА РАССВЕТЕ
+  if (startParam === 'fishing') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/fishing-main.jpg',
+      {
+        caption: 
+          `🎣 Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Рыбалка на рассвете\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Рыбалка на рассвете (5:00-11:00)\n` +
+          `• Все снасти и наживка\n` +
+          `• Приготовим ваш улов!\n` +
+          `• Завтрак на лодке\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 1800฿\n` +
+          `• Ребёнок (4-11 лет): 1200฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/fishing-sunrise' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 1️⃣6️⃣ РАЧА + КОРАЛ РАССВЕТ
+  if (startParam === 'rachasunrise') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/racha-sunrise.jpg',
+      {
+        caption: 
+          `🌅 Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Рача + Корал рассвет\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Ранний выезд - первые на островах!\n` +
+          `• Рассвет на пляже\n` +
+          `• Больше времени для купания\n` +
+          `• Завтрак + обед + трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 2300฿\n` +
+          `• Ребёнок (4-11 лет): 1700฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/racha-coral-sunrise' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 1️⃣7️⃣ РАЧА + КОРАЛ РАВАИ
+  if (startParam === 'racharawai') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/racha-rawai.jpg',
+      {
+        caption: 
+          `🏖️ Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Рача + Корал (из Раваи)\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Выезд из Раваи (ближе к островам!)\n` +
+          `• Меньше в пути = больше времени на пляже\n` +
+          `• Снорклинг\n` +
+          `• Обед + трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 2000฿\n` +
+          `• Ребёнок (4-11 лет): 1400฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/racha-coral-rawai' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 1️⃣8️⃣ ПХИ-ПХИ РАССВЕТ
+  if (startParam === 'phiphisunrise') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/phiphi-sunrise.jpg',
+      {
+        caption: 
+          `🌅 Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Пхи-Пхи рассвет\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Выезд в 5:00 - встречаем рассвет!\n` +
+          `• Майя Бэй БЕЗ толп туристов\n` +
+          `• Снорклинг в лагунах\n` +
+          `• Завтрак + обед + трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 2600฿\n` +
+          `• Ребёнок (4-11 лет): 2000฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/phi-phi-sunrise' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 1️⃣9️⃣ 5 ЖЕМЧУЖИН 2 ДНЯ
+  if (startParam === '5pearls') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/5pearls-main.jpg',
+      {
+        caption: 
+          `💎 Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: 5 жемчужин за 2 дня\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• 5 лучших островов\n` +
+          `• Проживание + питание\n` +
+          `• Снорклинг везде\n` +
+          `• Все трансферы\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 8000฿\n` +
+          `• Ребёнок (4-11 лет): 6500฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/five-pearls-2days' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 2️⃣0️⃣ ПХАНГ НГА + САМЕТ
+  if (startParam === 'phangngasamet') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/phangnga-samet.jpg',
+      {
+        caption: 
+          `🏝️ Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Пханг Нга + Самет\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Пханг Нга залив\n` +
+          `• Остров Самет\n` +
+          `• Каноэ\n` +
+          `• Обед + трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 2200฿\n` +
+          `• Ребёнок (4-11 лет): 1600฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/phang-nga-samet' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // 2️⃣1️⃣ СЕКРЕТЫ КРАБИ
+  if (startParam === 'krabi') {
+    await ctx.replyWithPhoto(
+      'https://phukeo.com/assets/krabi-main.jpg',
+      {
+        caption: 
+          `🗻 Привет, ${firstName}!\n\n` +
+          `✅ Вы выбрали: Секреты Краби\n\n` +
+          `📋 ЧТО ВХОДИТ:\n` +
+          `• Скрытые пляжи Краби\n` +
+          `• Изумрудный бассейн\n` +
+          `• Горячие источники\n` +
+          `• Храм тигра\n` +
+          `• Обед + трансфер\n\n` +
+          `💰 ЦЕНА:\n` +
+          `• Взрослый: 2400฿\n` +
+          `• Ребёнок (4-11 лет): 1800฿\n\n` +
+          `📅 Выберите дату! ⬇️`,
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Забронировать', web_app: { url: 'https://phukeo.com/#/tours/krabi-secrets' } }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Менеджер', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
+  // Обычное приветствие (если без параметра) - показываем главное меню
+  await ctx.reply(
+    `👋 Привет, ${firstName}!\n\n` +
+    `Я помогу выбрать идеальный тур на Пхукете! 🏝️\n\n` +
+    `Выберите действие:`,
+    Markup.inlineKeyboard([
+      [Markup.button.callback('🗺️ Смотреть туры', 'show_catalog')],
+      [Markup.button.callback('� Задать вопрос', 'ask_question')],
+      [Markup.button.url('☎️ Связаться с менеджером', 'https://t.me/Phuketga')]
+    ])
+  );
+});
+
+// 📚 КОМАНДА /help
+bot.command('help', (ctx) => {
+  ctx.replyWithMarkdown(`📚 **Справка по боту**
+
+🎯 **Основные команды:**
+/start - Главное меню
+/tours - Список туров
+/help - Эта справка
+/contacts - Наши контакты
+
+📱 **Как забронировать:**
+1️⃣ Открой каталог туров
+2️⃣ Выбери тур
+3️⃣ Нажми "Забронировать"
+4️⃣ Заполни форму
+
+💬 **Нужна помощь?** Просто напиши свой вопрос!`);
+});
+
+// 🗺️ КОМАНДА /tours
+bot.command('tours', (ctx) => {
+  ctx.replyWithMarkdown(`🏝️ **Наши туры:**
+
+1️⃣ Maya Bay Sunrise 🌅
+2️⃣ Phi Phi Islands Premium 🏝️
+3️⃣ James Bond Island 🎬
+4️⃣ Similan Islands 🐠
+5️⃣ 4 Islands by Speedboat ⚡
+6️⃣ Coral Island Paradise 🪸
+7️⃣ Banana Beach Escape 🍌
+8️⃣ Racha Island Diving 🤿
+9️⃣ Khai Islands Snorkeling 🏖️
+🔟 Promthep Sunset 🌅
+1️⃣1️⃣ Cheow Lan Lake 🏞️
+
+📱 [Открыть каталог](https://t.me/phuketgos_bot/app)`);
+});
+
+// ☎️ КОМАНДА /contacts
+bot.command('contacts', (ctx) => {
+  ctx.replyWithMarkdown(`☎️ **Свяжись с нами:**
+
+📱 Telegram: @phuketgos_bot
+🌐 Сайт: https://phukeo.com
+📧 Email: info@phukeo.com
+
+⏰ **Режим работы:**
+Понедельник - Воскресенье: 8:00 - 22:00 (Bangkok Time)
+
+💬 Отвечаем в течение 30 минут!`);
+});
+
+// 🔍 КОМАНДА /getid - Получить ID группы/чата
+bot.command('getid', (ctx) => {
+  const chatId = ctx.chat.id;
+  const chatType = ctx.chat.type;
+  const chatTitle = ctx.chat.title || 'Личный чат';
+  
+  ctx.reply(`📊 Информация о чате:
+
+🆔 ID: \`${chatId}\`
+📝 Тип: ${chatType}
+🏷️ Название: ${chatTitle}
+
+${chatType === 'private' ? '💡 Добавь бота в группу и используй эту команду там, чтобы получить ID группы' : '✅ Сохрани этот ID для настройки бота'}`, 
+    { parse_mode: 'Markdown' }
+  );
+});
+
+// 📊 КОМАНДА /stats - Статистика группы
+bot.command('stats', async (ctx) => {
+  const chatType = ctx.chat.type;
+  
+  if (chatType === 'private') {
+    return ctx.reply('❌ Эта команда работает только в группах');
+  }
+  
+  const topTours = Object.entries(groupStats.tourMentions)
+    .sort((a, b) => b[1] - a[1])
+    .filter(([_, count]) => count > 0)
+    .slice(0, 5)
+    .map(([tour, count]) => `${tour}: ${count} упоминаний`)
+    .join('\n') || 'Пока нет данных';
+  
+  const report = `📊 **Статистика группы**
+
+💬 Всего сообщений: ${groupStats.messages}
+👥 Уникальных пользователей: ${groupStats.users.size}
+❓ Вопросов: ${groupStats.questions}
+
+🏆 **Топ туров:**
+${topTours}
+
+📅 Период: с ${groupStats.lastReset.toLocaleDateString('ru-RU')}`;
+
+  ctx.replyWithMarkdown(report);
+});
+
+// 🔄 КОМАНДА /resetstats
+bot.command('resetstats', (ctx) => {
+  groupStats.messages = 0;
+  Object.keys(groupStats.tourMentions).forEach(key => groupStats.tourMentions[key] = 0);
+  groupStats.users.clear();
+  groupStats.questions = 0;
+  groupStats.lastReset = new Date();
+  
+  ctx.reply('✅ Статистика сброшена!');
+});
+
+// 🔔 CALLBACK КНОПКИ ДЛЯ ГЛАВНОГО МЕНЮ
+
+// 🗺️ КНОПКА "Смотреть туры" - Показать категории
+bot.action('show_catalog', async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.reply(
+    `🗺️ Выберите категорию туров:\n\n` +
+    `🏝️ Острова - самые популярные туры на острова\n` +
+    `🏔️ Приключения - активный отдых и экстрим\n` +
+    `🛕 Культурные - храмы, достопримечательности\n` +
+    `🤿 Дайвинг - подводный мир и снорклинг\n` +
+    `🎣 Рыбалка - морская рыбалка на рассвете`,
+    Markup.inlineKeyboard([
+      [Markup.button.callback(`🏝️ Острова (${categories.islands.tours.length})`, 'cat_islands')],
+      [Markup.button.callback(`🏔️ Приключения (${categories.adventure.tours.length})`, 'cat_adventure')],
+      [Markup.button.callback(`🛕 Культурные (${categories.cultural.tours.length})`, 'cat_cultural')],
+      [Markup.button.callback(`🤿 Дайвинг (${categories.diving.tours.length})`, 'cat_diving')],
+      [Markup.button.callback(`🎣 Рыбалка (${categories.fishing.tours.length})`, 'cat_fishing')],
+      [Markup.button.callback('« Назад в меню', 'back_to_menu')]
+    ])
+  );
+});
+
+// 💬 КНОПКА "Задать вопрос" (placeholder для будущего ChatGPT)
+bot.action('ask_question', async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.reply(
+    `💬 Вы можете задать любой вопрос о турах!\n\n` +
+    `Например:\n` +
+    `• "Какой тур лучше для детей?"\n` +
+    `• "Сколько стоит поездка на Пхи-Пхи?"\n` +
+    `• "Что взять с собой на экскурсию?"\n\n` +
+    `🤖 Скоро здесь появится AI-помощник!\n` +
+    `А пока вы можете связаться с менеджером:`,
+    Markup.inlineKeyboard([
+      [Markup.button.url('☎️ Написать менеджеру', 'https://t.me/Phuketga')],
+      [Markup.button.callback('« Назад в меню', 'back_to_menu')]
+    ])
+  );
+});
+
+// ↩️ КНОПКА "Назад в меню"
+bot.action('back_to_menu', async (ctx) => {
+  await ctx.answerCbQuery();
+  const firstName = ctx.from.first_name || 'друг';
+  await ctx.reply(
+    `👋 Привет, ${firstName}!\n\n` +
+    `Я помогу выбрать идеальный тур на Пхукете! 🏝️\n\n` +
+    `Выберите действие:`,
+    Markup.inlineKeyboard([
+      [Markup.button.callback('🗺️ Смотреть туры', 'show_catalog')],
+      [Markup.button.callback('💬 Задать вопрос', 'ask_question')],
+      [Markup.button.url('☎️ Связаться с менеджером', 'https://t.me/Phuketga')]
+    ])
+  );
+});
+
+// � ОБРАБОТЧИКИ КАТЕГОРИЙ
+
+// 🏝️ Категория "Острова"
+bot.action('cat_islands', async (ctx) => {
+  await ctx.answerCbQuery();
+  const categoryData = categories.islands;
+  const buttons = categoryData.tours.map(tourId => {
+    const tour = tours[tourId];
+    return [Markup.button.callback(
+      `${tour.name} - от ${tour.priceAdult}฿`,
+      `tour_${tourId}`
+    )];
+  });
+  buttons.push([Markup.button.callback('« Назад к категориям', 'show_catalog')]);
+  
+  await ctx.reply(
+    `${categoryData.emoji} ${categoryData.name}\n\n` +
+    `Выберите тур для подробностей:`,
+    Markup.inlineKeyboard(buttons)
+  );
+});
+
+// 🏔️ Категория "Приключения"
+bot.action('cat_adventure', async (ctx) => {
+  await ctx.answerCbQuery();
+  const categoryData = categories.adventure;
+  const buttons = categoryData.tours.map(tourId => {
+    const tour = tours[tourId];
+    return [Markup.button.callback(
+      `${tour.name} - от ${tour.priceAdult}฿`,
+      `tour_${tourId}`
+    )];
+  });
+  buttons.push([Markup.button.callback('« Назад к категориям', 'show_catalog')]);
+  
+  await ctx.reply(
+    `${categoryData.emoji} ${categoryData.name}\n\n` +
+    `Выберите тур для подробностей:`,
+    Markup.inlineKeyboard(buttons)
+  );
+});
+
+// 🛕 Категория "Культурные"
+bot.action('cat_cultural', async (ctx) => {
+  await ctx.answerCbQuery();
+  const categoryData = categories.cultural;
+  const buttons = categoryData.tours.map(tourId => {
+    const tour = tours[tourId];
+    return [Markup.button.callback(
+      `${tour.name} - от ${tour.priceAdult}฿`,
+      `tour_${tourId}`
+    )];
+  });
+  buttons.push([Markup.button.callback('« Назад к категориям', 'show_catalog')]);
+  
+  await ctx.reply(
+    `${categoryData.emoji} ${categoryData.name}\n\n` +
+    `Выберите тур для подробностей:`,
+    Markup.inlineKeyboard(buttons)
+  );
+});
+
+// 🤿 Категория "Дайвинг"
+bot.action('cat_diving', async (ctx) => {
+  await ctx.answerCbQuery();
+  const categoryData = categories.diving;
+  const buttons = categoryData.tours.map(tourId => {
+    const tour = tours[tourId];
+    return [Markup.button.callback(
+      `${tour.name} - от ${tour.priceAdult}฿`,
+      `tour_${tourId}`
+    )];
+  });
+  buttons.push([Markup.button.callback('« Назад к категориям', 'show_catalog')]);
+  
+  await ctx.reply(
+    `${categoryData.emoji} ${categoryData.name}\n\n` +
+    `Выберите тур для подробностей:`,
+    Markup.inlineKeyboard(buttons)
+  );
+});
+
+// 🎣 Категория "Рыбалка"
+bot.action('cat_fishing', async (ctx) => {
+  await ctx.answerCbQuery();
+  const categoryData = categories.fishing;
+  const buttons = categoryData.tours.map(tourId => {
+    const tour = tours[tourId];
+    return [Markup.button.callback(
+      `${tour.name} - от ${tour.priceAdult}฿`,
+      `tour_${tourId}`
+    )];
+  });
+  buttons.push([Markup.button.callback('« Назад к категориям', 'show_catalog')]);
+  
+  await ctx.reply(
+    `${categoryData.emoji} ${categoryData.name}\n\n` +
+    `Выберите тур для подробностей:`,
+    Markup.inlineKeyboard(buttons)
+  );
+});
+
+// �🔔 CALLBACK КНОПКИ (старые)
+bot.action('about', (ctx) => {
+  ctx.answerCbQuery();
+  ctx.replyWithMarkdown(`🌴 **О компании Пхукет Go**
+
+Мы — команда профессионалов с 10+ летним опытом работы на Пхукете.
+
+✨ **Почему мы:**
+• 🏆 Лучшие цены без наценок
+• ⭐ Рейтинг 4.9/5.0 (2000+ отзывов)
+• 🚗 Трансфер включён
+• 🎯 Русскоговорящие гиды
+• 💯 Гарантия возврата денег`);
+});
+
+bot.action('contacts', (ctx) => {
+  ctx.answerCbQuery();
+  ctx.replyWithMarkdown(`☎️ **Контакты:**
+
+📱 Telegram: @phuketgos_bot
+🌐 Сайт: https://phukeo.com
+📧 Email: info@phukeo.com
+
+⏰ Работаем: 8:00 - 22:00 (Bangkok Time)
+💬 Ответим в течение 30 минут!`);
+});
+
+// 🎯 СИСТЕМА БРОНИРОВАНИЙ
+// Хранилище активных бронирований (в памяти)
+const bookingSessions = new Map();
+
+// Данные туров для бронирования
+const toursData = {
+  'rafting': { name: 'Рафтинг + СПА + ATV', priceAdult: 2500, priceChild: 1800 },
+  'phiphi2days': { name: 'Пхи-Пхи 2 дня/1 ночь', priceAdult: 6500, priceChild: 5500 },
+  'pearls': { name: '4 Жемчужины Андаманского моря', priceAdult: 8500, priceChild: 7000 },
+  'sightseeing': { name: 'Достопримечательности Пхукета', priceAdult: 1800, priceChild: 1200 },
+  'raftingspa': { name: 'Рафтинг + СПА', priceAdult: 2200, priceChild: 1600 },
+  'kaolak': { name: 'Као Лак Сафари', priceAdult: 2600, priceChild: 2000 },
+  '11islands': { name: '11 островов МЕГА-ТУР', priceAdult: 4500, priceChild: 3500 },
+  'jamesbond': { name: 'Остров Джеймса Бонда', priceAdult: 2400, priceChild: 1800 },
+  'avatarplus': { name: 'Аватар Плюс + Хангдонг', priceAdult: 2800, priceChild: 2200 },
+  'racha': { name: 'Рача + Корал', priceAdult: 2200, priceChild: 1600 },
+  'skywalk': { name: 'Пханг Нга + Стеклянный мост', priceAdult: 2600, priceChild: 2000 },
+  'cheolan': { name: 'Чео Лан + Самет', priceAdult: 2800, priceChild: 2200 },
+  'similan': { name: 'Симиланы Standard', priceAdult: 3500, priceChild: 2800 },
+  'similanearly': { name: 'Симиланы Early Bird', priceAdult: 4000, priceChild: 3200 },
+  'similanspeed': { name: 'Симиланы Speedboat', priceAdult: 4500, priceChild: 3500 },
+  'fishing': { name: 'Рыбалка на рассвете', priceAdult: 3000, priceChild: 2400 },
+  'rachasunrise': { name: 'Рача + Корал рассвет', priceAdult: 2600, priceChild: 2000 },
+  'racharawai': { name: 'Рача + Корал Rawai', priceAdult: 2200, priceChild: 1600 },
+  'phiphisunrise': { name: 'Пхи-Пхи рассвет', priceAdult: 3200, priceChild: 2600 },
+  '5pearls': { name: '5 Жемчужин 2 дня', priceAdult: 9500, priceChild: 8000 },
+  'phangngasamet': { name: 'Пханг Нга + Самет', priceAdult: 2200, priceChild: 1600 },
+  'krabi': { name: 'Секреты Краби', priceAdult: 2400, priceChild: 1800 }
+};
+
+// Универсальный обработчик бронирования для всех туров
+Object.keys(toursData).forEach(tourId => {
+  bot.action(`book_${tourId}`, async (ctx) => {
+    await ctx.answerCbQuery();
+    
+    const userId = ctx.from.id;
+    const tour = toursData[tourId];
+    
+    // Создаём новую сессию бронирования
+    bookingSessions.set(userId, {
+      tourId: tourId,
+      tourName: tour.name,
+      priceAdult: tour.priceAdult,
+      priceChild: tour.priceChild,
+      step: 'name' // name → date → adults → children → contact → confirm
+    });
+    
+    await ctx.reply(
+      `✅ Отлично! Бронируем тур:\n🏝️ **${tour.name}**\n\n` +
+      `💰 Цена: ${tour.priceAdult}฿ взрослый, ${tour.priceChild}฿ ребёнок\n\n` +
+      `📝 **Шаг 1 из 5: Ваше имя**\n\n` +
+      `Введите ваше имя и фамилию:`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '❌ Отменить бронирование', callback_data: 'cancel_booking' }]
+          ]
+        }
+      }
+    );
+  });
+});
+
+// Отмена бронирования
+bot.action('cancel_booking', async (ctx) => {
+  await ctx.answerCbQuery();
+  const userId = ctx.from.id;
+  bookingSessions.delete(userId);
+  
+  await ctx.reply('❌ Бронирование отменено.\n\n💬 Чем ещё могу помочь?');
+});
+
+// Кнопки быстрого выбора взрослых
+for (let i = 1; i <= 10; i++) {
+  bot.action(`adults_${i}`, async (ctx) => {
+    await ctx.answerCbQuery();
+    const userId = ctx.from.id;
+    const session = bookingSessions.get(userId);
+    
+    if (!session || session.step !== 'adults') return;
+    
+    session.adults = i;
+    session.step = 'children';
+    
+    await ctx.reply(
+      `✅ Взрослых: ${i}\n\n` +
+      `📝 **Шаг 4 из 5: Количество детей**\n\n` +
+      `Введите количество детей (4-11 лет).\n` +
+      `Если детей нет, напишите 0:`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '0', callback_data: 'children_0' }, { text: '1', callback_data: 'children_1' }, { text: '2', callback_data: 'children_2' }],
+            [{ text: '3', callback_data: 'children_3' }, { text: '4', callback_data: 'children_4' }, { text: '5', callback_data: 'children_5' }],
+            [{ text: '❌ Отменить', callback_data: 'cancel_booking' }]
+          ]
+        }
+      }
+    );
+  });
+}
+
+// Кнопки быстрого выбора детей
+for (let i = 0; i <= 10; i++) {
+  bot.action(`children_${i}`, async (ctx) => {
+    await ctx.answerCbQuery();
+    const userId = ctx.from.id;
+    const session = bookingSessions.get(userId);
+    
+    if (!session || session.step !== 'children') return;
+    
+    session.children = i;
+    session.step = 'contact';
+    
+    await ctx.reply(
+      `✅ Детей: ${i}\n\n` +
+      `📝 **Шаг 5 из 5: Контакт для связи**\n\n` +
+      `Введите ваш номер телефона или Telegram:\n` +
+      `Например: +66 12 345 6789 или @username`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '❌ Отменить', callback_data: 'cancel_booking' }]
+          ]
+        }
+      }
+    );
+  });
+}
+
+// Подтверждение бронирования
+bot.action('confirm_booking', async (ctx) => {
+  await ctx.answerCbQuery();
+  const userId = ctx.from.id;
+  const session = bookingSessions.get(userId);
+  
+  if (!session) {
+    await ctx.reply('❌ Сессия истекла. Начните бронирование заново.');
+    return;
+  }
+  
+  // Рассчитываем стоимость
+  const totalAdults = session.adults * session.priceAdult;
+  const totalChildren = session.children * session.priceChild;
+  const totalPrice = totalAdults + totalChildren;
+  
+  // Формируем сообщение для админа
+  const adminMessage = 
+    `🔔 **НОВАЯ БРОНЬ!**\n\n` +
+    `🏝️ **Тур:** ${session.tourName}\n` +
+    `👤 **Имя:** ${session.name}\n` +
+    `📅 **Дата:** ${session.date}\n` +
+    `👥 **Взрослых:** ${session.adults} чел.\n` +
+    `👶 **Детей:** ${session.children} чел.\n` +
+    `📱 **Контакт:** ${session.contact}\n\n` +
+    `💰 **Сумма:** ${totalPrice}฿\n\n` +
+    `🆔 User ID: ${userId}\n` +
+    `👤 Username: @${ctx.from.username || 'нет'}\n` +
+    `📝 Имя в Telegram: ${ctx.from.first_name} ${ctx.from.last_name || ''}`;
+  
+  try {
+    // Отправляем админу
+    const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID || '1217592929';
+    await bot.telegram.sendMessage(ADMIN_CHAT_ID, adminMessage, { parse_mode: 'Markdown' });
+    
+    // Подтверждение клиенту
+    await ctx.reply(
+      `✅ **Бронирование отправлено!**\n\n` +
+      `Ваша заявка получена и передана менеджеру.\n\n` +
+      `📱 Мы свяжемся с вами в течение 30 минут для подтверждения деталей.\n\n` +
+      `Номер брони: #${userId}${Date.now().toString().slice(-4)}\n\n` +
+      `💬 Если есть вопросы, пишите @Phuketga`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '🗺️ Посмотреть другие туры', web_app: { url: 'https://phukeo.com' } }],
+            [{ text: '☎️ Написать менеджеру', url: 'https://t.me/Phuketga' }]
+          ]
+        }
+      }
+    );
+    
+    // Удаляем сессию
+    bookingSessions.delete(userId);
+    
+  } catch (error) {
+    console.error('Ошибка отправки брони админу:', error);
+    await ctx.reply(
+      `⚠️ Произошла ошибка при отправке.\n\n` +
+      `Пожалуйста, свяжитесь с нами напрямую:\n` +
+      `📱 @Phuketga\n\n` +
+      `Ваши данные:\n` +
+      `🏝️ ${session.tourName}\n` +
+      `📅 ${session.date}\n` +
+      `👥 ${session.adults} взрослых, ${session.children} детей`
+    );
+  }
+});
+
+
+// 💬 ОБРАБОТКА ТЕКСТОВЫХ СООБЩЕНИЙ
+bot.on('message', async (ctx) => {
+  if (!ctx.message.text) return;
+  
+  const chatType = ctx.chat.type;
+  const text = ctx.message.text;
+  const userId = ctx.from.id;
+  
+  // 🎯 ОБРАБОТКА АКТИВНОЙ СЕССИИ БРОНИРОВАНИЯ
+  if (chatType === 'private' && bookingSessions.has(userId)) {
+    const session = bookingSessions.get(userId);
+    
+    // ШАГ 1: Имя
+    if (session.step === 'name') {
+      session.name = text;
+      session.step = 'date';
+      
+      await ctx.reply(
+        `✅ Отлично, ${text}!\n\n` +
+        `📝 **Шаг 2 из 5: Дата тура**\n\n` +
+        `Введите желаемую дату в формате ДД.ММ.ГГГГ\n` +
+        `Например: 15.11.2025`,
+        {
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: '❌ Отменить', callback_data: 'cancel_booking' }]
+            ]
+          }
+        }
+      );
+      return;
+    }
+    
+    // ШАГ 2: Дата
+    if (session.step === 'date') {
+      session.date = text;
+      session.step = 'adults';
+      
+      await ctx.reply(
+        `✅ Дата: ${text}\n\n` +
+        `📝 **Шаг 3 из 5: Количество взрослых**\n\n` +
+        `Введите количество взрослых (от 1 до 10):`,
+        {
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: '1', callback_data: 'adults_1' }, { text: '2', callback_data: 'adults_2' }, { text: '3', callback_data: 'adults_3' }],
+              [{ text: '4', callback_data: 'adults_4' }, { text: '5', callback_data: 'adults_5' }, { text: '6', callback_data: 'adults_6' }],
+              [{ text: '❌ Отменить', callback_data: 'cancel_booking' }]
+            ]
+          }
+        }
+      );
+      return;
+    }
+    
+    // ШАГ 3: Взрослые (если ввели текстом)
+    if (session.step === 'adults') {
+      const adults = parseInt(text);
+      if (isNaN(adults) || adults < 1 || adults > 10) {
+        await ctx.reply('❌ Пожалуйста, введите число от 1 до 10');
+        return;
+      }
+      
+      session.adults = adults;
+      session.step = 'children';
+      
+      await ctx.reply(
+        `✅ Взрослых: ${adults}\n\n` +
+        `📝 **Шаг 4 из 5: Количество детей**\n\n` +
+        `Введите количество детей (4-11 лет).\n` +
+        `Если детей нет, напишите 0:`,
+        {
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: '0', callback_data: 'children_0' }, { text: '1', callback_data: 'children_1' }, { text: '2', callback_data: 'children_2' }],
+              [{ text: '3', callback_data: 'children_3' }, { text: '4', callback_data: 'children_4' }, { text: '5', callback_data: 'children_5' }],
+              [{ text: '❌ Отменить', callback_data: 'cancel_booking' }]
+            ]
+          }
+        }
+      );
+      return;
+    }
+    
+    // ШАГ 4: Дети (если ввели текстом)
+    if (session.step === 'children') {
+      const children = parseInt(text);
+      if (isNaN(children) || children < 0 || children > 10) {
+        await ctx.reply('❌ Пожалуйста, введите число от 0 до 10');
+        return;
+      }
+      
+      session.children = children;
+      session.step = 'contact';
+      
+      await ctx.reply(
+        `✅ Детей: ${children}\n\n` +
+        `📝 **Шаг 5 из 5: Контакт для связи**\n\n` +
+        `Введите ваш номер телефона или Telegram:\n` +
+        `Например: +66 12 345 6789 или @username`,
+        {
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: '📱 Поделиться номером', request_contact: true }],
+              [{ text: '❌ Отменить', callback_data: 'cancel_booking' }]
+            ]
+          }
+        }
+      );
+      return;
+    }
+    
+    // ШАГ 5: Контакт
+    if (session.step === 'contact') {
+      session.contact = text;
+      session.step = 'confirm';
+      
+      // Рассчитываем общую стоимость
+      const totalAdults = session.adults * session.priceAdult;
+      const totalChildren = session.children * session.priceChild;
+      const totalPrice = totalAdults + totalChildren;
+      
+      await ctx.reply(
+        `📋 **Проверьте данные бронирования:**\n\n` +
+        `🏝️ Тур: **${session.tourName}**\n` +
+        `👤 Имя: ${session.name}\n` +
+        `📅 Дата: ${session.date}\n` +
+        `👥 Взрослых: ${session.adults} x ${session.priceAdult}฿ = ${totalAdults}฿\n` +
+        `👶 Детей: ${session.children} x ${session.priceChild}฿ = ${totalChildren}฿\n` +
+        `📱 Контакт: ${session.contact}\n\n` +
+        `💰 **Итого: ${totalPrice}฿**\n\n` +
+        `✅ Всё верно? Подтвердите бронирование:`,
+        {
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: '✅ Подтвердить и отправить', callback_data: 'confirm_booking' }],
+              [{ text: '✏️ Исправить данные', callback_data: 'cancel_booking' }],
+              [{ text: '❌ Отменить', callback_data: 'cancel_booking' }]
+            ]
+          }
+        }
+      );
+      return;
+    }
+  }
+  
+  // Для групп и обычных сообщений - прежняя логика
+  const textLower = text.toLowerCase();
+  
+  // В группах только собираем статистику (не отвечаем на каждое сообщение)
+  if (chatType === 'group' || chatType === 'supergroup') {
+    const userId = ctx.from.id;
+    
+    // Собираем статистику
+    groupStats.messages++;
+    groupStats.users.add(userId);
+    
+    // Анализируем упоминания туров
+    Object.entries(keywords.tours).forEach(([tourName, tourKeywords]) => {
+      if (tourKeywords.some(keyword => text.includes(keyword.toLowerCase()))) {
+        groupStats.tourMentions[tourName]++;
+      }
+    });
+    
+    // Считаем вопросы
+    if (keywords.questions.some(keyword => text.includes(keyword))) {
+      groupStats.questions++;
+    }
+    
+    // Логируем
+    console.log(`📊 [${ctx.chat.title}] ${ctx.from.first_name}: "${text.substring(0, 50)}..."`);
+    
+    return; // Не отвечаем на каждое сообщение в группе
+  }
+  
+  // В личке - отвечаем на ключевые слова
+  if (text.includes('цена') || text.includes('стоимость') || text.includes('сколько')) {
+    ctx.reply('💰 Цены на туры смотри в каталоге: https://t.me/phuketgos_bot/app\n\nВыбери тур и увидишь точную стоимость!');
+  } else if (text.includes('забронировать') || text.includes('заказать')) {
+    ctx.reply('✅ Отлично! Открой каталог и выбери тур:\nhttps://t.me/phuketgos_bot/app\n\nЗатем нажми "Забронировать" и заполни форму.');
+  } else if (text.includes('контакт') || text.includes('связь')) {
+    ctx.reply('📞 Пиши прямо сюда! Мы отвечаем в течение 30 минут.\n\nИли используй команду /contacts');
+  } else {
+    ctx.reply(`👋 Привет! Я бот Пхукет Go.\n\n🗺️ Хочешь посмотреть туры? Нажми /start\n📚 Нужна помощь? Нажми /help`);
+  }
+});
+
+// 🚀 ЗАПУСК БОТА
+bot.launch().then(() => {
+  console.log('✅ Бот Пхукет Go запущен!');
+  console.log('📱 Тестируй: https://t.me/phuketgos_bot');
+  console.log('🗺️ Mini App: https://t.me/phuketgos_bot/app');
+  console.log('');
+  console.log('📊 Режим аналитики групп активирован');
+  console.log('💡 Команды для групп:');
+  console.log('   /getid - получить ID группы');
+  console.log('   /stats - посмотреть статистику');
+});
+
+// 🏥 Health check сервер для Koyeb
+const http = require('http');
+const healthServer = http.createServer((req, res) => {
+  if (req.url === '/health' || req.url === '/') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ 
+      status: 'ok', 
+      bot: 'running',
+      uptime: process.uptime(),
+      timestamp: new Date().toISOString()
+    }));
+  } else {
+    res.writeHead(404);
+    res.end('Not Found');
+  }
+});
+
+const PORT = process.env.PORT || 8000;
+healthServer.listen(PORT, () => {
+  console.log(`🏥 Health check server running on port ${PORT}`);
+});
+
+// Graceful shutdown
+process.once('SIGINT', () => {
+  healthServer.close();
+  bot.stop('SIGINT');
+});
+process.once('SIGTERM', () => {
+  healthServer.close();
+  bot.stop('SIGTERM');
+});

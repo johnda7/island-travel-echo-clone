@@ -1582,9 +1582,10 @@ bot.hears('🏞️ Природа', async (ctx) => {
 bot.command('tours', async (ctx) => {
   // Сразу открываем каталог
   await ctx.reply(
-    '🗺️ Открываю каталог туров...',
+    '🗺️ Открываю каталог...',
     {
       reply_markup: {
+        ...MAIN_KEYBOARD,
         inline_keyboard: [
           [{ text: '🗺️ Открыть каталог', web_app: { url: 'https://phukeo.com' } }]
         ]
@@ -1594,15 +1595,39 @@ bot.command('tours', async (ctx) => {
 });
 
 bot.command('popular', async (ctx) => {
-  const fakeUpdate = {
-    callback_query: {
-      id: String(Date.now()),
-      from: ctx.from,
-      message: ctx.message,
-      data: 'popular_tours'
+  await ctx.replyWithPhoto(
+    'https://phukeo.com/assets/hero-phuket.jpg',
+    {
+      caption: '⭐ *ТОП-5 популярных туров*\n\nВыберите:',
+      parse_mode: 'Markdown',
+      reply_markup: {
+        ...MAIN_KEYBOARD,
+        inline_keyboard: [
+          [{ text: '🏝️ Пхи-Пхи 2дня/1ночь — 4500฿', callback_data: 'select_phi-phi-2days' }],
+          [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
+          [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
+          [{ text: '🚣 Рафтинг + ATV — 2900฿', callback_data: 'select_rafting-spa-atv-1-day' }],
+          [{ text: '🏞️ Чео Лан — 2900฿', callback_data: 'select_cheow-lan-lake' }]
+        ]
+      }
     }
-  };
-  await bot.handleUpdate(fakeUpdate);
+  ).catch(async () => {
+    await ctx.reply('⭐ *ТОП-5 популярных туров*', { parse_mode: 'Markdown', reply_markup: MAIN_KEYBOARD });
+  });
+});
+
+bot.command('catalog', async (ctx) => {
+  await ctx.reply(
+    '🗺️ Открываю каталог...',
+    {
+      reply_markup: {
+        ...MAIN_KEYBOARD,
+        inline_keyboard: [
+          [{ text: '🗺️ Открыть каталог', web_app: { url: 'https://phukeo.com' } }]
+        ]
+      }
+    }
+  );
 });
 
 bot.command('islands', async (ctx) => {
@@ -1824,22 +1849,23 @@ app.listen(PORT, async () => {
     await bot.telegram.setWebhook(WEBHOOK_URL);
     console.log(`✅ Webhook установлен: ${WEBHOOK_URL}`);
     
-    // Убираем команды - пользователям не нужны слэши
-    await bot.telegram.setMyCommands([], {
-      scope: { type: 'all_private_chats' }
-    });
+    // Команды для Menu Button (полезный набор)
+    await bot.telegram.setMyCommands(
+      [
+        { command: 'start', description: '🏠 Главное меню' },
+        { command: 'popular', description: '⭐ ТОП-5 туров' },
+        { command: 'catalog', description: '🗺️ Открыть каталог' }
+      ],
+      { scope: { type: 'all_private_chats' } }
+    );
     
     await bot.telegram.setMyCommands([], {
       scope: { type: 'all_group_chats' }
     });
     
-    // Menu Button - открывает каталог туров
+    // Menu Button - показывает команды
     await bot.telegram.setChatMenuButton({
-      menu_button: {
-        type: 'web_app',
-        text: '🗺️ Каталог',
-        web_app: { url: 'https://phukeo.com' }
-      }
+      menu_button: { type: 'commands' }
     });
     
     console.log('✅ Команды и меню установлены');

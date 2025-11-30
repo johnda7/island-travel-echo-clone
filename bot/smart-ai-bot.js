@@ -286,6 +286,23 @@ async function handleTourDeepLink(ctx, tourSlug) {
   const tour = TOURS_DB[tourSlug];
   const userId = ctx.from.id;
   
+  // Проверяем существование тура
+  if (!tour) {
+    console.error(`❌ Тур не найден: ${tourSlug}`);
+    await ctx.reply(
+      '😔 Извините, этот тур временно недоступен.\n\nВыберите другой тур:',
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '⭐ Популярные туры', callback_data: 'popular_tours' }],
+            [{ text: '🗺️ Все туры', web_app: { url: 'https://phukeo.com' } }]
+          ]
+        }
+      }
+    );
+    return;
+  }
+  
   // Сохраняем выбранный тур в сессию
   if (!userSessions[userId]) {
     userSessions[userId] = { chatId: ctx.chat.id, userName: ctx.from.first_name };
@@ -548,7 +565,7 @@ bot.action('popular_tours', async (ctx) => {
           [{ text: '🏝️ Пхи-Пхи 2дня/1ночь — 4500฿', callback_data: 'select_phi-phi-2days' }],
           [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
           [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
-          [{ text: '🚣 Рафтинг + ATV — 2900฿', callback_data: 'select_rafting-atv-zipline' }],
+          [{ text: '🚣 Рафтинг + ATV — 2900฿', callback_data: 'select_rafting-spa-atv-1-day' }],
           [{ text: '🏞️ Чео Лан — 2900฿', callback_data: 'select_cheow-lan-lake' }],
           [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
@@ -573,7 +590,7 @@ bot.action('cat_sea', async (ctx) => {
           [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
           [{ text: '🏖️ Рача + Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
           [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
-          [{ text: '💎 5 Жемчужин Deluxe — 9900฿', callback_data: 'select_pearls-andaman-sea-deluxe' }],
+          [{ text: '💎 5 Жемчужин Deluxe — 9900฿', callback_data: 'select_five-pearls-2days' }],
           [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
       }
@@ -595,7 +612,7 @@ bot.action('cat_islands', async (ctx) => {
           [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
           [{ text: '🏖️ Рача + Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
           [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
-          [{ text: '💎 5 Жемчужин Deluxe — 9900฿', callback_data: 'select_pearls-andaman-sea-deluxe' }],
+          [{ text: '💎 5 Жемчужин Deluxe — 9900฿', callback_data: 'select_five-pearls-2days' }],
           [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
       }
@@ -611,7 +628,7 @@ bot.action('cat_adventure', async (ctx) => {
       parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
-          [{ text: '🚣 Рафтинг + SPA + ATV — 2900฿', callback_data: 'select_rafting-atv-zipline' }],
+          [{ text: '🚣 Рафтинг + SPA + ATV — 2900฿', callback_data: 'select_rafting-spa-atv-1-day' }],
           [{ text: '🐘 Као Лак Сафари — 3200฿', callback_data: 'select_kao-lak-safari-1-day' }],
           [{ text: '🏝️ Джеймс Бонд — 2900฿', callback_data: 'select_james-bond-island-phang-nga' }],
           [{ text: '🎣 Рыбалка на рассвете — 4500฿', callback_data: 'select_fishing-sunrise' }],
@@ -633,7 +650,7 @@ bot.action('cat_nature', async (ctx) => {
         inline_keyboard: [
           [{ text: '🏞️ Чео Лан + Самет Нангше — 2900฿', callback_data: 'select_cheow-lan-lake' }],
           [{ text: '💚 Тайны Краби — 3100฿', callback_data: 'select_krabi-secrets' }],
-          [{ text: '🌉 Пхангнга + Стеклянный мост — 2600฿', callback_data: 'select_phang-nga-glass-bridge' }],
+          [{ text: '🌉 Пхангнга + Стеклянный мост — 2600฿', callback_data: 'select_phang-nga-skywalk' }],
           [{ text: '🛕 Достопримечательности — 1800฿', callback_data: 'select_dostoprimechatelnosti-phuketa' }],
           [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
@@ -1813,9 +1830,8 @@ app.listen(PORT, async () => {
     // Уведомляем менеджера о запуске
     await bot.telegram.sendMessage(MANAGER_CHAT_ID,
       '🚀 Пхукет Go бот запущен!\n\n' +
-      '/reply CHAT_ID текст — ответить клиенту\n' +
-      '/stats — статистика',
-      { parse_mode: 'Markdown' }
+      '/reply [CHAT ID] текст — ответить клиенту\n' +
+      '/stats — статистика'
     );
     
   } catch (error) {

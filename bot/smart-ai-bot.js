@@ -390,7 +390,7 @@ async function handleTourDeepLink(ctx, tourSlug) {
 }
 
 // ====== ГЛАВНОЕ МЕНЮ (без deep link) ======
-async function showMainMenu(ctx, orderNumber) {
+async function showMainMenu(ctx, orderNumber = null) {
   // Устанавливаем нижнюю клавиатуру (ReplyKeyboard) — без AI и Менеджера
   const replyKeyboard = {
     keyboard: [
@@ -1495,8 +1495,9 @@ bot.hears('⭐ Популярные', async (ctx) => {
 });
 
 bot.hears('🗺️ Все туры', async (ctx) => {
+  // Сразу открываем каталог без лишнего текста
   await ctx.reply(
-    '🗺️ Открываю каталог туров:',
+    '🗺️',
     {
       reply_markup: {
         inline_keyboard: [
@@ -1505,6 +1506,11 @@ bot.hears('🗺️ Все туры', async (ctx) => {
       }
     }
   );
+});
+
+// Обработчик для кнопки "Меню" (если пользователь напишет "Меню")
+bot.hears(/^[Мм]еню$|^≡ Меню$/, async (ctx) => {
+  await showMainMenu(ctx);
 });
 
 bot.hears('🏝️ Острова', async (ctx) => {
@@ -1546,15 +1552,15 @@ bot.hears('🏞️ Природа', async (ctx) => {
 
 // Обработчики AI помощь и Менеджер убраны - всё происходит в боте
 
-// ====== КОМАНДЫ ДЛЯ MENU BUTTON ======
+// ====== КОМАНДЫ (для совместимости, но не показываются в меню) ======
 bot.command('tours', async (ctx) => {
+  // Сразу открываем каталог
   await ctx.reply(
-    '🗺️ Каталог туров:',
+    '🗺️ Открываю каталог туров...',
     {
       reply_markup: {
         inline_keyboard: [
-          [{ text: '🗺️ Открыть каталог', url: 'https://phukeo.com/#/tours' }],
-          [{ text: '💬 Подобрать тур', callback_data: 'start_ai' }]
+          [{ text: '🗺️ Открыть каталог', web_app: { url: 'https://phukeo.com' } }]
         ]
       }
     }
@@ -1610,19 +1616,8 @@ bot.command('nature', async (ctx) => {
 });
 
 bot.command('help', async (ctx) => {
-  await ctx.reply(
-    '❓ Помощь\n\n' +
-    '/start — Главное меню\n' +
-    '/tours — Каталог туров\n\n' +
-    'Напишите что ищете — подберём тур! 🏝️',
-    {
-      reply_markup: {
-        inline_keyboard: [
-          [{ text: '🗺️ Открыть каталог', url: 'https://phukeo.com/#/tours' }]
-        ]
-      }
-    }
-  );
+  // Показываем главное меню вместо списка команд
+  await showMainMenu(ctx);
 });
 
 // ====== КОМАНДА /REPLY ДЛЯ МЕНЕДЖЕРА ======
@@ -1803,26 +1798,22 @@ app.listen(PORT, async () => {
     await bot.telegram.setWebhook(WEBHOOK_URL);
     console.log(`✅ Webhook установлен: ${WEBHOOK_URL}`);
     
-    // Устанавливаем Menu Button (кнопка рядом с полем ввода)
-    
-    // Устанавливаем команды ТОЛЬКО для приватных чатов
-    await bot.telegram.setMyCommands(
-      [
-        { command: 'start', description: '🏠 Главное меню' },
-        { command: 'tours', description: '🗺️ Каталог туров' },
-        { command: 'help', description: '❓ Помощь' }
-      ],
-      { scope: { type: 'all_private_chats' } }
-    );
-    
-    // Для групп убираем команды
-    await bot.telegram.setMyCommands([], {
-      scope: { type: 'all_group_chats' }
+    // Menu Button - открывает каталог туров
+    await bot.telegram.setChatMenuButton({
+      menu_button: {
+        type: 'web_app',
+        text: '🗺️ Каталог',
+        web_app: { url: 'https://phukeo.com' }
+      }
     });
     
-    // Menu Button только для приватных чатов
-    await bot.telegram.setChatMenuButton({
-      menu_button: { type: 'commands' }
+    // Убираем команды - не нужны пользователям
+    await bot.telegram.setMyCommands([], {
+      scope: { type: 'all_private_chats' }
+    });
+    
+    await bot.telegram.setMyCommands([], {
+      scope: { type: 'all_group_chats' }
     });
     
     console.log('✅ Команды и меню установлены');

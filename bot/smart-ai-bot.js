@@ -331,22 +331,30 @@ async function handleTourDeepLink(ctx, tourSlug) {
   const formatDate = (d) => `${d.getDate()}.${d.getMonth() + 1}`;
   const formatDateFull = (d) => `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
   
-  // Фото туров
+  // Фото туров (все 22 тура)
   const tourPhotos = {
     'phi-phi-2days': 'https://phukeo.com/assets/phi-phi-maya-bay-LeJ2QhJv.jpg',
     'phi-phi': 'https://phukeo.com/assets/phi-phi-maya-bay-LeJ2QhJv.jpg',
+    'phi-phi-sunrise': 'https://phukeo.com/assets/phi-phi-maya-bay-LeJ2QhJv.jpg',
     'similan-islands': 'https://phukeo.com/assets/similan-islands.jpg',
+    'similan-islands-early': 'https://phukeo.com/assets/similan-islands.jpg',
+    'similan-islands-speedboat': 'https://phukeo.com/assets/similan-islands.jpg',
     'racha-coral-islands-speedboat': 'https://phukeo.com/assets/racha-coral.jpg',
+    'racha-coral-sunrise': 'https://phukeo.com/assets/racha-coral.jpg',
+    'racha-coral-rawai': 'https://phukeo.com/assets/racha-coral.jpg',
     'eleven-islands-mega': 'https://phukeo.com/assets/11-islands.jpg',
-    'pearls-andaman-sea-deluxe': 'https://phukeo.com/assets/pearls-andaman.jpg',
+    'pearls-andaman-sea': 'https://phukeo.com/assets/pearls-andaman.jpg',
+    'five-pearls-2days': 'https://phukeo.com/assets/pearls-andaman.jpg',
     'james-bond-island-phang-nga': 'https://phukeo.com/assets/james-bond.jpg',
     'cheow-lan-lake': 'https://phukeo.com/assets/cheow-lan.jpg',
     'krabi-secrets': 'https://phukeo.com/assets/krabi.jpg',
-    'rafting-atv-zipline': 'https://phukeo.com/assets/rafting.jpg',
+    'rafting-spa-atv-1-day': 'https://phukeo.com/assets/rafting.jpg',
+    'rafting-spa-1day': 'https://phukeo.com/assets/rafting.jpg',
     'kao-lak-safari-1-day': 'https://phukeo.com/assets/kao-lak.jpg',
     'fishing-sunrise': 'https://phukeo.com/assets/fishing.jpg',
     'dostoprimechatelnosti-phuketa': 'https://phukeo.com/assets/phuket-sights.jpg',
-    'phang-nga-glass-bridge': 'https://phukeo.com/assets/glass-bridge.jpg'
+    'phang-nga-skywalk': 'https://phukeo.com/assets/glass-bridge.jpg',
+    'phang-nga-samet': 'https://phukeo.com/assets/glass-bridge.jpg'
   };
   
   const photoUrl = tourPhotos[tourSlug] || tour.image || 'https://phukeo.com/assets/hero-phuket.jpg';
@@ -360,19 +368,20 @@ async function handleTourDeepLink(ctx, tourSlug) {
       `⏱ ${tour.duration}\n\n` +
       `📅 Выберите дату:`,
     parse_mode: 'Markdown',
-        reply_markup: {
-          inline_keyboard: [
-        [
-          { text: `Сегодня`, callback_data: `date_${tourSlug}_${formatDateFull(today)}` },
-          { text: `Завтра`, callback_data: `date_${tourSlug}_${formatDateFull(tomorrow)}` },
-          { text: `${formatDate(dayAfter)}`, callback_data: `date_${tourSlug}_${formatDateFull(dayAfter)}` }
-        ],
-        [
-          { text: '📆 Другая дата', callback_data: `date_other_${tourSlug}` },
-          { text: '⬅️ Назад', callback_data: 'back_to_menu' }
+      reply_markup: {
+        ...MAIN_KEYBOARD,
+        inline_keyboard: [
+          [
+            { text: `Сегодня`, callback_data: `date_${tourSlug}_${formatDateFull(today)}` },
+            { text: `Завтра`, callback_data: `date_${tourSlug}_${formatDateFull(tomorrow)}` },
+            { text: `${formatDate(dayAfter)}`, callback_data: `date_${tourSlug}_${formatDateFull(dayAfter)}` }
+          ],
+          [
+            { text: '📆 Другая дата', callback_data: `date_other_${tourSlug}` },
+            { text: '⬅️ Назад', callback_data: 'back_to_menu' }
+          ]
         ]
-      ]
-    }
+      }
   }).catch(async () => {
     // Fallback без фото
     await ctx.reply(
@@ -382,6 +391,7 @@ async function handleTourDeepLink(ctx, tourSlug) {
       {
         parse_mode: 'Markdown',
         reply_markup: {
+          ...MAIN_KEYBOARD,
           inline_keyboard: [
             [
               { text: `Сегодня`, callback_data: `date_${tourSlug}_${formatDateFull(today)}` },
@@ -413,7 +423,7 @@ async function showMainMenu(ctx, orderNumber = null) {
     }
   ).catch(async () => {
     // Fallback без фото
-    await ctx.reply(
+  await ctx.reply(
       `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
       `Выберите категорию внизу 👇`,
       {
@@ -507,15 +517,15 @@ async function showSeaTours(ctx) {
     }
   ).catch(async () => {
     // Fallback без фото
-    await ctx.reply(
+  await ctx.reply(
       '🏝️ *МОРСКИЕ ОСТРОВА* — ТОП-3:\n\n' +
       '1️⃣ Пхи-Пхи — 2500฿\n' +
       '2️⃣ Симиланы — 3500฿\n' +
       '3️⃣ Рача+Корал — 2200฿',
-      {
+    {
         parse_mode: 'Markdown',
-        reply_markup: {
-          inline_keyboard: [
+      reply_markup: {
+        inline_keyboard: [
             [{ text: '🏝️ Пхи-Пхи', callback_data: 'select_phi-phi' }],
             [{ text: '🐠 Симиланы', callback_data: 'select_similan-islands' }],
             [{ text: '🏖️ Рача+Корал', callback_data: 'select_racha-coral-islands-speedboat' }]
@@ -969,7 +979,7 @@ bot.action('start_ai', async (ctx) => {
       return `${day}.${month}`;
     };
     
-    await ctx.reply(
+  await ctx.reply(
       `🏝️ Отличный выбор: ${session.tour.name}\n` +
       `💰 Цена: ${session.tour.price}\n\n` +
       `📅 Когда планируете поездку?`,
@@ -990,10 +1000,14 @@ bot.action('start_ai', async (ctx) => {
       }
     );
   } else {
-  await ctx.reply(
-    '💬 Отлично! Я помогу подобрать идеальный тур.\n\n' +
-      'Расскажите, что вы ищете? Море, приключения, культура?'
-  );
+    await ctx.reply(
+      '💬 Отлично! Помогу подобрать идеальный тур.\n\n' +
+      'Что вас интересует? Море, приключения, природа?\n\n' +
+      '👇 Или выберите категорию внизу',
+      {
+        reply_markup: MAIN_KEYBOARD
+      }
+    );
   }
   
   // Уведомляем менеджера

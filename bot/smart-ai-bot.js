@@ -314,25 +314,25 @@ async function handleTourDeepLink(ctx, tourSlug) {
   const formatDate = (d) => `${d.getDate()}.${d.getMonth() + 1}`;
   const formatDateFull = (d) => `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
   
-  // Фото туров
+  // Фото туров (реальные URL с www.phukeo.com)
   const tourPhotos = {
-    'phi-phi-2days': 'https://phukeo.com/assets/phi-phi-maya-bay-LeJ2QhJv.jpg',
-    'phi-phi': 'https://phukeo.com/assets/phi-phi-maya-bay-LeJ2QhJv.jpg',
-    'similan-islands': 'https://phukeo.com/assets/similan-islands.jpg',
-    'racha-coral-islands-speedboat': 'https://phukeo.com/assets/racha-coral.jpg',
-    'eleven-islands-mega': 'https://phukeo.com/assets/11-islands.jpg',
-    'pearls-andaman-sea-deluxe': 'https://phukeo.com/assets/pearls-andaman.jpg',
-    'james-bond-island-phang-nga': 'https://phukeo.com/assets/james-bond.jpg',
-    'cheow-lan-lake': 'https://phukeo.com/assets/cheow-lan.jpg',
-    'krabi-secrets': 'https://phukeo.com/assets/krabi.jpg',
-    'rafting-atv-zipline': 'https://phukeo.com/assets/rafting.jpg',
-    'kao-lak-safari-1-day': 'https://phukeo.com/assets/kao-lak.jpg',
-    'fishing-sunrise': 'https://phukeo.com/assets/fishing.jpg',
-    'dostoprimechatelnosti-phuketa': 'https://phukeo.com/assets/phuket-sights.jpg',
-    'phang-nga-glass-bridge': 'https://phukeo.com/assets/glass-bridge.jpg'
+    'phi-phi-2days': 'https://www.phukeo.com/assets/maya-bay-1.jpg',
+    'phi-phi': 'https://www.phukeo.com/assets/maya-bay-2.jpg',
+    'similan-islands': 'https://www.phukeo.com/assets/bamboo-island.webp',
+    'racha-coral-islands-speedboat': 'https://www.phukeo.com/assets/racha-1.jpg',
+    'eleven-islands-mega': 'https://www.phukeo.com/assets/pileh-lagoon.jpg',
+    'pearls-andaman-sea-deluxe': 'https://www.phukeo.com/assets/racha-1.jpg',
+    'james-bond-island-phang-nga': 'https://www.phukeo.com/assets/james-1.jpg',
+    'cheow-lan-lake': 'https://www.phukeo.com/assets/pileh-lagoon.jpg',
+    'krabi-secrets': 'https://www.phukeo.com/assets/pileh-lagoon.jpg',
+    'rafting-atv-zipline': 'https://www.phukeo.com/assets/rafting21-scaled-ByH3BHki.jpg',
+    'kao-lak-safari-1-day': 'https://www.phukeo.com/assets/bamboo-island.webp',
+    'fishing-sunrise': 'https://www.phukeo.com/assets/racha-1.jpg',
+    'dostoprimechatelnosti-phuketa': 'https://www.phukeo.com/assets/big-buddha-viewpoint-CLKbB7BW.jpg',
+    'phang-nga-glass-bridge': 'https://www.phukeo.com/assets/james-1.jpg'
   };
   
-  const photoUrl = tourPhotos[tourSlug] || tour.image || 'https://phukeo.com/assets/hero-phuket.jpg';
+  const photoUrl = tourPhotos[tourSlug] || tour.image || 'https://www.phukeo.com/assets/maya-bay-1.jpg';
   
   // Отправляем карточку с фото
   await ctx.replyWithPhoto(photoUrl, {
@@ -386,7 +386,7 @@ async function handleTourDeepLink(ctx, tourSlug) {
 async function showMainMenu(ctx, orderNumber = null) {
   // Отправляем фото с inline кнопками
   await ctx.replyWithPhoto(
-    'https://phukeo.com/assets/hero-phuket.jpg',
+    'https://www.phukeo.com/assets/maya-bay-1.jpg',
     {
       caption: 
         `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
@@ -491,7 +491,7 @@ bot.on('web_app_data', async (ctx) => {
 // ====== ПОКАЗАТЬ МОРСКИЕ ТУРЫ С КАРТИНКОЙ ======
 async function showSeaTours(ctx) {
   await ctx.replyWithPhoto(
-    'https://phukeo.com/assets/phi-phi-maya-bay-LeJ2QhJv.jpg',
+    'https://www.phukeo.com/assets/maya-bay-1.jpg',
     {
       caption: 
         '🏝️ *МОРСКИЕ ОСТРОВА* — ТОП-3:\n\n' +
@@ -1454,7 +1454,7 @@ async function handleBookingComplete(ctx, session) {
 // ====== ОБРАБОТЧИКИ НИЖНЕГО МЕНЮ (REPLY KEYBOARD) ======
 bot.hears('⭐ Популярные', async (ctx) => {
   await ctx.replyWithPhoto(
-    'https://phukeo.com/assets/hero-phuket.jpg',
+    'https://www.phukeo.com/assets/maya-bay-1.jpg',
     {
       caption: '⭐ *ТОП-5 популярных туров:*',
       parse_mode: 'Markdown',
@@ -1489,7 +1489,7 @@ bot.hears('🗺️ Все туры', async (ctx) => {
 
 bot.hears('🏝️ Острова', async (ctx) => {
   await ctx.replyWithPhoto(
-    'https://phukeo.com/assets/phi-phi-maya-bay-LeJ2QhJv.jpg',
+    'https://www.phukeo.com/assets/maya-bay-1.jpg',
     {
       caption: '🌊 *МОРЕ И ОСТРОВА*\n\nВыберите тур:',
       parse_mode: 'Markdown',
@@ -1511,7 +1511,7 @@ bot.hears('🏝️ Острова', async (ctx) => {
 
 bot.hears('🚣 Приключения', async (ctx) => {
   await ctx.replyWithPhoto(
-    'https://phukeo.com/assets/rafting.jpg',
+    'https://www.phukeo.com/assets/rafting21-scaled-ByH3BHki.jpg',
     {
       caption: '🚣 *ПРИКЛЮЧЕНИЯ*\n\nВыберите тур:',
       parse_mode: 'Markdown',
@@ -1532,7 +1532,7 @@ bot.hears('🚣 Приключения', async (ctx) => {
 
 bot.hears('🏞️ Природа', async (ctx) => {
   await ctx.replyWithPhoto(
-    'https://phukeo.com/assets/cheow-lan.jpg',
+    'https://www.phukeo.com/assets/pileh-lagoon.jpg',
     {
       caption: '🏞️ *ПРИРОДА И КУЛЬТУРА*\n\nВыберите тур:',
       parse_mode: 'Markdown',

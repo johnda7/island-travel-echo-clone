@@ -392,7 +392,7 @@ async function showMainMenu(ctx, orderNumber) {
             { text: '🏞️ Природа/Культура', callback_data: 'cat_nature' },
             { text: '⭐ ТОП туры', callback_data: 'popular_tours' }
           ],
-          [{ text: '🤖 Не знаю, помогите выбрать', callback_data: 'start_ai' }]
+          [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
         ]
       }
     }
@@ -413,7 +413,7 @@ async function showMainMenu(ctx, orderNumber) {
               { text: '🏞️ Природа/Культура', callback_data: 'cat_nature' },
               { text: '⭐ ТОП туры', callback_data: 'popular_tours' }
             ],
-            [{ text: '🤖 Не знаю, помогите выбрать', callback_data: 'start_ai' }]
+            [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
           ]
         }
       }
@@ -498,7 +498,7 @@ async function showSeaTours(ctx) {
           [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
           [{ text: '🏖️ Рача+Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
           [{ text: '🌟 Больше островов...', callback_data: 'cat_islands' }],
-          [{ text: '🤖 Помогите выбрать', callback_data: 'start_ai' }]
+          [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
         ]
       }
     }
@@ -1276,7 +1276,7 @@ bot.on('text', async (ctx) => {
             inline_keyboard: [
               [{ text: '🚣 Рафтинг + ATV', callback_data: 'select_rafting-spa-atv-1-day' }],
               [{ text: '🐘 Као Лак Сафари', callback_data: 'select_kao-lak-safari-1-day' }],
-              [{ text: '🤖 Помогите выбрать', callback_data: 'start_ai' }]
+              [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
             ]
           }
         }
@@ -1296,7 +1296,7 @@ bot.on('text', async (ctx) => {
             inline_keyboard: [
               [{ text: '🏞️ Чео Лан', callback_data: 'select_cheow-lan-lake' }],
               [{ text: '💚 Краби', callback_data: 'select_krabi-secrets' }],
-              [{ text: '🤖 Помогите выбрать', callback_data: 'start_ai' }]
+              [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
             ]
           }
         }
@@ -1499,7 +1499,7 @@ bot.hears('🏞️ Природа', async (ctx) => {
   await bot.handleUpdate(fakeUpdate);
 });
 
-bot.hears('💬 AI помощь', async (ctx) => {
+bot.hears('❓ Помогите', async (ctx) => {
   const fakeUpdate = {
     callback_query: {
       id: String(Date.now()),

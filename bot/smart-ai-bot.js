@@ -1151,9 +1151,14 @@ async function completeQuickBooking(ctx, session) {
 bot.on('text', async (ctx) => {
   const userId = ctx.from.id;
   const session = userSessions[userId];
+  const text = ctx.message.text;
   
   // Игнорируем команды
-  if (ctx.message.text.startsWith('/')) return;
+  if (text.startsWith('/')) return;
+  
+  // ВАЖНО: Пропускаем кнопки нижнего меню - их обрабатывают bot.hears()
+  const menuButtons = ['⭐ Популярные', '🗺️ Все туры', '🏝️ Острова', '🚣 Приключения', '🏞️ Природа'];
+  if (menuButtons.includes(text)) return;
   
   // Обработка ввода даты вручную (новый flow с кнопками)
   if (session?.awaitingDate) {

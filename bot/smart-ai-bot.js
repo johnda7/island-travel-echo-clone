@@ -1245,7 +1245,7 @@ bot.hears(/Каталог/i, async (ctx) => {
     {
       reply_markup: {
         inline_keyboard: [
-          [{ text: '🗺️ Открыть каталог', web_app: { url: 'https://www.phukeo.com' } }],
+          [{ text: '🗺️ Открыть каталог', web_app: { url: 'https://www.phukeo.com/tours' } }],
           [{ text: '🏠 Главное меню', callback_data: 'back_to_menu' }]
         ]
       }

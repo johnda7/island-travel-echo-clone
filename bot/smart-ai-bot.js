@@ -1538,7 +1538,25 @@ bot.hears('🏞️ Природа', async (ctx) => {
 // ====== КОМАНДЫ ДЛЯ MENU BUTTON ======
 // /tours убран - клиент использует кнопки
 
-// Все /команды убраны - клиент использует только кнопки!
+// Команда /popular для Menu Button
+bot.command('popular', async (ctx) => {
+  await ctx.replyWithPhoto(
+    'https://www.phukeo.com/assets/maya-bay-1.jpg',
+    {
+      caption: '⭐ *ТОП-5 популярных туров:*',
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '🏝️ Пхи-Пхи 2дня — 4500฿', callback_data: 'select_phi-phi-2days' }],
+          [{ text: '🌟 11 островов — 4900฿', callback_data: 'select_eleven-islands-mega' }],
+          [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
+          [{ text: '🚣 Рафтинг + ATV — 2900฿', callback_data: 'select_rafting-atv-zipline' }],
+          [{ text: '🏞️ Чео Лан — 2900฿', callback_data: 'select_cheow-lan-lake' }]
+        ]
+      }
+    }
+  ).catch(() => ctx.reply('⭐ Популярные туры'));
+});
 
 // /help убран - клиенту не нужны слэш-команды
 
@@ -1723,22 +1741,22 @@ app.listen(PORT, async () => {
     // Устанавливаем Menu Button (кнопка рядом с полем ввода)
     
     // Устанавливаем команды ТОЛЬКО для приватных чатов
-    // Убираем ВСЕ команды - клиенту не нужны слэши!
-    await bot.telegram.setMyCommands([], {
-      scope: { type: 'all_private_chats' }
-    });
+    // Команды для Menu Button
+    await bot.telegram.setMyCommands(
+      [
+        { command: 'start', description: '🏠 Главное меню' },
+        { command: 'popular', description: '⭐ Популярные туры' }
+      ],
+      { scope: { type: 'all_private_chats' } }
+    );
     
     await bot.telegram.setMyCommands([], {
       scope: { type: 'all_group_chats' }
     });
     
-    // Menu Button → сразу открывает каталог (web_app)
+    // Menu Button показывает команды
     await bot.telegram.setChatMenuButton({
-      menu_button: {
-        type: 'web_app',
-        text: '🗺️ Каталог',
-        web_app: { url: 'https://www.phukeo.com' }
-      }
+      menu_button: { type: 'commands' }
     });
     
     console.log('✅ Команды и меню установлены');

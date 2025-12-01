@@ -16,16 +16,6 @@ const MANAGER_CHAT_ID = 1217592929; // ID менеджера
 const WEBHOOK_DOMAIN = process.env.WEBHOOK_DOMAIN || 'small-robinia-phukeo-8b5e1e16.koyeb.app';
 const PORT = process.env.PORT || 8000;
 
-// ====== НИЖНЕЕ МЕНЮ (ВСЕГДА ВИДНО) ======
-const MAIN_KEYBOARD = {
-  keyboard: [
-    [{ text: '⭐ Популярные' }, { text: '🗺️ Все туры' }],
-    [{ text: '🏝️ Острова' }, { text: '🚣 Приключения' }, { text: '🏞️ Природа' }]
-  ],
-  resize_keyboard: true,
-  is_persistent: true
-};
-
 // ====== БАЗА ДАННЫХ ТУРОВ (22 тура) ======
 const TOURS_DB = {
   // === ПОПУЛЯРНЫЕ МНОГОДНЕВНЫЕ ТУРЫ ===
@@ -314,37 +304,37 @@ async function handleTourDeepLink(ctx, tourSlug) {
   const formatDate = (d) => `${d.getDate()}.${d.getMonth() + 1}`;
   const formatDateFull = (d) => `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
   
-  // Фото туров (реальные URL с www.phukeo.com)
+  // Фото туров
   const tourPhotos = {
     'phi-phi-2days': 'https://www.phukeo.com/assets/maya-bay-1.jpg',
-    'phi-phi': 'https://www.phukeo.com/assets/maya-bay-2.jpg',
-    'similan-islands': 'https://www.phukeo.com/assets/bamboo-island.webp',
-    'racha-coral-islands-speedboat': 'https://www.phukeo.com/assets/racha-1.jpg',
-    'eleven-islands-mega': 'https://www.phukeo.com/assets/pileh-lagoon.jpg',
-    'pearls-andaman-sea-deluxe': 'https://www.phukeo.com/assets/racha-1.jpg',
-    'james-bond-island-phang-nga': 'https://www.phukeo.com/assets/james-1.jpg',
-    'cheow-lan-lake': 'https://www.phukeo.com/assets/pileh-lagoon.jpg',
-    'krabi-secrets': 'https://www.phukeo.com/assets/pileh-lagoon.jpg',
-    'rafting-atv-zipline': 'https://www.phukeo.com/assets/rafting21-scaled-ByH3BHki.jpg',
-    'kao-lak-safari-1-day': 'https://www.phukeo.com/assets/bamboo-island.webp',
-    'fishing-sunrise': 'https://www.phukeo.com/assets/racha-1.jpg',
-    'dostoprimechatelnosti-phuketa': 'https://www.phukeo.com/assets/big-buddha-viewpoint-CLKbB7BW.jpg',
-    'phang-nga-glass-bridge': 'https://www.phukeo.com/assets/james-1.jpg'
+    'phi-phi': 'https://www.phukeo.com/assets/maya-bay-1.jpg',
+    'similan-islands': 'https://www.phukeo.com/assets/similan-islands.jpg',
+    'racha-coral-islands-speedboat': 'https://www.phukeo.com/assets/racha-coral.jpg',
+    'eleven-islands-mega': 'https://www.phukeo.com/assets/11-islands.jpg',
+    'pearls-andaman-sea-deluxe': 'https://www.phukeo.com/assets/pearls-andaman.jpg',
+    'james-bond-island-phang-nga': 'https://www.phukeo.com/assets/james-bond.jpg',
+    'cheow-lan-lake': 'https://www.phukeo.com/assets/cheow-lan.jpg',
+    'krabi-secrets': 'https://www.phukeo.com/assets/krabi.jpg',
+    'rafting-atv-zipline': 'https://www.phukeo.com/assets/rafting.jpg',
+    'kao-lak-safari-1-day': 'https://www.phukeo.com/assets/kao-lak.jpg',
+    'fishing-sunrise': 'https://www.phukeo.com/assets/fishing.jpg',
+    'dostoprimechatelnosti-phuketa': 'https://www.phukeo.com/assets/phuket-sights.jpg',
+    'phang-nga-glass-bridge': 'https://www.phukeo.com/assets/glass-bridge.jpg'
   };
   
   const photoUrl = tourPhotos[tourSlug] || tour.image || 'https://www.phukeo.com/assets/maya-bay-1.jpg';
   
   // Отправляем карточку с фото
   await ctx.replyWithPhoto(photoUrl, {
-      caption:
+    caption: 
       `🏝️ *${tour.name}*\n\n` +
       `${tour.description || ''}\n\n` +
       `💰 *${tour.price}*\n` +
       `⏱ ${tour.duration}\n\n` +
       `📅 Выберите дату:`,
     parse_mode: 'Markdown',
-      reply_markup: {
-        inline_keyboard: [
+    reply_markup: {
+      inline_keyboard: [
         [
           { text: `Сегодня`, callback_data: `date_${tourSlug}_${formatDateFull(today)}` },
           { text: `Завтра`, callback_data: `date_${tourSlug}_${formatDateFull(tomorrow)}` },
@@ -383,17 +373,17 @@ async function handleTourDeepLink(ctx, tourSlug) {
 }
 
 // ====== ГЛАВНОЕ МЕНЮ (без deep link) ======
-async function showMainMenu(ctx, orderNumber = null) {
-  // Отправляем фото с inline кнопками
+async function showMainMenu(ctx, orderNumber) {
+  // Отправляем фото с меню
   await ctx.replyWithPhoto(
     'https://www.phukeo.com/assets/maya-bay-1.jpg',
     {
       caption: 
         `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
-        `Куда хотите поехать?`,
+        `Что вас интересует?`,
       parse_mode: 'Markdown',
-        reply_markup: {
-          inline_keyboard: [
+      reply_markup: {
+        inline_keyboard: [
           [
             { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
             { text: '🚣 Приключения', callback_data: 'cat_adventure' }
@@ -402,16 +392,18 @@ async function showMainMenu(ctx, orderNumber = null) {
             { text: '🏞️ Природа/Культура', callback_data: 'cat_nature' },
             { text: '⭐ ТОП туры', callback_data: 'popular_tours' }
           ],
-          [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
+          [{ text: '🤖 Не знаю, помогите выбрать', callback_data: 'start_ai' }]
         ]
       }
     }
   ).catch(async () => {
-  await ctx.reply(
-      `🌴 *Пхукет Go* — лучшие экскурсии!\n\nКуда хотите поехать?`,
-    {
+    // Fallback без фото
+    await ctx.reply(
+      `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
+      `Что вас интересует?`,
+      {
         parse_mode: 'Markdown',
-      reply_markup: {
+        reply_markup: {
           inline_keyboard: [
             [
               { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
@@ -421,15 +413,12 @@ async function showMainMenu(ctx, orderNumber = null) {
               { text: '🏞️ Природа/Культура', callback_data: 'cat_nature' },
               { text: '⭐ ТОП туры', callback_data: 'popular_tours' }
             ],
-            [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
+            [{ text: '🤖 Не знаю, помогите выбрать', callback_data: 'start_ai' }]
           ]
         }
       }
     );
   });
-  
-  // Отправляем нижнее меню
-  await ctx.reply('👇 Или выберите категорию внизу:', { reply_markup: MAIN_KEYBOARD });
 }
 
 // ====== ОБРАБОТКА ДАННЫХ ИЗ MINI APP ======
@@ -509,7 +498,7 @@ async function showSeaTours(ctx) {
           [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
           [{ text: '🏖️ Рача+Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
           [{ text: '🌟 Больше островов...', callback_data: 'cat_islands' }],
-          [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
+          [{ text: '🤖 Помогите выбрать', callback_data: 'start_ai' }]
         ]
       }
     }
@@ -527,10 +516,10 @@ async function showSeaTours(ctx) {
             [{ text: '🏝️ Пхи-Пхи', callback_data: 'select_phi-phi' }],
             [{ text: '🐠 Симиланы', callback_data: 'select_similan-islands' }],
             [{ text: '🏖️ Рача+Корал', callback_data: 'select_racha-coral-islands-speedboat' }]
-        ]
+          ]
+        }
       }
-    }
-  );
+    );
   });
 }
 
@@ -1162,14 +1151,9 @@ async function completeQuickBooking(ctx, session) {
 bot.on('text', async (ctx) => {
   const userId = ctx.from.id;
   const session = userSessions[userId];
-  const text = ctx.message.text;
   
   // Игнорируем команды
-  if (text.startsWith('/')) return;
-  
-  // Пропускаем кнопки нижнего меню - их обрабатывают bot.hears()
-  const menuButtons = ['⭐ Популярные', '🗺️ Все туры', '🏝️ Острова', '🚣 Приключения', '🏞️ Природа'];
-  if (menuButtons.includes(text)) return;
+  if (ctx.message.text.startsWith('/')) return;
   
   // Обработка ввода даты вручную (новый flow с кнопками)
   if (session?.awaitingDate) {
@@ -1281,7 +1265,7 @@ bot.on('text', async (ctx) => {
     if (text.includes('приключен') || text.includes('актив') || text.includes('рафтинг') || text.includes('сафари')) {
       await ctx.answerCbQuery?.();
       // Эмулируем нажатие на категорию
-    await ctx.reply(
+      await ctx.reply(
         '🚣 *ПРИКЛЮЧЕНИЯ* — выберите тур:\n\n' +
         '🚣 Рафтинг + SPA + ATV — *2900฿*\n' +
         '🐘 Као Лак Сафари — *3200฿*\n' +
@@ -1292,7 +1276,7 @@ bot.on('text', async (ctx) => {
             inline_keyboard: [
               [{ text: '🚣 Рафтинг + ATV', callback_data: 'select_rafting-spa-atv-1-day' }],
               [{ text: '🐘 Као Лак Сафари', callback_data: 'select_kao-lak-safari-1-day' }],
-              [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
+              [{ text: '🤖 Помогите выбрать', callback_data: 'start_ai' }]
             ]
           }
         }
@@ -1312,7 +1296,7 @@ bot.on('text', async (ctx) => {
             inline_keyboard: [
               [{ text: '🏞️ Чео Лан', callback_data: 'select_cheow-lan-lake' }],
               [{ text: '💚 Краби', callback_data: 'select_krabi-secrets' }],
-              [{ text: '❓ Помогите выбрать', callback_data: 'start_ai' }]
+              [{ text: '🤖 Помогите выбрать', callback_data: 'start_ai' }]
             ]
           }
         }
@@ -1451,36 +1435,27 @@ async function handleBookingComplete(ctx, session) {
 }
 
 // ====== ОБРАБОТКА ТЕКСТОВЫХ КНОПОК (REPLY KEYBOARD) ======
-// ====== ОБРАБОТЧИКИ НИЖНЕГО МЕНЮ (REPLY KEYBOARD) ======
 bot.hears('⭐ Популярные', async (ctx) => {
-  await ctx.replyWithPhoto(
-    'https://www.phukeo.com/assets/maya-bay-1.jpg',
-    {
-      caption: '⭐ *ТОП-5 популярных туров:*',
-      parse_mode: 'Markdown',
-      reply_markup: {
-        inline_keyboard: [
-          [{ text: '🏝️ Пхи-Пхи 2дня/1ночь — 4500฿', callback_data: 'select_phi-phi-2days' }],
-          [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
-          [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
-          [{ text: '🚣 Рафтинг + ATV — 2900฿', callback_data: 'select_rafting-atv-zipline' }],
-          [{ text: '🏞️ Чео Лан — 2900฿', callback_data: 'select_cheow-lan-lake' }],
-          [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
-        ]
-      }
+  await ctx.answerCbQuery?.() || Promise.resolve();
+  await bot.handleUpdate({
+    update_id: Date.now(),
+    callback_query: {
+      id: String(Date.now()),
+      from: ctx.from,
+      message: ctx.message,
+      data: 'popular_tours'
     }
-  ).catch(async () => {
-    await ctx.reply('⭐ *ТОП-5 популярных туров*\n\nВыберите:', { parse_mode: 'Markdown' });
   });
 });
 
 bot.hears('🗺️ Все туры', async (ctx) => {
   await ctx.reply(
-    '🗺️ Открываю полный каталог...',
+    '🗺️ Каталог туров:',
     {
       reply_markup: {
         inline_keyboard: [
-          [{ text: '🗺️ Открыть каталог', web_app: { url: 'https://phukeo.com' } }]
+          [{ text: '🗺️ Открыть каталог', url: 'https://phukeo.com/#/tours' }],
+          [{ text: '💬 Подобрать тур', callback_data: 'start_ai' }]
         ]
       }
     }
@@ -1488,67 +1463,67 @@ bot.hears('🗺️ Все туры', async (ctx) => {
 });
 
 bot.hears('🏝️ Острова', async (ctx) => {
-  await ctx.replyWithPhoto(
-    'https://www.phukeo.com/assets/maya-bay-1.jpg',
-    {
-      caption: '🌊 *МОРЕ И ОСТРОВА*\n\nВыберите тур:',
-      parse_mode: 'Markdown',
-      reply_markup: {
-        inline_keyboard: [
-          [{ text: '🏝️ Пхи-Пхи 2дня/1ночь — 4500฿', callback_data: 'select_phi-phi-2days' }],
-          [{ text: '🏝️ Пхи-Пхи (1 день) — 2500฿', callback_data: 'select_phi-phi' }],
-          [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
-          [{ text: '🏖️ Рача + Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
-          [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
-          [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
-        ]
-      }
+  // Вызываем существующий handler
+  const fakeUpdate = {
+    callback_query: {
+      id: String(Date.now()),
+      from: ctx.from,
+      message: ctx.message,
+      data: 'cat_islands'
     }
-  ).catch(async () => {
-    await ctx.reply('🌊 *МОРЕ И ОСТРОВА*\n\nВыберите:', { parse_mode: 'Markdown' });
-  });
+  };
+  await bot.handleUpdate(fakeUpdate);
 });
 
 bot.hears('🚣 Приключения', async (ctx) => {
-  await ctx.replyWithPhoto(
-    'https://www.phukeo.com/assets/rafting21-scaled-ByH3BHki.jpg',
-    {
-      caption: '🚣 *ПРИКЛЮЧЕНИЯ*\n\nВыберите тур:',
-      parse_mode: 'Markdown',
-      reply_markup: {
-        inline_keyboard: [
-          [{ text: '🚣 Рафтинг + SPA + ATV — 2900฿', callback_data: 'select_rafting-atv-zipline' }],
-          [{ text: '🐘 Као Лак Сафари — 3200฿', callback_data: 'select_kao-lak-safari-1-day' }],
-          [{ text: '🏝️ Джеймс Бонд — 2900฿', callback_data: 'select_james-bond-island-phang-nga' }],
-          [{ text: '🎣 Рыбалка на рассвете — 4500฿', callback_data: 'select_fishing-sunrise' }],
-          [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
-        ]
-      }
+  const fakeUpdate = {
+    callback_query: {
+      id: String(Date.now()),
+      from: ctx.from,
+      message: ctx.message,
+      data: 'cat_adventure'
     }
-  ).catch(async () => {
-    await ctx.reply('🚣 *ПРИКЛЮЧЕНИЯ*\n\nВыберите:', { parse_mode: 'Markdown' });
-  });
+  };
+  await bot.handleUpdate(fakeUpdate);
 });
 
 bot.hears('🏞️ Природа', async (ctx) => {
-  await ctx.replyWithPhoto(
-    'https://www.phukeo.com/assets/pileh-lagoon.jpg',
+  const fakeUpdate = {
+    callback_query: {
+      id: String(Date.now()),
+      from: ctx.from,
+      message: ctx.message,
+      data: 'cat_nature'
+    }
+  };
+  await bot.handleUpdate(fakeUpdate);
+});
+
+bot.hears('💬 AI помощь', async (ctx) => {
+  const fakeUpdate = {
+    callback_query: {
+      id: String(Date.now()),
+      from: ctx.from,
+      message: ctx.message,
+      data: 'start_ai'
+    }
+  };
+  await bot.handleUpdate(fakeUpdate);
+});
+
+bot.hears('📞 Менеджер', async (ctx) => {
+  await ctx.reply(
+    '📞 Напишите напрямую менеджеру:\n\n' +
+    '👤 @Phuketga\n\n' +
+    'Он ответит в течение 5-10 минут! 💬',
     {
-      caption: '🏞️ *ПРИРОДА И КУЛЬТУРА*\n\nВыберите тур:',
-      parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
-          [{ text: '🏞️ Чео Лан + Смотровая — 2900฿', callback_data: 'select_cheow-lan-lake' }],
-          [{ text: '💚 Тайны Краби — 3100฿', callback_data: 'select_krabi-secrets' }],
-          [{ text: '🌉 Пхангнга + Стеклянный мост — 2600฿', callback_data: 'select_phang-nga-glass-bridge' }],
-          [{ text: '🛕 Достопримечательности — 1800฿', callback_data: 'select_dostoprimechatelnosti-phuketa' }],
-          [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
+          [{ text: '📞 Написать @Phuketga', url: 'https://t.me/Phuketga' }]
         ]
       }
     }
-  ).catch(async () => {
-    await ctx.reply('🏞️ *ПРИРОДА И КУЛЬТУРА*\n\nВыберите:', { parse_mode: 'Markdown' });
-  });
+  );
 });
 
 // ====== КОМАНДЫ ДЛЯ MENU BUTTON ======
@@ -1808,22 +1783,26 @@ app.listen(PORT, async () => {
     await bot.telegram.setWebhook(WEBHOOK_URL);
     console.log(`✅ Webhook установлен: ${WEBHOOK_URL}`);
     
-    // Убираем ВСЕ команды - клиенту не нужны слэши!
-    await bot.telegram.setMyCommands([], {
-      scope: { type: 'all_private_chats' }
-    });
+    // Устанавливаем Menu Button (кнопка рядом с полем ввода)
     
+    // Устанавливаем команды ТОЛЬКО для приватных чатов
+    await bot.telegram.setMyCommands(
+      [
+        { command: 'start', description: '🏠 Главное меню' },
+        { command: 'tours', description: '🗺️ Каталог туров' },
+        { command: 'help', description: '❓ Помощь' }
+      ],
+      { scope: { type: 'all_private_chats' } }
+    );
+    
+    // Для групп убираем команды
     await bot.telegram.setMyCommands([], {
       scope: { type: 'all_group_chats' }
     });
     
-    // Menu Button - сразу открывает каталог (web_app), БЕЗ слэшей!
+    // Menu Button только для приватных чатов
     await bot.telegram.setChatMenuButton({
-      menu_button: {
-        type: 'web_app',
-        text: '🗺️ Каталог',
-        web_app: { url: 'https://phukeo.com' }
-      }
+      menu_button: { type: 'commands' }
     });
     
     console.log('✅ Команды и меню установлены');

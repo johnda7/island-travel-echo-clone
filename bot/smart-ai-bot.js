@@ -304,25 +304,31 @@ async function handleTourDeepLink(ctx, tourSlug) {
   const formatDate = (d) => `${d.getDate()}.${d.getMonth() + 1}`;
   const formatDateFull = (d) => `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
   
-  // Фото туров
+  // Фото туров (реальные URL с хешами)
   const tourPhotos = {
-    'phi-phi-2days': 'https://www.phukeo.com/assets/maya-bay-1.jpg',
-    'phi-phi': 'https://www.phukeo.com/assets/maya-bay-1.jpg',
-    'similan-islands': 'https://www.phukeo.com/assets/similan-islands.jpg',
-    'racha-coral-islands-speedboat': 'https://www.phukeo.com/assets/racha-coral.jpg',
-    'eleven-islands-mega': 'https://www.phukeo.com/assets/11-islands.jpg',
-    'pearls-andaman-sea-deluxe': 'https://www.phukeo.com/assets/pearls-andaman.jpg',
-    'james-bond-island-phang-nga': 'https://www.phukeo.com/assets/james-bond.jpg',
-    'cheow-lan-lake': 'https://www.phukeo.com/assets/cheow-lan.jpg',
-    'krabi-secrets': 'https://www.phukeo.com/assets/krabi.jpg',
-    'rafting-atv-zipline': 'https://www.phukeo.com/assets/rafting.jpg',
-    'kao-lak-safari-1-day': 'https://www.phukeo.com/assets/kao-lak.jpg',
-    'fishing-sunrise': 'https://www.phukeo.com/assets/fishing.jpg',
-    'dostoprimechatelnosti-phuketa': 'https://www.phukeo.com/assets/phuket-sights.jpg',
-    'phang-nga-glass-bridge': 'https://www.phukeo.com/assets/glass-bridge.jpg'
+    'phi-phi-2days': 'https://www.phukeo.com/assets/maya-bay-1-Bx0Hc6p5.jpg',
+    'phi-phi': 'https://www.phukeo.com/assets/maya-bay-2-BsSQxQbB.jpg',
+    'phi-phi-sunrise': 'https://www.phukeo.com/assets/maya-bay-sunrise-B-WNbBQ_.jpg',
+    'similan-islands': 'https://www.phukeo.com/assets/bamboo-island-CkWxsNHa.webp',
+    'similan-islands-early': 'https://www.phukeo.com/assets/bamboo-island-CkWxsNHa.webp',
+    'similan-islands-speedboat': 'https://www.phukeo.com/assets/bamboo-island-CkWxsNHa.webp',
+    'racha-coral-islands-speedboat': 'https://www.phukeo.com/assets/racha-1-DwZ8WjdT.jpg',
+    'racha-coral-sunrise': 'https://www.phukeo.com/assets/racha-2-BFTDCwzO.jpg',
+    'eleven-islands-mega': 'https://www.phukeo.com/assets/pileh-lagoon-DDg2zsRx.jpg',
+    'pearls-andaman-sea': 'https://www.phukeo.com/assets/pearls-1-CIQDkV1S.jpg',
+    'pearls-andaman-sea-deluxe': 'https://www.phukeo.com/assets/pearls-2-lTnf7Dxc.jpg',
+    'five-pearls-2days': 'https://www.phukeo.com/assets/pearls-3-79DtICyZ.jpg',
+    'james-bond-island-phang-nga': 'https://www.phukeo.com/assets/james-1-CrrUEsJ1.jpg',
+    'cheow-lan-lake': 'https://www.phukeo.com/assets/pileh-lagoon-DDg2zsRx.jpg',
+    'krabi-secrets': 'https://www.phukeo.com/assets/pileh-lagoon-DDg2zsRx.jpg',
+    'rafting-atv-zipline': 'https://www.phukeo.com/assets/fire-show-1-gxgUO7aY.jpg',
+    'kao-lak-safari-1-day': 'https://www.phukeo.com/assets/bamboo-island-CkWxsNHa.webp',
+    'fishing-sunrise': 'https://www.phukeo.com/assets/phi-phi-sunset-Be_fMUxQ.jpg',
+    'dostoprimechatelnosti-phuketa': 'https://www.phukeo.com/assets/rang-yai-1-DBCyL5mX.jpg',
+    'phang-nga-glass-bridge': 'https://www.phukeo.com/assets/james-2-Voq4mfXH.jpg'
   };
   
-  const photoUrl = tourPhotos[tourSlug] || tour.image || 'https://www.phukeo.com/assets/maya-bay-1.jpg';
+  const photoUrl = tourPhotos[tourSlug] || tour.image || 'https://www.phukeo.com/assets/phi-phi-speedboat-C_0fI01G.jpg';
   
   // Отправляем карточку с фото
   await ctx.replyWithPhoto(photoUrl, {
@@ -376,11 +382,11 @@ async function handleTourDeepLink(ctx, tourSlug) {
 async function showMainMenu(ctx, orderNumber) {
   // Отправляем фото с меню
   await ctx.replyWithPhoto(
-    'https://www.phukeo.com/assets/maya-bay-1.jpg',
+    'https://www.phukeo.com/assets/phi-phi-speedboat-C_0fI01G.jpg',
     {
       caption: 
         `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
-        `Что вас интересует?`,
+        `Куда хотите поехать?`,
       parse_mode: 'Markdown',
         reply_markup: {
           inline_keyboard: [
@@ -550,45 +556,57 @@ bot.action('popular_tours', async (ctx) => {
 // МОРЕ / ОСТРОВА
 bot.action('cat_sea', async (ctx) => {
   await ctx.answerCbQuery();
-  await ctx.reply(
-    '🌊 *МОРЕ И ОСТРОВА*\n\nВыберите тур:',
+  await ctx.replyWithPhoto(
+    'https://www.phukeo.com/assets/phi-phi-speedboat-C_0fI01G.jpg',
     {
+      caption: '🌊 *МОРЕ И ОСТРОВА* — все 12 туров:',
       parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
-          [{ text: '🏝️ Пхи-Пхи 2дня/1ночь — 4500฿', callback_data: 'select_phi-phi-2days' }],
-          [{ text: '🏝️ Пхи-Пхи (1 день) — 2500฿', callback_data: 'select_phi-phi' }],
+          [{ text: '🏝️ Пхи-Пхи 2дня — 4500฿', callback_data: 'select_phi-phi-2days' }],
+          [{ text: '🏝️ Пхи-Пхи 1день — 2500฿', callback_data: 'select_phi-phi' }],
+          [{ text: '🌅 Пхи-Пхи рассвет — 3200฿', callback_data: 'select_phi-phi-sunrise' }],
           [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
-          [{ text: '🏖️ Рача + Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
+          [{ text: '🌅 Симиланы Early — 4200฿', callback_data: 'select_similan-islands-early' }],
+          [{ text: '⚡ Симиланы Speedboat — 4800฿', callback_data: 'select_similan-islands-speedboat' }],
+          [{ text: '🏝️ Джеймс Бонд — 2900฿', callback_data: 'select_james-bond-island-phang-nga' }],
           [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
-          [{ text: '💎 5 Жемчужин Deluxe — 9900฿', callback_data: 'select_pearls-andaman-sea-deluxe' }],
+          [{ text: '🏖️ Рача + Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
+          [{ text: '💎 4 Жемчужины — 4850฿', callback_data: 'select_pearls-andaman-sea' }],
+          [{ text: '💎 5 Жемчужин Deluxe — 9900฿', callback_data: 'select_five-pearls-2days' }],
           [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
       }
     }
-  );
+  ).catch(() => ctx.reply('🌊 Море и острова - выберите тур'));
 });
 
 bot.action('cat_islands', async (ctx) => {
   await ctx.answerCbQuery();
-  // Перенаправляем на cat_sea
-  await ctx.reply(
-    '🌊 *МОРЕ И ОСТРОВА*\n\nВыберите тур:',
+  // То же что cat_sea
+  await ctx.replyWithPhoto(
+    'https://www.phukeo.com/assets/phi-phi-speedboat-C_0fI01G.jpg',
     {
+      caption: '🏝️ *ОСТРОВА* — все туры:',
       parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
-          [{ text: '🏝️ Пхи-Пхи 2дня/1ночь — 4500฿', callback_data: 'select_phi-phi-2days' }],
-          [{ text: '🏝️ Пхи-Пхи (1 день) — 2500฿', callback_data: 'select_phi-phi' }],
+          [{ text: '🏝️ Пхи-Пхи 2дня — 4500฿', callback_data: 'select_phi-phi-2days' }],
+          [{ text: '🏝️ Пхи-Пхи 1день — 2500฿', callback_data: 'select_phi-phi' }],
+          [{ text: '🌅 Пхи-Пхи рассвет — 3200฿', callback_data: 'select_phi-phi-sunrise' }],
           [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
-          [{ text: '🏖️ Рача + Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
+          [{ text: '🌅 Симиланы Early — 4200฿', callback_data: 'select_similan-islands-early' }],
+          [{ text: '⚡ Симиланы Speedboat — 4800฿', callback_data: 'select_similan-islands-speedboat' }],
+          [{ text: '🏝️ Джеймс Бонд — 2900฿', callback_data: 'select_james-bond-island-phang-nga' }],
           [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
-          [{ text: '💎 5 Жемчужин Deluxe — 9900฿', callback_data: 'select_pearls-andaman-sea-deluxe' }],
+          [{ text: '🏖️ Рача + Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
+          [{ text: '💎 4 Жемчужины — 4850฿', callback_data: 'select_pearls-andaman-sea' }],
+          [{ text: '💎 5 Жемчужин Deluxe — 9900฿', callback_data: 'select_five-pearls-2days' }],
           [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
       }
     }
-  );
+  ).catch(() => ctx.reply('🏝️ Острова - выберите тур'));
 });
 
 bot.action('cat_adventure', async (ctx) => {
@@ -1507,17 +1525,21 @@ bot.hears('🗺️ Все туры', async (ctx) => {
 
 bot.hears('🏝️ Острова', async (ctx) => {
   await ctx.replyWithPhoto(
-    'https://www.phukeo.com/assets/maya-bay-1.jpg',
+    'https://www.phukeo.com/assets/phi-phi-speedboat-C_0fI01G.jpg',
     {
-      caption: '🏝️ *МОРСКИЕ ОСТРОВА:*',
+      caption: '🏝️ *ОСТРОВА* — все туры:',
       parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
           [{ text: '🏝️ Пхи-Пхи 2дня — 4500฿', callback_data: 'select_phi-phi-2days' }],
-          [{ text: '🏝️ Пхи-Пхи 1день — 2200฿', callback_data: 'select_phi-phi' }],
+          [{ text: '🏝️ Пхи-Пхи 1день — 2500฿', callback_data: 'select_phi-phi' }],
+          [{ text: '🌅 Пхи-Пхи рассвет — 3200฿', callback_data: 'select_phi-phi-sunrise' }],
           [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
-          [{ text: '🏖️ Рача+Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
-          [{ text: '🌟 11 островов — 4900฿', callback_data: 'select_eleven-islands-mega' }],
+          [{ text: '🌅 Симиланы Early — 4200฿', callback_data: 'select_similan-islands-early' }],
+          [{ text: '🏝️ Джеймс Бонд — 2900฿', callback_data: 'select_james-bond-island-phang-nga' }],
+          [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
+          [{ text: '🏖️ Рача + Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
+          [{ text: '💎 4 Жемчужины — 4850฿', callback_data: 'select_pearls-andaman-sea' }],
           [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
       }

@@ -336,15 +336,15 @@ async function handleTourDeepLink(ctx, tourSlug) {
   
   // Отправляем карточку с фото
   await ctx.replyWithPhoto(photoUrl, {
-    caption: 
+      caption:
       `🏝️ *${tour.name}*\n\n` +
       `${tour.description || ''}\n\n` +
       `💰 *${tour.price}*\n` +
       `⏱ ${tour.duration}\n\n` +
       `📅 Выберите дату:`,
     parse_mode: 'Markdown',
-    reply_markup: {
-      inline_keyboard: [
+      reply_markup: {
+        inline_keyboard: [
         [
           { text: `Сегодня`, callback_data: `date_${tourSlug}_${formatDateFull(today)}` },
           { text: `Завтра`, callback_data: `date_${tourSlug}_${formatDateFull(tomorrow)}` },
@@ -392,8 +392,8 @@ async function showMainMenu(ctx, orderNumber = null) {
         `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
         `Куда хотите поехать?`,
       parse_mode: 'Markdown',
-      reply_markup: {
-        inline_keyboard: [
+        reply_markup: {
+          inline_keyboard: [
           [
             { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
             { text: '🚣 Приключения', callback_data: 'cat_adventure' }
@@ -407,11 +407,11 @@ async function showMainMenu(ctx, orderNumber = null) {
       }
     }
   ).catch(async () => {
-    await ctx.reply(
+  await ctx.reply(
       `🌴 *Пхукет Go* — лучшие экскурсии!\n\nКуда хотите поехать?`,
-      {
+    {
         parse_mode: 'Markdown',
-        reply_markup: {
+      reply_markup: {
           inline_keyboard: [
             [
               { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
@@ -527,10 +527,10 @@ async function showSeaTours(ctx) {
             [{ text: '🏝️ Пхи-Пхи', callback_data: 'select_phi-phi' }],
             [{ text: '🐠 Симиланы', callback_data: 'select_similan-islands' }],
             [{ text: '🏖️ Рача+Корал', callback_data: 'select_racha-coral-islands-speedboat' }]
-          ]
-        }
+        ]
       }
-    );
+    }
+  );
   });
 }
 
@@ -1162,9 +1162,14 @@ async function completeQuickBooking(ctx, session) {
 bot.on('text', async (ctx) => {
   const userId = ctx.from.id;
   const session = userSessions[userId];
+  const text = ctx.message.text;
   
   // Игнорируем команды
-  if (ctx.message.text.startsWith('/')) return;
+  if (text.startsWith('/')) return;
+  
+  // Пропускаем кнопки нижнего меню - их обрабатывают bot.hears()
+  const menuButtons = ['⭐ Популярные', '🗺️ Все туры', '🏝️ Острова', '🚣 Приключения', '🏞️ Природа'];
+  if (menuButtons.includes(text)) return;
   
   // Обработка ввода даты вручную (новый flow с кнопками)
   if (session?.awaitingDate) {
@@ -1276,7 +1281,7 @@ bot.on('text', async (ctx) => {
     if (text.includes('приключен') || text.includes('актив') || text.includes('рафтинг') || text.includes('сафари')) {
       await ctx.answerCbQuery?.();
       // Эмулируем нажатие на категорию
-      await ctx.reply(
+    await ctx.reply(
         '🚣 *ПРИКЛЮЧЕНИЯ* — выберите тур:\n\n' +
         '🚣 Рафтинг + SPA + ATV — *2900฿*\n' +
         '🐘 Као Лак Сафари — *3200฿*\n' +

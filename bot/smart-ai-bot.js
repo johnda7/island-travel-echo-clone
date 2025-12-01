@@ -1786,23 +1786,22 @@ app.listen(PORT, async () => {
     // Устанавливаем Menu Button (кнопка рядом с полем ввода)
     
     // Устанавливаем команды ТОЛЬКО для приватных чатов
-    await bot.telegram.setMyCommands(
-      [
-        { command: 'start', description: '🏠 Главное меню' },
-        { command: 'tours', description: '🗺️ Каталог туров' },
-        { command: 'help', description: '❓ Помощь' }
-      ],
-      { scope: { type: 'all_private_chats' } }
-    );
+    // Убираем ВСЕ команды - клиенту не нужны слэши!
+    await bot.telegram.setMyCommands([], {
+      scope: { type: 'all_private_chats' }
+    });
     
-    // Для групп убираем команды
     await bot.telegram.setMyCommands([], {
       scope: { type: 'all_group_chats' }
     });
     
-    // Menu Button только для приватных чатов
+    // Menu Button → сразу открывает каталог (web_app)
     await bot.telegram.setChatMenuButton({
-      menu_button: { type: 'commands' }
+      menu_button: {
+        type: 'web_app',
+        text: '🗺️ Каталог',
+        web_app: { url: 'https://phukeo.com' }
+      }
     });
     
     console.log('✅ Команды и меню установлены');

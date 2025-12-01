@@ -326,15 +326,15 @@ async function handleTourDeepLink(ctx, tourSlug) {
   
   // Отправляем карточку с фото
   await ctx.replyWithPhoto(photoUrl, {
-    caption: 
+      caption:
       `🏝️ *${tour.name}*\n\n` +
       `${tour.description || ''}\n\n` +
       `💰 *${tour.price}*\n` +
       `⏱ ${tour.duration}\n\n` +
       `📅 Выберите дату:`,
     parse_mode: 'Markdown',
-    reply_markup: {
-      inline_keyboard: [
+      reply_markup: {
+        inline_keyboard: [
         [
           { text: `Сегодня`, callback_data: `date_${tourSlug}_${formatDateFull(today)}` },
           { text: `Завтра`, callback_data: `date_${tourSlug}_${formatDateFull(tomorrow)}` },
@@ -382,8 +382,8 @@ async function showMainMenu(ctx, orderNumber) {
         `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
         `Что вас интересует?`,
       parse_mode: 'Markdown',
-      reply_markup: {
-        inline_keyboard: [
+        reply_markup: {
+          inline_keyboard: [
           [
             { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
             { text: '🚣 Приключения', callback_data: 'cat_adventure' }
@@ -398,12 +398,12 @@ async function showMainMenu(ctx, orderNumber) {
     }
   ).catch(async () => {
     // Fallback без фото
-    await ctx.reply(
+  await ctx.reply(
       `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
       `Что вас интересует?`,
-      {
+    {
         parse_mode: 'Markdown',
-        reply_markup: {
+      reply_markup: {
           inline_keyboard: [
             [
               { text: '🌊 Море/Острова', callback_data: 'cat_sea' },
@@ -444,16 +444,16 @@ bot.on('web_app_data', async (ctx) => {
     
     // Формируем сообщение для менеджера
     const managerMessage = 
-      `🎯 **ЗАЯВКА ИЗ MINI APP!**\n\n` +
-      `👤 **Клиент**: ${ctx.from.first_name}\n` +
-      `📱 **Username**: @${ctx.from.username || 'нет'}\n` +
-      `💬 **Chat ID**: \`${ctx.chat.id}\`\n\n` +
-      `🏝️ **Тур**: ${booking.tourName}\n` +
-      `📅 **Дата**: ${booking.date}\n` +
-      `👥 **Взрослых**: ${booking.adults}\n` +
-      `👶 **Детей**: ${booking.children || 0}\n` +
-      `💰 **Сумма**: ${booking.totalPrice} ${booking.currency}\n\n` +
-      `📞 **Телефон**: ${booking.phone || 'не указан'}\n\n` +
+      `🎯 *ЗАЯВКА ИЗ MINI APP!*\n\n` +
+      `👤 *Клиент*: ${ctx.from.first_name}\n` +
+      `📱 *Username*: @${ctx.from.username || 'нет'}\n` +
+      `💬 *Chat ID*: \`${ctx.chat.id}\`\n\n` +
+      `🏝️ *Тур*: ${booking.tourName}\n` +
+      `📅 *Дата*: ${booking.date}\n` +
+      `👥 *Взрослых*: ${booking.adults}\n` +
+      `👶 *Детей*: ${booking.children || 0}\n` +
+      `💰 *Сумма*: ${booking.totalPrice} ${booking.currency}\n\n` +
+      `📞 *Телефон*: ${booking.phone || 'не указан'}\n\n` +
       `⚡ Ответьте: \`/reply ${ctx.chat.id} текст\``;
 
     try {
@@ -516,10 +516,10 @@ async function showSeaTours(ctx) {
             [{ text: '🏝️ Пхи-Пхи', callback_data: 'select_phi-phi' }],
             [{ text: '🐠 Симиланы', callback_data: 'select_similan-islands' }],
             [{ text: '🏖️ Рача+Корал', callback_data: 'select_racha-coral-islands-speedboat' }]
-          ]
-        }
+        ]
       }
-    );
+    }
+  );
   });
 }
 
@@ -1105,14 +1105,14 @@ async function completeQuickBooking(ctx, session) {
   
   // Формируем сообщение для менеджера
   const managerMessage = 
-    `🎯 **НОВАЯ ЗАЯВКА!**\n\n` +
-    `👤 **Клиент**: ${session?.userName || ctx.from.first_name}\n` +
-    `📱 **Username**: @${session?.username || ctx.from.username || 'нет'}\n` +
-    `💬 **Chat ID**: \`${ctx.chat.id}\`\n\n` +
-    `🏝️ **Тур**: ${tour?.name || 'не выбран'}\n` +
-    `📅 **Дата**: ${booking.date || 'не указана'}\n` +
-    `👥 **Взрослых**: ${booking.adults || 0}\n` +
-    `👶 **Детей**: ${booking.children || 0}${booking.childrenAge ? ` (${booking.childrenAge})` : ''}\n\n` +
+    `🎯 *НОВАЯ ЗАЯВКА!*\n\n` +
+    `👤 *Клиент*: ${session?.userName || ctx.from.first_name}\n` +
+    `📱 *Username*: @${session?.username || ctx.from.username || 'нет'}\n` +
+    `💬 *Chat ID*: \`${ctx.chat.id}\`\n\n` +
+    `🏝️ *Тур*: ${tour?.name || 'не выбран'}\n` +
+    `📅 *Дата*: ${booking.date || 'не указана'}\n` +
+    `👥 *Взрослых*: ${booking.adults || 0}\n` +
+    `👶 *Детей*: ${booking.children || 0}${booking.childrenAge ? ` (${booking.childrenAge})` : ''}\n\n` +
     `⚡ Ответьте клиенту: \`/reply ${ctx.chat.id} текст\``;
 
   try {
@@ -1270,7 +1270,7 @@ bot.on('text', async (ctx) => {
     if (text.includes('приключен') || text.includes('актив') || text.includes('рафтинг') || text.includes('сафари')) {
       await ctx.answerCbQuery?.();
       // Эмулируем нажатие на категорию
-      await ctx.reply(
+    await ctx.reply(
         '🚣 *ПРИКЛЮЧЕНИЯ* — выберите тур:\n\n' +
         '🚣 Рафтинг + SPA + ATV — *2900฿*\n' +
         '🐘 Као Лак Сафари — *3200฿*\n' +
@@ -1310,11 +1310,17 @@ bot.on('text', async (ctx) => {
     }
     
     await ctx.reply(
-      'Выберите категорию:\n\n' +
-      '🏝️ /islands — Морские острова\n' +
-      '🚣 /adventure — Приключения\n' +
-      '🏞️ /nature — Природа\n\n' +
-      'Или нажмите /start'
+      '🌴 Выберите категорию:',
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '🏝️ Морские острова', callback_data: 'cat_islands' }],
+            [{ text: '🚣 Приключения', callback_data: 'cat_adventure' }],
+            [{ text: '🏞️ Природа', callback_data: 'cat_nature' }],
+            [{ text: '⭐ Популярные', callback_data: 'popular_tours' }]
+          ]
+        }
+      }
     );
     return;
   }
@@ -1392,22 +1398,22 @@ async function handleBookingComplete(ctx, session) {
   
   // Формируем сообщение для менеджера
   const managerMessage = 
-    `🎯 **ЗАЯВКА ГОТОВА К ОБРАБОТКЕ!**\n\n` +
-    `👤 **Клиент**: ${session.userName}\n` +
-    `📱 **Username**: @${session.username || 'нет'}\n` +
-    `💬 **Chat ID**: \`${session.chatId}\`\n` +
-    `🆔 **User ID**: ${ctx.from.id}\n\n` +
-    `🏝️ **Тур**: ${session.tour?.name || bookingInfo.tour}\n` +
-    `📅 **Дата**: ${bookingInfo.date}\n` +
-    `👥 **Взрослых**: ${bookingInfo.adults}\n` +
-    `👶 **Детей**: ${bookingInfo.children}\n` +
-    `📝 **Особые пожелания**: ${bookingInfo.notes || 'нет'}\n\n` +
-    `⚡ **ДЕЙСТВИЯ**:\n` +
+    `🎯 *ЗАЯВКА ГОТОВА К ОБРАБОТКЕ!*\n\n` +
+    `👤 *Клиент*: ${session.userName}\n` +
+    `📱 *Username*: @${session.username || 'нет'}\n` +
+    `💬 *Chat ID*: \`${session.chatId}\`\n` +
+    `🆔 *User ID*: ${ctx.from.id}\n\n` +
+    `🏝️ *Тур*: ${session.tour?.name || bookingInfo.tour}\n` +
+    `📅 *Дата*: ${bookingInfo.date}\n` +
+    `👥 *Взрослых*: ${bookingInfo.adults}\n` +
+    `👶 *Детей*: ${bookingInfo.children}\n` +
+    `📝 *Особые пожелания*: ${bookingInfo.notes || 'нет'}\n\n` +
+    `⚡ *ДЕЙСТВИЯ*:\n` +
     `1. Проверьте наличие мест у оператора\n` +
     `2. Подтвердите цену с учётом сезона\n` +
     `3. Ответьте клиенту командой:\n` +
     `   \`/reply ${session.chatId} Ваш текст\`\n\n` +
-    `🔥 **Клиент ждёт ответ!**`;
+    `🔥 *Клиент ждёт ответ!*`;
 
   try {
     await bot.telegram.sendMessage(MANAGER_CHAT_ID, managerMessage, {
@@ -1586,7 +1592,7 @@ bot.command('reply', async (ctx) => {
   try {
     // Отправляем сообщение клиенту от имени менеджера
     await bot.telegram.sendMessage(chatId, 
-      `💬 **Менеджер Пхукет Go**:\n\n${message}`,
+      `💬 *Менеджер Пхукет Go*:\n\n${message}`,
       {
         parse_mode: 'Markdown',
         reply_markup: {
@@ -1650,13 +1656,12 @@ function extractBookingInfo(messages) {
 async function notifyManagerTakeover(ctx, session, errorMsg) {
   try {
     await bot.telegram.sendMessage(MANAGER_CHAT_ID,
-      `🚨 **ТРЕБУЕТСЯ ВМЕШАТЕЛЬСТВО МЕНЕДЖЕРА**\n\n` +
+      `🚨 ТРЕБУЕТСЯ ВМЕШАТЕЛЬСТВО МЕНЕДЖЕРА\n\n` +
       `👤 Клиент: ${session?.userName || ctx.from.first_name}\n` +
-      `💬 Chat ID: \`${ctx.chat.id}\`\n` +
+      `💬 Chat ID: ${ctx.chat.id}\n` +
       `❌ Причина: ${errorMsg || 'AI не справился'}\n\n` +
       `Ответьте командой:\n` +
-      `\`/reply ${ctx.chat.id} Ваш текст\``,
-      { parse_mode: 'Markdown' }
+      `/reply ${ctx.chat.id} Ваш текст`
     );
   } catch (error) {
     console.error('Error notifying manager takeover:', error.message);
@@ -1672,7 +1677,7 @@ bot.command('stats', async (ctx) => {
   const waitingManager = Object.values(userSessions).filter(s => s.waitingManager).length;
   
   await ctx.reply(
-    `📊 **Статистика бота**\n\n` +
+    `📊 *Статистика бота*\n\n` +
     `👥 Всего пользователей: ${totalUsers}\n` +
     `💬 Активных AI диалогов: ${activeAI}\n` +
     `⏳ Ожидают менеджера: ${waitingManager}\n\n` +
@@ -1765,8 +1770,7 @@ app.listen(PORT, async () => {
     await bot.telegram.sendMessage(MANAGER_CHAT_ID,
       '🚀 Пхукет Go бот запущен!\n\n' +
       '/reply CHAT_ID текст — ответить клиенту\n' +
-      '/stats — статистика',
-      { parse_mode: 'Markdown' }
+      '/stats — статистика'
     );
     
   } catch (error) {
@@ -1798,7 +1802,7 @@ bot.action('contact_manager', async (ctx) => {
   // 1. Уведомляем менеджера
   try {
     await bot.telegram.sendMessage(MANAGER_CHAT_ID, 
-      `🔔 **КЛИЕНТ ХОЧЕТ СВЯЗАТЬСЯ!**\n\n` +
+      `🔔 *КЛИЕНТ ХОЧЕТ СВЯЗАТЬСЯ!*\n\n` +
       `👤 Имя: ${ctx.from.first_name}\n` +
       `🏷️ Username: @${ctx.from.username || 'нет'}\n` +
       `🎯 Контекст: ${tourName}\n` +

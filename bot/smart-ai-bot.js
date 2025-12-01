@@ -338,7 +338,7 @@ async function handleTourDeepLink(ctx, tourSlug) {
       `💰 *${tour.price}*\n` +
       `⏱ ${tour.duration}\n\n` +
       `📅 Выберите дату:`,
-    parse_mode: 'Markdown',
+    
       reply_markup: {
         inline_keyboard: [
         [
@@ -359,7 +359,7 @@ async function handleTourDeepLink(ctx, tourSlug) {
       `💰 *${tour.price}* | ⏱ ${tour.duration}\n\n` +
       `📅 Выберите дату:`,
       {
-        parse_mode: 'Markdown',
+        
         reply_markup: {
           inline_keyboard: [
             [
@@ -396,7 +396,7 @@ async function showMainMenu(ctx, orderNumber) {
       caption: 
         `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
         `Куда хотите поехать?`,
-      parse_mode: 'Markdown',
+      
         reply_markup: {
           inline_keyboard: [
           [
@@ -417,7 +417,7 @@ async function showMainMenu(ctx, orderNumber) {
       `🌴 *Пхукет Go* — лучшие экскурсии!\n\n` +
       `Куда хотите поехать?`,
     {
-        parse_mode: 'Markdown',
+        
       reply_markup: {
           inline_keyboard: [
             [
@@ -509,7 +509,7 @@ async function showSeaTours(ctx) {
         '3️⃣ *Рача + Корал* — белый песок\n' +
         '   💰 от 1300฿\n\n' +
         'Выберите тур:',
-      parse_mode: 'Markdown',
+      
       reply_markup: {
         inline_keyboard: [
           [{ text: '🏝️ Пхи-Пхи — 2500฿', callback_data: 'select_phi-phi' }],
@@ -528,7 +528,7 @@ async function showSeaTours(ctx) {
       '2️⃣ Симиланы — 2500฿\n' +
       '3️⃣ Рача+Корал — 1300฿',
       {
-        parse_mode: 'Markdown',
+        
         reply_markup: {
           inline_keyboard: [
             [{ text: '🏝️ Пхи-Пхи', callback_data: 'select_phi-phi' }],
@@ -548,7 +548,7 @@ bot.action('popular_tours', async (ctx) => {
   await ctx.reply(
     '⭐ *ТОП-5 популярных туров*\n\nВыберите:',
     {
-      parse_mode: 'Markdown',
+      
       reply_markup: {
         inline_keyboard: [
           [{ text: '🏝️ Пхи-Пхи 2дня/1ночь — 4400฿', callback_data: 'select_phi-phi-2days' }],
@@ -572,7 +572,7 @@ bot.action('cat_sea', async (ctx) => {
     'https://www.phukeo.com/assets/phi-phi-speedboat-C_0fI01G.jpg',
     {
       caption: '🌊 *МОРЕ И ОСТРОВА* — все 12 туров:',
-      parse_mode: 'Markdown',
+      
       reply_markup: {
         inline_keyboard: [
           [{ text: '🏝️ Пхи-Пхи 2дня — 4400฿', callback_data: 'select_phi-phi-2days' }],
@@ -600,7 +600,7 @@ bot.action('cat_islands', async (ctx) => {
     'https://www.phukeo.com/assets/phi-phi-speedboat-C_0fI01G.jpg',
     {
       caption: '🏝️ *ОСТРОВА* — все туры:',
-      parse_mode: 'Markdown',
+      
       reply_markup: {
         inline_keyboard: [
           [{ text: '🏝️ Пхи-Пхи 2дня — 4400฿', callback_data: 'select_phi-phi-2days' }],
@@ -626,7 +626,7 @@ bot.action('cat_adventure', async (ctx) => {
   await ctx.reply(
     '🚣 *ПРИКЛЮЧЕНИЯ*\n\nВыберите тур:',
     {
-      parse_mode: 'Markdown',
+      
       reply_markup: {
         inline_keyboard: [
           [{ text: '🚣 Рафтинг + SPA + ATV — 2000฿', callback_data: 'select_rafting-atv-zipline' }],
@@ -646,7 +646,7 @@ bot.action('cat_nature', async (ctx) => {
   await ctx.reply(
     '🏞️ *ПРИРОДА И КУЛЬТУРА*\n\nВыберите тур:',
     {
-      parse_mode: 'Markdown',
+      
       reply_markup: {
         inline_keyboard: [
           [{ text: '🏞️ Чео Лан + Самет Нангше — 2000฿', callback_data: 'select_cheow-lan-lake' }],
@@ -695,7 +695,7 @@ bot.action(/date_(.+)_(\d+\.\d+\.\d+)/, async (ctx) => {
     `🏝️ *Тур*: ${tour?.name || tourSlug}\n\n` +
     `👥 *Сколько человек поедет?*`,
     {
-      parse_mode: 'Markdown',
+      
       reply_markup: {
         inline_keyboard: [
           [
@@ -744,7 +744,7 @@ bot.action(/kids_(.+)_(.+)/, async (ctx) => {
   await ctx.reply(
     `👶 *Сколько детей?* (до 12 лет — скидка 30%)`,
     {
-      parse_mode: 'Markdown',
+      
       reply_markup: {
         inline_keyboard: [
           [
@@ -773,7 +773,7 @@ bot.action(/kidcount_(.+)_(.+)_(\d+)/, async (ctx) => {
     `👶 Детей: ${kids}\n📅 Дата: ${date}\n🏝️ ${tour?.name || tourSlug}\n\n` +
     `👥 *А сколько взрослых?*`,
     {
-      parse_mode: 'Markdown',
+      
       reply_markup: {
         inline_keyboard: [
           [
@@ -835,7 +835,7 @@ bot.action(/people_(.+)_(.+)_(\d+)_(\d+)/, async (ctx) => {
     `⏱ *15-30 минут* в рабочее время\n` +
     `🕘 9:00 - 21:00 (Пхукет)`,
     {
-      parse_mode: 'Markdown',
+      
       reply_markup: {
         inline_keyboard: [
           [{ text: '🏝️ Посмотреть другие туры', callback_data: 'back_to_menu' }]
@@ -1212,7 +1212,7 @@ bot.hears(/Менеджер/i, async (ctx) => {
     '⏱ Обычно отвечаем за 5-15 минут.\n\n' +
     '💡 Пока можете посмотреть туры:',
     {
-      parse_mode: 'Markdown',
+      
       reply_markup: {
         inline_keyboard: [
           [{ text: '⭐ Популярные туры', callback_data: 'popular_tours' }],
@@ -1280,7 +1280,7 @@ bot.on('text', async (ctx) => {
       `🏝️ *Тур*: ${tour?.name || tourSlug}\n\n` +
       `👥 *Сколько человек поедет?*`,
       {
-        parse_mode: 'Markdown',
+        
         reply_markup: {
           inline_keyboard: [
             [
@@ -1381,7 +1381,7 @@ bot.on('text', async (ctx) => {
         '🐘 Као Лак Сафари — *3800฿*\n' +
         '🎣 Рыбалка на рассвете — *4400฿*',
         {
-          parse_mode: 'Markdown',
+          
           reply_markup: {
             inline_keyboard: [
               [{ text: '🚣 Рафтинг + ATV', callback_data: 'select_rafting-spa-atv-1-day' }],
@@ -1401,7 +1401,7 @@ bot.on('text', async (ctx) => {
         '💚 Тайны Краби — *3100฿*\n' +
         '🛕 Достопримечательности — *1800฿*',
         {
-          parse_mode: 'Markdown',
+          
           reply_markup: {
             inline_keyboard: [
               [{ text: '🏞️ Чео Лан', callback_data: 'select_cheow-lan-lake' }],
@@ -1557,9 +1557,9 @@ async function handleBookingComplete(ctx, session) {
 // Команда /popular для Menu Button
 bot.command('popular', async (ctx) => {
   await ctx.reply(
-    '⭐ *ТОП-5 популярных туров:*',
+    '⭐ ТОП-5 популярных туров:',
     {
-      parse_mode: 'Markdown',
+      
       reply_markup: {
         inline_keyboard: [
           [{ text: '🏝️ Пхи-Пхи 2дня — 4400฿', callback_data: 'select_phi-phi-2days' }],
@@ -1604,7 +1604,7 @@ bot.command('reply', async (ctx) => {
     await bot.telegram.sendMessage(chatId, 
       `💬 *Менеджер Пхукет Go*:\n\n${message}`,
       {
-        parse_mode: 'Markdown',
+        
         reply_markup: {
           inline_keyboard: [
             [{ text: '✅ Подтверждаю бронь', callback_data: 'confirm_booking' }],

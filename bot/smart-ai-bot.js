@@ -1556,10 +1556,9 @@ async function handleBookingComplete(ctx, session) {
 
 // Команда /popular для Menu Button
 bot.command('popular', async (ctx) => {
-  await ctx.replyWithPhoto(
-    'https://www.phukeo.com/assets/phi-phi-speedboat-C_0fI01G.jpg',
+  await ctx.reply(
+    '⭐ *ТОП-5 популярных туров:*',
     {
-      caption: '⭐ *ТОП-5 популярных туров:*',
       parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
@@ -1567,12 +1566,12 @@ bot.command('popular', async (ctx) => {
           [{ text: '🌟 11 островов МЕГА — 4200฿', callback_data: 'select_eleven-islands-mega' }],
           [{ text: '🐠 Симиланы — 2500฿', callback_data: 'select_similan-islands' }],
           [{ text: '🚣 Рафтинг + ATV — 2000฿', callback_data: 'select_rafting-atv-zipline' }],
-          [{ text: '🏞️ Чео Лан — 2000฿', callback_data: 'select_cheow-lan-lake' }],
+          [{ text: '🏞️ Чео Лан — 2500฿', callback_data: 'select_cheow-lan-lake' }],
           [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
       }
     }
-  ).catch(() => ctx.reply('⭐ Популярные туры - нажмите /start'));
+  );
 });
 
 // /help убран - клиенту не нужны слэш-команды

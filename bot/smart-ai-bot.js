@@ -1590,21 +1590,22 @@ bot.hears('🏞️ Природа', async (ctx) => {
 // Команда /popular для Menu Button
 bot.command('popular', async (ctx) => {
   await ctx.replyWithPhoto(
-    'https://www.phukeo.com/assets/maya-bay-1.jpg',
+    'https://www.phukeo.com/assets/phi-phi-speedboat-C_0fI01G.jpg',
     {
       caption: '⭐ *ТОП-5 популярных туров:*',
       parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
           [{ text: '🏝️ Пхи-Пхи 2дня — 4500฿', callback_data: 'select_phi-phi-2days' }],
-          [{ text: '🌟 11 островов — 4900฿', callback_data: 'select_eleven-islands-mega' }],
+          [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
           [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
           [{ text: '🚣 Рафтинг + ATV — 2900฿', callback_data: 'select_rafting-atv-zipline' }],
-          [{ text: '🏞️ Чео Лан — 2900฿', callback_data: 'select_cheow-lan-lake' }]
+          [{ text: '🏞️ Чео Лан — 2900฿', callback_data: 'select_cheow-lan-lake' }],
+          [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
       }
     }
-  ).catch(() => ctx.reply('⭐ Популярные туры'));
+  ).catch(() => ctx.reply('⭐ Популярные туры - нажмите /start'));
 });
 
 // /help убран - клиенту не нужны слэш-команды

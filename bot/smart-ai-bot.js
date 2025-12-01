@@ -1737,7 +1737,7 @@ app.listen(PORT, async () => {
       menu_button: {
         type: 'web_app',
         text: '🗺️ Каталог',
-        web_app: { url: 'https://phukeo.com' }
+        web_app: { url: 'https://www.phukeo.com' }
       }
     });
     

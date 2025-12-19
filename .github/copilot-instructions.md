@@ -36,9 +36,14 @@ React 18 + TypeScript + Vite. WordPress‑style CMS on React: one universal temp
 - Build: `npm run build` (runs postbuild scripts: `scripts/postbuild.cjs`, `scripts/generate-og-pages.mjs`). Output in `dist/`.
 
 ## Deployment (current, canonical)
-- Auto‑deploy on push to `main` and on tags `v*` via `.github/workflows/deploy-canonical.yml`.
+- **ЕДИНСТВЕННЫЙ ПРАВИЛЬНЫЙ ДЕПЛОЙ**: `.github/workflows/deploy-canonical.yml`
+- Auto‑deploy on push to `main` and on tags `v*` via `deploy-canonical.yml`.
 - Manual run also available (Actions → “Deploy (canonical)” → Run workflow, ref `main`).
 - GitHub Pages must be set to “GitHub Actions”.
+- **⚠️ КРИТИЧНО**: `deploy-on-command.yml` ОТКЛЮЧЁН. НЕ используй его!
+- **React 18 vs React 19 конфликт**: Проект использует React 18.3.1, но `react-leaflet@5.0.0` требует React 19. Решение: `deploy-canonical.yml` использует `npm config set legacy-peer-deps true` + `npm ci --legacy-peer-deps`. НЕ обновляй react-leaflet без проверки совместимости!
+- **Правильный способ деплоя**: `git add <файлы> && git commit -m "описание" && git push origin main` → деплой запустится автоматически.
+- Подробные правила: см. `AI_DOCS/DEPLOY_RULES.md`
 
 ## Add a tour (quick path)
 1) Create `src/data/tours/<slug>/static.ts` exporting `tourData: TourData` and `routePoints: RoutePoint[]` (with coordinates). 2) `index.ts` → `export * from './static';` 3) Append to `toursRegistry.ts` (keep `isActive: true`, tags). 4) Add route in `src/App.tsx` if needed.

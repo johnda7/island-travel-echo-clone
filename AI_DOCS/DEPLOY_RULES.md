@@ -28,7 +28,12 @@ tailwind.config.ts      # Конфиг Tailwind
 
 ### 2. НИКОГДА не изменять workflow файлы без явного запроса:
 - `.github/workflows/deploy-canonical.yml` — **ЕДИНСТВЕННЫЙ ПРАВИЛЬНЫЙ ДЕПЛОЙ**
-- Другие workflow файлы — отключены или для особых случаев
+- **ОТКЛЮЧЁННЫЕ (неправильные) workflow файлы:**
+  - `deploy-on-command.yml` — DISABLED (отключён)
+  - `deploy.yml` — DISABLED (legacy)
+  - `deploy-to-pages-root.yml` — DISABLED (legacy)
+  - `deploy-release.yml` — DISABLED (legacy)
+- **НЕ ИСПОЛЬЗУЙ эти отключённые workflow!** Только `deploy-canonical.yml`!
 
 ### 3. НИКОГДА не делать `git reset --hard` без понимания последствий
 

@@ -111,14 +111,52 @@ export const TourVoucher = ({
             boxShadow: '0 4px 24px rgba(0, 0, 0, 0.08)'
           }}
         >
-          {/* Заголовок */}
+          {/* Фирменный заголовок с логотипом */}
           <div 
-            className="px-6 py-4 border-b border-gray-100"
+            className="px-6 py-5 border-b border-gray-100"
             style={{
-              background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.05) 0%, rgba(90, 200, 250, 0.05) 100%)'
+              background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.08) 0%, rgba(90, 200, 250, 0.08) 100%)'
             }}
           >
-            <h1 className="text-2xl font-bold text-gray-900 text-center tracking-tight">
+            {/* Логотип и название */}
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <div 
+                className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center font-black text-xl transition-all duration-150"
+                style={{
+                  background: 'linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%)',
+                  backdropFilter: 'blur(20px) saturate(180%)',
+                  boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                  border: '1px solid rgba(255, 255, 255, 0.18)'
+                }}
+              >
+                <span className="text-white">GO</span>
+              </div>
+              <div className="flex flex-col">
+                <span 
+                  className="text-2xl font-black tracking-tight"
+                  style={{
+                    background: 'linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
+                  }}
+                >
+                  ПХУКЕТ
+                </span>
+                <span 
+                  className="text-sm font-semibold -mt-1"
+                  style={{
+                    background: 'linear-gradient(135deg, #5AC8FA 0%, #007AFF 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
+                  }}
+                >
+                  GO
+                </span>
+              </div>
+            </div>
+            <h1 className="text-xl font-bold text-gray-900 text-center tracking-tight">
               {tourTitle}
             </h1>
           </div>
@@ -316,12 +354,55 @@ export const TourVoucher = ({
 
           {/* Секция "Bring With You" */}
           <div 
-            className="px-6 py-6 border-t border-gray-100"
+            className="px-6 py-6 border-t border-gray-100 relative overflow-hidden"
             style={{
               background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.02) 0%, rgba(90, 200, 250, 0.02) 100%)'
             }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Фирменный watermark снизу */}
+            <div 
+              className="absolute bottom-2 right-4 opacity-10 pointer-events-none"
+              style={{
+                transform: 'rotate(-15deg)'
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <div 
+                  className="w-16 h-16 rounded-full flex items-center justify-center font-black text-2xl"
+                  style={{
+                    background: 'linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%)',
+                    boxShadow: '0 4px 12px rgba(0, 122, 255, 0.2)'
+                  }}
+                >
+                  <span className="text-white">GO</span>
+                </div>
+                <div className="flex flex-col">
+                  <span 
+                    className="text-3xl font-black"
+                    style={{
+                      background: 'linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text'
+                    }}
+                  >
+                    ПХУКЕТ
+                  </span>
+                  <span 
+                    className="text-lg font-semibold -mt-1"
+                    style={{
+                      background: 'linear-gradient(135deg, #5AC8FA 0%, #007AFF 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text'
+                    }}
+                  >
+                    GO
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
               {/* Английская версия */}
               <div>
                 <h3 className="text-base font-bold text-gray-900 mb-3">Bring With You:</h3>

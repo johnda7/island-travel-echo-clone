@@ -58,6 +58,9 @@ export interface TourData {
   // Особенности для бронирования
   bookingNotes?: string;
   specialRequirements?: boolean;
+  
+  // Преимущества пакета Comfort+
+  comfortPlusFeatures?: string[];
 }
 
 // Интерфейс для пропсов BookingModal

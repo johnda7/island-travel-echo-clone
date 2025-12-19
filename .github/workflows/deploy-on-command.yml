@@ -1,14 +1,7 @@
-name: Deploy on command
+name: "DISABLED: Deploy on command (use deploy-canonical)"
 
 on:
-  issue_comment:
-    types: [created]
   workflow_dispatch:
-    inputs:
-      ref:
-        description: 'Git ref (branch, tag or SHA), default main'
-        required: false
-        default: 'main'
 
 permissions:
   contents: read
@@ -20,67 +13,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    name: Deploy on command (/deploy | сделай деплой)
+  notice:
+    if: ${{ false }}
+    name: This workflow is disabled
     runs-on: ubuntu-latest
-    if: |
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'issue_comment' && (
-        github.event.comment.body == '/deploy' || 
-        contains(github.event.comment.body, 'сделай деплой') ||
-        contains(github.event.comment.body, 'deploy please')
-      ))
-    env:
-      BUILD_REF: ${{ inputs.ref || 'refs/heads/main' }}
     steps:
-      - name: Checkout main
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.ref || 'main' }}
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-
-      - name: Install deps
-        run: |
-          npm config set fund false
-          npm config set audit false
-          npm ci || npm install --no-fund --no-audit
-
-      - name: Build
-        env:
-          NODE_OPTIONS: --max_old_space_size=4096
-        run: |
-          npm run build
-          echo "commit=${GITHUB_SHA} date=$(date -u +%Y-%m-%dT%H:%M:%SZ) ref=${{ inputs.ref || 'main' }}" > dist/__build.txt
-          touch dist/.nojekyll
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
-
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-      - name: React with rocket (issue comment runs)
-        if: github.event_name == 'issue_comment'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const body = context.payload.comment.body.toLowerCase();
-            let reaction = 'rocket';
-            if(body.includes('спасибо')) reaction = '+1';
-            await github.rest.reactions.createForIssueComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              comment_id: context.payload.comment.id,
-              content: reaction
-            });
+      - run: |
+          echo "This workflow is disabled. Use .github/workflows/deploy-canonical.yml for deployments."
+          echo "Deploy-canonical.yml automatically runs on push to main branch."

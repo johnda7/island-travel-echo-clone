@@ -18,6 +18,7 @@ import FAQPage from "./pages/FAQPage";
 import BookingHelpPage from "./pages/BookingHelpPage";
 import PaymentHelpPage from "./pages/PaymentHelpPage";
 import InfoPage from "./pages/InfoPage";
+import TourVoucherPage from "./pages/TourVoucherPage";
 
 // Существующие туры
 import PearlsAndamanSeaNew from "./pages/PearlsAndamanSeaNew";
@@ -79,6 +80,9 @@ function App() {
                 <Route path="/help/booking" element={<BookingHelpPage />} />
                 <Route path="/help/payment" element={<PaymentHelpPage />} />
                 <Route path="/help/contacts" element={<ContactPage />} />
+                
+                {/* Tour Voucher */}
+                <Route path="/voucher" element={<TourVoucherPage />} />
                 
                 {/* Старые URL - редиректы */}
                 <Route path="/faq" element={<FAQPage />} />

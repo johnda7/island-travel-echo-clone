@@ -35,8 +35,8 @@ export interface BookingResult {
 // ID менеджера для уведомлений
 const MANAGER_TELEGRAM_ID = '1217592929';
 
-// Новый токен бота (после смены 24.11.2025)
-const BOT_TOKEN = '8475227105:AAFWvuOuD-2vB0Ka7n9GowGbcjsWzqeL1N8';
+// Koyeb API endpoint для отправки уведомлений (токен скрыт на сервере)
+const KOYEB_API_URL = 'https://small-robinia-phukeo-8b5e1e16.koyeb.app/api/notify';
 
 // Генерация уникального ID заказа
 function generateBookingId(): string {
@@ -87,24 +87,22 @@ function formatTelegramMessage(booking: BookingData, bookingId: string): string 
   return lines.join('\n');
 }
 
-// Отправка сообщения в Telegram через Bot API
+// Отправка сообщения в Telegram через Koyeb API (токен скрыт на сервере)
 async function sendTelegramMessage(chatId: string, text: string, keyboard?: any): Promise<boolean> {
   try {
-    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    const response = await fetch(KOYEB_API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        chat_id: chatId,
-        text: text,
-        parse_mode: 'HTML',
-        reply_markup: keyboard
+        chatId: chatId,
+        message: text
       })
     });
     
     const result = await response.json();
     
-    if (!result.ok) {
-      console.error('❌ Telegram API error:', result);
+    if (!result.success) {
+      console.error('❌ Koyeb API error:', result);
       return false;
     }
     

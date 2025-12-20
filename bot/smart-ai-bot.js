@@ -1757,6 +1757,43 @@ app.get('/health', (req, res) => {
   });
 });
 
+// ====== API ENDPOINT ДЛЯ ЗАЯВОК С САЙТА ======
+app.post('/api/notify', async (req, res) => {
+  // CORS headers
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  
+  try {
+    const { message, chatId } = req.body;
+    
+    if (!message) {
+      return res.status(400).json({ error: 'Message is required' });
+    }
+    
+    const targetChatId = chatId || MANAGER_CHAT_ID;
+    
+    await bot.telegram.sendMessage(targetChatId, message, {
+      parse_mode: 'HTML'
+    });
+    
+    console.log('📨 Заявка с сайта отправлена в чат ' + targetChatId);
+    res.json({ success: true, message: 'Notification sent' });
+    
+  } catch (error) {
+    console.error('❌ API notify error:', error);
+    res.status(500).json({ error: 'Failed to send notification' });
+  }
+});
+
+// OPTIONS для CORS preflight
+app.options('/api/notify', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.sendStatus(200);
+});
+
 // ====== WEBHOOK ENDPOINT ======
 const WEBHOOK_PATH = '/telegram-webhook';
 

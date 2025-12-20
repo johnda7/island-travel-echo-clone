@@ -157,69 +157,42 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       existingOrders.push(newOrder);
       localStorage.setItem('bookingOrders', JSON.stringify(existingOrders));
 
-      // ✅ АВТОМАТИЧЕСКАЯ ОТПРАВКА В TELEGRAM через iframe proxy
-      const YOUR_TELEGRAM_ID = '1217592929';
-      
-      // Создаём невидимый iframe с нашим proxy
-      const sendToTelegram = (): Promise<any> => {
-        return new Promise((resolve, reject) => {
-          const iframe = document.createElement('iframe');
-          iframe.style.display = 'none';
-          iframe.src = '/api/send-telegram.html';
-          document.body.appendChild(iframe);
-
-          const requestId = Date.now().toString();
-          let timeoutId: NodeJS.Timeout;
-
-          const messageHandler = (event: MessageEvent) => {
-            if (event.data.ready) {
-              // Proxy готов, отправляем запрос
-              iframe.contentWindow?.postMessage({
-                chat_id: YOUR_TELEGRAM_ID,
-                text: message,
-                requestId
-              }, '*');
-
-              // Таймаут 10 секунд
-              timeoutId = setTimeout(() => {
-                window.removeEventListener('message', messageHandler);
-                document.body.removeChild(iframe);
-                reject(new Error('Timeout'));
-              }, 10000);
-            } else if (event.data.requestId === requestId) {
-              clearTimeout(timeoutId);
-              window.removeEventListener('message', messageHandler);
-              document.body.removeChild(iframe);
-
-              if (event.data.result?.ok) {
-                resolve(event.data.result);
-              } else {
-                reject(new Error(event.data.error || 'Failed'));
-              }
-            }
-          };
-
-          window.addEventListener('message', messageHandler);
-        });
-      };
+      // ✅ ОТПРАВКА В TELEGRAM через безопасный Koyeb API
+      const KOYEB_API_URL = 'https://small-robinia-phukeo-8b5e1e16.koyeb.app/api/notify';
+      const MANAGER_TELEGRAM_ID = '1217592929';
 
       try {
-        const result = await sendToTelegram();
+        console.log('📤 Отправляем заявку через Koyeb API...');
         
-        // ✅ УСПЕШНО ОТПРАВЛЕНО - показываем сообщение ВНУТРИ модалки и редиректим
-        setSuccessMessageText('✅ Заявка принята! Сейчас откроем Telegram для завершения бронирования...');
-        setShowSuccessMessage(true);
-        console.log('✅ Сообщение отправлено в Telegram:', result);
+        const response = await fetch(KOYEB_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chatId: MANAGER_TELEGRAM_ID,
+            message: message
+          })
+        });
+
+        const result = await response.json();
         
-        // ✅ РЕДИРЕКТ В TELEGRAM с готовым сообщением (как было раньше - 3 секунды)
-        setTimeout(() => {
-          const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-          window.location.href = telegramUrl;
-        }, 3000); // 3 секунды как было раньше
-        
-        return; // Не закрываем модал, т.к. переходим в Telegram
+        if (result.success) {
+          // ✅ УСПЕШНО ОТПРАВЛЕНО - показываем сообщение и редиректим
+          setSuccessMessageText('✅ Заявка принята! Сейчас откроем Telegram для завершения бронирования...');
+          setShowSuccessMessage(true);
+          console.log('✅ Сообщение отправлено в Telegram:', result);
+          
+          // ✅ РЕДИРЕКТ В TELEGRAM с готовым сообщением (3 секунды)
+          setTimeout(() => {
+            const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
+            window.location.href = telegramUrl;
+          }, 3000);
+          
+          return; // Не закрываем модал, т.к. переходим в Telegram
+        } else {
+          throw new Error(result.error || 'API returned error');
+        }
       } catch (error) {
-        console.error('❌ Ошибка отправки через proxy:', error);
+        console.error('❌ Ошибка отправки через Koyeb API:', error);
         
         // Fallback - открываем Telegram как запасной вариант
         setSuccessMessageText('✅ Заявка готова! Сейчас откроем Telegram для отправки...');

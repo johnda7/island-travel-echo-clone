@@ -1,0 +1,1 @@
+export { similanIslandsEarlyTourData } from './static';

@@ -1,0 +1,97 @@
+name: Deploy (canonical)
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Git ref (branch, tag or SHA) to build'
+        required: false
+        default: 'main'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    env:
+      BUILD_REF: ${{ inputs.ref || github.ref }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Print Node/npm versions
+        run: |
+          node -v
+          npm -v
+
+      - name: Install dependencies
+        run: |
+          npm config set fund false
+          npm config set audit false
+          npm config set legacy-peer-deps true
+          if [ -f package-lock.json ]; then
+            echo "Using npm ci (lockfile found) with legacy-peer-deps"
+            npm ci --legacy-peer-deps
+          else
+            echo "No package-lock.json found, falling back to npm install (legacy-peer-deps)"
+            npm install --no-fund --no-audit --legacy-peer-deps
+          fi
+
+      - name: Build
+        env:
+          NODE_OPTIONS: --max_old_space_size=4096
+        run: |
+          echo "Working directory: $(pwd)"
+          echo "Listing repo root:" && ls -la
+          npm run build
+          # sanity-checks
+          if [ -d dist/.git ]; then echo "ERROR: dist/.git detected"; exit 1; fi
+          SIZE_MB=$(du -sm dist | cut -f1)
+          echo "dist size: ${SIZE_MB} MB"
+          if [ "$SIZE_MB" -gt 2500 ]; then echo "ERROR: dist too large (>2500 MB)"; exit 1; fi
+          # service files
+          echo "commit=${GITHUB_SHA} ref=${{ inputs.ref || github.ref }} date=$(date -u +%Y-%m-%dT%H:%M:%SZ) repo=${GITHUB_REPOSITORY}" > dist/__build.txt
+          cp -v CNAME dist/ || true
+          cp -v robots.txt dist/ || true
+          cp -v sitemap.xml dist/ || true
+          touch dist/.nojekyll
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Post-deploy info
+        run: |
+          echo "✅ Deploy completed!"
+          echo "Site: https://phukeo.com"
+          echo "Commit: ${{ github.sha }}"
+          echo "Note: CDN cache may take 1-5 minutes to update"

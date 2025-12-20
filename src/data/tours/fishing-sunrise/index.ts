@@ -1,0 +1,1 @@
+export { fishingSunriseTourData } from './static';

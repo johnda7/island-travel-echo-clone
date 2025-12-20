@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Главная страница -->
+  <url>
+  <loc>https://phukeo.com/</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Каталог туров -->
+  <url>
+    <loc>https://phukeo.com/tours</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- ======================== -->
+  <!-- 🏝️ ТУРЫ НА ОСТРОВА -->
+  <!-- ======================== -->
+  
+  <url>
+    <loc>https://phukeo.com/tours/phi-phi-2days</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://phukeo.com/assets/phi-phi-maya-bay.jpg</image:loc>
+      <image:title>Пхи-Пхи 2 дня / 1 ночь</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://phukeo.com/tours/james-bond-island-phang-nga</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://phukeo.com/assets/james-1.jpg</image:loc>
+      <image:title>Остров Джеймса Бонда</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://phukeo.com/tours/racha-coral-islands-speedboat</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://phukeo.com/assets/racha-1.jpg</image:loc>
+      <image:title>Рача и Коралловые острова</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://phukeo.com/tours/eleven-islands-mega</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://phukeo.com/tours/pearls-andaman-sea</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://phukeo.com/tours/phi-phi-sunrise</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://phukeo.com/tours/similan-islands</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://phukeo.com/tours/similan-islands-speedboat</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- ======================== -->
+  <!-- 🚣 ПРИКЛЮЧЕНИЯ -->
+  <!-- ======================== -->
+  
+  <url>
+    <loc>https://phukeo.com/tours/rafting-spa-atv-1-day</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://phukeo.com/tours/kao-lak-safari-1-day</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://phukeo.com/tours/phang-nga-skywalk</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://phukeo.com/tours/cheow-lan-lake</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- ======================== -->
+  <!-- 🏛️ КУЛЬТУРНЫЕ -->
+  <!-- ======================== -->
+  
+  <url>
+  <loc>https://phukeo.com/tours/dostoprimechatelnosti-phuketa</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- ======================== -->
+  <!-- 🎣 РЫБАЛКА -->
+  <!-- ======================== -->
+  
+  <url>
+    <loc>https://phukeo.com/tours/fishing-sunrise</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- ======================== -->
+  <!-- 🏖️ ПЛЯЖИ -->
+  <!-- ======================== -->
+  
+  <url><loc>https://phukeo.com/beaches</loc><priority>0.6</priority></url>
+  <url><loc>https://phukeo.com/beach/patong</loc><priority>0.5</priority></url>
+  <url><loc>https://phukeo.com/beach/kata</loc><priority>0.5</priority></url>
+  <url><loc>https://phukeo.com/beach/karon</loc><priority>0.5</priority></url>
+  <url><loc>https://phukeo.com/beach/naiharn</loc><priority>0.5</priority></url>
+  <url><loc>https://phukeo.com/beach/surin</loc><priority>0.5</priority></url>
+  <url><loc>https://phukeo.com/beach/kamala</loc><priority>0.5</priority></url>
+  <url><loc>https://phukeo.com/beach/bangtao</loc><priority>0.5</priority></url>
+  <url><loc>https://phukeo.com/beach/mai-khao</loc><priority>0.5</priority></url>
+  <url><loc>https://phukeo.com/beach/freedom</loc><priority>0.5</priority></url>
+  
+</urlset>

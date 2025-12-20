@@ -1835,8 +1835,6 @@ app.listen(PORT, async () => {
     await bot.telegram.setMyCommands(
       [
         { command: 'start', description: '🏠 Главное меню' },
-        { command: 'tours', description: '🗺️ Каталог туров' },
-        { command: 'help', description: '❓ Помощь' }
       ],
       { scope: { type: 'all_private_chats' } }
     );

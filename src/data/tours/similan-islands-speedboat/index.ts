@@ -1,1 +1,0 @@
-export { similanIslandsSpeedboatTourData } from './static';

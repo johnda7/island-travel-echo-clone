@@ -1,4 +1,0 @@
-Empty deploy marker
-Timestamp (UTC): 2025-11-24T00:00:00Z
-Purpose: создать минимальное изменение для запуска автодеплоя (push в main) без функциональных правок.
-Commit message пример: chore: empty deploy trigger

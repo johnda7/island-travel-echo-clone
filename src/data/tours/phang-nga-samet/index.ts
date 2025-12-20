@@ -1,1 +1,0 @@
-export { phangNgaSametTourData } from './static';

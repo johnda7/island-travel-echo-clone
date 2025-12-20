@@ -35,16 +35,16 @@ export const Contact = () => {
     });
   };
 
-  // Telegram бот - @phuketgos_bot
+  // Telegram бот - @phukeo_bot
   const openTelegramBot = () => {
     const tg = (window as any).Telegram?.WebApp;
     if (tg?.HapticFeedback) {
       tg.HapticFeedback.impactOccurred('medium');
     }
     if (tg) {
-      tg.openTelegramLink('https://t.me/phuketgos_bot');
+      tg.openTelegramLink('https://t.me/phukeo_bot');
     } else {
-    window.open('https://t.me/phuketgos_bot', '_blank');
+    window.open('https://t.me/phukeo_bot', '_blank');
     }
   };
 
@@ -104,7 +104,7 @@ export const Contact = () => {
                 className="text-[13px]"
                 style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif", color: '#8E8E93' }}
               >
-                @phuketgos_bot — ответим быстро!
+                @phukeo_bot — ответим быстро!
               </div>
             </div>
           </button>

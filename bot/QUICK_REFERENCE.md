@@ -1,12 +1,12 @@
 # 🚀 QUICK REFERENCE - Telegram Bot
 
-**Последнее обновление**: 10 ноября 2025 г.
+**Последнее обновление**: 20 декабря 2025 г.
 
 ---
 
 ## ⚡ Быстрые ссылки
 
-**Бот**: https://t.me/phuketgos_bot  
+**Бот**: https://t.me/phukeo_bot  
 **Koyeb Dashboard**: https://app.koyeb.com/  
 **Health Check**: https://small-robinia-phukeo-8b5e1e16.koyeb.app/health  
 **OpenAI Dashboard**: https://platform.openai.com/  
@@ -16,8 +16,10 @@
 ## 🔑 Credentials
 
 ```bash
-BOT_TOKEN=8475227105:AAE7bu_y4nd8EpIpyQqBZg88F76yFyflWww
-OPENAI_API_KEY=sk-proj-Nfyr1pti... (в Koyeb Environment Variables)
+# ⚠️ ТОКЕНЫ ХРАНЯТСЯ ТОЛЬКО НА KOYEB!
+# Никогда не добавляй токены в репозиторий
+BOT_TOKEN=*** (в Koyeb Environment Variables)
+OPENAI_API_KEY=*** (в Koyeb Environment Variables)
 MANAGER_CHAT_ID=1217592929
 WEBHOOK_DOMAIN=small-robinia-phukeo-8b5e1e16.koyeb.app
 ```

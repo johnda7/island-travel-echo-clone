@@ -25,12 +25,10 @@ exports.handler = async (event) => {
   try {
     const { chat_id, text } = JSON.parse(event.body);
 
-    // ✅ НОВЫЙ ТОКЕН (старый отозван 24.11.2025 после взлома)
-    const BOT_TOKEN = '8475227105:AAFWvuOuD-2vB0Ka7n9GowGbcjsWzqeL1N8';
+    // ✅ Отправка через Koyeb (токен безопасно на сервере)
+    const KOYEB_NOTIFY_URL = 'https://small-robinia-phukeo-8b5e1e16.koyeb.app/api/notify';
 
-    const response = await fetch(
-      `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
-      {
+    const response = await fetch(KOYEB_NOTIFY_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -1741,7 +1741,7 @@ app.get('/', (req, res) => {
     <h1>🤖 Smart AI Booking Bot</h1>
     <p>✅ Status: Running</p>
     <p>⏱️ Uptime: ${Math.floor(process.uptime())}s</p>
-    <p>📱 Bot: @phuketgos_bot</p>
+    <p>📱 Bot: @phukeo_bot</p>
     <p>🌐 Website: <a href="https://phukeo.com">phukeo.com</a></p>
     <p>🧠 AI: GPT-3.5 Turbo</p>
   `);
@@ -1755,6 +1755,42 @@ app.get('/health', (req, res) => {
     uptime: process.uptime(),
     timestamp: new Date().toISOString()
   });
+});
+
+// ====== API ENDPOINT ДЛЯ УВЕДОМЛЕНИЙ С САЙТА ======
+app.post('/api/notify', async (req, res) => {
+  // CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
+  try {
+    const { chat_id, text, parse_mode } = req.body;
+    
+    if (!chat_id || !text) {
+      return res.status(400).json({ ok: false, error: 'Missing chat_id or text' });
+    }
+    
+    // Отправляем через Telegram Bot API
+    const result = await bot.telegram.sendMessage(chat_id, text, {
+      parse_mode: parse_mode || 'HTML'
+    });
+    
+    console.log('📤 Notify sent to:', chat_id);
+    res.json({ ok: true, success: true, result });
+    
+  } catch (error) {
+    console.error('❌ Notify error:', error.message);
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
+// OPTIONS для CORS preflight
+app.options('/api/notify', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.sendStatus(200);
 });
 
 // ====== WEBHOOK ENDPOINT ======
@@ -1781,7 +1817,7 @@ app.post(WEBHOOK_PATH, async (req, res) => {
 app.listen(PORT, async () => {
   console.log(`✅ Smart AI Bot running on port ${PORT}`);
   console.log(`🏥 Health check: http://localhost:${PORT}/health`);
-  console.log('📱 Bot: @phuketgos_bot');
+  console.log('📱 Bot: @phukeo_bot');
   console.log('🌐 Website: https://phukeo.com');
   console.log('');
   

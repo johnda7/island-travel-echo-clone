@@ -11,7 +11,7 @@ export const fishingSunriseTourData: TourData = {
   title: "Морская рыбалка на рассвете",
   subtitle: "Первые на воде — первые с уловом (Comfort+)",
   route: "/excursion/fishing-sunrise",
-  priceAdult: 2300,
+  priceAdult: 2400,
   priceChild: 2100,
   priceInfant: 0,
   currency: "฿",

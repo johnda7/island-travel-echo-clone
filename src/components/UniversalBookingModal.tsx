@@ -102,22 +102,20 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
     const shortMsg = `Бронь: ${tourData.title}\nЦена: ${priceCalc.totalPrice} ${priceCalc.currency}\nГости: ${priceCalc.adults} взр, ${priceCalc.children} дет\nДата: ${formData.date}\nИмя: ${formData.name}\nТел: ${formData.phone}`;
     const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(shortMsg)}`;
 
-    // Копируем полное сообщение в буфер обмена как надёжный резерв
+    // Копируем полное сообщение в буфер обмена как резерв
     try {
       navigator.clipboard.writeText(messageText).catch(() => {});
     } catch { /* clipboard не доступен */ }
 
     try {
       const tg = (window as any).Telegram?.WebApp;
-      if (tg) {
-        // Внутри Telegram Mini App — пробуем оба метода
-        if (typeof tg.openTelegramLink === 'function') {
-          tg.openTelegramLink(telegramUrl);
-        } else {
-          window.location.href = telegramUrl;
-        }
+      if (tg && typeof tg.openLink === 'function') {
+        // ✅ Mini App: openLink() открывает URL через ВНЕШНИЙ браузер,
+        // который перенаправляет в Telegram-приложение С ?text= pre-fill.
+        // openTelegramLink() НЕ передаёт ?text= — поэтому используем openLink.
+        tg.openLink(telegramUrl);
       } else {
-        // Обычный браузер
+        // Обычный браузер — открываем напрямую
         window.open(telegramUrl, '_blank') || (window.location.href = telegramUrl);
       }
     } catch {

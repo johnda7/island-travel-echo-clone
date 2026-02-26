@@ -1,8 +1,14 @@
 import type { TourData } from "@/types/Tour";
 
 // Фото тура "Пляж слонов, Самет Нангше и Mantra Spa"
-// TODO: Заменить на реальные фото когда будут загружены
-// import photo1 from "@/assets/elephant-beach-samet-mantra-spa/photo-1.jpg";
+import photo1 from "@/assets/elephant-beach-samet-mantra-spa/photo-1.jpg";
+import photo2 from "@/assets/elephant-beach-samet-mantra-spa/photo-2.jpg";
+import photo3 from "@/assets/elephant-beach-samet-mantra-spa/photo-3.jpg";
+import photo4 from "@/assets/elephant-beach-samet-mantra-spa/photo-4.jpg";
+import photo5 from "@/assets/elephant-beach-samet-mantra-spa/photo-5.jpg";
+import photo6 from "@/assets/elephant-beach-samet-mantra-spa/photo-6.jpg";
+import photo7 from "@/assets/elephant-beach-samet-mantra-spa/photo-7.jpg";
+import photo8 from "@/assets/elephant-beach-samet-mantra-spa/photo-8.jpg";
 
 export const elephantBeachSametMantraSpaTourData: TourData = {
   id: "elephant-beach-samet-mantra-spa",
@@ -19,15 +25,17 @@ export const elephantBeachSametMantraSpaTourData: TourData = {
 
   route: "/tours/elephant-beach-samet-mantra-spa",
 
-  mainImage: "https://images.unsplash.com/photo-1585409677983-0f6c41128c09?w=1200",
+  mainImage: photo1,
 
   gallery: [
-    "https://images.unsplash.com/photo-1585409677983-0f6c41128c09?w=800",
-    "https://images.unsplash.com/photo-1551918120-9739cb430c6d?w=800",
-    "https://images.unsplash.com/photo-1549989476-69a92fa57c36?w=800",
-    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800",
-    "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800",
-    "https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?w=800",
+    photo1,
+    photo2,
+    photo3,
+    photo4,
+    photo5,
+    photo6,
+    photo7,
+    photo8,
   ],
 
   priceAdult: 3100,

@@ -201,3 +201,21 @@ Related Decisions:
 - Защита критических файлов
 
 ## Pending Decisions
+
+### MCP серверы Context7 + Memory (2026-02-26)
+Настроены MCP серверы в `.vscode/mcp.json`: Context7 (`@upstash/context7-mcp`) для документации библиотек, Memory (`@modelcontextprotocol/server-memory`) для персистентной памяти AI агентов.
+
+**Status:** accepted
+**Impact:** AI агенты получают доступ к актуальной документации и памяти между сессиями
+
+Rationale:
+Context7 позволяет агентам получать свежую документацию по React, Vite, Tailwind и др. Memory сохраняет контекст между сессиями для continuity.
+
+### Добавление тура phi-phi-racha-maiton-sunset (2026-02-26)
+Добавлен новый тур "Пхи-Пхи, Рача Яй и закатная вечеринка у Майтон". Файлы: static.ts (данные + 13 фото), index.ts (реэкспорт), PhiPhiRachaMaitonSunsetNew.tsx (страница с 9 RoutePoints). Зарегистрирован в toursRegistry.ts (priority: 25, islands, featured). Маршруты добавлены в App.tsx.
+
+**Status:** accepted
+**Impact:** src/data/tours/phi-phi-racha-maiton-sunset/, src/pages/, toursRegistry.ts, App.tsx
+
+Rationale:
+Новый премиум тур на катамаране. Цена: 2800/2500 ฿. Comfort+ only. Маршрут: Пхукет → Рача Яй → Пхи-Пхи → Майтон → Пхукет.

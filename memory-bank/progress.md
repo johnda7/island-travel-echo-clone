@@ -1,25 +1,34 @@
 # Progress Log
 
 ## Current Phase
-**Production & Maintenance** (23 папки туров, ~22 активных на сайте)
+**Production & Active Development** (24 папки туров, добавляются новые)
 
-## Latest Update (2026-02-21)
-**Session:** Maintenance & MCP Setup  
-**Status:** Обновление memory-bank, восстановление copilot-instructions.md
+## Latest Update (2026-02-26)
+**Session:** Adding New Tours  
+**Status:** Добавлен тур "Пхи-Пхи + Рача Яй + Майтон Sunset Party"
 
-### Completed Today (2026-02-21)
-- ✅ **copilot-instructions.md** восстановлен — был повреждён (странно склеенные секции)
-- ✅ Memory-bank обновлён до актуального состояния
-- ✅ MCP Memory Bank настроен в .vscode/settings.json
+### Completed Today (2026-02-26)
+- ✅ **copilot-instructions.md** полностью переписан (чистый Markdown, без дублей)
+- ✅ Изучена архитектура: туры в файлах, Supabase только для бронирований
+- ✅ Добавлен тур phi-phi-racha-maiton-sunset (static.ts, index.ts, page, registry, routes)
+- ✅ 13 реальных фото загружены и подключены
+- ✅ Деплой выполнен (push 6858c99)
+- ✅ Fix: удалён битый git ref "main 2", resolved merge conflict
+
+### Completed (2026-02-21)
+- ✅ **copilot-instructions.md** восстановлен — был повреждён
+- ✅ Memory-bank обновлён
+- ✅ MCP Memory Bank настроен
 
 ## Project Status
 
-### Tours (23 папки в src/data/tours/)
+### Tours (24 папки в src/data/tours/)
 - avatar-plus-hangdong, cheow-lan-lake, dostoprimechatelnosti-phuketa
 - eleven-islands-mega, eleven-islands-standard, fishing-sunrise
 - five-pearls-2days, james-bond-island, kao-lak-safari
 - krabi-secrets, pearls-andaman-sea, phang-nga-samet
 - phang-nga-skywalk, phi-phi-2days, phi-phi-sunrise
+- **phi-phi-racha-maiton-sunset** (NEW 2026-02-26)
 - racha-coral-islands, racha-coral-rawai, racha-coral-sunrise
 - rafting-spa-1day, rafting-spa-atv
 - similan-islands, similan-islands-early, similan-islands-speedboat

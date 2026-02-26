@@ -35,6 +35,7 @@ import { fivePearls2DaysTourData } from './tours/five-pearls-2days';
 import { phangNgaSametTourData } from './tours/phang-nga-samet';
 import { krabiSecretsTourData } from './tours/krabi-secrets';
 import { phiPhiRachaMaitonSunsetTourData } from './tours/phi-phi-racha-maiton-sunset';
+import { elephantBeachSametMantraSpaTourData } from './tours/elephant-beach-samet-mantra-spa';
 
 import type { TourData } from '@/types/Tour';
 
@@ -353,6 +354,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,
     priority: 25,
     data: () => Promise.resolve(phiPhiRachaMaitonSunsetTourData)
+  },
+
+  // 26. Пляж слонов, Самет Нангше и Mantra Spa (НОВЫЙ!)
+  {
+    id: 'elephant-beach-samet-mantra-spa',
+    name: 'Пляж слонов, Самет Нангше и Mantra Spa',
+    category: 'adventure',
+    tags: ['слоны', 'пляж слонов', 'самет нангше', 'mantra spa', 'спа', 'пляж самолётов', 'белый храм', 'панорамы', 'пханг нга', 'природа', 'приключения', '1 день', 'фотосессия'],
+    isPopular: true,
+    isActive: true,
+    isFeatured: true,
+    priority: 26,
+    data: () => Promise.resolve(elephantBeachSametMantraSpaTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

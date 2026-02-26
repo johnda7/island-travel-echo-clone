@@ -44,6 +44,7 @@ import FivePearls2DaysNew from "./pages/FivePearls2DaysNew";
 import PhangNgaSametNew from "./pages/PhangNgaSametNew";
 import KrabiSecretsNew from "./pages/KrabiSecretsNew";
 import PhiPhiRachaMaitonSunsetNew from "./pages/PhiPhiRachaMaitonSunsetNew";
+import ElephantBeachSametMantraSpaNew from "./pages/ElephantBeachSametMantraSpaNew";
 
 // Динамический компонент для CMS туров
 import DynamicTourPage from "./components/DynamicTourPage";
@@ -165,6 +166,9 @@ function App() {
               
               <Route path="/excursion/phi-phi-racha-maiton-sunset" element={<PhiPhiRachaMaitonSunsetNew />} />
               <Route path="/tours/phi-phi-racha-maiton-sunset" element={<PhiPhiRachaMaitonSunsetNew />} />
+              
+              <Route path="/excursion/elephant-beach-samet-mantra-spa" element={<ElephantBeachSametMantraSpaNew />} />
+              <Route path="/tours/elephant-beach-samet-mantra-spa" element={<ElephantBeachSametMantraSpaNew />} />
               
               {/* ТЕСТОВЫЕ новые версии на template */}
               <Route path="/tours/cheow-lan-lake-new" element={<CheoLanLakeNew />} />

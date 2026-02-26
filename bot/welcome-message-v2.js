@@ -20,7 +20,11 @@ const groupStats = {
     'Racha Island': 0,
     'Khai Islands': 0,
     'Promthep Cape': 0,
-    'Cheow Lan Lake': 0
+    'Cheow Lan Lake': 0,
+    'Phi Phi Racha Maiton': 0,
+    'Elephant Beach Spa': 0,
+    'Coral Islands Rawai': 0,
+    'Diving Andaman': 0
   },
   users: new Set(),
   questions: 0,
@@ -41,7 +45,11 @@ const keywords = {
     'Racha Island': ['racha', 'рача'],
     'Khai Islands': ['khai', 'кхай'],
     'Promthep Cape': ['promthep', 'промтеп'],
-    'Cheow Lan Lake': ['cheow lan', 'чео лан', 'озеро']
+    'Cheow Lan Lake': ['cheow lan', 'чео лан', 'озеро'],
+    'Phi Phi Racha Maiton': ['майтон', 'maiton', 'рача яй', 'racha yai', 'закат'],
+    'Elephant Beach Spa': ['слон', 'elephant', 'самет', 'мантра', 'mantra', 'спа'],
+    'Coral Islands Rawai': ['раваи', 'rawai', 'коралловые острова'],
+    'Diving Andaman': ['дайвинг', 'diving', 'погружение', 'андаман']
   }
 };
 
@@ -117,8 +125,12 @@ bot.command('tours', (ctx) => {
 9️⃣ Khai Islands Snorkeling 🏖️
 🔟 Promthep Sunset 🌅
 1️⃣1️⃣ Cheow Lan Lake 🏞️
+1️⃣2️⃣ Пхи-Пхи + Рача Яй + Майтон 🌅
+1️⃣3️⃣ Слоны + пляж Самет + Мантра Спа 🐘
+1️⃣4️⃣ Коралловые острова с Раваи 🪸
+1️⃣5️⃣ Дайвинг в Андаманском море 🤿
 
-📱 [Открыть каталог](https://t.me/phuketgos_bot/app)`);
+📱 [Открыть каталог](https://t.me/phukeo_bot/app)`);
 });
 
 // ☎️ КОМАНДА /contacts

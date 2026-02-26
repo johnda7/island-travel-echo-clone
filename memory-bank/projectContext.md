@@ -4,11 +4,11 @@
 **Project Name:** Island Travel Echo Clone - Phuket Tours  
 **Live Site:** https://phukeo.com  
 **Repository:** johnda7/island-travel-echo-clone  
-**Version:** Production (24 тура, добавляются новые)  
+**Version:** Production (28 туров в реестре, добавляются новые)  
 **License:** Not specified
 
 ## Project Description
-React SPA сайт туров по Пхукету с iOS 26 дизайном. WordPress-like CMS архитектура на React. Telegram Mini App интеграция. Централизованная система: 24 папки туров, 23 зарегистрированы в `toursRegistry.ts`, все рендерятся через единый `TourPageTemplate.tsx` (1067 строк).
+React SPA сайт туров по Пхукету с iOS 26 дизайном. WordPress-like CMS архитектура на React. Telegram Mini App интеграция. Централизованная система: 27 папок туров, 28 зарегистрированы в `toursRegistry.ts`, все рендерятся через единый `TourPageTemplate.tsx` (1067 строк).
 
 ## Technical Stack
 **Runtime:** Node.js  
@@ -46,7 +46,7 @@ React SPA сайт туров по Пхукету с iOS 26 дизайном. Wo
 - **Структура туров:** Каждый тур = отдельная папка `src/data/tours/<slug>/`
   - `static.ts` - данные тура (TourData)
   - `index.ts` - реэкспорт
-- **Единый шаблон:** `src/components/TourPageTemplate.tsx` для всех 24 туров
+- **Единый шаблон:** `src/components/TourPageTemplate.tsx` для всех 28 туров
 - **Маршруты:** `src/data/routes/<tour>-route.ts` с GPS координатами
 
 ### iOS 26 Design System

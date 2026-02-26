@@ -15,7 +15,7 @@ src/data/tours/<slug>/static.ts   → данные тура (TourData)
 src/data/tours/<slug>/index.ts    → re-export (РОВНО 1 СТРОКА! Никаких дублей!)
 src/pages/<TourName>New.tsx       → тонкая обёртка (import data + routePoints → TourPageTemplate)
 src/App.tsx                       → маршруты (/excursion/<slug> + /tours/<slug>)
-src/data/toursRegistry.ts         → центральный реестр (26 записей)
+src/data/toursRegistry.ts         → центральный реестр (28 записей)
 ```
 
 ---
@@ -249,9 +249,12 @@ border-radius: 12px;
 
 ## 9. Текущее состояние (2026-02-27)
 
-- **Туров в папках:** 25
-- **В реестре:** 26 записей (включая elephant-beach-samet-mantra-spa)
-- **Категории:** islands(9), adventure(8), diving(3), cultural(1), fishing(1)
-- **Последний добавлен:** elephant-beach-samet-mantra-spa (3100/2800 ฿)
-- **Следующий priority:** 27
-- **Последний коммит:** 5c3be50
+- **Туров в папках:** 27
+- **В реестре:** 28 записей
+- **Категории:** islands(10), adventure(8), diving(4), cultural(1), fishing(1)
+- **Последние добавлены (сессия 2026-02-27):**
+  - elephant-beach-samet-mantra-spa (3100/2800 ฿, adventure, priority 26)
+  - coral-islands-rawai (1300/1200 ฿, islands, priority 27)
+  - diving-andaman (4100/3900 ฿, diving, priority 28)
+- **Следующий priority:** 29
+- **Последний коммит:** 036de16

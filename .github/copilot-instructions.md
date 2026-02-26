@@ -18,7 +18,7 @@ React 18 + TypeScript + Vite. WordPress-style CMS on React: one universal templa
 - **RoutePoint coordinates** are REQUIRED `[lat, lng]`. Missing → runtime TypeError crash.
 - **Images** MUST use `@/assets/...` import path. Never `../../assets` or bare URLs.
 - **Routes** MUST be ABOVE the `/:slug` catch-all in App.tsx.
-- **priority** in registry MUST be next sequential number (currently last is 26, next is 27).
+- **priority** in registry MUST be next sequential number (currently last is 28, next is 29).
 
 ### Step 1: Create photos folder
 Create `src/assets/<slug>/` with photos named `photo-1.jpg`, `photo-2.jpg`, etc. Use Unsplash URLs as placeholders if real photos aren't ready yet.
@@ -61,7 +61,7 @@ export default () => <TourPageTemplate tourData={myTourData} routePoints={routeP
   isPopular: true,
   isActive: true,
   isFeatured: true,
-  priority: 27, // NEXT sequential number!
+  priority: 29, // NEXT sequential number!
   data: () => Promise.resolve(tourData)
 },
 ```
@@ -122,7 +122,7 @@ export default () => <TourPageTemplate tourData={myTourData} routePoints={routeP
 
 - `src/components/TourPageTemplate.tsx` — universal tour renderer (1067 lines)
 - `src/components/UniversalBookingModal.tsx` — booking dialog
-- `src/data/toursRegistry.ts` — central tour registry (26 entries, last priority: 26)
+- `src/data/toursRegistry.ts` — central tour registry (28 entries, last priority: 28)
 - `src/types/Tour.ts` — TypeScript interfaces
 - `src/App.tsx` — routing (HashRouter)
 - `memory-bank/agentReference.md` — full AI agent reference with GPS coords, design specs

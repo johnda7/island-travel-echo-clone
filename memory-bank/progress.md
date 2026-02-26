@@ -1,19 +1,22 @@
 # Progress Log
 
 ## Current Phase
-**Production & Active Development** (24 папки туров, добавляются новые)
+**Production & Active Development** (27 папок туров, 28 в реестре)
 
-## Latest Update (2026-02-26)
-**Session:** Adding New Tours  
-**Status:** Добавлен тур "Пхи-Пхи + Рача Яй + Майтон Sunset Party"
+## Latest Update (2026-02-27)
+**Session:** Bug Fix + Documentation + Adding 3 Tours  
+**Status:** Исправлен билд, обновлена документация, добавлены 3 тура, деплой выполнен
 
-### Completed Today (2026-02-26)
-- ✅ **copilot-instructions.md** полностью переписан (чистый Markdown, без дублей)
-- ✅ Изучена архитектура: туры в файлах, Supabase только для бронирований
-- ✅ Добавлен тур phi-phi-racha-maiton-sunset (static.ts, index.ts, page, registry, routes)
-- ✅ 13 реальных фото загружены и подключены
-- ✅ Деплой выполнен (push 6858c99)
-- ✅ Fix: удалён битый git ref "main 2", resolved merge conflict
+### Completed Today (2026-02-27)
+- ✅ **Fix duplicate export** в elephant-beach index.ts (commit 5c3be50) — билд крашился
+- ✅ **agentReference.md** полностью переписан с "Critical Rules" для добавления туров
+- ✅ **copilot-instructions.md** полностью переписан с Critical Rules + troubleshooting
+- ✅ Тур **elephant-beach-samet-mantra-spa** — подключены фото, фикс
+- ✅ Тур **coral-islands-rawai** добавлен (1300/1200 ฿, islands, 10 фото, priority 27)
+- ✅ Тур **diving-andaman** добавлен (4100/3900 ฿, diving, 9 фото, priority 28)
+- ✅ Деплой (commit 036de16, 29 файлов, 508 insertions)
+- ✅ Все 4 тура проверены на сайте + в меню — работают
+- ✅ Memory bank обновлён
 
 ### Completed (2026-02-21)
 - ✅ **copilot-instructions.md** восстановлен — был повреждён

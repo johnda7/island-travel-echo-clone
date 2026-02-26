@@ -1,30 +1,29 @@
 # Active Context
 
 ## Current Session
-**Date:** 2026-02-26  
-**Mode:** Adding New Tours  
-**Task:** Добавление новых экскурсий в проект
+**Date:** 2026-02-27  
+**Mode:** Adding New Tours + Bug Fix + Documentation  
+**Task:** Исправление билда, обновление документации, добавление 3 новых туров
 
 ## Current Status
-- ✅ 24 папки туров в `src/data/tours/`, 23 зарегистрированы в реестре
-- ✅ Последний добавлен: **phi-phi-racha-maiton-sunset** (2026-02-26)
-- ✅ Деплой: push 6858c99 → deploy-canonical.yml → GitHub Pages
-- ✅ copilot-instructions.md переписан (чистый, ~75 строк)
-- ✅ MCP настроен: Context7 + Memory (`.vscode/mcp.json`)
-- ✅ Безопасность: токены только в Koyeb env vars
+- ✅ 27 папок туров в `src/data/tours/`, 28 зарегистрированы в реестре
+- ✅ Fix: дубликат экспорта в elephant-beach index.ts (commit 5c3be50)
+- ✅ agentReference.md и copilot-instructions.md переписаны с "Critical Rules"
+- ✅ Добавлены 3 тура: elephant-beach-samet-mantra-spa, coral-islands-rawai, diving-andaman
+- ✅ Деплой: push 036de16 → deploy-canonical.yml → GitHub Pages
+- ✅ Все 4 тура проверены на сайте + в меню
 
-## Последний добавленный тур
-- **Пхи-Пхи, Рача Яй и закатная вечеринка у Майтон** (`phi-phi-racha-maiton-sunset`)
-- Категория: islands, Comfort+ only, 2800/2500 ฿
-- 13 реальных фото, 9 RoutePoints (GPS)
-- Маршрут: Пхукет → Рача Яй → Пхи-Пхи Дон → Обезьяны → Викинги → Пиле → Майя Бэй → Майтон → Пхукет
+## Последние добавленные туры (сессия 2026-02-27)
+1. **Слоны, пляж Самет и Мантра Спа** (`elephant-beach-samet-mantra-spa`) — adventure, 3100/2800 ฿, priority 26
+2. **Коралловые острова с пирса Раваи** (`coral-islands-rawai`) — islands, 1300/1200 ฿, priority 27, 10 фото
+3. **Дайвинг в Андаманском море** (`diving-andaman`) — diving, 4100/3900 ฿, priority 28, 9 фото
 
-## Реестр туров (23 активных в toursRegistry.ts)
+## Реестр туров (28 в toursRegistry.ts)
 | Категория | Кол-во | Туры |
 |-----------|--------|------|
-| islands | 9 | phi-phi-2days, pearls-andaman-sea, eleven-islands-mega, james-bond-island-phang-nga, racha-coral-islands-speedboat, racha-coral-sunrise, racha-coral-rawai, phi-phi-sunrise, five-pearls-2days, phi-phi-racha-maiton-sunset |
-| adventure | 7 | rafting-spa-atv-1-day, rafting-spa-1day, kao-lak-safari-1-day, avatar-plus-hangdong, phang-nga-skywalk, cheow-lan-lake, phang-nga-samet, krabi-secrets |
-| diving | 3 | similan-islands, similan-islands-early, similan-islands-speedboat |
+| islands | 10 | phi-phi-2days, pearls-andaman-sea, eleven-islands-mega, james-bond-island-phang-nga, racha-coral-islands-speedboat, racha-coral-sunrise, racha-coral-rawai, phi-phi-sunrise, five-pearls-2days, phi-phi-racha-maiton-sunset, **coral-islands-rawai** |
+| adventure | 8 | rafting-spa-atv-1-day, rafting-spa-1day, kao-lak-safari-1-day, avatar-plus-hangdong, phang-nga-skywalk, cheow-lan-lake, phang-nga-samet, krabi-secrets, **elephant-beach-samet-mantra-spa** |
+| diving | 4 | similan-islands, similan-islands-early, similan-islands-speedboat, **diving-andaman** |
 | cultural | 1 | dostoprimechatelnosti-phuketa |
 | fishing | 1 | fishing-sunrise |
 

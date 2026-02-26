@@ -34,6 +34,7 @@ import { phiPhiSunriseTourData } from './tours/phi-phi-sunrise';
 import { fivePearls2DaysTourData } from './tours/five-pearls-2days';
 import { phangNgaSametTourData } from './tours/phang-nga-samet';
 import { krabiSecretsTourData } from './tours/krabi-secrets';
+import { phiPhiRachaMaitonSunsetTourData } from './tours/phi-phi-racha-maiton-sunset';
 
 import type { TourData } from '@/types/Tour';
 
@@ -339,6 +340,19 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,
     priority: 24,
     data: () => Promise.resolve(krabiSecretsTourData)
+  },
+
+  // 25. Пхи-Пхи, Рача Яй и закатная вечеринка у Майтон (НОВЫЙ!)
+  {
+    id: 'phi-phi-racha-maiton-sunset',
+    name: 'Пхи-Пхи, Рача Яй и закатная вечеринка у Майтон',
+    category: 'islands',
+    tags: ['пхи-пхи', 'рача', 'майтон', 'катамаран', 'премиум', 'sunset party', 'закат', 'снорклинг', 'майя бэй', 'острова', 'море', 'comfort+', 'вечеринка', '1 день', 'DJ', 'горка'],
+    isPopular: true,
+    isActive: true,
+    isFeatured: true,
+    priority: 25,
+    data: () => Promise.resolve(phiPhiRachaMaitonSunsetTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

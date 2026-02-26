@@ -1,0 +1,1 @@
+export { phiPhiRachaMaitonSunsetTourData } from './static';

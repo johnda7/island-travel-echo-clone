@@ -1,65 +1,77 @@
-# 🏝️ Phuket Tours Plat## Deployment (curren## iOS 26 design constraints
-- Use only `#007AFF` for interactive elements; glassmorphism backdrop blur(20px)/saturate(180%); SF Pro stack; footer `#1C1C1E`; rating format "⭐ 4.9". Use `CheoLanLake` as visual reference.nonical)
-- Auto‑deploy on push to `main` via `.github/workflows/deploy-canonical.yml`.
-- CDN cache takes 1-5 minutes to update after deploy.
-- GitHub Pages must be set to "GitHub Actions".
-- **Troubleshooting**: If deploy succeeds but site unchanged → just wait or clear browser cache.
-- **NEVER append to index.html** with echo/cat commands — this breaks HTML parsing.
+# Phuket Tours Platform — AI Agent Instructions
+
+React 18 + TypeScript + Vite. WordPress-style CMS on React: one universal template (`TourPageTemplate`) renders all tours; a central registry (`toursRegistry.ts`) is the "DB". Design: iOS 26 (glassmorphism, SF Pro, `#007AFF`). Live: https://phukeo.com. Uses HashRouter.
+
+## Architecture
+
+- **Universal renderer**: `src/components/TourPageTemplate.tsx` (PROTECTED — backup before editing: `npm run backup-template`).
+- **Central registry**: `src/data/toursRegistry.ts` (PROTECTED). Drives search, menu, cards, filters. NEVER change existing `id` values; only append new tours at the end.
+- **Tour data**: `src/data/tours/<slug>/static.ts` exports `tourData: TourData`. `index.ts` re-exports from `static.ts`.
+- **Tour pages**: `src/pages/<TourName>New.tsx` — thin wrappers importing data + routePoints, rendering `TourPageTemplate`.
+- **Routing**: `src/App.tsx` — each tour needs `/excursion/<slug>` and `/tours/<slug>` routes. Fallback: `DynamicTourPage` for `/tours/:slug`.
+- **Types**: `src/types/Tour.ts` — `TourData`, `RoutePoint`, `BookingFormData`, `PriceCalculation`.
+
+## Add a new tour (step-by-step)
+
+1. **Create data**: `src/data/tours/<slug>/static.ts` — export `<name>TourData: TourData` (reference: `cheow-lan-lake/static.ts`).
+   - Images: import via `@/assets/<slug>/...` (Vite alias `@` → `src/`). Never use deep relative paths.
+   - Required fields: `id`, `title`, `subtitle`, `description`, `route`, `mainImage`, `gallery`, `priceAdult`, `priceChild`, `currency` (`"฿"`), `duration`, `groupSize`, `rating`, `highlights`, `itinerary`.
+2. **Create index**: `src/data/tours/<slug>/index.ts` → `export { <name>TourData } from './static';`
+3. **Create page**: `src/pages/<TourName>New.tsx`:
+   ```tsx
+   import { TourPageTemplate } from "@/components/TourPageTemplate";
+   import { myTourData } from "@/data/tours/<slug>";
+   import type { RoutePoint } from "@/types/Tour";
+   const routePoints: RoutePoint[] = [
+     { name: 'Start', coordinates: [7.88, 98.39], type: 'start', time: '08:00', description: '...' },
+   ];
+   export default () => <TourPageTemplate tourData={myTourData} routePoints={routePoints} />;
+   ```
+4. **Register**: Append to `TOURS_REGISTRY` array in `src/data/toursRegistry.ts`:
+   - Import tourData at top. Append object: `{ id, name, category ('islands'|'mainland'|'adventure'|'cultural'|'diving'|'fishing'), tags, isPopular, isActive: true, isFeatured, priority (next number), data: () => Promise.resolve(tourData) }`.
+5. **Add routes**: In `src/App.tsx`, import page, add `<Route path="/excursion/<slug>">` and `<Route path="/tours/<slug>">` ABOVE the dynamic `/:slug` catch-all.
+
+## Golden rules
+
+- **RoutePoint coordinates**: every `RoutePoint` MUST include `coordinates: [lat, lng]`. Missing → runtime "reading 'lat'" crash.
+- **Images**: always `@/assets/...`. No `../../assets` or bare URLs.
+- **PROTECTED files** — never modify without backup: `TourPageTemplate.tsx`, `UniversalBookingModal.tsx`, `toursRegistry.ts`.
+- **NEVER append to `index.html`** with echo/cat — breaks HTML parsing.
+- **React 18 + react-leaflet 5 conflict**: project uses `--legacy-peer-deps`. Do NOT upgrade react-leaflet without testing.
+
+## Dev & Build
+
+- `npm run dev` — Vite dev server on port 8080.
+- `npm run build` — production build + postbuild (`scripts/postbuild.cjs`, `scripts/generate-og-pages.mjs`). Output: `dist/`.
+- `npm run backup-template` / `npm run restore-template` — protect `TourPageTemplate.tsx`.
+
+## Deployment
+
+- **ONLY** `.github/workflows/deploy-canonical.yml` — auto-deploys on push to `main` or `v*` tags. Uses `npm ci --legacy-peer-deps`.
+- `deploy-on-command.yml` is DISABLED — never use it.
+- Deploy: `git add . && git commit -m "msg" && git push origin main`.
+- CDN cache: 1–5 min delay after deploy.
+
+## iOS 26 design
+
+- Interactive elements: `#007AFF`. Glassmorphism: `backdrop-filter: blur(20px) saturate(180%)`. Font: SF Pro. Footer: `#1C1C1E`. Rating format: "⭐ 4.9".
 
 ## Telegram Mini App
-- Site works as Telegram Mini App when opened from @PhuketgaBot.
-- **In Telegram**: Header is hidden (`src/components/Header.tsx` returns null), bottom nav shows (`src/components/TelegramBottomNav.tsx`).
-- Detection: `window.Telegram?.WebApp?.initData` exists.
-- Bottom nav: Главная, Туры, Чат (center button → closes app), Поиск, Профиль.
-- Bot token: stored in Koyeb env vars, never commit to repo.
-- Manager Telegram ID: `1217592929`. — AI Working Notes (concise)
 
-React 18 + TypeScript + Vite. WordPress‑style CMS on React: one universal template renders all tours; a central registry is the “DB”. Design: iOS 26 (glass, SF Pro, single blue #007AFF). Live: https://phukeo.com
+- Detected via `window.Telegram?.WebApp?.initData`. Header hidden; `TelegramBottomNav.tsx` shows bottom nav.
+- Bot code: `bot/`. Tokens in Koyeb env vars — never commit `.env`.
 
-## Core architecture
-- Universal renderer `src/components/TourPageTemplate.tsx` (protected). All tour pages are 3 lines:
-  ```tsx
-  import { TourPageTemplate } from '@/components/TourPageTemplate';
-  import { tourData, routePoints } from '@/data/tours/<slug>';
-  export default () => <TourPageTemplate tourData={tourData} routePoints={routePoints} />;
-  ```
-- Central registry `src/data/toursRegistry.ts` (protected) drives search/menu/cards. Rules: do not change existing `id`; append new tours at end.
-- Tour files live in `src/data/tours/<slug>/{index.ts,static.ts}`. `index.ts` re‑exports from `static.ts`.
+## Troubleshooting
 
-## Golden rules (breakers to avoid)
-- GPS routes: every `RoutePoint` must include `coordinates: [lat, lng]`. Missing → “reading 'lat'” error. See `AI_DOCS/GPS_ROUTES_GUIDE.md`.
-- Images: always import via `@/assets/...` (Vite alias to `src`). No deep relative paths.
-- Protected: `TourPageTemplate.tsx`, `UniversalBookingModal.tsx`, `toursRegistry.ts`. Back up template before edits: `npm run backup-template` (restore: `npm run restore-template`).
+- Tour missing in UI → check `isActive: true` and `tags` in registry.
+- All tours broken → `TourPageTemplate.tsx` was modified; restore: `npm run restore-template`.
+- Deploy fails → check `index.html` ends with clean `</html>`.
 
-## Dev and build
-- Dev: `npm run dev` (Vite on 8080).
-- Build: `npm run build` (runs postbuild scripts: `scripts/postbuild.cjs`, `scripts/generate-og-pages.mjs`). Output in `dist/`.
+## Key files
 
-## Deployment (current, canonical)
-- **ЕДИНСТВЕННЫЙ ПРАВИЛЬНЫЙ ДЕПЛОЙ**: `.github/workflows/deploy-canonical.yml`
-- Auto‑deploy on push to `main` and on tags `v*` via `deploy-canonical.yml`.
-- Manual run also available (Actions → “Deploy (canonical)” → Run workflow, ref `main`).
-- GitHub Pages must be set to “GitHub Actions”.
-- **⚠️ КРИТИЧНО**: `deploy-on-command.yml` ОТКЛЮЧЁН. НЕ используй его!
-- **React 18 vs React 19 конфликт**: Проект использует React 18.3.1, но `react-leaflet@5.0.0` требует React 19. Решение: `deploy-canonical.yml` использует `npm config set legacy-peer-deps true` + `npm ci --legacy-peer-deps`. НЕ обновляй react-leaflet без проверки совместимости!
-- **Правильный способ деплоя**: `git add <файлы> && git commit -m "описание" && git push origin main` → деплой запустится автоматически.
-- Подробные правила: см. `AI_DOCS/DEPLOY_RULES.md`
-
-## Add a tour (quick path)
-1) Create `src/data/tours/<slug>/static.ts` exporting `tourData: TourData` and `routePoints: RoutePoint[]` (with coordinates). 2) `index.ts` → `export * from './static';` 3) Append to `toursRegistry.ts` (keep `isActive: true`, tags). 4) Add route in `src/App.tsx` if needed.
-
-## iOS 26 design constraints
-- Use only `#007AFF` for interactive elements; glassmorphism backdrop blur(20px)/saturate(180%); SF Pro stack; footer `#1C1C1E`; rating format “⭐ 4.9”. Use `CheoLanLake` as visual reference.
-
-## Telegram integration
-- Bot lives in `bot/`. Tokens are stored in hosting env vars (Koyeb). Never commit `bot/.env`. Booking flows pipe to Telegram; share falls back from Telegram WebApp → Web Share → clipboard.
-
-## Common fixes
-- Tour missing in UI: check registry `isActive`, tags.
-- All tours broken after edit → likely `TourPageTemplate.tsx`; restore from backup.
-- Deploy failed → check index.html for malformed HTML, ensure clean `</html>` ending.
-
-## Key refs
-`src/components/TourPageTemplate.tsx` • `src/components/UniversalBookingModal.tsx` • `src/data/toursRegistry.ts` • `src/types/Tour.ts` • `src/components/TelegramBottomNav.tsx` • `AI_DOCS/` (quick refs and deep dives)
-
-When editing, keep consistency with existing patterns; verify changes by reading the file after edits.
+- `src/components/TourPageTemplate.tsx` — universal tour renderer
+- `src/components/UniversalBookingModal.tsx` — booking dialog
+- `src/data/toursRegistry.ts` — central tour registry (23 tours)
+- `src/types/Tour.ts` — TypeScript interfaces
+- `src/App.tsx` — routing (HashRouter)
+- `AI_DOCS/` — detailed guides (GPS routes, deploy rules, design specs)

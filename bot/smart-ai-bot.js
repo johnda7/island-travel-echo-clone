@@ -16,7 +16,7 @@ const MANAGER_CHAT_ID = 1217592929; // ID менеджера
 const WEBHOOK_DOMAIN = process.env.WEBHOOK_DOMAIN || 'small-robinia-phukeo-8b5e1e16.koyeb.app';
 const PORT = process.env.PORT || 8000;
 
-// ====== БАЗА ДАННЫХ ТУРОВ (22 тура) ======
+// ====== БАЗА ДАННЫХ ТУРОВ (26 туров) ======
 const TOURS_DB = {
   // === ПОПУЛЯРНЫЕ МНОГОДНЕВНЫЕ ТУРЫ ===
   'phi-phi-2days': {
@@ -598,6 +598,8 @@ bot.action('cat_sea', async (ctx) => {
           [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
           [{ text: '🏖️ Рача + Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
           [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
+          [{ text: '🌅 Пхи-Пхи+Рача+Майтон Sunset — 2800฿', callback_data: 'select_phi-phi-racha-maiton-sunset' }],
+          [{ text: '🐚 Коралловые острова (Раваи) — 1300฿', callback_data: 'select_coral-islands-rawai' }],
           [{ text: '💎 5 Жемчужин Deluxe — 9900฿', callback_data: 'select_pearls-andaman-sea-deluxe' }],
           [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
@@ -620,6 +622,8 @@ bot.action('cat_islands', async (ctx) => {
           [{ text: '🐠 Симиланы — 3500฿', callback_data: 'select_similan-islands' }],
           [{ text: '🏖️ Рача + Корал — 2200฿', callback_data: 'select_racha-coral-islands-speedboat' }],
           [{ text: '🌟 11 островов МЕГА — 4900฿', callback_data: 'select_eleven-islands-mega' }],
+          [{ text: '🌅 Пхи-Пхи+Рача+Майтон Sunset — 2800฿', callback_data: 'select_phi-phi-racha-maiton-sunset' }],
+          [{ text: '🐚 Коралловые острова (Раваи) — 1300฿', callback_data: 'select_coral-islands-rawai' }],
           [{ text: '💎 5 Жемчужин Deluxe — 9900฿', callback_data: 'select_pearls-andaman-sea-deluxe' }],
           [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
@@ -639,7 +643,9 @@ bot.action('cat_adventure', async (ctx) => {
           [{ text: '🚣 Рафтинг + SPA + ATV — 2900฿', callback_data: 'select_rafting-atv-zipline' }],
           [{ text: '🐘 Као Лак Сафари — 3200฿', callback_data: 'select_kao-lak-safari-1-day' }],
           [{ text: '🏝️ Джеймс Бонд — 2900฿', callback_data: 'select_james-bond-island-phang-nga' }],
+          [{ text: '🐘 Слоны + Самет + Mantra Spa — 3100฿', callback_data: 'select_elephant-beach-samet-mantra-spa' }],
           [{ text: '🎣 Рыбалка на рассвете — 4500฿', callback_data: 'select_fishing-sunrise' }],
+          [{ text: '🤿 Дайвинг Андаман — 4100฿', callback_data: 'select_diving-andaman' }],
           [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
       }
@@ -660,6 +666,7 @@ bot.action('cat_nature', async (ctx) => {
           [{ text: '💚 Тайны Краби — 3100฿', callback_data: 'select_krabi-secrets' }],
           [{ text: '🌉 Пхангнга + Стеклянный мост — 2600฿', callback_data: 'select_phang-nga-glass-bridge' }],
           [{ text: '🛕 Достопримечательности — 1800฿', callback_data: 'select_dostoprimechatelnosti-phuketa' }],
+          [{ text: '🤿 Дайвинг Андаман — 4100฿', callback_data: 'select_diving-andaman' }],
           [{ text: '⬅️ Назад', callback_data: 'back_to_menu' }]
         ]
       }

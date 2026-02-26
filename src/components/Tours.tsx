@@ -416,9 +416,15 @@ function TourCard({
 
             <div className="flex flex-wrap gap-1 mb-4">
               {tour.tags?.slice(0, 3).map((tag: string, index: number) => (
-                <span key={index} className="text-xs px-2 py-1 rounded-md" style={{ background: 'rgba(0, 122, 255, 0.08)', color: '#007AFF', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif', fontWeight: 600 }}>
+                <Link
+                  key={index}
+                  to={`/tours?tag=${encodeURIComponent(tag)}`}
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-xs px-2 py-1 rounded-md cursor-pointer hover:opacity-80 active:scale-95 transition-all"
+                  style={{ background: 'rgba(0, 122, 255, 0.08)', color: '#007AFF', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif', fontWeight: 600, textDecoration: 'none' }}
+                >
                   #{tag}
-                </span>
+                </Link>
               ))}
             </div>
 

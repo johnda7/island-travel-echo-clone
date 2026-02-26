@@ -175,10 +175,17 @@ const Tours = () => {
                         <button
                           key={tag}
                           onClick={() => handleTagClick(tag)}
+                          onTouchEnd={(e) => {
+                            e.preventDefault();
+                            handleTagClick(tag);
+                          }}
                           className={`px-3 py-1.5 text-sm font-semibold rounded-xl whitespace-nowrap transition-all duration-150 ${colorClasses}`}
                           style={{
                             fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
                             letterSpacing: '-0.01em',
+                            touchAction: 'manipulation',
+                            WebkitTapHighlightColor: 'transparent',
+                            cursor: 'pointer',
                             ...(isActive && {
                               transform: 'scale(1.05)',
                               boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)'

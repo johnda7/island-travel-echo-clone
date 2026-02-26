@@ -78,11 +78,7 @@ const DynamicTourPage = () => {
       .finally(() => setStaticLoading(false));
   }, [slug, cmsTour]);
   
-  // Отладка - проверяем есть ли галерея
-  if (tour) {
-    // eslint-disable-next-line no-console
-    console.log('⚙️ DynamicTourPage loaded:', { slug, source: cmsTour ? 'cms' : 'static', gallery: tour.gallery?.length });
-  }
+
 
   // Функции для галереи (все хуки включая useCallback должны быть здесь)
   const openModal = useCallback((image: string, index: number) => {
@@ -244,11 +240,7 @@ const DynamicTourPage = () => {
                     decoding="async"
                     fetchPriority={index === 0 ? 'high' : 'auto'}
                     onError={(e) => {
-                      console.log('❌ Не удалось загрузить изображение:', image.image_url);
-                      e.currentTarget.src = fallbackImage; // корректный fallback asset
-                    }}
-                    onLoad={() => {
-                      console.log('✅ Изображение загружено:', image.image_url);
+                      e.currentTarget.src = fallbackImage;
                     }}
                   />
                   {index === 4 && tour.gallery.length > 5 && (
@@ -298,11 +290,7 @@ const DynamicTourPage = () => {
                       decoding="async"
                       fetchPriority={index === 0 ? 'high' : 'auto'}
                       onError={(e) => {
-                        console.log('❌ Не удалось загрузить изображение:', image.image_url);
-                        e.currentTarget.src = fallbackImage; // корректный fallback asset
-                      }}
-                      onLoad={() => {
-                        console.log('✅ Изображение загружено:', image.image_url);
+                        e.currentTarget.src = fallbackImage;
                       }}
                     />
                     {index === 4 && tour.gallery.length > 5 && (

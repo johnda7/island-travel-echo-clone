@@ -461,23 +461,9 @@ function TourCard({
                 <button
                   type="button"
                   disabled={isLoading}
-                  onPointerDown={(e) => {
-                    // iOS-first tap reliability: react to pointerdown
-                    e.preventDefault();
-                    e.stopPropagation();
-                    (e.nativeEvent as any).stopImmediatePropagation?.();
-                    onBook();
-                  }}
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    (e.nativeEvent as any).stopImmediatePropagation?.();
-                    onBook();
-                  }}
-                  onTouchEnd={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    (e.nativeEvent as any).stopImmediatePropagation?.();
                     onBook();
                   }}
                   className="w-full px-4 py-3 rounded-xl font-bold text-white text-sm transition-all duration-150 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"

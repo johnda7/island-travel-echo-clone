@@ -30,12 +30,34 @@ interface TourPageTemplateProps {
   breadcrumbCategoryLink?: string;
 }
 
+// Маппинг категорий для breadcrumbs и бейджей
+const CATEGORY_LABELS: Record<string, string> = {
+  islands: 'Острова',
+  mainland: 'Экскурсии',
+  adventure: 'Приключения',
+  cultural: 'Культурные',
+  diving: 'Дайвинг',
+  fishing: 'Рыбалка',
+};
+
+const CATEGORY_BADGE_COLORS: Record<string, string> = {
+  islands: 'rgba(0, 122, 255, 0.92)',
+  mainland: 'rgba(255, 149, 0, 0.92)',
+  adventure: 'rgba(255, 59, 48, 0.92)',
+  cultural: 'rgba(175, 82, 222, 0.92)',
+  diving: 'rgba(0, 199, 190, 0.92)',
+  fishing: 'rgba(52, 199, 89, 0.92)',
+};
+
 export const TourPageTemplate = ({ 
   tourData, 
   routePoints,
   breadcrumbCategory = "Туры",
   breadcrumbCategoryLink = "/tours"
 }: TourPageTemplateProps) => {
+  // Динамическая категория для breadcrumbs
+  const categoryLabel = tourData.category ? CATEGORY_LABELS[tourData.category] || tourData.category : 'Туры';
+  const categoryBadgeColor = tourData.category ? CATEGORY_BADGE_COLORS[tourData.category] || 'rgba(100, 100, 100, 0.92)' : 'rgba(100, 100, 100, 0.92)';
   const location = useLocation();
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -346,8 +368,8 @@ export const TourPageTemplate = ({
               {breadcrumbCategory}
             </Link>
             <span className="text-gray-400">›</span>
-            <Link to={breadcrumbCategoryLink} className="hover:text-[#007AFF] transition-colors">
-              Приключения
+            <Link to={`/tours?category=${tourData.category || ''}`} className="hover:text-[#007AFF] transition-colors">
+              {categoryLabel}
             </Link>
             <span className="text-gray-400">›</span>
             <span className="text-gray-900 font-medium line-clamp-1">{tourData.title}</span>
@@ -395,21 +417,23 @@ export const TourPageTemplate = ({
               style={{ userSelect: 'none' }}
             />
 
-            {/* Badges - iOS 26 compact mobile */}
+            {/* Badges - iOS 26 compact mobile (dynamic) */}
             <div className="absolute top-2.5 left-2.5 flex flex-wrap gap-1.5">
+              {tourData.isPopular && (
+                <span className="px-2 py-0.5 text-white text-[10px] font-bold tracking-wider rounded-md backdrop-blur-xl" style={{
+                  background: 'rgba(255, 59, 48, 0.92)',
+                  textShadow: '0 1px 2px rgba(0,0,0,0.25)',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.15)'
+                }}>
+                  ХИТ
+                </span>
+              )}
               <span className="px-2 py-0.5 text-white text-[10px] font-bold tracking-wider rounded-md backdrop-blur-xl" style={{
-                background: 'rgba(255, 59, 48, 0.92)',
+                background: categoryBadgeColor,
                 textShadow: '0 1px 2px rgba(0,0,0,0.25)',
                 boxShadow: '0 1px 3px rgba(0, 0, 0, 0.15)'
               }}>
-                ХИТ
-              </span>
-              <span className="px-2 py-0.5 text-white text-[10px] font-bold tracking-wider rounded-md backdrop-blur-xl" style={{
-                background: 'rgba(52, 199, 89, 0.92)',
-                textShadow: '0 1px 2px rgba(0,0,0,0.25)',
-                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.15)'
-              }}>
-                ПРИРОДА
+                {categoryLabel.toUpperCase()}
               </span>
             </div>
 
@@ -472,21 +496,23 @@ export const TourPageTemplate = ({
                 }}>
                   <img src={sortedGallery[0]} alt="Main" loading="eager" className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105" />
                   
-                  {/* Desktop badges */}
+                  {/* Desktop badges (dynamic) */}
                   <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                    {tourData.isPopular && (
+                      <span className="px-2.5 py-1 text-white text-[11px] font-bold tracking-wider rounded-lg" style={{
+                        background: 'rgba(255, 59, 48, 0.92)',
+                        backdropFilter: 'blur(20px) saturate(180%)',
+                        textShadow: '0 1px 2px rgba(0,0,0,0.25)'
+                      }}>
+                        ХИТ
+                      </span>
+                    )}
                     <span className="px-2.5 py-1 text-white text-[11px] font-bold tracking-wider rounded-lg" style={{
-                      background: 'rgba(255, 59, 48, 0.92)',
+                      background: categoryBadgeColor,
                       backdropFilter: 'blur(20px) saturate(180%)',
                       textShadow: '0 1px 2px rgba(0,0,0,0.25)'
                     }}>
-                      ХИТ
-                    </span>
-                    <span className="px-2.5 py-1 text-white text-[11px] font-bold tracking-wider rounded-lg" style={{
-                      background: 'rgba(52, 199, 89, 0.92)',
-                      backdropFilter: 'blur(20px) saturate(180%)',
-                      textShadow: '0 1px 2px rgba(0,0,0,0.25)'
-                    }}>
-                      ПРИРОДА
+                      {categoryLabel.toUpperCase()}
                     </span>
                   </div>
 

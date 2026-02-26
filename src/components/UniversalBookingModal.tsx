@@ -406,6 +406,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
                 style={{ 
                   borderColor: 'rgba(0, 0, 0, 0.15)'
                 }}
+                min={new Date().toISOString().split('T')[0]}
                 value={formData.date}
                 onChange={(e) => setFormData({...formData, date: e.target.value})}
                 required

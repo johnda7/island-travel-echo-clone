@@ -354,7 +354,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: true,
     isActive: true,
     isFeatured: true,
-    priority: 25,
+    priority: 29,
     data: () => Promise.resolve(phiPhiRachaMaitonSunsetTourData)
   },
 

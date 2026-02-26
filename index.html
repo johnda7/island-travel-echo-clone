@@ -11,7 +11,6 @@
     <link rel="preconnect" href="https://telegram.org" crossorigin />
     
     <!-- Preload критичных ресурсов -->
-    <link rel="preload" href="/src/main.tsx" as="script" />
     <link rel="preload" href="https://telegram.org/js/telegram-web-app.js" as="script" />
     
     <!-- RSS Feed для автоиндексации -->
@@ -25,7 +24,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
     
     <!-- Telegram Web App SDK -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script defer src="https://telegram.org/js/telegram-web-app.js"></script>
     
     <!-- Google Analytics 4 - TODO: заменить G-XXXXXXXXXX на реальный ID -->
     <!--
@@ -41,10 +40,10 @@
     </script>
     -->
     <script>
-      // Заглушки для функций аналитики
+      // Заглушки для функций аналитики (подставьте реальные ID GA4 и Яндекс.Метрики)
       window.dataLayer = window.dataLayer || [];
-      window.trackBooking = function(tourName, price) { console.log('Track booking:', tourName, price); };
-      window.trackTourView = function(tourName) { console.log('Track tour view:', tourName); };
+      window.trackBooking = function(tourName, price) {};
+      window.trackTourView = function(tourName) {};
     </script>
     
     <!-- Yandex Metrika - TODO: заменить XXXXXXXXX на реальный ID счётчика -->
@@ -67,7 +66,7 @@
     -->
     
     <title>ПхукетGO - Туры и экскурсии на Пхукете | Острова Пхи-Пхи, бухта Майя</title>
-    <meta name="description" content="⭐ Лучшие туры на Пхукете 2025! Острова Пхи-Пхи, бухта Майя, Джеймс Бонд от 1900฿. 🏝️ Русскоязычные гиды 🚤 Трансфер включен ✅ Рейтинг 4.9/5" />
+    <meta name="description" content="⭐ Лучшие туры на Пхукете 2026! Острова Пхи-Пхи, бухта Майя, Джеймс Бонд от 1900฿. 🏝️ Русскоязычные гиды 🚤 Трансфер включен ✅ Рейтинг 4.9/5" />
     <meta name="keywords" content="туры пхукет, экскурсии пхукет, пхи пхи майя бей, джеймс бонд пхукет, симиланские острова, рача яй, пхукет гид, экскурсии на пхукете, острова пхукет, пхукет что посмотреть" />
     <meta name="author" content="ПхукетGO - Туристическое агентство" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />

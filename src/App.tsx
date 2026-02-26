@@ -1,3 +1,4 @@
+import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,47 +7,49 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { TelegramProvider } from "@/contexts/TelegramContext";
 
-// Существующие страницы
+// Существующие страницы (критичные — синхронный импорт)
 import Index from "./pages/Index";
 import Tours from "./pages/Tours";
-import ContactPage from "./pages/ContactPage";
-import AdminPanelNew from "./pages/AdminPanelNew"; // Новая улучшенная админка
-import BookingPage from "./pages/BookingPage";
-import ReviewsPage from "./pages/ReviewsPage";
 import NotFound from "./pages/NotFound";
-import FAQPage from "./pages/FAQPage";
-import BookingHelpPage from "./pages/BookingHelpPage";
-import PaymentHelpPage from "./pages/PaymentHelpPage";
-import InfoPage from "./pages/InfoPage";
-import TourVoucherPage from "./pages/TourVoucherPage";
 
-// Существующие туры
-import PearlsAndamanSeaNew from "./pages/PearlsAndamanSeaNew";
-import DostoprimechatelnostiPhuketaNew from "./pages/DostoprimechatelnostiPhuketaNew";
-import JamesBondIslandTourNew from "./pages/JamesBondIslandTourNew";
-import RachaCoralIslandsTourNew from "./pages/RachaCoralIslandsTourNew";
-import RaftingSpaAtvTourNew from "./pages/RaftingSpaAtvTourNew";
-import { RaftingSpa1DayNew } from "./pages/RaftingSpa1DayNew";
-import KaoLakSafariTourNew from "./pages/KaoLakSafariTourNew";
-import AvatarPlusHangdongNew from "./pages/AvatarPlusHangdongNew";
-import ElevenIslandsMegaTourNew from "./pages/ElevenIslandsMegaTourNew";
-import PhangNgaSkywalkNew from "./pages/PhangNgaSkywalkNew";
-import CheoLanLakeNew from "./pages/CheoLanLakeNew";
-import PhiPhi2Days1NightNew from "./pages/PhiPhi2Days1NightNew";
-import SimilanIslandsNew from "./pages/SimilanIslandsNew";
-import SimilanIslandsEarlyNew from "./pages/SimilanIslandsEarlyNew";
-import SimilanIslandsSpeedboatNew from "./pages/SimilanIslandsSpeedboatNew";
-import FishingSunriseNew from "./pages/FishingSunriseNew";
-import RachaCoralSunriseNew from "./pages/RachaCoralSunriseNew";
-import RachaCoralRawaiNew from "./pages/RachaCoralRawaiNew";
-import PhiPhiSunriseNew from "./pages/PhiPhiSunriseNew";
-import FivePearls2DaysNew from "./pages/FivePearls2DaysNew";
-import PhangNgaSametNew from "./pages/PhangNgaSametNew";
-import KrabiSecretsNew from "./pages/KrabiSecretsNew";
-import PhiPhiRachaMaitonSunsetNew from "./pages/PhiPhiRachaMaitonSunsetNew";
-import ElephantBeachSametMantraSpaNew from "./pages/ElephantBeachSametMantraSpaNew";
-import CoralIslandsRawaiNew from "./pages/CoralIslandsRawaiNew";
-import DivingAndamanNew from "./pages/DivingAndamanNew";
+// Страницы загружаемые лениво
+const ContactPage = lazy(() => import("./pages/ContactPage"));
+const AdminPanelNew = lazy(() => import("./pages/AdminPanelNew"));
+const BookingPage = lazy(() => import("./pages/BookingPage"));
+const ReviewsPage = lazy(() => import("./pages/ReviewsPage"));
+const FAQPage = lazy(() => import("./pages/FAQPage"));
+const BookingHelpPage = lazy(() => import("./pages/BookingHelpPage"));
+const PaymentHelpPage = lazy(() => import("./pages/PaymentHelpPage"));
+const InfoPage = lazy(() => import("./pages/InfoPage"));
+const TourVoucherPage = lazy(() => import("./pages/TourVoucherPage"));
+
+// Туры — lazy loading (основная экономия bundle)
+const PearlsAndamanSeaNew = lazy(() => import("./pages/PearlsAndamanSeaNew"));
+const DostoprimechatelnostiPhuketaNew = lazy(() => import("./pages/DostoprimechatelnostiPhuketaNew"));
+const JamesBondIslandTourNew = lazy(() => import("./pages/JamesBondIslandTourNew"));
+const RachaCoralIslandsTourNew = lazy(() => import("./pages/RachaCoralIslandsTourNew"));
+const RaftingSpaAtvTourNew = lazy(() => import("./pages/RaftingSpaAtvTourNew"));
+const RaftingSpa1DayNew = lazy(() => import("./pages/RaftingSpa1DayNew"));
+const KaoLakSafariTourNew = lazy(() => import("./pages/KaoLakSafariTourNew"));
+const AvatarPlusHangdongNew = lazy(() => import("./pages/AvatarPlusHangdongNew"));
+const ElevenIslandsMegaTourNew = lazy(() => import("./pages/ElevenIslandsMegaTourNew"));
+const PhangNgaSkywalkNew = lazy(() => import("./pages/PhangNgaSkywalkNew"));
+const CheoLanLakeNew = lazy(() => import("./pages/CheoLanLakeNew"));
+const PhiPhi2Days1NightNew = lazy(() => import("./pages/PhiPhi2Days1NightNew"));
+const SimilanIslandsNew = lazy(() => import("./pages/SimilanIslandsNew"));
+const SimilanIslandsEarlyNew = lazy(() => import("./pages/SimilanIslandsEarlyNew"));
+const SimilanIslandsSpeedboatNew = lazy(() => import("./pages/SimilanIslandsSpeedboatNew"));
+const FishingSunriseNew = lazy(() => import("./pages/FishingSunriseNew"));
+const RachaCoralSunriseNew = lazy(() => import("./pages/RachaCoralSunriseNew"));
+const RachaCoralRawaiNew = lazy(() => import("./pages/RachaCoralRawaiNew"));
+const PhiPhiSunriseNew = lazy(() => import("./pages/PhiPhiSunriseNew"));
+const FivePearls2DaysNew = lazy(() => import("./pages/FivePearls2DaysNew"));
+const PhangNgaSametNew = lazy(() => import("./pages/PhangNgaSametNew"));
+const KrabiSecretsNew = lazy(() => import("./pages/KrabiSecretsNew"));
+const PhiPhiRachaMaitonSunsetNew = lazy(() => import("./pages/PhiPhiRachaMaitonSunsetNew"));
+const ElephantBeachSametMantraSpaNew = lazy(() => import("./pages/ElephantBeachSametMantraSpaNew"));
+const CoralIslandsRawaiNew = lazy(() => import("./pages/CoralIslandsRawaiNew"));
+const DivingAndamanNew = lazy(() => import("./pages/DivingAndamanNew"));
 
 // Динамический компонент для CMS туров
 import DynamicTourPage from "./components/DynamicTourPage";
@@ -54,7 +57,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import { TelegramBottomNav } from "./components/TelegramBottomNav";
 
 // Аналитика
-import AnalyticsDashboard from "./pages/AnalyticsDashboard";
+const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
 
 const queryClient = new QueryClient();
 
@@ -68,6 +71,7 @@ function App() {
           <HashRouter>
             <ScrollToTop />
             <ErrorBoundary>
+              <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-3 border-[#007AFF] border-t-transparent rounded-full animate-spin" /></div>}>
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/tours" element={<Tours />} />
@@ -187,6 +191,7 @@ function App() {
               {/* 404 страница */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+              </Suspense>
             
             {/* Нижняя навигация для Telegram Mini App */}
             <TelegramBottomNav />

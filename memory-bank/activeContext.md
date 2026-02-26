@@ -1,54 +1,38 @@
 # Active Context
 
 ## Current Session
-**Date:** 2025-12-21  
-**Mode:** Security Fix & Bot Update  
-**Task:** Исправление критической уязвимости (токены в публичном репо), пересоздание бота, настройка Koyeb API proxy
+**Date:** 2026-02-21  
+**Mode:** Maintenance & MCP Setup  
+**Task:** Обновление memory-bank, настройка MCP сервера, восстановление copilot-instructions.md
 
 ## Current Status
-- ✅ **КРИТИЧЕСКАЯ УЯЗВИМОСТЬ ИСПРАВЛЕНА** - токены удалены из кода
-- ✅ Старый бот @phuketgos_bot УДАЛЁН (случайно при revoke токена)
-- ✅ Новый бот @phukeo_bot создан (20.12.2025)
-- ✅ Koyeb обновлён с новым BOT_TOKEN
-- ✅ Добавлен /api/notify endpoint для безопасных уведомлений
-- ✅ bookingService.ts использует Koyeb API (не прямой Telegram API)
-- ✅ Команды бота сокращены до только /start (убраны /tours, /help)
-- ⏳ Ожидается автодеплой Koyeb с новым кодом бота
+- ✅ **copilot-instructions.md** восстановлен (был повреждён — склеенные секции)
+- ✅ Memory-bank обновлён до актуального состояния (февраль 2026)
+- ✅ MCP Memory Bank настроен в .vscode/settings.json
+- ✅ 23 папки туров в src/data/tours/ (включая eleven-islands-standard)
+- ✅ Все туры на TourPageTemplate
+- ✅ Безопасность: токены только в Koyeb env vars
 
 ## Repository Status
-- **Total files:** ~1197 файлов
-- **Last commit:** 59f4878 - "fix: только /start команда"
-- **Deploy workflow:** deploy-canonical.yml (единственный активный)
-- **Koyeb:** Автодеплой бота при изменениях в bot/
+- **Ветка:** main
+- **Деплой:** deploy-canonical.yml (единственный активный)
+- **Сайт:** https://phukeo.com (GitHub Pages)
+- **Бот:** @phukeo_bot (Koyeb: small-robinia-phukeo-8b5e1e16.koyeb.app)
 
-## Telegram Bot (ОБНОВЛЕНО 2025-12-21)
-- **Старый бот:** @phuketgos_bot - УДАЛЁН (revoke в BotFather)
-- **Новый бот:** @phukeo_bot
-- **Новый токен:** 8285085708:AAGTwOOM2pkgomdqz9SwYtyy44HrMgETFxs
+## Telegram Bot
+- **Бот:** @phukeo_bot (создан 20.12.2025)
+- **Токен:** В Koyeb env vars (НЕ в коде!)
 - **Manager Chat ID:** 1217592929
-- **Koyeb URL:** small-robinia-phukeo-8b5e1e16.koyeb.app
-- **API Endpoint:** /api/notify (для уведомлений с сайта)
-- **Команды:** только /start (убраны /tours, /help)
-
-## Security Fix (2025-12-20/21)
-- ❌ **БЫЛО:** Токены бота в публичном коде (КРИТИЧЕСКАЯ УЯЗВИМОСТЬ)
-- ✅ **СТАЛО:** Токены только в Koyeb env vars
-- ✅ **bookingService.ts:** Использует KOYEB_API_URL вместо прямого Telegram API
-- ✅ **UniversalBookingModal.tsx:** Уведомления через Koyeb /api/notify
+- **API Endpoint:** /api/notify (уведомления с сайта через Koyeb proxy)
+- **Команды:** только /start
 
 ## Key Files for AI Agents
-1. **.github/copilot-instructions.md** - основной промпт (66 строк)
-2. **AI_DOCS/AI_PROMPT_OPTIMIZED.md** - оптимизированный промпт
-3. **AI_DOCS/DEPLOY_RULES.md** - критические правила деплоя
-
-## Recent Updates
-- 2025-12-21: Убраны команды /tours и /help из бота (commit 59f4878)
-- 2025-12-21: Добавлен /api/notify endpoint в бот
-- 2025-12-20: Создан новый бот @phukeo_bot
-- 2025-12-20: Удалены токены из публичного кода
-- 2025-12-20: Обновлён bookingService.ts на Koyeb API
-- 2025-12-19: Удалён маршрут из тура 4 Жемчужины
+1. `.github/copilot-instructions.md` — основной промпт (~75 строк)
+2. `AI_DOCS/AI_PROMPT_OPTIMIZED.md` — оптимизированный промпт
+3. `AI_DOCS/DEPLOY_RULES.md` — критические правила деплоя
+4. `memory-bank/` — контекст проекта для AI агентов
 
 ## Known Issues
-- **Mini App 404:** При первом открытии показывает 404. Нужно в BotFather обновить URL на https://phukeo.com/#/
+- **Mini App 404:** При первом открытии — обновить URL в BotFather на https://phukeo.com/#/
 - **HashRouter:** Используется для GitHub Pages совместимости
+- **React 18 vs 19:** react-leaflet@5.0.0 требует React 19, решается --legacy-peer-deps

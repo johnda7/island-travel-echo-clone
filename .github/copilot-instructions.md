@@ -1,4 +1,4 @@
-# Phuket Tours Platform — AI Agent Instructions
+# Phuket Tours Platform — Copilot Instructions
 
 React 18 + TypeScript + Vite. WordPress-style CMS on React: one universal template (`TourPageTemplate`) renders all tours; a central registry (`toursRegistry.ts`) is the "DB". Design: iOS 26 (glassmorphism, SF Pro, `#007AFF`). Live: https://phukeo.com. Uses HashRouter.
 
@@ -13,48 +13,97 @@ React 18 + TypeScript + Vite. WordPress-style CMS on React: one universal templa
 
 ## Add a new tour (step-by-step)
 
-1. **Create data**: `src/data/tours/<slug>/static.ts` — export `<name>TourData: TourData` (reference: `cheow-lan-lake/static.ts`).
-   - Images: import via `@/assets/<slug>/...` (Vite alias `@` → `src/`). Never use deep relative paths.
-   - Required fields: `id`, `title`, `subtitle`, `description`, `route`, `mainImage`, `gallery`, `priceAdult`, `priceChild`, `currency` (`"฿"`), `duration`, `groupSize`, `rating`, `highlights`, `itinerary`.
-2. **Create index**: `src/data/tours/<slug>/index.ts` → `export { <name>TourData } from './static';`
-3. **Create page**: `src/pages/<TourName>New.tsx`:
-   ```tsx
-   import { TourPageTemplate } from "@/components/TourPageTemplate";
-   import { myTourData } from "@/data/tours/<slug>";
-   import type { RoutePoint } from "@/types/Tour";
-   const routePoints: RoutePoint[] = [
-     { name: 'Start', coordinates: [7.88, 98.39], type: 'start', time: '08:00', description: '...' },
-   ];
-   export default () => <TourPageTemplate tourData={myTourData} routePoints={routePoints} />;
-   ```
-4. **Register**: Append to `TOURS_REGISTRY` array in `src/data/toursRegistry.ts`:
-   - Import tourData at top. Append object: `{ id, name, category ('islands'|'mainland'|'adventure'|'cultural'|'diving'|'fishing'), tags, isPopular, isActive: true, isFeatured, priority (next number), data: () => Promise.resolve(tourData) }`.
-5. **Add routes**: In `src/App.tsx`, import page, add `<Route path="/excursion/<slug>">` and `<Route path="/tours/<slug>">` ABOVE the dynamic `/:slug` catch-all.
+### CRITICAL RULES (from real bugs)
+- **index.ts** must have EXACTLY 1 export line. Duplicate exports → build crash "Multiple exports with the same name".
+- **RoutePoint coordinates** are REQUIRED `[lat, lng]`. Missing → runtime TypeError crash.
+- **Images** MUST use `@/assets/...` import path. Never `../../assets` or bare URLs.
+- **Routes** MUST be ABOVE the `/:slug` catch-all in App.tsx.
+- **priority** in registry MUST be next sequential number (currently last is 26, next is 27).
+
+### Step 1: Create photos folder
+Create `src/assets/<slug>/` with photos named `photo-1.jpg`, `photo-2.jpg`, etc. Use Unsplash URLs as placeholders if real photos aren't ready yet.
+
+### Step 2: Create data — `src/data/tours/<slug>/static.ts`
+Export `<name>TourData: TourData` (reference: `elephant-beach-samet-mantra-spa/static.ts`).
+- Images: import via `@/assets/<slug>/...` (Vite alias `@` → `src/`).
+- Required fields: `id`, `title`, `subtitle`, `description`, `route`, `mainImage`, `gallery`, `priceAdult`, `priceChild`, `currency` (`"฿"`), `duration`, `groupSize`, `rating`, `highlights`, `itinerary`, `included`, `excluded`, `importantInfo`, `category`, `tags`, `isPopular`.
+
+### Step 3: Create index — `src/data/tours/<slug>/index.ts`
+**EXACTLY ONE LINE:**
+```typescript
+export { <name>TourData } from './static';
+```
+⚠️ NEVER duplicate this line! Build will crash.
+
+### Step 4: Create page — `src/pages/<TourName>New.tsx`
+```tsx
+import { TourPageTemplate } from "@/components/TourPageTemplate";
+import { myTourData } from "@/data/tours/<slug>";
+import type { RoutePoint } from "@/types/Tour";
+
+const routePoints: RoutePoint[] = [
+  { name: 'Отели Пхукета', coordinates: [7.8804, 98.3923], type: 'start', time: '08:00', description: 'Сбор гостей' },
+  // ⚠️ EVERY RoutePoint MUST have coordinates!
+];
+
+export default () => <TourPageTemplate tourData={myTourData} routePoints={routePoints} />;
+```
+
+### Step 5: Register — `src/data/toursRegistry.ts` + `src/App.tsx`
+
+**Registry:** Add import at top. Append entry to `TOURS_REGISTRY` array BEFORE the `// ➕ ДОБАВЛЯЯ СЮДА` comment:
+```typescript
+{
+  id: '<slug>',
+  name: 'Tour Name',
+  category: 'adventure', // islands|mainland|adventure|cultural|diving|fishing
+  tags: ['tag1', 'tag2'],
+  isPopular: true,
+  isActive: true,
+  isFeatured: true,
+  priority: 27, // NEXT sequential number!
+  data: () => Promise.resolve(tourData)
+},
+```
+
+**Routes in App.tsx:** Add import + 2 routes ABOVE `/:slug` catch-all:
+```tsx
+<Route path="/excursion/<slug>" element={<TourPage />} />
+<Route path="/tours/<slug>" element={<TourPage />} />
+```
+
+### Post-creation checklist
+1. ✅ `index.ts` has exactly 1 export line
+2. ✅ Every RoutePoint has `coordinates: [lat, lng]`
+3. ✅ `priority` is next number after last
+4. ✅ Routes are above catch-all in App.tsx
+5. ✅ All image imports use `@/assets/...`
+6. ✅ Deploy and visually verify at `https://phukeo.com/#/tours/<slug>`
 
 ## Golden rules
 
-- **RoutePoint coordinates**: every `RoutePoint` MUST include `coordinates: [lat, lng]`. Missing → runtime "reading 'lat'" crash.
-- **Images**: always `@/assets/...`. No `../../assets` or bare URLs.
 - **PROTECTED files** — never modify without backup: `TourPageTemplate.tsx`, `UniversalBookingModal.tsx`, `toursRegistry.ts`.
 - **NEVER append to `index.html`** with echo/cat — breaks HTML parsing.
 - **React 18 + react-leaflet 5 conflict**: project uses `--legacy-peer-deps`. Do NOT upgrade react-leaflet without testing.
+- **ALWAYS visually check** the page in browser before reporting completion.
 
 ## Dev & Build
 
 - `npm run dev` — Vite dev server on port 8080.
-- `npm run build` — production build + postbuild (`scripts/postbuild.cjs`, `scripts/generate-og-pages.mjs`). Output: `dist/`.
+- `npm run build` — production build + postbuild. Output: `dist/`.
 - `npm run backup-template` / `npm run restore-template` — protect `TourPageTemplate.tsx`.
+- `npm install --legacy-peer-deps` — ALWAYS use this flag.
 
 ## Deployment
 
-- **ONLY** `.github/workflows/deploy-canonical.yml` — auto-deploys on push to `main` or `v*` tags. Uses `npm ci --legacy-peer-deps`.
-- `deploy-on-command.yml` is DISABLED — never use it.
-- Deploy: `git add . && git commit -m "msg" && git push origin main`.
+- **ONLY** `.github/workflows/deploy-canonical.yml` — auto-deploys on push to `main`.
+- Deploy: `git add -A && git commit -m "msg" && git push origin main`.
 - CDN cache: 1–5 min delay after deploy.
+- Rollback: `git reset --hard <commit> && git push origin main --force`.
 
 ## iOS 26 design
 
-- Interactive elements: `#007AFF`. Glassmorphism: `backdrop-filter: blur(20px) saturate(180%)`. Font: SF Pro. Footer: `#1C1C1E`. Rating format: "⭐ 4.9".
+- Interactive elements: `#007AFF`. Glassmorphism: `backdrop-filter: blur(20px) saturate(180%)`. Font: SF Pro. Footer: `#1C1C1E`. Rating: "⭐ 4.9".
 
 ## Telegram Mini App
 
@@ -64,14 +113,17 @@ React 18 + TypeScript + Vite. WordPress-style CMS on React: one universal templa
 ## Troubleshooting
 
 - Tour missing in UI → check `isActive: true` and `tags` in registry.
-- All tours broken → `TourPageTemplate.tsx` was modified; restore: `npm run restore-template`.
-- Deploy fails → check `index.html` ends with clean `</html>`.
+- All tours broken → restore template: `npm run restore-template`.
+- Deploy fails → check `index.html` ends with `</html>`, check index.ts for duplicate exports.
+- Build hangs → check for circular imports or corrupted files.
+- TypeError "Cannot read 'lat'" → RoutePoint missing `coordinates`.
 
 ## Key files
 
-- `src/components/TourPageTemplate.tsx` — universal tour renderer
+- `src/components/TourPageTemplate.tsx` — universal tour renderer (1067 lines)
 - `src/components/UniversalBookingModal.tsx` — booking dialog
-- `src/data/toursRegistry.ts` — central tour registry (23 tours)
+- `src/data/toursRegistry.ts` — central tour registry (26 entries, last priority: 26)
 - `src/types/Tour.ts` — TypeScript interfaces
 - `src/App.tsx` — routing (HashRouter)
-- `AI_DOCS/` — detailed guides (GPS routes, deploy rules, design specs)
+- `memory-bank/agentReference.md` — full AI agent reference with GPS coords, design specs
+- `AI_DOCS/` — detailed guides

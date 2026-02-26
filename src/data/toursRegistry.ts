@@ -36,6 +36,8 @@ import { phangNgaSametTourData } from './tours/phang-nga-samet';
 import { krabiSecretsTourData } from './tours/krabi-secrets';
 import { phiPhiRachaMaitonSunsetTourData } from './tours/phi-phi-racha-maiton-sunset';
 import { elephantBeachSametMantraSpaTourData } from './tours/elephant-beach-samet-mantra-spa';
+import { coralIslandsRawaiTourData } from './tours/coral-islands-rawai';
+import { divingAndamanTourData } from './tours/diving-andaman';
 
 import type { TourData } from '@/types/Tour';
 
@@ -367,6 +369,32 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isFeatured: true,
     priority: 26,
     data: () => Promise.resolve(elephantBeachSametMantraSpaTourData)
+  },
+
+  // 27. Коралловые острова с пирса Раваи (НОВЫЙ!)
+  {
+    id: 'coral-islands-rawai',
+    name: 'Коралловые острова с пирса Раваи',
+    category: 'islands',
+    tags: ['коралловые острова', 'раваи', 'снорклинг', 'пляж', 'море', 'хин дам', 'кораллы', 'острова', '1 день', 'короткий тур', 'пирс раваи'],
+    isPopular: true,
+    isActive: true,
+    isFeatured: true,
+    priority: 27,
+    data: () => Promise.resolve(coralIslandsRawaiTourData)
+  },
+
+  // 28. Дайвинг в Андаманском море (НОВЫЙ!)
+  {
+    id: 'diving-andaman',
+    name: 'Дайвинг в Андаманском море',
+    category: 'diving',
+    tags: ['дайвинг', 'погружение', 'андаманское море', 'подводный мир', 'кораллы', 'для новичков', 'инструктор', '1 день', 'море'],
+    isPopular: true,
+    isActive: true,
+    isFeatured: true,
+    priority: 28,
+    data: () => Promise.resolve(divingAndamanTourData)
   },
   
   // ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР - ОН АВТОМАТИЧЕСКИ ПОЯВЛЯЕТСЯ:

@@ -1,0 +1,1 @@
+export { divingAndamanTourData } from './static';

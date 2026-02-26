@@ -1,0 +1,1 @@
+export { coralIslandsRawaiTourData } from './static';

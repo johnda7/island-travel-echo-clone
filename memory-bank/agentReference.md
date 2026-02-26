@@ -1,6 +1,6 @@
 # AI Agent Quick Reference
 
-> Полная справка для AI агентов. Обновлено: 2026-02-26.
+> Полная справка для AI агентов. Обновлено: 2026-02-27.
 
 ## 1. Архитектура
 
@@ -12,74 +12,129 @@
 **Модульная CMS на React:**
 ```
 src/data/tours/<slug>/static.ts   → данные тура (TourData)
-src/data/tours/<slug>/index.ts    → re-export
+src/data/tours/<slug>/index.ts    → re-export (РОВНО 1 СТРОКА! Никаких дублей!)
 src/pages/<TourName>New.tsx       → тонкая обёртка (import data + routePoints → TourPageTemplate)
 src/App.tsx                       → маршруты (/excursion/<slug> + /tours/<slug>)
-src/data/toursRegistry.ts         → центральный реестр (23 записи)
+src/data/toursRegistry.ts         → центральный реестр (26 записей)
 ```
 
 ---
 
-## 2. Добавление нового тура — 5 шагов
+## 2. Добавление нового тура — ТОЧНАЯ ПРОЦЕДУРА (5 шагов)
 
-### Шаг 1: Данные — `src/data/tours/<slug>/static.ts`
+> ⚠️ **КРИТИЧЕСКИ ВАЖНО**: Следуй каждому шагу ТОЧНО. Ошибки ломают билд!
+
+### ❌ Типичные ошибки (ЗАПОМНИ!)
+1. **Дублирование экспорта в index.ts** — файл ДОЛЖЕН содержать РОВНО 1 строку. НИКОГДА не дублируй.
+2. **Забыть coordinates в RoutePoint** — без координат → crash.
+3. **Путь картинок `../../assets/`** — ВСЕГДА используй `@/assets/`.
+4. **Маршруты ниже catch-all** — ВСЕГДА добавляй ВЫШЕ `/:slug`.
+5. **Неправильный priority** — проверь последний номер в реестре, используй +1.
+
+### Шаг 1: Фото — `src/assets/<slug>/`
+- Создай папку `src/assets/<slug>/`
+- Если фото ещё нет — используй Unsplash заглушки (URL), потом заменишь
+- Если фото есть — скопируй, переименуй в `photo-1.jpg`, `photo-2.jpg` и т.д.
+
+### Шаг 2: Данные — `src/data/tours/<slug>/static.ts`
 ```typescript
 import type { TourData } from "@/types/Tour";
-import img1 from "@/assets/<slug>/photo-1.jpg";  // ВСЕГДА @/assets!
+// Фото: ВСЕГДА через @/assets/ (Vite alias @ → src/)
+import photo1 from "@/assets/<slug>/photo-1.jpg";
+import photo2 from "@/assets/<slug>/photo-2.jpg";
 
-export const myTourData: TourData = {
-  id: "<slug>", title: "...", subtitle: "...", description: "...",
-  priceAdult: 2500, priceChild: 2000, currency: "฿",
-  duration: "1 день", groupSize: "до 15 человек", rating: 4.9,
-  mainImage: img1, gallery: [img1, ...],
-  highlights: [...], itinerary: [{day:'', time:'06:00', activity:'...'}],
-  included: [...], excluded: [...], importantInfo: [...]
+export const mySlugTourData: TourData = {
+  id: "<slug>",
+  title: "НАЗВАНИЕ ТУРА CAPS",
+  subtitle: "Краткое описание • ключевые точки • 1 день",
+  description: `Полное описание тура...`,
+  route: "/tours/<slug>",
+  mainImage: photo1,
+  gallery: [photo1, photo2],
+  priceAdult: 2500,
+  priceChild: 2000,
+  currency: "฿",
+  duration: "1 день (07:00–18:00)",
+  groupSize: "до 15 человек",
+  rating: 4.9,
+  highlights: ["🏝 Описание 1", "🐘 Описание 2"],
+  itinerary: [
+    { day: "", time: "07:00", activity: "Сбор гостей..." },
+    { day: "", time: "10:00", activity: "Основная программа..." },
+  ],
+  included: ["Трансфер от отеля и обратно", "Гид", "Страховка", "Обед"],
+  excluded: ["Личные расходы"],
+  importantInfo: ["⏰ Время сбора 07:00–08:00"],
+  whatToBring: ["Купальник", "Крем от солнца", "Полотенце"],
+  category: "adventure", // islands|mainland|adventure|cultural|diving|fishing
+  tags: ["тег1", "тег2", "1 день"],
+  isPopular: true,
+  bookingNotes: "Бронирование минимум за 24 часа.",
 };
 ```
 
-### Шаг 2: Индекс — `src/data/tours/<slug>/index.ts`
+### Шаг 3: Индекс — `src/data/tours/<slug>/index.ts`
 ```typescript
-export { myTourData } from './static';
+export { mySlugTourData } from './static';
 ```
+> ⚠️ **РОВНО 1 СТРОКА!** Дублирование → билд крашится с "Multiple exports with the same name"!
 
-### Шаг 3: Страница — `src/pages/<TourName>New.tsx`
+### Шаг 4: Страница — `src/pages/<TourName>New.tsx`
 ```tsx
 import { TourPageTemplate } from "@/components/TourPageTemplate";
-import { myTourData } from "@/data/tours/<slug>";
+import { mySlugTourData } from "@/data/tours/<slug>";
 import type { RoutePoint } from "@/types/Tour";
 
 const routePoints: RoutePoint[] = [
-  { name: 'Пхукет', coordinates: [7.88, 98.39], type: 'start', time: '08:00', description: '...' },
-  { name: 'Точка 2', coordinates: [7.74, 98.78], type: 'stop', time: '10:00', description: '...' },
-  { name: 'Финиш', coordinates: [7.88, 98.39], type: 'destination', time: '18:00', description: '...' },
+  { name: 'Отели Пхукета', coordinates: [7.8804, 98.3923], type: 'start', time: '07:00', description: 'Сбор гостей' },
+  { name: 'Точка 2', coordinates: [8.27, 98.50], type: 'stop', time: '10:00', description: 'Описание...' },
+  { name: 'Отели Пхукета', coordinates: [7.8804, 98.3923], type: 'destination', time: '18:00', description: 'Возвращение' },
 ];
+// ⚠️ КАЖДЫЙ RoutePoint ОБЯЗАН иметь coordinates: [lat, lng]! Без них → TypeError crash!
 
-export default () => <TourPageTemplate tourData={myTourData} routePoints={routePoints} />;
+export default () => <TourPageTemplate tourData={mySlugTourData} routePoints={routePoints} />;
 ```
 
-### Шаг 4: Реестр — `src/data/toursRegistry.ts`
-```typescript
-// GOLDEN RULE: НЕ import tourData наверху! Только import().then()
-{
-  id: '<slug>',
-  name: 'Название тура',
-  category: 'islands', // islands|mainland|adventure|cultural|diving|fishing
-  tags: ['острова', 'катамаран'],
-  isPopular: true,
-  isActive: true,
-  isFeatured: true,
-  priority: 26, // следующий номер
-  data: () => import('./tours/<slug>').then(m => m.myTourData)
-  // ❌ НЕЛЬЗЯ: data: () => Promise.resolve(tourData) — сломает модалку!
-}
-```
+### Шаг 5: Реестр + Роуты
 
-### Шаг 5: Маршруты — `src/App.tsx`
-```tsx
-<Route path="/excursion/<slug>" element={<MyTourPage />} />
-<Route path="/tours/<slug>" element={<MyTourPage />} />
-// ВЫШЕ catch-all /:slug!
-```
+**5a. Реестр `src/data/toursRegistry.ts`:**
+1. Добавь import ВВЕРХУ файла (к остальным import`ам):
+   ```typescript
+   import { mySlugTourData } from './tours/<slug>';
+   ```
+2. Добавь запись в массив `TOURS_REGISTRY` ПЕРЕД комментарием `// ➕ ДОБАВЛЯЯ СЮДА НОВЫЙ ТУР`:
+   ```typescript
+   {
+     id: '<slug>',
+     name: 'Название тура',
+     category: 'adventure',
+     tags: ['тег1', 'тег2'],
+     isPopular: true,
+     isActive: true,
+     isFeatured: true,
+     priority: 27,  // ← СЛЕДУЮЩИЙ после последнего! Проверь!
+     data: () => Promise.resolve(mySlugTourData)
+   },
+   ```
+
+**5b. Маршруты `src/App.tsx`:**
+1. Добавь import ВВЕРХУ:
+   ```typescript
+   import MyTourPage from "@/pages/MyTourNew";
+   ```
+2. Добавь 2 Route'а ВЫШЕ catch-all `/:slug`:
+   ```tsx
+   <Route path="/excursion/<slug>" element={<MyTourPage />} />
+   <Route path="/tours/<slug>" element={<MyTourPage />} />
+   ```
+
+### После создания — ОБЯЗАТЕЛЬНО:
+1. **Проверь `index.ts`** — ровно 1 строка экспорта, без дублей
+2. **Проверь coordinates** — каждый RoutePoint имеет `[lat, lng]`
+3. **Проверь priority** — следующий номер после последнего
+4. **Проверь маршруты** — выше catch-all в App.tsx
+5. **Деплой**: `git add -A && git commit -m "feat: add <tour-name> tour" && git push origin main`
+6. **Подожди 1-5 мин** (CDN кеш), проверь: `https://phukeo.com/#/tours/<slug>`
 
 ---
 
@@ -192,10 +247,11 @@ border-radius: 12px;
 
 ---
 
-## 9. Текущее состояние (2026-02-26)
+## 9. Текущее состояние (2026-02-27)
 
-- **Туров в папках:** 24 (1 сирота: eleven-islands-standard)
-- **В реестре:** 23 активных
-- **Категории:** islands(9), adventure(7), diving(3), cultural(1), fishing(1)
-- **Последний добавлен:** phi-phi-racha-maiton-sunset (2800/2500 ฿)
-- **Последний коммит:** 1c30d83
+- **Туров в папках:** 25
+- **В реестре:** 26 записей (включая elephant-beach-samet-mantra-spa)
+- **Категории:** islands(9), adventure(8), diving(3), cultural(1), fishing(1)
+- **Последний добавлен:** elephant-beach-samet-mantra-spa (3100/2800 ฿)
+- **Следующий priority:** 27
+- **Последний коммит:** 5c3be50

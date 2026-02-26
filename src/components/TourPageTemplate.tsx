@@ -937,12 +937,15 @@ export const TourPageTemplate = ({
         />
       )}
 
-      <MobileBookingBar 
-        priceAdult={tourData.priceAdult} 
-        priceChild={tourData.priceChild} 
-        currency={tourData.currency} 
-        onBookingClick={() => openBooking()} 
-      />
+      {/* MobileBookingBar скрываем в Telegram — там TelegramBottomNav */}
+      {!isTelegram && (
+        <MobileBookingBar 
+          priceAdult={tourData.priceAdult} 
+          priceChild={tourData.priceChild} 
+          currency={tourData.currency} 
+          onBookingClick={() => openBooking()} 
+        />
+      )}
 
       {/* iOS 26 Gradient Divider before Footer */}
       <div className="relative h-16" style={{ 

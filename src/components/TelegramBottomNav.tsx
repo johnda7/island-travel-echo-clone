@@ -9,6 +9,7 @@ import { useEffect, useState, useMemo, useCallback } from "react";
 import { useTours } from "@/hooks/useTours";
 import { useAutoMenu } from "@/hooks/useAutoMenu";
 import { getTourDetailPath } from "@/lib/paths";
+import { useRef } from "react";
 
 // Haptic Feedback helper
 const haptic = (style: 'light' | 'medium' | 'heavy' = 'light') => {
@@ -44,6 +45,10 @@ export const TelegramBottomNav = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
+  
+  // Timestamp refs для предотвращения ghost click на мобильных
+  const menuOpenedAt = useRef(0);
+  const searchOpenedAt = useRef(0);
   
   // Используем туры для поиска и меню
   const { allTours, loading } = useTours();
@@ -157,9 +162,13 @@ export const TelegramBottomNav = () => {
       }
     } else if (item.path === "#search") {
       e.preventDefault();
+      e.stopPropagation();
+      searchOpenedAt.current = Date.now();
       setShowSearch(true);
     } else if (item.path === "#menu") {
       e.preventDefault();
+      e.stopPropagation();
+      menuOpenedAt.current = Date.now();
       setShowMenu(true);
     }
   };
@@ -191,7 +200,17 @@ export const TelegramBottomNav = () => {
       {showMenu && (
         <div 
           className="fixed inset-0 z-[60] flex flex-col justify-end"
-          onClick={() => setShowMenu(false)}
+          onClick={() => {
+            // Защита от ghost click: игнорируем клики в первые 400мс после открытия
+            if (Date.now() - menuOpenedAt.current < 400) return;
+            setShowMenu(false);
+          }}
+          onTouchEnd={(e) => {
+            if (Date.now() - menuOpenedAt.current < 400) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+          }}
         >
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
           
@@ -341,7 +360,17 @@ export const TelegramBottomNav = () => {
       {showSearch && (
         <div 
           className="fixed inset-0 z-[60] flex flex-col"
-          onClick={() => setShowSearch(false)}
+          onClick={() => {
+            // Защита от ghost click
+            if (Date.now() - searchOpenedAt.current < 400) return;
+            setShowSearch(false);
+          }}
+          onTouchEnd={(e) => {
+            if (Date.now() - searchOpenedAt.current < 400) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+          }}
         >
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
           
@@ -504,6 +533,7 @@ export const TelegramBottomNav = () => {
                   key={item.path}
                   onClick={(e) => handleNavClick(item, e)}
                   className="flex flex-col items-center justify-center flex-1 -mt-4"
+                  style={{ touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent' }}
                 >
                   <div 
                     className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-200"
@@ -536,6 +566,8 @@ export const TelegramBottomNav = () => {
                 className="flex flex-col items-center justify-center flex-1 py-2 transition-all duration-200"
                 style={{
                   color: '#8E8E93',
+                  touchAction: 'manipulation', // Убираем 300ms задержку на мобильных
+                  WebkitTapHighlightColor: 'transparent',
                 }}
               >
                 <div className="relative">

@@ -14,8 +14,9 @@
 src/data/tours/<slug>/static.ts   → данные тура (TourData)
 src/data/tours/<slug>/index.ts    → re-export (РОВНО 1 СТРОКА! Никаких дублей!)
 src/pages/<TourName>New.tsx       → тонкая обёртка (import data + routePoints → TourPageTemplate)
-src/App.tsx                       → маршруты (/excursion/<slug> + /tours/<slug>)
-src/data/toursRegistry.ts         → центральный реестр (28 записей)
+src/App.tsx                       → React.lazy() + Suspense для всех туров (code splitting)
+src/data/toursRegistry.ts         → центральный реестр (29 записей, priority до 29)
+src/components/Footer.tsx         → футер с контактами (Telegram, MAX)
 ```
 
 ---
@@ -112,7 +113,7 @@ export default () => <TourPageTemplate tourData={mySlugTourData} routePoints={ro
      isPopular: true,
      isActive: true,
      isFeatured: true,
-     priority: 27,  // ← СЛЕДУЮЩИЙ после последнего! Проверь!
+     priority: 30,  // ← СЛЕДУЮЩИЙ после последнего (29)! Проверь!
      data: () => Promise.resolve(mySlugTourData)
    },
    ```
@@ -250,11 +251,27 @@ border-radius: 12px;
 ## 9. Текущее состояние (2026-02-27)
 
 - **Туров в папках:** 27
-- **В реестре:** 28 записей
-- **Категории:** islands(10), adventure(8), diving(4), cultural(1), fishing(1)
-- **Последние добавлены (сессия 2026-02-27):**
-  - elephant-beach-samet-mantra-spa (3100/2800 ฿, adventure, priority 26)
-  - coral-islands-rawai (1300/1200 ฿, islands, priority 27)
-  - diving-andaman (4100/3900 ฿, diving, priority 28)
-- **Следующий priority:** 29
-- **Последний коммит:** 036de16
+- **В реестре:** 29 записей
+- **Категории:** islands(11), adventure(8), diving(4), cultural(1), fishing(1)
+- **Последний priority:** 29 (phi-phi-racha-maiton-sunset)
+- **Следующий priority:** 30
+- **Последний коммит:** 35c55b3
+
+### Аудит-фиксы (сессия 2026-02-27, commit 35c55b3)
+- **React.lazy()** — все 28+ страниц туров с code splitting через `Suspense`
+- **Динамические бейджи** — `CATEGORY_LABELS` + `CATEGORY_BADGE_COLORS` в TourPageTemplate.tsx
+- **Динамические хлебные крошки** — категория из `tourData.category`
+- **Футер** — 3 колонки: лого | навигация (Все туры, Отзывы, FAQ) | контакты (Telegram @Phuketga, MAX канал, MAX чат)
+- **Бронирование** — `min={today}` блокирует прошедшие даты
+- **Один onClick** на кнопке бронирования (убраны onPointerDown + onTouchEnd)
+- **console.log удалены** из DynamicTourPage.tsx и index.html
+- **Priority fix** — phi-phi-racha-maiton-sunset: 25 → 29
+- **Telegram SDK** — загружается с `defer`
+- **Meta** — год 2025 → 2026
+
+### Оставшиеся проблемы
+- eleven-islands-standard: папка-сирота, не в реестре
+- rafting-spa-1day: не передаёт routePoints
+- phi-phi-racha-maiton-sunset: последний RoutePoint type:"start" вместо "destination"
+- Телефон-заглушка "+66-XX-XXX-XXXX" в JSON-LD
+- GA/Yandex аналитика закомментирована (нужны ID)

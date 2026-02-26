@@ -96,10 +96,33 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
     });
   };
 
+  // ✅ Универсальный открыватель Telegram ссылок (Mini App + обычный браузер)
+  const openTelegramChat = (url: string) => {
+    try {
+      const tg = (window as any).Telegram?.WebApp;
+      if (tg && typeof tg.openTelegramLink === 'function') {
+        // Внутри Telegram Mini App — используем нативный метод
+        tg.openTelegramLink(url);
+      } else {
+        // Обычный браузер — открываем в новом окне
+        window.open(url, '_blank') || (window.location.href = url);
+      }
+    } catch {
+      window.location.href = url;
+    }
+  };
+
   const handleBooking = async () => {
     // ✅ ВАЛИДАЦИЯ ПОЛЕЙ
     if (!formData.name.trim() || !formData.phone.trim() || !formData.date) {
       alert('Пожалуйста, заполните все обязательные поля (Имя, Телефон, Дата)');
+      return;
+    }
+
+    // ✅ ВАЛИДАЦИЯ ДАТЫ — нельзя выбрать прошедшую дату
+    const today = new Date().toISOString().split('T')[0];
+    if (formData.date < today) {
+      alert('❌ Нельзя выбрать прошедшую дату. Выберите сегодняшнюю или будущую дату.');
       return;
     }
 
@@ -184,7 +207,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
           // ✅ РЕДИРЕКТ В TELEGRAM с готовым сообщением (3 секунды)
           setTimeout(() => {
             const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-            window.location.href = telegramUrl;
+            openTelegramChat(telegramUrl);
           }, 3000);
           
           return; // Не закрываем модал, т.к. переходим в Telegram
@@ -200,7 +223,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
         
         setTimeout(() => {
           const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-          window.location.href = telegramUrl;
+          openTelegramChat(telegramUrl);
         }, 3000);
       }
       

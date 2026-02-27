@@ -1,353 +1,278 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Главная страница - высший приоритет -->
+  <!-- Главная страница -->
   <url>
     <loc>https://phukeo.com/</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  <!-- Основные разделы - высокий приоритет -->
+
+  <!-- Основные разделы -->
   <url>
-    <loc>https://phukeo.com/#/beaches</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/what-to-visit</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/dostoprimechatelnosti</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Популярные пляжи - высокий приоритет -->
-  <url>
-    <loc>https://phukeo.com/#/beach/patong</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/kata</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/karon</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/naiharn</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/surin</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/kamala</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/bangtao</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Остальные пляжи - средний приоритет -->
-  <url>
-    <loc>https://phukeo.com/#/beach/banana-beach</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/mai-khao</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/naiyang</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/freedom</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/kata-noi</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/rawai</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/ya-nui</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/ao-sane</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/tri-trang</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/paradise-beach</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/kalim</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/nai-thon</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/pansea</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/panwa</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/ao-yon</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://phukeo.com/#/beach/laem-singh</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <!-- ⭐ TOURS - ВСЕ 27 ТУРОВ (Обновлено 27.02.2026) -->
-  
-  <!-- Главная страница туров -->
-  <url>
-    <loc>https://phukeo.com/#/tours</loc>
+    <loc>https://phukeo.com/tours</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
-  
+  <url>
+    <loc>https://phukeo.com/beaches</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/what-to-visit</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ⭐ ВСЕ 26 ТУРОВ — URL без # (статические HTML генерируются при build) -->
+
   <!-- Топ-3 популярных тура -->
   <url>
-    <loc>https://phukeo.com/#/tours/phi-phi-2days</loc>
+    <loc>https://phukeo.com/tours/phi-phi-2days</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/pearls-andaman-sea</loc>
+    <loc>https://phukeo.com/tours/pearls-andaman-sea</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/dostoprimechatelnosti-phuketa</loc>
+    <loc>https://phukeo.com/tours/dostoprimechatelnosti-phuketa</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
-  
+
   <!-- Островные туры -->
   <url>
-    <loc>https://phukeo.com/#/tours/similan-islands</loc>
+    <loc>https://phukeo.com/tours/similan-islands</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/similan-islands-early</loc>
+    <loc>https://phukeo.com/tours/similan-islands-early</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/similan-islands-speedboat</loc>
+    <loc>https://phukeo.com/tours/similan-islands-speedboat</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/james-bond-island-phang-nga</loc>
+    <loc>https://phukeo.com/tours/james-bond-island-phang-nga</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/eleven-islands-mega</loc>
+    <loc>https://phukeo.com/tours/eleven-islands-mega</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/racha-coral-islands-speedboat</loc>
+    <loc>https://phukeo.com/tours/racha-coral-islands-speedboat</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/racha-coral-sunrise</loc>
+    <loc>https://phukeo.com/tours/racha-coral-sunrise</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/racha-coral-rawai</loc>
+    <loc>https://phukeo.com/tours/racha-coral-rawai</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/coral-islands-rawai</loc>
+    <loc>https://phukeo.com/tours/coral-islands-rawai</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/phi-phi-racha-maiton-sunset</loc>
+    <loc>https://phukeo.com/tours/phi-phi-racha-maiton-sunset</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-  
+  <url>
+    <loc>https://phukeo.com/tours/phi-phi-sunrise</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/tours/five-pearls-2days</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <!-- Приключенческие туры -->
   <url>
-    <loc>https://phukeo.com/#/tours/rafting-spa-atv-1-day</loc>
+    <loc>https://phukeo.com/tours/rafting-spa-atv-1-day</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/rafting-spa-1day</loc>
+    <loc>https://phukeo.com/tours/rafting-spa-1day</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/kao-lak-safari-1-day</loc>
+    <loc>https://phukeo.com/tours/kao-lak-safari-1-day</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/avatar-plus-hangdong</loc>
+    <loc>https://phukeo.com/tours/avatar-plus-hangdong</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/elephant-beach-samet-mantra-spa</loc>
+    <loc>https://phukeo.com/tours/elephant-beach-samet-mantra-spa</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  
-  <!-- Природа и культура -->
   <url>
-    <loc>https://phukeo.com/#/tours/phang-nga-skywalk</loc>
+    <loc>https://phukeo.com/tours/phang-nga-skywalk</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/cheow-lan-lake</loc>
+    <loc>https://phukeo.com/tours/cheow-lan-lake</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/phang-nga-samet</loc>
+    <loc>https://phukeo.com/tours/phang-nga-samet</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/krabi-secrets</loc>
+    <loc>https://phukeo.com/tours/krabi-secrets</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  
+
   <!-- Дайвинг -->
   <url>
-    <loc>https://phukeo.com/#/tours/diving-andaman</loc>
+    <loc>https://phukeo.com/tours/diving-andaman</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  
+
   <!-- Рыбалка -->
   <url>
-    <loc>https://phukeo.com/#/tours/fishing-sunrise</loc>
+    <loc>https://phukeo.com/tours/fishing-sunrise</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
-  
-  <!-- Многодневные туры -->
+
+  <!-- Пляжи Пхукета -->
   <url>
-    <loc>https://phukeo.com/#/tours/phi-phi-sunrise</loc>
+    <loc>https://phukeo.com/beach/patong</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://phukeo.com/#/tours/five-pearls-2days</loc>
+    <loc>https://phukeo.com/beach/kata</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
-  
+  <url>
+    <loc>https://phukeo.com/beach/karon</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/beach/naiharn</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/beach/surin</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/beach/kamala</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/beach/bangtao</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/beach/banana-beach</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/beach/mai-khao</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/beach/freedom</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/beach/kata-noi</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/beach/rawai</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://phukeo.com/beach/ya-nui</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>

@@ -8,22 +8,17 @@ import { Contact } from "@/components/Contact";
 import { FAQ } from "@/components/FAQ";
 import { FeaturedToursSection } from "@/components/FeaturedToursSection";
 import { WhyUs } from "@/components/WhyUs";
-import { Helmet } from "react-helmet";
+import { SEO } from "@/components/SEO";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
-      <Helmet>
-        <title>Экскурсии по Пхукету — острова Пхи-Пхи, Майя Бэй, лагуны | Phuket Go</title>
-        <meta
-          name="description"
-          content="Экскурсии и туры по Пхукету: Пхи-Пхи, Майя Бэй, Джеймс Бонд, коралловые острова. Локальная команда, честные цены, поддержка 24/7."
-        />
-        <meta property="og:title" content="Экскурсии по Пхукету | Phuket Go" />
-        <meta property="og:description" content="Топ-экскурсии: Пхи-Пхи, Майя Бэй, лагуны. Бронируйте с локальной командой." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={typeof window !== 'undefined' ? window.location.href : 'https://example.com/'} />
-      </Helmet>
+      <SEO
+        title="Экскурсии на Пхукете 2026 — от 1000฿ | ПхукетGO"
+        description="⭐ Лучшие туры на Пхукете 2026! Пхи-Пхи, Симиланы, Джеймс Бонд, Краби. Русскоязычные гиды, трансфер включён. Рейтинг 4.9/5. Бронируйте онлайн!"
+        url="https://phukeo.com/"
+        type="website"
+      />
       <Header />
       <Hero />
       <FeaturedToursSection />

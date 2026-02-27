@@ -38,3 +38,6 @@ bot/.env.local
 
 # Google credentials
 .google/
+
+# Vite temp files
+vite.config.ts.timestamp-*

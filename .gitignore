@@ -35,3 +35,6 @@ bot/.env
 bot/.env.local
 **/.env
 **/.env.local
+
+# Google credentials
+.google/

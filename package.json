@@ -85,6 +85,7 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
+    "googleapis": "^171.4.0",
     "lovable-tagger": "^1.1.7",
     "postcss": "^8.4.47",
     "react-snap": "^1.23.0",

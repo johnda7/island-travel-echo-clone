@@ -83,6 +83,7 @@ export default () => <TourPageTemplate tourData={myTourData} routePoints={routeP
 ## Golden rules
 
 - **PROTECTED files** — never modify without backup: `TourPageTemplate.tsx`, `UniversalBookingModal.tsx`, `toursRegistry.ts`.
+- **🚨 BOOKING REDIRECT — НЕ ТРОГАТЬ!** Редирект в `UniversalBookingModal.tsx` использует ТОЛЬКО `window.location.href = 'https://t.me/Phuketga?text=${encodeURIComponent(message)}'`. ЗАПРЕЩЕНО менять на clipboard, openTelegramLink, openLink, tg://resolve или любой другой метод. Это единственный работающий способ. Проверено 27.02.2026.
 - **NEVER append to `index.html`** with echo/cat — breaks HTML parsing.
 - **React 18 + react-leaflet 5 conflict**: project uses `--legacy-peer-deps`. Do NOT upgrade react-leaflet without testing.
 - **ALWAYS visually check** the page in browser before reporting completion.

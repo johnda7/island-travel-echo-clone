@@ -3,26 +3,28 @@
 ## Current Phase
 **Production & Active Development** (27 папок туров, 29 в реестре)
 
-## Latest Update (2026-02-27)
-**Session:** Комплексный аудит + баг-фиксы + оптимизация + деплой  
-**Status:** Найдено 18 проблем, 12 исправлено, задеплоено (commit 35c55b3)
+## Latest Update (2026-02-27, вечер)
+**Session:** Восстановление механизма бронирования + защита от изменений  
+**Status:** Бронирование восстановлено, работает, защищено (commit 071f1ea)
 
-### Completed Today — Аудит-сессия (2026-02-27)
-- ✅ **Комплексный аудит сайта** — найдено 18 проблем (critical, medium, low)
-- ✅ **React.lazy() + Suspense** — все 28+ страниц туров с code splitting (App.tsx)
-- ✅ **Динамические бейджи** — CATEGORY_LABELS + CATEGORY_BADGE_COLORS в TourPageTemplate.tsx
-- ✅ **Динамические хлебные крошки** — категория из tourData.category вместо хардкода "Приключения"
-- ✅ **Футер переписан** — 3 колонки: лого+описание | навигация | контакты (Telegram, MAX)
-- ✅ **Дата бронирования** — min={today} не позволяет выбрать прошедшую дату
-- ✅ **Один onClick** на кнопке "Забронировать" (было: onClick + onPointerDown + onTouchEnd)
-- ✅ **console.log удалены** — DynamicTourPage.tsx (5 шт), index.html (2 шт)
-- ✅ **Priority fix** — phi-phi-racha-maiton-sunset: 25 → 29 (конфликт с rafting-spa-1day)
-- ✅ **Telegram SDK defer** — скрипт загружается отложенно
-- ✅ **Preload убран** — удалён нерабочий `<link rel="preload" href="/src/main.tsx">`
-- ✅ **Год обновлён** — meta description: 2025 → 2026
-- ✅ **RaftingSpa1DayNew** — добавлен default export для React.lazy
-- ✅ **Деплой** — commit 35c55b3, 9 файлов, 163+/129−, push → deploy-canonical.yml
-- ✅ **Визуальная проверка** — карточки туров + модалка бронирования работают
+### Completed — Фикс бронирования (2026-02-27, вечер)
+- ✅ **Восстановлен оригинальный redirect** — `window.location.href` с `?text=` (из 35c55b3)
+- ✅ **Убран clipboard-подход** — `window.location.href` работает и без него
+- ✅ **Защита от изменений** — 5 строк запрета в UniversalBookingModal.tsx
+- ✅ **Правило в copilot-instructions** — "BOOKING REDIRECT — НЕ ТРОГАТЬ!"
+- ✅ **Автозаполнение телефона** из Telegram WebApp
+- ✅ **Viewport fix** — `100dvh` для модалки
+- ✅ **Туры переупорядочены** по популярности
+- ✅ **Деплой** — commit 071f1ea
+
+### Completed — Аудит-сессия (2026-02-27, утро)
+- ✅ **Комплексный аудит сайта** — найдено 18 проблем, 12 исправлено
+- ✅ **React.lazy() + Suspense** — code splitting для всех туров
+- ✅ **Динамические бейджи и хлебные крошки**
+- ✅ **Футер переписан** — 3 колонки с контактами
+- ✅ **Дата бронирования** — min={today}
+- ✅ **console.log удалены**, priority fix, Telegram SDK defer
+- ✅ **Деплой** — commit 35c55b3
 
 ### Completed Earlier (2026-02-27)
 - ✅ **Fix duplicate export** в elephant-beach index.ts (commit 5c3be50)

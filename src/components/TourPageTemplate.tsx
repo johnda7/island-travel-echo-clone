@@ -344,15 +344,32 @@ export const TourPageTemplate = ({
     <div className="min-h-screen" style={{ background: 'rgb(242, 242, 247)' }}>
       {/* 🎯 SEO Meta Tags для Telegram и соцсетей */}
       <SEO 
-        title={`${tourData.title} - ПхукетGO`}
+        title={`${tourData.title} — от ${tourData.priceAdult}฿ | ПхукетGO`}
         description={tourData.description}
         image={tourData.mainImage}
         url={`https://phukeo.com${location.pathname}`}
         type="article"
         price={`${tourData.priceAdult}฿`}
+        priceChild={`${tourData.priceChild}฿`}
         rating={tourData.rating.toString()}
         tourName={tourData.title}
+        category={tourData.category}
+        duration={tourData.duration}
       />
+      
+      {/* FAQ JSON-LD для Google FAQ Rich Snippets */}
+      {tourData.importantInfo && tourData.importantInfo.length > 0 && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            { "@type": "Question", "name": `Сколько стоит экскурсия "${tourData.title}"?`, "acceptedAnswer": { "@type": "Answer", "text": `Цена: ${tourData.priceAdult}฿ за взрослого, ${tourData.priceChild}฿ за ребёнка. Валюта: тайский бат (฿).` }},
+            { "@type": "Question", "name": `Сколько длится "${tourData.title}"?`, "acceptedAnswer": { "@type": "Answer", "text": `Продолжительность экскурсии: ${tourData.duration}. ${tourData.included?.slice(0, 3).join(', ') || ''}` }},
+            { "@type": "Question", "name": `Что входит в стоимость?`, "acceptedAnswer": { "@type": "Answer", "text": tourData.included?.join(', ') || 'Трансфер, питание, гид' }},
+            { "@type": "Question", "name": `Что важно знать перед поездкой?`, "acceptedAnswer": { "@type": "Answer", "text": tourData.importantInfo.join(' ') }},
+          ]
+        }) }} />
+      )}
       
       <Header />
       

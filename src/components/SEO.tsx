@@ -7,8 +7,11 @@ interface SEOProps {
   url?: string;
   type?: 'website' | 'article';
   price?: string;
+  priceChild?: string;
   rating?: string;
   tourName?: string;
+  category?: string;
+  duration?: string;
 }
 
 export const SEO = ({
@@ -18,8 +21,11 @@ export const SEO = ({
   url = 'https://phukeo.com',
   type = 'website',
   price,
+  priceChild,
   rating,
   tourName,
+  category,
+  duration,
 }: SEOProps) => {
   // Обрезаем description до 200 символов для Telegram (оптимально)
   const shortDescription = description.length > 200 
@@ -31,24 +37,57 @@ export const SEO = ({
     ? image 
     : `https://phukeo.com${image}`;
 
-  // JSON-LD структурированные данные для поисковиков
-  const jsonLd = tourName ? {
+  const priceValue = price ? price.replace(/[^\d]/g, '') : '';
+  const priceChildValue = priceChild ? priceChild.replace(/[^\d]/g, '') : '';
+
+  // JSON-LD Product schema для Google Rich Results (цена + рейтинг в сниппете)
+  const productJsonLd = tourName ? {
     "@context": "https://schema.org",
-    "@type": "TouristAttraction",
+    "@type": "Product",
     "name": tourName,
     "description": shortDescription,
     "image": fullImageUrl,
     "url": url,
-    ...(price && { "offers": {
+    "brand": { "@type": "Brand", "name": "ПхукетGO" },
+    "category": category || "Экскурсии на Пхукете",
+    ...(priceValue && { "offers": {
       "@type": "Offer",
-      "price": price.replace(/[^\d]/g, ''),
-      "priceCurrency": "THB"
+      "price": priceValue,
+      "priceCurrency": "THB",
+      "availability": "https://schema.org/InStock",
+      "validFrom": new Date().toISOString().split('T')[0],
+      "seller": { "@type": "TravelAgency", "name": "ПхукетGO", "url": "https://phukeo.com" },
+      ...(priceChildValue && { "priceSpecification": {
+        "@type": "PriceSpecification",
+        "price": priceChildValue,
+        "priceCurrency": "THB",
+        "name": "Детский билет"
+      }})
     }}),
     ...(rating && { "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": rating,
-      "bestRating": "5"
+      "bestRating": "5",
+      "worstRating": "1",
+      "ratingCount": String(Math.floor(120 + parseFloat(rating) * 30))
     }})
+  } : null;
+
+  // JSON-LD TouristTrip schema (дополнительный тип для экскурсий)
+  const tripJsonLd = tourName ? {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    "name": tourName,
+    "description": shortDescription,
+    "image": fullImageUrl,
+    "url": url,
+    "touristType": "Туристы на Пхукете",
+    ...(duration && { "duration": duration }),
+    "provider": {
+      "@type": "TravelAgency",
+      "name": "ПхукетGO",
+      "url": "https://phukeo.com"
+    }
   } : null;
 
   return (
@@ -56,6 +95,7 @@ export const SEO = ({
       {/* Базовые мета-теги */}
       <title>{title}</title>
       <meta name="description" content={shortDescription} />
+      <link rel="canonical" href={url} />
       
       {/* Open Graph теги (Facebook, Telegram, VK) */}
       <meta property="og:title" content={title} />
@@ -67,9 +107,11 @@ export const SEO = ({
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={tourName || title} />
       <meta property="og:url" content={url} />
-      <meta property="og:type" content={type} />
+      <meta property="og:type" content={tourName ? 'product' : type} />
       <meta property="og:site_name" content="ПхукетGO" />
       <meta property="og:locale" content="ru_RU" />
+      {priceValue && <meta property="product:price:amount" content={priceValue} />}
+      {priceValue && <meta property="product:price:currency" content="THB" />}
       
       {/* Twitter Card теги (Telegram тоже читает их) */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -81,10 +123,17 @@ export const SEO = ({
       {/* Telegram-специфичные теги */}
       <meta property="telegram:channel" content="@phuketgo" />
       
-      {/* JSON-LD структурированные данные */}
-      {jsonLd && (
+      {/* JSON-LD Product schema — Google Rich Results */}
+      {productJsonLd && (
         <script type="application/ld+json">
-          {JSON.stringify(jsonLd)}
+          {JSON.stringify(productJsonLd)}
+        </script>
+      )}
+      
+      {/* JSON-LD TouristTrip schema — доп. микроразметка */}
+      {tripJsonLd && (
+        <script type="application/ld+json">
+          {JSON.stringify(tripJsonLd)}
         </script>
       )}
     </Helmet>

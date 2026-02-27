@@ -247,3 +247,47 @@ Context7 позволяет агентам получать свежую док�
 
 Rationale:
 Новый премиум тур на катамаране. Цена: 2800/2500 ฿. Comfort+ only. Маршрут: Пхукет → Рача Яй → Пхи-Пхи → Майтон → Пхукет.
+
+### Google Search Console — верификация и API (2026-02-27)
+GSC верифицирован для phukeo.com через HTML-файл + meta tag. Подключен API через Service Account с Full access. Создано 4 скрипта для работы с GSC.
+
+**Status:** accepted
+**Impact:** SEO, индексация, мониторинг позиций
+
+Rationale:
+GSC необходим для мониторинга индексации, анализа поисковых запросов и отправки sitemap. Service Account взят из существующего проекта PhuketDa (phuketda-search-console). Верификация через HTML файл — самый надёжный метод для GitHub Pages.
+
+Файлы:
+- `public/googleec068cee75b8021a.html` — файл верификации GSC
+- `index.html` — добавлен meta tag `google-site-verification`
+- `scripts/lib/gsc-client.cjs` — базовый API-клиент
+- `scripts/gsc-test-connection.cjs` — тест подключения
+- `scripts/gsc-analytics.cjs` — аналитика (запросы, страницы, ошибки)
+- `scripts/gsc-submit-indexing.cjs` — отправка URL на индексацию
+- `.google/gsc-key.json` — ключ Service Account (НЕ коммитится)
+
+Ограничения:
+- Indexing API требует Owner-уровень, а Service Account имеет Full — индексация через API не работает
+- IndexNow не поддерживает hash-URLs (`/#/`)
+- Google/Bing ping endpoints deprecated (404/410)
+
+Alternatives Considered:
+- IndexNow — не работает с HashRouter (`/#/` URLs)
+- Google/Bing ping — deprecated
+- Ручная индексация через GSC web UI — работает как fallback
+
+### SEO: обновление sitemap.xml и JSON-LD (2026-02-27)
+Sitemap обновлён с 22 до 27 туров. Исправлены slug'и, удалён дубликат kata-noi, даты обновлены до 2026-02-27. JSON-LD телефон-заглушка заменена на ContactPoint с Telegram.
+
+**Status:** accepted
+**Impact:** SEO, индексация, структурированные данные
+
+Rationale:
+Sitemap был устаревшим — даты 2025-11, отсутствовали 5 туров, были неправильные slug'и. JSON-LD содержал фейковый телефон +66-XX-XXX-XXXX, что негативно для SEO. ContactPoint с Telegram URL — правильный формат для бизнеса без публичного телефона.
+
+Changes:
+- sitemap.xml: 27 tour URLs + 11 beach + 1 homepage = 39 URLs
+- Добавлены: phi-phi-racha-maiton-sunset, elephant-beach-samet-mantra-spa, coral-islands-rawai, diving-andaman, rafting-spa-atv-1-day
+- Исправлены: james-bond-island→phang-nga, racha-coral-islands→speedboat, kao-lak-safari→1-day
+- index.html: телефон → ContactPoint (Telegram, 3 языка)
+- Sitemap отправлен в GSC через API (0 ошибок)

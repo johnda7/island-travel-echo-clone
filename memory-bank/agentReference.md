@@ -298,7 +298,15 @@ border-radius: 12px;
 - **Категории:** islands(11), adventure(8), diving(4), cultural(1), fishing(1)
 - **Последний priority:** 29 (phi-phi-racha-maiton-sunset)
 - **Следующий priority:** 30
-- **Последний коммит:** 071f1ea
+- **Последний коммит:** 12e5dae
+
+### SEO (сессия 27.02.2026)
+- ✅ **Google Search Console** подключен и верифицирован
+- ✅ **GSC API** через Service Account (Full access)
+- ✅ **Sitemap.xml** обновлён: 27 туров, отправлен в GSC (0 ошибок)
+- ✅ **JSON-LD** исправлен: телефон → ContactPoint Telegram
+- ⚠️ **Indexing API** не работает (нужен Owner, есть Full)
+- ⚠️ **HashRouter** — главный SEO-блокер (Google не индексирует `/#/`)
 
 ### Фиксы бронирования (сессия 27.02.2026, вечер)
 - **Восстановлен оригинальный редирект** — `window.location.href` с `?text=` (из коммита 35c55b3)
@@ -313,10 +321,46 @@ border-radius: 12px;
 - `66d0ee6`..`0b9cc20` — 6 неудачных попыток починить редирект (openTelegramLink, openLink, tg://resolve, clipboard)
 - `d75e87f` — **ВОССТАНОВЛЕН оригинал** (window.location.href)
 - `071f1ea` — защита от изменений (комментарии в файле + copilot-instructions)
+- `10e80bf` — SEO: sitemap обновлён, JSON-LD исправлен, GSC верификация
+- `12e5dae` — GSC API: 4 скрипта аналитики/индексации, googleapis
 
 ### Оставшиеся проблемы
 - eleven-islands-standard: папка-сирота, не в реестре
 - rafting-spa-1day: не передаёт routePoints
 - phi-phi-racha-maiton-sunset: последний RoutePoint type:"start" вместо "destination"
-- Телефон-заглушка "+66-XX-XXX-XXXX" в JSON-LD
-- GA/Yandex аналитика закомментирована (нужны ID)
+- GA/Yandex аналитика не подключена (нужны ID)
+- Indexing API: нужен Owner-уровень для Service Account
+
+---
+
+## 10. Google Search Console
+
+### Подключение
+- **GSC Owner email:** `anotherstoriz@gmail.com`
+- **Service Account:** `phuketda-s-arch-console@phuketda-search-console.iam.gserviceaccount.com`
+- **Уровень:** siteFullUser (Full)
+- **Ключ:** `.google/gsc-key.json` (НЕ коммитится, в .gitignore)
+- **Верификация:** `public/googleec068cee75b8021a.html` + `<meta name="google-site-verification">` в index.html
+
+### Команды GSC:
+```bash
+node scripts/gsc-test-connection.cjs       # Тест подключения + статистика 7 дней
+node scripts/gsc-analytics.cjs             # Обзор за 7 дней  
+node scripts/gsc-analytics.cjs queries 20  # Топ-20 поисковых запросов
+node scripts/gsc-analytics.cjs pages 20    # Топ-20 страниц
+node scripts/gsc-analytics.cjs issues      # Ошибки покрытия
+node scripts/gsc-submit-indexing.cjs       # Отправка URL на индексацию (⚠️ нужен Owner)
+```
+
+### Структура файлов:
+- `scripts/lib/gsc-client.cjs` — базовый API-клиент (auth, SITE_URL, KEY_FILE_PATH)
+- `scripts/gsc-test-connection.cjs` — тест подключения
+- `scripts/gsc-analytics.cjs` — аналитика (overview, queries, pages, issues)
+- `scripts/gsc-submit-indexing.cjs` — batch URL submission
+- `.google/gsc-key.json` — ключ Service Account (НЕ в git!)
+
+### Ограничения:
+- **Indexing API** требует Owner-права (сейчас Full) — все URL получают "Permission denied"
+- **IndexNow** не поддерживает hash-URLs (`/#/`)
+- **Google/Bing ping** deprecated (404/410)
+- **HashRouter** — главный SEO-блокер, Google не индексирует `/#/` URLs

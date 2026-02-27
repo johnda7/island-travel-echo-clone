@@ -4,11 +4,11 @@
 **Project Name:** Island Travel Echo Clone - Phuket Tours  
 **Live Site:** https://phukeo.com  
 **Repository:** johnda7/island-travel-echo-clone  
-**Version:** Production (28 туров в реестре, добавляются новые)  
+**Version:** Production (29 туров в реестре, добавляются новые)  
 **License:** Not specified
 
 ## Project Description
-React SPA сайт туров по Пхукету с iOS 26 дизайном. WordPress-like CMS архитектура на React. Telegram Mini App интеграция. Централизованная система: 27 папок туров, 28 зарегистрированы в `toursRegistry.ts`, все рендерятся через единый `TourPageTemplate.tsx` (1067 строк).
+React SPA сайт туров по Пхукету с iOS 26 дизайном. WordPress-like CMS архитектура на React. Telegram Mini App интеграция. Централизованная система: 27 папок туров, 29 зарегистрированы в `toursRegistry.ts`, все рендерятся через единый `TourPageTemplate.tsx` (1067 строк). Google Search Console подключен и верифицирован.
 
 ## Technical Stack
 **Runtime:** Node.js  
@@ -34,6 +34,7 @@ React SPA сайт туров по Пхукету с iOS 26 дизайном. Wo
 | vite | ^5.4.1 | Сборка |
 | tailwindcss | ^3.4.11 | Стили |
 | typescript | ^5.5.3 | |
+| googleapis | devDependency | GSC API — аналитика, sitemap, индексация |
 | zod | ^3.23.8 | Валидация форм |
 | react-helmet-async | ^2.0.5 | SEO мета-теги |
 | lucide-react | ^0.462.0 | Иконки |
@@ -162,13 +163,15 @@ AI_DOCS/                        # Документация для AI агент�
 9. КОМАНДЫ 2-3 ЧЕЛОВЕКА (минимум координации)
 10. ЗДОРОВАЯ ПАРАНОЙЯ (конкуренты скопируют завтра)
 
-## Key Metrics (2026-02-26)
-- **Папок туров:** 24 (в src/data/tours/)
-- **В реестре:** 23 активных (все isActive: true)
+## Key Metrics (2026-02-27)
+- **Папок туров:** 27 (в src/data/tours/)
+- **В реестре:** 29 активных (все isActive: true)
 - **Маршрутов в App.tsx:** ~52 туровых + ~15 системных
-- **Категории:** islands(9), adventure(7), diving(3), cultural(1), fishing(1)
+- **Категории:** islands(11), adventure(8), diving(4), cultural(1), fishing(1)
 - **Конверсия через Telegram:** 15-25% (vs Booking.com 2-3%)
 - **Средний чек:** ฿4,500
+- **Google Search Console:** подключен, верифицирован, API через Service Account
+- **Sitemap:** 27 туров + 11 пляжей + 1 главная = 39 URLs
 
 ## Documentation for AI Agents
 1. `.github/copilot-instructions.md` — основной промпт (~75 строк)
@@ -193,6 +196,7 @@ AI_DOCS/                        # Документация для AI агент�
 **🚨 ЗАПРЕЩЕНО менять метод редиректа!** Только `window.location.href`. Никаких openTelegramLink, clipboard, tg://resolve, openLink. Проверено 27.02.2026.
 
 ## Recent Changes
+- 2026-02-27: **SEO** — sitemap обновлён (27 туров), JSON-LD исправлен, GSC подключен и верифицирован (commits 10e80bf, 12e5dae)
 - 2026-02-27: Восстановлен оригинальный redirect, защита от изменений (commit 071f1ea)
 - 2026-02-27: Аудит-сессия: React.lazy, бейджи, футер, валидация дат (commit 35c55b3)
 - 2026-02-26: Добавлен тур phi-phi-racha-maiton-sunset, copilot-instructions.md переписан, MCP настроен
@@ -205,4 +209,15 @@ AI_DOCS/                        # Документация для AI агент�
 - **Priority 25 conflict** — rafting-spa-1day и phi-phi-racha-maiton-sunset
 - **ID ≠ slug** для 4 туров: rafting-spa-atv-1-day, kao-lak-safari-1-day, james-bond-island-phang-nga, racha-coral-islands-speedboat
 - **Google Analytics** — placeholder G-XXXXXXXXXX, не подключён
-- **Google Search Console** — не настроен
+- ~~**Google Search Console** — не настроен~~ ✅ НАСТРОЕН 27.02.2026
+- **Indexing API** — нужен Owner-уровень для Service Account (сейчас Full)
+- **HashRouter** — главный SEO-блокер, Google не индексирует `/#/` URLs
+
+## Google Search Console
+- **GSC Owner email:** `anotherstoriz@gmail.com`
+- **Service Account:** `phuketda-s-arch-console@phuketda-search-console.iam.gserviceaccount.com`
+- **Уровень доступа:** siteFullUser (Full)
+- **Ключ:** `.google/gsc-key.json` (НЕ коммитится)
+- **Верификация:** HTML файл + meta tag
+- **Скрипты:** `scripts/gsc-*.cjs`, `scripts/lib/gsc-client.cjs`
+- **Зависимость:** `googleapis` (devDependency)

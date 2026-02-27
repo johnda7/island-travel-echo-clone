@@ -2,8 +2,8 @@
 
 ## Current Session
 **Date:** 2026-02-27  
-**Mode:** Аудит + баг-фиксы + фикс бронирования + деплой  
-**Task:** Восстановление механизма бронирования, защита от изменений
+**Mode:** Аудит + баг-фиксы + фикс бронирования + SEO + GSC + деплой  
+**Task:** SEO оптимизация, подключение Google Search Console API, sitemap
 
 ## Current Status
 - ✅ 27 папок туров в `src/data/tours/`, 29 записей в реестре (toursRegistry.ts)
@@ -12,7 +12,11 @@
 - ✅ Туры переупорядочены по популярности
 - ✅ Автозаполнение телефона из Telegram
 - ✅ Viewport 100dvh для мобильных
-- ✅ Деплой: commit 071f1ea
+- ✅ **Google Search Console** подключен и верифицирован
+- ✅ **GSC API** подключен через Service Account (Full access)
+- ✅ **Sitemap.xml** обновлён (27 туров) и отправлен в GSC (0 ошибок)
+- ✅ **JSON-LD** телефон-заглушка заменена на ContactPoint с Telegram
+- ✅ Деплой: commit 12e5dae
 
 ## Исправления аудита (сессия 2026-02-27)
 | # | Тип | Описание | Статус |
@@ -27,7 +31,7 @@
 | 8 | bug | RaftingSpa1DayNew не передаёт routePoints | ❌ |
 | 9 | bug | PhiPhiRachaMaiton последняя точка type:"start" | ❌ |
 | 10 | seo | Устаревший год 2025 в мета-описании | ✅ → 2026 |
-| 11 | seo | Телефон-заглушка в JSON-LD | ❌ |
+| 11 | seo | Телефон-заглушка в JSON-LD | ✅ → ContactPoint Telegram |
 | 13 | code | Мёртвые ссылки в paths.ts | ❌ |
 | 14 | code | eleven-islands-standard не зарегистрирован | ❌ |
 | 15 | perf | Нет lazy loading страниц | ✅ React.lazy |
@@ -143,13 +147,41 @@ setTimeout(() => {
 | `Footer.tsx` | 107 | Футер с Telegram/MAX контактами |
 | `copilot-instructions.md` | 131 | AI промпт |
 
+## Google Search Console (настроен 27.02.2026)
+- **Верификация:** HTML file (`public/googleec068cee75b8021a.html`) + meta tag в `index.html`
+- **GSC Email (owner):** `anotherstoriz@gmail.com`
+- **Service Account:** `phuketda-s-arch-console@phuketda-search-console.iam.gserviceaccount.com` (Full access)
+- **Ключ:** `.google/gsc-key.json` (НЕ коммитится, в .gitignore)
+- **Sitemap:** отправлен через API, 0 ошибок
+- **Indexing API:** НЕ работает (нужен Owner, есть только Full)
+
+### GSC-скрипты:
+```bash
+node scripts/gsc-test-connection.cjs    # Тест подключения
+node scripts/gsc-analytics.cjs          # Обзор за 7 дней
+node scripts/gsc-analytics.cjs queries 20  # Топ-20 запросов
+node scripts/gsc-analytics.cjs pages 20    # Топ-20 страниц
+node scripts/gsc-analytics.cjs issues      # Ошибки покрытия
+node scripts/gsc-submit-indexing.cjs       # Отправка URL на индексацию (⚠️ нужен Owner)
+```
+
+## SEO-изменения (сессия 27.02.2026)
+- ✅ **Sitemap.xml** — обновлён: 27 туров (было 22), даты → 2026-02-27
+- ✅ **Удалён дубликат** kata-noi из sitemap
+- ✅ **Исправлены slug'и:** james-bond-island→james-bond-island-phang-nga, racha-coral-islands→racha-coral-islands-speedboat, kao-lak-safari→kao-lak-safari-1-day
+- ✅ **Добавлены 5 туров:** phi-phi-racha-maiton-sunset, elephant-beach-samet-mantra-spa, coral-islands-rawai, diving-andaman, rafting-spa-atv-1-day
+- ✅ **Beach URLs** — формат `/#/beach/...`
+- ✅ **JSON-LD** — телефон-заглушка `+66-XX-XXX-XXXX` заменена на ContactPoint с Telegram URL (3 языка)
+- ✅ **google-site-verification** meta tag добавлен в index.html
+
 ## Known Issues (оставшиеся)
 - **eleven-islands-standard** — папка-сирота: есть в `src/data/tours/` но НЕ в реестре
 - **rafting-spa-1day** — не передаёт routePoints в TourPageTemplate
 - **phi-phi-racha-maiton-sunset** — последний RoutePoint type:"start" (должен быть "destination")
-- **phone placeholder** — "+66-XX-XXX-XXXX" в JSON-LD (index.html)
+- ~~**phone placeholder** — "+66-XX-XXX-XXXX" в JSON-LD (index.html)~~ ✅ ИСПРАВЛЕНО
 - **GA/Yandex** — аналитика закомментирована, нужны реальные ID
-- **SEO:** GA placeholder `G-XXXXXXXXXX` (не подключён), Google Search Console не настроен
-- **HashRouter:** Нужен для GitHub Pages, но мешает SEO
+- ~~**SEO:** Google Search Console не настроен~~ ✅ НАСТРОЕН
+- **HashRouter:** Нужен для GitHub Pages, но мешает SEO (главный SEO-блокер)
+- **Indexing API:** Нужен Owner-уровень для Service Account (сейчас Full)
 - **Supabase CMS:** Таблицы существуют, но НЕ используются — данные в TS файлах
 - **react-leaflet@5.0.0:** Требует React 19, решается `--legacy-peer-deps`

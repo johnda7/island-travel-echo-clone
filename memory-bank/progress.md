@@ -3,9 +3,23 @@
 ## Current Phase
 **Production & Active Development** (27 папок туров, 29 в реестре)
 
-## Latest Update (2026-02-27, вечер)
-**Session:** Восстановление механизма бронирования + защита от изменений  
-**Status:** Бронирование восстановлено, работает, защищено (commit 071f1ea)
+## Latest Update (2026-02-27, ночь)
+**Session:** SEO-оптимизация + Google Search Console API  
+**Status:** GSC подключен, sitemap обновлён и отправлен, JSON-LD исправлен (commit 12e5dae)
+
+### Completed — SEO + GSC (2026-02-27, ночь)
+- ✅ **Sitemap.xml обновлён** — 27 туров (было 22), даты → 2026-02-27
+- ✅ **Удалён дубликат** kata-noi из sitemap
+- ✅ **Исправлены slug'и** — james-bond-island→james-bond-island-phang-nga, racha-coral-islands→racha-coral-islands-speedboat, kao-lak-safari→kao-lak-safari-1-day
+- ✅ **Добавлены 5 туров** в sitemap — phi-phi-racha-maiton-sunset, elephant-beach-samet-mantra-spa, coral-islands-rawai, diving-andaman, rafting-spa-atv-1-day
+- ✅ **JSON-LD** — телефон-заглушка `+66-XX-XXX-XXXX` → ContactPoint с Telegram URL (3 языка)
+- ✅ **Google Search Console** — верифицирован (HTML file + meta tag)
+- ✅ **GSC API** — подключен через Service Account (`phuketda-s-arch-console@...`, Full access)
+- ✅ **Sitemap отправлен в GSC** через API — 0 ошибок
+- ✅ **4 GSC-скрипта** — gsc-test-connection, gsc-analytics, gsc-submit-indexing, lib/gsc-client
+- ✅ **`.google/` в .gitignore** — ключ не коммитится
+- ✅ **Деплой** — commits 10e80bf, 12e5dae
+- ⚠️ **Indexing API не работает** — нужен Owner-уровень, есть только Full
 
 ### Completed — Фикс бронирования (2026-02-27, вечер)
 - ✅ **Восстановлен оригинальный redirect** — `window.location.href` с `?text=` (из 35c55b3)

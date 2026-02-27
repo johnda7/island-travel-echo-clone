@@ -96,40 +96,14 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
     });
   };
 
-  // ✅ Универсальный открыватель Telegram чата с менеджером (с подстановкой текста)
-  // Цепочка fallback'ов: openTelegramLink → tg://resolve deep link → window.location.href
-  const openTelegramChat = (messageText: string) => {
-    const encoded = encodeURIComponent(messageText);
-    const httpsUrl = `https://t.me/Phuketga?text=${encoded}`;
-    const tgUrl = `tg://resolve?domain=Phuketga&text=${encoded}`;
-
-    // Копируем сообщение в буфер обмена как резерв
-    try { navigator.clipboard.writeText(messageText).catch(() => {}); } catch {}
-
+  // ✅ Открываем чат с менеджером в Telegram
+  // Заказ уже отправлен менеджеру через бота (Koyeb API) — просто открываем чат
+  const openTelegramChat = () => {
     const tg = (window as any).Telegram?.WebApp;
-    if (tg) {
-      // Внутри Telegram Mini App
-      try {
-        if (typeof tg.openTelegramLink === 'function') {
-          // Способ 1: openTelegramLink — документировано для ?text=
-          // Закрывает Mini App и открывает чат внутри Telegram
-          tg.openTelegramLink(httpsUrl);
-          return;
-        }
-      } catch (e) { console.warn('openTelegramLink failed:', e); }
-
-      try {
-        // Способ 2: tg:// deep link — нативный обработчик Telegram
-        // Обходит WebApp SDK, идёт напрямую в клиент
-        window.location.href = tgUrl;
-        return;
-      } catch (e) { console.warn('tg:// scheme failed:', e); }
-
-      // Способ 3: https fallback через location
-      window.location.href = httpsUrl;
+    if (tg && typeof tg.openTelegramLink === 'function') {
+      tg.openTelegramLink('https://t.me/Phuketga');
     } else {
-      // Обычный браузер
-      window.open(httpsUrl, '_blank') || (window.location.href = httpsUrl);
+      window.open('https://t.me/Phuketga', '_blank') || (window.location.href = 'https://t.me/Phuketga');
     }
   };
 
@@ -221,13 +195,13 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
         
         if (result.success) {
           // ✅ УСПЕШНО ОТПРАВЛЕНО - показываем сообщение и редиректим
-          setSuccessMessageText('✅ Заявка принята! Текст заказа скопирован. Открываем чат с менеджером...');
+          setSuccessMessageText('✅ Заявка отправлена менеджеру! Открываем чат...');
           setShowSuccessMessage(true);
           console.log('✅ Сообщение отправлено в Telegram:', result);
           
-          // ✅ РЕДИРЕКТ В TELEGRAM с готовым сообщением (3 секунды)
+          // ✅ Открываем чат с менеджером (3 секунды)
           setTimeout(() => {
-            openTelegramChat(message);
+            openTelegramChat();
           }, 3000);
           
           return; // Не закрываем модал, т.к. переходим в Telegram
@@ -238,11 +212,11 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
         console.error('❌ Ошибка отправки через Koyeb API:', error);
         
         // Fallback - открываем Telegram как запасной вариант
-        setSuccessMessageText('✅ Заявка готова! Текст скопирован. Открываем чат с менеджером...');
+        setSuccessMessageText('✅ Заявка готова! Открываем чат с менеджером...');
         setShowSuccessMessage(true);
         
         setTimeout(() => {
-          openTelegramChat(message);
+          openTelegramChat();
         }, 3000);
       }
       

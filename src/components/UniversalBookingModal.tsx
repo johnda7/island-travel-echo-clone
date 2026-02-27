@@ -59,9 +59,11 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
     hotelName: ""
   });
 
-  // ✅ STATE для показа сообщения ВНУТРИ модалки (как было раньше)
+  // ✅ STATE для показа сообщения ВНУТРИ модалки
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [successMessageText, setSuccessMessageText] = useState('');
+  const [bookingMessageForClipboard, setBookingMessageForClipboard] = useState('');
+  const [clipboardCopied, setClipboardCopied] = useState(false);
 
   // Универсальный калькулятор цен
   const calculatePrice = (): PriceCalculation => {
@@ -188,32 +190,49 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
         const result = await response.json();
         
         if (result.success) {
-          // ✅ УСПЕШНО ОТПРАВЛЕНО - показываем сообщение и редиректим
-          setSuccessMessageText('✅ Заявка отправлена менеджеру! Открываем чат...');
-          setShowSuccessMessage(true);
           console.log('✅ Сообщение отправлено в Telegram:', result);
-          
-          // ✅ РЕДИРЕКТ В TELEGRAM с готовым сообщением (3 секунды)
-          setTimeout(() => {
-            const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-            window.location.href = telegramUrl;
-          }, 3000);
-          
-          return; // Не закрываем модал, т.к. переходим в Telegram
         } else {
           throw new Error(result.error || 'API returned error');
         }
       } catch (error) {
         console.error('❌ Ошибка отправки через Koyeb API:', error);
+      }
+
+      // ✅ КОПИРУЕМ ТЕКСТ В БУФЕР ОБМЕНА + ПОКАЗЫВАЕМ ЭКРАН УСПЕХА
+      const isTelegramMiniApp = !!(window as any).Telegram?.WebApp?.initData;
+      
+      if (isTelegramMiniApp) {
+        // В Telegram Mini App: ?text= НЕ работает (ограничение Telegram)
+        // Копируем в буфер + показываем инструкцию
+        setBookingMessageForClipboard(message);
+        try {
+          await navigator.clipboard.writeText(message);
+          setClipboardCopied(true);
+        } catch {
+          // Fallback для старых WebView
+          const ta = document.createElement('textarea');
+          ta.value = message;
+          ta.style.cssText = 'position:fixed;opacity:0;left:-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); setClipboardCopied(true); } catch {}
+          document.body.removeChild(ta);
+        }
         
-        // Fallback - открываем Telegram как запасной вариант
-        setSuccessMessageText('✅ Заявка готова! Открываем чат с менеджером...');
+        // Haptic feedback
+        try { (window as any).Telegram?.WebApp?.HapticFeedback?.notificationOccurred('success'); } catch {}
+        
+        setSuccessMessageText('✅ Заявка отправлена менеджеру!');
         setShowSuccessMessage(true);
-        
+        return; // Не закрываем модал
+      } else {
+        // Обычный браузер: ?text= РАБОТАЕТ
+        setSuccessMessageText('✅ Заявка отправлена! Открываем Telegram...');
+        setShowSuccessMessage(true);
         setTimeout(() => {
-          const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
-          window.location.href = telegramUrl;
-        }, 3000);
+          window.location.href = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
+        }, 2000);
+        return;
       }
       
       // Очищаем форму и закрываем модал
@@ -443,10 +462,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
         </div>
       </div>
 
-      {/* ✅ СООБЩЕНИЕ ОБ УСПЕХЕ (как было раньше) */}
+      {/* ✅ ЭКРАН УСПЕХА ПОСЛЕ БРОНИРОВАНИЯ */}
       {showSuccessMessage && (
         <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 pointer-events-none"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
           style={{
             background: 'rgba(0, 0, 0, 0.7)',
             backdropFilter: 'blur(10px)',
@@ -454,24 +473,89 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
           }}
         >
           <div 
-            className="bg-white rounded-2xl p-6 max-w-sm w-full text-center pointer-events-auto"
+            className="bg-white rounded-2xl p-6 max-w-sm w-full text-center"
             style={{
               boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
               animation: 'slideDown 0.3s ease-out'
             }}
           >
-            <div className="text-4xl mb-4">
-              {successMessageText.includes('✅') ? '✅' : 
-               successMessageText.includes('📱') ? '📱' : '⚠️'}
-            </div>
-            <p className="text-base sm:text-lg font-semibold text-gray-900">
-              {successMessageText.replace(/✅|⚠️|📱/g, '').trim()}
+            <div className="text-5xl mb-3">✅</div>
+            <p className="text-lg font-bold text-gray-900 mb-2">
+              Заявка отправлена!
             </p>
-            {successMessageText.includes('Telegram') && (
+            <p className="text-sm text-gray-600 mb-4">
+              Менеджер уже получил вашу заявку через бота.
+            </p>
+
+            {/* Кнопка для Telegram Mini App — открыть чат */}
+            {bookingMessageForClipboard && (
+              <>
+                {clipboardCopied && (
+                  <div className="bg-green-50 border border-green-200 rounded-xl p-3 mb-3">
+                    <p className="text-sm text-green-800 font-medium">📋 Текст бронирования скопирован</p>
+                    <p className="text-xs text-green-600 mt-1">Вставьте его в чат с менеджером</p>
+                  </div>
+                )}
+                <button
+                  onClick={() => {
+                    const tg = (window as any).Telegram?.WebApp;
+                    if (tg?.openTelegramLink) {
+                      tg.openTelegramLink('https://t.me/Phuketga');
+                    } else {
+                      window.open('https://t.me/Phuketga', '_blank');
+                    }
+                  }}
+                  className="w-full py-3 px-4 rounded-xl text-white font-semibold text-base mb-2"
+                  style={{ backgroundColor: '#007AFF' }}
+                >
+                  💬 Открыть чат с менеджером
+                </button>
+                {!clipboardCopied && (
+                  <button
+                    onClick={async () => {
+                      try {
+                        await navigator.clipboard.writeText(bookingMessageForClipboard);
+                        setClipboardCopied(true);
+                        try { (window as any).Telegram?.WebApp?.HapticFeedback?.impactOccurred('light'); } catch {}
+                      } catch {
+                        const ta = document.createElement('textarea');
+                        ta.value = bookingMessageForClipboard;
+                        ta.style.cssText = 'position:fixed;opacity:0;left:-9999px';
+                        document.body.appendChild(ta);
+                        ta.select();
+                        try { document.execCommand('copy'); setClipboardCopied(true); } catch {}
+                        document.body.removeChild(ta);
+                      }
+                    }}
+                    className="w-full py-2 px-4 rounded-xl text-sm font-medium border"
+                    style={{ borderColor: '#007AFF', color: '#007AFF' }}
+                  >
+                    📋 Скопировать текст заявки
+                  </button>
+                )}
+              </>
+            )}
+
+            {/* Спиннер для обычного браузера (идёт редирект) */}
+            {!bookingMessageForClipboard && (
               <div className="mt-4">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto" style={{ borderColor: '#007AFF' }}></div>
+                <p className="text-xs text-gray-500 mt-2">Открываем Telegram...</p>
               </div>
             )}
+
+            <button
+              onClick={() => {
+                setShowSuccessMessage(false);
+                setBookingMessageForClipboard('');
+                setClipboardCopied(false);
+                setFormData({ name: '', phone: '', email: '', date: '', adults: 1, children: 0, specialRequests: '', hotelName: '' });
+                onClose();
+              }}
+              className="mt-3 text-sm text-gray-400 underline"
+            >
+              Закрыть
+            </button>
           </div>
         </div>
       )}

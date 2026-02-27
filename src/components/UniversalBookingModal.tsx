@@ -31,23 +31,26 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
       
       if (user) {
         console.log('🔍 Telegram User Data:', user); // Для отладки
+        // Получаем номер телефона из contact или initData
+        const phone = (tg.initDataUnsafe?.user as any)?.phone_number || '';
         return {
           telegramUsername: user.username ? `@${user.username}` : '',
           telegramFirstName: user.first_name || '',
           telegramLastName: user.last_name || '',
-          telegramId: user.id || ''
+          telegramId: user.id || '',
+          telegramPhone: phone
         };
       }
     }
     console.log('⚠️ Telegram WebApp не доступен или нет данных пользователя');
-    return { telegramUsername: '', telegramFirstName: '', telegramLastName: '', telegramId: '' };
+    return { telegramUsername: '', telegramFirstName: '', telegramLastName: '', telegramId: '', telegramPhone: '' };
   };
 
   const initialTgData = getTelegramUserData();
 
   const [formData, setFormData] = useState<BookingFormData>({
     name: initialTgData.telegramFirstName || "",
-    phone: "",
+    phone: initialTgData.telegramPhone || "",
     email: "",
     date: "",
     adults: 1,
@@ -96,16 +99,7 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
     });
   };
 
-  // ✅ Открываем чат с менеджером в Telegram
-  // Заказ уже отправлен менеджеру через бота (Koyeb API) — просто открываем чат
-  const openTelegramChat = () => {
-    const tg = (window as any).Telegram?.WebApp;
-    if (tg && typeof tg.openTelegramLink === 'function') {
-      tg.openTelegramLink('https://t.me/Phuketga');
-    } else {
-      window.open('https://t.me/Phuketga', '_blank') || (window.location.href = 'https://t.me/Phuketga');
-    }
-  };
+
 
   const handleBooking = async () => {
     // ✅ ВАЛИДАЦИЯ ПОЛЕЙ
@@ -199,9 +193,10 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
           setShowSuccessMessage(true);
           console.log('✅ Сообщение отправлено в Telegram:', result);
           
-          // ✅ Открываем чат с менеджером (3 секунды)
+          // ✅ РЕДИРЕКТ В TELEGRAM с готовым сообщением (3 секунды)
           setTimeout(() => {
-            openTelegramChat();
+            const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
+            window.location.href = telegramUrl;
           }, 3000);
           
           return; // Не закрываем модал, т.к. переходим в Telegram
@@ -216,7 +211,8 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
         setShowSuccessMessage(true);
         
         setTimeout(() => {
-          openTelegramChat();
+          const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(message)}`;
+          window.location.href = telegramUrl;
         }, 3000);
       }
       
@@ -244,10 +240,12 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
     <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ 
       background: 'rgba(0, 0, 0, 0.5)',
       backdropFilter: 'blur(10px)',
-      WebkitBackdropFilter: 'blur(10px)'
+      WebkitBackdropFilter: 'blur(10px)',
+      height: '100dvh',
+      minHeight: '-webkit-fill-available'
     }}>
-      {/* ✅ MOBILE ULTRA: max-h-[80vh] → max-h-[75vh] (-5%) */}
-      <div className="bg-white rounded-2xl max-w-md w-full max-h-[75vh] overflow-y-auto mx-4" style={{ 
+      {/* ✅ MOBILE: fixed height, no keyboard push */}
+      <div className="bg-white rounded-2xl max-w-md w-full max-h-[70dvh] overflow-y-auto mx-4" style={{ 
         boxShadow: '0 -10px 40px rgba(0, 0, 0, 0.2), 0 20px 60px rgba(0, 0, 0, 0.3)',
         border: '1px solid rgba(0, 0, 0, 0.1)'
       }}>

@@ -70,7 +70,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: true,
     isActive: true,
     isFeatured: true,
-    priority: 1,
+    priority: 11,
     data: () => Promise.resolve(phiPhi2DaysTourData)
   },
 
@@ -82,7 +82,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: true,
     isActive: true,
     isFeatured: true,
-    priority: 2,
+    priority: 6,
     data: () => Promise.resolve(pearlsAndamanSeaTourData)
   },
 
@@ -93,8 +93,8 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     tags: ['культурные', 'достопримечательности', 'храмы', 'обзорные', '1 день', 'семейный', 'большой будда', 'старый город', 'карон', 'смотровые'],
     isPopular: true,
     isActive: true,
-    isFeatured: true,
-    priority: 3,
+    isFeatured: false,
+    priority: 17,
     data: () => Promise.resolve(dostoprimechatelnostiPhuketaTourData)
   },
 
@@ -109,8 +109,8 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     tags: ['рафтинг', 'слоны', 'spa', 'atv', 'приключения', '1 день', 'активный', 'комбо'],
     isPopular: true,     // ✅ АКТИВИРОВАН - показываем в популярных
     isActive: true,      // ✅ АКТИВИРОВАН - показывается в поиске/меню
-    isFeatured: false,   // ❌ не на главной (пока)
-    priority: 5,
+    isFeatured: true,    // ✅ на главной
+    priority: 8,
     data: () => Promise.resolve(raftingSpaAtvTourData)
   },
 
@@ -122,8 +122,8 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     tags: ['рафтинг', 'слоны', 'spa', 'приключения', 'джунгли', 'водопад', 'храм', 'обезьяны', 'zip line', '1 день', 'активный', 'семейный', 'природа'],
     isPopular: true,     // ✅ популярный
     isActive: true,      // ✅ активен
-    isFeatured: true,    // ✅ на главной
-    priority: 25,
+    isFeatured: false,   // ❌ не на главной
+    priority: 23,
     data: () => Promise.resolve(raftingSpa1DayTourData)
   },
 
@@ -135,8 +135,8 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     tags: ['сафари', 'слоны', 'водопады', 'джунгли', '1 день', 'природа', 'као лак'],
     isPopular: true,     // ✅ АКТИВИРОВАН - показываем в популярных
     isActive: true,      // ✅ АКТИВИРОВАН - показывается в поиске/меню
-    isFeatured: false,   // ❌ не на главной (пока)
-    priority: 6,
+    isFeatured: false,   // ❌ не на главной
+    priority: 16,
     data: () => Promise.resolve(kaoLakSafariTourData)
   },
 
@@ -150,7 +150,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: true,     // ✅ показываем в популярных
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: true,    // ✅ показываем на главной (МЕГА ТУР!)
-    priority: 7,
+    priority: 5,
     data: () => Promise.resolve(elevenIslandsMegaTourData)
   },
 
@@ -163,7 +163,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: true,     // ✅ показываем в популярных
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: true,    // ✅ показываем на главной (популярный тур!)
-    priority: 8,
+    priority: 2,
     data: () => Promise.resolve(jamesBondIslandTourData)
   },
 
@@ -175,8 +175,8 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     tags: ['аватар', 'зиплайн', 'слоны', 'каноэ', 'горы', 'хангдонг', 'приключения', 'природа', 'джунгли', 'экстрим', '1 день'],
     isPopular: true,     // ✅ показываем в популярных
     isActive: true,      // ✅ АКТИВИРОВАН
-    isFeatured: false,   // ❌ не на главной (пока)
-    priority: 9,
+    isFeatured: false,   // ❌ не на главной
+    priority: 15,
     data: () => import('./tours/avatar-plus-hangdong').then(m => m.avatarPlusHangdongTour)
   },
 
@@ -188,8 +188,8 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     tags: ['море', 'морские', 'острова', 'рача', 'корал', 'спидбот', 'пляжи', 'снорклинг', 'парасейлинг', 'белый песок', '1 день'],
     isPopular: true,     // ✅ показываем в популярных
     isActive: true,      // ✅ АКТИВИРОВАН
-    isFeatured: false,   // ❌ не на главной (пока)
-    priority: 12,
+    isFeatured: true,    // ✅ на главной
+    priority: 4,
     data: () => Promise.resolve(rachaCoralIslandsTourData)
   },
 
@@ -202,7 +202,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: true,     // ✅ показываем в популярных
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: true,    // ✅ показываем на главной (уникальный тур!)
-    priority: 13,
+    priority: 14,
     data: () => Promise.resolve(phangNgaSkywalkTourData)
   },
   
@@ -214,7 +214,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: true,     // ✅ показываем в популярных
     isActive: true,      // ✅ АКТИВИРОВАН
     isFeatured: true,    // ✅ показываем на главной (уникальное озеро!)
-    priority: 14,
+    priority: 10,
     data: () => Promise.resolve(cheoLanLakeTourData)
   },
   
@@ -229,7 +229,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: true,
     isActive: true,
     isFeatured: true,
-    priority: 15,
+    priority: 3,
     data: () => Promise.resolve(similanIslandsTourData)
   },
   
@@ -241,7 +241,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: true,
     isActive: true,
     isFeatured: false,
-    priority: 16,
+    priority: 21,
     data: () => Promise.resolve(similanIslandsEarlyTourData)
   },
   
@@ -253,7 +253,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: false,
     isActive: true,
     isFeatured: false,
-    priority: 17,
+    priority: 22,
     data: () => Promise.resolve(similanIslandsSpeedboatTourData)
   },
   
@@ -265,8 +265,8 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     tags: ['рыбалка', 'троллинг', 'подводная охота', 'море', 'рассвет', 'краби ловушки', 'активный отдых', '1 день', 'экстрим', 'спорт'],
     isPopular: true,
     isActive: true,
-    isFeatured: true,
-    priority: 18,
+    isFeatured: false,
+    priority: 20,
     data: () => Promise.resolve(fishingSunriseTourData)
   },
   
@@ -278,7 +278,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     tags: ['рача', 'корал', 'рассвет', 'снорклинг', 'острова', 'море', 'comfort+', 'премиум', '1 день', 'белый песок', 'чистая вода'],
     isPopular: true,
     isActive: true,
-    isFeatured: true,
+    isFeatured: false,
     priority: 19,
     data: () => Promise.resolve(rachaCoralSunriseTourData)
   },
@@ -291,7 +291,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: true,
     isActive: true,
     isFeatured: false,
-    priority: 20,
+    priority: 24,
     data: () => Promise.resolve(rachaCoralRawaiTourData)
   },
   
@@ -304,7 +304,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: true,
     isActive: true,
     isFeatured: true,
-    priority: 21,
+    priority: 1,
     data: () => Promise.resolve(phiPhiSunriseTourData)
   },
   
@@ -316,7 +316,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: true,
     isActive: true,
     isFeatured: true,
-    priority: 22,
+    priority: 13,
     data: () => Promise.resolve(fivePearls2DaysTourData)
   },
   
@@ -328,8 +328,8 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     tags: ['пхангнга', 'самет нангше', 'смотровая', 'слоны', 'храм', 'пляж самолетов', 'природа', '1 день', 'сафари', 'фотосессия', 'виды'],
     isPopular: true,
     isActive: true,
-    isFeatured: true,
-    priority: 23,
+    isFeatured: false,
+    priority: 18,
     data: () => Promise.resolve(phangNgaSametTourData)
   },
   
@@ -341,7 +341,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: true,
     isActive: true,
     isFeatured: true,
-    priority: 24,
+    priority: 9,
     data: () => Promise.resolve(krabiSecretsTourData)
   },
 
@@ -354,7 +354,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: true,
     isActive: true,
     isFeatured: true,
-    priority: 29,
+    priority: 12,
     data: () => Promise.resolve(phiPhiRachaMaitonSunsetTourData)
   },
 
@@ -367,7 +367,7 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     isPopular: true,
     isActive: true,
     isFeatured: true,
-    priority: 26,
+    priority: 7,
     data: () => Promise.resolve(elephantBeachSametMantraSpaTourData)
   },
 
@@ -379,8 +379,8 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     tags: ['коралловые острова', 'раваи', 'снорклинг', 'пляж', 'море', 'хин дам', 'кораллы', 'острова', '1 день', 'короткий тур', 'пирс раваи'],
     isPopular: true,
     isActive: true,
-    isFeatured: true,
-    priority: 27,
+    isFeatured: false,
+    priority: 25,
     data: () => Promise.resolve(coralIslandsRawaiTourData)
   },
 
@@ -392,8 +392,8 @@ export const TOURS_REGISTRY: TourRegistryItem[] = [
     tags: ['дайвинг', 'погружение', 'андаманское море', 'подводный мир', 'кораллы', 'для новичков', 'инструктор', '1 день', 'море'],
     isPopular: true,
     isActive: true,
-    isFeatured: true,
-    priority: 28,
+    isFeatured: false,
+    priority: 26,
     data: () => Promise.resolve(divingAndamanTourData)
   },
   

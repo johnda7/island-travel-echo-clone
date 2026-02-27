@@ -96,30 +96,40 @@ export const UniversalBookingModal = ({ isOpen, onClose, tourData }: UniversalBo
     });
   };
 
-  // ✅ Универсальный открыватель Telegram чата с менеджером
+  // ✅ Универсальный открыватель Telegram чата с менеджером (с подстановкой текста)
+  // Цепочка fallback'ов: openTelegramLink → tg://resolve deep link → window.location.href
   const openTelegramChat = (messageText: string) => {
-    // Короткое сообщение для URL (без эмодзи — они ломают ?text= в Telegram)
-    const shortMsg = `Бронь: ${tourData.title}\nЦена: ${priceCalc.totalPrice} ${priceCalc.currency}\nГости: ${priceCalc.adults} взр, ${priceCalc.children} дет\nДата: ${formData.date}\nИмя: ${formData.name}\nТел: ${formData.phone}`;
-    const telegramUrl = `https://t.me/Phuketga?text=${encodeURIComponent(shortMsg)}`;
+    const encoded = encodeURIComponent(messageText);
+    const httpsUrl = `https://t.me/Phuketga?text=${encoded}`;
+    const tgUrl = `tg://resolve?domain=Phuketga&text=${encoded}`;
 
-    // Копируем полное сообщение в буфер обмена как резерв
-    try {
-      navigator.clipboard.writeText(messageText).catch(() => {});
-    } catch { /* clipboard не доступен */ }
+    // Копируем сообщение в буфер обмена как резерв
+    try { navigator.clipboard.writeText(messageText).catch(() => {}); } catch {}
 
-    try {
-      const tg = (window as any).Telegram?.WebApp;
-      if (tg && typeof tg.openLink === 'function') {
-        // ✅ Mini App: openLink() открывает URL через ВНЕШНИЙ браузер,
-        // который перенаправляет в Telegram-приложение С ?text= pre-fill.
-        // openTelegramLink() НЕ передаёт ?text= — поэтому используем openLink.
-        tg.openLink(telegramUrl);
-      } else {
-        // Обычный браузер — открываем напрямую
-        window.open(telegramUrl, '_blank') || (window.location.href = telegramUrl);
-      }
-    } catch {
-      window.location.href = telegramUrl;
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg) {
+      // Внутри Telegram Mini App
+      try {
+        if (typeof tg.openTelegramLink === 'function') {
+          // Способ 1: openTelegramLink — документировано для ?text=
+          // Закрывает Mini App и открывает чат внутри Telegram
+          tg.openTelegramLink(httpsUrl);
+          return;
+        }
+      } catch (e) { console.warn('openTelegramLink failed:', e); }
+
+      try {
+        // Способ 2: tg:// deep link — нативный обработчик Telegram
+        // Обходит WebApp SDK, идёт напрямую в клиент
+        window.location.href = tgUrl;
+        return;
+      } catch (e) { console.warn('tg:// scheme failed:', e); }
+
+      // Способ 3: https fallback через location
+      window.location.href = httpsUrl;
+    } else {
+      // Обычный браузер
+      window.open(httpsUrl, '_blank') || (window.location.href = httpsUrl);
     }
   };
 

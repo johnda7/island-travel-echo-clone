@@ -18,7 +18,7 @@ React 18 + TypeScript + Vite. WordPress-style CMS on React: one universal templa
 - **RoutePoint coordinates** are REQUIRED `[lat, lng]`. Missing → runtime TypeError crash.
 - **Images** MUST use `@/assets/...` import path. Never `../../assets` or bare URLs.
 - **Routes** MUST be ABOVE the `/:slug` catch-all in App.tsx.
-- **priority** in registry MUST be next sequential number (currently last is 28, next is 29).
+- **priority** in registry MUST be next sequential number (currently last is 29, next is 30).
 
 ### Step 1: Create photos folder
 Create `src/assets/<slug>/` with photos named `photo-1.jpg`, `photo-2.jpg`, etc. Use Unsplash URLs as placeholders if real photos aren't ready yet.
@@ -110,6 +110,10 @@ export default () => <TourPageTemplate tourData={myTourData} routePoints={routeP
 
 - Detected via `window.Telegram?.WebApp?.initData`. Header hidden; `TelegramBottomNav.tsx` shows bottom nav.
 - Bot code: `bot/`. Tokens in Koyeb env vars — never commit `.env`.
+- `UniversalBookingModalWrapper.tsx` — scroll lock via overflow:hidden (NEVER position:fixed — breaks redirect!)
+- BottomNav hides via `data-booking-open` attr on body (MutationObserver)
+- After booking: auto-return to /tours via visibilitychange
+- Contacts: Telegram manager @phuketGa, channel @phuketGoo, MAX channel + manager
 
 ## Troubleshooting
 
@@ -123,7 +127,7 @@ export default () => <TourPageTemplate tourData={myTourData} routePoints={routeP
 
 - `src/components/TourPageTemplate.tsx` — universal tour renderer (1067 lines)
 - `src/components/UniversalBookingModal.tsx` — booking dialog
-- `src/data/toursRegistry.ts` — central tour registry (28 entries, last priority: 28)
+- `src/data/toursRegistry.ts` — central tour registry (29 entries, last priority: 29)
 - `src/types/Tour.ts` — TypeScript interfaces
 - `src/App.tsx` — routing (HashRouter)
 - `memory-bank/agentReference.md` — full AI agent reference with GPS coords, design specs

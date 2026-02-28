@@ -1,43 +1,42 @@
 # Active Context
 
 ## Current Session
-**Date:** 2026-02-27  
-**Mode:** Аудит + баг-фиксы + фикс бронирования + SEO + GSC + деплой  
-**Task:** SEO оптимизация, подключение Google Search Console API, sitemap
+**Date:** 2026-03-01  
+**Mode:** SEO оптимизация, обновление документации  
+**Last commit:** 84302a6
 
 ## Current Status
-- ✅ 27 папок туров в `src/data/tours/`, 29 записей в реестре (toursRegistry.ts)
-- ✅ Бронирование работает через `window.location.href` + `?text=` (ПРОВЕРЕНО 27.02.2026)
+- ✅ 27 папок туров в `src/data/tours/`, 29 записей в реестре
+- ✅ Бронирование работает через `window.location.href` + `?text=` (ПРОВЕРЕНО)
 - ✅ Механизм бронирования ЗАЩИЩЁН от изменений AI агентами
-- ✅ Туры переупорядочены по популярности
-- ✅ Автозаполнение телефона из Telegram
-- ✅ Viewport 100dvh для мобильных
+- ✅ Booking modal: bottom-sheet на мобильных, scroll lock через overflow:hidden
+- ✅ После бронирования: автоматический возврат на /tours (visibilitychange)
+- ✅ Фильтры: iOS 26 пиллы категорий + 12 быстрых тегов
+- ✅ Футер: Telegram @phuketGa + @phuketGoo, MAX канал + менеджер
+- ✅ Telegram Mini App: BottomNav скрывается при модалке, кнопки прячутся
 - ✅ **Google Search Console** подключен и верифицирован
-- ✅ **GSC API** подключен через Service Account (Full access)
-- ✅ **Sitemap.xml** обновлён (27 туров) и отправлен в GSC (0 ошибок)
-- ✅ **JSON-LD** телефон-заглушка заменена на ContactPoint с Telegram
-- ✅ Деплой: commit 12e5dae
+- ✅ **Sitemap.xml** обновлён (27 туров) и отправлен в GSC
+- ✅ **JSON-LD** ContactPoint с Telegram
 
-## Исправления аудита (сессия 2026-02-27)
-| # | Тип | Описание | Статус |
-|---|-----|----------|--------|
-| 1 | bug | Дубликат priority: 25 в реестре | ✅ → 29 |
-| 2 | bug | Хардкод бейджи "ХИТ"/"ПРИРОДА" | ✅ динамические |
-| 3 | bug | Хардкод хлебные крошки "Приключения" | ✅ динамические |
-| 4 | bug | Можно выбрать прошедшую дату бронирования | ✅ min=today |
-| 5 | bug | Тройной обработчик на кнопке бронирования | ✅ один onClick |
-| 6 | bug | Пустой футер без контактов | ✅ полный футер |
-| 7 | bug | Форма закрывается при ошибке | ❌ не исправлено |
-| 8 | bug | RaftingSpa1DayNew не передаёт routePoints | ❌ |
-| 9 | bug | PhiPhiRachaMaiton последняя точка type:"start" | ❌ |
-| 10 | seo | Устаревший год 2025 в мета-описании | ✅ → 2026 |
-| 11 | seo | Телефон-заглушка в JSON-LD | ✅ → ContactPoint Telegram |
-| 13 | code | Мёртвые ссылки в paths.ts | ❌ |
-| 14 | code | eleven-islands-standard не зарегистрирован | ❌ |
-| 15 | perf | Нет lazy loading страниц | ✅ React.lazy |
-| 16 | perf | Блокирующий Telegram SDK | ✅ defer |
-| 17 | clean | console.log в продакшне | ✅ удалены |
-| 18 | track | GA/Yandex аналитика не подключена | ❌ нужны ID |
+## Последние изменения (28.02-01.03.2026)
+
+### Telegram Mini App UX
+- ✅ Убраны отступы pt-20 (Header скрыт в Telegram)
+- ✅ Модалка бронирования → bottom-sheet на мобильных (92dvh)  
+- ✅ Input font-size 16px (без авто-зума iOS)
+- ✅ BottomNav + нативные Telegram кнопки скрываются при модалке
+- ✅ Scroll lock через overflow:hidden (НЕ position:fixed — ломает redirect!)
+- ✅ Date picker overflow-x hidden
+- ✅ После бронирования → возврат на /tours для конверсии
+
+### Фильтры и UI  
+- ✅ Редизайн фильтров: 6 категорий (пиллы) + 12 быстрых тегов
+- ✅ Комбинация фильтров: категория + тег работают вместе
+- ✅ Теги скрываются если нет туров в текущей категории
+
+### Контакты
+- ✅ Футер обновлён: Telegram менеджер + канал, MAX канал + менеджер
+- ✅ Убраны старые некорректные ссылки
 
 ## Реестр туров (29 записей в toursRegistry.ts)
 | Категория | Кол-во | Туры |

@@ -10,48 +10,46 @@ type Props = {
 
 /**
  * Обёртка вокруг защищённого UniversalBookingModal.
- * - Блокирует скролл фона при открытии (iOS-friendly)
+ * - Блокирует скролл фона при открытии (мягко — без position:fixed, чтобы не ломать window.location.href)
  * - Скрывает Telegram MainButton/SecondaryButton и BottomNav пока модалка открыта
  * - Никаких scale(), fontSize override — оригинальная модалка рендерится как есть
  */
 export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
 
-  // Блокируем скролл фона при открытии (iOS-friendly)
+  // Блокируем скролл фона при открытии
+  // ⚠️ НЕ ИСПОЛЬЗОВАТЬ position:fixed на body — ломает window.location.href редирект в Telegram WebView!
   useEffect(() => {
     if (!isOpen) return;
 
     const scrollY = window.scrollY || window.pageYOffset;
     document.body.setAttribute("data-scroll-lock", String(scrollY));
 
-    Object.assign(document.documentElement.style, {
-      overscrollBehaviorY: "contain",
-    } as CSSStyleDeclaration);
+    // Мягкая блокировка: overflow:hidden на body + html
+    // НЕ ломает window.location.href (критично для редиректа в Telegram!)
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
 
-    Object.assign(document.body.style, {
-      position: "fixed",
-      top: `-${scrollY}px`,
-      left: "0",
-      right: "0",
-      width: "100%",
-      overflow: "hidden",
-      touchAction: "none",
-    } as CSSStyleDeclaration);
+    // iOS: предотвращаем фоновый скролл через touchmove
+    const preventBgScroll = (e: TouchEvent) => {
+      // Разрешаем скролл ВНУТРИ модалки (overflow-y:auto на карточке)
+      const target = e.target as HTMLElement;
+      const scrollableModal = target.closest('.overflow-y-auto, [data-booking-wrapper]');
+      if (scrollableModal) return; // не мешаем скроллу модалки
+      e.preventDefault();
+    };
+    document.addEventListener("touchmove", preventBgScroll, { passive: false });
 
     return () => {
       const prev = Number(document.body.getAttribute("data-scroll-lock") || 0);
       document.body.removeAttribute("data-scroll-lock");
 
-      Object.assign(document.body.style, {
-        position: "",
-        top: "",
-        left: "",
-        right: "",
-        width: "",
-        overflow: "",
-        touchAction: "",
-      } as CSSStyleDeclaration);
-      document.documentElement.style.overscrollBehaviorY = "";
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      document.body.style.touchAction = "";
+
+      document.removeEventListener("touchmove", preventBgScroll);
 
       window.scrollTo(0, prev);
     };

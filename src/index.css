@@ -187,6 +187,20 @@
     }
   }
 
+  /* Запрет горизонтального скролла при открытии date picker на iOS */
+  [data-booking-wrapper] {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+  [data-booking-wrapper] > div {
+    overflow-x: hidden !important;
+  }
+  /* input[type=date] на iOS может расширяться — ограничиваем */
+  [data-booking-wrapper] input[type="date"] {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
   /* КРИТИЧНО: Глобальная защита от горизонтального скролла на мобильных */
   #root {
     overflow-x: hidden;

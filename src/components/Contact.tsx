@@ -49,7 +49,7 @@ export const Contact = () => {
   };
 
   return (
-    <section className="py-10 relative overflow-hidden" style={{ background: '#1C1C1E' }}>
+    <section className="py-6 md:py-10 relative overflow-hidden" style={{ background: '#1C1C1E' }}>
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div 

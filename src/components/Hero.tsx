@@ -56,7 +56,7 @@ export const Hero = () => {
         
         {/* Hero Card - iOS 26 Liquid Glass - Компактнее в Telegram */}
         <div 
-          className={`text-center ${isTelegram ? 'px-6 py-6' : 'px-8 py-10'} rounded-[32px] max-w-md mx-auto animate-fade-in`}
+          className={`text-center ${isTelegram ? 'px-6 py-6' : 'px-6 py-6 md:px-8 md:py-10'} rounded-[32px] max-w-md mx-auto animate-fade-in`}
           style={{
             background: 'rgba(255, 255, 255, 0.12)',
             backdropFilter: 'blur(40px) saturate(180%)',
@@ -87,7 +87,7 @@ export const Hero = () => {
           
           {/* Title - Компактнее в Telegram */}
           <h1 
-            className={`${isTelegram ? 'text-4xl mb-2' : 'text-5xl md:text-6xl mb-3'} font-black tracking-tight`}
+            className={`${isTelegram ? 'text-4xl mb-2' : 'text-4xl md:text-5xl lg:text-6xl mb-3'} font-black tracking-tight`}
             style={{ 
               fontFamily: "'SF Pro Display', -apple-system, system-ui, sans-serif",
               background: 'linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.8) 100%)',
@@ -112,7 +112,7 @@ export const Hero = () => {
             size="lg" 
             asChild 
             onClick={() => haptic('medium')} 
-            className={`w-full bg-[#007AFF] hover:bg-[#0051D5] text-white ${isTelegram ? 'px-6 py-4 text-base' : 'px-8 py-6 text-lg'} font-semibold rounded-2xl transition-all duration-300 border-none transform hover:scale-[1.02] active:scale-[0.98]`}
+            className={`w-full bg-[#007AFF] hover:bg-[#0051D5] text-white ${isTelegram ? 'px-6 py-4 text-base' : 'px-6 py-4 md:px-8 md:py-6 text-lg'} font-semibold rounded-2xl transition-all duration-300 border-none transform hover:scale-[1.02] active:scale-[0.98]`}
             style={{ 
               fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif",
               boxShadow: '0 4px 20px rgba(0, 122, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)'

@@ -33,7 +33,7 @@ export const WhyUs = () => {
   const { ref: gridRef, isVisible: gridVisible } = useScrollReveal();
   
   return (
-    <section className="py-10 relative overflow-hidden">
+    <section className="py-6 md:py-10 relative overflow-hidden">
       {/* iOS 26 Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50/30 to-white"></div>
       

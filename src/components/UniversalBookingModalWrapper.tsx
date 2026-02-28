@@ -73,6 +73,12 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
     const root = wrapRef.current;
     if (!root) return;
 
+    // 🔒 Фиксируем начальную высоту viewport при открытии модалки.
+    // Когда открывается нативный date-picker / клавиатура на мобильном,
+    // window.innerHeight уменьшается → без этого фикса fitToViewport
+    // пересчитывает scale и модалка «прыгает».
+    const lockedViewportH = window.innerHeight;
+
     // Небольшая задержка, чтобы дочерний модал гарантированно появился в DOM
     const id = requestAnimationFrame(() => {
       try {
@@ -85,6 +91,10 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
           overlay.style.alignItems = "center"; // центрируем (вместо items-end)
           overlay.style.padding = "6px"; // ещё компактнее
           overlay.style.overscrollBehaviorY = "contain"; // исключаем "ездение"
+          // 🔒 Фиксируем высоту оверлея — не позволяем dvh/vh прыгать
+          overlay.style.height = `${lockedViewportH}px`;
+          overlay.style.minHeight = `${lockedViewportH}px`;
+          overlay.style.maxHeight = `${lockedViewportH}px`;
         }
 
         // Находим белую карточку внутри оверлея и ограничиваем высоту
@@ -92,7 +102,7 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
         if (panel) {
           // Базовые компактные стили
           panel.style.maxHeight = "100vh"; // разрешим полную высоту
-          panel.style.overflowY = "visible"; // убираем внутренний скролл
+          panel.style.overflowY = "auto"; // 🔒 разрешаем скролл внутри панели вместо overflow:visible
           (panel.style as any).webkitOverflowScrolling = "touch"; // iOS плавный скролл
           panel.style.margin = "0 auto";
           panel.style.width = "100%";
@@ -128,16 +138,15 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
             bookingBtn.style.borderRadius = "12px";
           }
 
-          // 👉 Автомасштаб под высоту вьюпорта: панель должна целиком помещаться без скролла
+          // 👉 Автомасштаб: панель должна целиком помещаться в зафиксированной области
           const fitToViewport = () => {
-            const viewportH = window.innerHeight;
-            // учтём паддинги оверлея по 10px сверху/снизу
-            const available = viewportH - 12; 
+            // 🔒 Используем зафиксированную высоту, а не текущую window.innerHeight
+            const available = lockedViewportH - 12;
             // временно сбросим трансформацию, чтобы измерить реальную высоту
             panel.style.transform = "";
             panel.style.transformOrigin = "top center";
             const fullH = panel.scrollHeight;
-            const scale = Math.min(1, Math.max(0.62, available / fullH)); // не меньше 0.62, чтобы точно помещалось
+            const scale = Math.min(1, Math.max(0.62, available / fullH));
             if (scale < 1) {
               panel.style.transform = `scale(${scale})`;
             } else {
@@ -146,17 +155,29 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
           };
 
           fitToViewport();
-          // Пересчёт при изменении размера/ориентации
-          const ro = new ResizeObserver(() => fitToViewport());
-          ro.observe(panel);
-          const onResize = () => fitToViewport();
-          window.addEventListener('resize', onResize);
-          window.addEventListener('orientationchange', onResize);
-          // Сохранить очистку на элементе для коллбэка возврата
+          // Пересчёт ТОЛЬКО при ориентации (не при resize — date picker/keyboard)
+          const onOrientationChange = () => {
+            // При смене ориентации пересчитываем с новым реальным viewport
+            const newH = window.innerHeight;
+            const available = newH - 12;
+            panel.style.transform = "";
+            panel.style.transformOrigin = "top center";
+            const fullH = panel.scrollHeight;
+            const scale = Math.min(1, Math.max(0.62, available / fullH));
+            if (scale < 1) {
+              panel.style.transform = `scale(${scale})`;
+            }
+            // Обновляем размеры оверлея
+            if (overlay) {
+              overlay.style.height = `${newH}px`;
+              overlay.style.minHeight = `${newH}px`;
+              overlay.style.maxHeight = `${newH}px`;
+            }
+          };
+          window.addEventListener('orientationchange', onOrientationChange);
+          // Сохранить очистку
           (panel as any).__fitCleanup = () => {
-            try { ro.disconnect(); } catch {}
-            window.removeEventListener('resize', onResize);
-            window.removeEventListener('orientationchange', onResize);
+            window.removeEventListener('orientationchange', onOrientationChange);
           };
         }
       } catch {}

@@ -228,24 +228,25 @@ export const Tours = ({ filteredTours }: ToursProps) => {
   return (
     <section 
       id="tours" 
-      className="py-16 bg-gradient-to-b from-white via-blue-50/30 to-white"
+      className="py-8 md:py-16 bg-gradient-to-b from-white via-blue-50/30 to-white"
     >
       <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-            {filteredTours ? 'Результаты поиска' : 'Популярные туры'}
-          </h2>
-          {!filteredTours && (
+        {/* Header — показываем только когда компонент используется БЕЗ filteredTours
+            (на главной странице). На странице /tours уже есть свой заголовок "Все туры". */}
+        {!filteredTours && (
+          <div className="text-center mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+              Популярные туры
+            </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Откройте для себя самые популярные направления Пхукета
             </p>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Filters */}
         {!filteredTours && (
-          <div className="mb-8">
+          <div className="mb-4 md:mb-8">
             <TourFilters 
               onFilterChange={setFilters}
               tourCount={toursToShow.length}
@@ -254,7 +255,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
         )}
 
         {/* Tours Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {toursToShow.map((tour, index) => (
             <TourCard 
               key={tour.id}
@@ -268,7 +269,7 @@ export const Tours = ({ filteredTours }: ToursProps) => {
         </div>
 
         {toursToShow.length === 0 && (
-          <div className="text-center py-12">
+          <div className="text-center py-6 md:py-12">
             <MapPin className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-600 mb-2">
               Туры не найдены

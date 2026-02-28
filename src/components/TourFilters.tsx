@@ -97,7 +97,7 @@ export const TourFilters = ({ onFilterChange, tourCount }: TourFiltersProps) => 
       {/* Filter Panel */}
       {isOpen && (
         <div 
-          className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-200 p-6 z-50 animate-fade-in"
+          className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-200 p-4 md:p-6 z-50 animate-fade-in"
           style={{
             backdropFilter: 'blur(40px) saturate(180%)',
             background: 'rgba(255, 255, 255, 0.95)',

@@ -27,7 +27,7 @@ export const FAQ = () => {
   const { ref: listRef, isVisible: listVisible } = useScrollReveal();
   
   return (
-    <section className="py-10 relative overflow-hidden">
+    <section className="py-6 md:py-10 relative overflow-hidden">
       {/* iOS 26 Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-white to-gray-50"></div>
       

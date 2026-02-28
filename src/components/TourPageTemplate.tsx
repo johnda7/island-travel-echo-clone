@@ -991,7 +991,7 @@ export const TourPageTemplate = ({
       )}
 
       {/* iOS 26 Gradient Divider before Footer */}
-      <div className="relative h-16" style={{ 
+      <div className="relative h-8 md:h-16" style={{ 
         background: 'linear-gradient(180deg, rgba(242, 242, 247, 0) 0%, rgba(242, 242, 247, 0.3) 30%, rgba(242, 242, 247, 0.6) 60%, rgba(242, 242, 247, 1) 100%)'
       }}>
         <div className="absolute inset-x-0 top-0 h-px" style={{

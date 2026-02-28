@@ -66,16 +66,25 @@ export const Footer = () => {
             <h3 className="text-sm font-semibold mb-3 text-white">Мы на связи</h3>
             <div className="flex flex-col items-center md:items-end gap-2">
               <a 
-                href="https://t.me/Phuketga" 
+                href="https://t.me/phuketGa" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-gray-400 hover:text-[#007AFF] text-xs transition-colors"
               >
                 <Send className="w-3.5 h-3.5" />
-                Написать менеджеру
+                Менеджер Telegram
               </a>
               <a 
-                href="https://max.ru/join/JgPj1Cst1b89JKK0g9TN9Bg2xX1FlTQwDdXMLHukLq4" 
+                href="https://t.me/phuketGoo" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-gray-400 hover:text-[#007AFF] text-xs transition-colors"
+              >
+                <Send className="w-3.5 h-3.5" />
+                Telegram — канал
+              </a>
+              <a 
+                href="https://max.ru/join/_A5GgMrHZDCZ2ulCH0RDz7e9SfDlA8lTDrO7Xxxz240" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-gray-400 hover:text-[#007AFF] text-xs transition-colors"
@@ -84,13 +93,13 @@ export const Footer = () => {
                 МАХ — канал
               </a>
               <a 
-                href="https://max.ru/join/hE6ryH0rhiZumsXvIFkIJTLvxPtm5Jrfpx7TPx2c_fI" 
+                href="https://max.ru/u/f9LHodD0cOLHcCKSsvaoi8e6b1B143PNGeRnZTzh3d00SMVo2frD_ty8YSU" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-gray-400 hover:text-[#007AFF] text-xs transition-colors"
               >
                 <Users className="w-3.5 h-3.5" />
-                МАХ — чат
+                МАХ — менеджер
               </a>
             </div>
           </div>

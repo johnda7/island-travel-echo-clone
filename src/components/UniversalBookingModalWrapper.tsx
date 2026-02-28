@@ -10,9 +10,9 @@ type Props = {
 
 /**
  * Обёртка вокруг защищённого UniversalBookingModal.
- * Минимальное вмешательство: только блокировка скролла фона при открытии.
- * Никаких scale(), fontSize override, padding override — оригинальная модалка
- * уже имеет свой адаптивный дизайн (sm: breakpoints).
+ * - Блокирует скролл фона при открытии (iOS-friendly)
+ * - Скрывает Telegram MainButton/SecondaryButton и BottomNav пока модалка открыта
+ * - Никаких scale(), fontSize override — оригинальная модалка рендерится как есть
  */
 export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
@@ -54,6 +54,31 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
       document.documentElement.style.overscrollBehaviorY = "";
 
       window.scrollTo(0, prev);
+    };
+  }, [isOpen]);
+
+  // Скрываем Telegram MainButton, SecondaryButton и нашу BottomNav
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Сигнал для TelegramBottomNav — скрыть навбар
+    document.body.setAttribute("data-booking-open", "true");
+
+    // Скрываем нативные Telegram кнопки
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg) {
+      try { tg.MainButton.hide(); } catch {}
+      try { tg.SecondaryButton?.hide(); } catch {}
+    }
+
+    return () => {
+      document.body.removeAttribute("data-booking-open");
+
+      // Восстанавливаем нативные Telegram кнопки
+      if (tg) {
+        try { tg.MainButton.show(); } catch {}
+        try { tg.SecondaryButton?.show(); } catch {}
+      }
     };
   }, [isOpen]);
 

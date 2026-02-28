@@ -45,6 +45,7 @@ export const TelegramBottomNav = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
+  const [bookingOpen, setBookingOpen] = useState(false);
   
   // Timestamp refs для предотвращения ghost click на мобильных
   const menuOpenedAt = useRef(0);
@@ -61,6 +62,15 @@ export const TelegramBottomNav = () => {
       setIsTelegram(true);
       console.log('📱 Telegram Mini App detected - showing bottom nav');
     }
+  }, []);
+
+  // Скрываем навбар когда открыта модалка бронирования
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setBookingOpen(document.body.hasAttribute('data-booking-open'));
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['data-booking-open'] });
+    return () => observer.disconnect();
   }, []);
   
   // Debounce для поиска
@@ -111,6 +121,9 @@ export const TelegramBottomNav = () => {
   
   // Не показываем в обычном браузере
   if (!isTelegram) return null;
+  
+  // Скрываем навбар когда открыта модалка бронирования
+  if (bookingOpen) return null;
   
   const navItems: NavItem[] = [
     {

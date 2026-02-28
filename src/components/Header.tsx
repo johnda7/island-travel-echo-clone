@@ -29,6 +29,35 @@ const getMenuIcon = (menuName: string): JSX.Element => {
   return icons[menuName] || <Home {...iconProps} />;
 };
 
+// Helper: get gradient colors for sub-item icons
+const getSubItemGradient = (sectionIndex: number, itemIndex: number): [string, string] => {
+  const gradients: [string, string][][] = [
+    // Морские туры — синие оттенки
+    [['#007AFF','#5AC8FA'], ['#34AADC','#5AC8FA'], ['#007AFF','#34AADC'], ['#0A84FF','#64D2FF'], ['#AF52DE','#DA8FFF'], ['#5856D6','#AF52DE']],
+    // Приключения — зелёные/оранжевые
+    [['#34C759','#30D158'], ['#FF9500','#FFCC00'], ['#FF6B35','#FF9500'], ['#30D158','#A8E06C'], ['#FF3B30','#FF6961'], ['#007AFF','#5AC8FA']],
+    // Культурные — красные/пурпурные
+    [['#FF2D55','#FF6482'], ['#AF52DE','#DA8FFF'], ['#FF9500','#FFCC00'], ['#5856D6','#AF52DE']],
+    // Подборки — разноцветные
+    [['#FFD60A','#FF9F0A'], ['#FF375F','#FF6482'], ['#FF9500','#FFCC00'], ['#AF52DE','#DA8FFF'], ['#5856D6','#AF52DE']],
+    // Информация — серо-голубые
+    [['#007AFF','#5AC8FA'], ['#34C759','#30D158'], ['#FF9500','#FFCC00'], ['#FFD60A','#FF9F0A'], ['#5856D6','#AF52DE'], ['#8E8E93','#AEAEB2']],
+  ];
+  const section = gradients[sectionIndex] || gradients[0];
+  return section[itemIndex % section.length];
+};
+
+// Helper: extract emoji from text
+const getSubItemEmoji = (name: string): string => {
+  const match = name.match(/^(\p{Emoji_Presentation}|\p{Extended_Pictographic})/u);
+  return match ? match[0] : '•';
+};
+
+// Helper: strip emoji from text  
+const stripEmoji = (name: string): string => {
+  return name.replace(/^(\p{Emoji_Presentation}|\p{Extended_Pictographic})\s*/u, '');
+};
+
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -456,101 +485,157 @@ export const Header = () => {
           </button>
         </div>
 
-        {/* Navigation Menu - iOS 26 Style (под header) */}
+        {/* Navigation Menu - iOS 26 Liquid Glass */}
         {isOpen && (
-          <div 
-            className="absolute top-16 left-0 right-0 z-40"
-            style={{
-              background: 'rgba(255, 255, 255, 0.98)',
-              backdropFilter: 'blur(40px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-              borderTop: '1px solid rgba(0, 0, 0, 0.08)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5)',
-              maxHeight: '80vh',
-              overflowY: 'auto',
-              animation: 'slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-            }}
-          >
-            <nav className="px-6 py-5 space-y-5">
-              {mainMenuItems.map((item, index) => (
-                <div 
-                  key={item.name}
-                  style={{
-                    animation: `fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.05}s both`
-                  }}
-                >
-                  <Link
-                    to={item.href}
-                    className="block font-bold text-[18px] mb-3 hover:text-blue-600 transition-colors duration-150"
+          <>
+            {/* Backdrop overlay */}
+            <div 
+              className="fixed inset-0 z-30"
+              style={{ background: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)' }}
+              onClick={() => setIsOpen(false)}
+            />
+            <div 
+              className="fixed top-16 left-0 right-0 z-40 overflow-hidden"
+              style={{
+                background: 'rgba(248, 248, 250, 0.97)',
+                backdropFilter: 'blur(60px) saturate(200%)',
+                WebkitBackdropFilter: 'blur(60px) saturate(200%)',
+                borderTop: '0.5px solid rgba(0, 0, 0, 0.06)',
+                boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15)',
+                maxHeight: 'calc(100vh - 4rem)',
+                overflowY: 'auto',
+                animation: 'slideDown 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)',
+                WebkitOverflowScrolling: 'touch',
+              }}
+            >
+              <nav className="px-4 py-4 max-w-lg mx-auto">
+                {mainMenuItems.map((item, index) => (
+                  <div 
+                    key={item.name}
+                    className="mb-3"
                     style={{
-                      color: '#000',
-                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-                      letterSpacing: '-0.02em',
-                      paddingBottom: '10px',
-                      borderBottom: '2px solid rgba(0, 122, 255, 0.15)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '10px'
+                      animation: `fadeIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) ${index * 0.04}s both`
                     }}
-                    onClick={() => setIsOpen(false)}
                   >
-                    {getMenuIcon(item.name)}
-                    {item.name}
-                  </Link>
-                  {item.subItems && (
-                    <div className="space-y-1 mt-3 ml-1">
-                      {item.subItems.map((subItem, subIndex) => (
-                        <Link
-                          key={subItem.name}
-                          to={subItem.href}
-                          className="block py-2.5 px-4 rounded-xl text-[15px] font-medium hover:bg-blue-50 hover:text-blue-600 transition-all duration-150"
-                          style={{
-                            color: '#1C1C1E',
-                            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                            animation: `fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) ${(index * 0.05) + (subIndex * 0.03)}s both`
-                          }}
-                          onClick={() => setIsOpen(false)}
-                        >
-                          <span style={{ marginRight: '8px', opacity: 0.7 }}>•</span>
-                          {subItem.name}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-              
-              {/* CTA Button */}
-              <div style={{
-                animation: `fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) ${mainMenuItems.length * 0.05 + 0.1}s both`
-              }}>
-                <button 
-                  onClick={() => {
-                    const tg = (window as any).Telegram?.WebApp;
-                    if (tg?.HapticFeedback) {
-                      tg.HapticFeedback.impactOccurred('medium');
-                    }
-                    if (tg) {
-                      tg.openTelegramLink('https://t.me/Phuketga');
-                    } else {
-                      window.open('https://t.me/Phuketga', '_blank');
-                    }
-                  }}
-                  className="btn-telegram block text-center mt-6 hover:transform hover:scale-105 active:scale-95 w-full"
+                    {/* Section Header */}
+                    <Link
+                      to={item.href}
+                      className="flex items-center gap-2.5 px-3 py-2 mb-1"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <span className="text-[15px] font-semibold tracking-tight" style={{
+                        color: '#8E8E93',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.04em',
+                        fontSize: '12px',
+                      }}>
+                        {item.name}
+                      </span>
+                    </Link>
+                    
+                    {/* Sub Items Card */}
+                    {item.subItems && (
+                      <div 
+                        className="rounded-2xl overflow-hidden"
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.85)',
+                          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04), 0 0 0 0.5px rgba(0, 0, 0, 0.04)',
+                        }}
+                      >
+                        {item.subItems.map((subItem, subIndex) => (
+                          <Link
+                            key={subItem.name}
+                            to={subItem.href}
+                            className="flex items-center gap-3 px-4 py-3 active:bg-gray-100/80 transition-colors duration-100"
+                            style={{
+                              borderBottom: subIndex < (item.subItems?.length || 0) - 1 ? '0.5px solid rgba(0, 0, 0, 0.06)' : 'none',
+                              animation: `fadeIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) ${(index * 0.04) + (subIndex * 0.02)}s both`
+                            }}
+                            onClick={() => setIsOpen(false)}
+                          >
+                            {/* Icon Circle */}
+                            <div 
+                              className="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center text-base"
+                              style={{
+                                background: `linear-gradient(135deg, ${getSubItemGradient(index, subIndex)[0]}, ${getSubItemGradient(index, subIndex)[1]})`,
+                                boxShadow: `0 2px 8px ${getSubItemGradient(index, subIndex)[0]}33`,
+                              }}
+                            >
+                              <span className="text-white text-sm">{getSubItemEmoji(subItem.name)}</span>
+                            </div>
+                            
+                            {/* Text */}
+                            <div className="flex-1 min-w-0">
+                              <div className="text-[15px] font-medium text-gray-900 leading-tight" style={{
+                                fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                              }}>
+                                {stripEmoji(subItem.name)}
+                              </div>
+                              {'description' in subItem && (subItem as any).description && (
+                                <div className="text-[12px] text-gray-500 mt-0.5 leading-tight" style={{
+                                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                                }}>
+                                  {(subItem as any).description}
+                                </div>
+                              )}
+                            </div>
+                            
+                            {/* Count badge + chevron */}
+                            <div className="flex items-center gap-1.5 flex-shrink-0">
+                              {'count' in subItem && (subItem as any).count > 0 && (
+                                <span className="text-[12px] font-medium px-1.5 py-0.5 rounded-md" style={{
+                                  background: 'rgba(0, 122, 255, 0.08)',
+                                  color: '#007AFF',
+                                }}>
+                                  {(subItem as any).count}
+                                </span>
+                              )}
+                              <svg className="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                              </svg>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+                
+                {/* CTA Button */}
+                <div 
+                  className="mt-4 mb-2"
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    transition: 'all 0.15s cubic-bezier(0.4, 0, 0.2, 1)'
+                    animation: `fadeIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) ${mainMenuItems.length * 0.04 + 0.1}s both`
                   }}
                 >
-                  <Send className="w-5 h-5" style={{ transform: 'rotate(-35deg)' }} />
-                  Написать менеджеру
-                </button>
-              </div>
-            </nav>
-          </div>
+                  <button 
+                    onClick={() => {
+                      const tg = (window as any).Telegram?.WebApp;
+                      if (tg?.HapticFeedback) {
+                        tg.HapticFeedback.impactOccurred('medium');
+                      }
+                      if (tg) {
+                        tg.openTelegramLink('https://t.me/Phuketga');
+                      } else {
+                        window.open('https://t.me/Phuketga', '_blank');
+                      }
+                    }}
+                    className="w-full flex items-center justify-center gap-2.5 py-3.5 rounded-2xl font-semibold text-[15px] active:scale-[0.98] transition-all duration-150"
+                    style={{
+                      background: 'linear-gradient(135deg, #34C759 0%, #30D158 100%)',
+                      color: '#fff',
+                      boxShadow: '0 4px 14px rgba(52, 199, 89, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                    }}
+                  >
+                    <Send className="w-4.5 h-4.5" style={{ transform: 'rotate(-35deg)' }} />
+                    Написать в Telegram
+                  </button>
+                </div>
+              </nav>
+            </div>
+          </>
         )}
 
 

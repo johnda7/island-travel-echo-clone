@@ -4,8 +4,22 @@
 **Production & Active Development** (27 папок туров, 29 в реестре)
 
 ## Latest Update (2026-03-01)
-**Session:** Telegram UX фиксы, редизайн фильтров, обновление контактов, SEO  
-**Status:** Последний коммит 84302a6
+**Session:** SEO обогащение, auto-sitemap, Indexing API, обновление документации  
+**Status:** Последний коммит baa82a8
+
+### Completed — SEO оптимизация (2026-03-01)
+- ✅ **generate-og-pages.mjs v2** — 52 HTML с видимым контентом (description, highlights, included, FAQ, цены)
+- ✅ **JSON-LD TouristTrip** заменил Product schema (лучше для Google Travel)
+- ✅ **Удалён fake aggregateRating** — formula `150 + id.length*7` убрана
+- ✅ **FAQPage JSON-LD** — 4 Q&A на каждый тур (цена, длительность, бронирование, включено)
+- ✅ **BreadcrumbList JSON-LD** — Главная → Категория → Тур
+- ✅ **hreflang** ru + x-default на каждой странице тура
+- ✅ **generate-sitemap.mjs** — auto-generated sitemap.xml (64 URLs)
+- ✅ **Build pipeline** — vite → postbuild → og-pages → sitemap
+- ✅ **gsc-submit-sitemap.cjs** — отправка sitemap в GSC через API
+- ✅ **SA повышен до Owner** — Indexing API теперь работает
+- ✅ **64 URL отправлены** на индексацию через Indexing API (0 ошибок)
+- ✅ **Деплой** — commit baa82a8
 
 ### Completed — Контакты и UI (2026-03-01)
 - ✅ **Футер обновлён** — Telegram менеджер @phuketGa, канал @phuketGoo, MAX канал + менеджер

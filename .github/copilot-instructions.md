@@ -123,6 +123,25 @@ export default () => <TourPageTemplate tourData={myTourData} routePoints={routeP
 - Build hangs → check for circular imports or corrupted files.
 - TypeError "Cannot read 'lat'" → RoutePoint missing `coordinates`.
 
+## SEO & Google Search Console
+
+- **GSC**: Connected, SA = Owner. Email: `anotherstoriz@gmail.com`.
+- **Indexing API**: WORKS! SA promoted to Owner 01.03.2026.
+- **Build pipeline**: `vite build → postbuild.cjs → generate-og-pages.mjs → generate-sitemap.mjs`
+- **Static HTML**: 52 pages (26 tours × 2 routes) with visible SEO content (highlights, included, FAQ, prices). Auto-hides after React loads.
+- **JSON-LD**: TouristTrip + BreadcrumbList + FAQPage per tour. No fake ratings.
+- **Sitemap**: Auto-generated, 64 URLs. Submitted via `gsc-submit-sitemap.cjs`.
+- **Indexing**: `node scripts/gsc-submit-indexing.cjs --from-sitemap 0 200` — sends all URLs.
+- **hreflang**: `ru` + `x-default` on every tour page.
+
+### GSC Scripts
+```bash
+node scripts/gsc-test-connection.cjs       # Test connection
+node scripts/gsc-analytics.cjs             # 7-day overview
+node scripts/gsc-submit-sitemap.cjs        # Submit sitemap
+node scripts/gsc-submit-indexing.cjs --from-sitemap 0 200  # Index all URLs
+```
+
 ## Key files
 
 - `src/components/TourPageTemplate.tsx` — universal tour renderer (1067 lines)
@@ -130,5 +149,9 @@ export default () => <TourPageTemplate tourData={myTourData} routePoints={routeP
 - `src/data/toursRegistry.ts` — central tour registry (29 entries, last priority: 29)
 - `src/types/Tour.ts` — TypeScript interfaces
 - `src/App.tsx` — routing (HashRouter)
+- `scripts/generate-og-pages.mjs` — SEO static HTML generator (v2, visible content)
+- `scripts/generate-sitemap.mjs` — auto sitemap generator (64 URLs)
+- `scripts/gsc-submit-indexing.cjs` — batch Indexing API submission
+- `scripts/gsc-submit-sitemap.cjs` — sitemap submission to GSC
 - `memory-bank/agentReference.md` — full AI agent reference with GPS coords, design specs
 - `AI_DOCS/` — detailed guides

@@ -2,8 +2,8 @@
 
 ## Current Session
 **Date:** 2026-03-01  
-**Mode:** SEO оптимизация, обновление документации  
-**Last commit:** 84302a6
+**Mode:** SEO оптимизация — обогащение static HTML, auto-sitemap, Indexing API  
+**Last commit:** baa82a8
 
 ## Current Status
 - ✅ 27 папок туров в `src/data/tours/`, 29 записей в реестре
@@ -14,9 +14,12 @@
 - ✅ Фильтры: iOS 26 пиллы категорий + 12 быстрых тегов
 - ✅ Футер: Telegram @phuketGa + @phuketGoo, MAX канал + менеджер
 - ✅ Telegram Mini App: BottomNav скрывается при модалке, кнопки прячутся
-- ✅ **Google Search Console** подключен и верифицирован
-- ✅ **Sitemap.xml** обновлён (27 туров) и отправлен в GSC
-- ✅ **JSON-LD** ContactPoint с Telegram
+- ✅ **Google Search Console** подключен, SA = **Owner**
+- ✅ **Indexing API** РАБОТАЕТ — 64 URL отправлены (0 ошибок)
+- ✅ **Sitemap.xml** auto-generated: 64 URLs (26×2 tours + 3 static + 9 beaches)
+- ✅ **Static HTML** содержит видимый контент (highlights, included, FAQ, цены)
+- ✅ **JSON-LD** TouristTrip + BreadcrumbList + FAQPage (убран fake ratingCount)
+- ✅ **hreflang** ru + x-default на каждой странице тура
 
 ## Последние изменения (28.02-01.03.2026)
 
@@ -146,41 +149,40 @@ setTimeout(() => {
 | `Footer.tsx` | 107 | Футер с Telegram/MAX контактами |
 | `copilot-instructions.md` | 131 | AI промпт |
 
-## Google Search Console (настроен 27.02.2026)
+## Google Search Console (настроен 27.02.2026, обновлён 01.03.2026)
 - **Верификация:** HTML file (`public/googleec068cee75b8021a.html`) + meta tag в `index.html`
 - **GSC Email (owner):** `anotherstoriz@gmail.com`
-- **Service Account:** `phuketda-s-arch-console@phuketda-search-console.iam.gserviceaccount.com` (Full access)
+- **Service Account:** `phuketda-s-arch-console@phuketda-search-console.iam.gserviceaccount.com` — **Owner** (повышен 01.03.2026)
 - **Ключ:** `.google/gsc-key.json` (НЕ коммитится, в .gitignore)
-- **Sitemap:** отправлен через API, 0 ошибок
-- **Indexing API:** НЕ работает (нужен Owner, есть только Full)
+- **Sitemap:** 64 URLs, auto-generated, отправлен через API
+- **Indexing API:** ✅ РАБОТАЕТ — 64 URL отправлены 01.03.2026 (0 ошибок)
 
 ### GSC-скрипты:
 ```bash
-node scripts/gsc-test-connection.cjs    # Тест подключения
-node scripts/gsc-analytics.cjs          # Обзор за 7 дней
-node scripts/gsc-analytics.cjs queries 20  # Топ-20 запросов
-node scripts/gsc-analytics.cjs pages 20    # Топ-20 страниц
-node scripts/gsc-analytics.cjs issues      # Ошибки покрытия
-node scripts/gsc-submit-indexing.cjs       # Отправка URL на индексацию (⚠️ нужен Owner)
+node scripts/gsc-test-connection.cjs       # Тест подключения
+node scripts/gsc-analytics.cjs             # Обзор за 7 дней
+node scripts/gsc-submit-sitemap.cjs        # Отправка sitemap в GSC
+node scripts/gsc-submit-indexing.cjs --from-sitemap 0 200  # Отправка URL на индексацию
 ```
 
-## SEO-изменения (сессия 27.02.2026)
-- ✅ **Sitemap.xml** — обновлён: 27 туров (было 22), даты → 2026-02-27
-- ✅ **Удалён дубликат** kata-noi из sitemap
-- ✅ **Исправлены slug'и:** james-bond-island→james-bond-island-phang-nga, racha-coral-islands→racha-coral-islands-speedboat, kao-lak-safari→kao-lak-safari-1-day
-- ✅ **Добавлены 5 туров:** phi-phi-racha-maiton-sunset, elephant-beach-samet-mantra-spa, coral-islands-rawai, diving-andaman, rafting-spa-atv-1-day
-- ✅ **Beach URLs** — формат `/#/beach/...`
-- ✅ **JSON-LD** — телефон-заглушка `+66-XX-XXX-XXXX` заменена на ContactPoint с Telegram URL (3 языка)
-- ✅ **google-site-verification** meta tag добавлен в index.html
+## SEO-изменения (сессия 01.03.2026)
+- ✅ **generate-og-pages.mjs v2** — 52 HTML с видимым контентом (description, highlights, included, FAQ, цены)
+- ✅ **JSON-LD TouristTrip** заменил Product schema (лучше для Google Travel)
+- ✅ **Удалён fake aggregateRating** (formula 150 + id.length*7)
+- ✅ **FAQPage JSON-LD** — 4 вопроса-ответа на каждый тур
+- ✅ **BreadcrumbList JSON-LD** — Главная → Категория → Тур
+- ✅ **hreflang** ru + x-default на каждой странице
+- ✅ **generate-sitemap.mjs** — auto-generated sitemap.xml (64 URLs)
+- ✅ **Build pipeline** — vite → postbuild → og-pages → sitemap
+- ✅ **gsc-submit-sitemap.cjs** — отправка sitemap в GSC
+- ✅ **SA повышен до Owner** — Indexing API работает
+- ✅ **64 URL отправлены** на индексацию (0 ошибок)
 
 ## Known Issues (оставшиеся)
 - **eleven-islands-standard** — папка-сирота: есть в `src/data/tours/` но НЕ в реестре
 - **rafting-spa-1day** — не передаёт routePoints в TourPageTemplate
 - **phi-phi-racha-maiton-sunset** — последний RoutePoint type:"start" (должен быть "destination")
-- ~~**phone placeholder** — "+66-XX-XXX-XXXX" в JSON-LD (index.html)~~ ✅ ИСПРАВЛЕНО
 - **GA/Yandex** — аналитика закомментирована, нужны реальные ID
-- ~~**SEO:** Google Search Console не настроен~~ ✅ НАСТРОЕН
 - **HashRouter:** Нужен для GitHub Pages, но мешает SEO (главный SEO-блокер)
-- **Indexing API:** Нужен Owner-уровень для Service Account (сейчас Full)
 - **Supabase CMS:** Таблицы существуют, но НЕ используются — данные в TS файлах
 - **react-leaflet@5.0.0:** Требует React 19, решается `--legacy-peer-deps`

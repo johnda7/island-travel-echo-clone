@@ -1,18 +1,18 @@
 {
-  "name": "Phukeo Tours - Пхукет",
-  "short_name": "Phukeo",
-  "description": "Лучшие туры и экскурсии на Пхукете. Острова Пхи-Пхи, Джеймс Бонд, 11 островов и другие приключения.",
+  "name": "ПхукетGO — Экскурсии на Пхукете",
+  "short_name": "ПхукетGO",
+  "description": "Лучшие туры и экскурсии на Пхукете 2026. Пхи-Пхи, Симиланы, Джеймс Бонд. Русскоязычные гиды, от 1000฿.",
   "start_url": "/",
-  "display": "fullscreen",
+  "display": "standalone",
   "orientation": "portrait-primary",
   "theme_color": "#007AFF",
   "background_color": "#FFFFFF",
   "icons": [
     {
       "src": "/favicon.ico",
-      "sizes": "512x512",
+      "sizes": "64x64",
       "type": "image/x-icon",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ],
   "categories": ["travel", "lifestyle"],

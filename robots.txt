@@ -58,9 +58,9 @@ Crawl-delay: 5
 # All other bots
 User-agent: *
 Allow: /
+Allow: /manifest.json
 Disallow: /admin/
 Disallow: /private/
-Disallow: /*.json$
 Disallow: /api/
 
 # Sitemap location

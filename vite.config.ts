@@ -21,4 +21,20 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    target: 'es2020',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'leaflet': ['leaflet', 'react-leaflet'],
+          'ui': ['@radix-ui/react-dialog', '@radix-ui/react-accordion', '@radix-ui/react-tabs', '@radix-ui/react-tooltip'],
+          'charts': ['recharts'],
+          'supabase': ['@supabase/supabase-js'],
+          'icons': ['lucide-react'],
+          'dates': ['date-fns'],
+        }
+      }
+    }
+  },
 }));

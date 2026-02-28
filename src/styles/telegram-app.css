@@ -18,11 +18,13 @@
   display: none !important;
 }
 
-/* Основной контент занимает всю высоту */
+/* Основной контент занимает всю высоту, БЕЗ лишнего padding-top
+   (Header скрыт в Telegram — pt-20 не нужен) */
 .telegram-app main {
   height: 100vh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  padding-top: 0.5rem !important;
 }
 
 /* Контейнеры на полную ширину в Telegram */
@@ -41,6 +43,18 @@
 .telegram-app .breadcrumbs,
 .telegram-app nav[aria-label="breadcrumb"] {
   display: none !important;
+}
+
+/* Секции с pt-16/pt-20/pt-24 для Header — убираем в Telegram (Header скрыт) */
+.telegram-app section[class*="pt-16"],
+.telegram-app section[class*="pt-20"],
+.telegram-app section[class*="pt-24"] {
+  padding-top: 0.5rem !important;
+}
+
+/* Убираем лишний pb на main в Telegram — контент до BottomNav */
+.telegram-app main {
+  padding-bottom: 5rem !important; /* место для BottomNav */
 }
 
 /* Мобильная навигация для Telegram */

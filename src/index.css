@@ -119,11 +119,18 @@
     background-attachment: fixed;
   }
 
-  /* Telegram Mini App / in-app browser: безопасная зона сверху
-     - Смещаем наш фиксированный хедер ниже системной панели
-     - Добавляем небольшой паддинг к body, чтобы контент не прятался под overlay */
+  /* Telegram Mini App: Header скрыт (return null), Telegram сам рисует свой хедер.
+     Не нужен padding-top — контент начинается сразу под Telegram-хедером. */
   body.telegram-app {
-    padding-top: max(env(safe-area-inset-top, 0px), 40px);
+    padding-top: 0 !important;
+  }
+
+  /* Telegram: убираем pt-20/pt-16/pt-24 которые были для фиксированного Header */
+  .telegram-app main {
+    padding-top: 0.5rem !important;
+  }
+  .telegram-app section:first-of-type {
+    padding-top: 0.5rem !important;
   }
 
   .telegram-app .liquid-glass-header {
@@ -150,14 +157,34 @@
   [data-booking-wrapper] input[type="date"],
   [data-booking-wrapper] select,
   [data-booking-wrapper] textarea {
-    min-height: 40px; /* компактнее, но читабельно */
-    padding: 10px 12px;
-    font-size: 15px;
+    min-height: 44px; /* iOS 26 минимальный тап-таргет */
+    padding: 10px 14px;
+    font-size: 16px; /* 16px предотвращает авто-зум на iOS */
     border-radius: 12px;
   }
 
   [data-booking-wrapper] label {
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  /* === МОДАЛКА БРОНИРОВАНИЯ — BOTTOM SHEET НА МОБИЛЬНЫХ === */
+  @media (max-width: 640px) {
+    /* Прижимаем модалку к низу экрана вместо центра */
+    [data-booking-wrapper] > div {
+      align-items: flex-end !important;
+      justify-content: flex-end !important;
+    }
+    /* Карточка модалки — полная ширина, скругление только сверху */
+    [data-booking-wrapper] > div > div:first-child {
+      max-height: 92dvh !important;
+      max-height: 92vh !important;
+      border-radius: 20px 20px 0 0 !important;
+      margin: 0 !important;
+      max-width: 100% !important;
+      width: 100% !important;
+    }
   }
 
   /* КРИТИЧНО: Глобальная защита от горизонтального скролла на мобильных */

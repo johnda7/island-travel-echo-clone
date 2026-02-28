@@ -80,6 +80,35 @@ export function UniversalBookingModal({ isOpen, onClose, tourData }: Props) {
     };
   }, [isOpen]);
 
+  // После возврата из Telegram — закрываем модалку и переходим на страницу всех туров
+  // Срабатывает ТОЛЬКО если на экране показано сообщение об успехе (z-[100] overlay)
+  useEffect(() => {
+    if (!isOpen) return;
+
+    let hiddenAt: number | null = null;
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        hiddenAt = Date.now();
+      } else if (hiddenAt) {
+        const elapsed = Date.now() - hiddenAt;
+        hiddenAt = null;
+
+        // Проверяем: есть ли на экране сообщение об успехе (overlay с z-[100])
+        // Это гарантирует, что мы не закроем форму, если юзер просто свернул приложение
+        const successOverlay = document.querySelector('.z-\\[100\\]');
+        if (successOverlay && elapsed > 1500) {
+          // Пользователь вернулся из Telegram после бронирования → закрываем и на туры
+          onClose();
+          window.location.hash = '#/tours';
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
+  }, [isOpen, onClose]);
+
   return (
     <div ref={wrapRef} data-booking-wrapper>
       {/* Если данные уже есть — рендерим оригинальную модалку */}

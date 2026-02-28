@@ -508,11 +508,11 @@ export const Header = () => {
                 WebkitOverflowScrolling: 'touch',
               }}
             >
-              <nav className="px-4 py-4 max-w-lg mx-auto">
+              <nav className="px-4 py-5 max-w-lg mx-auto">
                 {mainMenuItems.map((item, index) => (
                   <div 
                     key={item.name}
-                    className="mb-3"
+                    className="mb-5"
                     style={{
                       animation: `fadeIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) ${index * 0.04}s both`
                     }}
@@ -520,7 +520,7 @@ export const Header = () => {
                     {/* Section Header */}
                     <Link
                       to={item.href}
-                      className="flex items-center gap-2.5 px-3 py-2 mb-1"
+                      className="flex items-center gap-2.5 px-3 py-1.5 mb-2"
                       onClick={() => setIsOpen(false)}
                     >
                       <span className="text-[15px] font-semibold tracking-tight" style={{
@@ -547,7 +547,7 @@ export const Header = () => {
                           <Link
                             key={subItem.name}
                             to={subItem.href}
-                            className="flex items-center gap-3 px-4 py-3 active:bg-gray-100/80 transition-colors duration-100"
+                            className="flex items-center gap-3.5 px-4 py-3.5 active:bg-gray-100/80 transition-colors duration-100 min-h-[52px]"
                             style={{
                               borderBottom: subIndex < (item.subItems?.length || 0) - 1 ? '0.5px solid rgba(0, 0, 0, 0.06)' : 'none',
                               animation: `fadeIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) ${(index * 0.04) + (subIndex * 0.02)}s both`
@@ -556,13 +556,13 @@ export const Header = () => {
                           >
                             {/* Icon Circle */}
                             <div 
-                              className="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center text-base"
+                              className="flex-shrink-0 w-10 h-10 rounded-[12px] flex items-center justify-center text-base"
                               style={{
                                 background: `linear-gradient(135deg, ${getSubItemGradient(index, subIndex)[0]}, ${getSubItemGradient(index, subIndex)[1]})`,
                                 boxShadow: `0 2px 8px ${getSubItemGradient(index, subIndex)[0]}33`,
                               }}
                             >
-                              <span className="text-white text-sm">{getSubItemEmoji(subItem.name)}</span>
+                              <span className="text-white text-[16px]">{getSubItemEmoji(subItem.name)}</span>
                             </div>
                             
                             {/* Text */}
@@ -604,7 +604,7 @@ export const Header = () => {
                 
                 {/* CTA Button */}
                 <div 
-                  className="mt-4 mb-2"
+                    className="mt-6 mb-3"
                   style={{
                     animation: `fadeIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) ${mainMenuItems.length * 0.04 + 0.1}s both`
                   }}
